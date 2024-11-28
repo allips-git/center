@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 색 트렌지션 전역설정 */
+* {
+    @apply transition-colors duration-[20ms]; 
+  }
+
+  .mobile-hidden{
+    @apply hidden md:block
+  }
+  .pc-hidden{
+    @apply md:hidden block
+  }
+  .main-section-title-box{
+    @apply text-lg font-bold mb-3
+  }
+  .main-card-container-box{
+    @apply shadow-sm bg-white rounded-lg border border-gray-100 w-full
+  }
+  .main-card-container-box-padding{
+    @apply p-5
+  }
+  .main-card-tilte-box{
+    @apply font-bold flex justify-between items-center w-full border-b border-gray-100 py-1 px-5 text-lg
+  }
+  .custom-table-column-min-w{
+    @apply whitespace-nowrap
+  }
+  .page-title{
+    @apply text-2xl font-bold px-4 pt-8 pb-2
+  }

@@ -1,0 +1,48 @@
+
+
+.custom-datatable{
+    // 검색해더 필터 아이콘 버튼
+    .p-button.p-component.p-button-icon-only.p-button-secondary.p-button-rounded.p-button-text.p-datatable-column-filter-button{
+        display: none;
+    }
+    .p-button.p-component.p-button-icon-only.p-button-secondary.p-button-rounded.p-button-text.p-datatable-column-filter-clear-button{
+        display: none;
+    }
+    .p-datatable-sort-icon{
+        width: 0.75rem;
+        height: 0.75rem;
+        vertical-align: baseline;
+    }
+    .p-datatable-header-cell{
+        font-size: 0.875rem;
+        padding: 0.5rem;
+        .p-inputtext{
+            width: 100%;
+            }    
+        .p-select{
+            font-size: 0.875rem;
+        }
+        .p-select-label{
+            padding-left: 0.625rem;
+            padding-right: 0.625rem;
+            padding-top: 0.468rem;
+            padding-bottom: 0.468rem;
+        }
+            // 테이블 데이트 피크
+        .p-datepicker{
+            .p-datepicker-input{
+                font-size: 0.875rem;
+                padding-top: 0.325rem;
+                padding-bottom:  0.325rem;
+            }
+            .p-datepicker-input-icon-container{
+                height: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+}
+
+    

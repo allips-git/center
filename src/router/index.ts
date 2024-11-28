@@ -1,23 +1,318 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createWebHistory, createRouter } from "vue-router";
+
+import Index from "@/views/index.vue";
+import Login from "@/views/login/LoginPage.vue";
+import Agree from "@/views/login/JoinAgree.vue";
+import JoinFirst from "@/views/login/JoinFirst.vue";
+import JoinSecond from "@/views/login/JoinSecond.vue";
+import CustomerList from "@/views/customer/CustomerList.vue";
+import CustomerRegister from "@/views/customer/CustomerRegister.vue";
+import CustomerDetail from "@/views/customer/CustomerDetail.vue";
+import CustomerEstiIng from "@/views/customer/ProductRegister.vue";
+import CustomerEstiList from "@/views/customer/SpecsList.vue";
+import EstimateModal from "@/views/customer/EstimateModal.vue";
+import EstiDoc from "@/views/customer/EstiDoc.vue";
+import ConmateModal from "@/views/customer/ConmateModal.vue";
+import ConDoc from "@/views/customer/ConDoc.vue";
+import CustomerOrderList from "@/views/customer/OrderList.vue";
+import OutOrderDoc from "@/views/customer/OutOrderDoc.vue";
+import FactoryList from "@/views/factory/FactoryList.vue";
+import OutInput from "@/views/factory/OutInput.vue";
+import OutDetail from "@/views/factory/OutDetail.vue";
+import OutProduct from "@/views/factory/OutProduct.vue";
+import OutMng from "@/views/factory/OutMng.vue";
+import FactoryDetail from "@/views/factory/FactoryDetail.vue";
+import SysProduct from "@/views/factory/ProductInfo.vue";
+import SysMng from "@/views/factory/ProductMng.vue";
+import PlantalkMain from "@/views/plantalk/PlantalkMain.vue";
+import PlantalkRes from "@/views/plantalk/PlantalkAlert.vue"
+import PlantalkSend from "@/views/plantalk/PlantalkMessage.vue"
+import PlantalkDetail from "@/views/plantalk/ScheduleAlert.vue";
+import MessageView from "@/views/message/MessageView.vue";
+import SettingView from "@/views/setting/SettingView.vue";
+import TimeSetting from "@/views/setting/TimeSetting.vue";
+import StaticPayView from "@/views/setting/StaticPay.vue";
+import StaticPayIng from "@/views/setting/StaticPayUpdate.vue";
+import AccView from "@/views/acc/AccView.vue";
+import AccMonth from "@/views/acc/AccMonth.vue";
+import AccWeek from "@/views/acc/AccWeek.vue";
+import AccDay from "@/views/acc/AccDay.vue";
+import CalendarView from "@/views/calendar/CalendarView.vue";
+import AverageView from "@/views/average/AverageView.vue";
+import GroupMessageView from "@/views/groupMessage/GroupMessageView.vue";
+import MessageSend from "@/views/groupMessage/MessageSend.vue";
+
+const routes = [
+    {
+        path: "/login",
+        name: "LoginPage",
+        component: Login,
+        meta : { gubun: 'Y' }
+    },
+    {
+        path: "/join/agree",
+        name: "AgreePage",
+        component: Agree,
+        meta : { gubun: 'Y' }
+    },
+    {
+        path: "/join/joinFirst",
+        name: "JoinFirstPage",
+        component: JoinFirst,
+        meta : { gubun: 'Y' }
+    },
+    {
+        path: "/join/joinSecond",
+        name: "JoinSecondPage",
+        component: JoinSecond,
+        meta : { gubun: 'Y' }
+    },
+    {
+        path: "/",
+        name: "MainPage",
+        component: Index,
+    },
+    {
+        path: "/customer/list",
+        name: "CustomerList",
+        component: CustomerList,
+        meta: { title: '고객' }
+    },
+    {
+        path: "/customer/register",
+        name: "CustomerRegister",
+        component: CustomerRegister,
+        meta: { title: '고객 등록' }
+    },
+    {
+        path: "/customer/detail",
+        name: "CustomerDetail",
+        component: CustomerDetail,
+        meta: { title: '고객 상세' }
+    },
+    {
+        path: "/customer/estiIng",
+        name: "CustomerEstiIng",
+        component: CustomerEstiIng,
+        meta: { title: '견적 등록' }
+    },
+    {
+        path: "/customer/estiList",
+        name: "CustomerEstiList",
+        component: CustomerEstiList,
+        meta: { title: '명세표' }
+    },
+    {
+        path: "/customer/estiMate",
+        name: "EstimateModal",
+        component: EstimateModal,
+        meta: { title: '견적서' }
+    },
+    {
+        path: "/customer/estiDoc",
+        name: "EstiDoc",
+        component: EstiDoc,
+        meta: { title: '견적서 공유 화면', gubun: 'Y' }
+    },
+    {
+        path: "/customer/conMate",
+        name: "ConmateModal",
+        component: ConmateModal,
+        meta: { title: '계약서' }
+    },
+    {
+        path: "/customer/conDoc",
+        name: "ConDoc",
+        component: ConDoc,
+        meta: { title: '계약서 공유 화면', gubun: 'Y' }
+    },
+    {
+        path: "/customer/orderList",
+        name: "CustomerOrderList",
+        component: CustomerOrderList,
+        meta: { title: '발주서' }
+    },
+    {
+        path: "/outOrderDoc",
+        name: "outOrderDoc",
+        component: OutOrderDoc,
+        meta: { title: '외주 발주서', gubun: 'Y' }
+    },
+    {
+        path: "/factory/list",
+        name: "FactoryList",
+        component: FactoryList,
+        meta: { title: '공장' }
+    },
+    {
+        path: "/factory/outInput",
+        name: "OutInput",
+        component: OutInput,
+        meta: { title: '외주공장 저장' }
+    },
+    {
+        path: "/factory/outDetail",
+        name: "OutDetail",
+        component: OutDetail,
+        meta: { title: '외주공장 상세' }
+    },
+    {
+        path: "/factory/outProduct",
+        name: "OutProduct",
+        component: OutProduct,
+        meta: { title: '외주공장 제품 리스트' }
+    },
+    {
+        path: "/factory/outMng",
+        name: "OutMng",
+        component: OutMng,
+        meta: { title: '외주공장 제품 정보 확인 및 저장' }
+    },
+    {
+        path: "/factory/detail",
+        name: "FactoryDetail",
+        component: FactoryDetail,
+        meta: { title: '공장 상세' }
+    },
+    {
+        path: "/factory/sysProduct",
+        name: "SysProduct",
+        component: SysProduct,
+        meta: { title: '시스템 공장 제품 리스트' }
+    },
+    {
+        path: "/factory/sysMng",
+        name: "SysMng",
+        component: SysMng,
+        meta: { title: '시스템 공장 제품 정보' }
+    },
+    {
+        path: "/plantalk",
+        name: "PlantalkMain",
+        component: PlantalkMain,
+        meta: { title: '플랜톡' }
+    },
+    {
+        path: "/plantalk/res",
+        name: "PlantalkRes",
+        component: PlantalkRes,
+        meta: { title: '플랜톡 예약된 알림' }
+    },
+    {
+        path: "/plantalk/send",
+        name: "PlantalkSend",
+        component: PlantalkSend,
+        meta: { title: '플랜톡 발송 내역' }
+    },
+    {
+        path: "/plantalk/detail",
+        name: "PlantalkDetail",
+        component: PlantalkDetail,
+        meta: { title: '플랜톡 상세' }
+    },
+    {
+        path: "/acc",
+        name: "AccView",
+        component: AccView,
+        meta: { title: "회계" }
+    },
+    {
+        path: "/acc/month",
+        name: "AccMonth",
+        component: AccMonth,
+        meta: { title: "회계 월간 분석" }
+    },
+    {
+        path: "/acc/week",
+        name: "AccWeek",
+        component: AccWeek,
+        meta: { title: "회계 주간 분석" }
+    },
+    {
+        path: "/acc/day",
+        name: "AccDay",
+        component: AccDay,
+        meta: { title: "회계 일별 분석" }
+    },
+    {
+        path: "/msg",
+        name: "msg",
+        component: MessageView,
+        meta: { title: "메세지" }
+    },
+    {
+        path: "/setting",
+        name: "SettingView",
+        component: SettingView,
+        meta: { title: "설정" }
+    },
+    {
+        path: "/setting/staticPay",
+        name: "StaticPayView",
+        component: StaticPayView,
+        meta: { title: "고정비용 관리" }
+    },
+    {
+        path: "/setting/timeSetting",
+        name: "TimeSetting",
+        component: TimeSetting,
+        meta: { title: "시공시간 설정" }
+    },
+    {
+        path: "/setting/staticPayIng",
+        name: "StaticPayIng",
+        component: StaticPayIng,
+        meta: { title: "고정비용 저장" }
+    },
+    {
+        path: "/calendar",
+        name: "CalendarView",
+        component: CalendarView,
+        meta: { title: "일정" }
+    },
+    {
+        path: "/average",
+        name: "AverageView",
+        component: AverageView,
+        meta: { title: "통계" }
+    },
+    {
+        path: "/groupmsg",
+        name: "GroupMessageView",
+        component: GroupMessageView,
+        meta: { title: "단체 메시지" }
+    },
+    {
+        path: "/groupmsg_send",
+        name: "MessageSend",
+        component: MessageSend,
+        meta: { title: "단체 메시지" }
+    }
+]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
-    },
-  ],
-})
+    history: createWebHistory(),
+    routes
+});
+
+// router.beforeEach((to, from, next) => {
+//     const ceCd      = store.state.login.ceCd;
+
+//     if(to.meta.gubun === 'Y')
+//     {
+//         next();
+//     }
+//     else
+//     {
+//         if(ceCd === null)
+//         {
+//             next({ name : 'LoginPage' });
+//         }
+//         else
+//         {
+//             next();
+//         }
+//     }
+// });
 
 export default router
