@@ -1,0 +1,52 @@
+import { defineStore } from 'pinia';
+import { t } from '@/locales/i18n';
+
+export const useDataStore = defineStore('data', {
+    state: () => {
+        return {
+            useYn : [
+                { name : '사용', value : true },
+                { name : '미사용', value : false }
+            ],
+            bsCd  : [
+                { name : '블라인드', value : 'BS01' },
+                { name : '커튼', value : 'BS02' },
+            ],
+            proc  : [ 
+                { name : '나비주름', value : '001' },
+                { name : '평주름', value : '002' }
+            ],
+            usage : Array.from({ length: 21 }, (v, i) => ({ name: (1.0 + i * 0.1).toFixed(1)+'배', value: (1.0 + i * 0.1).toFixed(1) })),
+            split : [ 
+                { name : '양개', value : '001' },
+                { name : '편개', value : '002' }
+            ],
+            shape : [ 
+                { name : '있음', value : 'Y' },
+                { name : '없음', value : 'N' }
+            ],
+            addPrice : Array.from({ length: 10 }, (v, i) => ({ value: i, name : i+'%' })),
+            vat : [
+                { name : '발행', value : 'Y' },
+                { name : '미발행', value : 'N' }
+            ],
+            delivery : [
+                { name : '화물', value : '001'},
+                { name : '택배', value : '002'},
+                { name : '직배', value : '003'},
+                { name : '방문', value : '005'}
+            ],
+            unit : [
+                { name: '회배', value : '001'},
+                { name: '야드', value : '002'},
+                { name: '폭', value : '003'},
+                { name: 'EA', value : '004'}
+            ],
+            division : Array.from({ length: 10 }, (v, i) => ({ name: i === 0 ? '단창' : (i+1)+'분할', value: i+1 })),
+            handle : [
+                { name: '좌', value : 'L'},
+                { name: '우', value : 'R'}
+            ],
+        };
+    },
+});
