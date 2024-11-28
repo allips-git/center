@@ -1,28 +1,42 @@
 <template>
-    <aside class="h-[calc(100vh-60px)] bg-white border-r border-gray-200 w-[200px] flex-none sticky ">
-        <ul class="px-3">
-            <li class=" w-full items-center flex py-3 gap-2 px-1">
-                <span class="w-8"><IconAvatar class="text-indigo-300 w-6"/></span>
-                <p class="text-gray-900">디자인 윈도우</p>
+    <aside class="max-h-screen md:h-[calc(100vh-60px)] bg-white md:border-r border-gray-200 w-[200px] flex-none sticky"
+    :class="drawerClass ? '!flex !w-[200px] !justify-start'  : 'hidden md:!flex ' ,
+    setWideSide ? 'w-[220px] overflow-y-auto flex-none' : 'w-auto justify-center'"
+    >
+        <ul class="flex flex-col px-3 gap-5"
+        >
+            <li class=" items-center flex py-3 px-1">
+                <span class="w-8"
+                :class="setWideSide ? '' : '!w-auto'"
+                ><IconAvatar class="text-indigo-300 w-6"/></span>
+                <p v-if="setWideSide || drawerClass" class="text-gray-900">디자인 윈도우</p>
             </li>
             <li 
-            class="flex items-center cursor-pointer py-3 hover:bg-indigo-50 px-2 rounded-md font-bold group"
+            class="flex items-center cursor-pointer py-0.5 hover:bg-indigo-50 px-2 rounded-md font-bold group justify-start"
             v-for="item in SideHeaderItems" :key="item.id" @click="navigateTo(item.link)" >
-            <div class="w-8 flex items-center group-hover:text-indigo-600">
+            <div class="w-8 h-7 flex items-center group-hover:text-indigo-600" :class="setWideSide || drawerClass ? '' : '!w-auto'">
                 <span class="pi" :class="item.iconClass"></span> <!-- PrimeVue 아이콘 클래스 -->
             </div>
-                <p class="ml-2 group-hover:text-indigo-600">{{ item.label }}</p>
+                <p v-if="setWideSide || drawerClass" class="group-hover:text-indigo-600  duration-300" >{{ item.label }}</p>
             </li>
-    
         </ul>
     </aside>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, defineProps } from 'vue';
 import { useRouter } from 'vue-router';
 import IconAvatar from '@/components/icons/IconAvatar.vue';
 
+const props = defineProps({
+    drawerClass: {
+        type: Boolean,
+    },
+    setWideSide: {
+        type: Boolean
+    },
+   
+});
 
 // Vue Router 가져오기
 const router = useRouter();

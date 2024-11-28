@@ -1,5 +1,5 @@
 <template>
-    <header class="h-[48px] sticky top-0 flex items-center px-2">
+    <header class="h-[48px] sticky top-0 flex items-center px-2 md:border-b">
         <Button 
             plain 
             text 
@@ -7,7 +7,7 @@
             icon="pi pi-chevron-left" 
             @click="goBack" 
         />
-        <h1 class="absolute left-1/2 -translate-x-1/2 text-lg font-bold top-1/2 -translate-y-1/2">{{ title }}</h1>
+        <h1 class="absolute left-1/2 -translate-x-1/2 text-lg font-bold top-1/2 -translate-y-1/2 md:relative md:-translate-y-0 md:-translate-x-0 md:top-0  md:left-0 ">{{ title }}</h1>
     </header>
     </template>
     

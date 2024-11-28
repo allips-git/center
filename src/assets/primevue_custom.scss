@@ -1,4 +1,31 @@
 
+// Breakpoints
+$breakpoint-xs: 0; // Extra small devices (phones)
+$breakpoint-sm: 640px; // Small devices (tablets)
+$breakpoint-md: 768px; // Medium devices (desktops)
+$breakpoint-lg: 1024px; // Large devices (desktops)
+$breakpoint-xl: 1280px; // Extra large devices (large desktops)
+$breakpoint-2xl: 1536px; // Extra large devices (large desktops)
+$breakpoint-3xl: 1920px; // Extra large devices (large desktops)
+
+// Media Queries
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (min-width: $breakpoint-xs) { @content; }
+  } @else if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) { @content; }
+  } @else if $breakpoint == md {
+    @media (min-width: $breakpoint-md) { @content; }
+  } @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) { @content; }
+  } @else if $breakpoint == xl {
+    @media (min-width: $breakpoint-xl) { @content; }
+  } @else if $breakpoint == 2xl {
+    @media (min-width: $breakpoint-2xl) { @content; }
+  } @else if $breakpoint == 3xl {
+    @media (min-width: $breakpoint-3xl) { @content; }
+  }  
+}
 
 .custom-datatable{
     // 검색해더 필터 아이콘 버튼
@@ -42,6 +69,56 @@
                 justify-content: center;
             }
         }
+    }
+}
+.custom-drawer{
+    width: auto !important;
+    padding-right: 1rem;
+    .p-drawer-header{
+        padding: 0;
+        position: absolute;
+        top: 4px;
+        right: 1rem;
+        z-index: 99;
+    }
+
+    .p-drawer-content{
+        padding: 0 !important;
+     }
+}
+
+.custom-dialog-bottom.p-dialog{
+    // min-height: 100vh;
+    margin: 0 !important;
+    position: relative;
+    border-radius:  0.5rem 0.5rem 0px 0;
+    margin-top: 1rem !important;
+    width: 100%;
+    max-width: calc(100% - 1rem) !important;
+    @include respond-to(md) {
+        max-width: calc(100% - 1rem) !important;
+    }
+    .p-dialog-content{
+        padding: 0;
+        height: 100%;        
+    }
+    .p-dialog-header, .p-drawer-header{
+        padding: 0.25rem 20px;
+        .p-dialog-title , .p-drawer-title{
+            font-size: 13px;
+        }
+    }
+    .p-dialog-maximize-button{
+        display: none;
+        @include respond-to(md) {
+            display: flex;
+        }
+    }
+    .p-dialog.p-component , .p-drawer-content{
+        margin: 0;
+        min-height: 100vh;
+        border-radius:  4px 0px 0px 4px;
+        padding: 0;
     }
 }
 

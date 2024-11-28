@@ -1,4 +1,9 @@
-import { createWebHistory, createRouter } from "vue-router";
+import { createWebHistory, createRouter, } from "vue-router";
+
+// RouteMeta 인터페이스 정의
+interface RouteMeta {
+    showTopHeader?: boolean; // showTopHeader 메타 필드 정의
+  }
 
 import Index from "@/views/index.vue";
 import Login from "@/views/login/LoginPage.vue";
@@ -71,6 +76,7 @@ const routes = [
         path: "/",
         name: "MainPage",
         component: Index,
+        meta : { showTopHeader: true }
     },
     {
         path: "/customer/list",

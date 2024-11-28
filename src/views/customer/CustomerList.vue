@@ -1,6 +1,6 @@
 <template>
     <main>
-        <h1 class="text-2xl px-1 page-title">고객관리</h1>
+        <BackHeader title="공장" />
        <!-- 배송 대기 테이블 -->
        <div class="custom-datatable">
            <DataTable 
@@ -28,8 +28,7 @@
                            <Select v-model="selectedCategory" :options="category" optionLabel="name" placeholder="상태" class="w-full max-w-[100px]" />    
                        </div>
 
-                        <Button label="고객 신규 등록" class="flex-none" size="midium" />                    
-                    
+                        <Button label="고객 신규 등록" class="flex-none" />                    
                    </div>
                 </div>
            </template>
@@ -128,9 +127,7 @@ import Column from 'primevue/column';
 import IconField from 'primevue/iconfield'; 
 import InputText from 'primevue/inputtext'; 
 import InputIcon from 'primevue/inputicon'; 
-
-
-import ShipTablePop from '@/views/include/ship/ShipTablePop.vue'
+import BackHeader from '@/components/layouts/BackHeader.vue'
 
 
 
