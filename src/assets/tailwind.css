@@ -31,3 +31,18 @@
   .page-title{
     @apply text-2xl font-bold px-4 pt-8 pb-2
   }
+  .label-checkbox-box{
+    @apply flex gap-2 items-center w-full
+  }
+  .modal-page-padding{
+    @apply p-5 md:p-8
+  }
+  .label-input-box{
+    @apply w-full *:w-full flex flex-col gap-1
+  }
+  .form-gap-box{
+    @apply flex flex-col gap-5
+  }
+  .mobile-fiex-bottom{
+    @apply fixed md:relative bottom-0 left-0 w-full p-5 border-t md:p-0 mt-10
+  }
