@@ -1,0 +1,37 @@
+<template>
+    <header class="h-[48px] sticky top-0 flex items-center px-2">
+        <Button 
+            plain 
+            text 
+            rounded 
+            icon="pi pi-chevron-left" 
+            @click="goBack" 
+        />
+        <h1 class="absolute left-1/2 -translate-x-1/2 text-lg font-bold top-1/2 -translate-y-1/2">{{ title }}</h1>
+    </header>
+    </template>
+    
+    <script setup lang="ts">
+    import { defineProps } from 'vue';
+    import { useRouter } from 'vue-router'; // useRouter 임포트
+    
+    const props = defineProps({
+        title: {
+            type: String,
+            required: true,
+        },
+    })
+    
+    const router = useRouter(); // useRouter 훅 사용
+    
+    // 뒤로가기 함수 정의
+    const goBack = () => {
+        router.back(); // 또는 router.go(-1);
+    };
+    </script>
+    
+    <style lang="scss">
+    
+    
+    </style>
+    
