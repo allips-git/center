@@ -10,25 +10,25 @@
             <TabPanels>
                 <TabPanel value="0">
                     <div class="w-full flex justify-end">
-                        <Button label="공장코드 추가" icon="pi pi-plus" size="small" @click="factoryCodePop = true"/>
+                        <Button label="공장코드 추가" icon="pi pi-plus" size="small" @click="getPopupOpen('sysFactorySearch')"/>
                     </div>
                     <ul>
-                        <li class="border-b py-3 flex flex-col" v-for="(factory, index) in factories" :key="index" >
-                        <p class="font-bold mb-1">{{ factory.name }}</p>
-                        <p class="text-sm text-gray-600">{{ factory.phone }}</p>
-                        <p class="text-sm text-gray-400">{{ factory.address }}</p>
+                        <li class="border-b py-3 flex flex-col" v-for="(item, index) in factory['sys']['list']" :key="index" >
+                        <p class="font-bold mb-1">{{ item.faNm }}</p>
+                        <p class="text-sm text-gray-600">{{ item.tel }}</p>
+                        <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
                         </li>
                     </ul>
                 </TabPanel>
                 <TabPanel value="1">
                     <div class="w-full flex justify-end">
-                        <Button label="외주공장 추가" icon="pi pi-plus" size="small" @click="outsourcePop = true" />
+                        <Button label="외주공장 추가" icon="pi pi-plus" size="small" @click="getPopupOpen('outFactorySet')" />
                     </div>
                     <ul>
-                        <li class="border-b py-3 flex flex-col" v-for="(outsource, index) in outsourcelist" :key="index" >
-                            <p class="font-bold mb-1">{{ outsource.name }}</p>
-                            <p class="text-sm text-gray-600">{{ outsource.phone }}</p>
-                            <p class="text-sm text-gray-400">{{ outsource.address }}</p>
+                        <li class="border-b py-3 flex flex-col" v-for="(item, index) in factory['out']['list']" :key="index" >
+                            <p class="font-bold mb-1">{{ item.faNm }}</p>
+                            <p class="text-sm text-gray-600">{{ item.tel }}</p>
+                            <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
                         </li>
                     </ul>
                 </TabPanel>
@@ -37,35 +37,36 @@
     </div>
 
     <!-- 공장 코드 추가 다이얼로그 -->
-    <Dialog v-model:visible="factoryCodePop" 
+    <Dialog v-model:visible="popup['pop']['sysFactorySearch']" 
     header="공장코드 추가" 
     :modal=true
     position="bottom"
     class="custom-dialog-bottom"
+    @update:visible="getPopClose(true, 'sysFactorySearch')"
     >
         <div class="p-5">
             <div class="form-gap-box">
                     <IftaLabel>
                         <IconField>
-                            <InputText id="username" placeholder=""  class="w-full"/>
+                            <InputText id="serachFaCd" v-model="factory['sys']['serachFaCd']" class="w-full" @keyup.enter="getSearch"/>
                             <InputIcon class="pi pi-search" />
                         </IconField>
-                        <label for="username">공장 코드</label>
+                        <label for="faCd">공장 코드</label>
                     </IftaLabel>
 
                         <IftaLabel class="w-full">
                             <label for="emali">공장 이름</label>
-                            <InputText id="emali" placeholder="" class="w-full"/>    
+                            <InputText id="emali" class="w-full"/>    
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
                             <label for="emali">종목</label>
-                            <InputText id="emali" placeholder="" class="w-full"/>    
+                            <InputText id="emali" class="w-full"/>    
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
                             <label for="emali">담당자 성명</label>
-                            <InputText id="emali" placeholder="" class="w-full"/>    
+                            <InputText id="emali" class="w-full"/>    
                         </IftaLabel>
                     </div>
             <div class="w-full sticky bottom-0 mt-10">
@@ -75,27 +76,28 @@
     </Dialog>
 
     <!-- 외주 공장 저장 다이얼로그 -->
-    <Dialog v-model:visible="outsourcePop" 
+    <Dialog v-model:visible="popup['pop']['outFactorySet']" 
     header="외주공장 저장" 
     :modal=true
     position="bottom"
     class="custom-dialog-bottom"
+    @update:visible="getPopClose(true, 'outFactorySet')"
     >
         <div class="p-5">
             <div class="form-gap-box">
                     <IftaLabel>
-                        <InputText id="username" placeholder=""  class="w-full"/>
+                        <InputText id="username"   class="w-full"/>
                         <label for="username">공장 이름</label>
                     </IftaLabel>
 
                         <IftaLabel class="w-full">
                             <label for="emali">전화번호</label>
-                            <InputText id="emali" placeholder="" class="w-full"/>    
+                            <InputText id="emali"  class="w-full"/>    
                         </IftaLabel>
 
                         <IftaLabel>
                         <IconField>
-                            <InputText id="username" placeholder=""  class="w-full"/>
+                            <InputText id="username"   class="w-full"/>
                             <InputIcon class="pi pi-search" />
                         </IconField>
                         <label for="username">주소</label>
@@ -103,17 +105,17 @@
 
                         <IftaLabel class="w-full">
                             <label for="emali">상세 주소</label>
-                            <InputText id="emali" placeholder="" class="w-full"/>    
+                            <InputText id="emali"  class="w-full"/>    
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
                             <label for="emali">입금 계좌 정보</label>
-                            <InputText id="emali" placeholder="" class="w-full"/>    
+                            <InputText id="emali"  class="w-full"/>    
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
                             <label for="emali">카카오톡 연동 전화번호</label>
-                            <InputText id="emali" placeholder="" class="w-full"/>    
+                            <InputText id="emali"  class="w-full"/>    
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
@@ -132,8 +134,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-
 import Tabs from 'primevue/tabs';
 import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
@@ -143,42 +143,33 @@ import IftaLabel from 'primevue/iftalabel';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import Textarea from 'primevue/textarea';
-
 import BackHeader from '@/components/layouts/BackHeader.vue'
+import { ref, onMounted } from 'vue';
+import { usePopupStore, useFactoryStore } from '@/store';
+import { usePopup } from '@/assets/js/popup';
 
+const popup   = usePopupStore();
+const factory = useFactoryStore();
 
-const factoryCodePop = ref(false)
-const outsourcePop = ref(false)
+const { getPopupOpen, getPopupClose } = usePopup();
 
-const factories = ref([
-  {
-    name: '공장이름1',
-    phone: '010-9182-1212',
-    address: '부산 수영구 수영로 411-1 수영로',
-  },
-  {
-    name: '공장이름2',
-    phone: '010-1234-5678',
-    address: '부산 해운대구 해운대해변로 123',
-  },
+const getPopOpen = (popNm: string) => {
+    getPopupOpen(popNm);
+}
 
-]);
+const getPopClose = (gb: boolean, popNm: string) => {
+    getPopupClose(popNm, gb);
+}
 
-const outsourcelist = ref([
-  {
-    name: '외주 이름1',
-    phone: '010-9182-1212',
-    address: '부산 수영구 수영로 411-1 수영로',
-  },
-  {
-    name: '외주 이름2',
-    phone: '010-1234-5678',
-    address: '부산 해운대구 해운대해변로 123',
-  },
-  // 추가 공장 정보...
-]);
+const getSearch = async () => {
+    const result = await factory.getSysFactorySearch();
 
+    console.log(result);
+}
 
+onMounted(() => {
+    factory.getList();
+})
 </script>
 
 <style lang="scss">

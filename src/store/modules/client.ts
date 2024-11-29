@@ -1,0 +1,98 @@
+/**
+ * @description 고객 관련 모듈 pinia
+ */
+import { defineStore } from 'pinia';
+import { getAxiosData, getConvertDate } from '@/assets/js/function';
+
+interface List {
+    step        : number;
+    clientCd    : string;
+    clientNm    : string;
+    tel         : number;
+    addr        : string;
+    addrDetail  : string;
+    date        : string;
+    amt         : number;
+}
+
+interface State {
+    search  : string;
+    stCd    : string;
+    list    : List[];
+}
+
+export const useClientStore = defineStore('client', {
+    state: (): State => ({
+        search  : '',
+        stCd    : '',
+        list    : [],
+        start   : 0
+    }),
+    // getters: {
+    // },
+    actions: {
+        async getList()
+        {
+            const params = {
+                search : this.search,
+                stCd   : this.stCd,
+                start  : this.start
+            };
+
+            console.log(params);
+
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/clientV1/getList`, params);
+
+                console.log(res);
+
+                const list      = [];
+
+                res['data']['list'].map(item => {
+                    let step = 1;
+
+                    switch(item.stCd)
+                    {
+                        case '001':
+                            step = 1;
+                        break;
+                        case '002':
+                            step = 2;
+                        break;
+                        case '003':
+                            step = 3;
+                        break;
+                        case '006':
+                            step = 4;
+                        break;
+                        case '011':
+                            step = 5;
+                        break;
+                        case 'N':
+                            step = 6;
+                        break;
+                    }
+
+                    list.push({
+                        step        : step,
+                        clientCd    : item.clientCd,
+                        clientNm    : item.clientNm,
+                        tel         : item.tel,
+                        addr        : item.addr ,
+                        addrDetail  : item.addrDetail,
+                        date        : getConvertDate(new Date(item.regDt), 'yy.mm.dd'),
+                        amt         : item.amt
+                    });
+                })
+
+                this.list = list;
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        }
+    }
+});

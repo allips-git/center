@@ -39,10 +39,7 @@
 import Dialog from 'primevue/dialog';
 import { ref, defineProps } from "vue";
 import { useRouter } from 'vue-router';
-import { usePopup } from '@/assets/js/popup';
 
-const popup     = usePopupStore();
-const main      = useMainStore();
 const router    = useRouter();
 
 const alarmDetailsPop = ref(false)

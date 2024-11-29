@@ -1,9 +1,17 @@
 import { defineStore } from 'pinia';
-import { t } from '@/locales/i18n';
 
 export const useDataStore = defineStore('data', {
     state: () => {
         return {
+            clientStat : [
+                { value : '',    name : '전체'}, /** 견적대기 */
+                { value : '001', name : '대기'}, /** 견적대기 */
+                { value : '002', name : '견적'}, /** 견적진행 */
+                { value : '003', name : '발주'}, /** 계약완료 */
+                { value : '006', name : '시공'}, /** 발주완료 */
+                { value : '011', name : '결제'}, /** 시공완료 */
+                { value : 'N',   name : '취소'}  /** 견적취소 */
+            ],
             useYn : [
                 { name : '사용', value : true },
                 { name : '미사용', value : false }

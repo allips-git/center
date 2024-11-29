@@ -5,13 +5,11 @@
        <div class="custom-datatable">
            <DataTable 
            v-model:filters="filters" 
-           :value="products" 
+           :value="client['list']" 
            removableSort
-           dataKey="index" 
+           dataKey="clientCd" 
            filterDisplay="row"
            :loading="loading"
-           :globalFilterFields="['facilityName']"
-           selectionMode="single"
            >
            <!-- 필터 검색 영역 -->
            <template #header>
@@ -21,11 +19,11 @@
                            <InputIcon>
                                <i class="pi pi-search" />
                            </InputIcon>
-                           <InputText v-model="filters['global'].value" placeholder="고객명,주소,전화번호로 검색해주세요." class="w-full" />
+                           <InputText v-model="client['search']" placeholder="고객명,주소,전화번호로 검색해주세요." class="w-full" @keyup.enter="getList"/>
                        </IconField>
                        <div class="flex w-full gap-2">
-                           <Select v-model="selectedCategory" :options="category" optionLabel="name" placeholder="그룹" class="w-full max-w-[100px]" />    
-                           <Select v-model="selectedCategory" :options="category" optionLabel="name" placeholder="상태" class="w-full max-w-[100px]" />    
+                           <!-- <Select v-model="selectedCategory" :options="category" optionLabel="name" optionValue="value" placeholder="그룹" class="w-full max-w-[100px]" />     -->
+                           <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="w-full max-w-[100px]" @change="getList"/>
                        </div>
 
                         <Button label="고객 신규 등록" class="flex-none" />                    
@@ -36,10 +34,10 @@
                <p class="empty-data">데이터가 없습니다.</p>
            </template>
                <!-- 테이블 바디 -->
-               <Column field="status" header="상태" sortable class="custom-table-column-min-w max-w-min w-[100px] min-w-[100px] *:justify-center">
+               <Column field="step" header="상태" sortable class="custom-table-column-min-w max-w-min w-[100px] min-w-[100px] *:justify-center">
                    <template #body="{ data }">
                     <div class="flex items-center justify-center w-full">
-                        <p class="bg-blue-600 flex px-3 py-0.5 items-center justify-center rounded-full text-sm text-white">{{ data.status }}</p>
+                        <p class="bg-blue-600 flex px-3 py-0.5 items-center justify-center rounded-full text-sm text-white">{{ data.step }}</p>
                     </div>
                    </template>
                    <template #filter="{ filterModel, filterCallback }">
@@ -47,27 +45,27 @@
                    </template>
                </Column>
 
-                <Column field="cusNm" header="고객명" sortable class="custom-table-column-min-w  min-w-[100px]">
+                <Column field="clientNm" header="고객명" sortable class="custom-table-column-min-w  min-w-[100px]">
                     <template #body="{ data }">
-                        {{ data.cusNm }}
+                        {{ data.clientNm }}
                     </template>
                     <template #filter="{ filterModel, filterCallback }">
                         <InputText class="w-full" size="small" v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="검색" />
                     </template>                
                 </Column>
 
-                <Column field="address" header="주소" sortable class="custom-table-column-min-w" >
+                <Column field="addr" header="주소" sortable class="custom-table-column-min-w" >
                    <template #body="{ data }">
-                       {{ data.address }}
+                       {{ data.addr }}
                    </template>
                    <template #filter="{ filterModel, filterCallback }">
                        <InputText class="w-full" size="small" v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="검색" />
                    </template>
                </Column>
 
-               <Column field="adDt" header="상세주소" sortable class="custom-table-column-min-w">
+               <Column field="addrDetail" header="상세주소" sortable class="custom-table-column-min-w">
                    <template #body="{ data }">
-                       {{ data.adDt }}
+                       {{ data.addrDetail }}
                    </template>
                    <template #filter="{ filterModel, filterCallback }">
                        <InputText class="w-full" size="small" v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="검색" />
@@ -83,27 +81,18 @@
                    </template>
                </Column>
    
-               <Column field="Dt" header="등록일" sortable class="custom-table-column-min-w ">
+               <Column field="date" header="등록일" sortable class="custom-table-column-min-w ">
                    <template #body="{ data }">
-                       {{ data.Dt }}
-                   </template>
-                   <template #filter="{ filterModel, filterCallback }">
-                       <InputText class="w-full" size="small" v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="검색" />
-                   </template>
-               </Column>
-   
-               <Column field="group" header="그룹" sortable class="custom-table-column-min-w ">
-                   <template #body="{ data }">
-                       {{ data.group }}
+                       {{ data.date }}
                    </template>
                    <template #filter="{ filterModel, filterCallback }">
                        <InputText class="w-full" size="small" v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="검색" />
                    </template>
                </Column>
 
-               <Column field="totalAMt" header="총매출" sortable class="custom-table-column-min-w ">
+               <Column field="amt" header="총매출" sortable class="custom-table-column-min-w ">
                    <template #body="{ data }">
-                       {{ data.totalAMt }}
+                       {{ data.amt }}
                    </template>
                    <template #filter="{ filterModel, filterCallback }">
                        <InputText class="w-full" size="small" v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="검색" />
@@ -111,13 +100,23 @@
                </Column>
            </DataTable>
        </div>
+       <Toast position="top-center" group="headless" @close="visible = true">
+            <template #container="{ message, closeCallback }">
+                <section class="flex flex-col p-4 gap-4 w-full bg-primary/70 rounded-xl">
+                    <div class="flex items-center gap-5">
+                        <i class="pi pi-cloud-upload text-white dark:text-black text-2xl"></i>
+                        <span class="font-bold text-base text-white dark:text-black">토큰 만료다</span>
+                    </div>
+                    <div class="flex gap-4 mb-4 justify-end">
+                        <Button label="확인" size="small" @click="closeCallback"></Button>
+                    </div>
+                </section>
+            </template>
+        </Toast>
     </main>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineEmits } from 'vue';
-import { FilterMatchMode } from '@primevue/core/api';
-
 import Button from 'primevue/button';
 import Popover from 'primevue/popover';
 import DatePicker from 'primevue/datepicker';
@@ -128,140 +127,34 @@ import IconField from 'primevue/iconfield';
 import InputText from 'primevue/inputtext'; 
 import InputIcon from 'primevue/inputicon'; 
 import BackHeader from '@/components/layouts/BackHeader.vue'
+import Toast from 'primevue/toast';
+import { ref, onMounted, defineEmits } from 'vue';
+import { FilterMatchMode } from '@primevue/core/api';
+import { useDataStore, useClientStore } from '@/store';
 
-
-
-const posCenter = ref('center')
-const userListPop = ref(false);
-const openUserListPop = () => {
-    userListPop.value = true; // 다이얼로그 열기
-};
-
-const createInvLabListPop = ref(false);
-const openInvLabListPop = () => {
-    createInvLabListPop.value = true; // 다이얼로그 열기
-};
-
-const shipTablePop = ref(false);
-const openShipTablePop = () => {
-    shipTablePop.value = true; // 다이얼로그 열기
-};
-
-const loading = ref(false);
-const globalFilter = ref('');
+const data      = useDataStore();
+const client    = useClientStore();
+const loading   = ref(false);
 
 const filters = ref({
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    status: { value: null, matchMode: FilterMatchMode.EQUALS },
-    cusNm: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    address: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    adDt: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    tel: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    Dt: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    group: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    totalAMt: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    step        : { value: null, matchMode: FilterMatchMode.EQUALS },
+    clientCd    : { value: null, matchMode: FilterMatchMode.CONTAINS },
+    clientNm    : { value: null, matchMode: FilterMatchMode.CONTAINS },
+    tel         : { value: null, matchMode: FilterMatchMode.CONTAINS },
+    addr        : { value: null, matchMode: FilterMatchMode.CONTAINS },
+    addrDetail  : { value: null, matchMode: FilterMatchMode.CONTAINS },
+    date        : { value: null, matchMode: FilterMatchMode.CONTAINS },
+    amt         : { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
-const products = ref<Product[]>([]);
 
-// 더미 데이터
-const ProductService = {
-    getProductsData(): Product[] {
-        return [
-    {
-        status  : "견적",
-        cusNm   : "홍길동",
-        address : "부산광역시 수영구 수영로 411-1",
-        adDt    : "광안자이 아파트 2단지 102동 1004호",
-        tel     : "010-3445-2105",
-        Dt      : "2022.07.14(목)",
-        group   : "공동구매",
-        totalAMt: "99,999,999"
-    },
-    {
-        status  : "견적",
-        cusNm   : "홍길동",
-        address : "부산광역시 수영구 수영로 411-1",
-        adDt    : "광안자이 아파트 2단지 102동 1004호",
-        tel     : "010-3445-2105",
-        Dt      : "2022.07.14(목)",
-        group   : "공동구매",
-        totalAMt: "99,999,999"
-    },
-    {
-        status  : "견적",
-        cusNm   : "홍길동",
-        address : "부산광역시 수영구 수영로 411-1",
-        adDt    : "광안자이 아파트 2단지 102동 1004호",
-        tel     : "010-3445-2105",
-        Dt      : "2022.07.14(목)",
-        group   : "공동구매",
-        totalAMt: "99,999,999"
-    },
-
-        ];
-    },
-    getProductsMini(): Promise<Product[]> {
-        return Promise.resolve(this.getProductsData().slice(0, 50));
-    },
-};
-
-onMounted(() => {
+const getList = async () => {
     loading.value = true;
-    ProductService.getProductsMini().then((data) => {
-        products.value = data;
-    }).finally(() => {
-        loading.value = false;
-    });
-});
-
-
-function updateActiveStatus(data: Product) {
-    console.log(`ID: ${data.index}, Active Status: ${data.isActive}`);
+    await client.getList();
+    loading.value = false;
 }
 
-//  팝오버
-const op = ref();
-const settingLabel = ref(null)
-
-const toggleSettingLabel = () => {
-  if (settingLabel.value) {
-    settingLabel.value.toggle(event);
-  }
-};
-
-const hidePopover = () => {
-  if (settingLabel.value) {
-    settingLabel.value.hide(); // Popover를 숨김
-  }
-};
-
-const toggle = (event) => {
-    op.value.toggle(event);
-};
-
-const optionListPop = ref(null)
-
-const optionPopover = () => {
-  if (optionListPop.value) {
-    optionListPop.value.toggle(event);
-  }
-};
-
-// const hidePopover = () => {
-//   if (optionListPop.value) {
-//     optionListPop.value.hide(); // Popover를 숨김
-//   }
-// };
-
-
-const datepStart = ref(null);
-const datepEnd = ref(null);
-
-const selectedCategory = ref();
-const category = ref([
-    { name: '상위 공정명', code: 'procNm' },
-    { name: '매모', code: 'memo' },
-    
-]);
+onMounted(() => {
+    getList();
+})
 
 </script>

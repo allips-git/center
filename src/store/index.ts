@@ -1,9 +1,13 @@
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
-import { App } from 'vue';
+import type { App } from 'vue';
 
 import { useDataStore } from './modules/data';
+import { usePopupStore } from './modules/popup';
+import { useLoginStore } from './modules/login';
+import { useMainStore } from './modules/main';
 import { useClientStore } from './modules/client';
+import { useFactoryStore } from './modules/factory';
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
@@ -15,5 +19,9 @@ export function setupStore(app: App) {
 export {
     pinia,
     useDataStore,
-    useClientStore
+    usePopupStore,
+    useLoginStore,
+    useMainStore,
+    useClientStore,
+    useFactoryStore
 };
