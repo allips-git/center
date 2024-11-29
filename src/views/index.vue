@@ -16,12 +16,11 @@
         <section class="col-span-12">
             <div class="main-card-container-box">
                 <div class="main-card-tilte-box">
-                    <h2 class="flex items-center justify-center">전체 고객<span class="px-2 ml-2 font-normal text-white bg-indigo-600 rounded-full text-base">4명</span></h2>
+                    <h2 class="flex items-center justify-center">전체 고객<span class="px-2 ml-2 font-normal text-white bg-indigo-600 rounded-full text-base">{{ main['clientCnt'] }}명</span></h2>
                     <Button label="더보기 >" text severity="secondary" size="small"></Button>
                 </div>
                 <ul class="main-card-container-box-padding grid grid-cols-5">
-                    <li 
-                    v-for="item in cusStatus" :key="index" class="flex flex-col items-center justify-center gap-2 border-r last:border-r-0">
+                    <li v-for="(item, index) in main['stCnt']" :key="index" class="flex flex-col items-center justify-center gap-2 border-r last:border-r-0">
                         <p class="text-gray-600">{{ item.label }}</p>
                         <p class="text-indigo-600 text-2xl font-bold">{{ item.count }}</p>
                     </li>
@@ -42,7 +41,7 @@
                 <div class="main-card-container-box-padding flex justify-between">
                     <div class="flex flex-col gap-1">
                         <p class="text-gray-600 text-sm">공장전체</p>
-                        <p class="text-indigo-600 text-2xl font-bold">0</p>
+                        <p class="text-indigo-600 text-2xl font-bold">{{ main['factoryCnt'] }}</p>
                     </div>
                     <button class="text-xl font-bold text-gray-400">></button>
                 </div>
@@ -83,11 +82,11 @@
     
                 </div>
                 <div class="main-card-container-box-padding">
-                    <div v-if="kakaoYn">
+                    <div v-if="main['kakaoYn'] === 'N'">
                         <p class="bg-yellow-100 rounded py-2 px-2.5 text-xm w-full">일일이 세팅하지 말고, 꼭 필요한 예약 메시지를 자동으로 고객에게 전달해 보세요!</p>
                         <Button label="플랜톡 사용하기" class="w-full mt-5" ></Button>
                     </div>        
-                    <ul v-if="!kakaoYn" class="grid grid-cols-2 gap-2 *:bg-gray-50 *:p-3 *:rounded-lg *:flex *:flex-col *:gap-1">
+                    <ul v-else class="grid grid-cols-2 gap-2 *:bg-gray-50 *:p-3 *:rounded-lg *:flex *:flex-col *:gap-1">
                         <li>
                             <h5 class="font-bold">예약된 알림</h5>
                             <div class="flex justify-between items-center">
@@ -117,7 +116,7 @@
                     <Button label="메세지 추가 >" size="small" class="!py-0.5"></Button>
                 </div>
                 <ul class="main-card-container-box-padding max-h-[500px] overflow-y-auto !py-1 scroll-bar-thin">
-                    <li v-for="(item, index) in storeMsg" :key="index" class="w-full flex justify-between items-center py-3 border-b last:border-b-0 scroll-">
+                    <li v-for="(item, index) in main['msgList']" :key="index" class="w-full flex justify-between items-center py-3 border-b last:border-b-0 scroll-">
                         <p class="font-bold mr-2 w-6 flex-none">{{ index + 1 }}</p> <!-- 인덱스 표시 -->
                         <div class="flex flex-col w-full gap-1">
                             <p class="font-bold text-sm">{{ item.title }}</p>
@@ -134,17 +133,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, defineEmits } from 'vue';
+import { FilterMatchMode } from '@primevue/core/api';
+import { useLoginStore, useMainStore } from '@/store';
+
+const login = useLoginStore();
+const main  = useMainStore();
 
 const kakaoYn = ref(false)
-
-const cusStatus = ref([
-  { label: '견적', count: 0 },
-  { label: '발주', count: 0 },
-  { label: '시공', count: 0 },
-  { label: '결제', count: 0 },
-  { label: 'A/S', count: 0 },
-]);
 
 const storeMsg = ref([
     { title: '제목', description: '내용입니다아아아아ㅏ아아아아아ㅏ아아' },
@@ -154,6 +150,11 @@ const storeMsg = ref([
     { title: '제목', description: '내용입니다아아아아ㅏ아아아아아ㅏ아아' },
     
 ])
+
+onMounted(() => {
+    console.log(login.token);
+    main.getData();
+})
 </script>
 
 <style lang="scss">

@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter, } from "vue-router";
+import { useLoginStore } from '@/store';
 
 // RouteMeta 인터페이스 정의
 interface RouteMeta {
@@ -301,24 +302,24 @@ const router = createRouter({
     routes
 });
 
-// router.beforeEach((to, from, next) => {
-//     const ceCd      = store.state.login.ceCd;
+router.beforeEach((to, from, next) => {
+    const login = useLoginStore();
 
-//     if(to.meta.gubun === 'Y')
-//     {
-//         next();
-//     }
-//     else
-//     {
-//         if(ceCd === null)
-//         {
-//             next({ name : 'LoginPage' });
-//         }
-//         else
-//         {
-//             next();
-//         }
-//     }
-// });
+    if(to.meta.gubun === 'Y')
+    {
+        next();
+    }
+    else
+    {
+        if(login['token'] === null)
+        {
+            next({ name : 'LoginPage' });
+        }
+        else
+        {
+            next();
+        }
+    }
+});
 
 export default router

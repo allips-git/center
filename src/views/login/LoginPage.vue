@@ -15,11 +15,11 @@
                 <div class="flex gap-4 flex-col">
                     <div class="inline-flex flex-col gap-2">
                         <label for="username" class="">이메일</label>
-                        <InputText id="id" placeholder="이메일을 입력해주세요." v-model="idData"/>
+                        <InputText id="id" v-model="idData" placeholder="이메일을 입력해주세요." @keyup.enter="getEnter"/>
                     </div>
                     <div class="inline-flex flex-col gap-2">
                         <label for="pw" class="">비밀번호</label>
-                        <InputText id="pw" placeholder="비밀번호를 입력해주세요." v-model="pwData" type="password"/>
+                        <InputText id="pw" v-model="pwData" placeholder="비밀번호를 입력해주세요." type="password" @keyup.enter="getEnter"/>
                     </div>
                     <div class="flex gap-1 items-center self-center">
                         <Button label="아이디 찾기" plain text />
@@ -27,7 +27,7 @@
                         <Button label="비밀번호 찾기" plain text />
                     </div>
                 </div>
-                <Button label="로그인" size="large" class="w-full mt-4" />
+                <Button label="로그인" size="large" class="w-full mt-4" @click="getLogin"/>
                 <div class="flex w-full items-center justify-center mt-4">
                     <span>아이디가 없으신가요?</span>
                     <Button label="회원가입" class="!*:font-bold" text />
@@ -39,15 +39,50 @@
 
 <script setup lang="ts">
 import Dialog from 'primevue/dialog';
-import { ref } from 'vue';
 import IftaLabel from 'primevue/iftalabel';
 import IconLogo from '@/components/icons/IconLogo.vue'
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useLoginStore } from '@/store';
 
+const login     = useLoginStore();
+const router    = useRouter();
+const idData    = ref('');
+const pwData    = ref('');
 const visible   = ref(true);
-const idData = ref('')
-const pwData = ref('')
 
+const getEnter = () => {
+    const id  = event.target.id;
 
+    if(id === 'id')
+    {
+        const pw = document.getElementById("pw");
+
+        pw.focus();
+    }
+    else
+    {
+        getLogin();
+    }
+}
+
+const getLogin = async () => {
+    const params = {
+        id : idData.value, 
+        pw : pwData.value
+    };
+    
+    const result = await login.getLogin(params);
+
+    if(result)
+    {
+        router.push({ path : `/` });
+    }
+    else
+    {
+        alert('로그인 정보가 잘못되었습니다. 입력한 데이터를 확인해주세요.');
+    }
+}
 </script>
 
 <style lang="scss" scoped>
