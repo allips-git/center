@@ -1,5 +1,5 @@
 /**
- * @description 고객 관련 모듈 pinia
+ * @description 메인 화면 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
 import { getAxiosData } from '@/assets/js/function';
