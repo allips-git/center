@@ -12,8 +12,8 @@
         <div class="z-0 overflow-y-auto w-full">
             <RouterView/>
         </div>
-        <!-- <ConfirmDialog></ConfirmDialog>
-        <Toast></Toast> -->
+        <ConfirmDialog></ConfirmDialog>
+        <!-- <Toast></Toast> -->
         </div>
       </div>
   </main>
@@ -25,6 +25,7 @@ import { useRoute } from 'vue-router'; // useRoute 임포트
 
 import SideHeader from '@/components/layouts/SideHeader.vue';
 import TopHeader from '@/components/layouts/TopHeader.vue';
+import ConfirmDialog from 'primevue/confirmdialog';
 
 const setWideSide = ref(false); // wideSide 상태를 정의
 
