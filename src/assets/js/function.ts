@@ -30,6 +30,28 @@ export const getConvertDate = (date: Date, type: string): string => {
 };
 
 /**
+ * @description 다음 주소 API 팝업 위치 설정
+ */
+export function getDaumPopupPosition(layer)
+{
+    layer.style.display = 'block';
+
+    // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
+    var width 		= 300; //우편번호서비스가 들어갈 element의 width
+    var height 		= 400; //우편번호서비스가 들어갈 element의 height
+    var borderWidth = 5; //샘플에서 사용하는 border의 두께
+
+    // 위에서 선언한 값들을 실제 element에 넣는다.
+    layer.style.width 	= width + 'px';
+    layer.style.height 	= height + 'px';
+    layer.style.border 	= borderWidth + 'px solid';
+
+    // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+    layer.style.left 	= (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
+    layer.style.top 	= (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
+}
+
+/**
  * @description axios 통신
  */
 export const getAxiosData = async () => {

@@ -34,6 +34,12 @@ interface OutInfo {
     memo        : string;
 }
 
+interface OutMsg {
+    outFaNm : string;
+    tel     : string;
+    addr    : string;
+}
+
 const getSysInfo = (): SysInfo => {
     return {
         faCd        : '',
@@ -85,17 +91,27 @@ const getOutInfo = (): OutInfo => {
     }
 }
 
+const getOutMsg = (): OutMsg => {
+    return {
+        outFaNm : '',
+        tel     : '',
+        addr    : ''
+    }
+}
+
 interface State {
     sys : {
         serachFaCd  : string;
         list        : SysList[];
         info        : SysInfo;
         detail      : SysDetail;
+        msg         : string;
     },
     out : {
         type    : string;
         list    : OutList[];
         info    : OutInfo;
+        msg     : OutMsg;
     }
 }
 
@@ -106,11 +122,13 @@ export const useFactoryStore = defineStore('factory', {
             list        : [],
             info        : getSysInfo(),
             // detail  : getSysDetail(),
+            msg         : ''
         },
         out : {
             type    : 'I',
             list    : [],
-            info    : getOutInfo()
+            info    : getOutInfo(),
+            msg     : getOutMsg()
         }
     }),
     actions: {
@@ -137,8 +155,6 @@ export const useFactoryStore = defineStore('factory', {
                 faCd : this.sys['serachFaCd']
             };
 
-            console.log(params);
-
             try
             {
                 const instance  = await getAxiosData();
@@ -154,13 +170,23 @@ export const useFactoryStore = defineStore('factory', {
                 }
 
                 this.sys.info = info;
-                return true;
+                return { status : true, code : 2000, message : 'success' };
             }
             catch(e)
             {
                 console.log(e);
-                return false;
+                await this.getSysInfoReset();
+                return { status : false, code : e.response.data['code'], message : e.response.data['message'] };
             }
+        },
+        getSysMsgSet(msg: string)
+        {
+            this.sys.msg = msg;
+        },
+        getOutMsgSet(msg: string, name: string)
+        {
+            this.out.msg        = getOutMsg();
+            this.out.msg[name]  = msg;
         },
         getSysInfoReset()
         {
@@ -173,8 +199,9 @@ export const useFactoryStore = defineStore('factory', {
         },
         getOutInfoReset()
         {
-            getOutType('I');
+            this.getOutType('I');
             this.out.info = getOutInfo();
+            this.out.msg  = getOutMsg();
         }
     }
 });
