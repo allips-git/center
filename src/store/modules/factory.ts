@@ -9,16 +9,10 @@ interface SysList {
 }
 
 interface SysInfo {
-    compCd      : string;
     faCd        : string;
     faNm        : string;
-    item        : string;
-    imgUrl      : string;
+    einItem     : string;
     person      : string;
-    tel         : number;
-    zip         : number;
-    addr        : string;
-    addrDetail  : string;
 }
 
 interface SysDetail {
@@ -42,16 +36,10 @@ interface OutInfo {
 
 const getSysInfo = (): SysInfo => {
     return {
-        compCd      : '',
         faCd        : '',
         faNm        : '',
-        item        : '',
-        imgUrl      : '',
-        person      : '',
-        tel         : '',
-        zip         : '',
-        addr        : '',
-        addrDetail  : ''
+        einItem     : '',
+        person      : ''
     }
 }
 
@@ -114,8 +102,9 @@ interface State {
 export const useFactoryStore = defineStore('factory', {
     state: (): State => ({
         sys : {
-            list    : [],
-            info    : getSysInfo(),
+            serachFaCd  : '',
+            list        : [],
+            info        : getSysInfo(),
             // detail  : getSysDetail(),
         },
         out : {
@@ -153,19 +142,15 @@ export const useFactoryStore = defineStore('factory', {
             try
             {
                 const instance  = await getAxiosData();
-                const res       = await instance.post(`https://po-data.plansys.kr/v1/center/biz/purcBizInfo/getFacInfo`, params);
+                const res       = await instance.post(`https://data.planorder.kr/factoryV1/getSysFactorySearch`, params);
+
+                console.log(res);
 
                 const info = {
-                    compCd      : params['faCd'],
-                    faCd        : params['faCd'],
-                    faNm        : res.data['data']['faNm'],
-                    item        : res.data['data']['item'],
-                    imgUrl      : res.data['data']['imgUrl'],
-                    person      : res.data['data']['person'],
-                    tel         : res.data['data']['tel'],
-                    zip         : res.data['data']['zip'],
-                    addr        : res.data['data']['addr'],
-                    addrDetail  : res.data['data']['addrDetail']
+                    faCd        : res.data['info']['faCd'],
+                    faNm        : res.data['info']['faNm'],
+                    einItem     : res.data['info']['einItem'],
+                    person      : res.data['info']['person']
                 }
 
                 this.sys.info = info;
@@ -176,6 +161,11 @@ export const useFactoryStore = defineStore('factory', {
                 console.log(e);
                 return false;
             }
+        },
+        getSysInfoReset()
+        {
+            this.sys.serachFaCd = '';
+            this.sys.info       = getSysInfo();
         },
         getOutType(type: string)
         {

@@ -24,6 +24,10 @@ export const useLoginStore = defineStore('login', {
                 console.log(e);
                 return false;
             }
+        },
+        getToken(token: string)
+        {
+            this.token = string;
         }
     },
     persist: {

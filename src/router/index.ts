@@ -47,6 +47,7 @@ import CalendarView from "@/views/calendar/CalendarView.vue";
 import AverageView from "@/views/average/AverageView.vue";
 import GroupMessageView from "@/views/groupMessage/GroupMessageView.vue";
 import MessageSend from "@/views/groupMessage/MessageSend.vue";
+import { getAxiosData } from '@/assets/js/function';
 
 const routes = [
     {
@@ -302,7 +303,7 @@ const router = createRouter({
     routes
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach( async (to, from, next) => {
     const login = useLoginStore();
 
     if(to.meta.gubun === 'Y')
@@ -317,7 +318,25 @@ router.beforeEach((to, from, next) => {
         }
         else
         {
-            next();
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/api/token/getTokenCheck`);
+
+                console.log(res);
+
+                if(res.data['code'] === 2000)
+                {
+                    login.getToken(res.data['token']);
+                }
+
+                next();
+            }
+            catch(e)
+            {
+                console.log(e);
+                alert('토큰 만료');
+            }
         }
     }
 });
