@@ -28,7 +28,7 @@
                            <Select v-model="selectedCategory" :options="category" optionLabel="name" placeholder="상태" class="w-full max-w-[100px]" />    
                        </div>
 
-                        <Button label="고객 신규 등록" class="flex-none" />                    
+                        <Button label="고객 신규 등록" class="flex-none"  @click="CustomerListSetPop = true"/>                    
                    </div>
                 </div>
            </template>
@@ -111,6 +111,16 @@
                </Column>
            </DataTable>
        </div>
+       <div>
+        <Dialog
+        v-model:visible="CustomerListSetPop" 
+        header="고객 등록" 
+        :modal=true
+        position="bottom"
+        class="custom-dialog-bottom">
+            <CustomerListSet/>
+        </Dialog>
+       </div>
     </main>
 </template>
 
@@ -119,7 +129,6 @@ import { ref, onMounted, defineEmits } from 'vue';
 import { FilterMatchMode } from '@primevue/core/api';
 
 import Button from 'primevue/button';
-import Popover from 'primevue/popover';
 import DatePicker from 'primevue/datepicker';
 import Select from 'primevue/select';
 import DataTable from 'primevue/datatable';
@@ -128,27 +137,20 @@ import IconField from 'primevue/iconfield';
 import InputText from 'primevue/inputtext'; 
 import InputIcon from 'primevue/inputicon'; 
 import BackHeader from '@/components/layouts/BackHeader.vue'
+import Dialog from 'primevue/dialog';
+import CustomerListSet from '@/views/include/CustomerListSet.vue'
+
 
 
 
 const posCenter = ref('center')
-const userListPop = ref(false);
-const openUserListPop = () => {
-    userListPop.value = true; // 다이얼로그 열기
+const CustomerListSetPop = ref(false);
+const openCustomerListSetPop = () => {
+    CustomerListSetPop.value = true; // 다이얼로그 열기
 };
 
-const createInvLabListPop = ref(false);
-const openInvLabListPop = () => {
-    createInvLabListPop.value = true; // 다이얼로그 열기
-};
-
-const shipTablePop = ref(false);
-const openShipTablePop = () => {
-    shipTablePop.value = true; // 다이얼로그 열기
-};
 
 const loading = ref(false);
-const globalFilter = ref('');
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -219,49 +221,5 @@ function updateActiveStatus(data: Product) {
     console.log(`ID: ${data.index}, Active Status: ${data.isActive}`);
 }
 
-//  팝오버
-const op = ref();
-const settingLabel = ref(null)
-
-const toggleSettingLabel = () => {
-  if (settingLabel.value) {
-    settingLabel.value.toggle(event);
-  }
-};
-
-const hidePopover = () => {
-  if (settingLabel.value) {
-    settingLabel.value.hide(); // Popover를 숨김
-  }
-};
-
-const toggle = (event) => {
-    op.value.toggle(event);
-};
-
-const optionListPop = ref(null)
-
-const optionPopover = () => {
-  if (optionListPop.value) {
-    optionListPop.value.toggle(event);
-  }
-};
-
-// const hidePopover = () => {
-//   if (optionListPop.value) {
-//     optionListPop.value.hide(); // Popover를 숨김
-//   }
-// };
-
-
-const datepStart = ref(null);
-const datepEnd = ref(null);
-
-const selectedCategory = ref();
-const category = ref([
-    { name: '상위 공정명', code: 'procNm' },
-    { name: '매모', code: 'memo' },
-    
-]);
 
 </script>
