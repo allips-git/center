@@ -26,7 +26,7 @@
                            <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="w-full max-w-[100px]" @change="getList"/>
                        </div>
 
-                        <Button label="고객 신규 등록" class="flex-none" />                    
+                        <Button label="고객 신규 등록" class="flex-none"  @click="CustomerListSetPop = true"/>                    
                    </div>
                 </div>
            </template>
@@ -113,12 +113,21 @@
                 </section>
             </template>
         </Toast>
+       <div>
+        <Dialog
+        v-model:visible="CustomerListSetPop" 
+        header="고객 등록" 
+        :modal=true
+        position="bottom"
+        class="custom-dialog-bottom">
+            <CustomerListSet/>
+        </Dialog>
+       </div>
     </main>
 </template>
 
 <script setup lang="ts">
 import Button from 'primevue/button';
-import Popover from 'primevue/popover';
 import DatePicker from 'primevue/datepicker';
 import Select from 'primevue/select';
 import DataTable from 'primevue/datatable';
@@ -135,6 +144,18 @@ import { useDataStore, useClientStore } from '@/store';
 const data      = useDataStore();
 const client    = useClientStore();
 const loading   = ref(false);
+import Dialog from 'primevue/dialog';
+import CustomerListSet from '@/views/include/CustomerListSet.vue'
+
+
+
+
+const posCenter = ref('center')
+const CustomerListSetPop = ref(false);
+const openCustomerListSetPop = () => {
+    CustomerListSetPop.value = true; // 다이얼로그 열기
+};
+
 
 const filters = ref({
     step        : { value: null, matchMode: FilterMatchMode.EQUALS },
@@ -153,8 +174,5 @@ const getList = async () => {
     loading.value = false;
 }
 
-onMounted(() => {
-    getList();
-})
 
 </script>

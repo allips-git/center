@@ -1,9 +1,9 @@
 <template>
     <aside class="max-h-screen md:h-[calc(100vh-60px)] bg-white md:border-r border-gray-200 w-[200px] flex-none sticky"
     :class="drawerClass ? '!flex !w-[200px] !justify-start'  : 'hidden md:!flex ' ,
-    setWideSide ? 'w-[220px] overflow-y-auto flex-none' : 'w-auto justify-center'"
+    setWideSide ? 'w-[180px] overflow-y-auto flex-none' : 'w-auto justify-center'"
     >
-        <ul class="flex flex-col px-3 gap-5"
+        <ul class="flex flex-col px-3 gap-4 w-full"
         >
             <li class=" items-center flex py-3 px-1">
                 <span class="w-8"

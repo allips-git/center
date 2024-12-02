@@ -95,8 +95,11 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     margin-top: 1rem !important;
     width: 100%;
     max-width: calc(100% - 1rem) !important;
+    max-height: calc(100% - 1rem) !important;
+    height: 100% !important;
     @include respond-to(md) {
         max-width: calc(100% - 1rem) !important;
+        height: auto !important;
     }
     .p-dialog-content{
         padding: 0;
@@ -122,4 +125,32 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
-    
+.custom-popover-listbox{
+    .p-popover-content {
+        padding:0.275rem;
+        border: none !important;
+    }
+}
+.p-listbox{
+    border: none !important;;
+}
+
+.custom_accordion{
+    .p-accordion{
+        width: 100%;
+    }
+    .p-accordionheader{
+        padding: 0;
+        padding-bottom: 0rem;
+        justify-content: end;
+    }
+    .p-accordionpanel{
+        border: none;
+    }
+    .p-accordioncontent-content{
+        padding: 0;
+    }
+}
+.p-tabpanels{
+    padding: 0 !important;
+}

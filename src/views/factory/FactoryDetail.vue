@@ -29,7 +29,7 @@
                     >
                     <p class="text-indigo-600 text-lg font-bold">{{ item.value }}</p>
                     <p class="text-gray-600 text-sm">{{ item.label }}</p>
-                    </li>
+                </li>
             </ul>
         </section>
         <div class="h-3 w-full bg-gray-100 my-8"></div>
@@ -43,7 +43,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import BackHeader from '@/components/layouts/BackHeader.vue'
-import CalculateCard from "@/components/card/CalculateCard.vue";
+// import CalculateCard from "@/components/card/CalculateCard.vue";
 
 // 정보 배열 정의
 const infoItems = ref([

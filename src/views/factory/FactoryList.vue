@@ -9,7 +9,7 @@
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
-                    <div class="w-full flex justify-end">
+                    <div class="w-full flex justify-end px-5 pt-3">
                         <Button label="공장코드 추가" icon="pi pi-plus" size="small" @click="getPopOpen('sysFactorySearch')"/>
                     </div>
                     <ul>
@@ -21,16 +21,17 @@
                     </ul>
                 </TabPanel>
                 <TabPanel value="1">
-                    <div class="w-full flex justify-end">
+                    <div class="w-full flex justify-end px-5 pt-3">
                         <Button label="외주공장 추가" icon="pi pi-plus" size="small" @click="getPopOpen('outFactorySet')" />
                     </div>
                     <ul>
-                        <li class="border-b py-3 flex flex-col" v-for="(item, index) in factory['out']['list']" :key="index" >
+                        <li class="border-b py-3 px-4 flex flex-col" v-for="(item, index) in factory['out']['list']" :key="index" >
                             <p class="font-bold mb-1">{{ item.faNm }}</p>
                             <p class="text-sm text-gray-600">{{ item.tel }}</p>
                             <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
                         </li>
                     </ul>
+
                 </TabPanel>
             </TabPanels>
         </Tabs>
@@ -81,6 +82,7 @@
     header="외주공장 저장" 
     :modal=true
     position="bottom"
+    :dismissableMask="true"
     class="custom-dialog-bottom"
     @update:visible="getPopClose(true, 'outFactorySet')"
     >

@@ -37,6 +37,22 @@
   .modal-page-padding{
     @apply p-5 md:p-8
   }
+  .bottom-modal-contents-box{
+    @apply p-5 flex flex-col gap-5
+  }
+  .bottom-modal-sticky-box{
+    @apply w-full sticky bottom-0
+  }
+
+
+  .bottom-modal-sticky-box{
+    @apply w-full sticky bottom-0
+  }
+
+  .bottom-modal-absol-box{
+    @apply w-full absolute bottom-0 left-0 p-4 bg-white 
+  }
+
   .label-input-box{
     @apply w-full *:w-full flex flex-col gap-1
   }
