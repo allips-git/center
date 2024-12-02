@@ -3,13 +3,13 @@ import 'primeicons/primeicons.css';
 import './assets/primevue_custom.scss';
 
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
 
 import { definePreset } from '@primevue/themes';
 import PrimeVue from 'primevue/config';
 
 import App from './App.vue'
 import router from './router'
+import { setupStore } from '@/store'
 
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext'; 
@@ -75,7 +75,6 @@ app.use(PrimeVue, {
     },
 });
 
-app.use(createPinia())
-app.use(router)
-
-app.mount('#app')
+setupStore(app);
+app.use(router);
+app.mount('#app');
