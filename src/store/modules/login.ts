@@ -14,6 +14,7 @@ export const useLoginStore = defineStore('login', {
             try 
             {
                 const res  = await axios.post('https://data.planorder.kr/login/getLogin', params);
+                console.log(res);
                 this.token = res.data['access_token'];
 
                 return true;
