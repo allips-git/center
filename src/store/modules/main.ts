@@ -41,11 +41,11 @@ export const useMainStore = defineStore('main', {
         kakaoYn    : 'N',
         msgList    : []
     }),
-    // getters: {
-    // },
     actions: {
         async getData()
         {
+            this.stCnt = getStCnt();
+            
             try
             {
                 const instance  = await getAxiosData();

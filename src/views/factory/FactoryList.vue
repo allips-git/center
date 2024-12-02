@@ -10,7 +10,7 @@
             <TabPanels>
                 <TabPanel value="0">
                     <div class="w-full flex justify-end">
-                        <Button label="공장코드 추가" icon="pi pi-plus" size="small" @click="getPopupOpen('sysFactorySearch')"/>
+                        <Button label="공장코드 추가" icon="pi pi-plus" size="small" @click="getPopOpen('sysFactorySearch')"/>
                     </div>
                     <ul>
                         <li class="border-b py-3 flex flex-col" v-for="(item, index) in factory['sys']['list']" :key="index" >
@@ -38,39 +38,39 @@
 
     <!-- 공장 코드 추가 다이얼로그 -->
     <Dialog v-model:visible="popup['pop']['sysFactorySearch']" 
-    header="공장코드 추가" 
-    :modal=true
-    position="bottom"
-    class="custom-dialog-bottom"
-    @update:visible="getPopClose(true, 'sysFactorySearch')"
+        header="공장코드 추가" 
+        :modal=true
+        position="bottom"
+        class="custom-dialog-bottom"
+        @update:visible="getPopClose(true, 'sysFactorySearch')"
     >
         <div class="p-5">
             <div class="form-gap-box">
-                    <IftaLabel>
-                        <IconField>
-                            <InputText id="serachFaCd" v-model="factory['sys']['serachFaCd']" class="w-full" @keyup.enter="getSearch"/>
-                            <InputIcon class="pi pi-search" />
-                        </IconField>
-                        <label for="faCd">공장 코드</label>
-                    </IftaLabel>
+                <IftaLabel>
+                    <IconField>
+                        <InputText v-model="factory['sys']['serachFaCd']" class="w-full" @keyup.enter="getSearch"/>
+                        <InputIcon class="pi pi-search" />
+                    </IconField>
+                    <label for="faCd">공장 코드</label>
+                </IftaLabel>
 
-                        <IftaLabel class="w-full">
-                            <label for="emali">공장 이름</label>
-                            <InputText id="emali" class="w-full"/>    
-                        </IftaLabel>
+                <IftaLabel class="w-full">
+                    <label for="faNm">공장 이름</label>
+                    <InputText v-model="factory['sys']['info']['faNm']" class="w-full" disabled/>
+                </IftaLabel>
 
-                        <IftaLabel class="w-full">
-                            <label for="emali">종목</label>
-                            <InputText id="emali" class="w-full"/>    
-                        </IftaLabel>
+                <IftaLabel class="w-full">
+                    <label for="einItem">종목</label>
+                    <InputText v-model="factory['sys']['info']['einItem']" class="w-full" disabled/>    
+                </IftaLabel>
 
-                        <IftaLabel class="w-full">
-                            <label for="emali">담당자 성명</label>
-                            <InputText id="emali" class="w-full"/>    
-                        </IftaLabel>
-                    </div>
+                <IftaLabel class="w-full">
+                    <label for="person">담당자 성명</label>
+                    <InputText v-model="factory['sys']['info']['person']" class="w-full" disabled/>    
+                </IftaLabel>
+            </div>
             <div class="w-full sticky bottom-0 mt-10">
-                <Button type="button" label="거래신청" @click="alarmDetailsPop = false" class="w-full"></Button>
+                <Button type="button" label="거래신청" @click="getSysFactoryResult" class="w-full"></Button>
             </div>
         </div>
     </Dialog>
@@ -155,6 +155,15 @@ const { getPopupOpen, getPopupClose } = usePopup();
 
 const getPopOpen = (popNm: string) => {
     getPopupOpen(popNm);
+
+    if(popNm === 'sysFactorySearch')
+    {
+        factory.getSysInfoReset();
+    }
+    else
+    {
+        factory.getOutInfoReset();
+    }
 }
 
 const getPopClose = (gb: boolean, popNm: string) => {
