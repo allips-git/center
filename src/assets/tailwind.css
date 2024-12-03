@@ -52,7 +52,12 @@
   .bottom-modal-absol-box{
     @apply w-full absolute bottom-0 left-0 p-4 bg-white 
   }
-
+  .bottom-fixed-btn-box{
+    @apply w-full fixed bottom-0 left-0 p-4 bg-white flex gap-2 *:w-full
+  }
+  .main-bottom-fixed-pd{
+    @apply pb-24
+  }
   .label-input-box{
     @apply w-full *:w-full flex flex-col gap-1
   }
@@ -61,4 +66,7 @@
   }
   .mobile-fiex-bottom{
     @apply fixed md:relative bottom-0 left-0 w-full p-5 border-t md:p-0 mt-10
+  }
+  .gray-bar{
+    @apply my-5 bg-gray-100 w-full h-2
   }
