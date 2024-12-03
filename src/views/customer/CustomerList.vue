@@ -127,8 +127,8 @@
 </template>
 
 <script setup lang="ts">
-import Button from 'primevue/button';
 import DatePicker from 'primevue/datepicker';
+import Button from 'primevue/button';
 import Select from 'primevue/select';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -136,7 +136,9 @@ import IconField from 'primevue/iconfield';
 import InputText from 'primevue/inputtext'; 
 import InputIcon from 'primevue/inputicon'; 
 import BackHeader from '@/components/layouts/BackHeader.vue'
+import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
+import CustomerListSet from '@/views/include/CustomerListSet.vue'
 import { ref, onMounted, defineEmits } from 'vue';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useDataStore, useClientStore } from '@/store';
@@ -144,18 +146,11 @@ import { useDataStore, useClientStore } from '@/store';
 const data      = useDataStore();
 const client    = useClientStore();
 const loading   = ref(false);
-import Dialog from 'primevue/dialog';
-import CustomerListSet from '@/views/include/CustomerListSet.vue'
 
-
-
-
-const posCenter = ref('center')
 const CustomerListSetPop = ref(false);
 const openCustomerListSetPop = () => {
     CustomerListSetPop.value = true; // 다이얼로그 열기
 };
-
 
 const filters = ref({
     step        : { value: null, matchMode: FilterMatchMode.EQUALS },
@@ -173,6 +168,5 @@ const getList = async () => {
     await client.getList();
     loading.value = false;
 }
-
 
 </script>

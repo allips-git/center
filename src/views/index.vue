@@ -148,11 +148,9 @@ const storeMsg = ref([
     { title: '제목', description: '내용입니다아아아아ㅏ아아아아아ㅏ아아' },
     { title: '제목', description: '내용입니다아아아아ㅏ아아아아아ㅏ아아' },
     { title: '제목', description: '내용입니다아아아아ㅏ아아아아아ㅏ아아' },
-    
 ])
 
 onMounted(() => {
-    console.log(login.token);
     main.getData();
 })
 </script>

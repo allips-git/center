@@ -15,10 +15,36 @@ interface List {
     amt         : number;
 }
 
+interface Info {
+    estiDt      : string;
+    clientNm    : string;
+    tel         : null | number;
+    zip         : null | number;
+    addr        : string;
+    addrDetail  : string;
+    person      : string;
+    groupCd     : string;
+}
+
 interface State {
     search  : string;
     stCd    : string;
     list    : List[];
+    info    : Info;
+    start   : number;
+}
+
+const getInfo = (): Info => {
+    return {
+        estiDt      : '',
+        clientNm    : '',
+        tel         : null,
+        zip         : null,
+        addr        : '',
+        addrDetail  : '',
+        person      : '',
+        groupCd     : '',
+    }
 }
 
 export const useClientStore = defineStore('client', {
@@ -26,10 +52,9 @@ export const useClientStore = defineStore('client', {
         search  : '',
         stCd    : '',
         list    : [],
+        info    : getInfo(),
         start   : 0
     }),
-    // getters: {
-    // },
     actions: {
         async getList()
         {
@@ -93,6 +118,10 @@ export const useClientStore = defineStore('client', {
             {
                 console.log(e);
             }
+        },
+        async getInfo()
+        {
+            console.log('info');
         }
     }
 });
