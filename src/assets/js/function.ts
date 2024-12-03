@@ -2,6 +2,21 @@ import { useLoginStore } from '@/store';
 import axios from 'axios';
 
 /**
+ * @description 오늘일자(Y-m-d H:i)
+ */
+export const getTodayTimeDate = (): string => {
+    const currentDate = new Date();
+
+    const year  = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day   = String(currentDate.getDate()).padStart(2, '0');
+    const hour  = String(currentDate.getHours()).padStart(2, '0'); // 시 수정
+    const min   = String(currentDate.getMinutes()).padStart(2, '0'); // 분 수정
+
+    return `${year}-${month}-${day} ${hour}:${min}`;
+}
+
+/**
  * @description 날짜 변환 처리
  */
 export const getConvertDate = (date: Date, type: string): string => {
@@ -37,9 +52,9 @@ export function getDaumPopupPosition(layer)
     layer.style.display = 'block';
 
     // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
-    var width 		= 300; //우편번호서비스가 들어갈 element의 width
-    var height 		= 400; //우편번호서비스가 들어갈 element의 height
-    var borderWidth = 5; //샘플에서 사용하는 border의 두께
+    const width 		= 300; //우편번호서비스가 들어갈 element의 width
+    const height 		= 400; //우편번호서비스가 들어갈 element의 height
+    const borderWidth   = 5; //샘플에서 사용하는 border의 두께
 
     // 위에서 선언한 값들을 실제 element에 넣는다.
     layer.style.width 	= width + 'px';
