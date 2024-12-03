@@ -12,9 +12,9 @@ import Agree from "@/views/login/JoinAgree.vue";
 import JoinFirst from "@/views/login/JoinFirst.vue";
 import JoinSecond from "@/views/login/JoinSecond.vue";
 import CustomerList from "@/views/customer/CustomerList.vue";
-import CustomerRegister from "@/views/customer/CustomerRegister.vue";
+// import CustomerRegister from "@/views/customer/CustomerRegister.vue";
 import CustomerDetail from "@/views/customer/CustomerDetail.vue";
-import CustomerEstiIng from "@/views/customer/ProductRegister.vue";
+// import CustomerEstiIng from "@/views/customer/ProductRegister.vue";
 import CustomerEstiList from "@/views/customer/SpecsList.vue";
 import EstimateModal from "@/views/customer/EstimateModal.vue";
 import EstiDoc from "@/views/customer/EstiDoc.vue";
@@ -86,24 +86,24 @@ const routes = [
         component: CustomerList,
         meta: { title: '고객' }
     },
-    {
-        path: "/customer/register",
-        name: "CustomerRegister",
-        component: CustomerRegister,
-        meta: { title: '고객 등록' }
-    },
+    // {
+    //     path: "/customer/register",
+    //     name: "CustomerRegister",
+    //     component: CustomerRegister,
+    //     meta: { title: '고객 등록' }
+    // },
     {
         path: "/customer/detail",
         name: "CustomerDetail",
         component: CustomerDetail,
         meta: { title: '고객 상세' }
     },
-    {
-        path: "/customer/estiIng",
-        name: "CustomerEstiIng",
-        component: CustomerEstiIng,
-        meta: { title: '견적 등록' }
-    },
+    // {
+    //     path: "/customer/estiIng",
+    //     name: "CustomerEstiIng",
+    //     component: CustomerEstiIng,
+    //     meta: { title: '견적 등록' }
+    // },
     {
         path: "/customer/estiList",
         name: "CustomerEstiList",
