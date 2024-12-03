@@ -1,51 +1,58 @@
 <template>
     <div class="bottom-modal-contents-box">
+        <IftaLabel class="label-input-box">
+            <DatePicker showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd" v-model="client['info']['estiDt']" showTime hourFormat="24"/>
+            <label>일자</label>
+        </IftaLabel>
+
+        <IftaLabel class="label-input-box">
+            <InputText id="clientNm" v-model="client['info']['clientNm']"/>
+            <label>고객명</label>
+            <small class="text-red-500">{{ client['msg']['clientNm'] }}</small>
+        </IftaLabel>
+
+        <IftaLabel class="label-input-box">
+            <InputText id="tel" v-model="client['info']['tel']"/>
+            <label>전화번호</label>
+            <small class="text-red-500">{{ client['msg']['tel'] }}</small>
+        </IftaLabel>
         
-            <IftaLabel class="label-input-box">
-                <DatePicker showIcon fluid iconDisplay="input" id="username" showTime hourFormat="24"/>
-                <label for="username">일자</label>
-            </IftaLabel>
+        <IftaLabel>
+            <IconField>
+                <InputText v-model="client['info']['addr']" class="w-full" readonly @click="getAddr"/>
+                <InputIcon class="pi pi-search" />
+            </IconField>
+            <label>주소</label>
+            <small class="text-red-500">{{ client['msg']['addr'] }}</small>
+        </IftaLabel>
 
-            <IftaLabel class="label-input-box">
-                <InputText id="username"  />
-                <label for="username">고객명</label>
-            </IftaLabel>
+        <IftaLabel class="label-input-box">
+            <InputText v-model="client['info']['addrDetail']"/>
+            <label>상새주소</label>
+        </IftaLabel>
 
-            <IftaLabel class="label-input-box">
-                <InputText id="username"  />
-                <label for="username">전화번호</label>
-            </IftaLabel>
-            
-            <IftaLabel>
-                <IconField>
-                    <InputText id="username" placeholder=""  class="w-full"/>
-                    <InputIcon class="pi pi-search" />
-                </IconField>
-                <label for="username">주소</label>
-            </IftaLabel>
+        <IftaLabel class="label-input-box">
+            <Select v-model="client['info']['person']" :options="client['person']" optionLabel="label" optionValue="value"/> 
+            <label>담당자</label>
+            <small class="text-red-500">{{ client['msg']['person'] }}</small>
+        </IftaLabel>
 
-            <IftaLabel class="label-input-box">
-                <InputText id="username"  />
-                <label for="username">상새주소</label>
-            </IftaLabel>
+        <IftaLabel class="label-input-box">
+            <Select v-model="client['info']['groupCd']" :options="client['group']" optionLabel="label" optionValue="value"/> 
+            <label>그룹</label>
+        </IftaLabel>
 
-            <IftaLabel class="label-input-box">
-                <Select/> 
-                <label for="username">담당자</label>
-            </IftaLabel>
-
-            <IftaLabel class="label-input-box">
-                <Select/> 
-                <label for="username">그룹</label>
-            </IftaLabel>
-
-            <IftaLabel class="label-input-box">
-                <InputText id="username"  />
-                <label for="username">그룹명 입력</label>
-            </IftaLabel>
-            <div class="bottom-modal-sticky-box">
-                <Button type="button" label="명세서 이동" @click="" class="w-full" />
-            </div>
+        <IftaLabel v-if="client['info']['groupCd'] === 'N'" class="label-input-box">
+            <InputText id="groupNm" v-model="client['info']['groupNm']"/>
+            <label>그룹명 입력</label>
+            <small class="text-red-500">{{ client['msg']['groupNm'] }}</small>
+        </IftaLabel>
+        <div class="bottom-modal-sticky-box">
+            <Button type="button" label="명세서 이동" class="w-full" @click="getSaveNext"/>
+        </div>
+    </div>
+    <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:9999;-webkit-overflow-scrolling:touch;">
+        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" @click="getCloseDaumPost()" alt="닫기 버튼">
     </div>
 </template>
 
@@ -55,6 +62,149 @@ import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import DatePicker from 'primevue/datepicker';
 import Select from 'primevue/select';
+import { useConfirm } from "primevue/useconfirm";
+import { onMounted } from 'vue';
+import { useClientStore } from '@/store';
+import { getAxiosData, getDaumPopupPosition } from '@/assets/js/function';
+import { clientMsg } from '@/assets/js/msg';
+import { usePopup } from '@/assets/js/popup';
 
+const client    = useClientStore();
+const confirm   = useConfirm();
+
+const { getPopupClose } = usePopup();
+
+const getAddr = () => {
+    const layer = document.getElementById('layer');
+
+    new window.daum.Postcode({
+        oncomplete          : function(data) {
+            let addr = '';
+
+            if (data.userSelectedType === 'R') 
+            { 
+                // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } 
+            else 
+            { 
+                // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+
+            client.info['zip']  = data.zonecode;
+            client.info['addr'] = addr;
+            document.getElementById("addrDetail").focus();
+
+            // iframe을 넣은 element를 안보이게 한다.
+            // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+            layer.style.display = 'none';
+        },
+        width               : '100%',
+        height              : '100%',
+        submitMode          : false, // 뒤로가기 히스토리 남기지 않도록 설정
+        maxSuggestItems     : 5
+    }).embed(layer);
+
+    getDaumPopupPosition(layer);
+}
+
+const getCloseDaumPost = () => {
+    document.getElementById('layer').style.display = 'none';
+}
+
+const getSaveNext = () => {
+    const checkParams = {
+        clientNm    : client['info']['clientNm'],
+        tel         : client['info']['tel'],
+        addr        : client['info']['addr'],
+        person      : client['info']['person'],
+        groupCd     : client['info']['groupCd'],
+        groupNm     : client['info']['groupNm'],
+    };
+
+    const result = clientMsg(checkParams);
+
+    if(!result['state'])
+    {
+        client.getMsgSet(result['msg'], result['id']);
+        getFocus(result['id']);
+        return false;
+    }
+
+    confirm.require({
+        message     : '고객등록 후 명세표로 이동하시겠습니까?',
+        header      : '고객등록',
+        rejectProps : {
+            label       : '뒤로이동',
+            severity    : 'secondary',
+            outlined    : true
+        },
+        acceptProps : {
+            label: '명세표 이동'
+        },
+        accept : async () => {
+            const params = {
+                'type'          : client['type'],
+                'estiDt'        : client['info']['estiDt'],
+                'clientNm'      : client['info']['clientNm'],
+                'tel'           : client['info']['tel'],
+                'zip'           : client['info']['zip'],
+                'addr'          : client['info']['addr'],
+                'addrDetail'    : client['info']['addrDetail'],
+                'person'        : client['info']['person'],
+                'groupCd'       : client['info']['groupCd'],
+                'groupNm'       : client['info']['groupNm']
+            }
+
+            console.log(params);
+
+            try
+            {
+                const instance  = await getAxiosData();
+                await instance.post(`https://data.planorder.kr/clientV1/getResult`, params);
+                await client.getList();
+                getPopupClose(true, 'clientSet')
+            }
+            catch(e)
+            {
+                console.log(e);
+                if(e.response.status === 401)
+                {
+                    alert('토큰 만료');
+                }
+                else
+                {
+                    switch(e.response.data['code'])
+                    {
+                        case 4000:
+                            alert('고객 저장 도중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                        break;
+                        case 4100:
+                            client.getMsgSet('이미 등록된 그룹명 입니다.', 'groupNm');
+                            getFocus('groupNm');
+                        break;
+                        case 4200:
+                            client.getMsgSet('이미 등록된 고객명입니다.', 'clientNm');
+                            getFocus('clientNm');
+                        break;
+                    }
+                }
+            }
+        }
+    });
+}
+
+const getFocus = (id: string) => {
+    const inputElement = document.getElementById(id);
+    if (inputElement) 
+    {
+        inputElement.focus();
+    }
+}
+
+onMounted(() => {
+    client.getData();
+})
 
 </script>

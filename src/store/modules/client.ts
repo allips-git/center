@@ -24,35 +24,68 @@ interface Info {
     addrDetail  : string;
     person      : string;
     groupCd     : string;
+    groupNm     : string;
+}
+
+interface Select {
+    label   : string;
+    value   : string;
+}
+
+interface Msg {
+    clientNm    : string;
+    tel         : string;
+    addr        : string;
+    person      : string;
+    groupNm     : string;
 }
 
 interface State {
+    type    : string;
     search  : string;
     stCd    : string;
     list    : List[];
     info    : Info;
+    person  : Select[];
+    group   : Select[];
+    msg     : Msg;
     start   : number;
 }
 
 const getInfo = (): Info => {
     return {
-        estiDt      : '',
+        estiDt      : new Date(),
         clientNm    : '',
         tel         : null,
         zip         : null,
         addr        : '',
         addrDetail  : '',
         person      : '',
-        groupCd     : '',
+        groupCd     : 'N',
+        groupNm     : ''
+    }
+}
+
+const getMsg = (): Msg => {
+    return {
+        clientNm    : '',
+        tel         : '',
+        addr        : '',
+        person      : '',
+        groupNm     : ''
     }
 }
 
 export const useClientStore = defineStore('client', {
     state: (): State => ({
+        type    : 'I',
         search  : '',
         stCd    : '',
         list    : [],
         info    : getInfo(),
+        person  : [],
+        group   : [{ value : 'N', label : '신규입력' }],
+        msg     : getMsg(),
         start   : 0
     }),
     actions: {
@@ -119,9 +152,37 @@ export const useClientStore = defineStore('client', {
                 console.log(e);
             }
         },
+        async getData()
+        {
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/clientV1/getData`);
+
+                this.person = res.data['info']['person'];
+                this.group.push(...res.data['info']['group']);
+
+                console.log(this.group);
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        },
         async getInfo()
         {
             console.log('info');
+        },
+        getMsgSet(msg: string, name: string)
+        {
+            this.msg        = getMsg();
+            this.msg[name]  = msg;
+        },
+        async getReset()
+        {
+            this.person = [];
+            this.group  = [{ value : 'N', label : '신규입력' }];
+            this.info   = getInfo();
         }
     }
 });
