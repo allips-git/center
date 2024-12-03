@@ -7,8 +7,6 @@
                 <!-- 단위 -->
                 <p class="text-indigo-600 text-lg">111 <span class="ml-0.5">폭</span></p>
             </div>
-
-            
                 <dl class="flex py-3 border-b border-gray-100 items-center justify-between">
                     <dt class="text-gray-400 ">제품금액</dt>
                     <dd class="flex items-center font-bold">
@@ -26,13 +24,14 @@
                 </dl>
             
 
-            <div v-if="!showtitle">
+            <div v-if="!showtitle" class="custom_accordion">
                 <Accordion value="0">
                     <AccordionPanel class="*:pb-0 " value="0" >
-                        <AccordionHeader class="!gap-2 justify-end">
-                            <p class="font-bold text-sm pb-0">제품 상세 보기</p>
+                        <AccordionHeader class="!gap-2 !px-0">
+                            <p class="font-bold text-sm pb-0 w-full">제품 결제 내역</p>
+                            <p class="font-bold text-sm pb-0 flex-none">더보기</p>
                             </AccordionHeader>
-                        <AccordionContent class="w-full">
+                        <AccordionContent class="w-full *:!px-0">
                             <div class="flex flex-col gap-5">
                                 <div class="flex w-full mt-3 gap-4">
                                     <IftaLabel class="w-full">
@@ -67,6 +66,10 @@ import AccordionPanel from 'primevue/accordionpanel';
 import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
 
+import IftaLabel from 'primevue/iftalabel';
+import Textarea from 'primevue/textarea';
+
+
 defineProps({
     title       : String,
     showtitle   : Boolean,
@@ -75,5 +78,9 @@ defineProps({
 </script>
 
 <style lang="scss">
-
+.custom_accordion{
+    .p-accordionheader{
+        justify-content: space-between;
+    }
+}
 </style>
