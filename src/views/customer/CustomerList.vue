@@ -9,7 +9,6 @@
            removableSort
            dataKey="clientCd" 
            filterDisplay="row"
-           :loading="loading"
            @row-click="(event) => getInfo(event.data.clientCd)"
            >
            <!-- 필터 검색 영역 -->
@@ -134,7 +133,6 @@ import { usePopup } from '@/assets/js/popup';
 const data      = useDataStore();
 const popup     = usePopupStore();
 const client    = useClientStore();
-const loading   = ref(false);
 const router    = useRouter();
 
 const { getPopupOpen, getPopupClose } = usePopup();
@@ -160,9 +158,7 @@ const getPopClose = (gb: boolean, popNm: string) => {
 }
 
 const getList = async () => {
-    loading.value = true;
     await client.getList();
-    loading.value = false;
 }
 
 const getInfo = async (clientCd: string) => {
