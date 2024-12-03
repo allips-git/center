@@ -2,7 +2,7 @@
     <div class="bottom-modal-contents-box">
         
             <IftaLabel class="label-input-box">
-                <DatePicker showIcon fluid iconDisplay="input" id="username"  />
+                <DatePicker showIcon fluid iconDisplay="input" id="username" showTime hourFormat="24"/>
                 <label for="username">일자</label>
             </IftaLabel>
 

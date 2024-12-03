@@ -323,8 +323,6 @@ router.beforeEach( async (to, from, next) => {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/api/token/getTokenCheck`);
 
-                console.log(res);
-
                 if(res.data['code'] === 2000)
                 {
                     login.getToken(res.data['token']);
