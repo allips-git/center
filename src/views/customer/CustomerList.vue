@@ -26,7 +26,7 @@
                            <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="w-full max-w-[100px]" @change="getList"/>
                        </div>
 
-                        <Button label="고객 신규 등록" class="flex-none"  @click="CustomerListSetPop = true"/>                    
+                        <Button label="고객 신규 등록" class="flex-none"  @click="getPopOpen"/>                    
                    </div>
                 </div>
            </template>
@@ -100,26 +100,13 @@
                </Column>
            </DataTable>
        </div>
-       <Toast position="top-center" group="headless" @close="visible = true">
-            <template #container="{ message, closeCallback }">
-                <section class="flex flex-col p-4 gap-4 w-full bg-primary/70 rounded-xl">
-                    <div class="flex items-center gap-5">
-                        <i class="pi pi-cloud-upload text-white dark:text-black text-2xl"></i>
-                        <span class="font-bold text-base text-white dark:text-black">토큰 만료다</span>
-                    </div>
-                    <div class="flex gap-4 mb-4 justify-end">
-                        <Button label="확인" size="small" @click="closeCallback"></Button>
-                    </div>
-                </section>
-            </template>
-        </Toast>
        <div>
-        <Dialog
-        v-model:visible="CustomerListSetPop" 
+        <Dialog v-model:visible="popup['pop']['clientSet']" 
         header="고객 등록" 
         :modal=true
         position="bottom"
-        class="custom-dialog-bottom">
+        class="custom-dialog-bottom"
+        @update:visible="getPopClose(true, 'clientSet')">
             <CustomerListSet/>
         </Dialog>
        </div>
@@ -128,7 +115,6 @@
 
 <script setup lang="ts">
 import Button from 'primevue/button';
-import DatePicker from 'primevue/datepicker';
 import Select from 'primevue/select';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -137,20 +123,18 @@ import InputText from 'primevue/inputtext';
 import InputIcon from 'primevue/inputicon'; 
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import Dialog from 'primevue/dialog';
-import Toast from 'primevue/toast';
 import CustomerListSet from '@/views/include/CustomerListSet.vue'
-import { ref, onMounted, defineEmits } from 'vue';
+import { ref, onMounted } from 'vue';
 import { FilterMatchMode } from '@primevue/core/api';
-import { useDataStore, useClientStore } from '@/store';
+import { useDataStore, usePopupStore, useClientStore } from '@/store';
+import { usePopup } from '@/assets/js/popup';
 
 const data      = useDataStore();
+const popup     = usePopupStore();
 const client    = useClientStore();
 const loading   = ref(false);
 
-const CustomerListSetPop = ref(false);
-const openCustomerListSetPop = () => {
-    CustomerListSetPop.value = true; // 다이얼로그 열기
-};
+const { getPopupOpen, getPopupClose } = usePopup();
 
 const filters = ref({
     step        : { value: null, matchMode: FilterMatchMode.EQUALS },
@@ -163,10 +147,23 @@ const filters = ref({
     amt         : { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
+const getPopOpen = () => {
+    getPopupOpen('clientSet');
+    client.getReset();
+}
+
+const getPopClose = (gb: boolean, popNm: string) => {
+    getPopupClose(popNm, gb);
+}
+
 const getList = async () => {
     loading.value = true;
     await client.getList();
     loading.value = false;
 }
+
+onMounted(() => {
+    getList();
+})
 
 </script>

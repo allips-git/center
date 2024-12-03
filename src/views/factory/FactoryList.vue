@@ -152,7 +152,7 @@ import InputIcon from 'primevue/inputicon';
 import Textarea from 'primevue/textarea';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import { useConfirm } from "primevue/useconfirm";
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { usePopupStore, useFactoryStore } from '@/store';
 import { outFactoryMsg } from '@/assets/js/msg';
 import { getAxiosData, getDaumPopupPosition } from '@/assets/js/function';
