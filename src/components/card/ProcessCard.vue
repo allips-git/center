@@ -71,7 +71,7 @@ const moreBtnList = ref([
     { name: '견적서 발송' },
     { name: '계약서 발송' },
     { name: '네비게이션' },
-    { name: '명세표 취소' },
+    { name: '명세표 취소' }
 ]);
 
 // 상태 항목 배열 정의

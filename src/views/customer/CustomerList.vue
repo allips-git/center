@@ -10,6 +10,7 @@
            dataKey="clientCd" 
            filterDisplay="row"
            :loading="loading"
+           @row-click="(event) => getInfo(event.data.clientCd)"
            >
            <!-- 필터 검색 영역 -->
            <template #header>
@@ -125,6 +126,7 @@ import BackHeader from '@/components/layouts/BackHeader.vue'
 import Dialog from 'primevue/dialog';
 import CustomerListSet from '@/views/include/CustomerListSet.vue'
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useDataStore, usePopupStore, useClientStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
@@ -133,6 +135,7 @@ const data      = useDataStore();
 const popup     = usePopupStore();
 const client    = useClientStore();
 const loading   = ref(false);
+const router    = useRouter();
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
@@ -160,6 +163,11 @@ const getList = async () => {
     loading.value = true;
     await client.getList();
     loading.value = false;
+}
+
+const getInfo = async (clientCd: string) => {
+    await client.getDataSet(clientCd); 
+    router.push('/customer/detail');
 }
 
 onMounted(() => {
