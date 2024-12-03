@@ -32,6 +32,39 @@ interface Select {
     value   : string;
 }
 
+interface DetailList {
+    clientCd    : string;
+    conDt       : string;
+    deliConDt   : string;
+    deliDt      : string;
+    emCd        : string;
+    estiDt      : string;
+    insTime     : string;
+    payDt       : string;
+    preDt       : string;
+    stCd        : string;
+    stNm        : string;
+    totalSaleAmt: string;
+    useYn       : string;
+}
+
+interface Detail {
+    clientNm    : string;
+    tel         : string;
+    zip         : number;
+    addr        : string;
+    addrDetail  : string;
+    regDt       : string;
+    person      : string;
+    groupNm     : string;
+    cnt         : {
+        ing     : number;
+        comp    : number;
+        cancel  : number;
+    },
+    list        : DetailList[];
+}
+
 interface Msg {
     clientNm    : string;
     tel         : string;
@@ -41,15 +74,16 @@ interface Msg {
 }
 
 interface State {
-    type    : string;
-    search  : string;
-    stCd    : string;
-    list    : List[];
-    info    : Info;
-    person  : Select[];
-    group   : Select[];
-    msg     : Msg;
-    start   : number;
+    type        : string;
+    search      : string;
+    stCd        : string;
+    clientCd    : string;
+    list        : List[];
+    info        : Info;
+    person      : Select[];
+    group       : Select[];
+    msg         : Msg;
+    start       : number;
 }
 
 const getInfo = (): Info => {
@@ -66,6 +100,25 @@ const getInfo = (): Info => {
     }
 }
 
+const getDetail = (): Detail => {
+    return {
+        clientNm    : '',
+        tel         : '',
+        zip         : '',
+        addr        : '',
+        addrDetail  : '',
+        regDt       : '',
+        person      : '',
+        groupNm     : '',
+        cnt         : {
+            ing     : 0,
+            comp    : 0,
+            cancel  : 0 
+        },
+        list        : []
+    }
+}
+
 const getMsg = (): Msg => {
     return {
         clientNm    : '',
@@ -78,15 +131,17 @@ const getMsg = (): Msg => {
 
 export const useClientStore = defineStore('client', {
     state: (): State => ({
-        type    : 'I',
-        search  : '',
-        stCd    : '',
-        list    : [],
-        info    : getInfo(),
-        person  : [],
-        group   : [{ value : 'N', label : '신규입력' }],
-        msg     : getMsg(),
-        start   : 0
+        type        : 'I',
+        search      : '',
+        stCd        : '',
+        clientCd    : '',
+        list        : [],
+        info        : getInfo(),
+        detail      : getDetail(),
+        person      : [],
+        group       : [{ value : 'N', label : '신규입력' }],
+        msg         : getMsg(),
+        start       : 0
     }),
     actions: {
         async getList()
@@ -169,14 +224,45 @@ export const useClientStore = defineStore('client', {
                 console.log(e);
             }
         },
-        async getInfo()
+        async getDetail()
         {
-            console.log('info');
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/clientV1/getDetail`, { clientCd : this.clientCd });
+
+                const detail    = {
+                    clientNm    : res.data['client']['clientNm'],
+                    tel         : res.data['client']['tel'],
+                    zip         : res.data['client']['zip'],
+                    addr        : res.data['client']['addr'],
+                    addrDetail  : res.data['client']['addrDetail'],
+                    regDt       : res.data['client']['regDt'],
+                    person      : res.data['client']['person'],
+                    groupNm     : res.data['client']['groupNm'],
+                    cnt         : {
+                        ing     : res.data['cnt']['ing'],
+                        comp    : res.data['cnt']['comp'],
+                        cancel  : res.data['cnt']['cancel'] 
+                    },
+                    list        : res.data['list']
+                }
+
+                this.detail = detail;
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
         },
         getMsgSet(msg: string, name: string)
         {
             this.msg        = getMsg();
             this.msg[name]  = msg;
+        },
+        getDataSet(clientCd: string)
+        {
+            this.clientCd = clientCd;
         },
         async getReset()
         {
@@ -184,5 +270,10 @@ export const useClientStore = defineStore('client', {
             this.group  = [{ value : 'N', label : '신규입력' }];
             this.info   = getInfo();
         }
+    },
+    persist: {
+        key     : 'client',
+        storage : localStorage,
+        paths   : ['clientCd']
     }
 });
