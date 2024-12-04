@@ -1,7 +1,7 @@
 <template>
 <main>
     <BackHeader title="해당 공장 이름~~~~" />
-    <div>
+    <div class="!pb-36">
         <section class="aspect-video rounded-b-md overflow-hidden">
             <img src="@/assets/img/test.png" class="w-full aspect-video object-cover" alt="">
         </section>
@@ -37,13 +37,33 @@
             <CalculateCard />
         </section>
     </div>
+
+    <div class="bottom-fixed-btn-box flex-col border-t">
+        <div class="flex font-bold text-lg mb-1 justify-between">
+            <p >총 제품</p>
+            <p class="text-indigo-600">0개</p>
+        </div>
+        <Button label="제품 설정하기" size="large" @click="ProductInfoPop = true"/>
+    </div>
+
+    <Dialog
+    v-model:visible="ProductInfoPop" 
+    header="제품정보" 
+    :modal=true
+    position="bottom"
+    class="custom-dialog-bottom"
+    >
+    <ProductInfo/>
+    </Dialog>
 </main>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import BackHeader from '@/components/layouts/BackHeader.vue'
-// import CalculateCard from "@/components/card/CalculateCard.vue";
+import ProductInfo from "@/views/include/factory/ProductInfo.vue";
+
+const ProductInfoPop = ref(true)
 
 // 정보 배열 정의
 const infoItems = ref([

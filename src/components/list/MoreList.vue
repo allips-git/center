@@ -12,23 +12,24 @@
                 </li>
             </ul>
         </div>
-        <FontAwesomeIcon class="p-4 text-zinc-400" :icon="['fas', 'chevron-right']" @click="getInfo"/>
+        <span class="pi pi-angle-right"></span>
     </div>
 </template>
 
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue';
 
-defineProps({
-    title: String,
-    lists: Array
-});
-
-const emit = defineEmits(['getListClick']);
-
-const getInfo = () => {
-    emit('getListClick');
+// 리스트 객체의 타입 정의
+interface ListItem {
+    label: string;
+    content: string;
 }
+
+// props의 타입 정의
+const props = defineProps<{
+    title: string;
+    lists: ListItem[];
+}>();
 
 </script>
 
