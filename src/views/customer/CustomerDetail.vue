@@ -61,7 +61,7 @@
     <Dialog v-model:visible="popup['pop']['itemSet']" header="제품선택" 
         :modal=true position="bottom" class="custom-dialog-bottom"
         @update:visible="getPopClose(true, 'itemSet')">
-        <ProductRegister/>
+        <ProductChoice/>
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['ordList']"  header="발주서" 
@@ -69,21 +69,31 @@
         @update:visible="getPopClose(true, 'ordList')">
         <OrderList/>
     </Dialog>
+
+    <Dialog
+    v-model:visible="ProductRegisterPop" 
+    header="제품등록" 
+    :modal=true
+    position="bottom"
+    class="custom-dialog-bottom"
+    >
+        <ProductRegister/>
+    </Dialog>
 </template>
     
 <script setup lang="ts">
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import ProcessCard from "@/components/card/ProcessCard.vue";
+import ProductChoice from "@/views/include/ProductChoice.vue";
 import ProductRegister from "@/views/include/ProductRegister.vue";
 import OrderList from "@/views/include/customer/OrderList.vue";
-
 
 import Tabs from 'primevue/tabs';
 import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
-import { onMounted } from 'vue';
+import { onMounted , ref } from 'vue';
 import { usePopupStore, useClientStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
@@ -95,6 +105,8 @@ const { getPopupOpen, getPopupClose } = usePopup();
 const getPopClose = (gb: boolean, popNm: string) => {
     getPopupClose(popNm, gb);
 }
+
+const ProductRegisterPop = ref(false)
 
 onMounted(() => {
     client.getDetail();
