@@ -123,8 +123,17 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         border-radius:  4px 0px 0px 4px;
         padding: 0;
     }
+    
 }
-
+.custom-dialog-center{
+    .p-dialog-header, .p-drawer-header{
+        padding: 0.25rem 20px;
+        .p-dialog-title , .p-drawer-title{
+            font-size: 13px;
+        }
+    }
+    
+}
 .custom-popover-listbox{
     .p-popover-content {
         padding:0.275rem;
@@ -153,4 +162,8 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 }
 .p-tabpanels{
     padding: 0 !important;
+}
+.p-togglebutton.p-togglebutton-checked{   
+    color: var(--p-primary-600) !important;
+    font-weight: 600;
 }
