@@ -316,8 +316,6 @@ router.beforeEach( async (to, from, next) => {
         {
             const tokenCheckResult = await getTokenCheck();
 
-            console.log(tokenCheckResult);
-
             if(tokenCheckResult)
             {
                 if(popup.list.length === 0)
@@ -340,6 +338,8 @@ router.beforeEach( async (to, from, next) => {
 });
 
 const getTokenCheck = async () => {
+    const login = useLoginStore();
+    
     try
     {
         const instance  = await getAxiosData();

@@ -231,6 +231,8 @@ export const useClientStore = defineStore('client', {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/clientV1/getDetail`, { clientCd : this.clientCd });
 
+                console.log(res);
+
                 const detail    = {
                     clientNm    : res.data['client']['clientNm'],
                     tel         : res.data['client']['tel'],

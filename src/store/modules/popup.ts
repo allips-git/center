@@ -7,6 +7,8 @@ import { defineStore } from 'pinia';
 interface Pop {
     clientSet           : boolean;
     itemSet             : boolean;
+    estiList            : boolean;
+    ordList             : boolean;
     sysFactorySearch    : boolean;
     outFactorySet       : boolean;
 }
@@ -20,6 +22,8 @@ const getPopInfo = (): Pop => {
     return {
         clientSet           : false,
         itemSet             : false,
+        estiList            : false,
+        ordList             : false,
         sysFactorySearch    : false,
         outFactorySet       : false
     }
