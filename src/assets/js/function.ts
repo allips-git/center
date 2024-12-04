@@ -2,6 +2,18 @@ import { useLoginStore } from '@/store';
 import axios from 'axios';
 
 /**
+ * @description 숫자 콤마 처리
+ */
+export const getCommas = (value: number): string => {
+    if(typeof value !== 'number')
+    {
+        return value;
+    }
+    
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+/**
  * @description 오늘일자(Y-m-d H:i)
  */
 export const getTodayTimeDate = (): string => {
@@ -23,7 +35,12 @@ export const getConvertDate = (date: Date, type: string): string => {
     const y  = date.getFullYear();
     const m  = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1).toString();
     const d  = date.getDate() < 10 ? '0' + date.getDate() : date.getDate().toString();
+    const h  = date.getHours() < 10 ? '0'+date.getHours() : date.getHours();
+    const i  = date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes();
     const yy = y.toString().substring(2, 4);
+
+	const weekStr = ['일', '월', '화', '수', '목', '금', '토'];
+	const w       = weekStr[date.getDay()];
 
     let result: string;
 
@@ -36,6 +53,12 @@ export const getConvertDate = (date: Date, type: string): string => {
             break;
         case "yy.mm.dd":
             result = `${yy}.${m}.${d}`;
+            break;
+        case "mm%dd%w%" :
+            result = m+'.'+d+'('+w+')';
+            break;
+        case "mm%dd%w% hh:ii" :
+            result = m+'.'+d+'('+w+') '+h+':'+i;
             break;
         default:
             result = `${y}-${m}-${d}`;
