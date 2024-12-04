@@ -6,6 +6,7 @@ import { defineStore } from 'pinia';
 /** 리스트 데이터 */
 interface Pop {
     clientSet           : boolean;
+    itemSet             : boolean;
     sysFactorySearch    : boolean;
     outFactorySet       : boolean;
 }
@@ -18,6 +19,7 @@ interface State {
 const getPopInfo = (): Pop => {
     return {
         clientSet           : false,
+        itemSet             : false,
         sysFactorySearch    : false,
         outFactorySet       : false
     }

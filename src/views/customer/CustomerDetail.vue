@@ -92,20 +92,9 @@ import Badge from 'primevue/badge';
 import { ref, onMounted } from 'vue';
 import { usePopupStore, useClientStore } from '@/store';
 
-const client = useClientStore();
-const ProductRegisterPop = ref (false)
-const OrderListPop = ref (true)
-// 정보 배열 정의
-const infoItems = ref([
-    {
-    label: '전화번호',
-    value: '11',
-    },
-    {
-    label: '주소',
-    value: '010-1234-5678',
-    },
-])
+const client                = useClientStore();
+const ProductRegisterPop    = ref(false);
+const OrderListPop = ref (true);
 
 onMounted(() => {
     client.getDetail();
