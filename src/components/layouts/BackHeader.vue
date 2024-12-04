@@ -1,5 +1,5 @@
 <template>
-    <header class="py-2 sticky top-0 flex items-center px-2 md:border-b shadow-sm md:shadow-none bg-white">
+    <header class="h-[48px] sticky top-0 flex items-center px-2 md:border-b shadow-sm md:shadow-none bg-white z-50">
         <Button 
             plain 
             text 

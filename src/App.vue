@@ -9,7 +9,7 @@
             :setWideSide="setWideSide"
             :drawerClass="false"
             />
-        <div class="z-0 overflow-y-auto w-full">
+        <div class="z-0  w-full">
             <RouterView/>
         </div>
         <ConfirmDialog></ConfirmDialog>
