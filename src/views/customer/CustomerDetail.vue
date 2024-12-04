@@ -50,6 +50,16 @@
     >
     <ProductRegister/>
     </Dialog>
+
+    <Dialog
+    v-model:visible="OrderListPop" 
+    header="발주서" 
+    :modal=true
+    position="bottom"
+    class="custom-dialog-bottom"
+    >
+        <OrderList/>
+    </Dialog>
 </template>
     
 <script setup lang="ts">
@@ -57,6 +67,8 @@ import { ref } from 'vue';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import ProcessCard from "@/components/card/ProcessCard.vue";
 import ProductRegister from "@/views/include/ProductRegister.vue";
+import OrderList from "@/views/include/customer/OrderList.vue";
+
 
 import Tabs from 'primevue/tabs';
 import TabList from 'primevue/tablist';
@@ -67,6 +79,7 @@ import Badge from 'primevue/badge';
 
 
 const ProductRegisterPop = ref (false)
+const OrderListPop = ref (true)
 // 정보 배열 정의
 const infoItems = ref([
     {
