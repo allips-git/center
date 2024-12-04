@@ -3,14 +3,12 @@
         <div class="p-4 flex flex-col gap-5">
             <div class="flex gap-2">
                 <Select placeholder="브랜드 선택" /> 
-                
-                    <IconField class="table-search-input w-full">
-                        <InputIcon class="z-10">
-                            <i class="pi pi-search z-10" />
-                        </InputIcon>
-                        <InputText placeholder="제품명 검색" class="w-full" />
-                    </IconField>
-                    
+                <IconField class="table-search-input w-full">
+                    <InputIcon class="z-10">
+                        <i class="pi pi-search z-10" />
+                    </InputIcon>
+                    <InputText placeholder="제품명 검색" class="w-full" />
+                </IconField>
             </div>
         </div>
         <div class="flex gap-2 px-4 pb-2 w-full">

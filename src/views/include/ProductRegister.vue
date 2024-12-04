@@ -1,11 +1,14 @@
 <template>
 <main>
+    
     <div class="bottom-modal-contents-box !pb-20">
+        <div class="w-full flex justify-end">
+            <Button label="제품 변경" outlined/>
+        </div>    
         <div class="text-base font-bold flex justify-between bg-gray-50 p-2 px-4 rounded-lg border border-indigo-300">
             <h2>제품 이름 (하위 분류)</h2>
             <p class="text-indigo-600">(0폭) 0원</p>
         </div>
-
         <!-- 입력 계산기 컴포넌트 -->
         <div class="">
             <!-- 폭 , 야드 -->
