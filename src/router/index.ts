@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter, } from "vue-router";
-import { useLoginStore } from '@/store';
+import { usePopupStore, useLoginStore } from '@/store';
 
 // RouteMeta 인터페이스 정의
 interface RouteMeta {
@@ -305,6 +305,7 @@ const router = createRouter({
 
 router.beforeEach( async (to, from, next) => {
     const login = useLoginStore();
+    const popup = usePopupStore();
 
     if(to.meta.gubun === 'Y')
     {
@@ -318,25 +319,49 @@ router.beforeEach( async (to, from, next) => {
         }
         else
         {
-            try
-            {
-                const instance  = await getAxiosData();
-                const res       = await instance.post(`https://data.planorder.kr/api/token/getTokenCheck`);
+            const tokenCheckResult = await getTokenCheck();
 
-                if(res.data['code'] === 2000)
+            console.log(tokenCheckResult);
+
+            if(tokenCheckResult)
+            {
+                if(popup.list.length === 0)
                 {
-                    login.getToken(res.data['token']);
+                    next();
                 }
-
-                next();
+                else
+                {
+                    const lastPopNm = popup.list[popup.list.length - 1];
+                    await popup.getClose(lastPopNm);
+                    next(false);
+                }
             }
-            catch(e)
+            else
             {
-                console.log(e);
                 alert('토큰 만료');
             }
         }
     }
 });
+
+const getTokenCheck = async () => {
+    try
+    {
+        const instance  = await getAxiosData();
+        const res       = await instance.post(`https://data.planorder.kr/api/token/getTokenCheck`);
+
+        if(res.data['code'] === 2000)
+        {
+            login.getToken(res.data['token']);
+        }
+
+        return true;
+    }
+    catch(e)
+    {
+        console.log(e);
+        return false;
+    }
+}
 
 export default router

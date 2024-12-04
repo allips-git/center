@@ -79,8 +79,8 @@ import Badge from 'primevue/badge';
 import { ref, onMounted } from 'vue';
 import { usePopupStore, useClientStore } from '@/store';
 
-const client = useClientStore();
-const ProductRegisterPop = ref (false)
+const client                = useClientStore();
+const ProductRegisterPop    = ref(false);
 
 onMounted(() => {
     client.getDetail();
