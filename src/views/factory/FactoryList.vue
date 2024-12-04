@@ -31,7 +31,6 @@
                             <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
                         </li>
                     </ul>
-
                 </TabPanel>
             </TabPanels>
         </Tabs>

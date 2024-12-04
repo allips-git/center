@@ -1,13 +1,19 @@
 <template>
 <main class="p-5 !pb-32">
+    
+    <div class="flex justify-end">
+            <Button label="제품 삭제" size="small" severity="danger" />
+        </div>
     <div class="input-layout-box">
-
+        <div class="flex justify-between w-full items-center">
+            <h1 class="font-bold">제품명<span class="ml-0.5 text-red-500">*</span></h1>
+        </div>
         <IftaLabel class="w-full">
             <InputText id="username" class="w-full"/>
             <label for="emali">제품 이름</label>
         </IftaLabel>
 
-        <h1 class="mt-4 font-bold">색상 추가 <span class="ml-0.5 text-red-500">*</span></h1>
+        <h1 class="mt-4 font-bold">색상 추가<span class="ml-0.5 text-red-500">*</span></h1>
         <div class="flex gap-2">
             <IftaLabel class="w-full">
                 <InputText id="username" class="w-full"/>
@@ -24,7 +30,7 @@
             <Button label="삭제" class="w-28" severity="danger" outlined />
         </div>
 
-        <h1 class="mt-4 font-bold">옵션 설정 <span class="ml-0.5 text-red-500">*</span></h1>
+        <h1 class="mt-4 font-bold">옵션 설정<span class="ml-0.5 text-red-500">*</span></h1>
         <InputGroup>
             <IftaLabel class="w-full flex gap-2">
                 <InputText id="username" class="w-full"/>
@@ -58,7 +64,7 @@
         </InputGroup>
 
         <div class="bottom-fixed-btn-box">
-            <Button label="저장"/>
+            <Button label="저장" size="large"/>
         </div>
     </div>
 </main>
