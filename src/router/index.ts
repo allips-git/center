@@ -23,10 +23,10 @@ import ConDoc from "@/views/customer/ConDoc.vue";
 // import CustomerOrderList from "@/views/customer/OrderList.vue";
 import OutOrderDoc from "@/views/customer/OutOrderDoc.vue";
 import FactoryList from "@/views/factory/FactoryList.vue";
-import OutInput from "@/views/factory/OutInput.vue";
+// import OutInput from "@/views/factory/OutInput.vue";
 import OutDetail from "@/views/factory/OutDetail.vue";
 import OutProduct from "@/views/factory/OutProduct.vue";
-import OutMng from "@/views/factory/OutMng.vue";
+// import OutMng from "@/views/factory/OutMng.vue";
 import FactoryDetail from "@/views/factory/FactoryDetail.vue";
 import SysProduct from "@/views/factory/ProductInfo.vue";
 import SysMng from "@/views/factory/ProductMng.vue";
@@ -147,12 +147,12 @@ const routes = [
         component: FactoryList,
         meta: { title: '공장' }
     },
-    {
-        path: "/factory/outInput",
-        name: "OutInput",
-        component: OutInput,
-        meta: { title: '외주공장 저장' }
-    },
+    // {
+    //     path: "/factory/outInput",
+    //     name: "OutInput",
+    //     component: OutInput,
+    //     meta: { title: '외주공장 저장' }
+    // },
     {
         path: "/factory/outDetail",
         name: "OutDetail",
@@ -165,12 +165,12 @@ const routes = [
         component: OutProduct,
         meta: { title: '외주공장 제품 리스트' }
     },
-    {
-        path: "/factory/outMng",
-        name: "OutMng",
-        component: OutMng,
-        meta: { title: '외주공장 제품 정보 확인 및 저장' }
-    },
+    // {
+    //     path: "/factory/outMng",
+    //     name: "OutMng",
+    //     component: OutMng,
+    //     meta: { title: '외주공장 제품 정보 확인 및 저장' }
+    // },
     {
         path: "/factory/detail",
         name: "FactoryDetail",

@@ -45,7 +45,7 @@
         class="custom-dialog-bottom"
         @update:visible="getPopClose(true, 'sysFactorySearch')"
     >
-        <div class="p-5">
+        <div class="p-5 !pb-20">
             <div class="form-gap-box">
                 <IftaLabel>
                     <IconField>
@@ -71,7 +71,7 @@
                     <InputText v-model="factory['sys']['info']['person']" class="w-full" disabled/>    
                 </IftaLabel>
             </div>
-            <div class="w-full sticky bottom-0 mt-10">
+            <div class="bottom-modal-absol-box">
                 <Button type="button" label="거래신청" @click="getSysFactoryApply" class="w-full"></Button>
             </div>
         </div>
@@ -86,7 +86,7 @@
     class="custom-dialog-bottom"
     @update:visible="getPopClose(true, 'outFactorySet')"
     >
-        <div class="p-5">
+        <div class="p-5 !pb-20">
             <div class="form-gap-box">
                 <IftaLabel>
                     <InputText id="outFaNm" v-model="factory['out']['info']['faNm']" class="w-full"/>
@@ -129,7 +129,7 @@
                     <Textarea v-model="factory['out']['info']['memo']" rows="3" cols="30" style="resize: none" class="w-full" />
                 </IftaLabel>
             </div>
-            <div class="w-full sticky bottom-0 mt-10">
+            <div class="bottom-modal-absol-box">
                 <Button type="button" label="저장" @click="getOutFactorySave" class="w-full"></Button>
             </div>
         </div>

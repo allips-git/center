@@ -18,7 +18,6 @@
                                 <InputText placeholder="제품명 검색" class="w-full" />
                             </IconField>
                         </div>
-                        
                     </div>                    
                     <ul class="flex flex-col">
                         <li
