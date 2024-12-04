@@ -2,12 +2,12 @@
     <div>
         <div class="p-4 flex flex-col gap-5">
             <div class="flex gap-2">
-                <Select placeholder="브랜드 선택" /> 
+                <Select v-model="product['fcCd']" placeholder="브랜드 선택" :options="product['option']" optionLabel="label" optionValue="value" @change="getList"/> 
                 <IconField class="table-search-input w-full">
                     <InputIcon class="z-10">
                         <i class="pi pi-search z-10" />
                     </InputIcon>
-                    <InputText placeholder="제품명 검색" class="w-full" />
+                    <InputText v-model="product['itemNm']" placeholder="제품명 검색" class="w-full" @keyup.enter="getList"/>
                 </IconField>
             </div>
         </div>
@@ -17,33 +17,24 @@
             <Button label="블라인드 실측" outlined rounded  @click="ProductRegisterPop = true" />
         </div>
         <ul class="flex flex-col">
-            <li
-            v-for="(item, index) in items"
-            :key="index"
-            class="border-b"
-            >
+            <li v-for="(item, index) in product['list']" :key="index" class="border-b">
             <div class="flex justify-between items-center px-5 py-4">
                 <div class="label-checkbox-box  items-center" @click="toggleSubList(index)">
                     <RadioButton />
                     <label class="flex items-center">
-                        {{ item.label }} 
-                        <Badge value="주문불가" severity="danger" class="ml-2"></Badge>
+                        {{ item.itemNm }} 
+                        <Badge v-if="item['noUsed']" value="주문불가" severity="danger" class="ml-2"></Badge>
                     </label>
                 </div>
                 <p class="text-sm flex-none">폭 111,111,212원</p>
             </div>
-                <ul class="bg-gray-50" v-if="isActive(index)">
-                    <li
-                    v-for="(color, colorIndex) in item.colors"
-                    :key="colorIndex"
-                    :class="color"
-                    class="pl-10 py-4 border-b border-gray-200 last:border-b-0"
-                    >
+                <ul class="bg-gray-50" v-if="isActive(index) && !item['noUsed']">
+                    <li v-for="(color, colorIndex) in item.colorLists" :key="colorIndex" :class="color" class="pl-10 py-4 border-b border-gray-200 last:border-b-0">
                     <div class="label-checkbox-box">
                         <RadioButton />
                         <label class="flex items-center">
-                            {{ color }}
-                            <!-- <Badge value="주문불가" severity="danger" class="ml-2"></Badge> -->
+                            {{ color['icNm'] }}
+                            <Badge v-if="color['useYn'] === 'N'" value="주문불가" severity="danger" class="ml-2"></Badge>
                         </label>
                     </div>
                     </li>
@@ -63,15 +54,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-
 import IconField from 'primevue/iconfield'; 
 import InputText from 'primevue/inputtext'; 
 import InputIcon from 'primevue/inputicon'; 
 import Badge from 'primevue/badge';
-
 import RadioButton from 'primevue/radiobutton';
 import ProductRegister from "@/views/include/ProductRegister.vue";
+import { ref, onMounted } from 'vue';
+import { usePopupStore, useProductStore } from '@/store';
+
+const product = useProductStore();
 
 const ProductRegisterPop = ref(false) 
 
@@ -114,6 +106,17 @@ const toggleSubList = (index: number) => {
 const isActive = (index: number) => {
   return activeIndex.value === index;
 };
+
+const getList = () => {
+    if(product.fcCd !== '')
+    {
+        product.getList();
+    }
+}
+
+onMounted(() => {
+    product.getFactory();
+})
 
 </script>
 

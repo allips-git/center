@@ -7,6 +7,7 @@ import { usePopupStore } from './modules/popup';
 import { useLoginStore } from './modules/login';
 import { useMainStore } from './modules/main';
 import { useClientStore } from './modules/client';
+import { useProductStore } from './modules/product';
 import { useFactoryStore } from './modules/factory';
 
 const pinia = createPinia();
@@ -23,5 +24,6 @@ export {
     useLoginStore,
     useMainStore,
     useClientStore,
+    useProductStore,
     useFactoryStore
 };
