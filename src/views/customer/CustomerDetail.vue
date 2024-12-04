@@ -62,7 +62,8 @@
     position="bottom"
     class="custom-dialog-bottom"
     >
-    <ProductRegister/>
+    <ProductChoice/>
+    <!-- <ProductRegister/> -->
     </Dialog>
 
     <Dialog
@@ -79,7 +80,7 @@
 <script setup lang="ts">
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import ProcessCard from "@/components/card/ProcessCard.vue";
-import ProductRegister from "@/views/include/ProductRegister.vue";
+import ProductChoice from "@/views/include/ProductChoice.vue";
 import OrderList from "@/views/include/customer/OrderList.vue";
 
 import Tabs from 'primevue/tabs';
