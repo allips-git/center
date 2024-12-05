@@ -13,8 +13,8 @@
         </div>
         <div class="flex gap-2 px-4 pb-2 w-full">
             <Button label="실측 둘러보기" outlined rounded />
-            <Button label="커튼 실측" outlined rounded />
-            <Button label="블라인드 실측" outlined rounded />
+            <Button label="커튼 실측" outlined rounded @click="getExItem('EX000001')"/>
+            <Button label="블라인드 실측" outlined rounded @click="getExItem('EX000002')"/>
         </div>
         <ul class="flex flex-col">
             <li v-for="(item, index) in product['list']" :key="index" class="border-b">
@@ -51,11 +51,12 @@ import InputIcon from 'primevue/inputicon';
 import Badge from 'primevue/badge';
 import RadioButton from 'primevue/radiobutton';
 import { ref, onMounted } from 'vue';
-import { useProductStore } from '@/store';
+import { useProductStore, useEstiStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
 const product = useProductStore();
+const esti    = useEstiStore();
 const { getPopupOpen } = usePopup();
 
 // 현재 열려 있는 하위 목록의 인덱스
@@ -72,9 +73,19 @@ const isActive = (index: number) => {
     return activeIndex.value === index;
 };
 
-const getItemChoice = (icCd: string) => {
+const getItemChoice = async (icCd: string) => {
     product['icCd'] = icCd;
     getPopupOpen('itemSet');
+    
+    await product.getInfo();
+    await esti.getCommonSet(product['info']);
+}
+
+const getExItem = async (itemCd: string) => {
+    getPopupOpen('itemSet');
+
+    await product.getEx(itemCd);
+    await esti.getCommonSet(product['info']);
 }
 
 const getAmt = (amt: number) => {

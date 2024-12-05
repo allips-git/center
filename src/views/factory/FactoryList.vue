@@ -51,7 +51,7 @@
                         <InputText id="sysFaCd" v-model="factory['sys']['serachFaCd']" class="w-full" @keyup.enter="getSearch"/>
                         <InputIcon class="pi pi-search" />
                     </IconField>
-                    <small class="text-red-500">{{ factory['sys']['msg'] }}</small>
+                    <small class="text-red-500">{{ factory['sys']['msg']['sysFaCd'] }}</small>
                     <label for="faCd">공장 코드</label>
                 </IftaLabel>
 
@@ -215,8 +215,38 @@ const getSysFactoryApply = () => {
             label: '신청'
         },
         accept : async () => {
-            /** APS의 cenToFac 테이블에 insert 처리 이후 작업하기 */
-            console.log('test');
+            const params = {
+                faCd : factory['sys']['info']['faCd']
+            };
+
+            try
+            {
+                const instance  = await getAxiosData();
+                await instance.post(`https://data.planorder.kr/factoryV1/getSysFactoryRequest`, params);
+                await factory.getList();
+                getPopupClose(true, 'sysFactorySearch');
+            }
+            catch(e)
+            {
+                console.log(e);
+                if(e.response.status === 401)
+                {
+                    alert('토큰 만료');
+                }
+                else
+                {
+                    switch(e.response.data['code'])
+                    {
+                        case 4000:
+                            alert('시스템 공장 거래 신청 도중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                        break;
+                        case 4100:
+                            factory.getSysMsgSet('이미 신청한 공장입니다.');
+                            getFocus('sysFaCd');
+                        break;
+                    }
+                }
+            }
         }
     });
 }

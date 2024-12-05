@@ -19,6 +19,7 @@ import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 import Dialog from 'primevue/dialog'; 
 import Tooltip from 'primevue/tooltip';
+import KeyFilter from 'primevue/keyfilter';
 
 const app = createApp(App)
 
@@ -31,6 +32,7 @@ app.component('ConfirmDialog', ConfirmDialog);
 app.component('Dialog', Dialog);
 app.component('Select', Select);
 app.directive('tooltip', Tooltip);
+app.directive('keyfilter', KeyFilter);
 
 import Aura from '@primevue/themes/aura';
 

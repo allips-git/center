@@ -3,20 +3,20 @@
     
     <div class="bottom-modal-contents-box !pb-20">
         <div class="w-full flex justify-end">
-            <Button label="제품 변경" outlined/>
+            <Button label="제품 변경" outlined @click="getPopupClose(true, 'itemSet')"/>
         </div>    
         <div class="text-base font-bold flex justify-between bg-gray-50 p-2 px-4 rounded-lg border border-indigo-300">
-            <h2>제품 이름 (하위 분류)</h2>
-            <p class="text-indigo-600">(0폭) 0원</p>
+            <h2>{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
+            <p class="text-indigo-600">({{ esti['common']['unitSize'] }}{{ esti['common']['unitNm'] }}) {{ getAmt(esti['common']['saleUnit']) }}원</p>
         </div>
         <!-- 입력 계산기 컴포넌트 -->
         <div class="">
-            <!-- 폭 , 야드 -->
-            <CalcWidthYardSet v-if="unit==='001'"/>
             <!-- 회베 -->
-            <CalcHebeSet v-if="unit==='002'"/>
+            <CalcHebeSet v-if="esti['common']['unit'] === '001'"/>
+            <!-- 폭 , 야드 -->
+            <CalcWidthYardSet v-if="esti['common']['unit'] === '002' || esti['common']['unit'] === '003'"/>
             <!-- EA -->
-            <CalcEASet v-if="unit==='003'"/>
+            <CalcEASet v-if="esti['common']['unit'] === '004'"/>
         </div>
 
         <!-- 옵션 더보기 -->
@@ -62,62 +62,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-
 import Textarea from 'primevue/textarea';
 import IftaLabel from 'primevue/iftalabel';
 import Accordion from 'primevue/accordion';
 import AccordionPanel from 'primevue/accordionpanel';
 import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
-import RadioButton from 'primevue/radiobutton';
-
 import CalculateCard from '@/components/card/CalculateCard.vue'
-
 import CalcEASet from '@/views/include/calc/CalcEASet.vue'
 import CalcHebeSet from '@/views/include/calc/CalcHebeSet.vue'
 import CalcWidthYardSet from '@/views/include/calc/CalcWidthYardSet.vue'
+import { useEstiStore } from '@/store';
+import { getCommas } from '@/assets/js/function';
+import { usePopup } from '@/assets/js/popup';
 
+const esti = useEstiStore();
+const { getPopupClose } = usePopup();
 
-
-const unit = ref ('003')
-
-// 상위 항목과 하위 항목을 함께 정의
-const items = ref([
-  {
-    label: '아르키디아 1',
-    colors: ['r-화이트', '그레이', '블루', '다크그레이'],
-  },
-  {
-    label: '아르키디아 2',
-    colors: ['r-화이트', '그레이', '블루', '다크그레이'],
-  },
-  {
-    label: '아르키디아 3',
-    colors: ['r-화이트', '그레이', '블루', '다크그레이'],
-  },
-  {
-    label: '아르키디아 4',
-    colors: ['r-화이트', '그레이', '블루', '다크그레이'],
-  },
-  {
-    label: '아르키디아 5',
-    colors: ['r-화이트', '그레이', '블루', '다크그레이'],
-  },
-]);
-
-// 현재 열려 있는 하위 목록의 인덱스
-const activeIndex = ref<number | null>(null);
-
-// 하위 목록 토글 함수
-const toggleSubList = (index: number) => {
-  activeIndex.value = activeIndex.value === index ? null : index;
-};
-
-// 현재 인덱스가 활성화되어 있는지 확인하는 함수
-const isActive = (index: number) => {
-  return activeIndex.value === index;
-};
+const getAmt = (amt: number) => {
+    return getCommas(amt);
+}
 
 </script>
 

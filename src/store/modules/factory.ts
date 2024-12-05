@@ -34,6 +34,10 @@ interface OutInfo {
     memo        : string;
 }
 
+interface SysMsg {
+    sysFaCd : string;
+}
+
 interface OutMsg {
     outFaNm : string;
     tel     : string;
@@ -78,6 +82,12 @@ const getSysDetail = (): SysDetail => {
     }
 }
 
+const getSysMsg = (): SysMsg => {
+    return {
+        sysFaCd : ''
+    }
+}
+
 const getOutInfo = (): OutInfo => {
     return {
         faNm        : '',
@@ -105,7 +115,7 @@ interface State {
         list        : SysList[];
         info        : SysInfo;
         detail      : SysDetail;
-        msg         : string;
+        msg         : SysMsg;
     },
     out : {
         type    : string;
@@ -122,7 +132,7 @@ export const useFactoryStore = defineStore('factory', {
             list        : [],
             info        : getSysInfo(),
             // detail  : getSysDetail(),
-            msg         : ''
+            msg         : getSysMsg()
         },
         out : {
             type    : 'I',
@@ -181,7 +191,7 @@ export const useFactoryStore = defineStore('factory', {
         },
         getSysMsgSet(msg: string)
         {
-            this.sys.msg = msg;
+            this.sys.msg.sysFaCd = msg;
         },
         getOutMsgSet(msg: string, name: string)
         {

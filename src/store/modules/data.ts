@@ -20,6 +20,18 @@ export const useDataStore = defineStore('data', {
                 { name : '블라인드', value : 'BS01' },
                 { name : '커튼', value : 'BS02' },
             ],
+            division : [
+                { value : 1, name : '단창'},
+                { value : 2, name : '2분할'},
+                { value : 3, name : '3분할'},
+                { value : 4, name : '4분할'},
+                { value : 5, name : '5분할'},
+                { value : 6, name : '6분할'},
+                { value : 7, name : '7분할'},
+                { value : 8, name : '8분할'},
+                { value : 9, name : '9분할'},
+                { value : 10, name : '10분할'}
+            ],
             proc  : [ 
                 { name : '나비주름', value : '001' },
                 { name : '평주름', value : '002' }

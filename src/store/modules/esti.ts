@@ -2,6 +2,7 @@
  * @description 견적 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
+import { getHebeCalc, getPokCalc, getYardCalc, getBlindParams, getCurtainParams } from '@/assets/js/calcAndProcess';
 
 type Nullable<T>    = T | null;
 type YnType         = 'Y' | 'N';
@@ -91,6 +92,19 @@ interface TotalInfo {
     totalSaleTax        : number;
     totalPurcAmt        : number;
     totalPurcTax        : number;
+}
+
+interface ItemInfo {
+    fcCd        : string;
+    ordGb       : string;
+    itemCd      : string;
+    itemNm      : string;
+    icCd        : string;
+    icNm        : string;
+    unit        : string;
+    unitNm      : string;
+    saleUnit    : number;
+    purcUnit    : number;
 }
 
 /**
@@ -315,6 +329,93 @@ export const useEstiStore = defineStore('esti', {
             {
                 console.log(e);
             }
+        },
+        async getCommonSet(info: ItemInfo)
+        {
+            for (const data in info) {
+                this.common[data] = info[data];
+            }
+        },
+        getUnitCalc()
+        {
+            let info;
+
+            switch(this.common['unit'])
+            {
+                case '001': /** 회배 */
+                    info = getHebeCalc(this.common, this.blind);
+
+                    this.total['totalQty']      = Number(this.blind['division']) === 1 ? (Number(this.blind['leftQty']) + Number(this.blind['rightQty'])) : Number(this.blind['bQty']);
+                    this.total['totalUnitSize'] = info['hebe'];
+        
+                    if(Number(this.blind['division']) > 1)
+                    {
+                        this.total['eachItemSaleAmt'] = info['eachItemSaleAmt'];
+                        this.total['eachItemSaleTax'] = info['eachItemSaleTax'];
+                        this.total['eachItemPurcAmt'] = info['eachItemPurcAmt'];
+                        this.total['eachItemPurcTax'] = info['eachItemPurcTax'];
+                    }
+        
+                    this.total['totalShapeSaleAmt']   = 0;
+                    this.total['totalHeightSaleAmt']  = 0;
+                break;
+                case '002':
+                    this.curtain['size'] = getYard({
+                        width   : Number(this.common['width']),
+                        usage   : Number(this.curtain['use']),
+                        size    : Number(this.common['unitSize']),
+                        los     : this.curtain['los']
+                    });
+        
+                    info = getYardCalc(this.common, this.curtain);
+        
+                    this.total['totalQty']          = Number(this.curtain['cQty']);
+                    this.total['totalUnitSize']     = info['yard'];
+                    
+                    this.total['totalShapeSaleAmt']    = Number(info['shapeSaleAmt']);
+                    this.total['totalShapeSaleTax']    = Number(info['shapeSaleTax']);
+                    this.total['totalShapePurcAmt']    = Number(info['shapePurcAmt']);
+                    this.total['totalShapePurcTax']    = Number(info['shapePurcTax']);
+                break;
+                case '003': /** 폭 */
+                    this.curtain['size'] = getPok({
+                        width   : Number(this.common['width']),
+                        usage   : Number(this.curtain['use']),
+                        size    : Number(this.common['unitSize']),
+                        pokSpec : this.curtain['pokSpec'],
+                        los     : this.curtain['los']
+                    });
+                    
+                    info = getPokCalc(this.common, this.curtain);
+        
+                    this.total['totalQty']             = Number(this.curtain['cQty']);
+                    this.total['totalUnitSize']        = info['pok'];
+        
+                    this.total['totalHeightSaleAmt']   = Number(info['heightSaleAmt']);
+                    this.total['totalHeightSaleTax']   = Number(info['heightSaleTax']);
+                    this.total['totalHeightPurcAmt']   = Number(info['heightPurcAmt']);
+                    this.total['totalHeightPurcTax']   = Number(info['heightPurcTax']);
+        
+                    this.total['totalShapeSaleAmt']    = Number(info['shapeSaleAmt']);
+                    this.total['totalShapeSaleTax']    = Number(info['shapeSaleTax']);
+                    this.total['totalShapePurcAmt']    = Number(info['shapePurcAmt']);
+                    this.total['totalShapePurcTax']    = Number(info['shapePurcTax']);
+                break;
+                case '004': /** EA */
+                    
+                break;
+            }
+
+            this.total['totalItemSaleAmt']   = info['itemSaleAmt'];
+            this.total['totalItemSaleTax']   = info['itemSaleTax'];
+            this.total['totalItemPurcAmt']   = info['itemPurcAmt'];
+            this.total['totalItemPurcTax']   = info['itemPurcTax'];
+            /** 옵션 추가 필요 */
+            this.total['totalSaleAmt']       = info['totalSaleAmt'];
+            this.total['totalSaleTax']       = info['totalSaleTax'];
+            this.total['totalPurcAmt']       = info['totalPurcAmt'];
+            this.total['totalPurcTax']       = info['totalPurcTax'];
+            // this.total['totalDcCalcAmt']     = info['dcAmt'];
         }
     },
     persist: {
