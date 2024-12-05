@@ -27,8 +27,8 @@
         </IftaLabel>
 
         <IftaLabel class="label-input-box">
-            <InputText v-model="client['info']['addrDetail']"/>
-            <label>상새주소</label>
+            <InputText id="addrDetail" v-model="client['info']['addrDetail']"/>
+            <label>상세주소</label>
         </IftaLabel>
 
         <IftaLabel class="label-input-box">

@@ -10,6 +10,8 @@ interface Select {
 }
 
 interface ItemInfo {
+    fcCd        : string;
+    ordGb       : string;
     itemCd      : string;
     itemNm      : string;
     icCd        : string;
@@ -21,6 +23,8 @@ interface ItemInfo {
 }
 
 interface ExInfo {
+    fcCd        : null;
+    ordGb       : string;
     itemCd      : string;
     itemNm      : string;
     icCd        : string;
@@ -37,6 +41,8 @@ interface ExInfo {
  */
 const getExCurtainInfo = (): ExInfo => {
     return {
+        fcCd        : null,
+        ordGb       : 'O',
         itemCd      : 'EX000001',
         itemNm      : '커튼 실측',
         icCd        : '',
@@ -54,6 +60,8 @@ const getExCurtainInfo = (): ExInfo => {
  */
 const getExBlindInfo = (): ExInfo => {
     return {
+        fcCd        : null,
+        ordGb       : 'O',
         itemCd      : 'EX000002',
         itemNm      : '블라인드 실측',
         icCd        : '',
@@ -71,6 +79,8 @@ const getExBlindInfo = (): ExInfo => {
  */
 const getItemInfo = (): ItemInfo => {
     return {
+        fcCd        : '',
+        ordGb       : '',
         itemCd      : '',
         itemNm      : '',
         icCd        : '',
@@ -203,12 +213,18 @@ export const useProductStore = defineStore('product', {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/estiV1/getItemInfo`, params);
 
-                console.log(res);
+                this.info = res.data['info'];
+
+                console.log(this.info);
             }
             catch(e)
             {
                 console.error(e);
             }
+        },
+        getEx(itemCd: string)
+        {
+            this.info = itemCd === 'EX000001' ? this.exItem['curtain'] : this.exItem['blind'];
         },
         getReset()
         {
