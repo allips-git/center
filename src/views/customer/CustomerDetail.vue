@@ -55,29 +55,25 @@
             </TabPanels>
         </Tabs>
         <div class="fixed bottom-4 right-4">
-            <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getPopupOpen('itemSet')" />
+            <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getPopupOpen('itemList')" />
         </div>
     </main>
-    <Dialog v-model:visible="popup['pop']['itemSet']" header="제품선택" 
+    <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
+        :modal=true position="bottom" class="custom-dialog-bottom"
+        @update:visible="getPopClose(true, 'itemList')">
+        <ProductChoice/>
+    </Dialog>
+
+    <Dialog v-model:visible="popup['pop']['itemSet']" header="제품등록" 
         :modal=true position="bottom" class="custom-dialog-bottom"
         @update:visible="getPopClose(true, 'itemSet')">
-        <ProductChoice/>
+        <ProductRegister/>
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['ordList']"  header="발주서" 
         :modal=true position="bottom" class="custom-dialog-bottom"
         @update:visible="getPopClose(true, 'ordList')">
         <OrderList/>
-    </Dialog>
-
-    <Dialog
-    v-model:visible="ProductRegisterPop" 
-    header="제품등록" 
-    :modal=true
-    position="bottom"
-    class="custom-dialog-bottom"
-    >
-        <ProductRegister/>
     </Dialog>
 </template>
     
@@ -93,7 +89,7 @@ import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
-import { onMounted , ref } from 'vue';
+import { onMounted } from 'vue';
 import { usePopupStore, useClientStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
@@ -105,8 +101,6 @@ const { getPopupOpen, getPopupClose } = usePopup();
 const getPopClose = (gb: boolean, popNm: string) => {
     getPopupClose(popNm, gb);
 }
-
-const ProductRegisterPop = ref(false)
 
 onMounted(() => {
     client.getDetail();
