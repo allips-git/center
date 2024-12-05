@@ -1,6 +1,5 @@
 <template>
     <main>
-        <BackHeader title="제품 이름"/>
         <div class="p-5">
             <div class="flex gap-2">
                 <Select placeholder="선택" /> 
