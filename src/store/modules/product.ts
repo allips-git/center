@@ -86,10 +86,12 @@ const getItemInfo = (): ItemInfo => {
 interface State {
     option : Select[];
     fcCd   : string;
-    itemNm : string;
+    search : string;
+    itemCd : string;
+    icCd   : string;
     list   : [];
     info   : ItemInfo;
-    exImte : {
+    exItem : {
         blind   : ExInfo;
         curtain : ExInfo;
     };
@@ -100,24 +102,27 @@ export const useProductStore = defineStore('product', {
     state: (): State => ({
         option : [{ label: "브랜드_검색", value: "" }],
         fcCd   : '',
-        itemNm : '',
+        search : '',
+        itemCd : '',
+        icCd   : '',
         list   : [],
         info   : getItemInfo(),
-        exImte : {
+        exItem : {
             blind   : getExBlindInfo(),
             curtain : getExCurtainInfo()
         },
         start  : 0
     }),
     actions: {
+        /**
+         * @description 연동된 공장 / 외주공장 데이터 가져오기
+         */
         async getFactory()
         {
             try
             {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/estiV1/getFactory`);
-
-                console.log(res);
 
                 res.data['list'].forEach(item => {
                     if (!this.option.some(item1 => item1.label === item.label)) 
@@ -131,15 +136,25 @@ export const useProductStore = defineStore('product', {
                 console.error(e);
             }
         },
+        /**
+         * @description 제품 리스트
+         */
         async getList()
         {
+            if(this.fcCd === '')
+            {
+                this.list = [];
+                return;
+            }
+
             try
             {
                 const params = {
                     fcCd    : this.fcCd,
-                    itemNm  : this.itemNm,
+                    itemNm  : this.search,
                     start   : this.start
-                }
+                };
+
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/estiV1/getItemList`, params);
                 const itemList  = [];
@@ -162,7 +177,7 @@ export const useProductStore = defineStore('product', {
                         itemCd      : item.itemCd,
                         itemNm      : item.itemNm,
                         unit        : item.unitNm,
-                        price       : Number(item.saleAmt),
+                        amt         : Number(item.saleAmt),
                         colorLists  : colorLists,
                         noUsed      : item.useYn === 'N' ? true : false
                     })
@@ -174,6 +189,32 @@ export const useProductStore = defineStore('product', {
             {
                 console.error(e);
             }
+        },
+        async getInfo()
+        {
+            try
+            {
+                const params = {
+                    fcCd   : this.fcCd,
+                    itemCd : this.itemCd,
+                    icCd   : this.icCd
+                };
+
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/estiV1/getItemInfo`, params);
+
+                console.log(res);
+            }
+            catch(e)
+            {
+                console.error(e);
+            }
+        },
+        getReset()
+        {
+            this.fcCd   = '';
+            this.search = '';
+            this.list   = [];
         }
     }
 });
