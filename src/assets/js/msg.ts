@@ -46,7 +46,11 @@ interface DivSpec {
     size    : number;
 }
 
-interface EstiHebeMsg {
+interface EstiBlindMsg {
+    maxWidth    : number;
+    maxHeight   : number;
+    minWidth    : number;
+    minHeight   : number;
     width       : number;
     height      : number;
     leftQty     : number;
@@ -59,10 +63,25 @@ interface EstiHebeMsg {
 /**
  * @description 견적 저장 시 값 체크 (단위 : 회배)
  */
-export const estiHebeMsg = (params: EstiHebeMsg): { msg: string; id: string, state: boolean } => {
+export const estiBlindMsg = (params: EstiBlindMsg): { msg: string; id: string, state: boolean } => {
     if(!params['width'] || params['width'] === 0)
     {
         return { msg : '가로를 입력해주세요.', id : 'bWidth', state : false };
+    }
+
+    if(!params['height'] || params['height'] === 0)
+    {
+        return { msg : '세로를 입력해주세요.', id : 'bHeight', state : false };
+    }
+
+    if((Number(params['width']) < Number(params['minWidth'])) || (Number(params['width']) > Number(params['maxWidth'])))
+    {
+        return { msg : `해당 제품 최소 가로 ${params['minWidth']}cm, 최대 가로 ${params['maxWidth']}cm 입니다.`, id : 'bWidth', state : false };
+    }
+
+    if((Number(params['height']) < Number(params['minHeight'])) || (Number(params['height']) > Number(params['maxHeight'])))
+    {
+        return { msg : `해당 제품 최소 세로 ${params['minHeight']}cm, 최대 가로 ${params['maxHeight']}cm 입니다.`, id : 'bHeight', state : false };
     }
 
     if(!params['height'] || params['height'] === 0)

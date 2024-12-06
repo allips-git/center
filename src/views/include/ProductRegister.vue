@@ -77,7 +77,7 @@ import CalcWidthYardSet from '@/views/include/calc/CalcWidthYardSet.vue'
 import { useEstiStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
-import { estiHebeMsg, estiEaMsg } from '@/assets/js/msg';
+import { estiBlindMsg, estiEaMsg } from '@/assets/js/msg';
 
 const esti = useEstiStore();
 const { getPopupClose } = usePopup();
@@ -93,17 +93,19 @@ const getEstiSave = () => {
     {
         case '001':
         {
-            checkParams['width']    = esti['common']['width'];
-            checkParams['height']   = esti['common']['height'];
-            checkParams['leftQty']  = esti['blind']['leftQty'];
-            checkParams['rightQty'] = esti['blind']['rightQty'];
-            checkParams['qty']      = esti['blind']['bQty'];
-            checkParams['division'] = esti['blind']['division'];
-            checkParams['divSpec']  = esti['blind']['divSpec'];
+            checkParams['maxWidth']     = esti['blind']['maxWidth'];
+            checkParams['maxHeight']    = esti['blind']['maxHeight'];
+            checkParams['minWidth']     = esti['blind']['minWidth'];
+            checkParams['minHeight']    = esti['blind']['minHeight'];
+            checkParams['width']        = esti['common']['width'];
+            checkParams['height']       = esti['common']['height'];
+            checkParams['leftQty']      = esti['blind']['leftQty'];
+            checkParams['rightQty']     = esti['blind']['rightQty'];
+            checkParams['qty']          = esti['blind']['bQty'];
+            checkParams['division']     = esti['blind']['division'];
+            checkParams['divSpec']      = esti['blind']['divSpec'];
 
-            const result = estiHebeMsg(checkParams);
-
-            console.log(result);
+            const result = estiBlindMsg(checkParams);
 
             if(!result['state'])
             {
@@ -113,9 +115,7 @@ const getEstiSave = () => {
             }
         }            
         break;
-        case '002':
-        break;
-        case '003':
+        case '002': case '003':
         break;
         case '004':
         {
