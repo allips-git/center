@@ -29,7 +29,7 @@
                         'text-red-500' : calc.red,
                         'text-blue-500': calc.blue,
                         'text-neutral-700': !calc.red && !calc.blue
-                    }">{{ (calc.amt) }}<span class="font-normal text-xs">원</span>
+                    }">{{ getAmt(calc.amt) }}<span class="font-normal text-xs">원</span>
                     </dd>
                 </dl>
                 </template>
@@ -45,7 +45,7 @@
                 <dl class="flex pt-3 font-bold items-center justify-between  border-t border-dotted">
                     <dt class="text-xl">{{ totalTitle }}</dt>
                     <dd class="flex items-center text-indigo-600">
-                        <p class="text-xl">12121212</p> 
+                        <p class="text-xl">{{ getAmt(totalAmt) }}</p> 
                         <span class="text-sm ml-0.5">원</span>
                     </dd>
                 </dl>
@@ -55,37 +55,34 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
-
-
-defineProps({
-    title      : String,
-    totalTitle : String,
-    showtitle  : Boolean,
-    showtoggle : Boolean,
-    unit       : String,
-})
-
-interface Calc {
-    title: string;
-    amt: number;
-    red: boolean;
-    blue: boolean;
-}
-
 import Accordion from 'primevue/accordion';
 import AccordionPanel from 'primevue/accordionpanel';
 import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
+import { getCommas } from '@/assets/js/function';
 
-const calcs = ref<Calc[]>([
-    { title: '제품 금액', amt: 10000, red: false, blue: false },
-    { title: '배송비', amt: 3000, red: true, blue: false },
-    { title: '할인', amt: -2000, red: false, blue: true },
-    { title: '세금', amt: 500, red: false, blue: false },
-    { title: '총 합계', amt: 11500, red: false, blue: false }
-]);
+defineProps({
+    title       : String,
+    unit        : String,
+    showUnit    : Boolean,
+    showMore    : Boolean,
+    calcs       : Array,
+    totalTitle  : String,
+    showtitle   : Boolean,
+    totalAmt    : Number,
+    showtoggle  : Boolean,
+})
 
+const getAmt = (amt: number) => {
+    return getCommas(amt);
+}
+
+// interface Calc {
+//     title   : string;
+//     amt     : number;
+//     red     : boolean;
+//     blue    : boolean;
+// }
 
 </script>
 

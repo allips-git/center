@@ -2,6 +2,7 @@
  * @description 견적 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
+import { getHebe, getPok, eaCalculation } from '@/assets/js/order';
 import { getHebeCalc, getPokCalc, getYardCalc, getBlindParams, getCurtainParams } from '@/assets/js/calcAndProcess';
 
 type Nullable<T>    = T | null;
@@ -246,6 +247,20 @@ export const useEstiStore = defineStore('esti', {
         // },
         // conInfo     : getConInfo()
     }),
+    getters: {
+        totalAmtInfo : (state) => {
+            const info = [
+                { title : '제품 금액', amt : state.total['totalItemSaleAmt'] + state.total['totalItemSaleTax'] },
+                { title : '옵션 금액', amt : state.total['totalOptionSaleAmt'] + state.total['totalOptionSaleTax'] },
+                { title : '형상 금액', amt : state.total['totalShapeSaleAmt'] + state.total['totalShapeSaleTax'] },
+                { title : '세로길이 추가 금액', amt : state.total['totalHeightSaleAmt'] + state.total['totalHeightSaleTax'] }
+            ];
+
+            console.log(info);
+
+            return info;
+        }
+    },
     actions : {
         async getList()
         {
@@ -275,8 +290,8 @@ export const useEstiStore = defineStore('esti', {
                                             rows.push(...esti.detail.map(dItem => ({
                                                 width   : dItem.width,
                                                 height  : dItem.height,
-                                                leftQty : dItem.handle === '좌' ? 1 : 0,
-                                                rightQty: dItem.handle === '우' ? 1 : 0,
+                                                leftQty : dItem.handle === 'L' ? 1 : 0,
+                                                rightQty: dItem.handle === 'R' ? 1 : 0,
                                                 size    : dItem.size + esti.unitNm
                                             })));
                                         }
@@ -335,6 +350,68 @@ export const useEstiStore = defineStore('esti', {
             for (const data in info) {
                 this.common[data] = info[data];
             }
+        },
+        getDivisionSet()
+        {
+            console.log('division');
+            const division  = Number(this.blind['division']);
+
+            const specArr   = [];
+            const specInfo  = this.blind['divSpec'];
+        
+            for(let i=0; i<division; i++)
+            {
+                const spec = {
+                    width  : specInfo[i] !== undefined ? specInfo[i]['width'] : '',
+                    height : this.common['height'],
+                    handle : i === 0 ? 'L' : 'R',
+                    size   : getHebe({
+                        width  : specInfo[i] !== undefined ? specInfo[i]['width'] : '',
+                        height : Number(this.common['height']),
+                        size   : Number(this.common['unitSize'])
+                    })
+                }
+        
+                specArr.push(spec);
+            }
+        
+            this.blind['divSpec'] = specArr;
+        },
+        getEqual()
+        {
+            const width    = Number(this.common['width']);
+            const division = Number(this.blind['division']);
+        
+            let divisionWidth, nam, lastWidth;
+        
+            if(width > 0)
+            {
+                divisionWidth   = Number(Math.floor((width / division) * 10) / 10); /** 분할길이 */
+                nam             = (divisionWidth * (division - 1)).toFixed(1);      /** 나머지 값 */
+                lastWidth       = Number((width - nam).toFixed(1));                 /** 나머지 길이 */
+        
+                for(let i=0; i<division; i++)
+                {
+                    this.blind['divSpec'][i]['width'] = (i === (division-1) ? lastWidth : divisionWidth);
+                    this.blind['divSpec'][i]['size']  = getHebe({
+                        width  : i === (division-1) ? lastWidth : divisionWidth,
+                        height : this.common['height'],
+                        size   : 0
+                    })
+                }
+            }
+        },
+        getDivBlindWidth(index: number)
+        {
+            this.blind['divSpec'][index]['size']  = getHebe({
+                width  : this.blind['divSpec'][index]['width'],
+                height : Number(this.common['height']),
+                size   : 0
+            });
+
+            const total = this.blind['divSpec'].reduce((acc, val) => acc + Number(val['width']), 0);
+
+            this.common['width'] = Math.round(Number(total) * 10) / 10;
         },
         getUnitCalc()
         {
@@ -402,7 +479,18 @@ export const useEstiStore = defineStore('esti', {
                     this.total['totalShapePurcTax']    = Number(info['shapePurcTax']);
                 break;
                 case '004': /** EA */
-                    
+                    info = eaCalculation({
+                        purcAmt : Number(this.common['purcUnit']),
+                        saleAmt : Number(this.common['saleUnit']),
+                        qty     : Number(this.ea['qty']),
+                        option  : [],
+                        dcUnit  : this.common['dcUnit'],
+                        dcAmt   : this.common['dcAmt'],
+                        vat     : this.common['vat']
+                    });
+            
+                    this.total['totalQty']      = Number(this.ea['qty']);
+                    this.total['totalUnitSize'] = info['ea'];
                 break;
             }
 
