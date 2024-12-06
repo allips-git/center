@@ -39,6 +39,88 @@ export const clientMsg = (params: ClientMsg): { msg: string; id: string, state: 
     return { msg : '', id : '', state : true };
 }
 
+interface DivSpec {
+    width   : number;
+    height  : number;
+    handle  : string;
+    size    : number;
+}
+
+interface EstiHebeMsg {
+    width       : number;
+    height      : number;
+    leftQty     : number;
+    rightQty    : number;
+    qty         : number;
+    division    : number;
+    divSpec     : DivSpec[];
+}
+
+/**
+ * @description 견적 저장 시 값 체크 (단위 : 회배)
+ */
+export const estiHebeMsg = (params: EstiHebeMsg): { msg: string; id: string, state: boolean } => {
+    if(!params['width'] || params['width'] === 0)
+    {
+        return { msg : '가로를 입력해주세요.', id : 'bWidth', state : false };
+    }
+
+    if(!params['height'] || params['height'] === 0)
+    {
+        return { msg : '세로를 입력해주세요.', id : 'bHeight', state : false };
+    }
+
+    if(params['division'] === 1)
+    {
+        if((!params['leftQty'] || params['leftQty'] === 0) && (!params['rightQty'] || params['heirightQtyght'] === 0))
+        {
+            return { msg : '좌, 우 중 수량을 입력해주세요.', id : 'leftQty', state : false };
+        }
+    }
+    else
+    {
+        if(!params['qty'] || params['qty'] === 0)
+        {
+            return { msg : '수량을 입력해주세요.', id : 'bQty', state : false };
+        }
+
+        for(let index = 0; index < params['divSpec'].length; index++)
+        {
+            const item = params['divSpec'][index];
+    
+            if(!item['width'] || item['width'] === 0)
+            {
+                return { msg : '분할 가로 길이를 입력해주세요.', id : `bWidth${index}`, state : false };
+            }
+        }
+
+        const sumWidth = params['divSpec'].reduce((sum, item) => sum + item.width, 0);
+
+        if(Number(params['width']) !== Number(sumWidth))
+        {
+            return { msg : '분할 가로 길이 합계가 맞지않습니다.', id : 'bWidth', state : false };
+        }
+    }
+
+    return { msg : '', id : '', state : true };
+}
+
+interface EstiEaMsg {
+    qty : number;
+}
+
+/**
+ * @description 견적 저장 시 값 체크 (단위 : EA)
+ */
+export const estiEaMsg = (params: EstiEaMsg): { msg: string; id: string, state: boolean } => {
+    if(!params['qty'] || params['qty'] === 0)
+    {
+        return { msg : '수량을 입력해주세요.', id : 'qty', state : false };
+    }
+
+    return { msg : '', id : '', state : true };
+}
+
 interface OutFactoryMsg {
     faNm    : string;
     tel     : string;

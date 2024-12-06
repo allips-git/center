@@ -43,14 +43,22 @@ interface DivSpec {
 }
 
 interface BlindInfo {
-    division : number;
-    leftQty  : Nullable<number>;
-    rightQty : Nullable<number>;
-    bQty     : number;
-    divSpec  : DivSpec[];
+    maxWidth    : Nullable<number>;
+    maxHeight   : Nullable<number>;
+    minWidth    : Nullable<number>;
+    minHeight   : Nullable<number>;
+    division    : number;
+    leftQty     : Nullable<number>;
+    rightQty    : Nullable<number>;
+    bQty        : number;
+    divSpec     : DivSpec[];
 }
 
 interface CurtainInfo {
+    maxWidth        : Nullable<number>;
+    maxHeight       : Nullable<number>;
+    minWidth        : Nullable<number>;
+    minHeight       : Nullable<number>;
     shapeSaleAmt    : number;
     shapePurcAmt    : number;
     proc            : string;
@@ -93,6 +101,25 @@ interface TotalInfo {
     totalSaleTax        : number;
     totalPurcAmt        : number;
     totalPurcTax        : number;
+}
+
+interface MsgInfo {
+    ea : {
+        qty : string;
+    },
+    blind : {
+        bWidth      : string;
+        bHeight     : string;
+        leftQty     : string;
+        rightQty    : string;
+        bQty        : string;
+    },
+    curtain : {
+        cWidth  : string;
+        cHeight : string;
+        size    : string;
+        cQty    : string;
+    }
 }
 
 interface ItemInfo {
@@ -148,11 +175,15 @@ const getEaInfo = (): EaInfo => {
  */
 const getBlindInfo = (): BlindInfo => {
     return {
-        division : 1,       /** 분할 수 */
-        leftQty  : null,    /** 좌 수량 */
-        rightQty : null,    /** 우 수량 */
-        bQty     : 1,       /** 단창일 시 수량 */
-        divSpec  : []       /** { width(가로) , height(세로), handle(좌/우 구분), size(단위 크기) } */
+        maxWidth    : null,
+        maxHeight   : null,
+        minWidth    : null,
+        minHeight   : null,
+        division    : 1,       /** 분할 수 */
+        leftQty     : null,    /** 좌 수량 */
+        rightQty    : null,    /** 우 수량 */
+        bQty        : 1,       /** 단창일 시 수량 */
+        divSpec     : []       /** { width(가로) , height(세로), handle(좌/우 구분), size(단위 크기) } */
     }
 }
 
@@ -161,6 +192,10 @@ const getBlindInfo = (): BlindInfo => {
  */
 const getCurtainInfo = (): CurtainInfo => {
     return {
+        maxWidth        : null,
+        maxHeight       : null,
+        minWidth        : null,
+        minHeight       : null,
         shapeSaleAmt    : 0,
         shapePurcAmt    : 0,
         proc            : '001', /** 가공방법(나비주름 / 평주름) */
@@ -172,7 +207,7 @@ const getCurtainInfo = (): CurtainInfo => {
         cQty            : 1,     /** 수량 */
         los             : 60,    /** 로스 길이 */
         pokSpec         : 150,   /** 폭 일시 스펙 */
-        heightLen       : 0,     /** 세로 길이 제한 */
+        heightLen       : 0,     /** 세로 길이 제한(기본 세로 길이) */
         addPrice        : 0      /** 추가 비율 */
     }
 }
@@ -219,6 +254,27 @@ const getTotalInfo = (): TotalInfo => {
     }
 }
 
+const getMsgInfo = (): MsgInfo  => {
+    return {
+        ea : {
+            qty : ''
+        },
+        blind : {
+            bWidth      : '',
+            bHeight     : '',
+            leftQty     : '',
+            rightQty    : '',
+            bQty        : ''
+        },
+        curtain : {
+            cWidth  : '',
+            cHeight : '',
+            size    : '',
+            cQty    : ''
+        }
+    }
+}
+
 interface State {
     emCd        : string;
     common      : CommonInfo;
@@ -226,7 +282,8 @@ interface State {
     blind       : BlindInfo;
     curtain     : CurtainInfo;
     total       : TotalInfo;
-    list        : []
+    list        : [],
+    msg         : MsgInfo;
 }
 
 export const useEstiStore = defineStore('esti', {
@@ -238,6 +295,7 @@ export const useEstiStore = defineStore('esti', {
         curtain     : getCurtainInfo(),
         total       : getTotalInfo(),
         list        : [],
+        msg         : getMsgInfo()
         // payList     : getPayList(),
         // dcInfo      : getAmtInfo(),
         // addInfo     : getAmtInfo(),
@@ -255,8 +313,6 @@ export const useEstiStore = defineStore('esti', {
                 { title : '형상 금액', amt : state.total['totalShapeSaleAmt'] + state.total['totalShapeSaleTax'] },
                 { title : '세로길이 추가 금액', amt : state.total['totalHeightSaleAmt'] + state.total['totalHeightSaleTax'] }
             ];
-
-            console.log(info);
 
             return info;
         }
@@ -351,9 +407,20 @@ export const useEstiStore = defineStore('esti', {
                 this.common[data] = info[data];
             }
         },
+        async getBlindSet(info: object)
+        {
+            for(const data in info){
+                this.blind[data] = info[data];
+            }
+        },
+        async getCurtainSet(info: object)
+        {
+            for(const data in info){
+                this.curtain[data] = info[data];
+            }
+        },
         getDivisionSet()
         {
-            console.log('division');
             const division  = Number(this.blind['division']);
 
             const specArr   = [];
@@ -504,6 +571,24 @@ export const useEstiStore = defineStore('esti', {
             this.total['totalPurcAmt']       = info['totalPurcAmt'];
             this.total['totalPurcTax']       = info['totalPurcTax'];
             // this.total['totalDcCalcAmt']     = info['dcAmt'];
+        },
+        getMsgSet(msg: string, id: string)
+        {
+            this.msg = getMsgInfo();
+            
+            switch(this.common['unit'])
+            {
+                case '001':
+                    this.msg['blind'][id] = msg;
+                break;
+                case '002':
+                break;
+                case '003':
+                break;
+                case '004':
+                    this.msg['ea'][id] = msg;
+                break;
+            }
         }
     },
     persist: {

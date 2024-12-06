@@ -7,7 +7,7 @@
 
         <IftaLabel class="w-full">
             <label>수량</label>
-            <InputNumber v-model="esti['ea']['qty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">
+            <InputNumber inputId="qty" v-model="esti['ea']['qty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">
             <template #incrementbuttonicon>
                 <span class="pi pi-plus" />
             </template>
@@ -15,6 +15,7 @@
                 <span class="pi pi-minus" />
             </template>
         </InputNumber>
+        <small class="text-red-500">{{ esti['msg']['ea']['qty'] }}</small>
         </IftaLabel>
     </div>
 </template>

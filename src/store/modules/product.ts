@@ -213,13 +213,16 @@ export const useProductStore = defineStore('product', {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/estiV1/getItemInfo`, params);
 
+                console.log(res);
+
                 this.info = res.data['info'];
 
-                console.log(this.info);
+                return { result : true, calc : res.data['calc'] };
             }
             catch(e)
             {
                 console.error(e);
+                return { result : false, calc : null };
             }
         },
         getEx(itemCd: string)
