@@ -77,8 +77,26 @@ const getItemChoice = async (icCd: string) => {
     product['icCd'] = icCd;
     getPopupOpen('itemSet');
     
-    await product.getInfo();
+    const result = await product.getInfo();
+
+    console.log(result);
+
     await esti.getCommonSet(product['info']);
+    
+    if(product['info']['ordGb'] === 'S')
+    {
+        switch(product['info']['unit'])
+        {
+            case '001':
+                esti.getBlindSet(result['calc']);
+
+                console.log(esti['blind']);
+            break;
+            case '002': case '003':
+                esti.getCurtain(result['calc']);
+            break;
+        }        
+    }
 }
 
 const getExItem = async (itemCd: string) => {

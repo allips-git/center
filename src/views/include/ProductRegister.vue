@@ -52,11 +52,13 @@
             </div>
         </section>
         <div class="">
-            <CalculateCard title="총 단위" :showtitle="true"/>
+            <CalculateCard title="총 단위" :showtitle="true" 
+                :unit="esti['total']['totalUnitSize']+esti['common']['unitNm']"
+                :calcs="esti['totalAmtInfo']" totalTitle="총 금액" :totalAmt="esti['total']['totalSaleAmt']" :showUnit="true"/>
         </div>
     </div>
     <div class="bottom-modal-absol-box">
-        <Button type="button" label="저장" @click="outsourcePop = false" class="w-full"></Button>
+        <Button type="button" label="저장" @click="getEstiSave" class="w-full"></Button>
     </div>    
 </main>
 </template>
@@ -75,12 +77,69 @@ import CalcWidthYardSet from '@/views/include/calc/CalcWidthYardSet.vue'
 import { useEstiStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
+import { estiBlindMsg, estiEaMsg } from '@/assets/js/msg';
 
 const esti = useEstiStore();
 const { getPopupClose } = usePopup();
 
 const getAmt = (amt: number) => {
-    return getCommas(amt);
+    return getCommas(Number(amt));
+}
+
+const getEstiSave = () => {
+    const checkParams = new Object();
+
+    switch(esti['common']['unit'])
+    {
+        case '001':
+        {
+            checkParams['maxWidth']     = esti['blind']['maxWidth'];
+            checkParams['maxHeight']    = esti['blind']['maxHeight'];
+            checkParams['minWidth']     = esti['blind']['minWidth'];
+            checkParams['minHeight']    = esti['blind']['minHeight'];
+            checkParams['width']        = esti['common']['width'];
+            checkParams['height']       = esti['common']['height'];
+            checkParams['leftQty']      = esti['blind']['leftQty'];
+            checkParams['rightQty']     = esti['blind']['rightQty'];
+            checkParams['qty']          = esti['blind']['bQty'];
+            checkParams['division']     = esti['blind']['division'];
+            checkParams['divSpec']      = esti['blind']['divSpec'];
+
+            const result = estiBlindMsg(checkParams);
+
+            if(!result['state'])
+            {
+                esti.getMsgSet(result['msg'], result['id']);
+                getFocus(result['id']);
+                return false;
+            }
+        }            
+        break;
+        case '002': case '003':
+        break;
+        case '004':
+        {
+            checkParams['qty'] = esti['ea']['qty'];
+
+            const result = estiEaMsg(checkParams);
+
+            if(!result['state'])
+            {
+                esti.getMsgSet(result['msg'], result['id']);
+                getFocus(result['id']);
+                return false;
+            }
+        }
+        break;
+    }
+}
+
+const getFocus = (id: string) => {
+    const inputElement = document.getElementById(id);
+    if (inputElement) 
+    {
+        inputElement.focus();
+    }
 }
 
 </script>

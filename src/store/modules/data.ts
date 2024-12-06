@@ -36,7 +36,15 @@ export const useDataStore = defineStore('data', {
                 { name : '나비주름', value : '001' },
                 { name : '평주름', value : '002' }
             ],
-            usage : Array.from({ length: 21 }, (v, i) => ({ name: (1.0 + i * 0.1).toFixed(1)+'배', value: (1.0 + i * 0.1).toFixed(1) })),
+            usage : Array.from({ length: 21 }, (v, i) => ({ name: (1.0 + i * 0.1).toFixed(1)+'배', value: Number((1.0 + i * 0.1).toFixed(1)) })),
+            addColor    : [ 
+                { value : 'O', name : '원톤' }, 
+                { value : 'T', name : '투톤' }
+            ],
+            shape       : [ 
+                { value : 'Y', name : '있음' }, 
+                { value : 'N', name : '없음' } 
+            ],
             split : [ 
                 { name : '양개', value : '001' },
                 { name : '편개', value : '002' }
