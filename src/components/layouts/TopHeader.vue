@@ -1,5 +1,5 @@
 <template>
-<header class="bg-white h-[48px] border-b border-gray-100 flex justify-between items-center md:pl-4 md:pr-3 px-3 w-full z-50 dark:bg-zinc-800 dark:border-zinc-700 no-print sticky top-0 md:h-[60px] md:shadow-[0px_1px_4px_1px_rgba(0,0,0,0.05)] flex-none">
+<header class="bg-white h-[48px] border-b border-gray-100 flex justify-between items-center md:pl-4 md:pr-3 px-3 w-full z-50 dark:bg-zinc-800 dark:border-zinc-700 no-print sticky top-0 md:h-[60px] md:shadow-[0px_1px_4px_1px_rgba(0,0,0,0.05)]">
     <div class="flex items-center gap-2"> 
         <div class="pc-hidden">
             <Button icon="pi pi-bars" severity="contrast" text  plain size="large" @click="moSideHeader=true"/>
@@ -8,17 +8,17 @@
             <Button icon="pi pi-bars" variant="text" rounded severity="contrast" text  plain size="large" @click="handleClick"/>
         </div>
         <!-- pc button -->
-        <div class="flex gap-1 items-center  flex-none">
+        <div class="flex items-center flex-none gap-1">
             <li class="w-full h-[32px] md:h-[48px] flex items-center justify-center"><IconLogo class="fill-indigo-600 dark:fill-indigo-500 size-7"/></li>            
-            <router-link class="" to="/"><p class=" hidden md:blockfont-extrabold whitespace-nowrap text-2xl text-indigo-600 dark:text-indigo-500">PlanOrder Center</p></router-link>
+            <router-link class="" to="/"><p class="hidden text-2xl text-indigo-600 md:blockfont-extrabold whitespace-nowrap dark:text-indigo-500">PlanOrder Center</p></router-link>
         </div>
     </div>
     
     <div class="flex items-center gap-2">
         <!-- <Button class="*:!text-xl" icon="pi pi-bell" severity="contrast" text plain  @click="toggleAlarmPopover($event)" />
         <Popover class="custom-popover" ref="AlarmPopover" dismissable> 
-            <div class="w-full min-w-80 max-w-96  max-h-96 overflow-y-auto p-3">
-                <h1 class="text-sm font-bold mb-2">알림</h1>
+            <div class="w-full p-3 overflow-y-auto min-w-80 max-w-96 max-h-96">
+                <h1 class="mb-2 text-sm font-bold">알림</h1>
                 <Alarm :headerState="headerState"/>
             </div>
         </Popover> -->
@@ -47,7 +47,7 @@
 </header>
     <Drawer v-model:visible="moSideHeader" header="" class="custom-drawer" position="left">
         <template #header>
-            <div class="flex items-center gap-2 w-full justify-end" >
+            <div class="flex items-center justify-end w-full gap-2" >
             </div>
         </template>
         <SideHeader 

@@ -13,6 +13,9 @@ export default {
       screens: {
         '3xl': '1920px',
       },
+      colors: {
+        'kakaoBg': '#B2C7DA',
+      }
     },
   },
   plugins: [

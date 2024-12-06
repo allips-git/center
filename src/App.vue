@@ -1,16 +1,16 @@
 <template>
-  <main class="">
-      <div class="flex flex-col">
+  <main class="w-full">
+      <div class="flex flex-col items-center justify-center w-full">
           <TopHeader v-if="showTopHeader" @toggleHeader="toggleHeader"
           :class="showTopHeader"
           />
-        <div class="flex">
+        <div class="flex items-start justify-start w-full">
             <SideHeader 
             :setWideSide="setWideSide"
             :drawerClass="false"
             />
-        <div class="z-0  w-full">
-            <RouterView/>
+        <div class="z-0 w-full">
+            <RouterView class="w-full"/>
         </div>
         <ConfirmDialog></ConfirmDialog>
         <!-- <Toast></Toast> -->
