@@ -55,7 +55,7 @@
             </TabPanels>
         </Tabs>
         <div class="fixed bottom-4 right-4">
-            <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getPopupOpen('itemList')" />
+            <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getNewEsti" />
         </div>
     </main>
     <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
@@ -90,13 +90,19 @@ import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
 import { onMounted } from 'vue';
-import { usePopupStore, useClientStore } from '@/store';
+import { usePopupStore, useClientStore, useEstiStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
 const popup     = usePopupStore();
 const client    = useClientStore();
+const esti      = useEstiStore();
 
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getNewEsti = () => {
+    getPopupOpen('itemList');
+    esti.getType('N');
+}
 
 const getPopClose = (gb: boolean, popNm: string) => {
     getPopupClose(popNm, gb);

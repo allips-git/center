@@ -75,6 +75,7 @@ import CalcEASet from '@/views/include/calc/CalcEASet.vue'
 import CalcHebeSet from '@/views/include/calc/CalcHebeSet.vue'
 import CalcWidthYardSet from '@/views/include/calc/CalcWidthYardSet.vue'
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useConfirm } from "primevue/useconfirm";
 import { useClientStore, useEstiStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
@@ -83,6 +84,7 @@ import { estiBlindMsg, estiCurtainMsg, estiEaMsg } from '@/assets/js/msg';
 import { getBlindParams, getCurtainParams } from '@/assets/js/calcAndProcess';
 import { getAxiosData } from '@/assets/js/function';
 
+const router    = useRouter();
 const confirm   = useConfirm();
 const client    = useClientStore();
 const esti      = useEstiStore();
@@ -225,21 +227,25 @@ const getEstiSave = () => {
 
             params['itemCnt']           = esti['total']['totalQty'];
 
+            console.log(params);
+
             try
             {
                 const instance  = await getAxiosData();
-                await instance.post(`https://data.planorder.kr/estiV1/getResult`, params);
+                const res       = await instance.post(`https://data.planorder.kr/estiV1/getResult`, params);
+                
+                esti.getEmCd(res.data['emCd']);
                 esti.getList();
                 
-                // switch(esti['type'])
-                // {
-                //     case 'I': case 'N':
-                //         client.getDetail();
-                //     break;
-                //     case 'M':
-                //         esti.getList();
-                //     break;   
-                // }
+                switch(esti['type'])
+                {
+                    case 'I': case 'N':
+                        router.push({ path : '/customer/estiList' });
+                    break;
+                    case 'M':
+                        esti.getList();
+                    break;   
+                }
                 
                 getPopupClose(true, 'itemList');
                 getPopupClose(true, 'itemSet');

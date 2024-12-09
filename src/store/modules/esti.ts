@@ -734,6 +734,10 @@ export const useEstiStore = defineStore('esti', {
                 break;
             }
         },
+        getType(type: Type)
+        {
+            this.type = type;
+        },
         getEmCd(emCd: string)
         {
             this.emCd = emCd;
