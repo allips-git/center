@@ -74,14 +74,20 @@ export const estiBlindMsg = (params: EstiBlindMsg): { msg: string; id: string, s
         return { msg : '세로를 입력해주세요.', id : 'bHeight', state : false };
     }
 
-    if((Number(params['width']) < Number(params['minWidth'])) || (Number(params['width']) > Number(params['maxWidth'])))
+    if(params['minWidth'] && params['maxWidth'])
     {
-        return { msg : `해당 제품 최소 가로 ${params['minWidth']}cm, 최대 가로 ${params['maxWidth']}cm 입니다.`, id : 'bWidth', state : false };
+        if((Number(params['width']) < Number(params['minWidth'])) || (Number(params['width']) > Number(params['maxWidth'])))
+        {
+            return { msg : `해당 제품 최소 가로 ${params['minWidth']}cm, 최대 가로 ${params['maxWidth']}cm 입니다.`, id : 'bWidth', state : false };
+        }
     }
 
-    if((Number(params['height']) < Number(params['minHeight'])) || (Number(params['height']) > Number(params['maxHeight'])))
+    if(params['minHeight'] && params['maxHeight'])
     {
-        return { msg : `해당 제품 최소 세로 ${params['minHeight']}cm, 최대 가로 ${params['maxHeight']}cm 입니다.`, id : 'bHeight', state : false };
+        if((Number(params['height']) < Number(params['minHeight'])) || (Number(params['height']) > Number(params['maxHeight'])))
+        {
+            return { msg : `해당 제품 최소 세로 ${params['minHeight']}cm, 최대 가로 ${params['maxHeight']}cm 입니다.`, id : 'bHeight', state : false };
+        }
     }
 
     if(params['division'] === 1)
@@ -147,14 +153,20 @@ export const estiCurtainMsg = (params: EstiCurtainMsg): { msg: string; id: strin
         return { msg : '세로를 입력해주세요.', id : 'cHeight', state : false };
     }
 
-    if((Number(params['width']) < Number(params['minWidth'])) || (Number(params['width']) > Number(params['maxWidth'])))
+    if(params['maxWidth'])
     {
-        return { msg : `해당 제품 최대 가로 ${params['maxWidth']}cm 입니다.`, id : 'cWidth', state : false };
+        if(Number(params['width']) > Number(params['maxWidth']))
+        {
+            return { msg : `해당 제품 최대 가로 ${params['maxWidth']}cm 입니다.`, id : 'cWidth', state : false };
+        }
     }
 
-    if((Number(params['height']) < Number(params['minHeight'])) || (Number(params['height']) > Number(params['maxHeight'])))
+    if(params['maxHeight'])
     {
-        return { msg : `해당 제품 최대 가로 ${params['maxHeight']}cm 입니다.`, id : 'cHeight', state : false };
+        if(Number(params['height']) > Number(params['maxHeight']))
+        {
+            return { msg : `해당 제품 최대 세로 ${params['maxHeight']}cm 입니다.`, id : 'cHeight', state : false };
+        }
     }
 
     if(!Number(params['size']) || Number(params['size'] === 0))
