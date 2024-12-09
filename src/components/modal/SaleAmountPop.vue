@@ -2,36 +2,52 @@
     <div class="input-layout-box">
         <InputGroup>
             <IftaLabel class="w-full">
-                <InputText id="username" class="w-full"/>
-                <label for="emali">할인 금액 입력</label>
+                <InputNumber v-model="esti['dcInfo']['val']" class="w-full" @update:modelValue="(value) => getDcInput(value)" />
+                <label>할인 금액 입력</label>
             </IftaLabel>
             <InputGroupAddon class="custom-InputGroupAddon">
-                <SelectButton v-model="value" :options="options" class="custom-input-select-btn" />
+                <SelectButton v-model="esti['dcInfo']['unit']" 
+                    :options="data['discount']" optionLabel="label" optionValue="value" class="custom-input-select-btn" 
+                    @change="getValCheck"/>
             </InputGroupAddon>
         </InputGroup>
         <IftaLabel class="w-full">
-            <Textarea  rows="3" cols="30" class="w-full" />
-            <label for="emali">메모입력</label>
+            <Textarea v-model="esti['dcInfo']['memo']" rows="3" cols="30" class="w-full" />
+            <label>메모입력</label>
         </IftaLabel>
         <div class="btn-2-layout-box mt-2">
-            <Button severity="secondary" label="취소"/>
-            <Button label="확인"/>
+            <Button severity="secondary" label="취소" @click="emit('getClose')"/>
+            <Button label="확인" @click="emit('getApply')"/>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import IftaLabel from 'primevue/iftalabel';
+import InputNumber from 'primevue/inputnumber';
 import InputGroup from 'primevue/inputgroup';
 import InputGroupAddon from 'primevue/inputgroupaddon';
-
 import Textarea from 'primevue/textarea';
-
 import SelectButton from 'primevue/selectbutton';
+// import { ref } from 'vue'
+import { useDataStore, useEstiStore } from '@/store';
 
-const value = ref('원');
-const options = ref(['원', '%']);
+const emit  = defineEmits(['getApply', 'getClose']);
+const data  = useDataStore();
+const esti  = useEstiStore();
+
+const getDcInput = (amt: number) => {
+    if(esti['dcInfo']['unit'] === 'P' && amt > 100)
+    {
+        esti['dcInfo']['val'] = 100;
+    }
+}
+
+const getValCheck = () => {
+    const value = esti['dcInfo']['val'];
+
+    esti['dcInfo']['val'] = value > 100 ? 100 : value;
+}
 
 </script>
 

@@ -75,6 +75,10 @@ export const useDataStore = defineStore('data', {
                 { name: '좌', value : 'L'},
                 { name: '우', value : 'R'}
             ],
+            discount : [ 
+                { value : 'P', label : '%' }, 
+                { value : 'F', label : '원' }
+            ],
         };
     },
 });

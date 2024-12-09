@@ -7,17 +7,19 @@
             </section>
         
             <section class="relative -top-4 rounded-t-xl overflow-hidden bg-white">
-                <InfoCard :title="'공장이름?'" :info="info" />
+                <InfoCard :title="mate['ceNm']" :info="mate['headers']" />
                 <div class="gray-bar"></div>
 
                 <section class="px-5">
                     <div class="flex flex-col gap-5">
-                        <TableCard title="어떤 텍스트?" />
+                        <TableCard v-for="(table, index) in mate['list']" :key="index" :title="table.title" :cards="table.cardLists"
+                       :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag"
+                       :showButton="table.showButton" :sizeYn="mate['sizeYn']"/>
                     </div>
                 </section>
             </section>
             <section class="px-5">
-                <CalculateCard  :showtitle="true" title="합계 금액" totalTitle="총 합계 금액"/>
+                <CalculateCard  :showtitle="true" :calcs="mate['payList']" title="합계 금액" totalTitle="총 합계 금액" :totalAmt="getAmt(mate['payList'], 'total')"/>
             </section>
         </div>
     </main>
@@ -35,55 +37,44 @@
             </div>
             <div class="flex justify-between">
                 <p>사이즈 숨김</p>
-                <ToggleSwitch v-model="checked" />
+                <ToggleSwitch v-model="mate['sizeYn']" />
             </div>
         </div>
 
         <div class="btn-2-layout-box pt-4">
-            <Button label="견적서 미리보기" severity="secondary"/>
+            <InputText :value="''+domain+'/customer/estiDoc?cd='+emCd+''" readonly @click="getEstiDoc"/>
+        </div>
+        <div class="btn-2-layout-box pt-4">
             <Button label="견적서 링크 발송"/>
         </div>
     </section>
     </template>
     
 <script setup lang="ts">
-import { ref } from 'vue';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import CalculateCard from "@/components/card/CalculateCard.vue";
 import InfoCard from "@/components/card/InfoCard.vue";
 import TableCard from "@/components/card/TableCard.vue";
 import RadioButton from 'primevue/radiobutton';
 import ToggleSwitch from 'primevue/toggleswitch';
+import { onMounted } from 'vue';
+import { useEstiStore, useEstiMateStore } from '@/store';
+import { getAmt } from '@/assets/js/function';
 
+const esti      = useEstiStore();
+const mate      = useEstiMateStore();
+const domain    = window.location.origin;
+const emCd      = btoa(esti['emCd']);
 
-const checked = ref(false)
-// 정보 배열 정의
-const info = ref([
-    { label: '혜택', value: '11' },
-    { label: '전화번호', value: '010-1234-5678' },
-    { label: '영업시간', value: '09:00 - 18:00'},
-    { label: '주소', value: '부산 수영구 수영로 411-1' },
-    { label: '계좌', value: '123-456-7890123' },
-]);
+const getEstiDoc = () => {
+    const value = event.target.value;
 
-const orderItems = ref([
-    {
-    label: '주문',
-    value: '0',
-    },
-    {
-    label: '생산',
-    value: '0',
-    },
-    {
-    label: '생산완료',
-    value: '0',
-    },
-    {
-    label: '출고',
-    value: '0',
-    },
-]);
+    window.open(value, '_blank');
+}
+
+onMounted(() => {
+    mate.getInfo({ emCd : esti['emCd'] });
+})
 
 </script>
 

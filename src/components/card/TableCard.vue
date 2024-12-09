@@ -18,7 +18,7 @@
                 <thead class="border">
                     <tr class="*:py-2 text-xs text-gray-600 bg-gray-50">
                         <template v-for="col in card.columns" :key="col.key">
-                            <template v-if="sizeYn === 'Y'">
+                            <template v-if="sizeYn">
                                 <th v-if="col.header !== '가로' && col.header !== '세로'">
                                     {{ col.header }}
                                 </th>
@@ -34,7 +34,7 @@
                 <tbody class="border">
                     <!-- v-for -->
                     <tr class="*:py-2  border-b last:border-b-0 font-bold text-sm" v-for="(row, index) in card.rows" :key="index">
-                        <template v-if="sizeYn === 'Y'">
+                        <template v-if="sizeYn">
                             <template v-for="col in card.columns" :key="col.key">
                                 <td v-if="col.key !== 'width' && col.key !== 'height'">
                                     {{ row[col.key] }}
@@ -60,7 +60,7 @@
             <section class="my-2 text-sm text-gray-600 bg-gray-50 py-1 rounded-md px-3 border-gray-100 border">
                 <p class="font-bold">지시사항: <span class="font-normal">{{ card['spanText'] }}</span></p>
             </section>
-            <div class="flex justify-end mt-3">
+            <div v-if="card.showDelete" class="flex justify-end mt-3">
                 <Button label="삭제" outlined severity="danger" size="small"/>
             </div>
         </div>

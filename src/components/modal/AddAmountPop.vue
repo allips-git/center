@@ -2,35 +2,38 @@
     <div class="input-layout-box">
         <InputGroup>
             <IftaLabel class="w-full">
-                <InputText id="username" class="w-full"/>
-                <label for="emali">할인 금액 입력</label>
+                <InputNumber v-model="esti['addInfo']['val']" class="w-full"/>
+                <label>할인 금액 입력</label>
             </IftaLabel>
             <InputGroupAddon class="custom-InputGroupAddon">
-                <SelectButton v-model="value" :options="options" class="custom-input-select-btn" />
+                <SelectButton v-model="value" :options="options" class="custom-input-select-btn" disabled/>
             </InputGroupAddon>
         </InputGroup>
         <IftaLabel class="w-full">
-            <Textarea  rows="3" cols="30" class="w-full" />
-            <label for="emali">메모입력</label>
+            <Textarea v-model="esti['addInfo']['memo']" rows="3" cols="30" class="w-full" />
+            <label>메모입력</label>
         </IftaLabel>
         <div class="btn-2-layout-box mt-2">
-            <Button severity="secondary" label="취소"/>
-            <Button label="확인"/>
+            <Button severity="secondary" label="취소" @click="emit('getClose')"/>
+            <Button label="확인" @click="emit('getApply')"/>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
 import IftaLabel from 'primevue/iftalabel';
 import InputGroup from 'primevue/inputgroup';
 import InputGroupAddon from 'primevue/inputgroupaddon';
-
+import InputNumber from 'primevue/inputnumber';
 import Textarea from 'primevue/textarea';
-
 import SelectButton from 'primevue/selectbutton';
+import { ref } from 'vue'
+import { useEstiStore } from '@/store';
 
-const value = ref('원');
+const esti  = useEstiStore();
+const emit  = defineEmits(['getApply', 'getClose']);
+
+const value   = ref('원');
 const options = ref(['원']);
 
 </script>

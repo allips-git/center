@@ -53,10 +53,10 @@
             <Button severity="secondary" icon="pi pi-ellipsis-h" outlined class="flex-none" @click="togglemorePopover" />
 
             <Popover class="custom-popover-listbox" ref="morePopover" dismissable> 
-                <Listbox :options="moreBtnList"  optionLabel="name" class="w-full md:w-56">
+                <Listbox :options="moreBtnList" optionLabel="name" optionValue="value" class="w-full md:w-56">
                 <template #option="slotProps">
                     <ul class="flex items-center">
-                        <li>{{ slotProps.option.name }}</li>
+                        <li @click="getProcess(slotProps.option.value)">{{ slotProps.option.name }}</li>
                     </ul>
                 </template>
                 </Listbox>
@@ -102,10 +102,25 @@ const getDateAndTime = (date) => {
     return getConvertDate(new Date(date), 'mm%dd%w% hh:ii');
 }
 
+const getProcess = (value: string) => {
+    switch(value)
+    {
+        case 'E':
+            router.push({ path : '/customer/estiMate' });
+        break;
+        case 'C':
+        break;
+        case 'T':
+        break;
+        case 'N':
+        break;
+    }
+}
+
 const moreBtnList = ref([
-    { name: '견적서 발송' },
-    { name: '계약서 발송' },
-    { name: '네비게이션' },
-    { name: '명세표 취소' }
+    { name: '견적서 발송', value : 'E' },
+    { name: '계약서 발송', value : 'C' },
+    { name: '네비게이션', value : 'T' },
+    { name: '명세표 취소', value : 'N' }
 ]);
 </script>
