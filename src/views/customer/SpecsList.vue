@@ -40,8 +40,8 @@
         </section>
     </main>
     <div class="bottom-fixed-btn-box">
-        <Button label="계약서 이동" severity="secondary" size="large" @click="getConMove"/>
         <Button label="견적서 저장" size="large" @click="getEstiSave"/>
+        <Button label="계약서 이동" severity="secondary" size="large" @click="getConMove"/>
     </div>
 
     <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 

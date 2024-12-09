@@ -25,6 +25,10 @@ export const useLoginStore = defineStore('login', {
                 return false;
             }
         },
+        async getLogout()
+        {
+            this.token = null;
+        },
         getToken(token: string)
         {
             this.token = token;
