@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter, } from "vue-router";
-import { usePopupStore, useLoginStore } from '@/store';
+import { useLoginStore } from '@/store';
 
 // RouteMeta 인터페이스 정의
 interface RouteMeta {
@@ -31,18 +31,18 @@ import FactoryDetail from "@/views/factory/FactoryDetail.vue";
 import SysProduct from "@/views/factory/ProductInfo.vue";
 import SysMng from "@/views/factory/ProductMng.vue";
 import PlantalkMain from "@/views/plantalk/PlantalkMain.vue";
-import PlantalkRes from "@/views/plantalk/PlantalkAlert.vue"
-import PlantalkSend from "@/views/plantalk/PlantalkMessage.vue"
-import PlantalkDetail from "@/views/plantalk/ScheduleAlert.vue";
+// import PlantalkRes from "@/views/plantalk/PlantalkAlert.vue"
+// import PlantalkSend from "@/views/plantalk/PlantalkMessage.vue"
+// import PlantalkDetail from "@/views/plantalk/ScheduleAlert.vue";
 import MessageView from "@/views/message/MessageView.vue";
 import SettingView from "@/views/setting/SettingView.vue";
 import TimeSetting from "@/views/setting/TimeSetting.vue";
 import StaticPayView from "@/views/setting/StaticPay.vue";
 import StaticPayIng from "@/views/setting/StaticPayUpdate.vue";
 import AccView from "@/views/acc/AccView.vue";
-import AccMonth from "@/views/acc/AccMonth.vue";
-import AccWeek from "@/views/acc/AccWeek.vue";
-import AccDay from "@/views/acc/AccDay.vue";
+// import AccMonth from "@/views/acc/AccMonth.vue";
+// import AccWeek from "@/views/acc/AccWeek.vue";
+// import AccDay from "@/views/acc/AccDay.vue";
 import CalendarView from "@/views/calendar/CalendarView.vue";
 import AverageView from "@/views/average/AverageView.vue";
 import GroupMessageView from "@/views/groupMessage/GroupMessageView.vue";
@@ -195,48 +195,48 @@ const routes = [
         component: PlantalkMain,
         meta: { title: '플랜톡' }
     },
-    {
-        path: "/plantalk/res",
-        name: "PlantalkRes",
-        component: PlantalkRes,
-        meta: { title: '플랜톡 예약된 알림' }
-    },
-    {
-        path: "/plantalk/send",
-        name: "PlantalkSend",
-        component: PlantalkSend,
-        meta: { title: '플랜톡 발송 내역' }
-    },
-    {
-        path: "/plantalk/detail",
-        name: "PlantalkDetail",
-        component: PlantalkDetail,
-        meta: { title: '플랜톡 상세' }
-    },
+    // {
+    //     path: "/plantalk/res",
+    //     name: "PlantalkRes",
+    //     component: PlantalkRes,
+    //     meta: { title: '플랜톡 예약된 알림' }
+    // },
+    // {
+    //     path: "/plantalk/send",
+    //     name: "PlantalkSend",
+    //     component: PlantalkSend,
+    //     meta: { title: '플랜톡 발송 내역' }
+    // },
+    // {
+    //     path: "/plantalk/detail",
+    //     name: "PlantalkDetail",
+    //     component: PlantalkDetail,
+    //     meta: { title: '플랜톡 상세' }
+    // },
     {
         path: "/acc",
         name: "AccView",
         component: AccView,
         meta: { title: "회계" }
     },
-    {
-        path: "/acc/month",
-        name: "AccMonth",
-        component: AccMonth,
-        meta: { title: "회계 월간 분석" }
-    },
-    {
-        path: "/acc/week",
-        name: "AccWeek",
-        component: AccWeek,
-        meta: { title: "회계 주간 분석" }
-    },
-    {
-        path: "/acc/day",
-        name: "AccDay",
-        component: AccDay,
-        meta: { title: "회계 일별 분석" }
-    },
+    // {
+    //     path: "/acc/month",
+    //     name: "AccMonth",
+    //     component: AccMonth,
+    //     meta: { title: "회계 월간 분석" }
+    // },
+    // {
+    //     path: "/acc/week",
+    //     name: "AccWeek",
+    //     component: AccWeek,
+    //     meta: { title: "회계 주간 분석" }
+    // },
+    // {
+    //     path: "/acc/day",
+    //     name: "AccDay",
+    //     component: AccDay,
+    //     meta: { title: "회계 일별 분석" }
+    // },
     {
         path: "/msg",
         name: "msg",
@@ -300,7 +300,6 @@ const router = createRouter({
 
 router.beforeEach( async (to, from, next) => {
     const login = useLoginStore();
-    const popup = usePopupStore();
 
     if(to.meta.gubun === 'Y')
     {
@@ -314,49 +313,25 @@ router.beforeEach( async (to, from, next) => {
         }
         else
         {
-            const tokenCheckResult = await getTokenCheck();
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/api/token/getTokenCheck`);
 
-            if(tokenCheckResult)
-            {
-                if(popup.list.length === 0)
+                if(res.data['code'] === 2000)
                 {
-                    next();
+                    login.getToken(res.data['token']);
                 }
-                else
-                {
-                    const lastPopNm = popup.list[popup.list.length - 1];
-                    await popup.getClose(lastPopNm);
-                    next(false);
-                }
+
+                next();
             }
-            else
+            catch(e)
             {
+                console.log(e);
                 alert('토큰 만료');
             }
         }
     }
 });
-
-const getTokenCheck = async () => {
-    const login = useLoginStore();
-    
-    try
-    {
-        const instance  = await getAxiosData();
-        const res       = await instance.post(`https://data.planorder.kr/api/token/getTokenCheck`);
-
-        if(res.data['code'] === 2000)
-        {
-            login.getToken(res.data['token']);
-        }
-
-        return true;
-    }
-    catch(e)
-    {
-        console.log(e);
-        return false;
-    }
-}
 
 export default router

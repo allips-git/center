@@ -1,6 +1,5 @@
 <template>
 <main class="p-5 !pb-32">
-    
     <div class="flex justify-end">
             <Button label="제품 삭제" size="small" severity="danger" />
         </div>
