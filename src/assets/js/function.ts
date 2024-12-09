@@ -97,6 +97,34 @@ export const getCardColumns = (unit: string) => {
 }
 
 /**
+ * @description 상황별 할인 및 결제 처리할 금액 추출
+ */
+export const getAmt = (data: Array, type: string) => {
+	const arr = ['itemAmt', 'itemTax', 'shapeAmt', 'heightAmt', 'addAmt'];
+	let amt   = 0;
+
+	switch(type)
+	{
+		case 'firstDis': /** 계약 시 할인 적용할 총 금액 */
+			amt = data.filter(item => arr.includes(item.name)).reduce((total, item) => total + item.amt, 0);
+		break;
+		case 'cutDis': /** 천원 단위 절삭 할인 시 */
+			arr.push('dcAmt');
+			amt = data.filter(item => arr.includes(item.name)).reduce((total, item) => total + item.amt, 0);
+		break;
+		case 'lastDis': /** 최종 결제 시 할인 적용할 총 금액 */
+			arr.push('dcAmt', 'addAmt', 'cutAmt', 'conAmt', 'lastAddAmt');
+			amt = data.filter(item => arr.includes(item.name)).reduce((total, item) => total + item.amt, 0);
+		break;
+		case 'total': /** 모든 총 금액 */
+			amt = data.reduce((total, item) => total + item.amt, 0);
+		break;
+	}
+
+	return amt;
+}
+
+/**
  * @description 다음 주소 API 팝업 위치 설정
  */
 export function getDaumPopupPosition(layer)

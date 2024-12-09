@@ -24,7 +24,10 @@
             <div class="flex flex-col gap-2 py-3 ">
              <template v-for="(calc, index) in calcs" :key="index">
                 <dl v-if="Number(calc.amt) !== 0 || calc.title === '제품 금액'" class="flex items-center justify-between">
-                    <dt class="text-neutral-500 text-base">{{ calc.title }}</dt>
+                    <dt class="text-neutral-500 text-base">
+                        {{ calc.title }}
+                        <!-- <span v-if="calc.memo !== ''" class="text-red-500">({{ calc.memo }})</span> -->
+                    </dt>
                     <dd class="text-right font-bold text-lg" :class="{
                         'text-red-500' : calc.red,
                         'text-blue-500': calc.blue,

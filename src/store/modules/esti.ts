@@ -11,6 +11,7 @@ type Type           = 'I' | 'M' | 'N'; /** I : 명세표 추가 데이터 / M : 
 type YnType         = 'Y' | 'N';
 type OrdGbType      = 'S' | 'O';
 type AddColorType   = 'O' | 'T';
+type AmtUnitType    = 'F' | 'P'; /** F : 금액(원) / P : %(퍼센트) */
 
 interface CommonInfo {
     fcCd     : Nullable<string>;
@@ -104,6 +105,26 @@ interface TotalInfo {
     totalSaleTax        : number;
     totalPurcAmt        : number;
     totalPurcTax        : number;
+}
+
+interface PayList {
+    name    : string;
+    title   : string;
+    amt     : number;
+    red     : boolean;
+    blue    : boolean;
+}
+
+interface AmtInfo {
+    unit : AmtUnitType;
+    val  : Nullable<string>;
+    amt  : Nullable<string>;
+    memo : string;
+}
+
+interface CutInfo {
+    gubun : boolean;
+    amt   : Nullable<string>;
 }
 
 interface MsgInfo {
@@ -258,6 +279,34 @@ const getTotalInfo = (): TotalInfo => {
     }
 }
 
+/**
+ * @description 명세서 제품 결제 내역
+ */
+const getPayList = (): PayList => {
+    return [
+        {name : 'itemAmt',      title: '상품 금액',         amt: 0, red: false, blue: false},
+        {name : 'itemTax',      title: '부가세',            amt: 0, red: false, blue: false},
+        {name : 'shapeAmt',     title: '형상 금액',         amt: 0, red: false, blue: false},
+        {name : 'heightAmt',    title: '세로길이 추가금액', amt: 0, red: false, blue: false},
+        {name : 'addAmt',       title: '추가',              amt: 0, red: true, blue: false},
+        {name : 'dcAmt',        title: '할인',              amt: 0, red: true, blue: false},
+        {name : 'cutAmt',       title: '절삭 할인',         amt: 0, red: true, blue: false}
+        // {name : 'conAmt', title: '계약 선금', amt: 0, blue: true},
+        // {name : 'lastAddAmt', title: '최종 추가', amt: 0, red: true},
+        // {name : 'lastDcAmt', title: '최종 할인', amt: 0, red: true},
+        // {name : 'payAmt', title: '결제 금액', amt: 0, blue: true}
+    ]
+}
+
+const getAmtInfo = (): AmtInfo => {
+    return {
+        unit : 'F',
+        val  : null,
+        amt  : null,
+        memo : ''
+    }
+}
+
 const getMsgInfo = (): MsgInfo  => {
     return {
         ea : {
@@ -291,6 +340,10 @@ interface State {
     total       : TotalInfo;
     list        : [],
     msg         : MsgInfo;
+    payList     : PayList[];
+    dcInfo      : AmtInfo;
+    addInfo     : AmtInfo;
+    cutInfo     : CutInfo;
 }
 
 export const useEstiStore = defineStore('esti', {
@@ -304,14 +357,14 @@ export const useEstiStore = defineStore('esti', {
         curtain     : getCurtainInfo(),
         total       : getTotalInfo(),
         list        : [],
-        msg         : getMsgInfo()
-        // payList     : getPayList(),
-        // dcInfo      : getAmtInfo(),
-        // addInfo     : getAmtInfo(),
-        // cutInfo     : {
-        //     gubun : 'N',
-        //     amt   : 0
-        // },
+        msg         : getMsgInfo(),
+        payList     : getPayList(),
+        dcInfo      : getAmtInfo(),
+        addInfo     : getAmtInfo(),
+        cutInfo     : {
+            gubun : false,
+            amt   : 0
+        },
         // conInfo     : getConInfo()
     }),
     getters: {
@@ -410,7 +463,44 @@ export const useEstiStore = defineStore('esti', {
 
                 this.list = list;
 
-                console.log(this.list);
+                this.getPayAmt('itemAmt', Number(res.data['itemAmt']));
+                this.getPayAmt('itemTax', Number(res.data['itemTax']));
+
+                /** 추가 금액 */
+                if(res.data['addAmt'])
+                {
+                    this.getPayAmt('addAmt', Number(res.data['addAmt']['amt']));
+                    this.getPayAmt('addInfo', Number(res.data['addAmt']));
+                }
+                else
+                {
+                    this.getPayAmt('addAmt', 0);
+                    this.getPayAmt('addInfo', getAmtInfo());
+                }
+
+                /** 할인 금액 */
+                if(res.data['dcAmt'])
+                {
+                    this.getPayAmt('dcAmt', Number(res.data['dcAmt']['amt']));
+                    this.getPayAmt('dcInfo', Number(res.data['dcAmt']));
+                }
+                else
+                {
+                    this.getPayAmt('dcAmt', 0);
+                    this.getPayAmt('dcInfo', getAmtInfo());
+                }
+
+                /** 절삭 할인 금액 */
+                if(res.data['cutAmt'])
+                {
+                    this.getPayAmt('cutAmt', Number(res.data['cutAmt']['amt']));
+                    this.getPayAmt('cutInfo', Number(res.data['cutAmt']));
+                }
+                else
+                {
+                    this.getPayAmt('cutAmt', 0);
+                    this.getPayAmt('cutInfo', { gubun : false, amt : 0 });
+                }
             }
             catch(e)
             {
@@ -652,6 +742,15 @@ export const useEstiStore = defineStore('esti', {
         {
             this.type = 'M';
             this.edCd = edCd;
+        },
+        getPayAmt(name: string, amt: number)
+        {
+            const item = this.payList.find(item => item.name === name);
+
+            if(item)
+            {
+                item.amt = Number(amt);
+            }
         },
         getReset()
         {
