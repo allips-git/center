@@ -123,6 +123,16 @@ export const useProductStore = defineStore('product', {
         },
         start  : 0
     }),
+    getters: {
+        inIcList : (state) => {
+            const itemInfo  = state.list.find(item => item.itemCd === state.itemCd);
+            const colorList = itemInfo['colorLists'].filter(item => item.icCd !== state.icCd);
+
+            console.log(colorList);
+
+            return colorList;
+        }
+    },
     actions: {
         /**
          * @description 연동된 공장 / 외주공장 데이터 가져오기

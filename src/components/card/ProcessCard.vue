@@ -49,7 +49,7 @@
 
         <section class="flex gap-3 *:w-full">
             <Button severity="secondary"  label="견적서 공유" />
-            <Button label="견적서 이동"/>
+            <Button label="견적서 이동" @click="getEstiMove"/>
             <Button severity="secondary" icon="pi pi-ellipsis-h" outlined class="flex-none" @click="togglemorePopover" />
 
             <Popover class="custom-popover-listbox" ref="morePopover" dismissable> 
@@ -66,14 +66,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import Popover from 'primevue/popover';
 import Listbox from 'primevue/listbox';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useEstiStore } from '@/store';
 import { getCommas, getConvertDate } from '@/assets/js/function';
 
-const props = defineProps({
+const esti   = useEstiStore();
+const router = useRouter();
+const props  = defineProps({
     info : Object
 });
+
+const getEstiMove = () => {
+    esti.getEmCd(props['info']['emCd']);
+    router.push({ path: '/customer/estiList' });
+}
 
 const morePopover = ref() 
 

@@ -3,7 +3,7 @@
     
     <div class="bottom-modal-contents-box !pb-20">
         <div class="w-full flex justify-end">
-            <Button label="제품 변경" outlined @click="getPopupClose(true, 'itemSet')"/>
+            <Button label="제품 변경" outlined @click="getItemChange"/>
         </div>    
         <div class="text-base font-bold flex justify-between bg-gray-50 p-2 px-4 rounded-lg border border-indigo-300">
             <h2>{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
@@ -43,7 +43,7 @@
 
                                 <IftaLabel class="w-full">
                                     <label for="emali">지시사항</label>
-                                    <Textarea id="over_label" rows="3" cols="30" style="resize: none" class="w-full" />
+                                    <Textarea v-model="esti['common']['memo']" rows="3" cols="30" style="resize: none" class="w-full" />
                                 </IftaLabel>
                             </div>
                         </AccordionContent>
@@ -58,7 +58,7 @@
         </div>
     </div>
     <div class="bottom-modal-absol-box">
-        <Button type="button" label="저장" @click="getEstiSave" class="w-full"></Button>
+        <Button type="button" label="저장" @click="getEstiSave" :disabled="status" class="w-full"></Button>
     </div>    
 </main>
 </template>
@@ -74,13 +74,25 @@ import CalculateCard from '@/components/card/CalculateCard.vue'
 import CalcEASet from '@/views/include/calc/CalcEASet.vue'
 import CalcHebeSet from '@/views/include/calc/CalcHebeSet.vue'
 import CalcWidthYardSet from '@/views/include/calc/CalcWidthYardSet.vue'
-import { useEstiStore } from '@/store';
+import { ref, onMounted } from 'vue';
+import { useConfirm } from "primevue/useconfirm";
+import { useClientStore, useEstiStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
-import { estiBlindMsg, estiEaMsg } from '@/assets/js/msg';
+import { estiBlindMsg, estiCurtainMsg, estiEaMsg } from '@/assets/js/msg';
+import { getBlindParams, getCurtainParams } from '@/assets/js/calcAndProcess';
+import { getAxiosData } from '@/assets/js/function';
 
-const esti = useEstiStore();
-const { getPopupClose } = usePopup();
+const confirm   = useConfirm();
+const client    = useClientStore();
+const esti      = useEstiStore();
+const status    = ref(false);
+const { getPopupOpen, getPopupClose } = usePopup();
+
+const getItemChange = () => {
+    getPopupClose(true, 'itemSet');
+    getPopupOpen('itemList');
+}
 
 const getAmt = (amt: number) => {
     return getCommas(Number(amt));
@@ -116,6 +128,26 @@ const getEstiSave = () => {
         }            
         break;
         case '002': case '003':
+        {
+            checkParams['maxWidth']     = esti['curtain']['maxWidth'];
+            checkParams['maxHeight']    = esti['curtain']['maxHeight'];
+            checkParams['width']        = esti['common']['width'];
+            checkParams['height']       = esti['common']['height'];
+            checkParams['qty']          = esti['curtain']['cQty'];
+            checkParams['size']         = esti['curtain']['size'];
+            checkParams['addColor']     = esti['curtain']['addColor'];
+            checkParams['inColor']      = esti['curtain']['inColor'];
+            checkParams['inSize']       = esti['curtain']['inSize'];
+
+            const result = estiCurtainMsg(checkParams);
+
+            if(!result['state'])
+            {
+                esti.getMsgSet(result['msg'], result['id']);
+                getFocus(result['id']);
+                return false;
+            }
+        }
         break;
         case '004':
         {
@@ -132,6 +164,92 @@ const getEstiSave = () => {
         }
         break;
     }
+
+    confirm.require({
+        message     : '해당 견적을 저장하시겠습니까?',
+        header      : '견적저장',
+        rejectProps : {
+            label       : '취소',
+            severity    : 'secondary',
+            outlined    : true
+        },
+        acceptProps : {
+            label: '저장'
+        },
+        accept : async () => {
+            let params;
+
+            switch(esti['common']['unit'])
+            {
+                case '001':
+                    params = getBlindParams(esti['common'], esti['blind']);
+
+                    params['eachItemSaleAmt']   = esti['total']['eachItemSaleAmt'];
+                    params['eachItemSaleTax']   = esti['total']['eachItemSaleTax'];
+                    params['eachItemPurcAmt']   = esti['total']['eachItemPurcAmt'];
+                    params['eachItemPurcTax']   = esti['total']['eachItemPurcTax'];
+                break;
+                case '002': case '003':
+                    params = getCurtainParams(esti['common'], esti['curtain']);
+
+                    params['totalHeightSaleAmt']   = esti['total']['totalHeightSaleAmt'];
+                    params['totalHeightSaleTax']   = esti['total']['totalHeightSaleTax'];
+                    params['totalHeightPurcAmt']   = esti['total']['totalHeightPurcAmt'];
+                    params['totalHeightPurcTax']   = esti['total']['totalHeightPurcTax'];
+
+                    params['totalShapeSaleAmt']    = esti['total']['totalShapeSaleAmt'];
+                    params['totalShapeSaleTax']    = esti['total']['totalShapeSaleTax'];
+                    params['totalShapePurcAmt']    = esti['total']['totalShapePurcAmt'];
+                    params['totalShapePurcTax']    = esti['total']['totalShapePurcTax'];
+                break;
+                case '004':
+                break;
+            }
+
+            params['type']              = esti['type'];
+            params['emCd']              = esti['emCd'];
+            params['clientCd']          = client['clientCd'];
+            params['edCd']              = esti['edCd'];
+
+            params['totalUnit']         = esti['total']['totalUnitSize'];
+
+            params['pdSaleAmt']         = Number(esti['total']['totalItemSaleAmt']);
+            params['pdSaleTax']         = Number(esti['total']['totalItemSaleTax']);
+            params['pdPurcAmt']         = Number(esti['total']['totalItemPurcAmt']);
+            params['pdPurcTax']         = Number(esti['total']['totalItemPurcTax']);
+
+            params['totalSaleAmt']      = esti['total']['totalSaleAmt'];
+            params['totalSaleTax']      = esti['total']['totalSaleTax'];
+            params['totalPurcAmt']      = esti['total']['totalPurcAmt'];
+            params['totalPurcTax']      = esti['total']['totalPurcTax'];
+
+            params['itemCnt']           = esti['total']['totalQty'];
+
+            try
+            {
+                const instance  = await getAxiosData();
+                await instance.post(`https://data.planorder.kr/estiV1/getResult`, params);
+                esti.getList();
+                
+                // switch(esti['type'])
+                // {
+                //     case 'I': case 'N':
+                //         client.getDetail();
+                //     break;
+                //     case 'M':
+                //         esti.getList();
+                //     break;   
+                // }
+                
+                getPopupClose(true, 'itemList');
+                getPopupClose(true, 'itemSet');
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        }
+    });
 }
 
 const getFocus = (id: string) => {
@@ -141,6 +259,18 @@ const getFocus = (id: string) => {
         inputElement.focus();
     }
 }
+
+onMounted(() => {
+    switch(esti['type'])
+    {
+        case 'N': case 'I':
+            esti.getReset();
+        break;
+        case 'M':
+            esti.getInfo();
+        break;
+    }
+})
 
 </script>
 

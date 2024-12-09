@@ -67,6 +67,35 @@ export const getConvertDate = (date: Date, type: string): string => {
     return result;
 };
 
+export const getCardColumns = (unit: string) => {
+	const data = [];
+
+	switch(unit)
+	{
+		case '001': /** 블라인드 */
+			data.push(
+				{ key: 'width', header: '가로' },
+				{ key: 'height', header: '세로' },
+				{ key: 'leftQty', header: '좌' },
+				{ key: 'rightQty', header: '우' },
+				{ key: 'size', header: '규격' }
+			)
+		break;
+		case '002': case '003': /** 커튼 */
+			data.push(
+				{ key: 'width', header: '가로' },
+				{ key: 'height', header: '세로' },
+				{ key: 'proc', header: '가공' },
+				{ key: 'split', header: '분할' },
+				{ key: 'size', header: '규격' }
+			)
+		break;
+		default: /** 기타(EA) */
+	}
+
+	return data;
+}
+
 /**
  * @description 다음 주소 API 팝업 위치 설정
  */

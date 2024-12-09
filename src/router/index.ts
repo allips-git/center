@@ -328,7 +328,8 @@ router.beforeEach( async (to, from, next) => {
             catch(e)
             {
                 console.log(e);
-                alert('토큰 만료');
+                alert('토큰이 만료되었습니다. 로그인 페이지로 이동합니다.');
+                next({ path: '/login', name: 'LoginPage' });
             }
         }
     }
