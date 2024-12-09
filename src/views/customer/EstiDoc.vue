@@ -3,39 +3,40 @@
     <main class="!pb-5">
         <div class="relative">
             <section class="relative rounded-t-xl overflow-hidden bg-white">
-                <InfoCard :title="'공장이름?'" :info="info" />
+                <InfoCard :title="mate['ceNm']" :info="mate['headers']" />
                 <div class="gray-bar"></div>
 
                 <section class="px-5">
                     <div class="flex flex-col gap-5">
-                        <TableCard title="어떤 텍스트?" />
+                        <TableCard v-for="(table, index) in mate['list']" :key="index" :title="table.title" :cards="table.cardLists"
+                       :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag"
+                       :showButton="table.showButton"/>
                     </div>
                 </section>
             </section>
             <section class="px-5">
-                <CalculateCard  :showtitle="true" title="합계 금액" totalTitle="총 합계 금액"/>
+                <CalculateCard  :showtitle="true" :calcs="mate['payList']" title="합계 금액" totalTitle="총 합계 금액" :totalAmt="getAmt(mate['payList'], 'total')"/>
             </section>
         </div>
     </main>
 </template>
     
 <script setup lang="ts">
-import { ref } from 'vue';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import CalculateCard from "@/components/card/CalculateCard.vue";
 import InfoCard from "@/components/card/InfoCard.vue";
 import TableCard from "@/components/card/TableCard.vue";
+import { onMounted } from 'vue';
+import { useEstiMateStore } from '@/store';
+import { useRoute } from 'vue-router';
+import { getAmt } from '@/assets/js/function';
 
+const route = useRoute();
+const mate  = useEstiMateStore();
 
-const checked = ref(false)
-// 정보 배열 정의
-const info = ref([
-    { label: '혜택', value: '11' },
-    { label: '전화번호', value: '010-1234-5678' },
-    { label: '영업시간', value: '09:00 - 18:00'},
-    { label: '주소', value: '부산 수영구 수영로 411-1' },
-    { label: '계좌', value: '123-456-7890123' },
-]);
+onMounted(() => {
+    mate.getInfo({ emCd : atob(route.query.cd) });
+})
 </script>
 
 <style lang="scss">

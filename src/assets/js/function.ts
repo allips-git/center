@@ -60,6 +60,9 @@ export const getConvertDate = (date: Date, type: string): string => {
         case "mm%dd%w% hh:ii" :
             result = m+'.'+d+'('+w+') '+h+':'+i;
             break;
+        case "yy.mm.dd.w" :
+            result = yy +'. '+m+'. '+d+' ('+w+')';
+            break;
         default:
             result = `${y}-${m}-${d}`;
     }
