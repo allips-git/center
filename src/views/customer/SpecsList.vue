@@ -1,15 +1,14 @@
 <template>
     <div class="relative w-full">
         <BackHeader title="명세서" />
-        <Button label="제품 추가 등록" size="small" class="!absolute right-4 top-1/2 -translate-y-1/2" @click="ProductRegisterPop = true"/>
+        <Button label="제품 추가 등록" size="small" class="!absolute right-4 top-1/2 -translate-y-1/2"/>
     </div>
 <main class="main-bottom-fixed-pd">
     <section class="px-5">
         <div class="flex flex-col gap-5">
-            <TableCard title="어떤 텍스트?" />
-            <TableCard title="어떤 텍스트?" />
-            <TableCard title="어떤 텍스트?" />
-            <TableCard title="어떤 텍스트?" />
+            <TableCard v-for="(table, index) in esti['list']" :key="index" :title="table.title" :cards="table.cardLists"
+                :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag" :showButton="table.showButton"
+                @get-modify="getEstiModify"/>
         </div>
     </section>
     <div class="gray-bar"></div>
@@ -84,20 +83,20 @@
     </div>
 </Dialog>
 
-<Dialog
-    v-model:visible="ProductRegisterPop" 
-    header="제품선택" 
-    :modal=true
-    position="bottom"
-    class="custom-dialog-bottom"
-    >
-    <ProductRegister/>
-</Dialog>
+    <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
+        :modal=true position="bottom" class="custom-dialog-bottom"
+        @update:visible="getPopClose(true, 'itemList')">
+        <ProductChoice/>
+    </Dialog>
+
+    <Dialog v-model:visible="popup['pop']['itemSet']" header="제품등록" 
+        :modal=true position="bottom" class="custom-dialog-bottom"
+        @update:visible="getPopClose(true, 'itemSet')">
+        <ProductRegister/>
+    </Dialog>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import TableCard from '@/components/card/TableCard.vue'
 import CalculateCard from "@/components/card/CalculateCard.vue";
@@ -107,17 +106,29 @@ import InputGroupAddon from 'primevue/inputgroupaddon';
 import Dialog from 'primevue/dialog';
 import SaleAmountPop from '@/components/modal/SaleAmountPop.vue'
 import AddAmountPop from '@/components/modal/addAmountPop.vue'
+import ProductChoice from "@/views/include/ProductChoice.vue";
 import ProductRegister from "@/views/include/ProductRegister.vue";
-
-
-
 import ToggleSwitch from 'primevue/toggleswitch';
+import { ref, onMounted } from 'vue'
+import { usePopupStore, useEstiStore } from '@/store';
+import { usePopup } from '@/assets/js/popup';
+
+const popup = usePopupStore();
+const esti  = useEstiStore();
+
+const { getPopupOpen } = usePopup();
+
+const getEstiModify = (edCd: string) => {
+    esti.getEdCd(edCd);
+    getPopupOpen('itemSet');
+}
 
 const SaleAmountPopup = ref (false)
 const AddAmountPopup = ref (false)
-const ProductRegisterPop = ref (false)
 
 const checked = ref(false);
 
-
+onMounted(() => {
+    esti.getList();
+});
 </script>

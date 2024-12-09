@@ -3,9 +3,11 @@
  */
 import { defineStore } from 'pinia';
 import { getHebe, getPok, eaCalculation } from '@/assets/js/order';
-import { getHebeCalc, getPokCalc, getYardCalc, getBlindParams, getCurtainParams } from '@/assets/js/calcAndProcess';
+import { getHebeCalc, getPokCalc, getYardCalc } from '@/assets/js/calcAndProcess';
+import { getAxiosData, getCardColumns } from '@/assets/js/function';
 
 type Nullable<T>    = T | null;
+type Type           = 'I' | 'M' | 'N'; /** I : 명세표 추가 데이터 / M : 수정 데이터 / N : 신규 명세표 */
 type YnType         = 'Y' | 'N';
 type OrdGbType      = 'S' | 'O';
 type AddColorType   = 'O' | 'T';
@@ -57,8 +59,6 @@ interface BlindInfo {
 interface CurtainInfo {
     maxWidth        : Nullable<number>;
     maxHeight       : Nullable<number>;
-    minWidth        : Nullable<number>;
-    minHeight       : Nullable<number>;
     shapeSaleAmt    : number;
     shapePurcAmt    : number;
     proc            : string;
@@ -72,6 +72,9 @@ interface CurtainInfo {
     pokSpec         : number;
     heightLen       : number;
     addPrice        : number;
+    inColor         : string;
+    inSize          : number;
+    outSize         : Nullable<number>;
 }
 
 interface TotalInfo {
@@ -194,8 +197,6 @@ const getCurtainInfo = (): CurtainInfo => {
     return {
         maxWidth        : null,
         maxHeight       : null,
-        minWidth        : null,
-        minHeight       : null,
         shapeSaleAmt    : 0,
         shapePurcAmt    : 0,
         proc            : '001', /** 가공방법(나비주름 / 평주름) */
@@ -208,7 +209,10 @@ const getCurtainInfo = (): CurtainInfo => {
         los             : 60,    /** 로스 길이 */
         pokSpec         : 150,   /** 폭 일시 스펙 */
         heightLen       : 0,     /** 세로 길이 제한(기본 세로 길이) */
-        addPrice        : 0      /** 추가 비율 */
+        addPrice        : 0,     /** 추가 비율 */
+        inColor         : '',    /** 투톤일 시 안쪽 색상코드 */
+        inSize          : 0,     /** 투톤일 시 안쪽 사이즈 */
+        outSize         : null   /** 투톤일 시 바깥쪽 사이즈 */
     }
 }
 
@@ -269,14 +273,17 @@ const getMsgInfo = (): MsgInfo  => {
         curtain : {
             cWidth  : '',
             cHeight : '',
-            size    : '',
-            cQty    : ''
+            cSize   : '',
+            cQty    : '',
+            inColor : ''
         }
     }
 }
 
 interface State {
+    type        : Type;
     emCd        : string;
+    edCd        : string;
     common      : CommonInfo;
     ea          : EaInfo;
     blind       : BlindInfo;
@@ -288,7 +295,9 @@ interface State {
 
 export const useEstiStore = defineStore('esti', {
     state: (): State => ({
+        type        : 'N',
         emCd        : '',
+        edCd        : '',
         common      : getCommonInfo(),
         ea          : getEaInfo(),
         blind       : getBlindInfo(),
@@ -315,6 +324,9 @@ export const useEstiStore = defineStore('esti', {
             ];
 
             return info;
+        },
+        outSize : (state) => {
+            return state.curtain['size'] - state.curtain['inSize'];
         }
     },
     actions : {
@@ -323,7 +335,7 @@ export const useEstiStore = defineStore('esti', {
             try
             {
                 const instance  = await getAxiosData();
-                const res       = await instance.post(`https://data.planorder.kr/esti/getList`, { emCd : this.emCd });
+                const res       = await instance.post(`https://data.planorder.kr/estiV1/getList`, { emCd : this.emCd });
 
                 console.log(res);
 
@@ -395,10 +407,48 @@ export const useEstiStore = defineStore('esti', {
                         }).filter(Boolean)
                     })
                 });
+
+                this.list = list;
+
+                console.log(this.list);
             }
             catch(e)
             {
                 console.log(e);
+            }
+        },
+        async getInfo()
+        {
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/estiV1/getInfo`, { edCd : this.edCd });
+
+                console.log(res);
+
+                const common   = res.data['common'];
+                const itemInfo = res.data['itemInfo'];
+
+                this.getCommonSet(common);
+
+                const unit = common['unit'];
+
+                switch(unit)
+                {
+                    case '001':
+                        this.getBlindSet(itemInfo);
+                    break;
+                    case '002': case '003':
+                        this.getCurtainSet(itemInfo);
+                    break;
+                    default:
+                }
+
+                this.getUnitCalc();
+            }
+            catch(e)
+            {
+                console.error(e);
             }
         },
         async getCommonSet(info: ItemInfo)
@@ -410,14 +460,16 @@ export const useEstiStore = defineStore('esti', {
         async getBlindSet(info: object)
         {
             for(const data in info){
-                this.blind[data] = info[data];
+                this.blind[data] = data === 'division' ? Number(info[data]) : info[data];
             }
         },
         async getCurtainSet(info: object)
         {
             for(const data in info){
-                this.curtain[data] = info[data];
+                this.curtain[data] = data === 'use' ? Number(info[data]) : info[data];
             }
+
+            this.curtain['inColor'] = '';
         },
         getDivisionSet()
         {
@@ -486,7 +538,8 @@ export const useEstiStore = defineStore('esti', {
 
             switch(this.common['unit'])
             {
-                case '001': /** 회배 */
+                case '001':
+                    /** 회배 */
                     info = getHebeCalc(this.common, this.blind);
 
                     this.total['totalQty']      = Number(this.blind['division']) === 1 ? (Number(this.blind['leftQty']) + Number(this.blind['rightQty'])) : Number(this.blind['bQty']);
@@ -504,6 +557,7 @@ export const useEstiStore = defineStore('esti', {
                     this.total['totalHeightSaleAmt']  = 0;
                 break;
                 case '002':
+                    /** 야드 */
                     this.curtain['size'] = getYard({
                         width   : Number(this.common['width']),
                         usage   : Number(this.curtain['use']),
@@ -514,14 +568,15 @@ export const useEstiStore = defineStore('esti', {
                     info = getYardCalc(this.common, this.curtain);
         
                     this.total['totalQty']          = Number(this.curtain['cQty']);
-                    this.total['totalUnitSize']     = info['yard'];
+                    this.total['totalUnitSize']     = Number(this.curtain['size']);
                     
                     this.total['totalShapeSaleAmt']    = Number(info['shapeSaleAmt']);
                     this.total['totalShapeSaleTax']    = Number(info['shapeSaleTax']);
                     this.total['totalShapePurcAmt']    = Number(info['shapePurcAmt']);
                     this.total['totalShapePurcTax']    = Number(info['shapePurcTax']);
                 break;
-                case '003': /** 폭 */
+                case '003':
+                    /** 폭 */
                     this.curtain['size'] = getPok({
                         width   : Number(this.common['width']),
                         usage   : Number(this.curtain['use']),
@@ -533,7 +588,7 @@ export const useEstiStore = defineStore('esti', {
                     info = getPokCalc(this.common, this.curtain);
         
                     this.total['totalQty']             = Number(this.curtain['cQty']);
-                    this.total['totalUnitSize']        = info['pok'];
+                    this.total['totalUnitSize']        = Number(this.curtain['size']);
         
                     this.total['totalHeightSaleAmt']   = Number(info['heightSaleAmt']);
                     this.total['totalHeightSaleTax']   = Number(info['heightSaleTax']);
@@ -581,14 +636,31 @@ export const useEstiStore = defineStore('esti', {
                 case '001':
                     this.msg['blind'][id] = msg;
                 break;
-                case '002':
-                break;
-                case '003':
+                case '002': case '003':
+                    this.msg['curtain'][id] = msg;
                 break;
                 case '004':
                     this.msg['ea'][id] = msg;
                 break;
             }
+        },
+        getEmCd(emCd: string)
+        {
+            this.emCd = emCd;
+        },
+        getEdCd(edCd: string)
+        {
+            this.type = 'M';
+            this.edCd = edCd;
+        },
+        getReset()
+        {
+            this.common     = getCommonInfo();
+            this.ea         = getEaInfo();
+            this.blind      = getBlindInfo();
+            this.curtain    = getCurtainInfo();
+            this.total      = getTotalInfo();
+            this.msg        = getMsgInfo();
         }
     },
     persist: {
