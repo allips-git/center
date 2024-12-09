@@ -150,7 +150,7 @@ onMounted(() => {
         labels: ['블라인드', '커튼'],
         datasets: [{
             label: '매출 기여도',
-            data: [12000, 12000],
+            data: [12, 5],
             backgroundColor: ['#4ade80', ' #38bdf8'],
             hoverBackgroundColor: ['#66bb6a', '#42a5f5'],
         }],
@@ -173,7 +173,7 @@ onMounted(() => {
                             if (label) {
                                 label += ': ';
                             }
-                            label += context.raw + '원';
+                            label += context.raw + '개';
                             return label;
                         }
                     }
