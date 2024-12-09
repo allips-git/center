@@ -32,12 +32,11 @@
 </main>
 
 <div class="z-10 flex-col bottom-fixed-btn-box">
-        <p class="mb-1 text-lg font-bold text-indigo-600">0명 선택됨</p>
-        <div class="flex w-full gap-2 *:w-full">
-            <Button size="large"  label="선택완료"/>
-        </div>
+    <p class="mb-1 text-lg font-bold text-indigo-600">0명 선택됨</p>
+    <div class="flex w-full gap-2 *:w-full">
+        <Button size="large"  label="선택완료"/>
     </div>
-    
+</div>
 </template>
 
 <script setup lang="ts">

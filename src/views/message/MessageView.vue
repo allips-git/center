@@ -1,11 +1,14 @@
 <template>
-    <BackHeader title="메세지" />
+    <BackHeader title="메세지" v-if="showHeader"/>
     <main class="w-full p-5 pb-32">
         <section class="flex justify-between">
             <div>
                 <Button label="고객 선택" icon="pi pi-plus" outlined size="small" rounded @click="CustomerChoicePop = true"></Button>
             </div>
-            <Button label="메세지 저장" size="small"></Button>
+            <div class="flex gap-2">
+                <Button label="메세지 저장" size="small"></Button>
+                <!-- <Button label="메세지 삭제" size="small" severity="danger"></Button> -->
+            </div>
         </section>
         <section class="flex items-start py-3 mt-5 border-y">
             <h2 class="flex-none mt-2 mr-3 text-sm font-bold">받는 사람</h2>
@@ -61,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, defineProps } from 'vue'
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import CustomerChoice from '@/views/include/message/CustomerChoice.vue'
 import IftaLabel from 'primevue/iftalabel';
@@ -69,6 +72,14 @@ import Textarea from 'primevue/textarea';
 import Tag from 'primevue/tag';
 
 const CustomerChoicePop = ref(false)
+
+const props = defineProps({
+    showHeader: {
+        type: Boolean,
+        default: true // 기본값을 true로 설정
+    },
+})
+
 
 </script>
 
