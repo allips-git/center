@@ -38,18 +38,18 @@
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
-                    <section class="p-5 !pb-20 flex flex-col gap-5" v-for="(item, index) in client['detail']['list']" :key="index">
-                        <ProcessCard v-if="item['useYn'] !== 'N' && item['stCd'] !== '012'" :info="item"/>
+                    <section class="p-5 !pb-20 flex flex-col gap-5" v-for="(item, index) in getList(1)" :key="index">
+                        <ProcessCard :info="item"/>
                     </section>
                 </TabPanel>
                 <TabPanel value="1">
-                    <section class="p-5 !pb-20 flex flex-col gap-5" v-for="(item, index) in client['detail']['list']" :key="index">
-                        <ProcessCard v-if="item['stCd'] === '012'" :info="item"/>
+                    <section class="p-5 !pb-20 flex flex-col gap-5" v-for="(item, index) in getList(2)" :key="index">
+                        <ProcessCard :info="item"/>
                     </section>
                 </TabPanel>
                 <TabPanel value="2">
-                    <section class="p-5 !pb-20 flex flex-col gap-5" v-for="(item, index) in client['detail']['list']" :key="index">
-                        <ProcessCard v-if="item['useYn'] === 'N' && item['stCd'] !== '012'" :info="item"/>
+                    <section class="p-5 !pb-20 flex flex-col gap-5" v-for="(item, index) in getList(3)" :key="index">
+                        <ProcessCard :info="item"/>
                     </section>
                 </TabPanel>
             </TabPanels>
@@ -98,6 +98,18 @@ const client    = useClientStore();
 const esti      = useEstiStore();
 
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getList = (tab: number) => {
+    switch(tab)
+    {
+        case 1:
+            return client['detail']['list'].filter(item => item.useYn !== 'N' && item.stCd !== '012');
+        case 2:
+            return client['detail']['list'].filter(item => item.stCd === '012');
+        case 3:
+            return client['detail']['list'].filter(item => item.useYn === 'N' && item.stCd !== '012');
+    }
+}
 
 const getNewEsti = () => {
     getPopupOpen('itemList');
