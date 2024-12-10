@@ -61,18 +61,26 @@
                 <p class="font-bold">지시사항: <span class="font-normal">{{ card['spanText'] }}</span></p>
             </section>
             <div v-if="card.showDelete" class="flex justify-end mt-3">
-                <Button label="삭제" outlined severity="danger" size="small"/>
+                <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])"/>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import Tag from 'primevue/tag';
+import { useConfirm } from "primevue/useconfirm";
+import { defineProps } from 'vue'
+import { useRouter } from 'vue-router';
+import { useClientStore, useEstiStore } from '@/store';
 import { getCommas } from "@/assets/js/function";
+import { getAxiosData, getTokenOut } from '@/assets/js/function';
 
-const emit = defineEmits(['get-modify']);
+const emit      = defineEmits(['get-modify']);
+const confirm   = useConfirm();
+const router    = useRouter();
+const client    = useClientStore();
+const esti      = useEstiStore();
 
 defineProps({
     title   : String,
@@ -81,6 +89,54 @@ defineProps({
     rows    : Array,
     sizeYn  : String
 });
+
+const getDelete = (edCd: string) => {
+    confirm.require({
+        message     : '해당 제품을 삭제하시겠습니까?',
+        header      : '삭제',
+        rejectProps : {
+            label       : '취소',
+            severity    : 'secondary',
+            outlined    : true
+        },
+        acceptProps : {
+            label: '확인'
+        },
+        accept : async () => {
+            const params = {
+                clientCd : client['clientCd'],
+                edCd     : edCd
+            }
+
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/estiV1/getDelete`, params);
+
+                if(res.data['cnt'] === 0)
+                {
+                    router.go(-1);
+                }
+                else
+                {
+                    esti.getList();
+                }
+            }
+            catch(e)
+            {
+                console.log(e);
+                if(e.response.status === 401)
+                {
+                    getTokenOut();
+                }
+                else
+                {
+                    alert('제품 삭제 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                }
+            }
+        }
+    });
+}
 
 const getAmt = (amt) => {
     return getCommas(Number(amt));

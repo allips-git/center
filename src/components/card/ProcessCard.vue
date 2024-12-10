@@ -188,8 +188,38 @@ const getSecondBtnClick = () => {
             router.push({ path: '/customer/orderList' });
         break;
         case '006':
-            // getAlertDataSet(true, '시공완료', '시공완료 처리하시겠습니까?', true);
-            // resultYn.value = 'Y';
+            confirm.require({
+                message     : '시공완료 처리하시겠습니까?',
+                header      : '시공완료',
+                rejectProps : {
+                    label       : '취소',
+                    severity    : 'secondary',
+                    outlined    : true
+                },
+                acceptProps : {
+                    label: '확인'
+                },
+                accept : async () => {
+                    try
+                    {
+                        const instance  = await getAxiosData();
+                        await instance.post(`https://data.planorder.kr/estiV1/getDeilResult`, { emCd : props['info']['emCd'] });
+                        client.getDetail();
+                    }
+                    catch(e)
+                    {
+                        console.log(e);
+                        if(e.response.status === 401)
+                        {
+                            getTokenOut();
+                        }
+                        else
+                        {
+                            alert('시공 완료 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                        }
+                    }
+                }
+            });
         break;
         case '011': case '012':
             router.push({ path: '/customer/orderList' });
