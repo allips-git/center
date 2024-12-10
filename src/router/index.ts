@@ -331,7 +331,7 @@ router.beforeEach( async (to, from, next) => {
             }
             else
             {
-                alert('토큰이 만료되었습니다. 다시 로그인해주세요.');
+                alert('세션이 만료되었습니다. 로그인 화면으로 이동합니다.');
                 login.getLogout();
                 router.push({ path : '/login' });
             }

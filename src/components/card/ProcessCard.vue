@@ -49,7 +49,7 @@
 
         <section class="flex gap-3 *:w-full">
             <template v-if="props.info['stCd'] === '001' && props.info['useYn'] === 'Y'">
-                <Button label="제품추가"/>
+                <Button label="제품추가" @click="getEstiAdd"/>
             </template>
             <template v-else-if="props.info['stCd'] === '012'">
                 <Button severity="secondary" label="상세보기"/>
@@ -83,6 +83,9 @@ import { useConfirm } from "primevue/useconfirm";
 import { useRouter } from 'vue-router';
 import { useClientStore, useEstiStore } from '@/store';
 import { getAxiosData, getTokenOut, getCommas, getConvertDate } from '@/assets/js/function';
+import { usePopup } from '@/assets/js/popup';
+
+const { getPopupOpen } = usePopup();
 
 const confirm   = useConfirm();
 const client    = useClientStore();
@@ -91,6 +94,13 @@ const router    = useRouter();
 const props     = defineProps({
     info : Object
 });
+
+const getEstiAdd = () => {
+    esti.getType('I');
+    esti.getEmCd(props['info']['emCd']);
+    esti.getReset();
+    getPopupOpen('itemList');
+}
 
 const morePopover = ref() 
 
