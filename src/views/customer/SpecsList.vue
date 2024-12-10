@@ -1,7 +1,7 @@
 <template>
     <div class="relative w-full">
         <BackHeader title="명세서" />
-        <Button label="제품 추가 등록" size="small" class="!absolute right-4 top-1/2 -translate-y-1/2"/>
+        <Button label="제품 추가 등록" size="small" class="!absolute right-4 top-1/2 -translate-y-1/2 z-50"/>
     </div>
     <main class="main-bottom-fixed-pd">
         <section class="px-5">
@@ -20,7 +20,7 @@
                             <InputText :value="getAmtInfo('dcAmt')" class="w-full" readonly/>
                             <label>할인 금액</label>
                         </IftaLabel>
-                        <InputGroupAddon><span class="text-blue-600 text-sm">원</span></InputGroupAddon>
+                        <InputGroupAddon><span class="text-sm text-blue-600">원</span></InputGroupAddon>
                     </InputGroup>
             
                     <InputGroup @click="getPopupOpen('addAmtSet')">
@@ -28,7 +28,7 @@
                             <InputText :value="getAmtInfo('addAmt')" class="w-full" readonly/>
                             <label>추가 금액</label>
                         </IftaLabel>
-                        <InputGroupAddon><span class="text-red-600 text-sm">원</span></InputGroupAddon>
+                        <InputGroupAddon><span class="text-sm text-red-600">원</span></InputGroupAddon>
                     </InputGroup>
 
                     <div class="flex justify-between">
@@ -71,6 +71,13 @@
         @update:visible="getPopupClose(true, 'itemSet')">
         <ProductRegister/>
     </Dialog>
+    
+    <Dialog v-model:visible="contractModalPop" header="계약 정보" 
+        :modal=true position="bottom" class="custom-dialog-bottom"
+        >
+        <ContractModal/>
+    </Dialog>
+    
 </template>
 
 <script setup lang="ts">
@@ -83,6 +90,7 @@ import InputGroupAddon from 'primevue/inputgroupaddon';
 import Dialog from 'primevue/dialog';
 import SaleAmountPop from '@/components/modal/SaleAmountPop.vue'
 import AddAmountPop from '@/components/modal/addAmountPop.vue'
+import ContractModal from '@/views/customer/ContractModal.vue'
 import ProductChoice from "@/views/include/ProductChoice.vue";
 import ProductRegister from "@/views/include/ProductRegister.vue";
 import ToggleSwitch from 'primevue/toggleswitch';
@@ -92,6 +100,8 @@ import { useRouter } from 'vue-router';
 import { usePopupStore, useEstiStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 import { getAmt, getAxiosData } from '@/assets/js/function';
+
+const contractModalPop = (true)
 
 const confirm   = useConfirm();
 const router    = useRouter();
