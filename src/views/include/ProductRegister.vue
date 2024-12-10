@@ -81,7 +81,7 @@ import { useClientStore, useEstiStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { estiBlindMsg, estiCurtainMsg, estiEaMsg } from '@/assets/js/msg';
-import { getBlindParams, getCurtainParams } from '@/assets/js/calcAndProcess';
+import { getBlindParams, getCurtainParams, getEaParams } from '@/assets/js/calcAndProcess';
 import { getAxiosData } from '@/assets/js/function';
 
 const router    = useRouter();
@@ -205,6 +205,7 @@ const getEstiSave = () => {
                     params['totalShapePurcTax']    = esti['total']['totalShapePurcTax'];
                 break;
                 case '004':
+                    params = getEaParams(esti['common'], esti['ea']);
                 break;
             }
 

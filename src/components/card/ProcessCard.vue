@@ -2,7 +2,7 @@
     <!-- 프로세스 카드 -->
      <div class="w-full p-4 rounded border border-gray-200">
          <div class="flex justify-between border-b border-neutral-100 pb-4 font-bold">
-             <h1>견적진행</h1>
+             <h1>{{ props.info['stNm'] }}</h1>
              <h2 class="text-xl">{{ getAmt(props.info['totalSaleAmt']) }}원</h2>
          </div>
 

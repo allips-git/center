@@ -1,7 +1,7 @@
 <template>
     <div class="relative w-full">
         <BackHeader title="명세서" />
-        <Button label="제품 추가 등록" size="small" class="!absolute right-4 top-1/2 -translate-y-1/2 z-50"/>
+        <Button label="제품 추가 등록" size="small" class="!absolute right-4 top-1/2 -translate-y-1/2 z-50" @click="getEstiAdd"/>
     </div>
     <main class="main-bottom-fixed-pd">
         <section class="px-5">
@@ -108,6 +108,12 @@ const esti      = useEstiStore();
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
+const getEstiAdd = () => {
+    esti.getType('I');
+    esti.getReset();
+    getPopupOpen('itemList');
+}
+
 const getEstiModify = (edCd: string) => {
     esti.getEdCd(edCd);
     getPopupOpen('itemSet');
@@ -210,6 +216,8 @@ const getEstiSave = () => {
                 dcInfo  : esti['dcInfo'],
                 cutInfo : esti['cutInfo']
             }
+
+            console.log(params);
 
             try
             {

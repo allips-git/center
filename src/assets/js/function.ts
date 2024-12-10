@@ -60,8 +60,14 @@ export const getConvertDate = (date: Date, type: string): string => {
         case "mm%dd%w% hh:ii" :
             result = m+'.'+d+'('+w+') '+h+':'+i;
             break;
+        case "yyyy-mm-dd hh:ii" :
+            result = `${y}-${m}-${d} ${h}:${i}`;
+            break;
         case "yy.mm.dd.w" :
             result = yy +'. '+m+'. '+d+' ('+w+')';
+            break;
+        case "hh:ii" :
+            result = `${h}:${i}`;
             break;
         default:
             result = `${y}-${m}-${d}`;
@@ -94,6 +100,9 @@ export const getCardColumns = (unit: string) => {
 			)
 		break;
 		default: /** 기타(EA) */
+            data.push(
+                { key: 'qty', header: '수량' }
+            )
 	}
 
 	return data;
