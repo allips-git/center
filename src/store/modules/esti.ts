@@ -470,36 +470,36 @@ export const useEstiStore = defineStore('esti', {
                 if(res.data['addAmt'])
                 {
                     this.getPayAmt('addAmt', Number(res.data['addAmt']['amt']));
-                    this.getPayAmt('addInfo', Number(res.data['addAmt']));
+                    this.getAmtInfo('addInfo', res.data['addAmt']);
                 }
                 else
                 {
                     this.getPayAmt('addAmt', 0);
-                    this.getPayAmt('addInfo', getAmtInfo());
+                    this.getAmtInfo('addInfo', getAmtInfo());
                 }
 
                 /** 할인 금액 */
                 if(res.data['dcAmt'])
                 {
                     this.getPayAmt('dcAmt', Number(res.data['dcAmt']['amt']));
-                    this.getPayAmt('dcInfo', Number(res.data['dcAmt']));
+                    this.getAmtInfo('dcInfo', res.data['dcAmt']);
                 }
                 else
                 {
                     this.getPayAmt('dcAmt', 0);
-                    this.getPayAmt('dcInfo', getAmtInfo());
+                    this.getAmtInfo('dcInfo', getAmtInfo());
                 }
 
                 /** 절삭 할인 금액 */
                 if(res.data['cutAmt'])
                 {
                     this.getPayAmt('cutAmt', Number(res.data['cutAmt']['amt']));
-                    this.getPayAmt('cutInfo', Number(res.data['cutAmt']));
+                    this.getAmtInfo('cutInfo', { gubun : true, amt : Number(res.data['cutAmt']) });
                 }
                 else
                 {
                     this.getPayAmt('cutAmt', 0);
-                    this.getPayAmt('cutInfo', { gubun : false, amt : 0 });
+                    this.getAmtInfo('cutInfo', { gubun : false, amt : 0 });
                 }
             }
             catch(e)
@@ -755,6 +755,11 @@ export const useEstiStore = defineStore('esti', {
             {
                 item.amt = Number(amt);
             }
+        },
+        getAmtInfo(name: string, info: obejct)
+        {
+            console.log(this[name]);
+            this[name] = info;
         },
         getReset()
         {

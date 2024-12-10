@@ -74,7 +74,7 @@ import CalculateCard from '@/components/card/CalculateCard.vue'
 import CalcEASet from '@/views/include/calc/CalcEASet.vue'
 import CalcHebeSet from '@/views/include/calc/CalcHebeSet.vue'
 import CalcWidthYardSet from '@/views/include/calc/CalcWidthYardSet.vue'
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useConfirm } from "primevue/useconfirm";
 import { useClientStore, useEstiStore } from '@/store';
@@ -266,17 +266,17 @@ const getFocus = (id: string) => {
     }
 }
 
-onMounted(() => {
-    switch(esti['type'])
-    {
-        case 'N': case 'I':
-            esti.getReset();
-        break;
-        case 'M':
-            esti.getInfo();
-        break;
-    }
-})
+// onMounted(() => {
+//     switch(esti['type'])
+//     {
+//         case 'N': case 'I':
+//             esti.getReset();
+//         break;
+//         case 'M':
+//             esti.getInfo();
+//         break;
+//     }
+// })
 
 </script>
 

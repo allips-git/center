@@ -103,6 +103,7 @@ const { getPopupOpen, getPopupClose } = usePopup();
 const getEstiModify = (edCd: string) => {
     esti.getEdCd(edCd);
     getPopupOpen('itemSet');
+    esti.getInfo();
 }
 
 const getAmtInfo = (name) => {
