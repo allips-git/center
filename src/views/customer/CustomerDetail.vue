@@ -39,7 +39,7 @@
             <TabPanels>
                 <TabPanel value="0">
                     <section class="p-5 !pb-20 flex flex-col gap-5" v-for="(item, index) in client['detail']['list']" :key="index">
-                        <ProcessCard v-if="item['stCd'] !== 'N' && item['stCd'] !== '012'" :info="item"/>
+                        <ProcessCard v-if="item['useYn'] !== 'N' && item['stCd'] !== '012'" :info="item"/>
                     </section>
                 </TabPanel>
                 <TabPanel value="1">
@@ -49,7 +49,7 @@
                 </TabPanel>
                 <TabPanel value="2">
                     <section class="p-5 !pb-20 flex flex-col gap-5" v-for="(item, index) in client['detail']['list']" :key="index">
-                        <ProcessCard v-if="item['stCd'] === 'N' && item['stCd'] !== '012'" :info="item"/>
+                        <ProcessCard v-if="item['useYn'] === 'N' && item['stCd'] !== '012'" :info="item"/>
                     </section>
                 </TabPanel>
             </TabPanels>

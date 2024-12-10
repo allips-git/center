@@ -166,3 +166,11 @@ export const getAxiosData = async () => {
 
     return instance;
 };
+
+export const getTokenOut = () => {
+    const login = useLoginStore();
+
+    alert('세션이 만료되었습니다. 로그인 화면으로 이동합니다.');
+    login.getLogout();
+    router.push('/login');
+}

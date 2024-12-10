@@ -21,7 +21,6 @@
                 <label>시공 담당</label>
             </IftaLabel>
             <div>
-                <p class="mb-2">선금</p>
                 <div class="flex gap-4">
                     <IftaLabel class="w-60">
                         <label>지금 방식</label>
@@ -42,7 +41,7 @@
         </div>
     </div>
     <div class="bottom-fixed-btn-box">
-        <Button label="계약서 이동" size="large"</Button>
+        <Button label="계약서 이동" size="large"></Button>
     </div>
 </template>
 

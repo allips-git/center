@@ -41,7 +41,7 @@
     </main>
     <div class="bottom-fixed-btn-box">
         <Button label="견적서 저장" size="large" @click="getEstiSave"/>
-        <Button label="계약서 이동" severity="secondary" size="large" @click="getConMove"/>
+        <Button label="계약서 이동" severity="secondary" size="large" @click="getPopupOpen('conInfoSet')"/>
     </div>
 
     <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 
@@ -72,9 +72,9 @@
         <ProductRegister/>
     </Dialog>
     
-    <Dialog v-model:visible="contractModalPop" header="계약 정보" 
+    <Dialog v-model:visible="popup['pop']['conInfoSet']" header="계약 정보" 
         :modal=true position="bottom" class="custom-dialog-bottom"
-        >
+        @update:visible="getPopupClose(true, 'conInfoSet')">
         <ContractModal/>
     </Dialog>
     
@@ -99,9 +99,7 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { usePopupStore, useEstiStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
-import { getAmt, getAxiosData } from '@/assets/js/function';
-
-const contractModalPop = (true)
+import { getAmt, getAxiosData, getTokenOut } from '@/assets/js/function';
 
 const confirm   = useConfirm();
 const router    = useRouter();
@@ -222,6 +220,14 @@ const getEstiSave = () => {
             catch(e)
             {
                 console.log(e);
+                if(e.response.status === 401)
+                {
+                    getTokenOut();
+                }
+                else
+                {
+                    alert('견적 저장 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                }
             }
         }
     });
