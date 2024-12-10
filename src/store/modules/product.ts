@@ -49,7 +49,7 @@ const getExCurtainInfo = (): ExInfo => {
         icNm        : '',
         unit        : '003',
         unitNm      : '폭',
-        unitSize    : 0,
+        unitSize    : 1,
         saleUnit    : 0,
         purcUnit    : 0
     }
@@ -68,7 +68,7 @@ const getExBlindInfo = (): ExInfo => {
         icNm        : '',
         unit        : '001',
         unitNm      : '회베',
-        unitSize    : 0,
+        unitSize    : 1,
         saleUnit    : 0,
         purcUnit    : 0
     }

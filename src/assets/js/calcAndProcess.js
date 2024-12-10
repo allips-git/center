@@ -102,8 +102,8 @@ export function getBlindParams(common, blind)
     params['division'] = blind['division'];
     params['width']    = common['width'];
     params['height']   = common['height'];
-    params['leftCnt']  = blind['leftQty'];
-    params['rightCnt'] = blind['rightQty'];
+    params['leftCnt']  = blind['leftQty'] ? blind['leftQty'] : 0;
+    params['rightCnt'] = blind['rightQty'] ? blind['rightQty'] : 0;
     params['cnt']      = blind['bQty'];
     params['spec']     = blind['divSpec'];
 
@@ -125,6 +125,18 @@ export function getCurtainParams(common, curtain)
     params['split']     = curtain['split'];
     params['use']       = curtain['use'];
     params['cnt']       = curtain['cQty'];
+
+    return params;
+}
+
+/**
+ * @description EA Request 파라미터 가공
+ */
+export function getEaParams(common, ea)
+{
+    const params  = getCommonParams(common);
+
+    params['cnt'] = ea['qty'];
 
     return params;
 }

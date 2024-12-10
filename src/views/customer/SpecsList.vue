@@ -1,7 +1,7 @@
 <template>
     <div class="relative w-full">
         <BackHeader title="명세서" />
-        <Button label="제품 추가 등록" size="small" class="!absolute right-4 top-1/2 -translate-y-1/2 z-50"/>
+        <Button label="제품 추가 등록" size="small" class="!absolute right-4 top-1/2 -translate-y-1/2 z-50" @click="getEstiAdd"/>
     </div>
     <main class="main-bottom-fixed-pd">
         <section class="px-5">
@@ -41,7 +41,7 @@
     </main>
     <div class="bottom-fixed-btn-box">
         <Button label="견적서 저장" size="large" @click="getEstiSave"/>
-        <Button label="계약서 이동" severity="secondary" size="large" @click="getConMove"/>
+        <Button label="계약서 이동" severity="secondary" size="large" @click="getPopupOpen('conInfoSet')"/>
     </div>
 
     <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 
@@ -72,9 +72,9 @@
         <ProductRegister/>
     </Dialog>
     
-    <Dialog v-model:visible="contractModalPop" header="계약 정보" 
+    <Dialog v-model:visible="popup['pop']['conInfoSet']" header="계약 정보" 
         :modal=true position="bottom" class="custom-dialog-bottom"
-        >
+        @update:visible="getPopupClose(true, 'conInfoSet')">
         <ContractModal/>
     </Dialog>
     
@@ -99,9 +99,7 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { usePopupStore, useEstiStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
-import { getAmt, getAxiosData } from '@/assets/js/function';
-
-const contractModalPop = (true)
+import { getAmt, getAxiosData, getTokenOut } from '@/assets/js/function';
 
 const confirm   = useConfirm();
 const router    = useRouter();
@@ -110,9 +108,16 @@ const esti      = useEstiStore();
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
+const getEstiAdd = () => {
+    esti.getType('I');
+    esti.getReset();
+    getPopupOpen('itemList');
+}
+
 const getEstiModify = (edCd: string) => {
     esti.getEdCd(edCd);
     getPopupOpen('itemSet');
+    esti.getInfo();
 }
 
 const getAmtInfo = (name) => {
@@ -212,6 +217,8 @@ const getEstiSave = () => {
                 cutInfo : esti['cutInfo']
             }
 
+            console.log(params);
+
             try
             {
                 const instance  = await getAxiosData();
@@ -221,6 +228,14 @@ const getEstiSave = () => {
             catch(e)
             {
                 console.log(e);
+                if(e.response.status === 401)
+                {
+                    getTokenOut();
+                }
+                else
+                {
+                    alert('견적 저장 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                }
             }
         }
     });

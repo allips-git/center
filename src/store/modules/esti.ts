@@ -127,6 +127,16 @@ interface CutInfo {
     amt   : Nullable<string>;
 }
 
+interface ConInfo {
+    conDt   : date;
+    deliDt  : Nullable<date>;
+    insTime : date;
+    person  : string;
+    payGb   : string;
+    amt     : Nullable<number>;
+    memo    : string;
+}
+
 interface MsgInfo {
     ea : {
         qty : string;
@@ -307,6 +317,21 @@ const getAmtInfo = (): AmtInfo => {
     }
 }
 
+/**
+ * @description 계약서 정보
+ */
+const getConInfo = (): ConInfo => {
+    return {
+        conDt   : new Date(),
+        deliDt  : '',
+        insTime : '',
+        person  : '',
+        payGb   : '001',
+        amt     : 0,
+        memo    : ''
+    }
+}
+
 const getMsgInfo = (): MsgInfo  => {
     return {
         ea : {
@@ -344,6 +369,7 @@ interface State {
     dcInfo      : AmtInfo;
     addInfo     : AmtInfo;
     cutInfo     : CutInfo;
+    conInfo     : ConInfo;
 }
 
 export const useEstiStore = defineStore('esti', {
@@ -365,7 +391,7 @@ export const useEstiStore = defineStore('esti', {
             gubun : false,
             amt   : 0
         },
-        // conInfo     : getConInfo()
+        conInfo     : getConInfo()
     }),
     getters: {
         totalAmtInfo : (state) => {
@@ -436,6 +462,11 @@ export const useEstiStore = defineStore('esti', {
                                             size    : esti.totalUnit + esti.unitNm
                                         });
                                     break;
+                                    case '004':
+                                        rows.push({
+                                            qty : esti.cnt
+                                        })
+                                    break;
                                 }
 
                                 if(esti.shape === 'Y')
@@ -461,6 +492,8 @@ export const useEstiStore = defineStore('esti', {
                     })
                 });
 
+                console.log(list);
+
                 this.list = list;
 
                 this.getPayAmt('itemAmt', Number(res.data['itemAmt']));
@@ -470,36 +503,36 @@ export const useEstiStore = defineStore('esti', {
                 if(res.data['addAmt'])
                 {
                     this.getPayAmt('addAmt', Number(res.data['addAmt']['amt']));
-                    this.getPayAmt('addInfo', Number(res.data['addAmt']));
+                    this.getAmtInfo('addInfo', res.data['addAmt']);
                 }
                 else
                 {
                     this.getPayAmt('addAmt', 0);
-                    this.getPayAmt('addInfo', getAmtInfo());
+                    this.getAmtInfo('addInfo', getAmtInfo());
                 }
 
                 /** 할인 금액 */
                 if(res.data['dcAmt'])
                 {
                     this.getPayAmt('dcAmt', Number(res.data['dcAmt']['amt']));
-                    this.getPayAmt('dcInfo', Number(res.data['dcAmt']));
+                    this.getAmtInfo('dcInfo', res.data['dcAmt']);
                 }
                 else
                 {
                     this.getPayAmt('dcAmt', 0);
-                    this.getPayAmt('dcInfo', getAmtInfo());
+                    this.getAmtInfo('dcInfo', getAmtInfo());
                 }
 
                 /** 절삭 할인 금액 */
                 if(res.data['cutAmt'])
                 {
                     this.getPayAmt('cutAmt', Number(res.data['cutAmt']['amt']));
-                    this.getPayAmt('cutInfo', Number(res.data['cutAmt']));
+                    this.getAmtInfo('cutInfo', { gubun : true, amt : Number(res.data['cutAmt']) });
                 }
                 else
                 {
                     this.getPayAmt('cutAmt', 0);
-                    this.getPayAmt('cutInfo', { gubun : false, amt : 0 });
+                    this.getAmtInfo('cutInfo', { gubun : false, amt : 0 });
                 }
             }
             catch(e)
@@ -531,7 +564,9 @@ export const useEstiStore = defineStore('esti', {
                     case '002': case '003':
                         this.getCurtainSet(itemInfo);
                     break;
-                    default:
+                    case '004':
+                        this.getEaSet(itemInfo);
+                    break;
                 }
 
                 this.getUnitCalc();
@@ -557,6 +592,14 @@ export const useEstiStore = defineStore('esti', {
         {
             for(const data in info){
                 this.curtain[data] = data === 'use' ? Number(info[data]) : info[data];
+            }
+
+            this.curtain['inColor'] = '';
+        },
+        async getEaSet(info: object)
+        {
+            for(const data in info){
+                this.ea[data] = data === 'qty' ? Number(info[data]) : info[data];
             }
 
             this.curtain['inColor'] = '';
@@ -755,6 +798,10 @@ export const useEstiStore = defineStore('esti', {
             {
                 item.amt = Number(amt);
             }
+        },
+        getAmtInfo(name: string, info: obejct)
+        {
+            this[name] = info;
         },
         getReset()
         {
