@@ -54,12 +54,14 @@ import DatePicker from 'primevue/datepicker';
 import Textarea from 'primevue/textarea';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router';
 import { useDataStore, useClientStore, useEstiStore, useContractStore } from '@/store';
 import { getAxiosData, getTokenOut } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { contractMsg } from '@/assets/js/msg';
 
 const confirm   = useConfirm();
+const router    = useRouter();
 const data      = useDataStore();
 const client    = useClientStore();
 const esti      = useEstiStore();
@@ -111,6 +113,7 @@ const getConMove = () => {
                 const instance  = await getAxiosData();
                 await instance.post(`https://data.planorder.kr/estiV1/getContract`, params);
                 getPopupClose(true, 'conInfoSet');
+                router.go(-1);
             }
             catch(e)
             {
