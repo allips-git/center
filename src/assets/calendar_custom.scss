@@ -1,0 +1,94 @@
+:root {
+    --fc-small-font-size: .85em;
+    --fc-page-bg-color: #fff;
+    --fc-neutral-bg-color: rgba(208, 208, 208, 0.3);
+    --fc-neutral-text-color: #808080;
+    --fc-border-color: #ddd;
+  
+    --fc-button-text-color: #fff;
+    --fc-button-bg-color: #2C3E50;
+    --fc-button-border-color: #2C3E50;
+    --fc-button-hover-bg-color: #1e2b37;
+    --fc-button-hover-border-color: #1a252f;
+    --fc-button-active-bg-color: #1a252f;
+    --fc-button-active-border-color: #151e27;
+  
+    --fc-event-bg-color: #3788d8;
+    --fc-event-border-color: #3788d8;
+    --fc-event-text-color: #fff;
+    --fc-event-selected-overlay-color: rgba(0, 0, 0, 0.25);
+  
+    --fc-more-link-bg-color: #d0d0d0;
+    --fc-more-link-text-color: inherit;
+  
+    --fc-event-resizer-thickness: 8px;
+    --fc-event-resizer-dot-total-width: 8px;
+    --fc-event-resizer-dot-border-width: 1px;
+  
+    --fc-non-business-color: rgba(215, 215, 215, 0.3);
+    --fc-bg-event-color: rgb(143, 223, 130);
+    --fc-bg-event-opacity: 0.3;
+    --fc-highlight-color: rgba(188, 232, 241, 0.3);
+    --fc-today-bg-color: rgba(255, 220, 40, 0.15);
+    --fc-now-indicator-color: red;
+  }
+  .month-custom{
+      .fc-scrollgrid-section.fc-scrollgrid-section-header {
+        font-size: 0.75rem !important;
+      }
+      .fc-col-header {
+        border-bottom-width:  1px !important;
+      }
+      .fc-theme-standard th{
+        border-width: 0px !important;
+        
+      }
+      .fc-theme-standard td{
+        border-width: 0px !important;
+        border-bottom-width: 1px !important;
+            .fc-daygrid-day-top{
+             flex-direction: row;
+             padding-left: 0.25rem;
+             padding-top: 0.25rem;
+             font-weight: 700;
+            }
+      }
+    //   오늘 날짜 커스텀
+      .fc-daygrid-day.fc-day-today{
+        background-color: var(--p-primary-50) !important;
+        // background-color: transparent !important;
+            .fc-daygrid-day-number{
+                color: white;
+                border-radius: 9999px;
+                width: 24px;
+                height: 24px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: var(--p-primary-600) !important;
+            }
+      }
+    //   다음 달 날짜 배경 색
+      .fc-day-other{
+        background-color: var(--p-gray-50) !important;
+      }
+  }
+
+  .time-grid-custom{
+    .fc-timegrid-col.fc-day-today{
+        background-color: transparent;
+    }
+    .fc-timegrid-slot-label-cushion{
+        font-size: 0.875rem;
+        position: relative;
+        top: -12px;
+        background: #fff;
+        color: var(--p-gray-400) !important;
+    }
+    .fc-theme-standard td, .fc-theme-standard th{
+        border-color: var(--p-gray-200) !important;
+    }
+    .fc-theme-standard .fc-timegrid-slot-label{
+        border: none;
+    }
+  }
