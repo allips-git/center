@@ -15,6 +15,9 @@ interface Pop {
     conInfoSet          : boolean;
     sysFactorySearch    : boolean;
     outFactorySet       : boolean;
+    sysOrderSet         : boolean;
+    outOrderSet         : boolean;
+    paymentSet          : boolean;
 }
 
 interface State {
@@ -33,7 +36,10 @@ const getPopInfo = (): Pop => {
         addAmtSet           : false,
         conInfoSet          : false,
         sysFactorySearch    : false,
-        outFactorySet       : false
+        outFactorySet       : false,
+        sysOrderSet         : false,
+        outOrderSet         : false,
+        paymentSet          : false
     }
 }
 

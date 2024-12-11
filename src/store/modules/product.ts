@@ -94,44 +94,44 @@ const getItemInfo = (): ItemInfo => {
 }
 
 interface State {
-    option : Select[];
-    fcCd   : string;
-    search : string;
-    itemCd : string;
-    icCd   : string;
-    list   : [];
-    info   : ItemInfo;
-    exItem : {
+    option      : Select[];
+    fcCd        : string;
+    search      : string;
+    itemCd      : string;
+    icCd        : string;
+    list        : [];
+    info        : ItemInfo;
+    exItem      : {
         blind   : ExInfo;
         curtain : ExInfo;
     };
-    start  : number;
+    inIcList    : [];
+    start       : number;
 }
 
 export const useProductStore = defineStore('product', {
     state: (): State => ({
-        option : [{ label: "브랜드_검색", value: "" }],
-        fcCd   : '',
-        search : '',
-        itemCd : '',
-        icCd   : '',
-        list   : [],
-        info   : getItemInfo(),
-        exItem : {
+        option      : [{ label: "브랜드_검색", value: "" }],
+        fcCd        : '',
+        search      : '',
+        itemCd      : '',
+        icCd        : '',
+        list        : [],
+        info        : getItemInfo(),
+        exItem      : {
             blind   : getExBlindInfo(),
             curtain : getExCurtainInfo()
         },
-        start  : 0
+        inIcList    : [],
+        start       : 0
     }),
     getters: {
-        inIcList : (state) => {
-            const itemInfo  = state.list.find(item => item.itemCd === state.itemCd);
-            const colorList = itemInfo['colorLists'].filter(item => item.icCd !== state.icCd);
+        // inIcList : (state) => {
+        //     const itemInfo  = state.list.find(item => item.itemCd === state.itemCd);
+        //     const colorList = itemInfo['colorLists'].filter(item => item.icCd !== state.icCd);
 
-            console.log(colorList);
-
-            return colorList;
-        }
+        //     return colorList;
+        // }
     },
     actions: {
         /**

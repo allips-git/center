@@ -125,6 +125,9 @@ export function getCurtainParams(common, curtain)
     params['split']     = curtain['split'];
     params['use']       = curtain['use'];
     params['cnt']       = curtain['cQty'];
+    params['inColor']   = curtain['inColor'];
+    params['inSize']    = curtain['inSize'];
+    params['outSize']   = curtain['size'] - curtain['inSize'];
 
     return params;
 }
