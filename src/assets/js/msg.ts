@@ -208,6 +208,28 @@ export const estiEaMsg = (params: EstiEaMsg): { msg: string; id: string, state: 
     return { msg : '', id : '', state : true };
 }
 
+interface ContractMsg {
+    deliDt  : string;
+    insTime : string;
+}
+
+/**
+ * @description 계약 처리 시 저장 값 체크
+ */
+export const contractMsg = (params: ContractMsg): { msg: string; id: string, state: boolean } => {
+    if(params['deliDt'] === '')
+    {
+        return { msg : '시공일을 입력해주세요.', id : 'deliDt', state : false };
+    }
+
+    if(params['insTime'] === '')
+    {
+        return { msg : '설치시간을 입력해주세요.', id : 'insTime', state : false };
+    }
+
+    return { msg : '', id : '', state : true };
+}
+
 interface OutFactoryMsg {
     faNm    : string;
     tel     : string;

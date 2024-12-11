@@ -102,6 +102,7 @@ const getExItem = async (itemCd: string) => {
 
     await product.getEx(itemCd);
     await esti.getCommonSet(product['info']);
+    await esti.getUnitCalc();
 }
 
 const getAmt = (amt: number) => {

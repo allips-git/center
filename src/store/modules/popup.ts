@@ -12,6 +12,7 @@ interface Pop {
     ordList             : boolean;
     disAmtSet           : boolean;
     addAmtSet           : boolean;
+    conInfoSet          : boolean;
     sysFactorySearch    : boolean;
     outFactorySet       : boolean;
 }
@@ -30,6 +31,7 @@ const getPopInfo = (): Pop => {
         ordList             : false,
         disAmtSet           : false,
         addAmtSet           : false,
+        conInfoSet          : false,
         sysFactorySearch    : false,
         outFactorySet       : false
     }

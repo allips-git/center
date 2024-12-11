@@ -60,8 +60,14 @@ export const getConvertDate = (date: Date, type: string): string => {
         case "mm%dd%w% hh:ii" :
             result = m+'.'+d+'('+w+') '+h+':'+i;
             break;
+        case "yyyy-mm-dd hh:ii" :
+            result = `${y}-${m}-${d} ${h}:${i}`;
+            break;
         case "yy.mm.dd.w" :
             result = yy +'. '+m+'. '+d+' ('+w+')';
+            break;
+        case "hh:ii" :
+            result = `${h}:${i}`;
             break;
         default:
             result = `${y}-${m}-${d}`;
@@ -94,6 +100,9 @@ export const getCardColumns = (unit: string) => {
 			)
 		break;
 		default: /** 기타(EA) */
+            data.push(
+                { key: 'qty', header: '수량' }
+            )
 	}
 
 	return data;
@@ -166,3 +175,11 @@ export const getAxiosData = async () => {
 
     return instance;
 };
+
+export const getTokenOut = () => {
+    const login = useLoginStore();
+
+    alert('세션이 만료되었습니다. 로그인 화면으로 이동합니다.');
+    login.getLogout();
+    router.push('/login');
+}

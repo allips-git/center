@@ -79,6 +79,11 @@ export const useDataStore = defineStore('data', {
                 { value : 'P', label : '%' }, 
                 { value : 'F', label : '원' }
             ],
+            payGb : [ 
+                { value : '001', label : '계좌' }, 
+                { value : '002', label : '현금' },
+                { value : '003', label : '카드' }
+            ],
         };
     },
 });

@@ -9,7 +9,9 @@ import { useMainStore } from './modules/main';
 import { useClientStore } from './modules/client';
 import { useProductStore } from './modules/product';
 import { useEstiStore } from './modules/esti';
+import { useContractStore } from './modules/contract';
 import { useEstiMateStore } from './modules/estiMate';
+import { useConMateStore } from './modules/conMate';
 import { useFactoryStore } from './modules/factory';
 
 const pinia = createPinia();
@@ -28,6 +30,8 @@ export {
     useClientStore,
     useProductStore,
     useEstiStore,
+    useContractStore,
     useEstiMateStore,
+    useConMateStore,
     useFactoryStore
 };
