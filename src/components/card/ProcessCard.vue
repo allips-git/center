@@ -61,7 +61,7 @@
                 <Button severity="secondary" :label="getFirstBtnText()" @click="getFirstBtnClick"/>
                 <Button :label="getSecondBtnText()" @click="getSecondBtnClick"/>
             </template>
-            <Button v-if="props.info['useYn'] !== 'N'" severity="secondary" icon="pi pi-ellipsis-h" outlined class="flex-none" @click="togglemorePopover" />
+            <Button v-if="props.info['useYn'] !== 'N' && props.info['stCd'] !== '001'" severity="secondary" icon="pi pi-ellipsis-h" outlined class="flex-none" @click="togglemorePopover" />
             <Popover class="custom-popover-listbox" ref="morePopover" dismissable> 
                 <Listbox :options="moreBtnList" optionLabel="name" optionValue="value" class="w-full md:w-56">
                 <template #option="slotProps">
@@ -163,6 +163,8 @@ const getSecondBtnText = () => {
 };
 
 const getFirstBtnClick = () => {
+    esti.getEmCd(props['info']['emCd']);
+
     switch(props.info['stCd'])
     {
         case '002':
@@ -178,10 +180,11 @@ const getFirstBtnClick = () => {
 }
 
 const getSecondBtnClick = () => {
+    esti.getEmCd(props['info']['emCd']);
+    
     switch(props.info['stCd'])
     {
         case '002':
-            esti.getEmCd(props['info']['emCd']);
             router.push({ path: '/customer/estiList' });
         break;
         case '003':
@@ -263,12 +266,22 @@ const getEstiRestore = () => {
 }
 
 const getProcess = (value: string) => {
+    esti.getEmCd(props['info']['emCd']);
+    
     switch(value)
     {
         case 'E':
             router.push({ path : '/customer/estiMate' });
         break;
         case 'C':
+            if(props.info['stCd'] !== '002')
+            {
+                router.push({ path : '/customer/conMate' });
+            }
+            else
+            {
+                alert('계약 진행 후 확인 가능합니다.');
+            }
         break;
         case 'T':
         break;
