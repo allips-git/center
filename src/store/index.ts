@@ -12,6 +12,7 @@ import { useEstiStore } from './modules/esti';
 import { useContractStore } from './modules/contract';
 import { useEstiMateStore } from './modules/estiMate';
 import { useConMateStore } from './modules/conMate';
+import { useOrderStore } from './modules/order';
 import { useFactoryStore } from './modules/factory';
 
 const pinia = createPinia();
@@ -33,5 +34,6 @@ export {
     useContractStore,
     useEstiMateStore,
     useConMateStore,
+    useOrderStore,
     useFactoryStore
 };

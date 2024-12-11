@@ -112,8 +112,9 @@ const getList = (tab: number) => {
 }
 
 const getNewEsti = () => {
-    getPopupOpen('itemList');
+    esti.getReset();
     esti.getType('N');
+    getPopupOpen('itemList');
 }
 
 const getPopClose = (gb: boolean, popNm: string) => {
