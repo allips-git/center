@@ -15,7 +15,7 @@
 
         <div>
             <IftaLabel class="w-full">
-            <Select v-model="esti['curtain']['addColor']" :options="data['addColor']" optionLabel="name" optionValue="value" class="w-full" />
+            <Select v-model="esti['curtain']['addColor']" :options="data['addColor']" optionLabel="name" optionValue="value" class="w-full" @update:modelValue="(value) => getInColor(value)"/>
                 <label>색상추가</label>
             </IftaLabel>
     
@@ -135,10 +135,17 @@ const getSize = () => {
     esti['curtain']['size'] = value;
 }
 
-// const getIncolor = () => {
-//     const itemInfo  = product['list'].find(item => item.itemCd === esti['common']['itemCd']);
-//     const colorInfo = itemInfo['colorLists'].filter(item => item.icCd !== esti['common']['icCd']);
+const getInColor = (value: string) => {
 
-//     return colorInfo;
-// }
+    if(value === 'T')
+    {
+        if(product['inIcList'].length === 0)
+        {
+            const itemInfo  = product['list'].find(item => item.itemCd === esti['common']['itemCd']);
+            const colorInfo = itemInfo['colorLists'].filter(item => item.icCd !== esti['common']['icCd']);
+
+            product['inIcList'] = colorInfo;
+        }
+    }
+}
 </script>

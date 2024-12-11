@@ -64,10 +64,9 @@
                 <p class="font-bold">지시사항: <span class="font-normal">{{ card['spanText'] }}</span></p>
             </section>
             <!-- 버튼 -->
-            <!-- 버튼타입 // severity="" // success,secondary,info -->
+            <!-- 버튼타입 // severity="" // primary(시스템),success(외주),secondary(시스템/외주 발주완료),warn(발주취소),danger(발주 취소 요청) -->
             <div class="w-full *:w-full mt-4">
-                <Button label="버튼" severity="primary" size="small"/>
-                <!-- <Button label="버튼" severity="primary" size="small"/> -->
+                <Button v-if="card['showButton'] && index === cards.length -1" :label="card['buttonText']" :severity="card['buttonType']" size="small"/>
             </div>
         </div>
     </div>

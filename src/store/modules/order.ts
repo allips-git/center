@@ -2,13 +2,14 @@
  * @description 발주 처리 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
-// import { getAxiosData } from '@/assets/js/function';
+import { getAxiosData, getCardColumns } from '@/assets/js/function';
 
 type Nullable<T>    = T | null;
 type AmtUnitType    = 'F' | 'P'; /** F : 금액(원) / P : %(퍼센트) */
 
 interface PayList {
     name    : string;
+    amtGb   : string;
     title   : string;
     amt     : number;
     red     : boolean;
@@ -36,17 +37,17 @@ interface Info {
  */
 const getPayList = (): PayList[] => {
     return [
-        {name : 'itemAmt',      title: '상품 금액',         amt: 0, red: false, blue: false},
-        {name : 'itemTax',      title: '부가세',            amt: 0, red: false, blue: false},
-        {name : 'shapeAmt',     title: '형상 금액',         amt: 0, red: false, blue: false},
-        {name : 'heightAmt',    title: '세로길이 추가금액', amt: 0, red: false, blue: false},
-        {name : 'addAmt',       title: '추가',              amt: 0, red: true, blue: false},
-        {name : 'dcAmt',        title: '할인',              amt: 0, red: true, blue: false},
-        {name : 'cutAmt',       title: '절삭 할인',         amt: 0, red: true, blue: false},
-        {name : 'conAmt',       title: '계약 선금',         amt: 0, red: false, blue: true},
-        {name : 'lastAddAmt',   title: '최종 추가',         amt: 0, red: true, blue: false},
-        {name : 'lastDcAmt',    title: '최종 할인',         amt: 0, red: true, blue: false},
-        {name : 'payAmt',       title: '결제 금액',         amt: 0, red: false, blue: true}
+        {name : 'itemAmt',      amtGb : '', title: '상품 금액',         amt: 0, red: false, blue: false},
+        {name : 'itemTax',      amtGb : '', title: '부가세',            amt: 0, red: false, blue: false},
+        {name : 'shapeAmt',     amtGb : '', title: '형상 금액',         amt: 0, red: false, blue: false},
+        {name : 'heightAmt',    amtGb : '', title: '세로길이 추가금액', amt: 0, red: false, blue: false},
+        {name : 'addAmt',       amtGb : '001', title: '추가',              amt: 0, red: true, blue: false},
+        {name : 'dcAmt',        amtGb : '002', title: '할인',              amt: 0, red: true, blue: false},
+        {name : 'cutAmt',       amtGb : '003', title: '절삭 할인',         amt: 0, red: true, blue: false},
+        {name : 'conAmt',       amtGb : '004', title: '계약 선금',         amt: 0, red: false, blue: true},
+        {name : 'lastAddAmt',   amtGb : '005', title: '최종 추가',         amt: 0, red: true, blue: false},
+        {name : 'lastDcAmt',    amtGb : '006', title: '최종 할인',         amt: 0, red: true, blue: false},
+        {name : 'payAmt',       amtGb : '007', title: '결제 금액',         amt: 0, red: false, blue: true}
     ]
 }
 
@@ -71,6 +72,7 @@ const getInfo = (): Info => {
 }
 
 interface State {
+    list        : [];
     payList     : PayList[];
     dcInfo      : AmtInfo;
     addInfo     : AmtInfo;
@@ -79,6 +81,7 @@ interface State {
 
 export const useOrderStore = defineStore('order', {
     state: (): State => ({
+        list        : [],
         payList     : getPayList(),
         dcInfo      : getAmtInfo(),
         addInfo     : getAmtInfo(),
@@ -104,6 +107,7 @@ export const useOrderStore = defineStore('order', {
                         masterStCd : fa.masterStCd,
                         cardLists  : res.data['orderList'].map(order => {
                             let buttonText = '';
+                            let buttonType = '';
 
                             if(fa.fcCd === order.fcCd)
                             {
@@ -156,10 +160,12 @@ export const useOrderStore = defineStore('order', {
                                     if(order.detailStCd === '006')
                                     {
                                         buttonText = '발주 완료';
+                                        buttonType = 'secondary';
                                     }
                                     else
                                     {
                                         buttonText = '메세지 발주';
+                                        buttonType = 'success';
                                     }
                                 }
                                 else
@@ -169,9 +175,11 @@ export const useOrderStore = defineStore('order', {
                                     {
                                         case '005': /** 발주대기 */
                                             buttonText = '시스템 발주';
+                                            buttonType = 'success';
                                         break;
                                         case '006': /** 발주완료 */
                                             buttonText = '배송완료';
+                                            buttonType = 'secondary';
                                         break;
                                         // case '007': /** 발주취소 */
                                         // break;
@@ -180,9 +188,11 @@ export const useOrderStore = defineStore('order', {
                                         // break;
                                         case '009': /** 발주진행 */
                                             buttonText = '발주 취소';
+                                            buttonType = 'warn';
                                         break;
                                         case '010': /** 발주승인 */
                                             buttonText = '발주 취소 요청';
+                                            buttonType = 'danger';
                                         break;
                                     }
                                 }
@@ -203,26 +213,42 @@ export const useOrderStore = defineStore('order', {
                                     spanText     : order.memo,
                                     showButton   : true,
                                     buttonText   : `(${fa.faNm})`+ buttonText,
-                                    blueButton   : order.ordGb === 'S' && order.detailStCd === '005' ? true : false,
-                                    greyButton   : order.detailStCd === '006' ? true : false,
-                                    cyanButton   : order.ordGb === 'O' && order.detailStCd === '005' ? true : false,
-                                    softOrange   : order.ordGb === 'S' && order.detailStCd === '009' ? true : false,
-                                    vividOrange  : order.ordGb === 'S' && order.detailStCd === '010' ? true : false,
+                                    buttonType   : buttonType
                                 }
                             }
                         }).filter(Boolean)
                     })
                 });
+
+                this.list = list;
+
+                this.getItemAmt('itemAmt', Number(res.data['itemAmt']));
+                this.getItemAmt('itemTax', Number(res.data['itemTax']));
+
+                res.data['amtList'].map((amt) => {
+                    this.getPayAmt(amt['amtGb'], Number(amt['amt']))
+                });
+
+                this.info = res.data['info'];
             }
             catch(e)
             {
                 console.log(e);
             }
         },
-        getPayAmt(name: string, amt: number)
+        getItemAmt(name: string, amt: number)
         {
             const item = this.payList.find(item => item.name === name);
-
+            
+            if(item)
+            {
+                item.amt = Number(amt);
+            }
+        },
+        getPayAmt(amtGb: string, amt: number)
+        {
+            const item = this.payList.find(item => item.amtGb === amtGb);
+            
             if(item)
             {
                 item.amt = Number(amt);

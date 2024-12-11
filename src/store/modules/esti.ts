@@ -593,8 +593,6 @@ export const useEstiStore = defineStore('esti', {
             for(const data in info){
                 this.curtain[data] = data === 'use' ? Number(info[data]) : info[data];
             }
-
-            this.curtain['inColor'] = '';
         },
         async getEaSet(info: object)
         {

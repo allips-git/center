@@ -37,7 +37,7 @@
         </IftaLabel>
         
         <div class="mt-2 btn-2-layout-box bottom-fixed-btn-box">
-            <Button label="시스템 발주" @click=""/>
+            <Button label="시스템 발주"/>
         </div>
     </div>
 </main>
