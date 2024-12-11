@@ -20,7 +20,7 @@ import EstimateModal from "@/views/customer/EstimateModal.vue";
 import EstiDoc from "@/views/customer/EstiDoc.vue";
 import ConmateModal from "@/views/customer/ConmateModal.vue";
 import ConDoc from "@/views/customer/ConDoc.vue";
-// import CustomerOrderList from "@/views/customer/OrderList.vue";
+import CustomerOrderList from "@/views/customer/OrderList.vue";
 import OutOrderDoc from "@/views/customer/OutOrderDoc.vue";
 import FactoryList from "@/views/factory/FactoryList.vue";
 // import OutInput from "@/views/factory/OutInput.vue";
@@ -134,7 +134,12 @@ const routes = [
         component: ConDoc,
         meta: { title: '계약서 공유 화면', gubun: 'Y' }
     },
-
+    {
+        path: "/customer/orderList",
+        name: "CustomerOrderList",
+        component: CustomerOrderList,
+        meta: { title: '발주서' }
+    },
     {
         path: "/outOrderDoc",
         name: "outOrderDoc",
