@@ -105,7 +105,6 @@ interface State {
         blind   : ExInfo;
         curtain : ExInfo;
     };
-    inIcList    : [];
     start       : number;
 }
 
@@ -122,7 +121,6 @@ export const useProductStore = defineStore('product', {
             blind   : getExBlindInfo(),
             curtain : getExCurtainInfo()
         },
-        inIcList    : [],
         start       : 0
     }),
     getters: {

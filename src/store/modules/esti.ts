@@ -57,6 +57,11 @@ interface BlindInfo {
     divSpec     : DivSpec[];
 }
 
+interface InColorList {
+    icCd : string;
+    icNm : string;
+}
+
 interface CurtainInfo {
     maxWidth        : Nullable<number>;
     maxHeight       : Nullable<number>;
@@ -73,6 +78,7 @@ interface CurtainInfo {
     pokSpec         : number;
     heightLen       : number;
     addPrice        : number;
+    inColorList     : InColorList[];
     inColor         : string;
     inSize          : number;
     outSize         : Nullable<number>;
@@ -241,6 +247,7 @@ const getCurtainInfo = (): CurtainInfo => {
         pokSpec         : 150,   /** 폭 일시 스펙 */
         heightLen       : 0,     /** 세로 길이 제한(기본 세로 길이) */
         addPrice        : 0,     /** 추가 비율 */
+        inColorList     : [],    /** 투톤일 시 안쪽 색상 리스트 */
         inColor         : '',    /** 투톤일 시 안쪽 색상코드 */
         inSize          : 0,     /** 투톤일 시 안쪽 사이즈 */
         outSize         : null   /** 투톤일 시 바깥쪽 사이즈 */
@@ -403,6 +410,9 @@ export const useEstiStore = defineStore('esti', {
             ];
 
             return info;
+        },
+        inColorList : (state) => {
+            return state.curtain['inColorList'].filter(item => item.icCd !== state.common['icCd']);
         },
         outSize : (state) => {
             return state.curtain['size'] - state.curtain['inSize'];

@@ -15,7 +15,7 @@
 
         <div>
             <IftaLabel class="w-full">
-            <Select v-model="esti['curtain']['addColor']" :options="data['addColor']" optionLabel="name" optionValue="value" class="w-full" @update:modelValue="(value) => getInColor(value)"/>
+            <Select v-model="esti['curtain']['addColor']" :options="data['addColor']" optionLabel="name" optionValue="value" class="w-full"/>
                 <label>색상추가</label>
             </IftaLabel>
     
@@ -81,7 +81,7 @@
             <div class="flex gap-4">
                 <IftaLabel class="w-full">
                     <label>안쪽컬러 <span class="ml-1 text-red-600">*</span></label>
-                    <Select v-model="esti['curtain']['inColor']" :options="product.inIcList" optionLabel="icNm" optionValue="icCd" placeholder="안쪽 컬러를 선택해주세요." class="w-full" />
+                    <Select v-model="esti['curtain']['inColor']" :options="esti.inColorList" optionLabel="icNm" optionValue="icCd" placeholder="안쪽 컬러를 선택해주세요." class="w-full" />
                 </IftaLabel>
         
                 <InputGroup class="max-w-[200px]">
@@ -123,29 +123,14 @@ import InputNumber from 'primevue/inputnumber';
 import InputGroup from 'primevue/inputgroup';
 import InputGroupAddon from 'primevue/inputgroupaddon';
 import IftaLabel from 'primevue/iftalabel';
-import { useDataStore, useProductStore, useEstiStore } from '@/store';
+import { useDataStore, useEstiStore } from '@/store';
 
 const data      = useDataStore();
-const product   = useProductStore();
 const esti      = useEstiStore();
 
 const getSize = () => {
     const value = event.target.value;
 
     esti['curtain']['size'] = value;
-}
-
-const getInColor = (value: string) => {
-
-    if(value === 'T')
-    {
-        if(product['inIcList'].length === 0)
-        {
-            const itemInfo  = product['list'].find(item => item.itemCd === esti['common']['itemCd']);
-            const colorInfo = itemInfo['colorLists'].filter(item => item.icCd !== esti['common']['icCd']);
-
-            product['inIcList'] = colorInfo;
-        }
-    }
 }
 </script>
