@@ -82,7 +82,7 @@ const getItemChoice = async (icCd: string) => {
     await esti.getCommonSet(product['info']);
     await esti.getUnitCalc();
     
-    if(product['info']['ordGb'] === 'S')
+    if(result['calc'])
     {
         /** 연동된 공장의 특수계산기 정보를 적용 */
         switch(product['info']['unit'])
