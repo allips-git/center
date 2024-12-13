@@ -1,7 +1,7 @@
 <template>
     <main>
         <BackHeader title="고객상세" />
-        <section class="p-5">
+        <section class="p-5 pb-0">
             <h1 class="text-2xl font-bold ">{{ client['detail']['clientNm'] }}</h1>
             <ul class="flex flex-col gap-4 mt-5 rounded-md">
                 <li class="flex">
@@ -30,6 +30,7 @@
                 </li>
             </ul>
         </section>
+        <div class="gray-bar !mb-1"></div>
         <Tabs value="0" class="w-full">
             <TabList class="">
                 <Tab value="0" class="flex items-center justify-center w-1/3 gap-2">판매중 <span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['ing'] }}</span></Tab>

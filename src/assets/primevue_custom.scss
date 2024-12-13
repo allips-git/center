@@ -167,3 +167,12 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     color: var(--p-primary-600) !important;
     font-weight: 600;
 }
+.p-carousel-item-list{
+    .p-carousel-item-start span{
+        color:  var(--p-red-500);
+    }
+
+    .p-carousel-item-end span{
+        color:  var(--p-blue-600);
+    }
+}
