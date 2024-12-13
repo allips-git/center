@@ -1,46 +1,46 @@
 <template>
     <!-- 프로세스 카드 -->
-     <div class="w-full p-4 rounded border border-gray-200">
-         <div class="flex justify-between border-b border-neutral-100 pb-4 font-bold">
+     <div class="w-full p-4 border border-gray-200 rounded">
+         <div class="flex justify-between pb-4 font-bold border-b border-neutral-100">
              <h1>{{ props.info['stNm'] }}</h1>
              <h2 class="text-xl">{{ getAmt(props.info['totalSaleAmt']) }}원</h2>
          </div>
 
          <ul class="flex mt-5">
-            <li class="w-1/4 flex flex-col gap-3 *:first:rounded-l-full *:last:rounded-r-full">
-                <div class="w-full h-2" :class="props['info']['conDt'] !== '' ? 'bg-indigo-500' : 'bg-gray-200'" ></div>
+            <li class="w-1/4 flex flex-col gap-1 *:first:rounded-l-full *:last:rounded-r-full">
+                <div class="w-full h-2 mb-2" :class="props['info']['conDt'] !== '' ? 'bg-indigo-500' : 'bg-gray-200'" ></div>
                 <p class="text-sm text-center text-gray-600">계약 완료</p>
-                <p class="text-sm text-center text-gray-600">{{ getDate(props.info['conDt']) }}</p>
+                <p class="text-sm text-center text-gray-400">{{ getDate(props.info['conDt']) }}</p>
             </li>
-            <li class="w-1/4 flex flex-col gap-3 *:first:rounded-l-full *:last:rounded-r-full">
-                <div class="w-full h-2" :class="props['info']['preDt'] !== '' ? 'bg-indigo-500' : 'bg-gray-200'" ></div>
+            <li class="w-1/4 flex flex-col gap-1 *:first:rounded-l-full *:last:rounded-r-full">
+                <div class="w-full h-2 mb-2" :class="props['info']['preDt'] !== '' ? 'bg-indigo-500' : 'bg-gray-200'" ></div>
                 <p class="text-sm text-center text-gray-600">발주 완료</p>
-                <p class="text-sm text-center text-gray-600">{{ getDate(props.info['preDt']) }}</p>
+                <p class="text-sm text-center text-gray-400">{{ getDate(props.info['preDt']) }}</p>
             </li>
-            <li class="w-1/4 flex flex-col gap-3 *:first:rounded-l-full *:last:rounded-r-full">
-                <div class="w-full h-2" :class="props['info']['deliConDt'] !== '' ? 'bg-indigo-500' : 'bg-gray-200'" ></div>
+            <li class="w-1/4 flex flex-col gap-1 *:first:rounded-l-full *:last:rounded-r-full">
+                <div class="w-full h-2 mb-2" :class="props['info']['deliConDt'] !== '' ? 'bg-indigo-500' : 'bg-gray-200'" ></div>
                 <p class="text-sm text-center text-gray-600">시공 완료</p>
-                <p class="text-sm text-center text-gray-600">{{ getDate(props.info['deliConDt']) }}</p>
+                <p class="text-sm text-center text-gray-400">{{ getDate(props.info['deliConDt']) }}</p>
             </li>
-            <li class="w-1/4 flex flex-col gap-3 *:first:rounded-l-full *:last:rounded-r-full">
-                <div class="w-full h-2" :class="props['info']['payDt'] !== '' ? 'bg-indigo-500' : 'bg-gray-200'" ></div>
+            <li class="w-1/4 flex flex-col gap-1 *:first:rounded-l-full *:last:rounded-r-full">
+                <div class="w-full h-2 mb-2" :class="props['info']['payDt'] !== '' ? 'bg-indigo-500' : 'bg-gray-200'" ></div>
                 <p class="text-sm text-center text-gray-600">결제 완료</p>
-                <p class="text-sm text-center text-gray-600">{{ getDate(props.info['payDt']) }}</p>
+                <p class="text-sm text-center text-gray-400">{{ getDate(props.info['payDt']) }}</p>
             </li>
         </ul>
 
         <div class="my-8">
-            <section v-if="props.info['stCd'] === '001' || props.info['stCd'] === '002'" class="w-full text-center flex flex-col gap-1">
+            <section v-if="props.info['stCd'] === '001' || props.info['stCd'] === '002'" class="flex flex-col w-full gap-1 text-center">
                 <p class="text-gray-400">견적일</p>
                 <span class="text-base">{{ getDateAndTime(props.info['estiDt']) }}</span>
             </section>
 
             <section v-else class="flex gap-2">
-                <p class="text-center text-gray-400 w-full">
+                <p class="w-full text-center text-gray-400">
                     시공일
                     <span class="block text-gray-900">{{ props.info['deliDt'] === '' ? getDateAndTime(props.info['deliConDt']) : getDateAndTime(props.info['deliDt']) }}</span>
                 </p>
-                <p class="text-center text-gray-400 w-full border-l">
+                <p class="w-full text-center text-gray-400 border-l">
                     작업시간
                     <span class="block text-gray-900">{{ props.info['insTime'] }}</span>
                 </p>

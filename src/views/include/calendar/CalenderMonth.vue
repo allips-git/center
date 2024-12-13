@@ -1,14 +1,17 @@
 <template>
-    <main class="month-custom">
+    <main class="relative month-custom">
         <div class="h-screen">
           <FullCalendar 
           :options="calendarOptions"
-          @dateClick="dateClick" 
+          
           />
+          <!-- @dateClick="dateClick"  -->
         </div>
+
         <div class="fixed z-50 bottom-4 right-4 size-12">
             <Button size="large" icon="pi pi-plus" class="!size-full" rounded @click="calenderSetPop= true"></Button>
         </div>
+        
         <Dialog
         v-model:visible="calenderSetPop" 
         header="일정" 
@@ -19,7 +22,7 @@
             <CalenderSet/>
         </Dialog>
     
-        <div v-show="isModalVisible" class="z-50 overflow-hidden w-full max-w-[300px] rounded-xl bg-white border border-gray-100 shadow-sm" :style="modalStyle">
+        <div v-if="isModalVisible" class="z-50 overflow-hidden w-full max-w-[300px] rounded-xl bg-white border border-gray-100 shadow-sm" :style="modalStyle">
           <div ref="modalContentRef">
               <div class="flex items-center justify-between px-5 py-3 pr-1">
                 <h1 class="text-xl font-bold">2024-10-10 (일)</h1>
@@ -49,63 +52,46 @@
 </template>
   
 <script setup lang="ts">
-import { ref, nextTick } from 'vue';
-import CalenderSet from '@/views/include/calendar/CalenderSet.vue'
+import { ref, nextTick, onMounted } from 'vue';
+import CalenderSet from '@/views/include/calendar/CalenderSet.vue';
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import koLocale from '@fullcalendar/core/locales/ko'; 
 
-const calenderSetPop = ref(false)
+const calenderSetPop = ref(false);
 const isModalVisible = ref(false); // 모달 표시 여부
 const modalStyle = ref({}); // 모달 스타일을 위한 객체
 const selectedDate = ref(''); // 선택한 날짜
 const modalContentRef = ref<HTMLElement | null>(null);
 
-// 랜덤 색상 생성 함수
-const getRandomColor = () => {
-const letters = '0123456789ABCDEF';
-let color = '#';
-for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-}
-return color;
-};
-
-// 날짜 클릭 핸들러
-const dateClick = function(info) {
-  selectedDate.value = info.dateStr; // 선택한 날짜 저장
-  toggle(info.jsEvent); // 클릭 이벤트로 토글 함수 호출
-};
-
-// 모달 토글 함수
 const toggle = (event) => {
   isModalVisible.value = true;
 
   nextTick(() => {
-    // 모달 콘텐츠가 렌더링된 후 높이를 계산
-    const modalHeight = modalContentRef.value?.offsetHeight;
-
-    // 기본 높이 설정
-    const calculatedHeight = modalHeight || 150;
-
-    // 뷰포트 크기 가져오기
+    const modalHeight = modalContentRef.value?.offsetHeight || 150;
+    const modalWidth = modalContentRef.value?.offsetWidth || 300;
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
-    let left = event.clientX;
-    let top = event.clientY;
+    let left = 0;
+    let top = 0;
 
-    // 가로 위치 조정
-    if (left + 300 > viewportWidth) {
-      left = viewportWidth - 300 - 10;
+    if (event) {
+      // event 객체에서 좌표 가져오기
+      left = event.pageX;
+      top = event.pageY;
     }
 
-    // 세로 위치 조정
-    if (top + calculatedHeight > viewportHeight) {
-      top = viewportHeight - calculatedHeight - 10;
+    // 뷰포트 초과 여부를 판단하여 위치 조정
+    if (left + modalWidth > viewportWidth) {
+      left = viewportWidth - modalWidth - 10; // 오른쪽 경계 초과 시 조정
+    }
+    if (top + modalHeight > viewportHeight) {
+      top = viewportHeight - modalHeight - 10; // 아래쪽 경계 초과 시 조정
     }
 
+    // 모달 스타일 업데이트
     modalStyle.value = {
       position: 'absolute',
       left: `${left}px`,
@@ -114,45 +100,66 @@ const toggle = (event) => {
   });
 };
 
+const dateClick = function(info) {
+  // 선택한 날짜 저장
+  selectedDate.value = info.dateStr;
+  let left, top;
+
+  // 모바일에서 터치 이벤트 처리
+  if (info.jsEvent.touches && info.jsEvent.touches.length > 0) {
+    left = info.jsEvent.touches[0].clientX; 
+    top = info.jsEvent.touches[0].clientY;
+  } else if (info.jsEvent.pageX !== undefined && info.jsEvent.pageY !== undefined) {
+    // PC에서 클릭 이벤트 처리
+    left = info.jsEvent.pageX; 
+    top = info.jsEvent.pageY;  
+  }
+  // 모달 토글 함수 호출, 좌표를 event로 전달
+  toggle({ pageX: left, pageY: top }); // 좌표를 포함한 객체 전달
+};
+
+
 // 모달 닫기 함수
 const closeModal = () => {
   isModalVisible.value = false; // 모달 숨김
 };
 
-
 // 캘린더 옵션 설정
 const calendarOptions = ref({
-    plugins: [dayGridPlugin, interactionPlugin],
-    initialView: 'dayGridMonth',
-    locale: koLocale, // 기본 한국어 설정
-    headerToolbar: {
-        left: '',
-        center: 'title',
-        right: ''
-    },
-    height: '100%', // 캘린더 높이 설정
-    dayCellContent: function(info) {
+  plugins: [dayGridPlugin, interactionPlugin],
+  initialView: 'dayGridMonth',
+  locale: koLocale,
+  headerToolbar: {
+    left: '',
+    center: 'title',
+    right: ''
+  },
+  dayCellContent: function(info) {
         // 날짜 숫자만 반환
         return { html: info.date.getDate().toString() }; 
     },
-    events: [
-        { title: '이벤트 1', start: '2024-12-01', backgroundColor: getRandomColor() },
-        { title: '이벤트 2', start: '2024-12-01', backgroundColor: getRandomColor() },
-        { title: '이벤트 3', start: '2024-12-01', backgroundColor: getRandomColor() },
-        { title: '이벤트 4', start: '2024-12-01', backgroundColor: getRandomColor() },
-        { title: '이벤트 5', start: '2024-12-01', backgroundColor: getRandomColor() },
-        { title: '이벤트 6', start: '2024-12-01', backgroundColor: getRandomColor() },
-        { title: '이벤트 7', start: '2024-12-01', backgroundColor: getRandomColor() },
-    ],
-    selectable: true,
-    editable: true,
-    dayMaxEvents : true,
+//     eventAdd: (info) => {
+//     // 필요 시 추가 로직 작성
+//   },
+  height: '100%',
+  // selectable: true,
+//   editable: false,
+  dayMaxEvents: true,
+  eventStartEditable: false, // 터치 드래그 비활성화
+  dateClick: dateClick,
 });
 
-// dateClick 핸들러를 calendarOptions에 추가
-calendarOptions.value.dateClick = dateClick;
-
-
+onMounted(() => {
+  const calendarEl = document.querySelector('.fc'); // FullCalendar의 최상위 DOM 요소 선택
+  if (calendarEl) {
+    calendarEl.addEventListener('touchstart', (event) => {
+      const left = event.touches[0].clientX;
+      const top = event.touches[0].clientY;
+      alert(`Touched Position: X = ${left}, Y = ${top}`);
+      toggle({ pageX: left, pageY: top });
+    });
+  }
+});
 
 
 </script>

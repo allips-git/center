@@ -13,20 +13,23 @@
            >
            <!-- 필터 검색 영역 -->
            <template #header>
-               <div class="flex justify-between items-center no-print">
-                   <div class="flex justify-start self-center w-full gap-6">
-                       <IconField class="table-search-input w-full max-w-[300px]">
-                           <InputIcon>
-                               <i class="pi pi-search" />
-                           </InputIcon>
-                           <InputText v-model="client['search']" placeholder="고객명,주소,전화번호로 검색해주세요." class="w-full" @keyup.enter="getList"/>
-                       </IconField>
-                       <div class="flex w-full gap-2">
-                           <!-- <Select v-model="selectedCategory" :options="category" optionLabel="name" optionValue="value" placeholder="그룹" class="w-full max-w-[100px]" />     -->
-                           <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="w-full max-w-[100px]" @change="getList"/>
-                       </div>
+               <div class="flex items-center justify-between no-print">
+                   <div class="flex self-center justify-between w-full ">
+                    <div class="flex w-full gap-2">
+                        <div class="flex w-full gap-2 max-w-[90px]">
+                            <!-- <Select v-model="selectedCategory" :options="category" optionLabel="name" optionValue="value" placeholder="그룹" class="w-full max-w-[100px]" />     -->
+                            <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="w-full" @change="getList"/>
+                        </div>
+                        
+                        <IconField class="table-search-input w-full max-w-[300px]">
+                            <InputIcon>
+                                <i class="pi pi-search" />
+                            </InputIcon>
+                            <InputText v-model="client['search']" placeholder="고객명,주소,전화번호로 검색해주세요." class="w-full" @keyup.enter="getList"/>
+                        </IconField>
+                    </div>
 
-                        <Button label="고객 신규 등록" class="flex-none"  @click="getPopOpen"/>                    
+                        <Button label="고객 신규 등록" class="!fixed flex-none bottom-4 right-4 md:bottom-0 md:right-0 md:!relative" @click="getPopOpen"/>                    
                    </div>
                 </div>
            </template>

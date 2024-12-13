@@ -1,6 +1,6 @@
 <template>
-<!-- <CalenderMonth/> -->
-<CalenderDay/>
+<CalenderMonth/>
+<!-- <CalenderDay/> -->
 </template>
 
 <script setup lang="ts">
