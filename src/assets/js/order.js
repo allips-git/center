@@ -676,12 +676,14 @@ export function pokCalculation(data)
 	//금액조정 금액
 	result['dcAmt'] = dcCalculation(saleAmt, data['dcUnit'], data['dcAmt']);
 
-	//회배
+	//폭
 	result['pok'] = pok;
 	result['totalPurcAmt'] = purcAmt;
 	result['totalPurcTax'] = getVatAmt(data['vat'] , result['totalPurcAmt']);
 	result['totalSaleAmt'] = saleAmt + result['dcAmt'];
 	result['totalSaleTax'] = getVatAmt(data['vat'] , result['totalSaleAmt']);
+
+	console.log(result);
 
 	return result;
 }

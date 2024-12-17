@@ -18,11 +18,11 @@
             <div class="w-full h-5 overflow-hidden rounded-full bg-gray-50 ">
                 <div class="flex items-center h-full *:h-full">
                     <div class="w-1/3 bg-green-400">
-                        <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">33%</p>
+                        <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">20%</p>
                     </div>
     
                     <div class="w-1/3 bg-sky-400">
-                        <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">33%</p>
+                        <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">43%</p>
                     </div>
     
                     <div class="w-1/3 bg-red-400">

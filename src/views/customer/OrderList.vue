@@ -39,7 +39,7 @@
     </main>
     <div class="bottom-fixed-btn-box">
         <Button v-if="ord['info']['stCd'] !== '011'" label="확인" size="large" severity="secondary" @click="router.go(-1)"/>
-        <Button v-if="ord['info']['stCd'] === '011'" label="최종 결제 입력" size="large"/>
+        <Button v-if="ord['info']['stCd'] === '011'" label="최종 결제 입력" size="large" @click="getPopupOpen('paymentSet')"/>
     </div>
 
     <Dialog v-model:visible="popup['pop']['sysOrderSet']"  header="시스템 발주 정보" 
