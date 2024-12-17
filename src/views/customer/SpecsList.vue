@@ -115,9 +115,10 @@ const getEstiAdd = () => {
 }
 
 const getEstiModify = (edCd: string) => {
+    esti.getReset();
     esti.getEdCd(edCd);
-    getPopupOpen('itemSet');
     esti.getInfo();
+    getPopupOpen('itemSet');
 }
 
 const getAmtInfo = (name) => {
