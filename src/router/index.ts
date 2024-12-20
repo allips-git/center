@@ -4,6 +4,7 @@ import { usePopupStore, useLoginStore } from '@/store';
 // RouteMeta 인터페이스 정의
 interface RouteMeta {
     showTopHeader?: boolean; // showTopHeader 메타 필드 정의
+    showAppFooter?: boolean
   }
 
 import Index from "@/views/index.vue";
@@ -44,9 +45,29 @@ import AccView from "@/views/acc/AccView.vue";
 // import AccWeek from "@/views/acc/AccWeek.vue";
 // import AccDay from "@/views/acc/AccDay.vue";
 import CalendarView from "@/views/calendar/CalendarView.vue";
+import CalendarDayView from "@/views/calendar/CalendarDayView.vue";
+
 import AverageView from "@/views/average/AverageView.vue";
 import GroupMessageView from "@/views/groupMessage/GroupMessageView.vue";
 import MessageSend from "@/views/groupMessage/MessageSend.vue";
+import settingStore from "@/views/setting/SettingStore.vue";
+import memberMng from "@/views/setting/MemberMng.vue";
+import MemberAuthSetting from "@/views/setting/MemberAuthSetting.vue";
+
+import MemberDetail from "@/views/setting/MemberDetail.vue";
+import MemberEdit from "@/views/setting/MemberEdit.vue";
+import CouponMenu from "@/views/setting/CouponMenu.vue";
+import CouponDetail from "@/views/setting/CouponDetail.vue";
+import SettingAuth from "@/views/setting/SettingAuth.vue";
+
+
+
+
+
+
+
+
+
 import { getAxiosData } from '@/assets/js/function';
 
 const routes = [
@@ -78,7 +99,7 @@ const routes = [
         path: "/",
         name: "MainPage",
         component: Index,
-        meta : { showTopHeader: true }
+        meta : { showTopHeader: true, showAppFooter: true }
     },
     {
         path: "/customer/list",
@@ -222,7 +243,7 @@ const routes = [
         path: "/acc",
         name: "AccView",
         component: AccView,
-        meta: { title: "회계" }
+        meta : { showTopHeader: false, showAppFooter: true }
     },
     // {
     //     path: "/acc/month",
@@ -261,7 +282,7 @@ const routes = [
         meta: { title: "고정비용 관리" }
     },
     {
-        path: "/setting/timeSetting",
+        path: "/setting/time_setting",
         name: "TimeSetting",
         component: TimeSetting,
         meta: { title: "시공시간 설정" }
@@ -276,13 +297,20 @@ const routes = [
         path: "/calendar",
         name: "CalendarView",
         component: CalendarView,
-        meta: { title: "일정" }
+        meta : { showTopHeader: false, showAppFooter: true }
+    },
+
+    {
+        path: "/calendar/day",
+        name: "CalendarDayView",
+        component: CalendarDayView,
+        meta : { showTopHeader: false, showAppFooter: true }
     },
     {
         path: "/average",
         name: "AverageView",
         component: AverageView,
-        meta: { title: "통계" }
+        meta : { showTopHeader: false, showAppFooter: true }
     },
     {
         path: "/groupmsg",
@@ -295,7 +323,62 @@ const routes = [
         name: "MessageSend",
         component: MessageSend,
         meta: { title: "단체 메시지" }
-    }
+    },
+
+    {
+        path: "/setting/setting_store",
+        name: "settingStore",
+        component: settingStore,
+        meta: { title: "매장 설정" }    
+    },
+    {
+        path: "/setting/member_list",
+        name: "memberMng",
+        component: memberMng,
+        meta: { title: "맴버 목록" }    
+    },
+
+    {
+        path: "/setting/member_detail",
+        name: "MemberDetail",
+        component: MemberDetail,
+        meta: { title: "맴버 상세" }    
+    },
+
+    {
+        path: "/setting/member_auth",
+        name: "MemberAuthSetting",
+        component: MemberAuthSetting,    
+        meta: { title: "맴버 권한 설정" }    
+    },
+
+    {
+        path: "/setting/member_edit",
+        name: "MemberEdit",
+        component: MemberEdit,
+        meta: { title: "맴버 설정" }    
+    },
+
+    {
+        path: "/setting/coupon_menu",
+        name: "CouponMenu",
+        component: CouponMenu,
+        meta: { title: "할인 설정 쿠폰 목록" }    
+    },
+
+    {
+        path: "/setting/coupon_detail",
+        name: "CouponDetail",
+        component: CouponDetail,
+        meta: { title: "할인 설정 쿠폰 설정" }    
+    },
+
+    {
+        path: "/setting/setting_auth",
+        name: "SettingAuth",
+        component: SettingAuth,
+        meta: { title: "사업자 인증" }    
+    },
 ]
 
 const router = createRouter({

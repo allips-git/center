@@ -63,7 +63,7 @@
     v-model:visible="plantalkDetailPop" 
     header="플랜톡 설정" 
     :modal=true
-    position="bottom"
+    position="center"
     class="custom-dialog-bottom"
     >
     <ScheduleAlert/>
@@ -73,7 +73,7 @@
     v-model:visible="plantalkMessagePop" 
     header="예약된 알림" 
     :modal=true
-    position="bottom"
+    position="center"
     class="custom-dialog-bottom"
     >
     <PlantalkMessage/>
@@ -83,7 +83,7 @@
     v-model:visible="plantalkAlertPop" 
     header="예약된 알림" 
     :modal=true
-    position="bottom"
+    position="center"
     class="custom-dialog-bottom"
     >
     <PlantalkAlert/>

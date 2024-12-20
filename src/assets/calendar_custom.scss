@@ -53,10 +53,22 @@
              font-weight: 700;
             }
       }
-    //   오늘 날짜 커스텀
+      .fc-header-toolbar{
+        display: none;
+      }
+      .fc-theme-standard .fc-scrollgrid{
+        border: none;
+        // border-top: 1px solid var(--p-gray-300);
+      }
+      .fc-h-event{
+        border: none;
+        padding: 2px 5px;
+        pointer-events: none; /* 클릭 이벤트 무시 */
+      }
+      // 오늘 날짜 배경색
       .fc-daygrid-day.fc-day-today{
-        background-color: var(--p-primary-50) !important;
-        // background-color: transparent !important;
+        // background-color: var(--p-primary-50) !important;
+        background-color: transparent !important;
             .fc-daygrid-day-number{
                 color: white;
                 border-radius: 9999px;
@@ -68,15 +80,47 @@
                 background-color: var(--p-primary-600) !important;
             }
       }
-    //   다음 달 날짜 배경 색
+      .fc-daygrid-day{
+        &.selected-date{
+          background-color: var(--p-primary-50) !important;
+           .fc-highlight{
+          background-color: var(--p-primary-50) !important;
+
+           }
+        }
+
+      }
+
+      // 다음 달 날짜 배경 색
       .fc-day-other{
         background-color: var(--p-gray-50) !important;
+      }
+      .fc-daygrid-body.fc-daygrid-body-balanced{
+        width: 100% !important;
+      }
+      .fc-scrollgrid-sync-table{
+        width: 100% !important;
+      }
+      .fc-col-header {
+        width: 100% !important;
       }
   }
 
   .time-grid-custom{
     .fc-timegrid-col.fc-day-today{
         background-color: transparent;
+    }
+    .fc-v-event{
+      border: 0 !important;
+      padding: 2px 8px;
+    }
+    .fc-timegrid-body{
+      width: 100% !important;
+    }
+    .fc-timegrid-slots, .fc-timegrid-cols{
+      table{
+        width: 100% !important;
+      }
     }
     .fc-timegrid-slot-label-cushion{
         font-size: 0.8rem;

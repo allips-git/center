@@ -2,15 +2,15 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import vueDevTools from 'vite-plugin-vue-devtools'
+// import vueDevTools from 'vite-plugin-vue-devtools'
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
-import postcssImport from 'postcss-import';
 
 
+// vueDevTools(),
 export default defineConfig({
   plugins: [
-      vue(), vueDevTools(),
+      vue(), 
       //테일윈드 관련 플러그인 ( 테일윈드 플러그인 타입정의가 맞지 않아서 길게 작성)
       {
           name: 'tailwindcss',

@@ -3,7 +3,7 @@
         <div class="p-5">
             <div class="flex gap-2">
                 <Select placeholder="선택" /> 
-                <IconField class="table-search-input w-full">
+                <IconField class="w-full table-search-input">
                     <InputIcon>
                         <i class="pi pi-search" />
                     </InputIcon>
@@ -21,13 +21,16 @@
     </main>
 </template>
 
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import IconField from 'primevue/iconfield'; 
 import InputText from 'primevue/inputtext'; 
 import InputIcon from 'primevue/inputicon'; 
+import OutMng from "@/views/include/factory/OutMng.vue";
 
-import BackHeader from '@/components/layouts/BackHeader.vue'
+const OutMngPop = ref(false)
+
 import MoreCard from "@/components/card/MoreCard.vue";
 
 const dummyData = ref({

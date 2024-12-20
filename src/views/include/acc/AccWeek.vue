@@ -13,7 +13,7 @@
     v-model:visible="AccDayPop" 
     header="일간 분석" 
     :modal=true
-    position="bottom"
+    position="center"
     class="custom-dialog-bottom"
     >
         <AccDay/>
