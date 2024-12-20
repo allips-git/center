@@ -1,16 +1,16 @@
 <template>
-<main>
+<main class="relative">
     <BackHeader title="해당 공장 이름~~~~" />
-    <div class="!pb-36">
-        <section class="aspect-video rounded-b-md overflow-hidden">
-            <img src="@/assets/img/test.png" class="w-full aspect-video object-cover" alt="">
+    <div class="!pb-52">
+        <section class="overflow-hidden aspect-video rounded-b-md">
+            <img src="@/assets/img/test.png" class="object-cover w-full aspect-video" alt="">
         </section>
     
         <section class="">
-            <h1 class="text-2xl font-bold mb-4 px-5 pt-5 pb-2">공장 이름~!~!</h1>
+            <h1 class="px-5 pt-5 pb-2 mb-4 text-2xl font-bold">공장 이름~!~!</h1>
             <ul class="flex flex-col gap-4 p-5 pt-0 rounded-md">
                 <li v-for="(item, index) in infoItems" :key="index" class="flex">
-                    <p class="text-gray-600 w-24 whitespace-nowrap">{{ item.label }}</p>
+                    <p class="w-24 text-gray-600 whitespace-nowrap">{{ item.label }}</p>
                     <p>{{ item.value }}
                         <ul v-if="item.label === '영업시간'" class="flex flex-col gap-1 mt-1">
                             <li v-for="(extraItem, extraIndex) in item.extra" :key="extraIndex" >
@@ -21,36 +21,36 @@
                 </li>
             </ul>
             <!-- 카운트 -->
-            <ul class="mt-2 grid grid-cols-4 bg-gray-50 rounded-lg mx-4">
+            <ul class="grid grid-cols-4 mx-4 mt-2 rounded-lg bg-gray-50">
                 <li
                     v-for="(item, index) in orderItems"
                     :key="index"
-                    class="py-5 flex flex-col items-center justify-center border-r last:border-r-0"
+                    class="flex flex-col items-center justify-center py-5 border-r last:border-r-0"
                     >
-                    <p class="text-indigo-600 text-lg font-bold">{{ item.value }}</p>
-                    <p class="text-gray-600 text-sm">{{ item.label }}</p>
+                    <p class="text-lg font-bold text-indigo-600">{{ item.value }}</p>
+                    <p class="text-sm text-gray-600">{{ item.label }}</p>
                 </li>
             </ul>
         </section>
-        <div class="h-3 w-full bg-gray-100 my-8"></div>
+        <div class="w-full h-3 my-8 bg-gray-100"></div>
         <section>
             <CalculateCard />
         </section>
     </div>
-
-    <div class="bottom-fixed-btn-box flex-col border-t">
-        <div class="flex font-bold text-lg mb-1 justify-between">
-            <p >총 제품</p>
-            <p class="text-indigo-600">0개</p>
+    <div class="flex-col border-t bottom-fixed-btn-box">
+            <div class="flex justify-between mb-1 text-lg font-bold">
+                <p >총 제품</p>
+                <p class="text-indigo-600">0개</p>
+            </div>
+            <Button label="제품 설정하기" size="large" @click="ProductInfoPop = true"/>
         </div>
-        <Button label="제품 설정하기" size="large" @click="ProductInfoPop = true"/>
-    </div>
+
 
     <Dialog
     v-model:visible="ProductInfoPop" 
     header="제품정보" 
     :modal=true
-    position="bottom"
+    position="center"
     class="custom-dialog-bottom"
     >
     <ProductInfo/>

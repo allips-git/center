@@ -56,7 +56,7 @@
     v-model:visible="CustomerChoicePop" 
     header="고객선택" 
     :modal=true
-    position="bottom"
+    position="center"
     class="custom-dialog-bottom"
     >
     <CustomerChoice/>

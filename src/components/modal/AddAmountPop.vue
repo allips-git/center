@@ -13,7 +13,7 @@
             <Textarea v-model="esti['addInfo']['memo']" rows="3" cols="30" class="w-full" />
             <label>메모입력</label>
         </IftaLabel>
-        <div class="btn-2-layout-box mt-2">
+        <div class="mt-2 btn-2-layout-box">
             <Button severity="secondary" label="취소" @click="emit('getClose')"/>
             <Button label="확인" @click="emit('getApply')"/>
         </div>
@@ -43,6 +43,9 @@ const options = ref(['원']);
     height: 100% !important;
     &.p-selectbutton .p-togglebutton:first-child{
         border-radius: 0 !important;
+    }
+    > button{
+        height: 100%;
     }
 }
 .custom-InputGroupAddon{

@@ -47,7 +47,7 @@
             <label>그룹명 입력</label>
             <small class="text-red-500">{{ client['msg']['groupNm'] }}</small>
         </IftaLabel>
-        <div class="bottom-modal-sticky-box">
+        <div class="bottom-modal-absol-box">
             <Button type="button" label="명세서 이동" class="w-full" @click="getSaveNext"/>
         </div>
     </div>

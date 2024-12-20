@@ -9,24 +9,41 @@
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
-                    <div class="w-full flex justify-end px-5 pt-3">
+                    <div class="flex justify-end w-full px-5 pt-3">
                         <Button label="공장코드 추가" icon="pi pi-plus" size="small" @click="getPopOpen('sysFactorySearch')"/>
                     </div>
                     <ul>
-                        <li class="border-b py-3 flex flex-col" v-for="(item, index) in factory['sys']['list']" :key="index" >
-                        <p class="font-bold mb-1">{{ item.faNm }}</p>
-                        <p class="text-sm text-gray-600">{{ item.tel }}</p>
-                        <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
+                        <li class="flex w-full gap-3 px-5 py-3 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" >
+                            <div class="aspect-[4/3] max-w-[100px] overflow-hidden rounded-md">
+                                <img src="@/assets/img/test.png" class="object-cover w-full h-full " >
+                            </div>
+                            <div class="w-full">
+                                <div class="flex items-center justify-between w-full mb-1 font-bold">
+                                    <p class="">{{ item.faNm }}</p>
+                                    <!-- <div class="text-right">
+                                        <p class="text-blue-500">승인 대기</p>
+                                        <p class="text-orange-500">반려</p>
+                                    </div> -->
+                                </div>
+                                <p class="text-sm text-gray-600">{{ item.tel }}</p>
+                                <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
+                                <div class="flex flex-wrap gap-1 mt-2">
+                                    <!-- v-for -->
+                                    <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
+                                    <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
+
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </TabPanel>
                 <TabPanel value="1">
-                    <div class="w-full flex justify-end px-5 pt-3">
+                    <div class="flex justify-end w-full px-5 pt-3">
                         <Button label="외주공장 추가" icon="pi pi-plus" size="small" @click="getPopOpen('outFactorySet')" />
                     </div>
                     <ul>
-                        <li class="border-b py-3 px-4 flex flex-col" v-for="(item, index) in factory['out']['list']" :key="index" >
-                            <p class="font-bold mb-1">{{ item.faNm }}</p>
+                        <li class="flex flex-col px-4 py-3 border-b" v-for="(item, index) in factory['out']['list']" :key="index" >
+                            <p class="mb-1 font-bold">{{ item.faNm }}</p>
                             <p class="text-sm text-gray-600">{{ item.tel }}</p>
                             <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
                         </li>
@@ -38,14 +55,14 @@
 
     <!-- 공장 코드 추가 다이얼로그 -->
     <Dialog v-model:visible="popup['pop']['sysFactorySearch']" header="공장코드 추가" 
-        :modal=true position="bottom" class="custom-dialog-bottom"
+        :modal=true position="center" class="custom-dialog-bottom"
         @update:visible="getPopClose(true, 'sysFactorySearch')">
         <FactorySearch/>
     </Dialog>
 
     <!-- 외주 공장 저장 다이얼로그 -->
     <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주공장 저장" 
-        :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom"
+        :modal=true position="center" :dismissableMask="true" class="custom-dialog-bottom"
         @update:visible="getPopClose(true, 'outFactorySet')">
         <OutFactorySet/>
     </Dialog>
@@ -58,6 +75,7 @@ import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
+import Tag from 'primevue/tag';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import FactorySearch from '@/views/include/factory/FactorySearch.vue'
 import OutFactorySet from '@/views/include/factory/OutFactorySet.vue'

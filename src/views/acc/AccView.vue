@@ -150,7 +150,7 @@
     v-model:visible="AccMonthPop" 
     header="월간 분석" 
     :modal=true
-    position="bottom"
+    position="center"
     class="custom-dialog-bottom"
     >
     <AccMonth/>

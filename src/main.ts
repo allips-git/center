@@ -10,6 +10,7 @@ import PrimeVue from 'primevue/config';
 import App from './App.vue'
 import router from './router'
 import { setupStore } from '@/store'
+import { datePickerLocales } from '@/locales/datepicker'; // 데이트 피크 언어 변경 로케일
 
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext'; 
@@ -66,7 +67,7 @@ const MyPreset = definePreset(Aura, {
         }
     }, 
 });
-
+const storedLocale = (localStorage.getItem('locale') || 'ko') as 'en' | 'ko';
 // PrimeVue에 테마 적용
 app.use(PrimeVue, {
     theme: {
@@ -75,6 +76,7 @@ app.use(PrimeVue, {
             darkModeSelector: '.dark', // 다크 모드 선택기
         }
     },
+    locale: datePickerLocales[storedLocale as keyof typeof datePickerLocales] // 초기 로케일 설정
 });
 
 setupStore(app);

@@ -3,21 +3,21 @@
     :class="drawerClass ? '!flex !w-[200px] !justify-start'  : 'hidden md:!flex ' ,
     setWideSide ? 'w-[180px] overflow-y-auto flex-none' : 'w-auto justify-center'"
     >
-        <ul class="flex flex-col px-3 gap-4 w-full"
+        <ul class="flex flex-col w-full gap-4 px-3 "
         >
-            <li class=" items-center flex py-3 px-1">
+            <li class="flex items-center px-1 py-3 ">
                 <span class="w-8"
                 :class="setWideSide ? '' : '!w-auto'"
-                ><IconAvatar class="text-indigo-300 w-6"/></span>
+                ><IconAvatar class="w-6 text-indigo-300"/></span>
                 <p v-if="setWideSide || drawerClass" class="text-gray-900">디자인 윈도우</p>
             </li>
             <li 
             class="flex items-center cursor-pointer py-0.5 hover:bg-indigo-50 px-2 rounded-md font-bold group justify-start"
             v-for="item in SideHeaderItems" :key="item.id" @click="navigateTo(item.link)" >
-            <div class="w-8 h-7 flex items-center group-hover:text-indigo-600" :class="setWideSide || drawerClass ? '' : '!w-auto'">
+            <div class="flex items-center w-8 h-7 group-hover:text-indigo-600" :class="setWideSide || drawerClass ? '' : '!w-auto'">
                 <span class="pi" :class="item.iconClass"></span> <!-- PrimeVue 아이콘 클래스 -->
             </div>
-                <p v-if="setWideSide || drawerClass" class="group-hover:text-indigo-600  duration-300" >{{ item.label }}</p>
+                <p v-if="setWideSide || drawerClass" class="duration-300 group-hover:text-indigo-600" >{{ item.label }}</p>
             </li>
         </ul>
     </aside>

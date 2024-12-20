@@ -25,7 +25,7 @@
     v-model:visible="OutProductPop" 
     header="외주공장 이름 제품정보" 
     :modal=true
-    position="bottom"
+    position="center"
     class="custom-dialog-bottom"
     >
     <OutProduct/>

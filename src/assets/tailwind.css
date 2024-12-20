@@ -53,7 +53,7 @@
     @apply w-full absolute bottom-0 left-0 p-4 bg-white 
   }
   .bottom-fixed-btn-box{
-    @apply w-full fixed bottom-0 left-0 p-4 bg-white flex gap-2 *:w-full
+    @apply w-full fixed bottom-0 left-0 p-4 bg-white flex gap-2 *:w-full border-t border-gray-200
   }
   .btn-2-layout-box{
     @apply w-full bg-white flex gap-2 *:w-full
@@ -75,4 +75,14 @@
   }
   .input-layout-box{
     @apply flex flex-col gap-3
+  }
+  .ifta-label{
+    @apply text-gray-500 absolute top-2 text-xs 
+  }
+
+  .ifta-label-box{
+    @apply border border-gray-300 px-3 pt-6 pb-2 relative rounded-md shadow-sm
+  }
+  .pc-contents-h-box{
+    @apply md:min-h-[calc(100vh-108px)] md:relative
   }
