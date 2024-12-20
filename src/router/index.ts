@@ -386,67 +386,67 @@ const router = createRouter({
     routes
 });
 
-// router.beforeEach( async (to, from, next) => {
-//     const login = useLoginStore();
-//     const popup = usePopupStore();
+router.beforeEach( async (to, from, next) => {
+    const login = useLoginStore();
+    const popup = usePopupStore();
 
-//     if(to.meta.gubun === 'Y')
-//     {
-//         next();
-//     }
-//     else
-//     {
-//         if(login['token'] === null)
-//         {
-//             next({ name : 'LoginPage' });
-//         }
-//         else
-//         {
-//             const tokenCheckResult = await getTokenCheck();
+    if(to.meta.gubun === 'Y')
+    {
+        next();
+    }
+    else
+    {
+        if(login['token'] === null)
+        {
+            next({ name : 'LoginPage' });
+        }
+        else
+        {
+            const tokenCheckResult = await getTokenCheck();
 
-//             if(tokenCheckResult)
-//             {
-//                 if(popup.list.length === 0)
-//                 {
-//                     next();
-//                 }
-//                 else
-//                 {
-//                     const lastPopNm = popup.list[popup.list.length - 1];
-//                     await popup.getClose(lastPopNm);
-//                     next(false);
-//                 }
-//             }
-//             else
-//             {
-//                 alert('세션이 만료되었습니다. 로그인 화면으로 이동합니다.');
-//                 login.getLogout();
-//                 router.push({ path : '/login' });
-//             }
-//         }
-//     }
-// });
+            if(tokenCheckResult)
+            {
+                if(popup.list.length === 0)
+                {
+                    next();
+                }
+                else
+                {
+                    const lastPopNm = popup.list[popup.list.length - 1];
+                    await popup.getClose(lastPopNm);
+                    next(false);
+                }
+            }
+            else
+            {
+                alert('세션이 만료되었습니다. 로그인 화면으로 이동합니다.');
+                login.getLogout();
+                router.push({ path : '/login' });
+            }
+        }
+    }
+});
 
-// const getTokenCheck = async () => {
-//     const login = useLoginStore();
+const getTokenCheck = async () => {
+    const login = useLoginStore();
     
-//     try
-//     {
-//         const instance  = await getAxiosData();
-//         const res       = await instance.post(`https://data.planorder.kr/api/token/getTokenCheck`);
+    try
+    {
+        const instance  = await getAxiosData();
+        const res       = await instance.post(`https://data.planorder.kr/api/token/getTokenCheck`);
 
-//         if(res.data['code'] === 2000)
-//         {
-//             login.getToken(res.data['token']);
-//         }
+        if(res.data['code'] === 2000)
+        {
+            login.getToken(res.data['token']);
+        }
 
-//         return true;
-//     }
-//     catch(e)
-//     {
-//         console.log(e);
-//         return false;
-//     }
-// }
+        return true;
+    }
+    catch(e)
+    {
+        console.log(e);
+        return false;
+    }
+}
 
 export default router
