@@ -42,6 +42,20 @@ interface SysItemList {
     useYn   : string;
 }
 
+interface SysColors {
+    icCd : string;
+    icNm : string;
+}
+
+interface SysItemInfo {
+    itemNm  : string;
+    colors  : SysColors[];
+    size    : number;
+    unitNm  : string;
+    purcAmt : number;
+    saleAmt : number;
+}
+
 interface OutInfo {
     faNm        : string;
     tel         : number;
@@ -75,6 +89,17 @@ const getSysInfo = (): SysInfo => {
         bankNm      : '',
         accNum      : 0,
         itemCnt     : 0
+    }
+}
+
+const getSysItemInfo = (): SysItemInfo => {
+    return {
+        itemNm  : '',
+        colors  : [],
+        size    : 0,
+        unitNm  : '',
+        purcAmt : 0,
+        saleAmt : 0
     }
 }
 
@@ -131,7 +156,9 @@ export const useFactoryStore = defineStore('factory', {
             list        : [],
             info        : getSysInfo(),
             itemSearch  : '',
+            itemCd      : '',
             itemList    : [],
+            itemInfo    : getSysItemInfo(),
             msg         : getSysMsg()
         },
         out : {
@@ -243,9 +270,43 @@ export const useFactoryStore = defineStore('factory', {
                 console.log(e);
             }
         },
+        async getSysItemInfo()
+        {
+            const params    = {
+                faCd    : this.sys['faCd'],
+                itemCd  : this.sys['itemCd']
+            };
+
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/factoryV1/getSysItemInfo`, params);
+
+                console.log(res);
+
+                const info = {
+                    itemNm  : res.data['info']['itemNm'],
+                    colors  : res.data['info']['colors'],
+                    size    : res.data['info']['size'],
+                    unitNm  : res.data['info']['unitNm'],
+                    purcAmt : res.data['info']['purcAmt'],
+                    saleAmt : Number(res.data['info']['saleAmt'])
+                };
+
+                this.sys.itemInfo = info;
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        },
         getSysFaCd(faCd: string)
         {
             this.sys.faCd = faCd;
+        },
+        getSysItemCd(itemCd: string)
+        {
+            this.sys.itemCd = itemCd;
         },
         getSysMsgSet(msg: string)
         {

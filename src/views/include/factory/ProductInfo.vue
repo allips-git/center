@@ -32,9 +32,9 @@ import { usePopup } from '@/assets/js/popup';
 const factory = useFactoryStore();
 const { getPopupOpen } = usePopup();
 
-const getItemDetail = (itemCd: string) => {
-    console.log(itemCd);
-    getPopupOpen('sysFactoryItemSet');
+const getItemDetail = async (itemCd: string) => {
+    await factory.getSysItemCd(itemCd);
+    await getPopupOpen('sysFactoryItemSet');
 }
 
 onMounted(() => {
