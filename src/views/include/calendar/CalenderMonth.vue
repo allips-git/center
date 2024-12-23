@@ -1,11 +1,13 @@
 <template>
-    <main class="relative month-custom">
-        <div class="h-screen">
+    <main class="relative h-[100%-48px] month-custom">
+        <div class="flex justify-center py-4 border-b border-gray-200">
+            <DatePicker v-model="date" view="month" dateFormat="yy.mm'월'" class="custom-select" :locale="locale"   showIcon fluid iconDisplay="input"/>
+        </div>
+        <div class="h-[calc(100vh-167px)] w-full md:h-[calc(100vh-171px)]">
           <FullCalendar 
           :options="calendarOptions"
-          
+          ref="fullCalendar"
           />
-          <!-- @dateClick="dateClick"  -->
         </div>
 
         <div class="fixed z-50 bottom-4 right-4 size-12">
@@ -16,13 +18,13 @@
         v-model:visible="calenderSetPop" 
         header="일정" 
         :modal=true
-        position="bottom"
-        class="custom-dialog-bottom"
+        position="center"
+        class="border-0 custom-dialog-bottom"
         >
             <CalenderSet/>
         </Dialog>
     
-        <div v-if="isModalVisible" class="z-50 overflow-hidden w-full max-w-[300px] rounded-xl bg-white border border-gray-100 shadow-sm" :style="modalStyle">
+        <div v-if="isModalVisible" class="z-50 overflow-hidden w-full max-w-[300px] rounded-xl bg-white border border-gray-100 shadow-sm max-h-[80vh]" :style="modalStyle">
           <div ref="modalContentRef">
               <div class="flex items-center justify-between px-5 py-3 pr-1">
                 <h1 class="text-xl font-bold">2024-10-10 (일)</h1>
@@ -42,7 +44,9 @@
             </div>
             
             <div class="bg-white *:w-full flex gap-1 py-2 px-2 ">
-                <Button label="일 캘린더 보기" text severity="secondary" class="*:!font-bold"/>
+                <router-link to="/calendar/day" class="md:hidden">
+                    <Button label="일 캘린더 보기" text severity="secondary" class="*:!font-bold w-full" @click=""/>
+                </router-link>
                 <Button label="새 일정" text icon="pi pi-plus" class="*:!font-bold" @click="calenderSetPop= true"/>
             </div>
 
@@ -52,13 +56,16 @@
 </template>
   
 <script setup lang="ts">
-import { ref, nextTick, onMounted } from 'vue';
+import { ref, nextTick, onMounted, onBeforeUnmount } from 'vue';
 import CalenderSet from '@/views/include/calendar/CalenderSet.vue';
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import koLocale from '@fullcalendar/core/locales/ko'; 
+import DatePicker from 'primevue/datepicker';
+const locale = 'ko'; // 한국어 로케일 설정
 
+const date = ref(new Date()); // 현재 날짜로 초기화
 const calenderSetPop = ref(false);
 const isModalVisible = ref(false); // 모달 표시 여부
 const modalStyle = ref({}); // 모달 스타일을 위한 객체
@@ -93,14 +100,28 @@ const toggle = (event) => {
 
     // 모달 스타일 업데이트
     modalStyle.value = {
-      position: 'absolute',
+      position: 'fixed',
       left: `${left}px`,
       top: `${top}px`,
     };
+       // 이전 선택 해제
+       if (previousDate.value) {
+      const previousDateCell = document.querySelector(`[data-date="${previousDate.value}"]`);
+      if (previousDateCell) {
+        previousDateCell.classList.remove('selected-date'); // 이전 선택된 날짜 클래스 제거
+      }
+    }
+
+    // 선택된 날짜의 배경색 변경
+    const dateCell = document.querySelector(`[data-date="${selectedDate.value}"]`);
+    if (dateCell) {
+      dateCell.classList.add('selected-date'); // 선택된 날짜에 클래스 추가
+    }
   });
 };
 
 const dateClick = function(info) {
+    previousDate.value = selectedDate.value; // 이전 날짜 저장
   // 선택한 날짜 저장
   selectedDate.value = info.dateStr;
   let left, top;
@@ -118,6 +139,9 @@ const dateClick = function(info) {
   toggle({ pageX: left, pageY: top }); // 좌표를 포함한 객체 전달
 };
 
+// 이전 선택된 날짜를 저장할 ref 추가
+const previousDate = ref(null);
+
 
 // 모달 닫기 함수
 const closeModal = () => {
@@ -131,21 +155,29 @@ const calendarOptions = ref({
   locale: koLocale,
   headerToolbar: {
     left: '',
-    center: 'title',
+    center: '',
     right: ''
   },
   dayCellContent: function(info) {
         // 날짜 숫자만 반환
         return { html: info.date.getDate().toString() }; 
     },
-//     eventAdd: (info) => {
-//     // 필요 시 추가 로직 작성
-//   },
+
   height: '100%',
-  // selectable: true,
-//   editable: false,
+  selectable: true,
   dayMaxEvents: true,
-  eventStartEditable: false, // 터치 드래그 비활성화
+  events: [
+    { title: '김가은', start: '2024-12-12', classNames: ['bg-red-200'] },
+    { title: '김가은', start: '2024-12-12', classNames: ['bg-gray-200'] },
+    { title: '김가은', start: '2024-12-12', classNames: ['bg-blue-200'] },
+    { title: '김가은', start: '2024-12-12', classNames: ['bg-blue-200'] },
+    { title: '김가은', start: '2024-12-12', classNames: ['bg-blue-200'] },
+  ],
+  eventContent: function(arg) {
+    return {
+      html: `<div class="text-gray-900 border-0 ${arg.event.classNames.join(' ')}">${arg.event.title}</div>`
+    };
+  },
   dateClick: dateClick,
 });
 
@@ -155,10 +187,27 @@ onMounted(() => {
     calendarEl.addEventListener('touchstart', (event) => {
       const left = event.touches[0].clientX;
       const top = event.touches[0].clientY;
-      alert(`Touched Position: X = ${left}, Y = ${top}`);
+      
       toggle({ pageX: left, pageY: top });
     });
   }
+});
+
+const fullCalendar = ref(null);
+
+
+const handleResize = () => {
+  if (fullCalendar.value) {
+    fullCalendar.value.getApi().updateSize(); // FullCalendar의 크기 업데이트
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize); // resize 이벤트 리스너 추가
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize); // 컴포넌트 언마운트 시 리스너 제거
 });
 
 
@@ -166,4 +215,18 @@ onMounted(() => {
 
 <style lang="scss">
 @use '/src/assets/calendar_custom.scss';
+
+.custom-select{    
+    justify-content: center !important;
+    align-items: center !important;
+    height: 34px;
+    .p-datepicker-input{
+        font-size: 1rem !important;
+        border-radius: 9999px !important;
+        width: 100% !important;
+        flex-basis: auto !important; 
+        flex: 0 0 auto !important;
+        height: 100%;
+    }
+}
 </style>

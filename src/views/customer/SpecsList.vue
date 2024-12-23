@@ -1,5 +1,5 @@
 <template>
-    <div class="relative w-full">
+    <div class="sticky top-0 z-10 w-full bg-white">
         <BackHeader title="명세서" />
         <Button label="제품 추가 등록" size="small" class="!absolute right-4 top-1/2 -translate-y-1/2 z-50" @click="getEstiAdd"/>
     </div>
@@ -61,19 +61,19 @@
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
-        :modal=true position="bottom" class="custom-dialog-bottom"
+        :modal=true position="center" class="custom-dialog-bottom"
         @update:visible="getPopupClose(true, 'itemList')">
         <ProductChoice/>
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['itemSet']" header="제품등록" 
-        :modal=true position="bottom" class="custom-dialog-bottom"
+        :modal=true position="center" class="custom-dialog-bottom"
         @update:visible="getPopupClose(true, 'itemSet')">
         <ProductRegister/>
     </Dialog>
     
     <Dialog v-model:visible="popup['pop']['conInfoSet']" header="계약 정보" 
-        :modal=true position="bottom" class="custom-dialog-bottom"
+        :modal=true position="center" class="custom-dialog-bottom"
         @update:visible="getPopupClose(true, 'conInfoSet')">
         <ContractModal/>
     </Dialog>

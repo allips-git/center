@@ -2,7 +2,6 @@
     <main>
         <div class="p-5">
             <div class="flex gap-2">
-                <IconField class="table-search-input w-full">
                     <InputIcon>
                         <i class="pi pi-search" />
                     </InputIcon>
@@ -19,10 +18,11 @@
     </main>
 </template>
 
+
 <script setup lang="ts">
 import IconField from 'primevue/iconfield'; 
 import InputText from 'primevue/inputtext'; 
-import InputIcon from 'primevue/inputicon'; 
+import InputIcon from 'primevue/inputicon';
 import MoreCard from "@/components/card/MoreCard.vue";
 import { onMounted } from 'vue';
 import { useFactoryStore } from '@/store';

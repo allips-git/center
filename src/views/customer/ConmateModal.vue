@@ -1,14 +1,15 @@
 <template>
     <BackHeader title="계약서" />
-    <main class="!pb-36">
+    <main class="!pb-52">
         <div class="relative">
-            <section class="aspect-video relative -z-10 overflow-hidden">
-                <img src="@/assets/img/test.png" class="w-full aspect-video object-cover" alt="">
+            <section class="relative overflow-hidden aspect-video -z-10">
+                <img src="@/assets/img/test.png" class="object-cover w-full aspect-video" alt="">
             </section>
         
-            <section class="relative -top-4 rounded-t-xl overflow-hidden bg-white">
+            <section class="relative overflow-hidden bg-white -top-4 rounded-t-xl">
                 <InfoCard :title="mate['ceNm']" :info="mate['headers']" />
-                <div class="gray-bar"></div>
+
+                <div class="gray-bar !mt-0"></div>
 
                 <section class="px-5">
                     <div class="flex flex-col gap-5">
@@ -18,12 +19,13 @@
                     </div>
                 </section>
             </section>
+            <div class="gray-bar !mt-2"></div>
             <section class="px-5">
                 <CalculateCard  :showtitle="true" :calcs="mate['payList']" title="합계 금액" totalTitle="총 합계 금액" :totalAmt="getAmt(mate['payList'], 'total')"/>
             </section>
         </div>
     </main>
-    <section class="fixed bg-white border-t border-gray-200 rounded-t-2xl p-5 bottom-0 w-full overflow-hidden">
+    <section class="fixed bottom-0 w-full p-5 overflow-hidden bg-white border-t border-gray-200 rounded-t-2xl">
         <div class="flex justify-between *:flex *:gap-2 *:items-center text-sm w-full">
             <div>
                 <div class="label-checkbox-box">
@@ -41,10 +43,10 @@
             </div>
         </div>
 
-        <div class="btn-2-layout-box pt-4">
+        <div class="pt-4 btn-2-layout-box">
             <InputText :value="''+domain+'/customer/conDoc?cd='+emCd+''" readonly @click="getConDoc"/>
         </div>
-        <div class="btn-2-layout-box pt-4">
+        <div class="pt-4 btn-2-layout-box">
             <Button label="계약서 링크 발송"/>
         </div>
     </section>

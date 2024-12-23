@@ -1,42 +1,51 @@
 <template>
-    
-    <main class="max-h-screen time-grid-custom">
-        <swiper :slides-per-view="7" :slides-per-group="7" @slideChange="onSlideChange">
-            <swiper-slide v-for="(item, index) in products" :key="index">
-                <div class="flex items-center justify-center h-20 rounded">
+    <main class="time-grid-custom">
+        <swiper :slides-per-view="7" :slides-per-group="7">
+            <swiper-slide v-for="(item, index) in products" :key="index" @click="showDay(index)">
+                <div class="flex items-center justify-center h-20 rounded cursor-pointer">
                     <div class="flex flex-col items-center justify-center gap-0.5 relative w-full h-full">
                         <span class="text-xs">{{ item.week }}</span>
                         <div class="flex items-center justify-center text-center rounded-full size-9"
-                        :class="{ 'bg-blue-500 text-white': item.isToday,}"
+                        :class="{ 'bg-indigo-500 text-white': item.isToday,}"
                         >
                             <h3 class="text-2xl font-bold">
                             {{ item.dateDay }}</h3>
                         </div>
-                        <span v-if="item.selectDay" class="absolute bottom-0 z-10 w-full h-[3px] rounded-full bg-indigo-600"></span>
+                        <span v-if="selectedIndex === index" class="absolute bottom-0 z-10 w-full h-[3px] rounded-full bg-indigo-600"></span>
                     </div>
                 </div>
             </swiper-slide>
         </swiper>
 
-        <swiper>
-            <swiper-slide>
-            <div class="relative z-10 w-full h-[calc(100vh-70px)]">
-                <FullCalendar :options="calendarOptions" />
-            </div>
-            </swiper-slide>
 
-            <swiper-slide>
-            <div class="relative z-10 w-full h-[calc(100vh-70px)]">
-                <FullCalendar :options="calendarOptions" />
-            </div>
-            </swiper-slide>
+            <swiper class="h-[calc(100vh-174px)] md:h-[calc(100vh-178px)] custom-slide-time-grid">
+                <swiper-slide>
+                <div class="relative z-10 w-full h-[calc(100vh-174px)] md:h-[calc(100vh-178px)]">
+                    <div class="absolute z-50 flex justify-center -translate-x-1/2 top-4 left-1/2">
+                        <span class="absolute z-40 -translate-y-1/2 right-4 top-1/2 pi pi-angle-down !text-sm text-gray-400"></span>
+                        <DatePicker v-model="date"  dateFormat="yy.mm.d" class="custom-daySelect"  showIcon fluid iconDisplay="input"/>
+                    </div>
+                    <FullCalendar :options="calendarOptions" />
+                    <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-4 left-1/2">
+                        <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm">당일</div>
+                    </div>
+                </div>
+                </swiper-slide>
 
-            <swiper-slide>
-            <div class="relative z-10 w-full h-[calc(100vh-70px)]">
-                <FullCalendar :options="calendarOptions" />
-            </div>
-            </swiper-slide>
-        </swiper>
+                <swiper-slide>
+                <div class="relative z-10 w-full h-[calc(100vh-118px)] md:h-[calc(100vh-178px)]">
+                    <div class="absolute z-50 flex justify-center -translate-x-1/2 top-4 left-1/2">
+                        <span class="absolute z-40 -translate-y-1/2 right-4 top-1/2 pi pi-angle-down !text-sm text-gray-400"></span>
+                        <DatePicker v-model="date"  dateFormat="yy.mm.d" class="custom-daySelect"  showIcon fluid iconDisplay="input"/>
+                    </div>
+                    <FullCalendar :options="calendarOptions" />
+                    <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-4 left-1/2">
+                        <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm">당일</div>
+                    </div>
+                </div>
+                </swiper-slide>
+            </swiper>
+
         <div class="fixed z-50 bottom-4 right-4 size-12">
             <Button size="large" icon="pi pi-plus" class="!size-full" rounded @click="calenderSetPop= true"></Button>
         </div>
@@ -44,7 +53,7 @@
         v-model:visible="calenderSetPop" 
         header="일정" 
         :modal=true
-        position="bottom"
+        position="center"
         class="text-gray-200 custom-dialog-bottom"
         >
             <CalenderSet/>
@@ -54,21 +63,14 @@
   
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
 import CalenderSet from '@/views/include/calendar/CalenderSet.vue'
 import FullCalendar from '@fullcalendar/vue3';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import koLocale from '@fullcalendar/core/locales/ko';
-import { Swiper, SwiperSlide } from 'swiper/vue';
+import DatePicker from 'primevue/datepicker';
 import 'swiper/swiper-bundle.css';
-
-const images = ref([
-  'https://via.placeholder.com/300/FF7F7F/333333?text=Image+1',
-  'https://via.placeholder.com/300/7F7FFF/333333?text=Image+2',
-  'https://via.placeholder.com/300/7FFF7F/333333?text=Image+3',
-  'https://via.placeholder.com/300/FFFF7F/333333?text=Image+4',
-  'https://via.placeholder.com/300/FF7FFF/333333?text=Image+5',
-]);
 
 const calenderSetPop = ref(false)
 
@@ -80,8 +82,6 @@ interface Product {
     selectDay: boolean;
 }
 
-const isToday = ref('') 
-// 제품 데이터 정의
 const products = ref<Product[]>([
   { dateDay: 1, week: '일' , isToday:true ,selectDay:false },
   { dateDay: 2, week: '월' , isToday:false ,selectDay:false},
@@ -100,7 +100,18 @@ const products = ref<Product[]>([
   { dateDay: 14, week: '토' , isToday:false ,selectDay:false},  
 ]);
 
-const selectedDate = ref(new Date()); // 현재 선택된 날짜
+// 선택된 아이템의 인덱스를 저장, 오늘 날짜로 초기화
+const selectedIndex = ref<number | null>(products.value.findIndex(item => item.isToday));
+
+// 아이템 선택 메서드
+const showDay = (index: number) => {
+  selectedIndex.value = index; // 선택된 인덱스 업데이트
+
+  // 선택된 아이템의 selectDay 속성 업데이트
+  products.value.forEach((item, i) => {
+    item.selectDay = (i === index);
+  });
+};
 
 // 캘린더 옵션 설정
 const calendarOptions = ref({
@@ -109,7 +120,7 @@ const calendarOptions = ref({
   locale: koLocale, // 기본 한국어 설정
   headerToolbar: {
     left: '',
-    center: 'title',
+    center: '',
     right: ''
   },
   nowIndicator: true,
@@ -120,12 +131,14 @@ const calendarOptions = ref({
   dayMaxEvents: true,
   slotLabelFormat: { hour: '2-digit', minute: '2-digit', hour12: false }, // 24시간제 설정
   events: [
-    { title: '김가은', start: '2024-12-12T00:00:00', end: '2024-12-12T01:40:00' },
+    { title: '김가은', start: '2024-12-17T00:00:00', end: '2024-12-17T01:40:00',classNames: ['bg-red-200']},
+    { title: '김가은', start: '2024-12-17T01:40:00', end: '2024-12-17T02:40:00',classNames: ['bg-gray-200']},
+    { title: '김가은', start: '2024-12-17T03:00:00', end: '2024-12-17T03:40:00',classNames: ['bg-blue-200']},
   ],
   eventContent: function(arg) {
     return {
       html: `
-        <div>
+        <div class="text-gray-900 border-0 ${arg.event.classNames.join(' ')}">
           <strong>${arg.event.title}</strong> <span calss="mx-2">・</span> <span>시공완료</span> <br />
           <span>${arg.event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}</span>
           <span class="mx-1">~</span>
@@ -135,9 +148,7 @@ const calendarOptions = ref({
     };
   },
 });
-
-
-
+// 현재 시간 표시
 const updateNowIndicator = () => {
   const nowIndicator = document.querySelector('.fc-timegrid-now-indicator-line');
   if (nowIndicator) {
@@ -159,4 +170,27 @@ onMounted(() => {
 
 <style lang="scss">
 @use '/src/assets/calendar_custom.scss';
+.custom-slide-time-grid .swiper-slide.swiper-slide-active{
+    width: 100% !important;
+}
+
+.custom-daySelect{    
+    justify-content: center !important;
+    align-items: center !important;
+    height: 28px;
+    .p-datepicker-input{
+        max-width: 110px;
+        font-size: 0.825rem !important;
+        border-radius: 9999px !important;
+        width: 100% !important;
+        flex-basis: auto !important; 
+        flex: 0 0 auto !important;
+        height: 100%;
+        padding-right: 0.75rem !important;
+    }
+    .p-datepicker-input-icon-container{
+        display: none;
+    }
+}
+
 </style>

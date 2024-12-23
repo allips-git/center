@@ -28,8 +28,7 @@
                             <InputText v-model="client['search']" placeholder="고객명,주소,전화번호로 검색해주세요." class="w-full" @keyup.enter="getList"/>
                         </IconField>
                     </div>
-
-                        <Button label="고객 신규 등록" class="!fixed flex-none bottom-4 right-4 md:bottom-0 md:right-0 md:!relative" @click="getPopOpen"/>                    
+                        <Button label="고객 신규 등록" icon="pi pi-plus" class="!fixed flex-none bottom-4 right-4 md:bottom-0 md:right-0 md:!relative" @click="getPopOpen"/>                    
                    </div>
                 </div>
            </template>
@@ -107,7 +106,7 @@
         <Dialog v-model:visible="popup['pop']['clientSet']" 
         header="고객 등록" 
         :modal=true
-        position="bottom"
+        position="center"
         class="custom-dialog-bottom"
         @update:visible="getPopClose(true, 'clientSet')">
             <CustomerListSet/>

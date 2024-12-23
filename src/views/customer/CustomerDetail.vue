@@ -39,43 +39,65 @@
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
-                    <section class="p-5 !pb-20 flex flex-col gap-5" v-for="(item, index) in getList(1)" :key="index">
-                        <ProcessCard :info="item"/>
-                    </section>
+                    <div class="p-5 !pb-20 flex flex-col gap-5">
+                        <section v-for="(item, index) in getList(1)" :key="index">
+                            <ProcessCard :info="item"/>
+                        </section>
+
+                        <div class="flex flex-col items-center justify-center gap-2 py-10 text-center" v-if="getList(1).length === 0">
+                            <div class="flex items-center justify-center rounded-full bg-red-50 size-16 "> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
+                            <p class="text-center">판매중인 항목이 없습니다.</p>
+                        </div>
+                    </div>
                 </TabPanel>
                 <TabPanel value="1">
-                    <section class="p-5 !pb-20 flex flex-col gap-5" v-for="(item, index) in getList(2)" :key="index">
-                        <ProcessCard :info="item"/>
-                    </section>
+                    <div class="p-5 !pb-20 flex flex-col gap-5">
+                        <section v-for="(item, index) in getList(2)" :key="index">
+                            <ProcessCard :info="item"/>
+                        </section>
+                        <div class="flex flex-col items-center justify-center gap-2 py-10 text-center" v-if="getList(2).length === 0">
+                            <div class="flex items-center justify-center rounded-full bg-red-50 size-16 "> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
+                            <p class="text-center">판매완료된 항목이 없습니다.</p>
+                        </div>
+                    </div>
                 </TabPanel>
                 <TabPanel value="2">
-                    <section class="p-5 !pb-20 flex flex-col gap-5" v-for="(item, index) in getList(3)" :key="index">
-                        <ProcessCard :info="item"/>
-                    </section>
+                    <div class="p-5 !pb-20 flex flex-col gap-5">
+                        <section v-for="(item, index) in getList(3)" :key="index">
+                            <ProcessCard :info="item"/>
+                        </section>
+
+                        <div class="flex flex-col items-center justify-center gap-2 py-10 text-center" v-if="getList(3).length === 0">
+                            <div class="flex items-center justify-center rounded-full bg-red-50 size-16 "> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
+                            <p class="text-center">판매취소된 항목이 없습니다.</p>
+                        </div>
+                        
+                    </div>
                 </TabPanel>
             </TabPanels>
         </Tabs>
         <div class="fixed bottom-4 right-4">
             <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getNewEsti" />
         </div>
-    </main>
-    <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
-        :modal=true position="bottom" class="custom-dialog-bottom"
-        @update:visible="getPopClose(true, 'itemList')">
-        <ProductChoice/>
-    </Dialog>
 
-    <Dialog v-model:visible="popup['pop']['itemSet']" header="제품등록" 
-        :modal=true position="bottom" class="custom-dialog-bottom"
-        @update:visible="getPopClose(true, 'itemSet')">
-        <ProductRegister/>
-    </Dialog>
+        <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
+            :modal=true position="center" class="custom-dialog-bottom"
+            @update:visible="getPopClose(true, 'itemList')">
+            <ProductChoice/>
+        </Dialog>
     
-    <Dialog v-model:visible="popup['pop']['ordList']"  header="발주서" 
-        :modal=true position="bottom" class="custom-dialog-bottom"
+        <Dialog v-model:visible="popup['pop']['itemSet']" header="제품등록" 
+            :modal=true position="center" class="custom-dialog-bottom"
+            @update:visible="getPopClose(true, 'itemSet')">
+            <ProductRegister/>
+        </Dialog>
+        
+    </main>
+    <!-- <Dialog v-model:visible="popup['pop']['ordList']"  header="발주서" 
+        :modal=true position="center" class="custom-dialog-bottom"
         @update:visible="getPopClose(true, 'ordList')">
         <OrderList/>
-    </Dialog>
+    </Dialog> -->
 </template>
     
 <script setup lang="ts">

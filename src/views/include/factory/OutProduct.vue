@@ -43,7 +43,7 @@
     v-model:visible="OutMngPop" 
     header="외주공장 이름 제품관리" 
     :modal=true
-    position="bottom"
+    position="center"
     class="custom-dialog-bottom"
     >
     <OutMng/>
