@@ -66,7 +66,7 @@ import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
-import Tag from 'primevue/tag';
+// import Tag from 'primevue/tag';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import FactorySearch from '@/views/include/factory/FactorySearch.vue'
 import OutFactorySet from '@/views/include/factory/OutFactorySet.vue'

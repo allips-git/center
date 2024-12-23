@@ -61,7 +61,6 @@
             <CalculateCard />
         </section>
     </div>
-
     <div class="bottom-fixed-btn-box flex-col border-t">
         <div class="flex font-bold text-lg mb-1 justify-between">
             <p >총 제품</p>
