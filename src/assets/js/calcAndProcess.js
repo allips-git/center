@@ -120,6 +120,7 @@ export function getCurtainParams(common, curtain)
     params['width']     = common['width'];
     params['height']    = common['height'];
     params['proc']      = curtain['proc'];
+    params['los']       = curtain['los'];
     params['addColor']  = curtain['addColor'];
     params['shape']     = curtain['shape'];
     params['split']     = curtain['split'];
@@ -128,6 +129,11 @@ export function getCurtainParams(common, curtain)
     params['inColor']   = curtain['inColor'];
     params['inSize']    = curtain['inSize'];
     params['outSize']   = curtain['size'] - curtain['inSize'];
+
+    if(params['unit'] === '003')
+    {
+        params['pokSpec'] = curtain['pokSpec'];
+    }
 
     return params;
 }

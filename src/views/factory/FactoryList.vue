@@ -13,7 +13,7 @@
                         <Button label="공장코드 추가" icon="pi pi-plus" size="small" @click="getPopOpen('sysFactorySearch')"/>
                     </div>
                     <ul>
-                        <li class="border-b py-3 flex flex-col" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getDetail(item.faCd, item.appGb)">  
+                        <li class="border-b py-3 flex flex-col" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">  
                             <p class="font-bold mb-1">{{ item.faNm }}</p>
                             <div class="text-right">
                                 <p v-if="item['appGb'] === 'E'" class="text-blue-500">승인 대기</p>
@@ -33,7 +33,7 @@
                         <Button label="외주공장 추가" icon="pi pi-plus" size="small" @click="getPopOpen('outFactorySet')" />
                     </div>
                     <ul>
-                        <li class="flex flex-col px-4 py-3 border-b" v-for="(item, index) in factory['out']['list']" :key="index" >
+                        <li class="flex flex-col px-4 py-3 border-b" v-for="(item, index) in factory['out']['list']" :key="index" @click="getOutDetail(item.fcCd)">
                             <p class="mb-1 font-bold">{{ item.faNm }}</p>
                             <p class="text-sm text-gray-600">{{ item.tel }}</p>
                             <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
@@ -98,12 +98,17 @@ const getPopClose = (gb: boolean, popNm: string) => {
     getPopupClose(popNm, gb);
 }
 
-const getDetail = (faCd: string, appGb: string) => {
+const getSysDetail = (faCd: string, appGb: string) => {
     if(appGb === 'Y')
     {
         factory.getSysFaCd(faCd);
         router.push({ name: 'FactoryDetail' });
     }
+}
+
+const getOutDetail = (fcCd: string) => {
+    factory.getOutFcCd(fcCd);
+    router.push({ name: 'OutDetail' });
 }
 
 onMounted(() => {

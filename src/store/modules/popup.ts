@@ -17,6 +17,7 @@ interface Pop {
     sysFactoryItemList  : boolean;
     sysFactoryItemSet   : boolean;
     outFactorySet       : boolean;
+    outFactoryDetail    : boolean;
     sysOrderSet         : boolean;
     outOrderSet         : boolean;
     paymentSet          : boolean;
@@ -41,6 +42,7 @@ const getPopInfo = (): Pop => {
         sysFactoryItemList  : false,
         sysFactoryItemSet   : false,
         outFactorySet       : false,
+        outFactoryDetail    : false,
         sysOrderSet         : false,
         outOrderSet         : false,
         paymentSet          : false
