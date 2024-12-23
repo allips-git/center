@@ -18,18 +18,16 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps , ref } from 'vue'
-
 interface InfoItem {
-    label: string;
-    value: string;
-    extra?: string[]; // 추가 정보가 있을 수 있으므로 선택적 속성으로 설정
+    label   : string;
+    value   : string;
+    extra?  : string[]; // 추가 정보가 있을 수 있으므로 선택적 속성으로 설정
 }
 
 const props = defineProps<{
-    title: string;
-    btnLabel: string;
-    info: InfoItem[];
+    title       : string;
+    btnLabel    : string;
+    info        : InfoItem[];
 }>();
 
 </script>

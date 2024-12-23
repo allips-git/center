@@ -118,7 +118,8 @@ const getOutInfo = (): OutInfo => {
         addrDetail  : '',
         accInfo     : '',
         kakaoTel    : '',
-        memo        : ''
+        memo        : '',
+        itemCnt     : 0
     }
 }
 
@@ -142,6 +143,7 @@ interface State {
     },
     out : {
         type    : string;
+        fcCd    : string;
         list    : OutList[];
         info    : OutInfo;
         msg     : OutMsg;
@@ -163,8 +165,19 @@ export const useFactoryStore = defineStore('factory', {
         },
         out : {
             type    : 'I',
+            fcCd    : '',
             list    : [],
             info    : getOutInfo(),
+            detail  : {
+                header : [
+                    { label: '공장명', value: '' },
+                    { label: '전화번호', value: '' },
+                    { label: '주소', value: '' },
+                    { label: '계좌', value: '' },
+                    { label: '메모', value: '' },
+                ],
+                itemCnt : 0
+            },
             msg     : getOutMsg()
         }
     }),
@@ -300,9 +313,41 @@ export const useFactoryStore = defineStore('factory', {
                 console.log(e);
             }
         },
+        async getOutFactoryDetail()
+        {
+            const params    = {
+                fcCd    : this.out['fcCd']
+            };
+
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/factoryV1/getOutFactoryInfo`, params);
+
+                this.out.detail.header  = [
+                    { label: '공장명', value: res.data['info']['faNm'] },
+                    { label: '전화번호', value: res.data['info']['tel'] },
+                    { label: '주소', value: res.data['info']['addr'] + ' ' + res.data['info']['addrDetail']},
+                    { label: '계좌', value: res.data['info']['accInfo'] },
+                    { label: '메모', value: res.data['info']['memo'] }
+                ];
+                
+                this.out.detail.itemCnt = res.data['itemCnt'];
+
+                console.log(res);
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        },
         getSysFaCd(faCd: string)
         {
             this.sys.faCd = faCd;
+        },
+        getOutFcCd(fcCd: string)
+        {
+            this.out.fcCd = fcCd;
         },
         getSysItemCd(itemCd: string)
         {
@@ -341,7 +386,7 @@ export const useFactoryStore = defineStore('factory', {
     persist: {
         key     : 'factory',
         storage : localStorage,
-        paths   : ['sys.faCd'],
+        paths   : ['sys.faCd', 'out.fcCd'],
         reducer : (state) => {
             return {
                 faCd: state.sys.faCd

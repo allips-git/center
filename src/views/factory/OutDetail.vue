@@ -1,9 +1,9 @@
 <template>
-    <BackHeader title="공장이름?~" />
+    <BackHeader :title="factory['out']['detail']['header'][0]['value']+' 상세 정보'" />
     <main class="!pb-36">
         <div class="relative">
             <section class="relative rounded-t-xl overflow-hidden bg-white">
-                <InfoCard :title="'공장 정보'" :info="info" />
+                <InfoCard :title="factory['out']['detail']['header'][0]['value']" :info="factory['out']['detail']['header']" :btnLabel="'수정하기'"/>
             </section>
 
             <div class="gray-bar"></div>
@@ -16,40 +16,34 @@
     <div class="bottom-fixed-btn-box flex-col border-t">
         <div class="flex font-bold text-lg mb-1 justify-between">
             <p >총 제품</p>
-            <p class="text-indigo-600">0개</p>
+            <p class="text-indigo-600">{{ factory['out']['info']['itemCnt'] }}개</p>
         </div>
-        <Button label="제품 설정하기" size="large" @click="OutProductPop = true"/>
+        <Button label="제품 설정하기" size="large"/>
     </div>
 
-    <Dialog
-    v-model:visible="OutProductPop" 
-    header="외주공장 이름 제품정보" 
-    :modal=true
-    position="center"
-    class="custom-dialog-bottom"
-    >
-    <OutProduct/>
+    <Dialog v-model:visible="popup['pop']['outFactoryDetail']" header="외주공장 이름 제품정보" 
+        :modal=true position="center" class="custom-dialog-bottom"
+        @update:visible="getPopupClose('outFactoryDetail', true)">
+        <OutProduct/>
     </Dialog>
 </template>
     
 <script setup lang="ts">
-import { ref } from 'vue';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import CalculateCard from "@/components/card/CalculateCard.vue";
 import InfoCard from "@/components/card/InfoCard.vue";
 import OutProduct from "@/views/include/factory/OutProduct.vue";
+import { onMounted } from 'vue';
+import { usePopupStore, useFactoryStore } from '@/store';
+import { usePopup } from '@/assets/js/popup';
 
-const OutProductPop = ref(false)
-const checked = ref(false)
+const popup     = usePopupStore();
+const factory   = useFactoryStore();
+const { getPopupOpen, getPopupClose } = usePopup();
 
-// 정보 배열 정의
-const info = ref([
-    { label: '공장명', value: '11' },
-    { label: '전화번호', value: '010-1234-5678' },
-    { label: '주소', value: '부산 수영구 수영로 611-1 1층'},
-    { label: '계좌', value: '1231-4111-1112 신한은행' },
-    { label: '메모', value: '집에 가고 싶어요' },
-]);
+onMounted(async () => {
+    await factory.getOutFactoryDetail();
+});
 </script>
 
 <style lang="scss">
