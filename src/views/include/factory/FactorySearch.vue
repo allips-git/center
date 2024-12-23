@@ -46,6 +46,7 @@ const confirm   = useConfirm();
 const { getPopupClose } = usePopup();
 
 const getSearch = async () => {
+    await factory.getSysMsgReset();
     const result = await factory.getSysFactorySearch();
 
     if(!result['status'])
@@ -89,7 +90,7 @@ const getSysFactoryApply = () => {
                 const instance  = await getAxiosData();
                 await instance.post(`https://data.planorder.kr/factoryV1/getSysFactoryRequest`, params);
                 await factory.getList();
-                getPopupClose(true, 'sysFactorySearch');
+                getPopupClose('sysFactorySearch', true);
             }
             catch(e)
             {

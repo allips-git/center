@@ -12,13 +12,12 @@
                 <label for="emali">제품 이름</label>
             </IftaLabel>
     
-            <h1 class="mt-4 font-bold">색상 추가<span class="ml-0.5 text-red-500">*</span></h1>
+            <h1 class="mt-4 font-bold">색상</h1>
             <div class="flex gap-2">
                 <IftaLabel class="w-full">
                     <InputText id="username" class="w-full"/>
                     <label for="emali">색상이름</label>
                 </IftaLabel>
-                <Button label="색상 추가" class="w-28"/>
             </div>
     
             <div class="flex gap-2">

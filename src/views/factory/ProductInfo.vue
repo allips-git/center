@@ -5,9 +5,6 @@
             <div class="flex gap-2">
                 <Select placeholder="선택" /> 
                 <IconField class="table-search-input w-full">
-                    <InputIcon>
-                        <i class="pi pi-search" />
-                    </InputIcon>
                     <InputText placeholder="제품명 검색" class="w-full" />
                 </IconField>
             </div>

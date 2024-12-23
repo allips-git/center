@@ -13,10 +13,10 @@
                         <Button label="공장코드 추가" icon="pi pi-plus" size="small" @click="getPopOpen('sysFactorySearch')"/>
                     </div>
                     <ul>
-                        <li class="border-b py-3 flex flex-col" v-for="(item, index) in factory['sys']['list']" :key="index" >
-                        <p class="font-bold mb-1">{{ item.faNm }}</p>
-                        <p class="text-sm text-gray-600">{{ item.tel }}</p>
-                        <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
+                        <li class="border-b py-3 flex flex-col" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getDetail(item.faCd, item.appGb)">  
+                            <p class="font-bold mb-1">{{ item.faNm }}</p>
+                            <p class="text-sm text-gray-600">{{ item.tel }}</p>
+                            <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
                         </li>
                     </ul>
                 </TabPanel>
@@ -62,9 +62,11 @@ import BackHeader from '@/components/layouts/BackHeader.vue'
 import FactorySearch from '@/views/include/factory/FactorySearch.vue'
 import OutFactorySet from '@/views/include/factory/OutFactorySet.vue'
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { usePopupStore, useFactoryStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
+const router    = useRouter();
 const popup     = usePopupStore();
 const factory   = useFactoryStore();
 
@@ -85,6 +87,14 @@ const getPopOpen = (popNm: string) => {
 
 const getPopClose = (gb: boolean, popNm: string) => {
     getPopupClose(popNm, gb);
+}
+
+const getDetail = (faCd: string, appGb: string) => {
+    if(appGb === 'Y')
+    {
+        factory.getSysFaCd(faCd);
+        router.push({ name: 'FactoryDetail' });
+    }
 }
 
 onMounted(() => {

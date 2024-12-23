@@ -2,25 +2,44 @@
  * @description 공장 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
-import { getAxiosData, getConvertDate } from '@/assets/js/function';
+import { getAxiosData } from '@/assets/js/function';
+
+type AppGb = 'Y' | 'N' | 'E'; /** Y : 승인 / N : 거절 / E : 대기기 */
 
 interface SysList {
-
+    faCd        : string;
+    faNm        : string;
+    appGb       : AppGb;
+    einItem     : string;
+    person      : string;
+    imgUrl      : string;
+    tel         : string;
+    zip         : number;
+    addr        : string;
+    addrDetail  : string;
 }
 
 interface SysInfo {
-    faCd        : string;
     faNm        : string;
-    einItem     : string;
-    person      : string;
+    tel         : string;
+    boon        : string;
+    time        : string;
+    zip         : number;
+    addr        : string;
+    addrDetail  : string;
+    bankNm      : string;
+    accNum      : string;
+    itemCnt     : number;
 }
 
-interface SysDetail {
-
-}
-
-interface OutList {
-
+interface SysItemList {
+    itemCd  : string;
+    itemNm  : string;
+    size    : number;
+    unitNm  : string;
+    saleAmt : number;
+    purcAmt : number;
+    useYn   : string;
 }
 
 interface OutInfo {
@@ -46,39 +65,16 @@ interface OutMsg {
 
 const getSysInfo = (): SysInfo => {
     return {
-        faCd        : '',
         faNm        : '',
-        einItem     : '',
-        person      : ''
-    }
-}
-
-const getSysDetail = (): SysDetail => {
-    return {
-        faNm     : '',
-        imgUrl   : '',
-        infoList : [
-            { title: "혜택", content: "" },
-            { title: "전화번호", content: "", background: true },
-            { title: "영업시간", content: "" },
-            { title: "주소", content: "" },
-            { title: "계좌", content: "" }
-        ],
-        countList : [
-            { label: "주문", count: 0  },
-            { label: "생산", count: 0 },
-            { label: "생산완료", count: 0 },
-            { label: "출고", count: 0 }
-        ],
-        amtList : [
-            {name : '1', title: '이월 잔액', amt: 0},
-            {name : '2', title: '이달 매입금', amt: 0},
-            {name : '3', title: '이달 수정 / 반품', amt: 0},
-            {name : '4', title: '이달 결제', amt: 0}
-        ],
-        totalAmt   : 0,
-        noticeList : [],
-        itemCnt    : 0
+        tel         : '',
+        boon        : '',
+        time        : '',
+        zip         : 0,
+        addr        : '',
+        addrDetail  : '',
+        bankNm      : '',
+        accNum      : 0,
+        itemCnt     : 0
     }
 }
 
@@ -112,9 +108,11 @@ const getOutMsg = (): OutMsg => {
 interface State {
     sys : {
         serachFaCd  : string;
+        faCd        : string;
         list        : SysList[];
         info        : SysInfo;
-        detail      : SysDetail;
+        itemSearch  : string;
+        itemList    : SysItemList[];
         msg         : SysMsg;
     },
     out : {
@@ -129,9 +127,11 @@ export const useFactoryStore = defineStore('factory', {
     state: (): State => ({
         sys : {
             serachFaCd  : '',
+            faCd        : '',
             list        : [],
             info        : getSysInfo(),
-            // detail  : getSysDetail(),
+            itemSearch  : '',
+            itemList    : [],
             msg         : getSysMsg()
         },
         out : {
@@ -189,9 +189,71 @@ export const useFactoryStore = defineStore('factory', {
                 return { status : false, code : e.response.data['code'], message : e.response.data['message'] };
             }
         },
+        async getSysFactoryDetail()
+        {
+            const params    = {
+                faCd : this.sys['faCd']
+            };
+
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/factoryV1/getSysFactoryDetail`, params);
+
+                console.log(res);
+
+                const info = {
+                    faNm        : res.data['info']['faNm'],
+                    tel         : res.data['info']['tel'],
+                    boon        : '',
+                    time        : '',
+                    zip         : res.data['info']['zip'],
+                    addr        : res.data['info']['addr'],
+                    addrDetail  : res.data['info']['addrDetail'],
+                    bankNm      : res.data['info']['bankNm'],
+                    accNum      : res.data['info']['accNum'],
+                    itemCnt     : res.data['itemCnt']
+                }
+
+                this.sys.info = info;
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        },
+        async getSysItemList()
+        {
+            const params    = {
+                faCd    : this.sys['faCd'],
+                search  : this.sys['itemSearch']
+            };
+
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/factoryV1/getSysItemList`, params);
+
+                console.log(res);
+
+                this.sys.itemList = res.data['list'];
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        },
+        getSysFaCd(faCd: string)
+        {
+            this.sys.faCd = faCd;
+        },
         getSysMsgSet(msg: string)
         {
             this.sys.msg.sysFaCd = msg;
+        },
+        getSysMsgReset()
+        {
+            this.sys.msg = getSysMsg();
         },
         getOutMsgSet(msg: string, name: string)
         {
@@ -202,6 +264,7 @@ export const useFactoryStore = defineStore('factory', {
         {
             this.sys.serachFaCd = '';
             this.sys.info       = getSysInfo();
+            this.sys.msg        = getSysMsg();
         },
         getOutType(type: string)
         {
@@ -212,6 +275,16 @@ export const useFactoryStore = defineStore('factory', {
             this.getOutType('I');
             this.out.info = getOutInfo();
             this.out.msg  = getOutMsg();
+        }
+    },
+    persist: {
+        key     : 'factory',
+        storage : localStorage,
+        paths   : ['sys.faCd'],
+        reducer : (state) => {
+            return {
+                faCd: state.sys.faCd
+            };
         }
     }
 });
