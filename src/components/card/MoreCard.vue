@@ -1,35 +1,24 @@
 <template>
-    <div class="border border-gray-200 rounded-md p-4 first:mt-6 last:mb-3">
-        <div class="flex justify-between w-full items-center">
-            <h1 class="font-bold flex gap-2 items-center" ><span class="size-1.5 rounded-full bg-green-500 block"></span>{{ itemNm }}</h1>
-            <span class="pi pi-angle-right text-gray-400"></span>
+    <div class="p-4 border border-gray-200 rounded-md first:mt-6 last:mb-3">
+        <div class="flex items-center justify-between w-ful">
+            <h1 class="flex items-center gap-2 font-bold" ><span class="size-1.5 rounded-full bg-green-500 block"></span>{{ itemNm }}</h1>
+            <span class="text-gray-400 pi pi-angle-right"></span> 
         </div>
         <ul class="flex flex-col gap-0.5 text-gray-600 text-sm mt-3 *:flex *:justify-between">
             <li>
                 <p>단위</p>
-                <b class="text-gray-900 text-base">{{ size }}{{ unitNm }}</b>
-                <b class="text-base text-gray-900">2회베</b>
+                <b class="text-base text-gray-900">{{ size }}{{ unitNm }}</b>
             </li>
             <li>
                 <p>판매</p>
-                 <b class="text-red-500 text-base">{{ getAmt(saleAmt) }}<span class="text-xs font-normal ml-0.5">원</span></b> 
+                 <b class="text-base text-red-500">{{ getAmt(saleAmt) }}<span class="text-xs font-normal ml-0.5">원</span></b> 
             </li>
             <li>
                 <p>매입</p>
                 <b class="text-blue-600 text-base">{{ getAmt(purcAmt) }}<span class="text-xs font-normal ml-0.5">원</span></b> 
             </li>
         </ul>
-        <Dialog
-        v-model:visible="OutMngPop" 
-        header="외주공장 이름 제품관리" 
-        :modal=true
-        position="center"
-        class="custom-dialog-bottom"
-        >
-            <OutMng/>
-        </Dialog>
     </div>
-    
 </template>
 
 <script setup lang="ts">

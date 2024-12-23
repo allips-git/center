@@ -15,8 +15,16 @@
                     <ul>
                         <li class="border-b py-3 flex flex-col" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getDetail(item.faCd, item.appGb)">  
                             <p class="font-bold mb-1">{{ item.faNm }}</p>
+                            <div class="text-right">
+                                <p v-if="item['appGb'] === 'E'" class="text-blue-500">승인 대기</p>
+                                <p v-if="item['appGb'] === 'N'" class="text-orange-500">반려</p>
+                            </div>
                             <p class="text-sm text-gray-600">{{ item.tel }}</p>
                             <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
+                            <!-- <div class="flex flex-wrap gap-1 mt-2">
+                                <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
+                                <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
+                            </div> -->
                         </li>
                     </ul>
                 </TabPanel>
@@ -58,7 +66,7 @@ import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
-import Tag from 'primevue/tag';
+// import Tag from 'primevue/tag';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import FactorySearch from '@/views/include/factory/FactorySearch.vue'
 import OutFactorySet from '@/views/include/factory/OutFactorySet.vue'
