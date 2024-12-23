@@ -98,8 +98,11 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     max-height: calc(100% - 1rem) !important;
     height: 100% !important;
     @include respond-to(md) {
-        max-width: calc(100% - 1rem) !important;
+        // max-width: calc(100% - 3rem) !important;
+        max-width: 500px !important;
         height: auto !important;
+        min-height: 80%;
+        border-radius:  0.5rem;
     }
     .p-dialog-content{
         padding: 0;

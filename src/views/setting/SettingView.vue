@@ -37,7 +37,7 @@
         <section class="">
             <h2 class="px-4 mb-1 text-sm font-bold">정보설정</h2>
             <ul>
-                <li v-for="(item, index) in storeSettings" :key="index" class="flex justify-between px-4 py-3 border-b hover:bg-gray-50" @click="navigateTo(item)">
+                <li v-for="(item, index) in storeSettings" :key="index" class="flex justify-between px-5 py-4 border-b hover:bg-gray-50" @click="navigateTo(item)">
                     <p>{{ item.name }}</p>
                     <span class="pi pi-angle-right"></span>
                 </li>
@@ -78,16 +78,16 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const storeSettings = ref([
-    { name: '매장설정', path: '/store-settings' },
-    { name: '플랜톡', path: '/plan-talk' },
-    { name: '멤버관리', path: '/member-management' },
-    { name: '할인 설정', path: '/discount-settings' },
-    { name: '시공시간 설정', path: '/construction-time-settings' },
-    { name: '고정비용 등록', path: '/fixed-cost-registration' },
-    { name: '푸쉬 알림', path: '/push-notifications' },
+    { name: '매장설정', path: '/setting_store' },
+    { name: '플랜톡', path: '/plantalk' },
+    { name: '멤버관리', path: '/setting/member_list' },
+    { name: '할인 설정', path: '/setting/coupon_menu' },
+    { name: '시공시간 설정', path: '/setting/time_setting' },
+    { name: '고정비용 등록', path: '/setting/staticPay' },
+    { name: '푸쉬 알림', path: '/setting' },
     { name: '회원정보 변경', path: '/member-info-change' },
-    { name: '사업자 인증', path: '/business-certification' },
-    { name: '계약서 관리', path: '/contract-management' },
+    { name: '사업자 인증', path: '/setting/setting_auth' },
+    { name: '계약서 관리', path: '/setting' },
 ]);
 
 const navigateTo = (item) => {

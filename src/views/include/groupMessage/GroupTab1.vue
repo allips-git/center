@@ -26,7 +26,7 @@
     v-model:visible="MessageViewPop" 
     header="메세지" 
     :modal=true
-    position="bottom"
+    position="center"
     class="custom-dialog-bottom"
     >
     <MessageView :showHeader="false"/>

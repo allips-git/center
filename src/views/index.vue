@@ -1,5 +1,5 @@
 <template>
-<div class="w-full md:grid md:grid-cols-[1fr_300px] p-5 gap-8 items-start bg-gray-50 min-h-[calc(100vh-60px)]">
+<div class="w-full md:grid md:grid-cols-[1fr_300px] p-5 gap-8 items-start bg-gray-100 min-h-[calc(100vh-60px)] pb-[60px]">
     <main class="w-full gap-y-5 gap-x-2.5 grid grid-cols-12">
         <section class="w-full col-span-12">
             <div class="relative w-full h-full px-10 py-5 overflow-hidden rounded-md bg-indigo-50">
@@ -118,11 +118,11 @@
                     <Button label="메세지 추가 >" size="small" class="!py-0.5"></Button>
                 </div>
                 <ul class="main-card-container-box-padding max-h-[500px] overflow-y-auto !py-1 scroll-bar-thin">
-                    <li v-for="(item, index) in main['msgList']" :key="index" class="flex items-center justify-between w-full py-3 border-b last:border-b-0 scroll-">
+                    <li v-for="(item, index) in main['msgList']" :key="index" class="flex items-center justify-between flex-none w-full py-3 border-b last:border-b-0 scroll-">
                         <p class="flex-none w-6 mr-2 font-bold">{{ index + 1 }}</p> <!-- 인덱스 표시 -->
-                        <div class="flex flex-col w-full gap-1">
+                        <div class="flex flex-col w-[calc(100%-40px)] gap-1">
                             <p class="text-sm font-bold">{{ item.title }}</p>
-                            <p class="mt-0.5 text-base text-gray-900 truncate">{{ item.description }}</p>
+                            <p class="mt-0.5 text-base text-gray-900 truncate w-full">{{ item.description }}</p>
                         </div>
                         <p>></p>
                     </li>
@@ -143,14 +143,6 @@ const login = useLoginStore();
 const main  = useMainStore();
 
 const kakaoYn = ref(false)
-
-const storeMsg = ref([
-    { title: '제목', description: '내용입니다아아아아ㅏ아아아아아ㅏ아아' },
-    { title: '제목', description: '내용입니다아아아아ㅏ아아아아아ㅏ아아' },
-    { title: '제목', description: '내용입니다아아아아ㅏ아아아아아ㅏ아아' },
-    { title: '제목', description: '내용입니다아아아아ㅏ아아아아아ㅏ아아' },
-    { title: '제목', description: '내용입니다아아아아ㅏ아아아아아ㅏ아아' },
-])
 
 onMounted(() => {
     main.getData();

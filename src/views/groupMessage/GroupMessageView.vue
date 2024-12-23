@@ -28,7 +28,7 @@
     v-model:visible="GroupMessagePop" 
     header="발송 상세 내역" 
     :modal=true
-    position="bottom"
+    position="center"
     class="custom-dialog-bottom"
     >
         <GroupMessagePopup/>

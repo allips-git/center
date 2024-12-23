@@ -1,5 +1,5 @@
 <template>
-    <BackHeader title="고정비용 등록"/>
+    <BackHeader title="사업자 인증"/>
     <main class="p-5 pb-20">
         <section class="form-gap-box">
             <IftaLabel class="w-full">

@@ -56,7 +56,7 @@
                 </li>
             </ul>
         </section>
-        <div class="h-3 w-full bg-gray-100 my-8"></div>
+        <div class="w-full h-3 my-8 bg-gray-100"></div>
         <section>
             <CalculateCard />
         </section>
