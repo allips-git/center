@@ -13,27 +13,10 @@
                         <Button label="공장코드 추가" icon="pi pi-plus" size="small" @click="getPopOpen('sysFactorySearch')"/>
                     </div>
                     <ul>
-                        <li class="flex w-full gap-3 px-5 py-3 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" >
-                            <div class="aspect-[4/3] max-w-[100px] overflow-hidden rounded-md">
-                                <img src="@/assets/img/test.png" class="object-cover w-full h-full " >
-                            </div>
-                            <div class="w-full">
-                                <div class="flex items-center justify-between w-full mb-1 font-bold">
-                                    <p class="">{{ item.faNm }}</p>
-                                    <!-- <div class="text-right">
-                                        <p class="text-blue-500">승인 대기</p>
-                                        <p class="text-orange-500">반려</p>
-                                    </div> -->
-                                </div>
-                                <p class="text-sm text-gray-600">{{ item.tel }}</p>
-                                <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
-                                <div class="flex flex-wrap gap-1 mt-2">
-                                    <!-- v-for -->
-                                    <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
-                                    <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
-
-                                </div>
-                            </div>
+                        <li class="border-b py-3 flex flex-col" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getDetail(item.faCd, item.appGb)">  
+                            <p class="font-bold mb-1">{{ item.faNm }}</p>
+                            <p class="text-sm text-gray-600">{{ item.tel }}</p>
+                            <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
                         </li>
                     </ul>
                 </TabPanel>
@@ -80,9 +63,11 @@ import BackHeader from '@/components/layouts/BackHeader.vue'
 import FactorySearch from '@/views/include/factory/FactorySearch.vue'
 import OutFactorySet from '@/views/include/factory/OutFactorySet.vue'
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { usePopupStore, useFactoryStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
+const router    = useRouter();
 const popup     = usePopupStore();
 const factory   = useFactoryStore();
 
@@ -103,6 +88,14 @@ const getPopOpen = (popNm: string) => {
 
 const getPopClose = (gb: boolean, popNm: string) => {
     getPopupClose(popNm, gb);
+}
+
+const getDetail = (faCd: string, appGb: string) => {
+    if(appGb === 'Y')
+    {
+        factory.getSysFaCd(faCd);
+        router.push({ name: 'FactoryDetail' });
+    }
 }
 
 onMounted(() => {

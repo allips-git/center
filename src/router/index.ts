@@ -30,7 +30,6 @@ import OutProduct from "@/views/factory/OutProduct.vue";
 // import OutMng from "@/views/factory/OutMng.vue";
 import FactoryDetail from "@/views/factory/FactoryDetail.vue";
 import SysProduct from "@/views/factory/ProductInfo.vue";
-import SysMng from "@/views/factory/ProductMng.vue";
 import PlantalkMain from "@/views/plantalk/PlantalkMain.vue";
 // import PlantalkRes from "@/views/plantalk/PlantalkAlert.vue"
 // import PlantalkSend from "@/views/plantalk/PlantalkMessage.vue"
@@ -209,12 +208,12 @@ const routes = [
         component: SysProduct,
         meta: { title: '시스템 공장 제품 리스트' }
     },
-    {
-        path: "/factory/sysMng",
-        name: "SysMng",
-        component: SysMng,
-        meta: { title: '시스템 공장 제품 정보' }
-    },
+    // {
+    //     path: "/factory/sysMng",
+    //     name: "SysMng",
+    //     component: SysMng,
+    //     meta: { title: '시스템 공장 제품 정보' }
+    // },
     {
         path: "/plantalk",
         name: "PlantalkMain",
