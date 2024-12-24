@@ -17,6 +17,7 @@ export const useDataStore = defineStore('data', {
                 { name : '미사용', value : false }
             ],
             instCd : [
+                { name : '업종_전체', value : '' },
                 { name : '블라인드', value : 'IC001' },
                 { name : '커튼', value : 'IC002' },
             ],
