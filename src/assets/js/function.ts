@@ -45,6 +45,12 @@ export const getConvertDate = (date: Date, type: string): string => {
     let result: string;
 
     switch (type) {
+        case 'aver':
+            result = `${y}년 ${m}월`;
+        break;
+		case "yyyymm":
+			result = y+''+m;
+		break;
         case "yyyy-mm-dd":
             result = `${y}-${m}-${d}`;
             break;
