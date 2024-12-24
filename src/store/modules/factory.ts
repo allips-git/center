@@ -67,6 +67,20 @@ interface OutInfo {
     memo        : string;
 }
 
+interface OutDetailHeader {
+    label   : string;
+    value   : string;
+}
+
+interface OutDetailInfo {
+    name    : string;
+    amtGb   : string;
+    title   : string;
+    amt     : number;
+    red     : boolean;
+    blue    : boolean;
+}
+
 interface SysMsg {
     sysFaCd : string;
 }
@@ -146,6 +160,12 @@ interface State {
         fcCd    : string;
         list    : OutList[];
         info    : OutInfo;
+        detail  : {
+            header   : OutDetailHeader[];
+            info     : OutDetailInfo[];
+            totalAmt : number;
+            itemCnt  : number;
+        };
         msg     : OutMsg;
     }
 }
@@ -176,7 +196,11 @@ export const useFactoryStore = defineStore('factory', {
                     { label: '계좌', value: '' },
                     { label: '메모', value: '' },
                 ],
-                itemCnt : 0
+                info    : [
+                    { name : 'itemAmt', amtGb : '', title: '이달 매입금', amt: 0, red: false, blue: false }
+                ],
+                totalAmt : 0,
+                itemCnt  : 0
             },
             msg     : getOutMsg()
         }
@@ -324,17 +348,22 @@ export const useFactoryStore = defineStore('factory', {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/factoryV1/getOutFactoryInfo`, params);
 
+                console.log(res);
+
                 this.out.detail.header  = [
                     { label: '공장명', value: res.data['info']['faNm'] },
                     { label: '전화번호', value: res.data['info']['tel'] },
-                    { label: '주소', value: res.data['info']['addr'] + ' ' + res.data['info']['addrDetail']},
+                    { label: '주소', value: res.data['info']['addr'] + ' ' + res.data['info']['addrDetail'] },
                     { label: '계좌', value: res.data['info']['accInfo'] },
                     { label: '메모', value: res.data['info']['memo'] }
                 ];
-                
-                this.out.detail.itemCnt = res.data['itemCnt'];
 
-                console.log(res);
+                this.out.detail.info    = [
+                    { name : 'amt', amtGb: '', title: '이달 매입금', amt: res.data['purcAmt'], red: false, blue: false }
+                ];
+
+                this.out.detail.totalAmt = res.data['totalAmt'];
+                this.out.detail.itemCnt  = res.data['itemCnt'];
             }
             catch(e)
             {
