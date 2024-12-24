@@ -3,11 +3,13 @@
         <BackHeader title="통계"/>
         <div class="flex justify-between p-5 pb-0">
             <div>
-                <p class="text-xl font-bold text-green-500">100,000,000,000 원</p>
-                <p class="font-bold">2024년 12월 총 손익</p>
+                <p class="text-xl font-bold text-green-500">{{ getAmt(aver['totalAmt']) }} 원</p>
+                <p class="font-bold">{{ getConvertDate(aver['searchDt'], 'aver') }} 총 손익</p>
             </div>
             <div>
-                <Select size="small" class="w-32" placeholder="날짜 선택"/>    
+                <DatePicker v-model="aver['searchDt']" view="month" dateFormat="yy년 mm'월'" 
+                    class="custom-select" :locale="'ko'" showIcon fluid iconDisplay="input"
+                    @update:modelValue="aver.getData()"/>
             </div>
         </div>
 
@@ -17,16 +19,16 @@
             <h2 class="pt-2 mb-4 text-lg font-bold">요약</h2>
             <div class="w-full h-5 overflow-hidden rounded-full bg-gray-50 ">
                 <div class="flex items-center h-full *:h-full">
-                    <div class="w-1/3 bg-green-400">
-                        <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">20%</p>
+                    <div :class="`w-${aver.saleAmtFraction}/5 bg-green-400`">
+                        <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.saleAmtPercent }}</p>
                     </div>
     
-                    <div class="w-1/3 bg-sky-400">
-                        <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">43%</p>
+                    <div :class="`w-${aver.purcAmtFraction}/5 bg-sky-400`">
+                        <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.purcAmtPercent }}</p>
                     </div>
     
-                    <div class="w-1/3 bg-red-400">
-                        <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">33%</p>
+                    <div :class="`w-${aver.fixedAmtFraction}/5 bg-red-400`">
+                        <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.fixedAmtPercent }}</p>
                     </div>
                 </div>
             </div>
@@ -37,7 +39,7 @@
                         <span class="block bg-green-400 rounded-full size-2"></span>
                         <p>매출</p>
                     </div>
-                    <p class="text-lg font-bold text-green-400">12,000원</p>
+                    <p class="text-lg font-bold text-green-400">{{ getAmt(aver['saleAmt']) }}원</p>
                 </li>
 
                 <li class="flex justify-between gap-5">
@@ -45,7 +47,7 @@
                         <span class="block rounded-full bg-sky-400 size-2"></span>
                         <p>매입</p>
                     </div>
-                    <p class="text-lg font-bold text-sky-400">12,000원</p>
+                    <p class="text-lg font-bold text-sky-400">{{ getAmt(aver['purcAmt']) }}원</p>
                 </li>
 
                 <li class="flex justify-between gap-5">
@@ -53,7 +55,7 @@
                         <span class="block bg-red-400 rounded-full size-2"></span>
                         <p>비용</p>
                     </div>
-                    <p class="text-lg font-bold text-red-400">12,000원</p>
+                    <p class="text-lg font-bold text-red-400">{{ getAmt(aver['fixedAmt']) }}원</p>
                 </li>
             </ul>
         </section>
@@ -64,13 +66,13 @@
             <div class="w-full bg-white">
                 <h2 class="px-4 pt-2 text-lg font-bold">이달 고객 매출 순위 TOP 10</h2>
                 <ul class="mt-4">
-                    <li class="flex items-center justify-between p-4 border-b">
+                    <li v-for="(item, index) in aver['clientRank']" :key="index" class="flex items-center justify-between p-4 border-b">
                             <div class="flex items-center gap-2 ">
-                                <p class="font-bold">1</p>
+                                <p class="font-bold">{{ index + 1 }}</p>
                                 <Avatar icon="pi pi-user" class="!size-5 *:!text-xs *:!flex *:!items-center *:!justify-center" style="background-color: #ece9fc; color: #2a1261" shape="circle" />
-                                <p class="">이름</p>
+                                <p class="">{{ item['clientNm'] }}</p>
                             </div>
-                        <p class="font-bold ">100,000원</p>
+                        <p class="font-bold ">{{ getAmt(item['amt']) }}원</p>
                     </li>
                 </ul>
             </div>
@@ -138,22 +140,32 @@
 <script setup lang="ts">
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import Avatar from 'primevue/avatar';
+import DatePicker from 'primevue/datepicker';
 import { onMounted } from 'vue';
+import { useAverageStore } from '@/store';
 import { Chart, registerables } from 'chart.js';
+import { getCommas, getConvertDate } from '@/assets/js/function';
 
-onMounted(() => {
+const aver = useAverageStore();
+
+const getAmt = (amt: number) => {
+    return getCommas(Number(amt));
+}
+
+onMounted(async () => {
+    await aver.getData();
     Chart.register(...registerables);
     
     const ctx = document.getElementById('myDoughnutChart') as HTMLCanvasElement;
 
     const chartData = {
-        labels: ['블라인드', '커튼'],
-        datasets: [{
-            label: '매출 기여도',
-            data: [12, 5],
-            backgroundColor: ['#4ade80', ' #38bdf8'],
-            hoverBackgroundColor: ['#66bb6a', '#42a5f5'],
-        }],
+        labels      : ['블라인드', '커튼'],
+        datasets    : [{
+            label                   : '매출 기여도',
+            data                    : [100, 500],
+            backgroundColor         : ['#4ade80', ' #38bdf8'],
+            hoverBackgroundColor    : ['#66bb6a', '#42a5f5'],
+        }]
     };
 
     new Chart(ctx, {

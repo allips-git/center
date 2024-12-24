@@ -74,19 +74,31 @@ export const estiBlindMsg = (params: EstiBlindMsg): { msg: string; id: string, s
         return { msg : '세로를 입력해주세요.', id : 'bHeight', state : false };
     }
 
-    if(params['minWidth'] && params['maxWidth'])
+    if(params['ordGb'] === 'S')
     {
-        if((Number(params['width']) < Number(params['minWidth'])) || (Number(params['width']) > Number(params['maxWidth'])))
+        /** 시스템 공장 제품품 */
+        if(params['minWidth'] && params['maxWidth'])
         {
-            return { msg : `해당 제품 최소 가로 ${params['minWidth']}cm, 최대 가로 ${params['maxWidth']}cm 입니다.`, id : 'bWidth', state : false };
+            if((Number(params['width']) < Number(params['minWidth'])) || (Number(params['width']) > Number(params['maxWidth'])))
+            {
+                return { msg : `해당 제품 최소 가로 ${params['minWidth']}cm, 최대 가로 ${params['maxWidth']}cm 입니다.`, id : 'bWidth', state : false };
+            }
+        }
+    
+        if(params['minHeight'] && params['maxHeight'])
+        {
+            if((Number(params['height']) < Number(params['minHeight'])) || (Number(params['height']) > Number(params['maxHeight'])))
+            {
+                return { msg : `해당 제품 최소 세로 ${params['minHeight']}cm, 최대 가로 ${params['maxHeight']}cm 입니다.`, id : 'bHeight', state : false };
+            }
         }
     }
-
-    if(params['minHeight'] && params['maxHeight'])
+    else
     {
-        if((Number(params['height']) < Number(params['minHeight'])) || (Number(params['height']) > Number(params['maxHeight'])))
+        /** 센터 외주 제품품 */
+        if((Number(params['height']) < Number(params['minHeight'])))
         {
-            return { msg : `해당 제품 최소 세로 ${params['minHeight']}cm, 최대 가로 ${params['maxHeight']}cm 입니다.`, id : 'bHeight', state : false };
+            return { msg : `해당 제품 기본 세로 ${params['minHeight']}cm 입니다.`, id : 'bHeight', state : false };
         }
     }
 

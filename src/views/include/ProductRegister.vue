@@ -107,6 +107,7 @@ const getEstiSave = () => {
     {
         case '001':
         {
+            checkParams['ordGb']        = esti['common']['ordGb'];
             checkParams['maxWidth']     = esti['blind']['maxWidth'];
             checkParams['maxHeight']    = esti['blind']['maxHeight'];
             checkParams['minWidth']     = esti['blind']['minWidth'];
