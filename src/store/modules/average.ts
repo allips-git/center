@@ -10,6 +10,13 @@ interface ClientRank {
     amt      : number;
 }
 
+interface PayList {
+    codeSub : string;
+    codeNm  : string;
+    cnt     : number;
+    amt     : number;
+}
+
 interface State {
     searchDt    : string;
     totalAmt    : number;
@@ -17,6 +24,7 @@ interface State {
     purcAmt     : number;
     fixedAmt    : number;
     clientRank  : ClientRank[];
+    payList     : PayList[];
 }
 
 export const useAverageStore = defineStore('average', {
@@ -76,6 +84,7 @@ export const useAverageStore = defineStore('average', {
                 this.fixedAmt   = Number(res.data['summary']['fixedAmt']);
 
                 this.clientRank = res.data['clientRank'];
+                this.payList    = res.data['payGb'];
             }
             catch(e)
             {
