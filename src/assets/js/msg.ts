@@ -257,3 +257,75 @@ export const outFactoryMsg = (params: OutFactoryMsg): { msg: string; id: string,
 
     return { msg : '', id : '', state : true };
 }
+
+interface OutFactoryColors {
+    icNm    : string;
+}
+
+interface OutFactoryItemMsg {
+    itemNm      : string;
+    colors      : OutFactoryColors[];
+    size        : string;
+    unit        : string;
+    minHeight   : number;
+    pokSpec     : number;
+    purcAmt     : number;
+    saleAmt     : number;
+}
+
+/**
+ * @description 외주공장 제품 저장 시 유효성 검사
+ */
+export const outFactoryItemMsg = (params: OutFactoryItemMsg): { msg: string; id: string, state: boolean } => {
+    if(params['itemNm'] === '')
+    {
+        return { msg : '제품명을 입력해주세요.', id : 'itemNm', state : false };
+    }
+
+    for(let index = 0; index < params['colors'].length; index++)
+    {
+        const item = params['colors'][index];
+
+        if(item['icNm'] === '')
+        {
+            return { msg : '색상 이름을 입력해주세요.', id : `icNm${index}`, state : false };
+        }
+    }
+    if(params['colors'].length === 0)
+    {
+        return { msg : '컬러를 선택해주세요.', id : 'colors', state : false };
+    }
+
+    if(!Number(params['size']) || Number(params['size'] === 0))
+    {
+        return { msg : '기본 단위를 입력해주세요.', id : 'size', state : false };
+    }
+
+    if(params['unit'] !== '004')
+    {
+        if(!Number(params['minHeight']) || Number(params['minHeight'] === 0))
+        {
+            return { msg : '기본 높이를 입력해주세요.', id : 'minHeight', state : false };
+        }
+    }
+
+    if(params['unit'] === '003')
+    {
+        if(!Number(params['pokSpec']) || Number(params['pokSpec'] === 0))
+        {
+            return { msg : '원단 폭을 입력해주세요.', id : 'pokSpec', state : false };
+        }
+    }
+
+    if(!Number(params['purcAmt']) || Number(params['purcAmt'] === 0))
+    {
+        return { msg : '매입 가격을을 입력해주세요.', id : 'purcAmt', state : false };
+    }
+
+    if(!Number(params['saleAmt']) || Number(params['saleAmt'] === 0))
+    {
+        return { msg : '판매 가격을을 입력해주세요.', id : 'saleAmt', state : false };
+    }
+
+    return { msg : '', id : '', state : true };
+}

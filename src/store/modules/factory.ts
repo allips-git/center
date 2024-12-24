@@ -4,7 +4,8 @@
 import { defineStore } from 'pinia';
 import { getAxiosData } from '@/assets/js/function';
 
-type AppGb = 'Y' | 'N' | 'E'; /** Y : 승인 / N : 거절 / E : 대기기 */
+type Nullable<T>    = T | null;
+type AppGb          = 'Y' | 'N' | 'E'; /** Y : 승인 / N : 거절 / E : 대기기 */
 
 interface SysList {
     faCd        : string;
@@ -81,6 +82,43 @@ interface OutDetailInfo {
     blue    : boolean;
 }
 
+interface OutItemList {
+    itemCd  : string;
+    itemNm  : string;
+    size    : number;
+    unitNm  : string;
+    saleAmt : number;
+    purcAmt : number;
+}
+
+interface OutColors {
+    icCd  : Nullable<string>;
+    icNm  : string;
+    delYn : Y | N;
+}
+
+interface OutItemInfo {
+    itemNm      : string;
+    colors      : OutColors[];
+    size        : Nullable<number>;
+    unit        : string;
+    minHeight   : Nullable<number>;
+    pokSpec     : Nullable<number>;
+    purcAmt     : Nullable<number>;
+    saleAmt     : Nullable<number>;
+}
+
+interface OutItemMsg {
+    itemNm      : string;
+    colors      : string;
+    size        : string;
+    unit        : string;
+    minHeight   : string;
+    pokSpec     : string;
+    purcAmt     : string;
+    saleAmt     : string;
+}
+
 interface SysMsg {
     sysFaCd : string;
 }
@@ -137,6 +175,32 @@ const getOutInfo = (): OutInfo => {
     }
 }
 
+const getOutItemInfo = (): OutItemInfo => {
+    return {
+        itemNm      : '',
+        colors      : [{ icCd: null, icNm: '', delYn: 'N' }],
+        size        : null,
+        unit        : '001',
+        minHeight   : null,
+        pokSpec     : null,
+        purcAmt     : null,
+        saleAmt     : null
+    }
+}
+
+const getOutItemMsg = (): OutItemMsg => {
+    return {
+        itemNm      : '',
+        colors      : '',
+        size        : '',
+        unit        : '',
+        minHeight   : '',
+        pokSpec     : '',
+        purcAmt     : '',
+        saleAmt     : ''
+    }
+}
+
 const getOutMsg = (): OutMsg => {
     return {
         outFaNm : '',
@@ -156,17 +220,23 @@ interface State {
         msg         : SysMsg;
     },
     out : {
-        type    : string;
-        fcCd    : string;
-        list    : OutList[];
-        info    : OutInfo;
-        detail  : {
+        type        : string;
+        fcCd        : string;
+        list        : OutList[];
+        info        : OutInfo;
+        detail      : {
             header   : OutDetailHeader[];
             info     : OutDetailInfo[];
             totalAmt : number;
             itemCnt  : number;
         };
-        msg     : OutMsg;
+        itemSearch  : string;
+        itemList    : OutItemList[];
+        itemInfo    : OutItemInfo;
+        itemType    : string;
+        start       : number;
+        itemMsg     : OutItemMsg;
+        msg         : OutMsg;
     }
 }
 
@@ -184,17 +254,17 @@ export const useFactoryStore = defineStore('factory', {
             msg         : getSysMsg()
         },
         out : {
-            type    : 'I',
-            fcCd    : '',
-            list    : [],
-            info    : getOutInfo(),
-            detail  : {
+            type        : 'I',
+            fcCd        : '',
+            list        : [],
+            info        : getOutInfo(),
+            detail      : {
                 header : [
                     { label: '공장명', value: '' },
                     { label: '전화번호', value: '' },
                     { label: '주소', value: '' },
                     { label: '계좌', value: '' },
-                    { label: '메모', value: '' },
+                    { label: '메모', value: '' }
                 ],
                 info    : [
                     { name : 'itemAmt', amtGb : '', title: '이달 매입금', amt: 0, red: false, blue: false }
@@ -202,7 +272,14 @@ export const useFactoryStore = defineStore('factory', {
                 totalAmt : 0,
                 itemCnt  : 0
             },
-            msg     : getOutMsg()
+            itemSearch  : '',
+            itemCd      : '',
+            itemList    : [],
+            itemInfo    : getOutItemInfo(),
+            itemType    : 'I',
+            start       : 0,
+            itemMsg     : getOutItemMsg(),
+            msg         : getOutMsg()
         }
     }),
     actions: {
@@ -400,6 +477,50 @@ export const useFactoryStore = defineStore('factory', {
                 console.log(e);
             }
         },
+        async getOutFactoryItemList()
+        {
+            const params    = {
+                fcCd    : this.out['fcCd'],
+                search  : this.out['itemSearch'],
+                start   : this.out['start']
+            };
+
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/factoryV1/getOutFactoryItemList`, params);
+
+                console.log(res);
+
+                this.out.itemList = res.data['list'];
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        },
+        async getOutFactoryItemInfo()
+        {
+            const params    = {
+                fcCd    : this.out['fcCd'],
+                itemCd  : this.out['itemCd']
+            };
+
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/factoryV1/getOutFactoryItemInfo`, params);
+
+                console.log(res);
+
+                this.out.itemType = 'U';
+                this.out.itemInfo = res.data['info'];
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        },
         getSysFaCd(faCd: string)
         {
             this.sys.faCd = faCd;
@@ -412,6 +533,10 @@ export const useFactoryStore = defineStore('factory', {
         {
             this.sys.itemCd = itemCd;
         },
+        getOutItemCd(itemCd: string)
+        {
+            this.out.itemCd = itemCd;
+        },
         getSysMsgSet(msg: string)
         {
             this.sys.msg.sysFaCd = msg;
@@ -419,6 +544,46 @@ export const useFactoryStore = defineStore('factory', {
         getSysMsgReset()
         {
             this.sys.msg = getSysMsg();
+        },
+        getOutAddColor()
+        {
+            this.out.itemInfo.colors.push({ icCd: null, icNm: '', delYn: 'N' });
+        },
+        getOutDelColor(index: number)
+        {
+            if(this.out.itemInfo.colors[index]['icCd'] !== null)
+            {
+                this.out.itemInfo.colors[index]['delYn'] = 'Y';
+            }
+            else
+            {
+                this.out.itemInfo.colors.splice(index, 1);
+            }
+        },
+        getOutColorRestore(icCd: string)
+        {
+            const index = this.out.itemInfo.colors.findIndex((item) => item.icCd === icCd);
+            this.out.itemInfo.colors[index]['delYn'] = 'N';
+
+            return index;
+        },
+        getOutItemInfoReset()
+        {
+            this.out.itemType = 'I';
+            this.out.itemInfo = getOutItemInfo();
+            this.out.itemMsg  = getOutItemMsg();
+        },
+        getOutItemMsgSet(msg: string, name: string)
+        {
+            this.out.itemMsg = getOutItemMsg();
+            if (name.includes('icNm')) 
+            {
+                this.out.itemMsg.colors = msg;
+            }
+            else
+            {
+                this.out.itemMsg[name]  = msg;
+            }
         },
         getOutMsgSet(msg: string, name: string)
         {

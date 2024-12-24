@@ -24,7 +24,7 @@
         <Button label="제품 설정하기" size="large" @click="getPopupOpen('outFactoryItemList')"/>
     </div>
 
-    <Dialog v-model:visible="popup['pop']['outFactoryItemList']" header="외주공장 이름 제품정보" 
+    <Dialog v-model:visible="popup['pop']['outFactoryItemList']" header="외주공장 제품정보" 
         :modal=true position="center" class="custom-dialog-bottom"
         @update:visible="getPopupClose('outFactoryItemList', true)">
         <OutProduct/>
