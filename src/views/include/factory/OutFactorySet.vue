@@ -152,12 +152,18 @@ const getOutFactorySave = () => {
                 'memo'          : factory['out']['info']['memo']
             }
 
+            if(factory['out']['type'] === 'U')
+            {
+                params['fcCd'] = factory['out']['fcCd'];
+            }
+
             try
             {
                 const instance  = await getAxiosData();
                 await instance.post(`https://data.planorder.kr/factoryV1/getOutFactorySave`, params);
                 await factory.getList();
-                getPopClose(true, 'outFactorySet')
+                await factory.getOutFactoryDetail();
+                getPopClose(true, 'outFactorySet');
             }
             catch(e)
             {

@@ -17,9 +17,6 @@
             </div>
             <div class="flex flex-col gap-4">
                 <MoreCard/>
-                <MoreCard/>
-                <MoreCard/>
-                <MoreCard/>
             </div>
         </section>
 
@@ -31,20 +28,13 @@
             <!-- 카드 UI -->
             <div class="flex flex-col gap-4">
                 <MoreCard/>
-                <MoreCard/>
-                <MoreCard/>
-                <MoreCard/>
             </div>
         </section>
     </div>    
 </main>
 
-<Dialog
-    v-model:visible="OutMngPop" 
-    header="외주공장 이름 제품관리" 
-    :modal=true
-    position="center"
-    class="custom-dialog-bottom"
+<Dialog v-model:visible="OutMngPop" header="외주공장 이름 제품관리" 
+    :modal=true position="center" class="custom-dialog-bottom"
     >
     <OutMng/>
 </Dialog>

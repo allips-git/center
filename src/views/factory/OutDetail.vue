@@ -3,7 +3,9 @@
     <main class="!pb-36">
         <div class="relative">
             <section class="relative rounded-t-xl overflow-hidden bg-white">
-                <InfoCard :title="factory['out']['detail']['header'][0]['value']" :info="factory['out']['detail']['header']" :btnLabel="'수정하기'"/>
+                <InfoCard :title="factory['out']['detail']['header'][0]['value']" 
+                    :info="factory['out']['detail']['header']" :btnLabel="'수정하기'"
+                    @get-btn="getPopOpen('outFactorySet')"/>
             </section>
 
             <div class="gray-bar"></div>
@@ -27,6 +29,12 @@
         @update:visible="getPopupClose('outFactoryItemList', true)">
         <OutProduct/>
     </Dialog>
+
+    <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주공장 저장" 
+        :modal=true position="center" :dismissableMask="true" class="custom-dialog-bottom"
+        @update:visible="getPopClose(true, 'outFactorySet')">
+        <OutFactorySet/>
+    </Dialog>
 </template>
     
 <script setup lang="ts">
@@ -34,6 +42,7 @@ import BackHeader from '@/components/layouts/BackHeader.vue'
 import CalculateCard from "@/components/card/CalculateCard.vue";
 import InfoCard from "@/components/card/InfoCard.vue";
 import OutProduct from "@/views/include/factory/OutProduct.vue";
+import OutFactorySet from '@/views/include/factory/OutFactorySet.vue'
 import { onMounted } from 'vue';
 import { usePopupStore, useFactoryStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
@@ -41,6 +50,12 @@ import { usePopup } from '@/assets/js/popup';
 const popup     = usePopupStore();
 const factory   = useFactoryStore();
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getPopOpen = (popNm: string) => {
+    factory.getOutInfoReset();
+    factory.getOutFactoryInfo();
+    getPopupOpen(popNm);
+}
 
 onMounted(async () => {
     await factory.getOutFactoryDetail();

@@ -346,7 +346,7 @@ export const useFactoryStore = defineStore('factory', {
             try
             {
                 const instance  = await getAxiosData();
-                const res       = await instance.post(`https://data.planorder.kr/factoryV1/getOutFactoryInfo`, params);
+                const res       = await instance.post(`https://data.planorder.kr/factoryV1/getOutFactoryDetail`, params);
 
                 console.log(res);
 
@@ -364,6 +364,36 @@ export const useFactoryStore = defineStore('factory', {
 
                 this.out.detail.totalAmt = res.data['totalAmt'];
                 this.out.detail.itemCnt  = res.data['itemCnt'];
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        },
+        async getOutFactoryInfo()
+        {
+            const params    = {
+                fcCd    : this.out['fcCd']
+            };
+
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/factoryV1/getOutFactoryInfo`, params);
+
+                const info      = {
+                    faNm        : res.data['info']['faNm'],
+                    tel         : res.data['info']['tel'],
+                    zip         : res.data['info']['zip'],
+                    addr        : res.data['info']['addr'],
+                    addrDetail  : res.data['info']['addrDetail'],
+                    accInfo     : res.data['info']['accInfo'],
+                    kakaoTel    : res.data['info']['kakaoTel'],
+                    memo        : res.data['info']['memo']
+                };
+
+                this.out.type = 'U';
+                this.out.info = info;
             }
             catch(e)
             {
@@ -401,13 +431,9 @@ export const useFactoryStore = defineStore('factory', {
             this.sys.info       = getSysInfo();
             this.sys.msg        = getSysMsg();
         },
-        getOutType(type: string)
-        {
-            this.out.type = type;
-        },
         getOutInfoReset()
         {
-            this.getOutType('I');
+            this.out.type = 'I';
             this.out.info = getOutInfo();
             this.out.msg  = getOutMsg();
         }
