@@ -46,9 +46,9 @@
                 </swiper-slide>
             </swiper>
 
-        <div class="fixed z-50 bottom-4 right-4 size-12">
+        <!-- <div class="fixed z-50 bottom-4 right-4 size-12">
             <Button size="large" icon="pi pi-plus" class="!size-full" rounded @click="calenderSetPop= true"></Button>
-        </div>
+        </div> -->
         <Dialog
         v-model:visible="calenderSetPop" 
         header="일정" 

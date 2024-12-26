@@ -12,9 +12,6 @@
 import CalenderMonth from '@/views/include/calendar/CalenderMonth.vue'
 import CalenderDay from '@/views/include/calendar/CalenderDay.vue'
 import BackHeader from '@/components/layouts/BackHeader.vue'
-
-
-
 </script>
 
 <style lang="scss">
