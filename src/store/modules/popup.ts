@@ -23,6 +23,7 @@ interface Pop {
     outOrderSet         : boolean;
     accMonth            : boolean;
     accWeek             : boolean;
+    accDay              : boolean;
     paymentSet          : boolean;
 }
 
@@ -51,6 +52,7 @@ const getPopInfo = (): Pop => {
         outOrderSet         : false,
         accMonth            : false,
         accWeek             : false,
+        accDay              : false,
         paymentSet          : false
     }
 }

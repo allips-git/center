@@ -1,44 +1,41 @@
 <template>
     <main>
         <section class="px-5 pt-5">
-            <AccInfo :dateSelect="false"/>
+            <AccInfo :saleAmt="getAmt(acc.daySaleAmt)" :purcAmt="getAmt(acc.dayPurcAmt)" :margin="acc.dayMargin"/>
         </section>
         <div class="mt-5"></div>
         <section>
             <div class="px-4 py-2 font-bold text-lx bg-gray-50">
-                <p class="text-indigo-600">2024.04.22 (월)</p>
+                <p class="text-indigo-600">{{ getDate(acc.searchDt) }}</p>
             </div>
-            <AccountList/>
-            <AccountList/>
-            <AccountList/>
-            <AccountList/>
+            <template v-for="(item, index) in acc['dayList']" :key="index">
+                <AccountList :clientNm="item['clientNm']" :stNm="item['stNm']" :addr="item['addr']+' '+item['addrDetail']"
+                    :saleAmt="getAmt(item['saleAmt'])" :purcAmt="getAmt(item['purcAmt'])" :rev="getAmt(item['rev'])"/>
+            </template>
         </section>
     </main>
-
-    <Dialog
-    v-model:visible="AccWeekPop" 
-    header="주간 분석" 
-    :modal=true
-    position="center"
-    class="custom-dialog-bottom"
-    >
-        <AccWeek/>
-    </Dialog>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
 import AccountList from '@/components/list/AccountList.vue'
 import AccInfo from '@/views/include/acc/AccInfo.vue'
+import { onMounted } from 'vue';
+import { useAccStore } from '@/store';
+import { getCommas, getConvertDate } from '@/assets/js/function';
 
+const acc = useAccStore();
 
-const salesData = ref([
-    { title: '매출', amount: 131000 },
-    { title: '환불', amount: 50000 },
-    { title: '마진', amount: 47 },
-]);
+const getDate = (date: string) => {
+    return getConvertDate(new Date(date), 'accWeek');
+}
 
-const AccWeekPop = ref(false)
+const getAmt = (amt: number) => {
+    return getCommas(Number(amt));
+}
+
+onMounted(() => {
+    acc.getDayData();
+});
 
 </script>
 

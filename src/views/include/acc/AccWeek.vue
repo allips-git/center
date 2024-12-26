@@ -15,20 +15,16 @@
                     </li>
                     <template v-for="(week, wIndex) in acc['weekList']" :key="wIndex">
                         <StatisticsList :date="getDate(week['date'])" :margin="week['margin']" 
-                            :waitAmt="getAmt(week['waitAmt'])" :saleAmt="getAmt(week['saleAmt'])" :rev="getAmt(week['rev'])"/>
+                            :waitAmt="getAmt(week['waitAmt'])" :saleAmt="getAmt(week['saleAmt'])" :rev="getAmt(week['rev'])" @click="getDayPopup(week['date'])"/>
                     </template>
                 </ul>
             </template>
         </section>
     </main>
 
-    <Dialog
-    v-model:visible="AccDayPop" 
-    header="일간 분석" 
-    :modal=true
-    position="center"
-    class="custom-dialog-bottom"
-    >
+    <Dialog v-model:visible="popup['pop']['accDay']" header="일간 분석" 
+        :modal=true position="center" class="custom-dialog-bottom"
+        @update:visible="getPopupClose('accDay', true)">
         <AccDay/>
     </Dialog>
 </template>
@@ -46,6 +42,11 @@ const popup = usePopupStore();
 const acc   = useAccStore();
 
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getDayPopup = (date: string) => {
+    getPopupOpen('accDay');
+    acc.getSearchDt(date);
+}
 
 const getDate = (date: string) => {
     return getConvertDate(new Date(date), 'accWeek');
