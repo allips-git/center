@@ -17,6 +17,13 @@ interface PayList {
     amt     : number;
 }
 
+interface KeywordList {
+    codeSub : string;
+    codeNm  : string;
+    cnt     : number;
+    amt     : number;
+}
+
 interface State {
     searchDt    : string;
     totalAmt    : number;
@@ -25,6 +32,7 @@ interface State {
     fixedAmt    : number;
     clientRank  : ClientRank[];
     payList     : PayList[];
+    keywordList : KeywordList[];
 }
 
 export const useAverageStore = defineStore('average', {
@@ -35,6 +43,8 @@ export const useAverageStore = defineStore('average', {
         purcAmt     : 0,
         fixedAmt    : 0,
         clientRank  : [],
+        payList     : [],
+        keywordList : []
     }),
     getters : {
         totalAmount: (state) => {
@@ -63,6 +73,13 @@ export const useAverageStore = defineStore('average', {
         fixedAmtFraction: (state) => {
             const total = state.saleAmt + state.purcAmt + state.fixedAmt;
             return total ? Math.round((state.fixedAmt / total) * 5) : 0;
+        },
+        keywordNmList: (state) => {
+            return state.keywordList.map(item => item.codeNm);
+        },
+        keywordValList: (state) => {
+            console.log(state.keywordList.map(item => Number(item.cnt)));
+            return state.keywordList.map(item => Number(item.cnt));
         }
     },
     actions : {
@@ -78,13 +95,14 @@ export const useAverageStore = defineStore('average', {
                 const res       = await instance.post(`https://data.planorder.kr/averageV1/getData`, params);
 
                 console.log(res);
-                this.totalAmt   = res.data['totalAmt'];
-                this.saleAmt    = Number(res.data['summary']['saleAmt']);
-                this.purcAmt    = Number(res.data['summary']['purcAmt']);
-                this.fixedAmt   = Number(res.data['summary']['fixedAmt']);
+                this.totalAmt       = res.data['totalAmt'];
+                this.saleAmt        = Number(res.data['summary']['saleAmt']);
+                this.purcAmt        = Number(res.data['summary']['purcAmt']);
+                this.fixedAmt       = Number(res.data['summary']['fixedAmt']);
 
-                this.clientRank = res.data['clientRank'];
-                this.payList    = res.data['payGb'];
+                this.clientRank     = res.data['clientRank'];
+                this.payList        = res.data['payGb'];
+                this.keywordList    = res.data['unitGb'];
             }
             catch(e)
             {
