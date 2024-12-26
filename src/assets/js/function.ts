@@ -51,6 +51,13 @@ export const getConvertDate = (date: Date, type: string): string => {
         case 'accWeek':
             result = `${m}월 ${d}일 (${w})`;
         break;
+        case 'monthCalendar':
+            result = `${y}년 ${m}월 ${d}일 (${w})`;
+        break;
+        case 'monthCalendarInfo':
+            result = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            console.log(result);
+        break;
 		case "yyyymm":
 			result = y+''+m;
 		break;
