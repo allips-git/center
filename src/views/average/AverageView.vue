@@ -105,14 +105,14 @@
                 <canvas id="myDoughnutChart"></canvas>
             </div>
             <ul class="flex flex-col gap-2 p-4 mx-4 mt-4 border border-gray-200 rounded-md">
-                <li class="flex justify-between gap-5">
+                <li v-for="(item, index) in aver['keywordList']" :key="index" class="flex justify-between gap-5">
                     <div class="flex items-center gap-2">
-                        <span class="block bg-green-400 rounded-full size-2"></span>
-                        <span class="block rounded-full bg-sky-400 size-2"></span>
-                        <p>블라인드 (1개)</p>
+                        <span v-if="item['codeSub'] === '001' || item['codeSub'] === '002'" class="block bg-green-400 rounded-full size-2"></span>
+                        <span v-if="item['codeSub'] === '003' || item['codeSub'] === '004'" class="block rounded-full bg-sky-400 size-2"></span>
+                        <p>{{ item['codeNm'] }} ({{ item['cnt'] }}개)</p>
                     </div>
-                    <p class="text-lg font-bold text-green-400">12,000원</p>
-                    <p class="text-lg font-bold text-sky-400">12,000원</p>
+                    <p v-if="item['codeSub'] === '001' || item['codeSub'] === '002'" class="text-lg font-bold text-sky-400">{{ getAmt(item['amt']) }}원</p>
+                    <p v-if="item['codeSub'] === '003' || item['codeSub'] === '004'" class="text-lg font-bold text-green-400">{{ getAmt(item['amt']) }}원</p>
                 </li>
             </ul>
         </section>
@@ -141,11 +141,11 @@ onMounted(async () => {
     const ctx = document.getElementById('myDoughnutChart') as HTMLCanvasElement;
 
     const chartData = {
-        labels      : ['블라인드', '커튼'],
+        labels      : aver.keywordNmList,
         datasets    : [{
             label                   : '매출 기여도',
-            data                    : [100, 500],
-            backgroundColor         : ['#4ade80', ' #38bdf8'],
+            data                    : aver.keywordValList,
+            backgroundColor         : ['#4ade80', '#38bdf8'],
             hoverBackgroundColor    : ['#66bb6a', '#42a5f5'],
         }]
     };
