@@ -78,7 +78,6 @@ export const useAverageStore = defineStore('average', {
             return state.keywordList.map(item => item.codeNm);
         },
         keywordValList: (state) => {
-            console.log(state.keywordList.map(item => Number(item.cnt)));
             return state.keywordList.map(item => Number(item.cnt));
         }
     },
