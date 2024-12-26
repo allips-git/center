@@ -21,6 +21,8 @@ interface Pop {
     outFactoryItemSet   : boolean;
     sysOrderSet         : boolean;
     outOrderSet         : boolean;
+    accMonth            : boolean;
+    accWeek             : boolean;
     paymentSet          : boolean;
 }
 
@@ -47,6 +49,8 @@ const getPopInfo = (): Pop => {
         outFactoryItemSet   : false,
         sysOrderSet         : false,
         outOrderSet         : false,
+        accMonth            : false,
+        accWeek             : false,
         paymentSet          : false
     }
 }

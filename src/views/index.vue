@@ -29,7 +29,6 @@
                 </ul>
             </div>
         </section>
-        
 
         <section class="col-span-6 mb-5 md:mb-0">
             <div class="main-card-container-box">
@@ -38,7 +37,9 @@
                         <img src="@/assets/img/img-factory.svg" alt="공장" title="공장" class="size-6"/>
                         공장
                     </h2>
-                    <Button label="더보기 >" text severity="secondary" size="small"></Button>
+                    <router-link to="/factory/list">
+                        <Button label="더보기 >" text severity="secondary" size="small"></Button>
+                    </router-link>
                 </div>
                 <div class="flex justify-between main-card-container-box-padding">
                     <div class="flex flex-col gap-1">
@@ -135,14 +136,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineEmits } from 'vue';
-import { FilterMatchMode } from '@primevue/core/api';
-import { useLoginStore, useMainStore } from '@/store';
+import { onMounted } from 'vue';
+import { useMainStore } from '@/store';
 
-const login = useLoginStore();
 const main  = useMainStore();
-
-const kakaoYn = ref(false)
 
 onMounted(() => {
     main.getData();

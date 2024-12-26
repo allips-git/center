@@ -14,6 +14,7 @@ import { useEstiMateStore } from './modules/estiMate';
 import { useConMateStore } from './modules/conMate';
 import { useOrderStore } from './modules/order';
 import { useFactoryStore } from './modules/factory';
+import { useAccStore } from './modules/acc';
 import { useAverageStore } from './modules/average';
 
 const pinia = createPinia();
@@ -37,5 +38,6 @@ export {
     useConMateStore,
     useOrderStore,
     useFactoryStore,
+    useAccStore,
     useAverageStore
 };

@@ -146,20 +146,14 @@
     </section>
 </main>
 
-<Dialog
-    v-model:visible="AccMonthPop" 
-    header="월간 분석" 
-    :modal=true
-    position="center"
-    class="custom-dialog-bottom"
-    >
+<Dialog v-model:visible="AccMonthPop" header="월간 분석" 
+    :modal=true position="center" class="custom-dialog-bottom"
+    @update:visible="getPopupClose('sysFactoryItemList', true)">
     <AccMonth/>
 </Dialog>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineEmits } from 'vue';
-import { FilterMatchMode } from '@primevue/core/api';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import AccMonth from '@/views/include/acc/AccMonth.vue'
 import DataTable from 'primevue/datatable';
@@ -167,11 +161,18 @@ import Column from 'primevue/column';
 import IconField from 'primevue/iconfield'; 
 import InputText from 'primevue/inputtext'; 
 import InputIcon from 'primevue/inputicon'; 
+import { ref, onMounted } from 'vue';
+import { FilterMatchMode } from '@primevue/core/api';
+import { usePopupStore, useAccStore } from '@/store';
+import { usePopup } from '@/assets/js/popup';
+
+const popup = usePopupStore();
+const acc   = useAccStore();
+
+const { getPopupOpen, getPopupClose } = usePopup();
 
 const AccMonthPop = ref (false)
- 
 const loading = ref(false);
-const globalFilter = ref('');
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },

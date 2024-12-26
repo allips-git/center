@@ -218,6 +218,8 @@ export const useProductStore = defineStore('product', {
                     icCd   : this.icCd
                 };
 
+                console.log(params);
+
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/estiV1/getItemInfo`, params);
 
