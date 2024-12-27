@@ -21,18 +21,6 @@ export const useDataStore = defineStore('data', {
                 { name : '블라인드', value : 'IC001' },
                 { name : '커튼', value : 'IC002' },
             ],
-            division : [
-                { value : 1, name : '단창'},
-                { value : 2, name : '2분할'},
-                { value : 3, name : '3분할'},
-                { value : 4, name : '4분할'},
-                { value : 5, name : '5분할'},
-                { value : 6, name : '6분할'},
-                { value : 7, name : '7분할'},
-                { value : 8, name : '8분할'},
-                { value : 9, name : '9분할'},
-                { value : 10, name : '10분할'}
-            ],
             proc  : [ 
                 { name : '나비주름', value : '001' },
                 { name : '평주름', value : '002' }
@@ -41,10 +29,6 @@ export const useDataStore = defineStore('data', {
             addColor    : [ 
                 { value : 'O', name : '원톤' }, 
                 { value : 'T', name : '투톤' }
-            ],
-            shape       : [ 
-                { value : 'Y', name : '있음' }, 
-                { value : 'N', name : '없음' } 
             ],
             split : [ 
                 { name : '양개', value : '001' },

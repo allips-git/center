@@ -11,6 +11,7 @@ interface MonthEvents {
     stCd        : string;
     stNm        : string;
     stDt        : Date;
+    insTime     : string;
     classNames  : string;
 }
 
@@ -24,11 +25,33 @@ interface MonthDetail {
     list : DetailList[];
 }
 
+interface DayList {
+    date        : string;
+    dateDay     : number;
+    week        : string;
+    isToday     : boolean;
+    selectDay   : boolean;
+}
+
+interface DayEvents {
+    emCd        : string;
+    clientCd    : string;
+    title       : string;
+    stCd        : string;
+    stNm        : string;
+    stDt        : Date;
+    insTime     : string;
+    classNames  : string;
+}
+
 interface State {
     searchDt    : Date;
     emCd        : string;
     monthEvents : MonthEvents[];
     monthDetail : MonthDetail;
+    dayList     : DayList[];
+    daySelIndex : number;
+    dayEvents   : DayEvents[];
 }
 
 export const useCalendarStore = defineStore('calendar', {
@@ -39,9 +62,13 @@ export const useCalendarStore = defineStore('calendar', {
         monthDetail : {
             date : getConvertDate(new Date(), 'monthCalendar'),
             list : []
-        }
+        },
+        dayList     : [],
+        daySelIndex : 0,
+        dayEvents   : []
     }),
     getters : {
+        initialDate : (state) => getConvertDate(state.searchDt, 'yyyy-mm-dd')
     },
     actions : {
         async getInfo()
@@ -70,14 +97,10 @@ export const useCalendarStore = defineStore('calendar', {
                 date : getConvertDate(new Date(this.searchDt), 'yyyymm')
             };
 
-            console.log(params);
-
             try
             {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/calendarV1/getMonthData`, params);
-
-                console.log(res);
 
                 this.monthEvents = res.data['list'];
             }
@@ -109,16 +132,88 @@ export const useCalendarStore = defineStore('calendar', {
                 }
             });
         },
+        async getDayData()
+        {
+            const params = {
+                date : getConvertDate(new Date(this.searchDt), 'yyyy-mm-dd')
+            };
+
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/calendarV1/getDayData`, params);
+
+                console.log(res);
+
+                this.dayEvents = res.data['list'].map(item => {
+                    const startDt   = new Date(item['start']);
+                    const endDt     = new Date(item['start']);
+                    const insTime   = item['insTime'] !== '' ? item['insTime'] : '0:0';
+
+                    const [hours, minutes] = insTime.split(':').map(Number);
+
+                    endDt.setHours(endDt.getHours() + hours);
+                    endDt.setMinutes(endDt.getMinutes() + minutes);
+
+                    /** 
+                     * @description 날짜는 금일로 고정하여 시간 데이터만 변경하여 표기 => 일자를 변경 시 fullcalendar를 컴포넌트에서 계속 재랜더링 안하기 위해 강제 처리
+                     */
+                    const sDt = getConvertDate(new Date(), 'yyyy-mm-dd')+'T'+getConvertDate(startDt, 'hh:ii');
+                    const eDt = getConvertDate(new Date(), 'yyyy-mm-dd')+'T'+getConvertDate(endDt, 'hh:ii');
+
+                    return {
+                        emCd        : item.emCd,
+                        clientCd    : item.clientCd,
+                        title       : item.title,
+                        stCd        : item.stCd,
+                        stNm        : item.stNm,
+                        start       : sDt,
+                        end         : item.stCd === '001' ? null : eDt,
+                        classNames  : item.classNames
+                    }
+                });
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        },
         getSearchDt(newDate: Date)
         {
-            this.searchDt           = newDate;
-            this.calendarOptions    = { 
-                ...this.calendarOptions, initialDate: getConvertDate(new Date(this.searchDt), 'yyyy-mm-dd')
-            };
+            this.searchDt   = newDate;
         },
         getEmCd(emCd: string)
         {
             this.emCd = emCd;
+        },
+        getDayListSet()
+        {
+            const year  = this.searchDt.getFullYear();
+            const month = this.searchDt.getMonth();
+
+            const firstDay  = new Date(year, month, 1);
+            const lastDay   = new Date(year, month + 1, 0);
+            const dayList   = [];
+
+            const weekStr = ['일', '월', '화', '수', '목', '금', '토'];
+
+            for (let day = firstDay; day <= lastDay; day.setDate(day.getDate() + 1)) 
+            {
+                dayList.push({
+                    date        : getConvertDate(new Date(day), 'yyyy-mm-dd'),
+                    dateDay     : day.getDate(),
+                    week        : weekStr[day.getDay()],
+                    isToday     : getConvertDate(new Date(), 'yyyy-mm-dd') === getConvertDate(new Date(day), 'yyyy-mm-dd') ? true : false,
+                    selectDay   : getConvertDate(new Date(), 'yyyy-mm-dd') === getConvertDate(new Date(day), 'yyyy-mm-dd') ? true : false
+                });
+            }
+
+            this.dayList        = dayList;
+            this.daySelIndex    = this.dayList.findIndex(item => item.date === getConvertDate(new Date(this.searchDt), 'yyyy-mm-dd')) === -1 ? 0 : this.dayList.findIndex(item => item.date === getConvertDate(new Date(this.searchDt), 'yyyy-mm-dd'));
+        },
+        getDayChoiceSet(index: number)
+        {
+            this.daySelIndex = index;
         }
     }
 });
