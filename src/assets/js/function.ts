@@ -37,6 +37,7 @@ export const getConvertDate = (date: Date, type: string): string => {
     const d  = date.getDate() < 10 ? '0' + date.getDate() : date.getDate().toString();
     const h  = date.getHours() < 10 ? '0'+date.getHours() : date.getHours();
     const i  = date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes();
+    const s  = String(date.getSeconds()).padStart(2, '0');
     const yy = y.toString().substring(2, 4);
 
 	const weekStr = ['일', '월', '화', '수', '목', '금', '토'];
@@ -56,7 +57,9 @@ export const getConvertDate = (date: Date, type: string): string => {
         break;
         case 'monthCalendarInfo':
             result = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-            console.log(result);
+        break;
+        case 'dayCalendar':
+            result = `${y}-${m}-${d}T${h}:${i}`;
         break;
 		case "yyyymm":
 			result = y+''+m;

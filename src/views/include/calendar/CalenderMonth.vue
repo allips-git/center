@@ -2,10 +2,10 @@
     <main class="relative h-[100%-48px] month-custom">
         <div class="flex justify-center py-4 border-b border-gray-200">
             <DatePicker v-model="calendar['searchDt']" view="month" dateFormat="yy.mm'월'" class="custom-select" 
-                :locale="locale" showIcon fluid iconDisplay="input" @update:modelValue="(value) => getUpdate(value)" />
+                :locale="locale" showIcon fluid iconDisplay="input" @update:modelValue="getUpdate" />
         </div>
         <div class="h-[calc(100vh-167px)] w-full md:h-[calc(100vh-171px)]">
-            <FullCalendar :options="calendarOptions" ref="fullCalendar"/>
+            <FullCalendar :options="{ ... calendarOptions, events : calendar['monthEvents']}" ref="fullCalendar"/>
         </div>
 
         <!-- <div class="fixed z-50 bottom-4 right-4 size-12">
@@ -17,11 +17,11 @@
             @update:visible="getPopupClose('calendarSet', true)">
             <CalenderSet/>
         </Dialog>
-        <div v-if="isModalVisible" class="z-50 overflow-hidden w-full max-w-[300px] rounded-xl bg-white border border-gray-100 shadow-sm max-h-[80vh]" :style="modalStyle">
+        <div v-if="popup['pop']['calendarDetail']" class="z-50 overflow-hidden w-full max-w-[300px] rounded-xl bg-white border border-gray-100 shadow-sm max-h-[80vh]" :style="modalStyle">
             <div ref="modalContentRef">
                 <div class="flex items-center justify-between px-5 py-3 pr-1">
                     <h1 class="text-xl font-bold">{{ calendar['monthDetail']['date'] }}</h1>
-                    <Button text plain icon="pi pi-times" @click="closeModal" size="small" />
+                    <Button text plain icon="pi pi-times" @click="getPopupClose('calendarDetail', true)" size="small" />
                 </div>
                 <div class="p-3 overflow-auto bg-gray-50 max-h-96">
                     <ul class="flex flex-col gap-2">
@@ -58,7 +58,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import koLocale from '@fullcalendar/core/locales/ko'; 
 import DatePicker from 'primevue/datepicker';
-import { ref, nextTick, onMounted, onBeforeUnmount } from 'vue';
+import { ref, nextTick, watch, onMounted, onBeforeUnmount } from 'vue';
 import { usePopupStore, useCalendarStore } from '@/store';
 import { getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
@@ -68,7 +68,6 @@ const popup             = usePopupStore();
 const calendar          = useCalendarStore();
 
 const locale            = 'ko';
-const isModalVisible    = ref(false);
 const modalStyle        = ref({});
 const selectedDate      = ref('');
 const modalContentRef   = ref<HTMLElement | null>(null);
@@ -76,8 +75,7 @@ const modalContentRef   = ref<HTMLElement | null>(null);
 const { getPopupOpen, getPopupClose } = usePopup();
 
 const toggle = (event) => {
-    isModalVisible.value = true;
-
+    getPopupOpen('calendarDetail');
     nextTick(() => {
         const modalHeight       = modalContentRef.value?.offsetHeight || 150;
         const modalWidth        = modalContentRef.value?.offsetWidth || 300;
@@ -132,36 +130,36 @@ const toggle = (event) => {
     });
 };
 
-const dateClick = function(info) {
-    calendar.getMonthDetail(info['dateStr']);
-    previousDate.value = selectedDate.value; // 이전 날짜 저장
-    // 선택한 날짜 저장
-    selectedDate.value = info.dateStr;
-    let left, top;
+const dateClick = async (info) => {
+    await getPopupClose('calendarDetail', true);
+    await calendar.getMonthDetail(info['dateStr']);
+    
+    if(calendar['monthDetail']['list'].length !== 0)
+    {
+        previousDate.value = selectedDate.value; // 이전 날짜 저장
+        // 선택한 날짜 저장
+        selectedDate.value = info.dateStr;
+        let left, top;
 
-    // 모바일에서 터치 이벤트 처리
-    if (info.jsEvent.touches && info.jsEvent.touches.length > 0) 
-    {
-        left = info.jsEvent.touches[0].clientX; 
-        top = info.jsEvent.touches[0].clientY;
-    } 
-    else if (info.jsEvent.pageX !== undefined && info.jsEvent.pageY !== undefined) 
-    {
-        // PC에서 클릭 이벤트 처리
-        left = info.jsEvent.pageX; 
-        top = info.jsEvent.pageY;  
+        // 모바일에서 터치 이벤트 처리
+        if (info.jsEvent.touches && info.jsEvent.touches.length > 0) 
+        {
+            left = info.jsEvent.touches[0].clientX; 
+            top = info.jsEvent.touches[0].clientY;
+        } 
+        else if (info.jsEvent.pageX !== undefined && info.jsEvent.pageY !== undefined) 
+        {
+            // PC에서 클릭 이벤트 처리
+            left = info.jsEvent.pageX; 
+            top = info.jsEvent.pageY;  
+        }
+        // 모달 토글 함수 호출, 좌표를 event로 전달
+        toggle({ pageX: left, pageY: top }); // 좌표를 포함한 객체 전달
     }
-    // 모달 토글 함수 호출, 좌표를 event로 전달
-    toggle({ pageX: left, pageY: top }); // 좌표를 포함한 객체 전달
 };
 
 // 이전 선택된 날짜를 저장할 ref 추가
 const previousDate = ref(null);
-
-// 모달 닫기 함수
-const closeModal = () => {
-    isModalVisible.value = false; // 모달 숨김
-};
 
 const getMonthDataInfo = async (emCd: string) => {
     getPopupOpen('calendarSet');
@@ -169,16 +167,13 @@ const getMonthDataInfo = async (emCd: string) => {
     await calendar.getInfo();
 }
 
-const getUpdate = async (value) => {
-    await calendar.getSearchDt(value);
-    await fullCalendar.value.getApi().gotoDate(getConvertDate(new Date(value), 'yyyy-mm-dd'));
+const getUpdate = async () => {
     await getMonthData();
+    await calendar.getDayListSet();
 }
 
 const getMonthData = async () => {
-    await fullCalendar.value.getApi().removeAllEvents();
     await calendar.getMonthData();
-    await fullCalendar.value.getApi().addEventSource(calendar['monthEvents']);
 }
 
 // 캘린더 옵션 설정
@@ -187,9 +182,11 @@ const calendarOptions = {
     initialView         : 'dayGridMonth',
     locale              : koLocale,
     height              : '100%',
+    droppable           : true,
+    editable            : true,
     selectable          : true,
     dayMaxEvents        : true,
-    initialDate         : getConvertDate(new Date(calendar.searchDt), 'yyyy-mm-dd'),
+    initialDate         : getConvertDate(calendar.searchDt, 'yyyy-mm-dd'),
     dateClick           : dateClick,
     dayCellContent      : function(info) {
         return { html: info.date.getDate().toString() }; 
@@ -198,6 +195,9 @@ const calendarOptions = {
         return {
             html: `<div class="text-gray-900 border-0 ${arg.event.classNames.join(' ')}">${arg.event.title}</div>`
         }
+    },
+    eventDrop: function(arg) {
+        console.log(arg);
     }
 };
 
@@ -221,9 +221,19 @@ const fullCalendar = ref(null);
 const handleResize = () => {
     if (fullCalendar.value) 
     {
-        fullCalendar.value.getApi().updateSize(); // FullCalendar의 크기 업데이트
+        fullCalendar.value.getApi().updateSize();
     }
 };
+
+/** 날짜 변경 감지 */
+watch(() => calendar.searchDt, async (newDate) => {
+    await calendar.getDayData();
+    
+    if (fullCalendar.value) 
+    {
+        fullCalendar.value.getApi().gotoDate(newDate);
+    }
+});
 
 onBeforeUnmount(() => {
     window.removeEventListener('resize', handleResize); // 컴포넌트 언마운트 시 리스너 제거

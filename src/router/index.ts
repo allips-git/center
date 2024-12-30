@@ -44,6 +44,7 @@ import AccView from "@/views/acc/AccView.vue";
 // import AccWeek from "@/views/acc/AccWeek.vue";
 // import AccDay from "@/views/acc/AccDay.vue";
 import CalendarView from "@/views/calendar/CalendarView.vue";
+import CalenderTest from "@/views/include/calendar/CalenderTest.vue";
 import CalendarDayView from "@/views/calendar/CalendarDayView.vue";
 
 import AverageView from "@/views/average/AverageView.vue";
@@ -292,6 +293,13 @@ const routes = [
         component: StaticPayIng,
         meta: { title: "고정비용 저장" }
     },
+
+    {
+        path: "/test",
+        name: "CalenderTest",
+        component: CalenderTest
+    },
+
     {
         path: "/calendar",
         name: "CalendarView",
