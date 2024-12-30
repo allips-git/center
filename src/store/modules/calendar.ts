@@ -102,6 +102,8 @@ export const useCalendarStore = defineStore('calendar', {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/calendarV1/getMonthData`, params);
 
+                console.log(res);
+
                 this.monthEvents = res.data['list'];
             }
             catch(e)
