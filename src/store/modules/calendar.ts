@@ -44,6 +44,29 @@ interface DayEvents {
     classNames  : string;
 }
 
+interface Person {
+    value : string;
+    label : string;
+}
+
+interface History {
+    ikey    : number;
+    emCd    : string;
+    name    : string;
+    stDt    : string;
+    stNm    : string;
+}
+
+interface Info {
+    stCd        : string;
+    clientNm    : string;
+    estiPerson  : string;
+    estiDt      : string;
+    deliPerson  : string;
+    deliDt      : string;
+    history     : History[];
+}
+
 interface State {
     searchDt    : Date;
     emCd        : string;
@@ -52,6 +75,20 @@ interface State {
     dayList     : DayList[];
     daySelIndex : number;
     dayEvents   : DayEvents[];
+    person      : Person[];
+    info        : Info;
+}
+
+const getInfo = (): Info => {
+    return {
+        stCd        : '',
+        clientNm    : '',
+        estiPerson  : '',
+        estiDt      : '',
+        deliPerson  : '',
+        deliDt      : '',
+        history     : []
+    }
 }
 
 export const useCalendarStore = defineStore('calendar', {
@@ -65,7 +102,9 @@ export const useCalendarStore = defineStore('calendar', {
         },
         dayList     : [],
         daySelIndex : 0,
-        dayEvents   : []
+        dayEvents   : [],
+        person      : [],
+        info        : getInfo()
     }),
     getters : {
         initialDate : (state) => getConvertDate(state.searchDt, 'yyyy-mm-dd')
@@ -85,6 +124,30 @@ export const useCalendarStore = defineStore('calendar', {
                 const res       = await instance.post(`https://data.planorder.kr/calendarV1/getInfo`, params);
 
                 console.log(res);
+
+                this.person = res.data['person'];
+
+                const info  = {
+                    stCd        : res.data['stCd'],
+                    clientNm    : res.data['clientNm'],
+                    estiPerson  : res.data['info']['estiPerson'],
+                    estiDt      : new Date(res.data['info']['estiDt']),
+                    deliPerson  : res.data['info']['deliPerson'],
+                    deliDt      : res.data['info']['deliDt'] !== '' ? new Date(res.data['info']['deliDt']) : '',
+                    history     : res.data['history'].map(item => {
+                        return {
+                            ikey    : item['ikey'],
+                            emCd    : item['emCd'],
+                            name    : item['name'],
+                            stDt    : item['stDt'],
+                            stNm    : item['stNm']
+                        }
+                    })
+                }
+
+                this.info = info;
+
+                console.log(this.info);
             }
             catch(e)
             {

@@ -537,7 +537,7 @@ export const useEstiStore = defineStore('esti', {
                 if(res.data['cutAmt'])
                 {
                     this.getPayAmt('cutAmt', Number(res.data['cutAmt']['amt']));
-                    this.getAmtInfo('cutInfo', { gubun : true, amt : Number(res.data['cutAmt']['amt']) });
+                    this.getAmtInfo('cutInfo', { gubun : Number(res.data['cutAmt']['amt']) === 0 ? false : true, amt : Number(res.data['cutAmt']['amt']) });
                 }
                 else
                 {

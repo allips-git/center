@@ -6,7 +6,7 @@
                 <IconAvatar class="text-indigo-300 !size-16"/>
                 <div>
                     <p class="text-sm text-indigo-600">고객</p>
-                    <h2 class="text-xl font-bold">하현재</h2>
+                    <h2 class="text-xl font-bold">{{ calendar['info']['clientNm'] }}</h2>
                 </div>
             </div>
             <span class="pi pi-angle-right"></span>
@@ -16,22 +16,26 @@
     <section class="px-5">
         <div class="form-gap-box">
             <IftaLabel class="w-full">
-                <Select class="w-full"/>
+                <Select v-model="calendar['info']['estiPerson']" :options="calendar['person']" class="w-full"
+                    optionLabel="label" optionValue="value" @update:modelValue="(value) => getModify('estiDt', value)"/>
                 <label>견적 담당</label>
             </IftaLabel>
 
             <IftaLabel class="label-input-box">
-                <DatePicker showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd"/>
+                <DatePicker v-model="calendar['info']['estiDt']" showIcon fluid iconDisplay="input" 
+                    dateFormat="yy-mm-dd" showTime hourFormat="24" @update:modelValue="(value) => getModify('estiDt', value)"/>
                 <label>견적일</label>
             </IftaLabel>
 
             <IftaLabel class="w-full">
-                <Select class="w-full"/>
+                <Select v-model="calendar['info']['deliPerson']" :options="calendar['person']" class="w-full"
+                    optionLabel="label" optionValue="value" :disabled="getStCheck" @update:modelValue="(value) => getModify('deliDt', value)"/>
                 <label>시공담당</label>
             </IftaLabel>
 
             <IftaLabel class="label-input-box">
-                <DatePicker showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd"/>
+                <DatePicker v-model="calendar['info']['deliDt']" showIcon fluid iconDisplay="input" 
+                    dateFormat="yy-mm-dd" showTime hourFormat="24" :disabled="getStCheck"/>
                 <label>시공일</label>
             </IftaLabel>
         </div>
@@ -41,15 +45,15 @@
     <section class="">
         <h2 class="px-5 text-lg font-bold">수정기록</h2>
         <ul class="flex flex-col">
-            <li v-for="(item, index) in notifications" :key="index" class="flex items-center gap-2 px-4 py-4 border-b first:mt-2">
+            <li v-for="(item, index) in calendar['info']['history']" :key="index" class="flex items-center gap-2 px-4 py-4 border-b first:mt-2">
             <IconAvatar class="text-indigo-300 !size-10"/>
             <div>
                 <div class="flex items-center gap-1">
                 <b>{{ item.name }}</b>
                 <span>・</span>
-                <p class="text-sm text-gray-400">{{ item.time }}</p>
+                <p class="text-sm text-gray-400">{{ item.stDt }}</p>
                 </div>
-                <p>{{ item.message }}</p>
+                <p>{{ item.stNm }} 처리되었습니다.</p>
             </div>
             </li>
         </ul>
@@ -58,18 +62,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import DatePicker from 'primevue/datepicker';
 import IftaLabel from 'primevue/iftalabel';
 import IconAvatar from '@/components/icons/IconAvatar.vue';
+import { useConfirm } from "primevue/useconfirm";
+import { useCalendarStore } from '@/store';
+import { getAxiosData, getConvertDate, getTokenOut } from '@/assets/js/function';
+import { usePopup } from '@/assets/js/popup';
 
+const confirm   = useConfirm();
+const calendar  = useCalendarStore();
 
-const notifications = ref([
-  { name: '김시공', time: '오후 12:18분', message: '시공 완료을 완료 하였습니다.' },
-  { name: '홍길동', time: '오후 1:30분', message: '작업이 시작되었습니다.' },
-  { name: '이순신', time: '오후 2:45분', message: '배달이 완료되었습니다.' },
-  // 더 많은 항목을 추가할 수 있습니다.
-]);
+const getStCheck = () => {
+    return calendar['info']['stCd'] !== '006' ? false : true
+}
+
+const getModify = (target: string, value: string) => {
+    console.log(value);
+}
 </script>
 
 <style lang="scss">
