@@ -63,7 +63,7 @@
       .fc-h-event{
         border: none;
         padding: 2px 5px;
-        pointer-events: none; /* 클릭 이벤트 무시 */
+        // pointer-events: none; /* 클릭 이벤트 무시 */
       }
       // 오늘 날짜 배경색
       .fc-daygrid-day.fc-day-today{

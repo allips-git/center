@@ -145,11 +145,9 @@ export const useCalendarStore = defineStore('calendar', {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/calendarV1/getDayData`, params);
 
-                console.log(res);
-
                 this.dayEvents = res.data['list'].map(item => {
-                    const startDt   = new Date(item['start']);
-                    const endDt     = new Date(item['start']);
+                    const startDt   = new Date(item['stDt'] + '+09:00');
+                    const endDt     = new Date(item['stDt'] + '+09:00');
                     const insTime   = item['insTime'] !== '' ? item['insTime'] : '0:0';
 
                     const [hours, minutes] = insTime.split(':').map(Number);

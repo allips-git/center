@@ -58,12 +58,14 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import koLocale from '@fullcalendar/core/locales/ko'; 
 import DatePicker from 'primevue/datepicker';
+import { useConfirm } from "primevue/useconfirm";
 import { ref, nextTick, watch, onMounted, onBeforeUnmount } from 'vue';
 import { usePopupStore, useCalendarStore } from '@/store';
-import { getConvertDate } from '@/assets/js/function';
+import { getAxiosData, getConvertDate, getTokenOut } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
 
+const confirm           = useConfirm();
 const popup             = usePopupStore();
 const calendar          = useCalendarStore();
 
@@ -196,8 +198,59 @@ const calendarOptions = {
             html: `<div class="text-gray-900 border-0 ${arg.event.classNames.join(' ')}">${arg.event.title}</div>`
         }
     },
-    eventDrop: function(arg) {
-        console.log(arg);
+    eventDrop: function(info) {
+        const { event } = info;
+
+        const data = event._def.extendedProps;
+
+        const preDt = getConvertDate(new Date(data['stDt']), 'yyyy-mm-dd');
+        const exDt  = event.startStr;
+        const msg   = `해당 일정을 ${preDt}에서 ${exDt}로 변경하시겠습니까?`;
+
+        confirm.require({
+            message     : msg,
+            header      : '일정 변경',
+            rejectProps : {
+                label       : '취소',
+                severity    : 'secondary',
+                outlined    : true
+            },
+            acceptProps : {
+                label: '확인'
+            },
+            accept : async () => {
+                const params = {
+                    emCd  : data['emCd'],
+                    stCd  : data['stCd'],
+                    preDt : data['stDt'],
+                    exDt  : exDt
+                };
+
+                try
+                {
+                    const instance  = await getAxiosData();
+                    await instance.post(`https://data.planorder.kr/calendarV1/getMonExchange`, params);
+                    await calendar.getDayData();
+                }
+                catch(e)
+                {
+                    console.log(e);
+                    if(e.response.status === 401)
+                    {
+                        getTokenOut();
+                    }
+                    else
+                    {
+                        alert('일정 변경 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                    }
+                    info.revert();
+                }
+            },
+            reject : () => {
+                /** 드래그한 이벤트 취소 */
+                info.revert();
+            }
+        });
     }
 };
 
