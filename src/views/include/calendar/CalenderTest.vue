@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="h-[calc(100vh-167px)] w-full md:h-[calc(100vh-171px)]">
         <FullCalendar :options="calendarOptions"/>
     </div>
@@ -36,9 +36,9 @@ const calendarOptions = {
         console.log(arg);
     }
 };
-</script>
+</script> -->
 
-<!-- <template>
+<template>
     <div class="h-[calc(100vh-167px)] w-full md:h-[calc(100vh-171px)]">
         <FullCalendar :options="calendarOptions"/>
     </div>
@@ -72,4 +72,4 @@ const calendarOptions = {
         console.log(arg);
     }
 };
-</script> -->
+</script>
