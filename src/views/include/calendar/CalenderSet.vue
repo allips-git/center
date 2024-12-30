@@ -17,25 +17,25 @@
         <div class="form-gap-box">
             <IftaLabel class="w-full">
                 <Select v-model="calendar['info']['estiPerson']" :options="calendar['person']" class="w-full"
-                    optionLabel="label" optionValue="value" @update:modelValue="(value) => getModify('estiDt', value)"/>
+                    optionLabel="label" optionValue="value" @update:modelValue="(value) => getModify('estiPerson', value)"/>
                 <label>견적 담당</label>
             </IftaLabel>
 
             <IftaLabel class="label-input-box">
                 <DatePicker v-model="calendar['info']['estiDt']" showIcon fluid iconDisplay="input" 
-                    dateFormat="yy-mm-dd" showTime hourFormat="24" @update:modelValue="(value) => getModify('estiDt', value)"/>
+                    dateFormat="yy-mm-dd" showTime hourFormat="24" @hide="(value) => getModify('estiDt', value)"/>
                 <label>견적일</label>
             </IftaLabel>
 
             <IftaLabel class="w-full">
                 <Select v-model="calendar['info']['deliPerson']" :options="calendar['person']" class="w-full"
-                    optionLabel="label" optionValue="value" :disabled="getStCheck" @update:modelValue="(value) => getModify('deliDt', value)"/>
+                    optionLabel="label" optionValue="value" :disabled="getStCheck()" @update:modelValue="(value) => getModify('deliPerson', value)"/>
                 <label>시공담당</label>
             </IftaLabel>
 
             <IftaLabel class="label-input-box">
                 <DatePicker v-model="calendar['info']['deliDt']" showIcon fluid iconDisplay="input" 
-                    dateFormat="yy-mm-dd" showTime hourFormat="24" :disabled="getStCheck"/>
+                    dateFormat="yy-mm-dd" showTime hourFormat="24" :disabled="getStCheck()" @hide="(value) => getModify('deliDt', value)"/>
                 <label>시공일</label>
             </IftaLabel>
         </div>
@@ -74,11 +74,39 @@ const confirm   = useConfirm();
 const calendar  = useCalendarStore();
 
 const getStCheck = () => {
-    return calendar['info']['stCd'] !== '006' ? false : true
+    return calendar['info']['stCd'] !== '006' ? true : false
 }
 
-const getModify = (target: string, value: string) => {
-    console.log(value);
+const getModify = async (target: string, value: string) => {
+
+
+    const params = {
+        emCd    : calendar['emCd'],
+        target  : target,
+        value   : target === 'estiPerson' || target === 'deliPerson' ? value : getConvertDate(calendar['info'][target], 'yyyy-mm-dd hh:ii')
+    }
+
+    console.log(params);
+    
+    try
+    {
+        const instance  = await getAxiosData();
+        await instance.post(`https://data.planorder.kr/calendarV1/getModify`, params);
+        await calendar.getDayData();
+        await calendar.getMonthData();
+    }
+    catch(e)
+    {
+        console.log(e);
+        if(e.response.status === 401)
+        {
+            getTokenOut();
+        }
+        else
+        {
+            alert('일정 상세 변경 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+        }
+    }
 }
 </script>
 
