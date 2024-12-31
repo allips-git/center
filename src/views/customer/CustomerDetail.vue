@@ -2,15 +2,18 @@
     <main>
         <BackHeader title="고객상세" />
         <section class="p-5 pb-0">
-            <h1 class="text-xl font-bold ">{{ client['detail']['clientNm'] }}</h1>
-            <ul class="flex flex-col gap-4 mt-5 rounded-md">
-                <li class="flex">
+            <div class="flex items-center justify-between">
+                <h1 class="text-lg font-bold ">{{ client['detail']['clientNm'] }}</h1>
+                <Button label="정보수정" outlined severity="secondary" size="small"/>
+            </div>
+            <ul class="flex flex-col gap-4 mt-5 text-sm rounded-md">
+                <li class="flex items-center">
                     <p class="w-24 text-gray-600 whitespace-nowrap">전화번호</p>
-                    <p>{{ client['detail']['tel'] }}</p>
+                    <p class="capsuel_sky">{{ client['detail']['tel'] }}</p>
                 </li>
-                <li class="flex">
+                <li class="flex items-center">
                     <p class="w-24 text-gray-600 whitespace-nowrap">주소</p>
-                    <p>({{ client['detail']['zip'] }}){{ client['detail']['addr'] }}</p>
+                    <p class="capsuel_sky">({{ client['detail']['zip'] }}) {{ client['detail']['addr'] }}</p>
                 </li>
                 <li class="flex">
                     <p class="w-24 text-gray-600 whitespace-nowrap">상세주소</p>
