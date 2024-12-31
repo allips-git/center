@@ -43,6 +43,12 @@ interface CenterInfo {
     ceoTel      : string;
 }
 
+interface Msg {
+    id      : string;
+    pw      : string;
+    pwChk   : string;
+}
+
 interface State {
     certified   : boolean;
     agree       : AgreeInfo;
@@ -51,28 +57,75 @@ interface State {
     center      : CenterInfo;
 }
 
+const getAgreeInfo = (gb): AgreeInfo => {
+    const date = gb === 'Y' ? getTodayTimeDate() : '';
+
+    return {
+        age    : { yn : gb, date : date },
+        use    : { yn : gb, date : date },
+        info   : { yn : gb, date : date },
+        choice : { yn : gb, date : date }
+    }
+}
+
+const getAuthInfo = (): AuthInfo => {
+    return {
+        name    : '',
+        tel     : ''
+    }
+}
+
+const getLoginInfo = (): LoginInfo => {
+    return {
+        id      : '',
+        pw      : '',
+        pwChk   : '',
+        einFile : {
+            file : null,
+            name : ''
+        }
+    }
+}
+
+const getCenterInfo = (): CenterInfo => {
+    return {
+        ceNm        : '',
+        area        : '',
+        gb          : 'P',
+        einNum      : '',
+        ceoNm       : '',
+        zip         : '',
+        addr        : '',
+        addrDetail  : '',
+        ceoTel      : ''
+    }
+}
+
+const getMsg = (): Msg => {
+    return {
+        id      : '',
+        pw      : '',
+        pwChk   : ''
+    }
+}
+
 export const useJoinStore = defineStore('join', {
     state: (): State => ({
-        certified   : false,
+        certified   : true,
         agree       : getAgreeInfo(false),
         auth        : getAuthInfo(),
         login       : getLoginInfo(),
-        center      : getCenterInfo()
+        center      : getCenterInfo(),
+        msg         : getMsg()
     }),
     actions: {
-        getAgree(status: boolean, gb: string)
+        getCertified(state: boolean)
         {
-            if(gb === 'all')
-            {
-                this.agree = getAgreeInfo(status);
-            }
-            else
-            {
-                const date = status ? getTodayTimeDate() : '';
-
-                this.agree[gb]['yn']    = status;
-                this.agree[gb]['date']  = date;
-            }
+            this.certified = state;
+        },
+        getAgree(status: boolean)
+        {
+            this.agree = getAgreeInfo(status);
         }
     }
 });
