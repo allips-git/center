@@ -52,7 +52,7 @@
                 <Button label="제품추가" @click="getEstiAdd"/>
             </template>
             <template v-else-if="props.info['stCd'] === '012'">
-                <Button severity="secondary" label="상세보기"/>
+                <Button severity="secondary" label="상세보기" @click="router.push({ path: '/customer/orderList' })"/>
             </template>
             <template v-else-if="props.info['useYn'] === 'N'">
                 <Button severity="secondary" label="견적서 복원" @click="getEstiRestore"/>

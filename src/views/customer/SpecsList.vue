@@ -46,35 +46,35 @@
 
     <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 
         :modal=true position="center" class="min-w-96 custom-dialog-center" :dismissableMask="true"
-        @update:visible="getPopupClose(true, 'disAmtSet')">
+        @update:visible="getPopupClose('disAmtSet', true)">
         <div class="pt-3">
-            <SaleAmountPop @getApply="getDisApply" @getClose="getPopupClose(true, 'disAmtSet')"/>
+            <SaleAmountPop :gubun="'E'" @getApply="getDisApply" @getClose="getPopupClose('disAmtSet', true)"/>
         </div>
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['addAmtSet']" header="추가 가격 입력" 
         :modal=true position="center" class="min-w-96 custom-dialog-center" :dismissableMask="true"
-        @update:visible="getPopupClose(true, 'addAmtSet')">
+        @update:visible="getPopupClose('addAmtSet', true)">
         <div class="pt-3">
-            <AddAmountPop @getApply="getAddApply" @getClose="getPopupClose(true, 'addAmtSet')"/>
+            <AddAmountPop :gubun="'E'" @getApply="getAddApply" @getClose="getPopupClose('addAmtSet', true)"/>
         </div>
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
         :modal=true position="center" class="custom-dialog-bottom"
-        @update:visible="getPopupClose(true, 'itemList')">
+        @update:visible="getPopupClose('itemList', true)">
         <ProductChoice/>
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['itemSet']" header="제품등록" 
         :modal=true position="center" class="custom-dialog-bottom"
-        @update:visible="getPopupClose(true, 'itemSet')">
+        @update:visible="getPopupClose('itemSet', true)">
         <ProductRegister/>
     </Dialog>
     
     <Dialog v-model:visible="popup['pop']['conInfoSet']" header="계약 정보" 
         :modal=true position="center" class="custom-dialog-bottom"
-        @update:visible="getPopupClose(true, 'conInfoSet')">
+        @update:visible="getPopupClose('conInfoSet', true)">
         <ContractModal/>
     </Dialog>
     
@@ -128,7 +128,7 @@ const getAmtInfo = (name) => {
 }
 
 const getDisApply = () => {
-    getPopupClose(true, 'disAmtSet');
+    getPopupClose('disAmtSet', true);
 
     if(esti['dcInfo']['unit'] === 'F')
     {

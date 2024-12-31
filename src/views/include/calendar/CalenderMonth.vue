@@ -249,6 +249,10 @@ const calendarOptions = {
             reject : () => {
                 /** 드래그한 이벤트 취소 */
                 info.revert();
+            },
+            onHide : () => {
+                /** 드래그한 이벤트 취소 */
+                info.revert();
             }
         });
     }

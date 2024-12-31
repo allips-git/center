@@ -32,6 +32,13 @@ interface Info {
     insUser : string;
 }
 
+interface Pay {
+    totalPayAmt : number;
+    payGb       : string;
+    payAmt      : number;
+    memo        : string;
+}
+
 /**
  * @description 명세서 제품 결제 내역
  */
@@ -71,12 +78,22 @@ const getInfo = (): Info => {
     }
 }
 
+const getPay = (): Pay => {
+    return {
+        totalPayAmt : 0,
+        payGb       : '001',
+        payAmt      : 0,
+        memo        : ''
+    }
+}
+
 interface State {
     list        : [];
     payList     : PayList[];
     dcInfo      : AmtInfo;
     addInfo     : AmtInfo;
     info        : Info;
+    pay         : Pay;
 }
 
 export const useOrderStore = defineStore('order', {
@@ -85,7 +102,8 @@ export const useOrderStore = defineStore('order', {
         payList     : getPayList(),
         dcInfo      : getAmtInfo(),
         addInfo     : getAmtInfo(),
-        info        : getInfo()
+        info        : getInfo(),
+        pay         : getPay()
     }),
     getters: {
     },

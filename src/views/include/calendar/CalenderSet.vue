@@ -65,21 +65,16 @@
 import DatePicker from 'primevue/datepicker';
 import IftaLabel from 'primevue/iftalabel';
 import IconAvatar from '@/components/icons/IconAvatar.vue';
-import { useConfirm } from "primevue/useconfirm";
 import { useCalendarStore } from '@/store';
 import { getAxiosData, getConvertDate, getTokenOut } from '@/assets/js/function';
-import { usePopup } from '@/assets/js/popup';
 
-const confirm   = useConfirm();
-const calendar  = useCalendarStore();
+const calendar = useCalendarStore();
 
 const getStCheck = () => {
     return calendar['info']['stCd'] !== '006' ? true : false
 }
 
 const getModify = async (target: string, value: string) => {
-
-
     const params = {
         emCd    : calendar['emCd'],
         target  : target,

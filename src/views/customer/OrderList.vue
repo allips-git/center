@@ -44,19 +44,19 @@
 
     <Dialog v-model:visible="popup['pop']['sysOrderSet']"  header="시스템 발주 정보" 
         :modal=true position="center" class="custom-dialog-bottom"
-        @update:visible="getPopupClose(true, 'sysOrderSet')">
+        @update:visible="getPopupClose('sysOrderSet', true)">
         <SysOrderInfo/>
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['outOrderSet']"  header="외주 발주 정보" 
         :modal=true position="center" class="custom-dialog-bottom"
-        @update:visible="getPopupClose(true, 'outOrderSet')">
+        @update:visible="getPopupClose('outOrderSet', true)">
         <OutOrderInfo/>
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['paymentSet']"  header="최종 결제 입력" 
         :modal=true position="center" class="custom-dialog-bottom"
-        @update:visible="getPopupClose(true, 'paymentSet')">
+        @update:visible="getPopupClose('paymentSet', true)">
         <PaymentModal/>
     </Dialog>
 </template>
@@ -68,14 +68,12 @@ import CalculateCard from "@/components/card/CalculateCard.vue";
 import SysOrderInfo from "@/views/include/customer/SysOrderInfo.vue";
 import OutOrderInfo from "@/views/include/customer/OutOrderInfo.vue";
 import PaymentModal from "@/views/include/customer/PaymentModal.vue";
-import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { usePopupStore, useEstiStore, useOrderStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
-import { getAmt, getAxiosData, getTokenOut } from '@/assets/js/function';
+import { getAmt } from '@/assets/js/function';
 
-const confirm   = useConfirm();
 const router    = useRouter();
 const popup     = usePopupStore();
 const esti      = useEstiStore();

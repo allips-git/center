@@ -2,7 +2,7 @@
     <div class="input-layout-box">
         <InputGroup>
             <IftaLabel class="w-full">
-                <InputNumber v-model="esti['addInfo']['val']" class="w-full"/>
+                <InputNumber v-model="info['addInfo']['val']" class="w-full"/>
                 <label>할인 금액 입력</label>
             </IftaLabel>
             <InputGroupAddon class="custom-InputGroupAddon">
@@ -10,7 +10,7 @@
             </InputGroupAddon>
         </InputGroup>
         <IftaLabel class="w-full">
-            <Textarea v-model="esti['addInfo']['memo']" rows="3" cols="30" class="w-full" />
+            <Textarea v-model="info['addInfo']['memo']" rows="3" cols="30" class="w-full" />
             <label>메모입력</label>
         </IftaLabel>
         <div class="mt-2 btn-2-layout-box">
@@ -28,9 +28,13 @@ import InputNumber from 'primevue/inputnumber';
 import Textarea from 'primevue/textarea';
 import SelectButton from 'primevue/selectbutton';
 import { ref } from 'vue'
-import { useEstiStore } from '@/store';
+import { useEstiStore, useOrderStore } from '@/store';
 
-const esti  = useEstiStore();
+const props = defineProps({
+    gubun : String
+});
+
+const info  = props['gubun'] === 'E' ? useEstiStore() : useOrderStore();
 const emit  = defineEmits(['getApply', 'getClose']);
 
 const value   = ref('원');
