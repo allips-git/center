@@ -16,21 +16,17 @@
                 </div>
             </swiper-slide>
         </swiper>
-        <swiper class="h-[calc(100vh-174px)] md:h-[calc(100vh-178px)] custom-slide-time-grid">
-            <swiper-slide>
-                <div class="relative z-10 w-full h-[calc(100vh-118px)] md:h-[calc(100vh-178px)]">
-                    <div class="absolute z-50 flex justify-center -translate-x-1/2 top-4 left-1/2">
-                        <span class="absolute z-40 -translate-y-1/2 right-4 top-1/2 pi pi-angle-down !text-sm text-gray-400"></span>
-                        <DatePicker v-model="calendar['searchDt']" dateFormat="yy.mm.d" class="custom-daySelect" showIcon fluid iconDisplay="input"
-                            @update:modelValue="(value) => getDatePicker(value)"/>
-                    </div>
-                    <FullCalendar :options="{ ... calendarOptions, events : calendar['dayEvents'] }" ref="fullCalendar" />
-                    <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-4 left-1/2">
-                        <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm">당일</div>
-                    </div>
-                </div>
-            </swiper-slide>
-        </swiper>
+        <div class="relative z-10 w-full h-[calc(100vh-118px)] md:h-[calc(100vh-178px)]">
+            <div class="absolute z-50 flex justify-center -translate-x-1/2 top-4 left-1/2">
+                <span class="absolute z-40 -translate-y-1/2 right-4 top-1/2 pi pi-angle-down !text-sm text-gray-400"></span>
+                <DatePicker v-model="calendar['searchDt']" dateFormat="yy.mm.d" class="custom-daySelect" showIcon fluid iconDisplay="input"
+                    @update:modelValue="(value) => getDatePicker(value)"/>
+            </div>
+            <FullCalendar :options="{ ... calendarOptions, events : calendar['dayEvents'] }" ref="fullCalendar" />
+            <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-4 left-1/2">
+                <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm">당일</div>
+            </div>
+        </div>
 
         <!-- <div class="fixed z-50 bottom-4 right-4 size-12">
             <Button size="large" icon="pi pi-plus" class="!size-full" rounded @click="calenderSetPop= true"></Button>
@@ -51,12 +47,14 @@ import interactionPlugin from '@fullcalendar/interaction';
 import koLocale from '@fullcalendar/core/locales/ko';
 import DatePicker from 'primevue/datepicker';
 import 'swiper/swiper-bundle.css';
+import { useConfirm } from "primevue/useconfirm";
 import { ref, onMounted, watch } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { usePopupStore, useCalendarStore } from '@/store';
-import { getConvertDate } from '@/assets/js/function';
+import { getAxiosData, getConvertDate, getTokenOut } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
+const confirm   = useConfirm();
 const popup     = usePopupStore();
 const calendar  = useCalendarStore();
 
@@ -78,6 +76,7 @@ const calendarOptions = {
     dayMaxEvents        : true,
     initialDate         : getConvertDate(new Date(), 'yyyy-mm-dd'),
     slotLabelFormat     : { hour: '2-digit', minute: '2-digit', hour12: false }, // 24시간제 설정
+    snapDuration        : '00:10:00',
     eventContent        : function(arg) {
         return {
             html: ` <div class="text-gray-900 border-0 ${arg.event.classNames.join(' ')}">
@@ -87,6 +86,58 @@ const calendarOptions = {
                         <span calss="w-full">${arg.event.end ? arg.event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}</span>
                     </div>`
         };
+    },
+    eventDrop: function(info) {
+        const { event } = info;
+
+        const data  = event._def.extendedProps;
+
+        const exDt  = event.start;
+        const msg   = `해당 일정을 ${getConvertDate(new Date(exDt), 'hh:ii')}로 변경하시겠습니까?`;
+
+        confirm.require({
+            message     : msg,
+            header      : '일정 변경',
+            rejectProps : {
+                label       : '취소',
+                severity    : 'secondary',
+                outlined    : true
+            },
+            acceptProps : {
+                label: '확인'
+            },
+            accept : async () => {
+                const params = {
+                    emCd  : data['emCd'],
+                    stCd  : data['stCd'],
+                    exDt  : getConvertDate(calendar['searchDt'], 'yyyy-mm-dd')+' '+getConvertDate(exDt, 'hh:ii')
+                };
+
+                try
+                {
+                    const instance  = await getAxiosData();
+                    await instance.post(`https://data.planorder.kr/calendarV1/getDayExchange`, params);
+                    await calendar.getDayData();
+                }
+                catch(e)
+                {
+                    console.log(e);
+                    if(e.response.status === 401)
+                    {
+                        getTokenOut();
+                    }
+                    else
+                    {
+                        alert('일정 변경 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                    }
+                    info.revert();
+                }
+            },
+            reject : () => {
+                /** 드래그한 이벤트 취소 */
+                info.revert();
+            }
+        });
     }
 };
 
