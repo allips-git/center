@@ -2,7 +2,7 @@
     <main>
         <BackHeader title="고객상세" />
         <section class="p-5 pb-0">
-            <h1 class="text-2xl font-bold ">{{ client['detail']['clientNm'] }}</h1>
+            <h1 class="text-xl font-bold ">{{ client['detail']['clientNm'] }}</h1>
             <ul class="flex flex-col gap-4 mt-5 rounded-md">
                 <li class="flex">
                     <p class="w-24 text-gray-600 whitespace-nowrap">전화번호</p>

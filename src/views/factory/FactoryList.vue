@@ -13,11 +13,13 @@
                         <Button label="공장코드 추가" icon="pi pi-plus" size="small" @click="getPopOpen('sysFactorySearch')"/>
                     </div>
                     <ul>
-                        <li class="border-b py-3 flex flex-col" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">  
-                            <p class="font-bold mb-1">{{ item.faNm }}</p>
-                            <div class="text-right">
-                                <p v-if="item['appGb'] === 'E'" class="text-blue-500">승인 대기</p>
-                                <p v-if="item['appGb'] === 'N'" class="text-orange-500">반려</p>
+                        <li class="flex flex-col px-5 py-3 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
+                            <div class="flex justify-between">
+                                <p class="mb-1 font-bold">{{ item.faNm }}</p>
+                                <div class="text-sm text-right *:px-3 *:py-1 *:rounded-full text-white font-bold">
+                                    <p v-if="item['appGb'] === 'E'" class="bg-blue-500 ">승인 대기</p>
+                                    <p v-if="item['appGb'] === 'N'" class="bg-orange-500">반려</p>
+                                </div>
                             </div>
                             <p class="text-sm text-gray-600">{{ item.tel }}</p>
                             <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>

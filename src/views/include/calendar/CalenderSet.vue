@@ -42,7 +42,9 @@
         <h2 class="px-5 text-lg font-bold">수정기록</h2>
         <ul class="flex flex-col">
             <li v-for="(item, index) in notifications" :key="index" class="flex items-center gap-2 px-4 py-4 border-b first:mt-2">
-            <IconAvatar class="text-indigo-300 !size-10"/>
+                <div>
+                    <IconAvatar class="text-indigo-300 !size-10"/>
+                </div>
             <div>
                 <div class="flex items-center gap-1">
                 <b>{{ item.name }}</b>
