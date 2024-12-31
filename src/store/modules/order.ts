@@ -2,7 +2,7 @@
  * @description 발주 처리 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
-import { getAxiosData, getCardColumns } from '@/assets/js/function';
+import { getAxiosData, getCardColumns, getAddDate, getConvertDate } from '@/assets/js/function';
 
 type Nullable<T>    = T | null;
 type AmtUnitType    = 'F' | 'P'; /** F : 금액(원) / P : %(퍼센트) */
@@ -30,6 +30,17 @@ interface Info {
     deliDt  : string;
     insTime : string;
     insUser : string;
+}
+
+interface Order {
+    edCd        : string;
+    ordDt       : string;
+    outDt       : string;
+    shippingGb  : string;
+    zip         : null | number;
+    addr        : string;
+    addrDetail  : string;
+    memo        : string;
 }
 
 interface Pay {
@@ -87,12 +98,26 @@ const getPay = (): Pay => {
     }
 }
 
+const getOrder = (): Order => {
+    return {
+        edCd        : '',
+        ordDt       : getConvertDate(new Date(), 'yyyy-MM-dd'),
+        outDt       : getConvertDate(getAddDate(3), 'yyyy-MM-dd'),
+        shippingGb  : '001',
+        zip         : null,
+        addr        : '',
+        addrDetail  : '',
+        memo        : ''
+    }
+}
+
 interface State {
     list        : [];
     payList     : PayList[];
     dcInfo      : AmtInfo;
     addInfo     : AmtInfo;
     info        : Info;
+    outInfo     : OrderInfo;
     pay         : Pay;
 }
 
@@ -103,6 +128,7 @@ export const useOrderStore = defineStore('order', {
         dcInfo      : getAmtInfo(),
         addInfo     : getAmtInfo(),
         info        : getInfo(),
+        outInfo     : getOrder(),
         pay         : getPay()
     }),
     getters: {
@@ -275,6 +301,19 @@ export const useOrderStore = defineStore('order', {
         getAmtInfo(name: string, info: AmtInfo)
         {
             this[name] = info;
+        },
+        getEdCd(edCd: string)
+        {
+            this.outInfo.edCd = edCd;
+        },
+        getOutInfoAddrReset()
+        {
+            this.outInfo.zip    = null;
+            this.outInfo.addr   = '';
+        },
+        getOutInfoReset()
+        {
+            this.outInfo = getOrder();
         }
     }
 });
