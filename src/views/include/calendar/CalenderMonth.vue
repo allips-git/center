@@ -41,9 +41,7 @@
                 </div>
                 
                 <div class="bg-white *:w-full flex gap-1 py-2 px-2">
-                    <router-link to="/calendar/day" class="md:hidden">
-                        <Button label="일 캘린더 보기" text severity="secondary" class="*:!font-bold w-full"/>
-                    </router-link>
+                    <Button label="일 캘린더 보기" text severity="secondary" @click.stop="router.push('/calendar/day')"/>
                     <!-- <Button label="새 일정" text icon="pi pi-plus" class="*:!font-bold" @click="calenderSetPop= true"/> -->
                 </div>
             </div>
@@ -60,14 +58,15 @@ import koLocale from '@fullcalendar/core/locales/ko';
 import DatePicker from 'primevue/datepicker';
 import { useConfirm } from "primevue/useconfirm";
 import { ref, nextTick, watch, onMounted, onBeforeUnmount } from 'vue';
+import { useRouter } from 'vue-router';
 import { usePopupStore, useCalendarStore } from '@/store';
 import { getAxiosData, getConvertDate, getTokenOut } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
-
-const confirm           = useConfirm();
-const popup             = usePopupStore();
-const calendar          = useCalendarStore();
+const router        = useRouter();
+const confirm       = useConfirm();
+const popup         = usePopupStore();
+const calendar      = useCalendarStore();
 
 const locale            = 'ko';
 const modalStyle        = ref({});
@@ -164,6 +163,7 @@ const dateClick = async (info) => {
 const previousDate = ref(null);
 
 const getMonthDataInfo = async (emCd: string) => {
+    getPopupClose('calendarDetail', true)
     getPopupOpen('calendarSet');
     await calendar.getEmCd(emCd);
     await calendar.getInfo();
@@ -247,6 +247,10 @@ const calendarOptions = {
                 }
             },
             reject : () => {
+                /** 드래그한 이벤트 취소 */
+                info.revert();
+            },
+            onHide : () => {
                 /** 드래그한 이벤트 취소 */
                 info.revert();
             }

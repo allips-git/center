@@ -156,6 +156,16 @@ export const getAmt = (data: Array, type: string) => {
 }
 
 /**
+ * @description 날짜 추가
+ */
+export const getAddDate = (days: number) => {
+	const result = new Date();
+	result.setDate(result.getDate() + days);
+
+	return result;
+}
+
+/**
  * @description 다음 주소 API 팝업 위치 설정
  */
 export function getDaumPopupPosition(layer)

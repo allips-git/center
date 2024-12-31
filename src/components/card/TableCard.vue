@@ -66,7 +66,8 @@
             <!-- 버튼 -->
             <!-- 버튼타입 // severity="" // primary(시스템),success(외주),secondary(시스템/외주 발주완료),warn(발주취소),danger(발주 취소 요청) -->
             <div class="w-full *:w-full mt-4">
-                <Button v-if="card['showButton'] && index === cards.length -1" :label="card['buttonText']" :severity="card['buttonType']" size="small"/>
+                <Button v-if="card['showButton'] && index === cards.length -1" 
+                    :label="card['buttonText']" :severity="card['buttonType']" size="small" @click="getBtnProcess(card['buttonType'], card['edCd'])"/>
             </div>
         </div>
     </div>
@@ -77,15 +78,19 @@ import Tag from 'primevue/tag';
 import { useConfirm } from "primevue/useconfirm";
 import { defineProps } from 'vue'
 import { useRouter } from 'vue-router';
-import { useClientStore, useEstiStore } from '@/store';
+import { useClientStore, useEstiStore, useOrderStore } from '@/store';
 import { getCommas } from "@/assets/js/function";
 import { getAxiosData, getTokenOut } from '@/assets/js/function';
+import { usePopup } from '@/assets/js/popup';
 
 const emit      = defineEmits(['get-modify']);
 const confirm   = useConfirm();
 const router    = useRouter();
 const client    = useClientStore();
 const esti      = useEstiStore();
+const order     = useOrderStore();
+
+const { getPopupOpen, getPopupClose } = usePopup();
 
 defineProps({
     title   : String,
@@ -141,6 +146,31 @@ const getDelete = (edCd: string) => {
             }
         }
     });
+}
+
+const getBtnProcess = async (type: string, edCd: string) => {
+    switch(type)
+    {
+        case 'primary':
+        {
+            /** 시스템 공장 발주 */
+        }
+        break;
+        case 'success':
+        {
+            /** 외주 공장 발주 */
+            await order.getOutInfoReset();
+            await order.getEdCd(edCd);
+            getPopupOpen('outOrderSet');
+        }
+        break;
+        case 'warn':
+            /** 시스템 공장 발주취소 */
+        break;
+        case 'danger':
+            /** 시스템 공장 발주 취소요청 */
+        break;
+    }
 }
 
 const getAmt = (amt) => {

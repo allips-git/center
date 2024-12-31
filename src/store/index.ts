@@ -4,6 +4,7 @@ import type { App } from 'vue';
 
 import { useDataStore } from './modules/data';
 import { usePopupStore } from './modules/popup';
+import { useJoinStore } from './modules/join';
 import { useLoginStore } from './modules/login';
 import { useMainStore } from './modules/main';
 import { useClientStore } from './modules/client';
@@ -29,6 +30,7 @@ export {
     pinia,
     useDataStore,
     usePopupStore,
+    useJoinStore,
     useLoginStore,
     useMainStore,
     useClientStore,

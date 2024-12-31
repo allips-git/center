@@ -34,7 +34,7 @@
                 <Button label="로그인" size="large" class="w-full mt-4" @click="getLogin"/>
                 <div class="flex items-center justify-center w-full mt-4">
                     <span>아이디가 없으신가요?</span>
-                    <Button label="회원가입" class="!*:font-bold" text />
+                    <Button label="회원가입" class="!*:font-bold" text @click="router.push({ path : '/join/agree' })"/>
                 </div>
             </div>
         </template>

@@ -2,17 +2,17 @@
     <div class="input-layout-box">
         <InputGroup>
             <IftaLabel class="w-full">
-                <InputNumber v-model="esti['dcInfo']['val']" class="w-full" @update:modelValue="(value) => getDcInput(value)" />
+                <InputNumber v-model="info['dcInfo']['val']" class="w-full" @update:modelValue="(value) => getDcInput(value)" />
                 <label>할인 금액 입력</label>
             </IftaLabel>
             <InputGroupAddon class="custom-InputGroupAddon">
-                <SelectButton v-model="esti['dcInfo']['unit']" 
+                <SelectButton v-model="info['dcInfo']['unit']" 
                     :options="data['discount']" optionLabel="label" optionValue="value" class="custom-input-select-btn" 
                     @change="getValCheck"/>
             </InputGroupAddon>
         </InputGroup>
         <IftaLabel class="w-full">
-            <Textarea v-model="esti['dcInfo']['memo']" rows="3" cols="30" class="w-full" />
+            <Textarea v-model="info['dcInfo']['memo']" rows="3" cols="30" class="w-full" />
             <label>메모입력</label>
         </IftaLabel>
         <div class="mt-2 btn-2-layout-box">
@@ -29,24 +29,27 @@ import InputGroup from 'primevue/inputgroup';
 import InputGroupAddon from 'primevue/inputgroupaddon';
 import Textarea from 'primevue/textarea';
 import SelectButton from 'primevue/selectbutton';
-// import { ref } from 'vue'
-import { useDataStore, useEstiStore } from '@/store';
+import { useDataStore, useEstiStore, useOrderStore } from '@/store';
+
+const props = defineProps({
+    gubun : String
+});
 
 const emit  = defineEmits(['getApply', 'getClose']);
 const data  = useDataStore();
-const esti  = useEstiStore();
+const info  = props['gubun'] === 'E' ? useEstiStore() : useOrderStore();
 
 const getDcInput = (amt: number) => {
-    if(esti['dcInfo']['unit'] === 'P' && amt > 100)
+    if(info['dcInfo']['unit'] === 'P' && amt > 100)
     {
-        esti['dcInfo']['val'] = 100;
+        info['dcInfo']['val'] = 100;
     }
 }
 
 const getValCheck = () => {
-    const value = esti['dcInfo']['val'];
+    const value = info['dcInfo']['val'];
 
-    esti['dcInfo']['val'] = value > 100 ? 100 : value;
+    info['dcInfo']['val'] = value > 100 ? 100 : value;
 }
 
 </script>

@@ -7,27 +7,32 @@
                 <div class="modal-page-padding">
                     <div class="form-gap-box">
                         <IftaLabel class="w-full">
-                            <label for="emali">이메일</label>
-                            <InputText id="emali" placeholder="이메일을 입력해주세요." class="w-full"/>    
+                            <label for="id">이메일</label>
+                            <InputText id="id" v-model="join['login']['id']" placeholder="이메일을 입력해주세요." class="w-full"/>
+                            <small v-if="join['msg']['id'] !== ''" class="text-red-500">{{ join['msg']['id'] }}</small>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
-                            <label for="emali">비밀번호</label>
-                            <InputText id="emali" placeholder="비밀번호를 입력해주세요" class="w-full"/>    
+                            <label for="pw">비밀번호</label>
+                            <InputText id="pw" v-model="join['login']['pw']" placeholder="비밀번호를 입력해주세요" class="w-full"/>
+                            <small v-if="join['msg']['pw'] !== ''" class="text-red-500">{{ join['msg']['pw'] }}</small>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
-                            <label for="emali">비밀번호 확인</label>
-                            <InputText id="emali" placeholder="비밀번호를 다시 한 번 입력해주세요" class="w-full"/>    
+                            <label for="pw">비밀번호 확인</label>
+                            <InputText id="pwChk" v-model="join['login']['pwChk']" placeholder="비밀번호를 다시 한 번 입력해주세요" class="w-full"/>    
+                            <small v-if="join['msg']['pwChk'] !== ''" class="text-red-500">{{ join['msg']['pwChk'] }}</small>
                         </IftaLabel>
 
                         <IftaLabel>
                             <IconField>
-                                <InputText id="username" placeholder="사업자 등록증을 업로드 해주세요." variant="filled" class="w-full" readonly/>
+                                <InputText id="username" placeholder="사업자 등록증을 업로드 해주세요." variant="filled" class="w-full" readonly @click="getFileBtn"/>
+                                <input type="file" id="einFile" ref="einFile" style="display:none" accept="image/*" @change="getFile"/>
                                 <InputIcon class="pi pi-file-arrow-up" />
                             </IconField>
-                            <label for="username">사업자 등록증 업로드</label>
+                            <label>사업자 등록증 업로드</label>
                         </IftaLabel>
+                        <small v-if="join['msg']['einFile'] !== ''" class="text-red-500">{{ join['msg']['einFile'] }}</small>
                     </div>
                     <div class="mobile-fiex-bottom">
                         <Button label="동의하고 계속하기" class="w-full" />
@@ -39,22 +44,29 @@
     
 <script setup lang="ts">
 import Dialog from 'primevue/dialog';
-import Checkbox from 'primevue/checkbox';
-
 import IftaLabel from 'primevue/iftalabel';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
-
-
-
-import { ref } from 'vue';
-
 import BackHeader from '@/components/layouts/BackHeader.vue'
+import { useJoinStore } from '@/store';
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router'
+
+const join      = useJoinStore();
+const router    = useRouter();
 const visible   = ref(true);
-const idData = ref('')
-const pwData = ref('')
+const einFile   = ref<HTMLInputElement | null>(null);
 
+const getFileBtn = () => {
+    einFile.value?.click();
+};
 
+onMounted(()=>{
+    if(!join.certified)
+    {
+        router.go(-1);
+    }
+})
 </script>
 
 <style lang="scss" scoped>

@@ -24,7 +24,7 @@
             </div>
             <FullCalendar :options="{ ... calendarOptions, events : calendar['dayEvents'] }" ref="fullCalendar" />
             <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-4 left-1/2">
-                <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm">당일</div>
+                <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm" @click="calendar.getSearchDt(new Date())">당일</div>
             </div>
         </div>
 
@@ -118,6 +118,7 @@ const calendarOptions = {
                     const instance  = await getAxiosData();
                     await instance.post(`https://data.planorder.kr/calendarV1/getDayExchange`, params);
                     await calendar.getDayData();
+                    await calendar.getMonthData();
                 }
                 catch(e)
                 {
@@ -134,6 +135,10 @@ const calendarOptions = {
                 }
             },
             reject : () => {
+                /** 드래그한 이벤트 취소 */
+                info.revert();
+            },
+            onHide : () => {
                 /** 드래그한 이벤트 취소 */
                 info.revert();
             }
