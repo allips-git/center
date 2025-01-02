@@ -89,17 +89,17 @@
             <div class="px-4">
                 <div class="w-full h-5 overflow-hidden rounded-full bg-gray-50 ">
                     <div class="flex items-center h-full *:h-full">
-                        <div :class="`bg-blue-400`" :style="{ width: `${aver.saleAmtPercent}`}" >
-                            <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.saleAmtPercent }}</p>
+                        <div :class="`bg-blue-400`" :style="{ width: `${aver.accountPercent}`}" >
+                            <p v-if="aver.accountPercent !== '0%'"  class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.accountPercent }}</p>
                         </div>
         
-                        <div :class="`bg-yellow-400`" :style="{ width: `${aver.purcAmtPercent}` }" >
-                            <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.purcAmtPercent }}</p>
+                        <div :class="`bg-yellow-400`" :style="{ width: `${aver.cashPercent}` }" >
+                            <p v-if="aver.cashPercent === '0%'" class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.cashPercent }}</p>
                         </div>
         
-                        <div :class="`bg-red-400`" :style="{ width: `${aver.fixedAmtPercent}` }">
+                        <div :class="`bg-red-400`" :style="{ width: `${aver.cardPercent}` }">
                             <!-- 0%센트 일때 안보이게 처리 (글자 겹칩 현상 발생함) -->
-                            <p v-if="aver.fixedAmtPercent == '0%'"   class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.fixedAmtPercent }}</p>
+                            <p v-if="aver.cardPercent === '0%'"  class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.cardPercent }}</p>
                         </div>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
 
         <div class="gray-bar"></div>
 
-        <section class="pb-10">
+        <!-- <section class="pb-10">
             <h2 class="px-4 pt-2 text-lg font-bold">키워드별 매출 기여도</h2>
             <div class="flex justify-center px-10 py-5">
                 <canvas id="myDoughnutChart"></canvas>
@@ -130,12 +130,12 @@
             <ul class="flex flex-col gap-2 p-4 pb-0 mx-4">
                 <li v-for="(item, index) in aver['keywordList']" :key="index" class="flex justify-between gap-5">
                     <div class="flex items-center gap-2">
-                        <!-- 
+                        
                         배경색상 양식 : bg-[color]-[num] / 텍스트색상 양식: text-[color]-[num]
                         폭 > -red-400
                         EA > -blue-400
                         회베 > -green-400
-                        야드 > -sky-500 -->
+                        야드 > -sky-500 
                         <span v-if="item['codeSub'] === '001' || item['codeSub'] === '002'" class="block bg-green-400 rounded-full size-3"></span>
                         <span v-if="item['codeSub'] === '003' || item['codeSub'] === '004'" class="block rounded-full bg-sky-400 size-3"></span>
                         <p>{{ item['codeNm'] }} ({{ item['cnt'] }}개)</p>
@@ -144,14 +144,14 @@
                     <p v-if="item['codeSub'] === '003' || item['codeSub'] === '004'" class="text-lg font-bold text-blue-400">{{ getAmt(item['amt']) }}원</p>
                 </li>
             </ul>
-        </section>
+        </section> -->
     </main>
     <div class="bg-blue-400"></div>
 </template>
 
 <script setup lang="ts">
 import BackHeader from '@/components/layouts/BackHeader.vue'
-import Avatar from 'primevue/avatar';
+// import Avatar from 'primevue/avatar';
 import DatePicker from 'primevue/datepicker';
 import IconAvatar from '@/components/icons/IconAvatar.vue';
 import { onMounted } from 'vue';

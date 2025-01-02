@@ -490,7 +490,7 @@ export const useEstiStore = defineStore('esti', {
                                     colorTitle   : esti.colorTitle,
                                     showDelete   : true,
                                     amt          : Number(esti.totalSaleAmt) + Number(esti.totalSaleTax),
-                                    isRed        : esti.productTitle === '' ? true : false,
+                                    isRed        : esti.productTitle ? false : true,
                                     columns      : getCardColumns(esti.unit),
                                     rows         : rows,
                                     showTag      : tags.length > 0 ? true : false,

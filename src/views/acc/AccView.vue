@@ -3,13 +3,22 @@
     <main class="w-full">
         <section class="px-5 pt-5">
         <div class="relative w-full bg-white ">
-            <ul v-for="(item, index) in salesData" :key="index">
+            <ul>
                 <li class="flex items-center gap-2">
-                    <p class="w-20 text-gray-600">{{ item.title }}</p>
-                    <p class="text-xl font-bold" :class="{ 'text-green-500': item.title === '마진' }">{{ item.amount }}원</p>
+                    <p class="w-20 text-gray-600">매출</p>
+                    <p class="text-xl font-bold">{{ getAmt(acc['mainHeader']['saleAmt']) }}원</p>
+                </li>
+                <li class="flex items-center gap-2">
+                    <p class="w-20 text-gray-600">매입</p>
+                    <p class="text-xl font-bold">{{ getAmt(acc['mainHeader']['purcAmt']) }}원</p>
+                </li>
+                <li class="flex items-center gap-2">
+                    <p class="w-20 text-gray-600">마진</p>
+                    <p class="text-xl font-bold text-green-500">{{ acc['mainHeader']['margin'] }}%</p>
                 </li>
             </ul>
-            <Button label="전체 기록 보기"  severity="secondary" class="!absolute right-0 top-0" size="small" @click="AccMonthPop = true"/>
+
+            <Button label="전체 기록 보기" severity="secondary" class="!absolute right-0 top-0" size="small" @click="getPopupOpen('accMonth')"/>
         </div>
     </section>
 
@@ -17,28 +26,29 @@
     <section class="w-full custom-right-tab">
         <Tabs value="0" class="w-full">
             <TabList class="justify-end">
-                <Tab value="0" class="text-lg font-bold ">계약 9건</Tab>
-                <Tab value="1" class="text-lg font-bold">결제 12건</Tab>
+                <Tab value="0" class="text-lg font-bold" @click="acc.getStCd('003')">계약 9건</Tab>
+                <Tab value="1" class="text-lg font-bold" @click="acc.getStCd('012')">결제 12건</Tab>
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
                     <div class="">
                         <div>
-                        <div class="flex items-center gap-2 px-4 py-2">
-                            <p class="flex-none text-gray-400">{{ getDate(acc.searchDt) }}</p>
-                            <div class="w-full h-px bg-gray-200"></div>
+                            <template v-for="(date, dIndex) in acc.dateList" :key="dIndex">
+                                <div class="flex items-center gap-2 px-4 py-2">
+                                    <p class="flex-none text-gray-400">{{ date['stDt'] }}</p>
+                                    <div class="w-full h-px bg-gray-200"></div>
+                                </div>
+                                <template v-for="(item, index) in acc.list" :key="index">
+                                    <AccountList v-if="date['stDt'] === item.stDt" 
+                                        :clientNm="item.clientNm" 
+                                        :stNm="item.stCd === '003' ? '계약' : '결제'" 
+                                        :addr="item.addr + ' ' + item.addrDetail"
+                                        :saleAmt="item.saleAmt" 
+                                        :purcAmt="item.purcAmt" 
+                                        :rev="item.rev" />
+                                </template>
+                            </template>
                         </div>
-                        <template v-for="(item, index) in acc.dayList" :key="index">
-                            <AccountList 
-                                :clientNm="item.clientNm" 
-                                :stNm="item.stNm" 
-                                :addr="item.addr + ' ' + item.addrDetail"
-                                :saleAmt="getAmt(item.saleAmt)" 
-                                :purcAmt="getAmt(item.purcAmt)" 
-                                :rev="getAmt(item.rev)" 
-                            />
-                        </template>
-                    </div>
                     </div>
                 </TabPanel>
                 <TabPanel value="0"></TabPanel>
@@ -47,9 +57,9 @@
     </section>
 </main>
 
-<Dialog v-model:visible="AccMonthPop" header="월간 분석" 
+<Dialog v-model:visible="popup['pop']['accMonth']" header="월간 분석" 
     :modal=true position="center" class="custom-dialog-bottom"
-    @update:visible="getPopupClose('sysFactoryItemList', true)">
+    @update:visible="getPopupClose('accMonth', true)">
     <AccMonth/>
 </Dialog>
 </template>
@@ -63,87 +73,23 @@ import TabPanel from 'primevue/tabpanel';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import AccMonth from '@/views/include/acc/AccMonth.vue'
 import AccountList from '@/components/list/AccountList.vue'
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { usePopupStore, useAccStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
+import { getCommas } from '@/assets/js/function';
 
 const popup = usePopupStore();
-// const acc   = useAccStore();
+const acc   = useAccStore();
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
-const AccMonthPop = ref (false)
-const loading = ref(false);
+const getAmt = (amt: number) => {
+    return getCommas(Number(amt));
+}
 
-
-
-const salesData = ref([
-    { title: '매출', amount: 131000 },
-    { title: '환불', amount: 50000 },
-    { title: '마진', amount: 81000 },
-]);
-
-const acc = ref({
-    searchDt: '2023-12-31', // 예시 날짜
-    dayList: [
-        {
-            clientNm: '고객1',
-            stNm: '대기',
-            addr: '서울시 강남구',
-            addrDetail: '역삼동 123-45',
-            saleAmt: 100000,
-            purcAmt: 50000,
-            rev: 50000,
-        },
-        {
-            clientNm: '고객2',
-            stNm: '결제',
-            addr: '부산시 해운대구',
-            addrDetail: '우동 67',
-            saleAmt: 200000,
-            purcAmt: 100000,
-            rev: 100000,
-        },
-        {
-            clientNm: '고객3',
-            stNm: '발주',
-            addr: '대구시 중구',
-            addrDetail: '동인동 89',
-            saleAmt: 150000,
-            purcAmt: 75000,
-            rev: 75000,
-        },
-        {
-            clientNm: '고객4',
-            stNm: '시공',
-            addr: '인천시 연수구',
-            addrDetail: '송도동 45',
-            saleAmt: 250000,
-            purcAmt: 125000,
-            rev: 125000,
-        },
-        {
-            clientNm: '고객5',
-            stNm: 'A/S',
-            addr: '광주시 서구',
-            addrDetail: '농성동 12',
-            saleAmt: 300000,
-            purcAmt: 150000,
-            rev: 150000,
-        },
-    ],
-});
-
-// 더미 함수 예시
-const getDate = (date) => {
-    // 날짜 포맷팅 로직 추가 (예: 'YYYY-MM-DD' 형식)
-    return new Date(date).toLocaleDateString();
-};
-
-const getAmt = (amount) => {
-    // 금액 포맷팅 로직 추가 (예: 통화 형식으로 변환)
-    return amount.toLocaleString('ko-KR') + ' 원';
-};
+onMounted(() => {
+    acc.getAccAll();
+})
 
 </script>
 
