@@ -81,8 +81,9 @@ const ord       = useOrderStore();
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
-onMounted(() => {
-    ord.getList({ emCd : esti['emCd'] });
+onMounted(async () => {
+    await ord.getReset();
+    await ord.getList({ emCd : esti['emCd'] });
 })
 
 </script>

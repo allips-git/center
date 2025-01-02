@@ -69,9 +69,11 @@ export const useContractStore = defineStore('contract', {
                 this.person             = res.data['person'];
                 this.conInfo['person']  = res.data['person'][0]['value'];
 
+                const date = getConvertDate(new Date(), 'yyyy-mm-dd')
+
                 if(res.data['insTime']['hours'] !== 0 || res.data['insTime']['minutes'] !== 0)
                 {
-                    this.conInfo['insTime'] = `${res.data['insTime']['hours']}:${res.data['insTime']['minutes']}`;
+                    this.conInfo['insTime'] = new Date(`${date} ${String(res.data['insTime']['hours']).padStart(2, "0")}:${res.data['insTime']['minutes']}`);
                 }
             }
             catch(e)
