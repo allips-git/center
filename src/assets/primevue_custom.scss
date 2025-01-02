@@ -110,6 +110,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
     .p-dialog-header, .p-drawer-header{
         padding: 0.25rem 20px;
+        padding-right: 8px;
         .p-dialog-title , .p-drawer-title{
             font-size: 13px;
         }

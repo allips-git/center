@@ -1,85 +1,46 @@
 <template>
 <main class="pt-5 !pb-32">
-    <div class="form-gap-box">
+
+    <div class="">
         <section class="px-5 form-gap-box">
-            <div>
-                <h1 class="mb-2 text-lg font-bold">금액 조정</h1>
-                <InputGroup>
-                    <IftaLabel class="w-full text-red-500">
-                        <InputNumber :modelValue="getAmtInfo('lastDcAmt')" placeholder="할인 금액을 입력하세요" 
-                            class="*:!text-right" readonly @click="getPopupOpen('disAmtSet')"/>
-                        <label>할인금액</label>
-                    </IftaLabel>
-                    <InputGroupAddon><span class="text-sm text-blue-600">원</span></InputGroupAddon>
-                </InputGroup>
-            </div>
-            
-            <InputGroup>
-                <IftaLabel class="w-full">
-                    <InputNumber :modelValue="getAmtInfo('lastAddAmt')" placeholder="추가 금액을 입력하세요" 
-                        class="*:!text-right" readonly @click="getPopupOpen('addAmtSet')"/>
-                    <label>추가 금액</label>
-                </IftaLabel>
-                <InputGroupAddon><span class="text-sm text-blue-600">원</span></InputGroupAddon>
-            </InputGroup>
-            
-            <InputGroup>
-                <IftaLabel class="w-full">
-                    <InputNumber :modelValue="getTotalAmt()" placeholder="최종 결제 금액을 입력하세요" class="*:!text-right" readonly/>
-                    <label>최종 결제 금액</label>
-                </IftaLabel>
-                <InputGroupAddon><span class="text-sm text-blue-600">원</span></InputGroupAddon>
-            </InputGroup>
-            <!-- <h1 class="mb-2 text-lg font-bold">금액 조정</h1>
+            <h1 class="mb-2 text-lg font-bold">금액 조정</h1>
             <div class="relative flex items-center justify-center">
                 <p class="w-[100px] flex-none">할인 금액</p>
-                <InputNumber  class="*:!text-red-500 inputNumber-color" />
+                <InputNumber  class="*:!text-red-500 inputNumber-color" :modelValue="getAmtInfo('lastDcAmt')" placeholder="할인 금액을 입력하세요" 
+                readonly @click="getPopupOpen('disAmtSet')"
+                />
                 <span class="absolute text-sm text-red-500 right-4 bottom-2.5">원</span>
             </div>
 
             <div class="relative flex items-center justify-center">
                 <p class="w-[100px] flex-none">추가 금액</p>
-                <InputNumber class="*:!text-blue-500 inputNumber-color" />
+                <InputNumber class="*:!text-blue-500 inputNumber-color" 
+                :modelValue="getAmtInfo('lastAddAmt')" placeholder="추가 금액을 입력하세요"
+                readonly @click="getPopupOpen('addAmtSet')"
+                />
                 <span class="absolute text-sm text-blue-500 right-4 bottom-2.5">원</span>
             </div>
 
             <div class="relative flex items-center justify-center">
                 <p class="w-[100px] flex-none">최종 결제금액</p>
-                <InputNumber class="*:!text-blue-500 inputNumber-color" />
+                <InputNumber class="*:!text-blue-500 inputNumber-color" :modelValue="getTotalAmt()" placeholder="최종 결제 금액을 입력하세요"/>
                 <span class="absolute text-sm text-blue-500 right-4 bottom-2.5">원</span>
-            </div> -->
+            </div>
         </section>
 
         <div class="gray-bar"></div>
         <section class="px-5">
-            <div class="mt-5">
+            <div class="">
                 <h1 class="mb-2 text-lg font-bold">입금 정보</h1>
-                <div class="flex gap-2">
-                    <IftaLabel class="w-full">
-                        <Select v-model="order['pay']['payGb']" :options="data['payGb']" optionLabel="label" optionValue="value" class="w-full"/>
-                        <label>잔금 처리 형식</label>
-                    </IftaLabel>
-
-                    <InputGroup>
-                        <IftaLabel class="w-full">
-                            <InputNumber :modelValue="getTotalAmt()" placeholder="잔금을 입력하세요" class="*:!text-right" readonly/>
-                            <label>잔금</label>
-                        </IftaLabel>
-                        <InputGroupAddon><span class="text-sm text-blue-600">원</span></InputGroupAddon>
-                    </InputGroup>
-                </div>
-            </div>
-            <IftaLabel class="w-full">
-                <Textarea v-model="order['pay']['memo']" rows="3" cols="30" style="resize: none" class="w-full"/>
-                <label>메모</label>
-            </IftaLabel>        
-                <!-- <div class="form-gap-box">
+                <div class="form-gap-box">
                     <div class="relative flex items-center justify-start w-full">
                         <p class="w-[100px] flex-none">잔금</p>
                         <div class="flex w-[calc(100%-100px)]">
-                            <Select class="w-32"/>
+                            <Select class="w-32" v-model="order['pay']['payGb']" :options="data['payGb']" optionLabel="label" optionValue="value"/>
                             <div class="relative w-[calc(100%-8rem)] ml-2">
-                                <InputNumber class="*:!text-blue-500 inputNumber-color *:w-full" />
+                                <InputNumber class="*:!text-blue-500 inputNumber-color *:w-full" 
+                                :modelValue="getTotalAmt()" placeholder="잔금을 입력하세요" readonly
+                                />
                                 <span class="absolute text-sm text-blue-500 right-4 bottom-2.5">원</span>
                             </div>
                         </div>
@@ -87,15 +48,16 @@
 
                     <div class="relative flex items-start justify-center">
                         <p class="w-[100px] flex-none">메모</p>
-                        <Textarea rows="3" cols="30" style="resize: none" class="w-full"/>
+                        <Textarea v-model="order['pay']['memo']" rows="3" cols="30" style="resize: none" class="w-full"/>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </section>
         <div class="mt-2 btn-2-layout-box bottom-fixed-btn-box">
             <Button label="결제 완료" @click="getPay"/>
         </div>
     </div>
+    
     <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 
         :modal=true position="center" class="min-w-96 custom-dialog-center" :dismissableMask="true"
         @update:visible="getPopupClose('disAmtSet', true)">
@@ -115,10 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import IftaLabel from 'primevue/iftalabel';
 import InputNumber  from 'primevue/inputnumber';
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
 import Textarea from 'primevue/textarea';
 import SaleAmountPop from '@/components/modal/SaleAmountPop.vue'
 import AddAmountPop from '@/components/modal/addAmountPop.vue'

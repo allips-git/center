@@ -151,6 +151,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useMainStore } from '@/store';
+import PaymentModal from './include/customer/PaymentModal.vue';
 
 
 const main  = useMainStore();
