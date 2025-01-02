@@ -113,6 +113,11 @@ export const useEstiMateStore = defineStore('estiMate', {
                                             size    : esti.totalUnit + esti.unitNm
                                         });
                                     break;
+                                    case '004':
+                                        rows.push({
+                                            qty : esti.cnt
+                                        })
+                                    break;
                                 }
 
                                 if(esti.shape === 'Y')

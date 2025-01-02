@@ -166,7 +166,7 @@ const getOrder = () => {
                 const instance  = await getAxiosData();
                 await instance.post(`https://data.planorder.kr/orderV1/getOutOrderResult`, params);
                 getPopupClose('outOrderSet', true);
-                router.push({ path : '/outOrderDoc' });
+                router.push({ path : '/customer/outOrderMate' });
             }
             catch(e)
             {

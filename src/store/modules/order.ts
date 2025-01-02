@@ -33,7 +33,6 @@ interface Info {
 }
 
 interface Order {
-    edCd        : string;
     ordDt       : string;
     outDt       : string;
     shippingGb  : string;
@@ -100,7 +99,6 @@ const getPay = (): Pay => {
 
 const getOrder = (): Order => {
     return {
-        edCd        : '',
         ordDt       : getConvertDate(new Date(), 'yyyy-MM-dd'),
         outDt       : getConvertDate(getAddDate(3), 'yyyy-MM-dd'),
         shippingGb  : '001',
@@ -112,6 +110,7 @@ const getOrder = (): Order => {
 }
 
 interface State {
+    edCd        : string;
     list        : [];
     payList     : PayList[];
     dcInfo      : AmtInfo;
@@ -123,6 +122,7 @@ interface State {
 
 export const useOrderStore = defineStore('order', {
     state: (): State => ({
+        edCd        : '',
         list        : [],
         payList     : getPayList(),
         dcInfo      : getAmtInfo(),
@@ -315,7 +315,7 @@ export const useOrderStore = defineStore('order', {
         },
         getEdCd(edCd: string)
         {
-            this.outInfo.edCd = edCd;
+            this.edCd = edCd;
         },
         getOutInfoAddrReset()
         {
@@ -336,5 +336,10 @@ export const useOrderStore = defineStore('order', {
             this.outInfo     = getOrder();
             this.pay         = getPay();
         }
+    },
+    persist: {
+        key     : 'order',
+        storage : localStorage,
+        paths   : ['edCd']
     }
 });

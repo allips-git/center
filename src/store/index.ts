@@ -14,6 +14,7 @@ import { useContractStore } from './modules/contract';
 import { useEstiMateStore } from './modules/estiMate';
 import { useConMateStore } from './modules/conMate';
 import { useOrderStore } from './modules/order';
+import { useOutOrderMateStore } from './modules/outOrderMate';
 import { useFactoryStore } from './modules/factory';
 import { useAccStore } from './modules/acc';
 import { useAverageStore } from './modules/average';
@@ -40,6 +41,7 @@ export {
     useEstiMateStore,
     useConMateStore,
     useOrderStore,
+    useOutOrderMateStore,
     useFactoryStore,
     useAccStore,
     useAverageStore,
