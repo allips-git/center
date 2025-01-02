@@ -6,13 +6,13 @@
         </IftaLabel>
 
         <IftaLabel class="label-input-box">
-            <InputText id="clientNm" v-model="client['info']['clientNm']"/>
+            <InputText id="clientNm" v-model="client['info']['clientNm']" placeholder="고객명을 입력해주세요."/>
             <label>고객명</label>
             <small class="text-red-500">{{ client['msg']['clientNm'] }}</small>
         </IftaLabel>
 
         <IftaLabel class="label-input-box">
-            <InputText id="tel" v-model="client['info']['tel']"/>
+            <InputText id="tel" v-model="client['info']['tel']" placeholder="010-0000-0000"/>
             <label>전화번호</label>
             <small class="text-red-500">{{ client['msg']['tel'] }}</small>
         </IftaLabel>
@@ -27,12 +27,12 @@
         </IftaLabel>
 
         <IftaLabel class="label-input-box">
-            <InputText id="addrDetail" v-model="client['info']['addrDetail']"/>
+            <InputText id="addrDetail" v-model="client['info']['addrDetail']" placeholder="상세주소를 입력해주세요."/>
             <label>상세주소</label>
         </IftaLabel>
 
         <IftaLabel class="label-input-box">
-            <Select v-model="client['info']['person']" :options="client['person']" optionLabel="label" optionValue="value"/> 
+            <Select v-model="client['info']['person']" :options="client['person']" optionLabel="label" optionValue="value" placeholder="선택"/> 
             <label>담당자</label>
             <small class="text-red-500">{{ client['msg']['person'] }}</small>
         </IftaLabel>
@@ -48,7 +48,7 @@
             <small class="text-red-500">{{ client['msg']['groupNm'] }}</small>
         </IftaLabel>
         <div class="bottom-modal-absol-box">
-            <Button type="button" label="명세서 이동" class="w-full" @click="getSaveNext"/>
+            <Button type="button" label="명세서 이동" class="w-full" size="large" @click="getSaveNext"/>
         </div>
     </div>
     <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:9999;-webkit-overflow-scrolling:touch;">

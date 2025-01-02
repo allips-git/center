@@ -1,23 +1,11 @@
 <template>
     <main>
-        <BackHeader title="공장" />
-       <!-- 배송 대기 테이블 -->
-       <div class="custom-datatable">
-           <DataTable 
-           v-model:filters="filters" 
-           :value="client['list']" 
-           removableSort
-           dataKey="clientCd" 
-           filterDisplay="row"
-           @row-click="(event) => getInfo(event.data.clientCd)"
-           >
-           <!-- 필터 검색 영역 -->
-           <template #header>
-               <div class="flex items-center justify-between no-print">
+        <BackHeader title="고객" />
+       <section class="">
+        <div class="flex items-center justify-between px-4 mt-5 mb-2 no-print">
                    <div class="flex self-center justify-between w-full ">
                     <div class="flex w-full gap-2">
                         <div class="flex w-full gap-2 max-w-[90px]">
-                            <!-- <Select v-model="selectedCategory" :options="category" optionLabel="name" optionValue="value" placeholder="그룹" class="w-full max-w-[100px]" />     -->
                             <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="w-full" @change="getList"/>
                         </div>
                         
@@ -28,78 +16,46 @@
                             <InputText v-model="client['search']" placeholder="고객명,주소,전화번호로 검색해주세요." class="w-full" @keyup.enter="getList"/>
                         </IconField>
                     </div>
-                        <Button label="고객 신규 등록" icon="pi pi-plus" class="!fixed flex-none bottom-4 right-4 md:bottom-0 md:right-0 md:!relative" @click="getPopOpen"/>                    
                    </div>
                 </div>
-           </template>
-           <template #empty> 
-               <p class="empty-data">데이터가 없습니다.</p>
-           </template>
-               <!-- 테이블 바디 -->
-               <Column field="step" header="상태" sortable class="custom-table-column-min-w max-w-min w-[100px] min-w-[100px] *:justify-center">
-                   <template #body="{ data }">
-                    <div class="flex items-center justify-center w-full">
-                        <p class="bg-blue-600 flex px-3 py-0.5 items-center justify-center rounded-full text-sm text-white">{{ data.step }}</p>
+                
+        <ul class="flex flex-col">
+            <li v-for="(item, index) in list" :key="index" class="flex items-center justify-between w-full px-5 py-2">
+                <!-- 상태 -->
+                <div :class="getStatusClass(item.status)" class="flex items-center justify-center mr-4 text-sm font-bold text-white rounded-md size-10">
+                    {{ item.status }}
+                </div>
+            
+                    <div class="flex justify-between gap-2 w-[calc(100%-40px)]">
+                        <div class="flex flex-col">
+                            <p class="font-bold">{{ item.clientNm }}</p>
+                            <span class="text-xs text-gray-400">{{ item.addr }} {{ item.addrDetail }}</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-sm text-right text-gray-400">{{ item.date }}</span>
+                            <p class="font-bold">{{ item.amt }}원</p>
+                        </div>
                     </div>
-                   </template>
-                   <template #filter="{ filterModel, filterCallback }">
-                       <InputText class="w-full" size="small" v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="검색" />
-                   </template>
-               </Column>
+            </li>
+        </ul>
+       </section>
+       <Button label="고객 신규 등록" icon="pi pi-plus" class="!fixed flex-none bottom-4 right-4" size="large" @click="getPopOpen"/>                    
 
+       작업 다하고 아래 지워주세요!
+       <div class="custom-datatable">
+           <DataTable 
+           v-model:filters="filters" 
+           :value="client['list']" 
+           removableSort
+           dataKey="clientCd" 
+           filterDisplay="row"
+           @row-click="(event) => getInfo(event.data.clientCd)"
+           >
                 <Column field="clientNm" header="고객명" sortable class="custom-table-column-min-w  min-w-[100px]">
                     <template #body="{ data }">
                         {{ data.clientNm }}
                     </template>
-                    <template #filter="{ filterModel, filterCallback }">
-                        <InputText class="w-full" size="small" v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="검색" />
-                    </template>                
                 </Column>
-
-                <Column field="addr" header="주소" sortable class="custom-table-column-min-w" >
-                   <template #body="{ data }">
-                       {{ data.addr }}
-                   </template>
-                   <template #filter="{ filterModel, filterCallback }">
-                       <InputText class="w-full" size="small" v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="검색" />
-                   </template>
-               </Column>
-
-               <Column field="addrDetail" header="상세주소" sortable class="custom-table-column-min-w">
-                   <template #body="{ data }">
-                       {{ data.addrDetail }}
-                   </template>
-                   <template #filter="{ filterModel, filterCallback }">
-                       <InputText class="w-full" size="small" v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="검색" />
-                   </template>
-               </Column>
-
-               <Column field="tel" header="전화번호" sortable class="custom-table-column-min-w">
-                   <template #body="{ data }">
-                       {{ data.tel }}
-                   </template>
-                   <template #filter="{ filterModel, filterCallback }"> 
-                       <InputText class="w-full" size="small" v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="검색" />
-                   </template>
-               </Column>
-   
-               <Column field="date" header="등록일" sortable class="custom-table-column-min-w ">
-                   <template #body="{ data }">
-                       {{ data.date }}
-                   </template>
-                   <template #filter="{ filterModel, filterCallback }">
-                       <InputText class="w-full" size="small" v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="검색" />
-                   </template>
-               </Column>
-
-               <Column field="amt" header="총매출" sortable class="custom-table-column-min-w ">
-                   <template #body="{ data }">
-                       {{ data.amt }}
-                   </template>
-                   <template #filter="{ filterModel, filterCallback }">
-                       <InputText class="w-full" size="small" v-model="filterModel.value" type="text" @input="filterCallback()" placeholder="검색" />
-                   </template>
-               </Column>
            </DataTable>
        </div>
        <div>
@@ -172,4 +128,76 @@ onMounted(() => {
     getList();
 })
 
+
+
+const list = ref([
+    { 
+        status: '대기', 
+        clientNm: '고객1', 
+        addr: '서울시 강남구', 
+        addrDetail: '역삼동 123-45', 
+        date: '22.04.22', 
+        amt: '100,000' 
+    },
+    { 
+        status: '견적', 
+        clientNm: '고객1', 
+        addr: '서울시 강남구', 
+        addrDetail: '역삼동 123-45', 
+        date: '22.04.22', 
+        amt: '100,000' 
+    },
+    { 
+        status: '발주',
+        clientNm: '고객2', 
+        addr: '부산시 해운대구', 
+        addrDetail: '우동 67', 
+        date: '22.04.23', 
+        amt: '200,000' 
+    },
+    { 
+        status: '시공',
+        clientNm: '고객3', 
+        addr: '대구시 중구', 
+        addrDetail: '동인동 89', 
+        date: '22.04.24', 
+        amt: '150,000' 
+    },
+    { 
+        status: '결제',
+        clientNm: '고객4', 
+        addr: '인천시 연수구', 
+        addrDetail: '송도동 45', 
+        date: '22.04.25', 
+        amt: '250,000' 
+    },
+    { 
+        status: 'A/S',
+        clientNm: '고객5', 
+        addr: '광주시 서구', 
+        addrDetail: '농성동 12', 
+        date: '22.04.26', 
+        amt: '300,000' 
+    },
+]);
+
+// 상태에 따른 배경색 클래스 반환
+const getStatusClass = (status) => {
+    switch (status) {
+        case '대기':
+            return 'bg-blue-300';
+        case '견적':
+            return 'bg-blue-400';
+        case '발주':
+            return 'bg-blue-500';
+        case '시공':
+            return 'bg-blue-700';
+        case '결제':
+            return 'bg-blue-800';
+        case 'A/S':
+            return 'bg-red-500';
+        default:
+            return 'bg-gray-500';
+    }
+};
 </script>

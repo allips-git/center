@@ -63,21 +63,25 @@
       .fc-h-event{
         border: none;
         padding: 2px 5px;
-        // pointer-events: none; /* 클릭 이벤트 무시 */
+     
       }
+      .fc-daygrid-day-number{
+     
+        border-radius: 9999px;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 3px;
+    }
       // 오늘 날짜 배경색
       .fc-daygrid-day.fc-day-today{
         // background-color: var(--p-primary-50) !important;
         background-color: transparent !important;
             .fc-daygrid-day-number{
                 color: white;
-                border-radius: 9999px;
-                width: 24px;
-                height: 24px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background-color: var(--p-primary-600) !important;
+                background-color: var(--p-primary-500) !important;
             }
       }
       .fc-daygrid-day{

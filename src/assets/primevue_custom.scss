@@ -179,3 +179,24 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         color:  var(--p-blue-600);
     }
 }
+.custom-right-tab{
+    .p-tablist-tab-list{
+        justify-content: end;
+        gap: 1.5rem !important;
+        padding-right: 1.5rem;
+        border: none;
+    }
+    .p-tab-active{
+        &.p-tab{
+            color: var(--p-tabs-tab-active-color);;
+            border-bottom-width: 3px;
+            border-color: var(--p-tabs-tab-active-border-color);
+        }
+    }
+    .p-tab{
+        border-bottom-width: 3px;
+        padding: 0.5rem 0rem;
+        border-color: transparent;
+        color: var(--p-tabs-tab-color);
+    }
+}

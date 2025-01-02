@@ -4,11 +4,11 @@
             plain 
             text 
             rounded 
-            icon="pi pi-chevron-left" 
+            icon="pi pi-arrow-left" 
             @click="goBack"
             class="!block pc-hidden md:!hidden"
         />
-        <h1 class="absolute text-lg font-bold -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 md:relative md:-translate-y-0 md:-translate-x-0 md:top-0 md:left-2">{{ title }}</h1>
+        <h1 class="absolute text-base font-bold -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 md:relative md:-translate-y-0 md:-translate-x-0 md:top-0 md:left-2">{{ title }}</h1>
     </header>
 </template>
 

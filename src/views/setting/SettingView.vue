@@ -3,10 +3,12 @@
     <main class="pb-5">
         <section class="p-4">
             <div class="flex gap-2 p-4 border border-gray-200 rounded-md">
-                <Avatar icon="pi pi-user" class="mr-2 " size="large" style="background-color: #ece9fc; color: #2a1261" shape="circle" />
-                <div class="">
+                <div class="!size-12 flex items-center justify-center">
+                    <IconAvatar class="text-sky-400 size-full"/>
+                </div>
+                <div class="flex flex-col">
                     <h1>디자인 윈도우</h1>
-                    <span class="text-sm bg-indigo-200">대표님</span>
+                    <span class="text-sm text-sky-500">대표님</span>
                 </div>
             </div>
         </section>
@@ -17,37 +19,36 @@
                         <p>요금제</p>
                         <div class="ml-2"> 
                             <Badge value="스탠다드"></Badge>
-
                         </div>
                     </div>
-                    <p class="text-sm font-bold text-indigo-600">사용 가능 기한 2022년 10월 10일 까지</p>
+                    <p class="text-sm font-bold text-sky-500">사용 가능 기한 2022년 10월 10일 까지</p>
                 </li>
                 <li>
                     <p>플랜 포인트</p>
-                    <p class="text-sm font-bold text-indigo-600">2400p</p>
+                    <p class="text-sm font-bold text-sky-500">2400p</p>
                 </li>
 
                 <li>
                     <p>샵 맴버 인원</p>
-                    <p class="text-sm font-bold text-indigo-600">1/3 사용중</p>
+                    <p class="text-sm font-bold text-sky-500">1/3 사용중</p>
                 </li>
             </ul>
         </section>
         <div class="gray-bar"></div>
-        <section class="">
-            <h2 class="px-4 mb-1 text-sm font-bold">정보설정</h2>
+        <section class="px-4">
+            <h2 class="setting-list-header">정보설정</h2>
             <ul>
-                <li v-for="(item, index) in storeSettings" :key="index" class="flex justify-between px-5 py-4 border-b hover:bg-gray-50" @click="navigateTo(item)">
+                <li v-for="(item, index) in storeSettings" :key="index" class="flex justify-between px-2 py-4 border-b hover:bg-gray-50" @click="navigateTo(item)">
                     <p>{{ item.name }}</p>
-                    <span class="pi pi-angle-right"></span>
+                    <div><IconPlay class="w-2 fill-gray-600"/></div>
                 </li>
             </ul>
 
-            <h2 class="px-4 mt-10 mb-1 text-sm font-bold">플랜오더 약관</h2>
+            <h2 class="mt-4 setting-list-header">플랜오더 약관</h2>
             <ul>
-                <li v-for="(item, index) in termsList" :key="index" class="flex items-center justify-between px-5 py-4 border-b border-gray-200 hover:bg-gray-50">
+                <li v-for="(item, index) in termsList" :key="index" class="flex justify-between px-2 py-4 border-b hover:bg-gray-50">
                     <p>{{ item }}</p>
-                    <span class="pi pi-angle-right"></span>
+                    <div><IconPlay class="w-2 fill-gray-600"/></div>
                 </li>
             </ul>
         </section>
@@ -70,7 +71,8 @@
 
 <script setup lang="ts">
 import BackHeader from '@/components/layouts/BackHeader.vue'
-import Avatar from 'primevue/avatar';
+import IconAvatar from '@/components/icons/IconAvatar.vue';
+import IconPlay from '@/components/icons/IconPlay.vue';
 import Badge from 'primevue/badge';
 
 import { ref } from 'vue';
