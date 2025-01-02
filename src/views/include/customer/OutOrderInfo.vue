@@ -25,12 +25,13 @@
                             readonly @click="getAddr"/>
                     </IftaLabel>
                 </div>
+                <small class="text-red-500">{{ addrMsg }}</small>
             </div>
     
             <IftaLabel class="label-input-box ">
                 <label>상세 주소</label>
                 <InputText id="addrDetail" v-model="order['outInfo']['addrDetail']" placeholder="상세 주소를 입력하세요" />
-                <small class="text-red-500">{{ msg }}</small>
+                <small class="text-red-500">{{ addrDetailMsg }}</small>
             </IftaLabel>
     
             <IftaLabel class="label-input-box ">
@@ -60,11 +61,12 @@ import { useDataStore, useOrderStore } from '@/store';
 import { getAxiosData, getTokenOut, getDaumPopupPosition } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
-const confirm   = useConfirm();
-const router    = useRouter();
-const data      = useDataStore();
-const order     = useOrderStore();
-const msg       = ref('');
+const confirm       = useConfirm();
+const router        = useRouter();
+const data          = useDataStore();
+const order         = useOrderStore();
+const addrMsg       = ref('');
+const addrDetailMsg = ref('');
 
 const { getPopupClose } = usePopup();
 
@@ -120,9 +122,16 @@ const getCloseDaumPost = () => {
 }
 
 const getOrder = () => {
+    if(order['outInfo']['shippingGb'] !== '001' && order['outInfo']['addr'] === '')
+    {
+        addrMsg.value = '주소를 검색해주세요.';
+        return false;
+    }
+
     if(order['outInfo']['addrDetail'] === '')
     {
-        msg.value = '상세 주소를 입력해주세요.';
+        addrMsg.value       = '';
+        addrDetailMsg.value = '상세 주소를 입력해주세요.';
         document.getElementById("addrDetail").focus();
         return false;
     }

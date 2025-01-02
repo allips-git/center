@@ -273,7 +273,18 @@ export const useOrderStore = defineStore('order', {
                     this.getPayAmt(amt['amtGb'], Number(amt['amt']))
                 });
 
-                this.info = res.data['info'];
+                const [hours, minutes] = res.data['info']['insTime'].split(':').map(Number);
+
+                const info = {
+                    stCd    : res.data['info']['stCd'],
+                    estiDt  : res.data['info']['estiDt'],
+                    conDt   : res.data['info']['conDt'],
+                    deliDt  : res.data['info']['deliDt'],
+                    insTime : `${hours}시간 ${minutes}분`,
+                    insUser : res.data['info']['insUser']
+                }
+
+                this.info = info;
             }
             catch(e)
             {
