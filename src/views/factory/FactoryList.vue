@@ -13,20 +13,25 @@
                         <Button label="공장코드 추가" icon="pi pi-plus" size="small" @click="getPopOpen('sysFactorySearch')"/>
                     </div>
                     <ul>
-                        <li class="flex flex-col px-5 py-3 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
-                            <div class="flex justify-between">
-                                <p class="mb-1 font-bold">{{ item.faNm }}</p>
-                                <div class="text-sm text-right *:px-3 *:py-1 *:rounded-full text-white font-bold">
-                                    <p v-if="item['appGb'] === 'E'" class="bg-blue-500 ">승인 대기</p>
-                                    <p v-if="item['appGb'] === 'N'" class="bg-orange-500">반려</p>
-                                </div>
+                        <li class="flex gap-3 px-5 py-3 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
+                            <div class="max-w-[78px]">
+                                <img src="/src/assets/img/test.png" class="w-full h-[87px] rounded-lg object-cover" alt="">
                             </div>
-                            <p class="text-sm text-gray-600">{{ item.tel }}</p>
-                            <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
-                            <!-- <div class="flex flex-wrap gap-1 mt-2">
-                                <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
-                                <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
-                            </div> -->
+                            <div class="w-full">
+                                <div class="flex justify-between">
+                                    <p class="mb-1 font-bold">{{ item.faNm }}</p>
+                                    <div class="text-sm text-right *:px-3 *:py-1 *:rounded-full font-bold">
+                                        <p v-if="item['appGb'] === 'E'" class="text-blue-500 ">승인 대기</p>
+                                        <p v-if="item['appGb'] === 'N'" class="text-orange-500">반려</p>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-600">{{ item.tel }}</p>
+                                <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
+                                <!-- <div class="flex flex-wrap gap-1 mt-2">
+                                    <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
+                                    <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
+                                </div> -->
+                            </div>
                         </li>
                     </ul>
                 </TabPanel>

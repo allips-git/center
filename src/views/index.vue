@@ -142,7 +142,6 @@
                         <button class="text-lg font-bold text-gray-300">></button>
                     </li>
                 </ul>
-                    
             </div>
         </section>
     </aside>
@@ -152,6 +151,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useMainStore } from '@/store';
+
 
 const main  = useMainStore();
 

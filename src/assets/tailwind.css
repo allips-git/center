@@ -92,3 +92,6 @@
   .capsuel_sky{
     @apply  px-4 py-1 text-white rounded-full bg-sky-500
   }
+  .inputNumber-color{
+    @apply *:!text-right w-full  *:!pr-8 font-bold
+  }
