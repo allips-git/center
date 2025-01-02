@@ -6,12 +6,12 @@
                     <div class="flex flex-col items-center justify-center gap-0.5 relative w-full h-full">
                         <span class="text-xs">{{ item.week }}</span>
                         <div class="flex items-center justify-center text-center rounded-full size-9"
-                        :class="{ 'bg-indigo-500 text-white': item.isToday,}"
+                        :class="{ 'bg-sky-500 text-white': item.isToday,}"
                         >
                             <h3 class="text-2xl font-bold">
                             {{ item.dateDay }}</h3>
                         </div>
-                        <span v-if="calendar['daySelIndex'] === index" class="absolute bottom-0 z-10 w-full h-[3px] rounded-full bg-indigo-600"></span>
+                        <span v-if="calendar['daySelIndex'] === index" class="absolute bottom-0 z-10 w-full h-[3px] rounded-full bg-sky-500"></span>
                     </div>
                 </div>
             </swiper-slide>
@@ -36,11 +36,17 @@
             @update:visible="getPopupClose('calendarSet', true)">
             <CalenderSet/>
         </Dialog>
+
+        <Dialog v-model:visible="calenaderEditPop" header="일정" 
+            :modal=true position="center" class="border-0 custom-dialog-bottom">
+            <CalenaderEdit/>
+        </Dialog>
     </main>
 </template>
   
 <script setup lang="ts">
 import CalenderSet from '@/views/include/calendar/CalenderSet.vue'
+import CalenaderEdit from '@/views/include/calendar/CalenaderEdit.vue'
 import FullCalendar from '@fullcalendar/vue3';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -54,6 +60,7 @@ import { usePopupStore, useCalendarStore } from '@/store';
 import { getAxiosData, getConvertDate, getTokenOut } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
+const calenaderEditPop = ref(true)
 const confirm   = useConfirm();
 const popup     = usePopupStore();
 const calendar  = useCalendarStore();

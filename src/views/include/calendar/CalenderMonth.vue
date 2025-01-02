@@ -12,42 +12,45 @@
             <Button size="large" icon="pi pi-plus" class="!size-full" rounded @click="calenderSetPop= true"></Button>
         </div> -->
         
-        <Dialog v-model:visible="popup['pop']['calendarSet']" header="일정" 
+        <!-- <Dialog v-model:visible="popup['pop']['calendarSet']" header="일정" 
             :modal=true position="center" class="border-0 custom-dialog-bottom"
             @update:visible="getPopupClose('calendarSet', true)">
             <CalenderSet/>
-        </Dialog>
-        <div v-if="popup['pop']['calendarDetail']" class="z-50 overflow-hidden w-full max-w-[300px] rounded-xl bg-white border border-gray-100 shadow-sm max-h-[80vh]" :style="modalStyle">
-            <div ref="modalContentRef">
-                <div class="flex items-center justify-between px-5 py-3 pr-1">
-                    <h1 class="text-xl font-bold">{{ calendar['monthDetail']['date'] }}</h1>
-                    <Button text plain icon="pi pi-times" @click="getPopupClose('calendarDetail', true)" size="small" />
+        </Dialog> -->
+
+        <Dialog v-model:visible="popup['pop']['calendarDetail']" header="일정" 
+            :modal=true position="center" class="border-0 custom-dialog-bottom"
+            @update:visible="getPopupClose('calendarSet', true)">
+            <div class="z-50 overflow-hidden w-full max-w-[full] bg-white h-full">
+                <div ref="modalContentRef" class="!containerh-full">
+                    <div class="flex items-center justify-between px-5 py-3 pr-1">
+                        <h1 class="text-xl font-bold">{{ calendar['monthDetail']['date'] }}</h1>
+                    </div>
+                    <div class="p-3 overflow-auto bg-gray-50 max-h-96">
+                        <ul class="flex flex-col gap-2">
+                            <li v-for="(item, index) in calendar['monthDetail']['list']" :key="index" 
+                                :class="`flex items-center justify-between w-full p-3 bg-gray-200 bg-${item['stCd'] === '001' ? 'blue' : 'red'}-100 rounded-md`"
+                                @click="getMonthDataInfo(item['emCd'])">
+                                <div class="flex gap-1">
+                                    <b>{{ item['clientNm'] }}</b>
+                                    <span>・</span>
+                                    <p class="">{{ item['stNm'] }}</p>
+                                </div>
+                                <p class="text-sm">
+                                    {{ item['stCd'] === '001' ? item['startTime'] : item['startTime'] + '~' + item['endTime'] }}
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="p-3 overflow-auto bg-gray-50 max-h-96">
-                    <ul class="flex flex-col gap-2">
-                        <li v-for="(item, index) in calendar['monthDetail']['list']" :key="index" 
-                            :class="`flex items-center justify-between w-full p-3 bg-${item['stCd'] === '001' ? 'blue' : 'red'}-100 rounded-lg`"
-                            @click="getMonthDataInfo(item['emCd'])">
-                            <div class="flex gap-1">
-                                <b>{{ item['clientNm'] }}</b>
-                                <span>・</span>
-                                <p class="">{{ item['stNm'] }}</p>
-                            </div>
-                            <p class="text-sm">
-                                {{ item['stCd'] === '001' ? item['startTime'] : item['startTime'] + '~' + item['endTime'] }}
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="bg-white *:w-full flex gap-1 py-2 px-2">
+                <div class="bg-white *:w-full flex gap-1 py-2 px-2 absolute bottom-0 w-full">
                     <router-link to="/calendar/day" class="md:hidden">
                         <Button label="일 캘린더 보기" text severity="secondary" class="*:!font-bold w-full"/>
                     </router-link>
-                    <!-- <Button label="새 일정" text icon="pi pi-plus" class="*:!font-bold" @click="calenderSetPop= true"/> -->
+                    <Button text label="새로운 견적"></Button>
                 </div>
             </div>
-        </div>
+        </Dialog>
     </main>
 </template>
   
@@ -59,7 +62,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import koLocale from '@fullcalendar/core/locales/ko'; 
 import DatePicker from 'primevue/datepicker';
 import { useConfirm } from "primevue/useconfirm";
-import { ref, nextTick, watch, onMounted, onBeforeUnmount } from 'vue';
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import { usePopupStore, useCalendarStore } from '@/store';
 import { getAxiosData, getConvertDate, getTokenOut } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
@@ -78,58 +81,58 @@ const { getPopupOpen, getPopupClose } = usePopup();
 
 const toggle = (event) => {
     getPopupOpen('calendarDetail');
-    nextTick(() => {
-        const modalHeight       = modalContentRef.value?.offsetHeight || 150;
-        const modalWidth        = modalContentRef.value?.offsetWidth || 300;
-        const viewportWidth     = window.innerWidth;
-        const viewportHeight    = window.innerHeight;
+    // nextTick(() => {
+    //     const modalHeight       = modalContentRef.value?.offsetHeight || 150;
+    //     const modalWidth        = modalContentRef.value?.offsetWidth || 300;
+    //     const viewportWidth     = window.innerWidth;
+    //     const viewportHeight    = window.innerHeight;
 
-        let left = 0;
-        let top  = 0;
+    //     let left = 0;
+    //     let top  = 0;
 
-    if (event) 
-    {
-        // event 객체에서 좌표 가져오기
-        left = event.pageX;
-        top = event.pageY;
-    }
+    // if (event) 
+    // {
+    //     // event 객체에서 좌표 가져오기
+    //     left = event.pageX;
+    //     top = event.pageY;
+    // }
 
-    // 뷰포트 초과 여부를 판단하여 위치 조정
-    if (left + modalWidth > viewportWidth) 
-    {
-        left = viewportWidth - modalWidth - 10; // 오른쪽 경계 초과 시 조정
-    }
+    // // 뷰포트 초과 여부를 판단하여 위치 조정
+    // if (left + modalWidth > viewportWidth) 
+    // {
+    //     left = viewportWidth - modalWidth - 10; // 오른쪽 경계 초과 시 조정
+    // }
 
-    if (top + modalHeight > viewportHeight) 
-    {
-        top = viewportHeight - modalHeight - 10; // 아래쪽 경계 초과 시 조정
-    }
+    // if (top + modalHeight > viewportHeight) 
+    // {
+    //     top = viewportHeight - modalHeight - 10; // 아래쪽 경계 초과 시 조정
+    // }
 
-    // 모달 스타일 업데이트
-    modalStyle.value = {
-        position    : 'fixed',
-        left        : `${left}px`,
-        top         : `${top}px`
-    };
+    // // 모달 스타일 업데이트
+    // modalStyle.value = {
+    //     position    : 'fixed',
+    //     left        : `${left}px`,
+    //     top         : `${top}px`
+    // };
     
-    // 이전 선택 해제
-    if (previousDate.value) 
-    {
-        const previousDateCell = document.querySelector(`[data-date="${previousDate.value}"]`);
-        if (previousDateCell) 
-        {
-            previousDateCell.classList.remove('selected-date'); // 이전 선택된 날짜 클래스 제거
-        }
-    }
+    // // 이전 선택 해제
+    // if (previousDate.value) 
+    // {
+    //     const previousDateCell = document.querySelector(`[data-date="${previousDate.value}"]`);
+    //     if (previousDateCell) 
+    //     {
+    //         previousDateCell.classList.remove('selected-date'); // 이전 선택된 날짜 클래스 제거
+    //     }
+    // }
 
-    // 선택된 날짜의 배경색 변경
-    const dateCell = document.querySelector(`[data-date="${selectedDate.value}"]`);
+    // // 선택된 날짜의 배경색 변경
+    // const dateCell = document.querySelector(`[data-date="${selectedDate.value}"]`);
 
-        if (dateCell) 
-        {
-            dateCell.classList.add('selected-date'); // 선택된 날짜에 클래스 추가
-        }
-    });
+    //     if (dateCell) 
+    //     {
+    //         dateCell.classList.add('selected-date'); // 선택된 날짜에 클래스 추가
+    //     }
+    // });
 };
 
 const dateClick = async (info) => {
@@ -141,22 +144,7 @@ const dateClick = async (info) => {
         previousDate.value = selectedDate.value; // 이전 날짜 저장
         // 선택한 날짜 저장
         selectedDate.value = info.dateStr;
-        let left, top;
-
-        // 모바일에서 터치 이벤트 처리
-        if (info.jsEvent.touches && info.jsEvent.touches.length > 0) 
-        {
-            left = info.jsEvent.touches[0].clientX; 
-            top = info.jsEvent.touches[0].clientY;
-        } 
-        else if (info.jsEvent.pageX !== undefined && info.jsEvent.pageY !== undefined) 
-        {
-            // PC에서 클릭 이벤트 처리
-            left = info.jsEvent.pageX; 
-            top = info.jsEvent.pageY;  
-        }
-        // 모달 토글 함수 호출, 좌표를 event로 전달
-        toggle({ pageX: left, pageY: top }); // 좌표를 포함한 객체 전달
+        toggle({}); 
     }
 };
 
@@ -195,7 +183,7 @@ const calendarOptions = {
     },
     eventContent: function(arg) {
         return {
-            html: `<div class="text-gray-900 border-0 ${arg.event.classNames.join(' ')}">${arg.event.title}</div>`
+            html: `<div class="text-gray-900 truncate border-0 ${arg.event.classNames.join(' ')}">${arg.event.title}</div>`
         }
     },
     eventDrop: function(info) {
@@ -260,10 +248,10 @@ onMounted(async () => {
     if (calendarEl) 
     {
         await calendarEl.addEventListener('touchstart', (event) => {
-            const left = event.touches[0].clientX;
-            const top = event.touches[0].clientY;
+            const left = event.cilck[0].clientX;
+            const top = event.cilck[0].clientY;
             
-            toggle({ pageX: left, pageY: top });
+            toggle({});
         });
     }
 
@@ -288,9 +276,9 @@ watch(() => calendar.searchDt, async (newDate) => {
     }
 });
 
-onBeforeUnmount(() => {
-    window.removeEventListener('resize', handleResize); // 컴포넌트 언마운트 시 리스너 제거
-});
+// onBeforeUnmount(() => {
+//     window.removeEventListener('resize', handleResize); // 컴포넌트 언마운트 시 리스너 제거
+// });
 </script>
 
 <style lang="scss">
