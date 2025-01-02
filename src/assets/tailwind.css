@@ -20,10 +20,10 @@
     @apply shadow-sm bg-white rounded-lg border border-gray-100 w-full
   }
   .main-card-container-box-padding{
-    @apply p-5
+    @apply p-4
   }
   .main-card-tilte-box{
-    @apply font-bold flex justify-between items-center w-full border-b border-gray-100 py-1 px-5 text-lg
+    @apply font-bold flex justify-between items-center w-full border-b pt-4 pb-2 border-gray-100 py-1 px-5 text-lg
   }
   .custom-table-column-min-w{
     @apply whitespace-nowrap
@@ -50,7 +50,7 @@
   }
 
   .bottom-modal-absol-box{
-    @apply w-full absolute bottom-0 left-0 p-4 bg-white 
+    @apply w-full absolute bottom-0 left-0 p-4 bg-white border border-t border-gray-100 pt-3
   }
   .bottom-fixed-btn-box{
     @apply w-full fixed bottom-0 left-0 p-4 bg-white flex gap-2 *:w-full border-t border-gray-200
@@ -85,4 +85,13 @@
   }
   .pc-contents-h-box{
     @apply md:min-h-[calc(100vh-108px)] md:relative
+  }
+  .setting-list-header{
+    @apply px-4 py-3 font-bold border border-gray-200 rounded-lg bg-gray-50
+  }
+  .capsuel_sky{
+    @apply  px-4 py-1 text-white rounded-full bg-sky-500
+  }
+  .inputNumber-color{
+    @apply *:!text-right w-full  *:!pr-8 font-bold
   }

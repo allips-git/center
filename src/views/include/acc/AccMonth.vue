@@ -1,20 +1,20 @@
 <template>
     <main>
         <section class="px-5 pt-5">
-            <div class="relative w-full p-4 bg-white border border-gray-200 rounded-md">
+            <div class="relative w-full ">
                 <section class="flex items-center justify-between mb-1">
                     <h1 class="text-xl font-bold">{{ acc.year }}년</h1>
                     <DatePicker v-model="acc.searchDt" view="year" dateFormat="yy년" 
-                        class="custom-select" :locale="'ko'" showIcon fluid iconDisplay="input"
-                        @update:modelValue="acc.getMonData()"/>
+                        class="w-40 custom-select" :locale="'ko'" showIcon fluid iconDisplay="input"
+                        @update:modelValue="acc.getMonData()" />
                 </section>
                 <AccInfo :saleAmt="getAmt(acc.monthSaleAmt)" :purcAmt="getAmt(acc.monthPurcAmt)" :margin="acc.monthMargin"/>
             </div>
         </section>
-           <div class="mt-5"></div> 
+           <div class="mt-5 gray-bar"></div> 
         <section>
             <ul>
-                <li class="px-4 py-2 font-bold text-lx bg-gray-50">
+                <li class="px-4 py-2 font-bold text-gray-500 border-b border-gray-100 text-lx ">
                     <p>{{ acc.year }}년</p>
                 </li>
                 <template v-for="(item, index) in acc['monthList']" :key="index">
@@ -61,5 +61,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-
+.p-datepicker-panel{
+    min-width: 200px;
+}
 </style>

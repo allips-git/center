@@ -1,13 +1,13 @@
 <template>
 <Dialog v-model:visible="visible"
     style="background-image: radial-gradient(circle at left top, var(--p-surface-0), var(--p-primary-50))"
-    pt:root:class="!border-0 !bg-transparent w-full md:w-[400px] md:h-auto !min-h-[600px] h-full !max-h-screen justify-center" 
+    pt:root:class="!border-0 !bg-transparent w-full md:w-[400px] md:h-auto !min-h-[600px] h-full !max-h-screen justify-start" 
     pt:mask:class="bg-white backdrop-blur-sm">
         <template #container>
             <div class="flex flex-col px-6 pb-8 mt-10 rounded-2xl sm:mt-0">
                 <div class="flex flex-col items-center justify-center">
-                    <IconLogo class="fill-indigo-600 size-32 sm:size-16 "/>
-                    <p class="w-full mb-2 text-3xl font-bold text-center"><span class="text-indigo-600 rext">PlanOrder Center</span></p>
+                    <IconLogo class="fill-sky-500 size-16"/>
+                    <p class="w-full mb-2 text-2xl font-bold text-center"><span class="text-sky-500 rext">PlanOrder Center</span></p>
                 </div>
                 <div class="mt-10 mb-10">
                     <p class="flex flex-col items-center justify-center text-2xl font-bold">로그인</p>

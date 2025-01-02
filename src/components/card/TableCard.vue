@@ -11,7 +11,8 @@
                 <div class="flex items-end justify-between mt-2 mb-5 text-base">
                     <div class="">
                         <h2 class="mb-1 text-sm text-gray-400">{{ card.productTitle }}</h2>
-                        <h3 class="font-bold text-indigo-600">{{ card.colorTitle }}</h3>
+                        <h3 class="font-bold text-blue-600">{{ card.colorTitle }}</h3>
+                        <!-- <h3 class="font-bold text-red-600">{{ card.colorTitle }}</h3> -->
                     </div>
                     <p class="text-lg font-bold">{{ getAmt(card.amt) }}원</p>
                 </div>
