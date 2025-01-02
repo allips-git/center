@@ -56,7 +56,7 @@ import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { useDataStore, useClientStore, useEstiStore, useContractStore } from '@/store';
-import { getAxiosData, getTokenOut } from '@/assets/js/function';
+import { getAxiosData, getTokenOut, getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { contractMsg } from '@/assets/js/msg';
 
@@ -102,7 +102,7 @@ const getConMove = () => {
                 addInfo     : esti['addInfo'],
                 dcInfo      : esti['dcInfo'],
                 cutInfo     : esti['cutInfo'],
-                insTime     : con['conInfo']['insTime'],
+                insTime     : getConvertDate(con['conInfo']['insTime'], 'hh:ii'),
                 conInfo     : con['conInfo']
             }
 

@@ -314,6 +314,16 @@ export const useOrderStore = defineStore('order', {
         getOutInfoReset()
         {
             this.outInfo = getOrder();
+        },
+        getReset()
+        {
+            this.list        = [];
+            this.payList     = getPayList();
+            this.dcInfo      = getAmtInfo();
+            this.addInfo     = getAmtInfo();
+            this.info        = getInfo();
+            this.outInfo     = getOrder();
+            this.pay         = getPay();
         }
     }
 });
