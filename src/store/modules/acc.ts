@@ -4,20 +4,26 @@
 import { defineStore } from 'pinia';
 import { getAxiosData, getConvertDate } from '@/assets/js/function';
 
-// type Nullable<T>    = T | null;
-// type AmtUnitType    = 'F' | 'P'; /** F : 금액(원) / P : %(퍼센트) */
+interface MainHeader {
+    saleAmt    : number;
+    purcAmt    : number;
+    margin     : number;
+}
 
-// interface AmtInfo {
-//     saleAmt     : number;
-//     purcAmt     : number;
-//     marginAmt   : number;
-// }
+interface DateList {
+    stDt    : string;
+}
 
-// const getAmtInfo = (): AmtInfo => ({
-//     saleAmt : 0,
-//     purcAmt : 0,
-//     margin  : 0
-// });
+interface List {
+    emCd        : string;
+    stDt        : string;
+    clientNm    : string;
+    addr        : string;
+    addrDetail  : string;
+    totalSaleAmt: number;
+    totalPurcAmt: number;
+    rev         : number;
+}
 
 interface MonthList {
     date    : string;
@@ -51,20 +57,38 @@ interface DayList {
 }
 
 interface State {
-    searchDt : Date;
-    monthList: MonthList[];
-    weekData : [];
-    weekList : WeekList[];
-    dayList  : DayList[];
+    searchDt    : Date;
+    stCd        : string;
+    mainHeader  : MainHeader;
+    dateList    : DateList[];
+    list        : List[];
+    monthList   : MonthList[];
+    weekData    : [];
+    weekList    : WeekList[];
+    dayList     : DayList[];
+    start       : number;
+}
+
+const getMainHeader = (): MainHeader => {
+    return {
+        saleAmt : 0,
+        purcAmt : 0,
+        margin  : 0
+    }
 }
 
 export const useAccStore = defineStore('acc', {
     state: (): State => ({
         searchDt    : new Date(),
+        stCd        : '003',
+        mainHeader  : getMainHeader(),
+        dateList    : [],
+        list        : [],
         monthList   : [],
         weekData    : [],
         weekList    : [],
-        dayList     : []
+        dayList     : [],
+        start       : 0
     }),
     getters : {
         year            : (state) => state.searchDt.getFullYear(),
@@ -95,14 +119,22 @@ export const useAccStore = defineStore('acc', {
         }
     },
     actions : {
-        async getList(params)
+        async getAccAll()
         {
+            const params = {
+                stCd  : this.stCd,
+                start : this.start
+            }
+
             try
             {
                 const instance  = await getAxiosData();
-                const res       = await instance.post(`https://data.planorder.kr/accV1/getList`, params);
+                const res       = await instance.post(`https://data.planorder.kr/accV1/getAccAll`, params);
 
                 console.log(res);
+                this.mainHeader = res.data['amt'];
+                this.dateList   = res.data['date'];
+                this.list       = res.data['list'];
             }
             catch(e)
             {

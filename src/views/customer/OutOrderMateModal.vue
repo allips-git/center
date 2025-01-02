@@ -50,7 +50,7 @@ import { useOrderStore, useOutOrderMateStore } from '@/store';
 const ord       = useOrderStore();
 const mate      = useOutOrderMateStore();
 const domain    = window.location.origin;
-const edCd      = btoa(ord['emCd']);
+const edCd      = btoa(ord['edCd']);
 
 const getOutOrderDoc = () => {
     const value = event.target.value;
