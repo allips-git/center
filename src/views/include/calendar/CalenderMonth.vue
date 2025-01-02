@@ -230,6 +230,7 @@ const calendarOptions = {
                 {
                     const instance  = await getAxiosData();
                     await instance.post(`https://data.planorder.kr/calendarV1/getMonExchange`, params);
+                    await calendar.getMonthData();
                     await calendar.getDayData();
                 }
                 catch(e)

@@ -28,9 +28,11 @@
             </div>
         </div>
 
+        <div class="pt-4 btn-2-layout-box">
+            <InputText :value="''+domain+'/customer/conDoc?cd='+emCd+''" readonly/>
+        </div>
         <div class="btn-2-layout-box pt-4">
-            <Button label="발주서 미리보기" severity="secondary"/>
-            <Button label="발주 하기"/>
+            <Button label="링크 발주" severity="success"/>
         </div>
     </section>
 </template>
