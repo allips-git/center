@@ -10,17 +10,17 @@
         </div>
         <ul class="flex flex-col gap-1 *:flex *:gap-2 *:justify-between">
             <li class="">
-                <p class="w-10">메출</p>
+                <p class="w-10 text-gray-500">메출</p>
                 <span class="font-bold text-right">{{ saleAmt }}</span>
             </li>
 
             <li class="">
-                <p class="w-10">매입</p>
+                <p class="w-10 text-gray-500">매입</p>
                 <span class="font-bold text-right">{{ purcAmt }}</span>
             </li>
 
             <li class="">
-                <p class="w-10">수익</p>
+                <p class="w-10 text-gray-500">수익</p>
                 <span class="font-bold text-right text-green-500">{{ rev }}</span>
             </li>
         </ul>

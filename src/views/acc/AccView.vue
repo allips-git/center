@@ -2,14 +2,14 @@
     <BackHeader title="회계" />
     <main class="w-full">
         <section class="px-5 pt-5">
-        <div class="relative w-full p-4 bg-white border border-gray-200 rounded-md">
+        <div class="relative w-full bg-white ">
             <ul v-for="(item, index) in salesData" :key="index">
                 <li class="flex items-center gap-2">
                     <p class="w-20 text-gray-600">{{ item.title }}</p>
-                    <p class="text-lg font-bold" :class="{ 'text-green-500': item.title === '마진' }">{{ item.amount }}원</p>
+                    <p class="text-xl font-bold" :class="{ 'text-green-500': item.title === '마진' }">{{ item.amount }}원</p>
                 </li>
             </ul>
-            <Button label="전체 기록 보기" outlined class="!absolute right-4 top-4" size="small" @click="AccMonthPop = true"/>
+            <Button label="전체 기록 보기"  severity="secondary" class="!absolute right-0 top-0" size="small" @click="AccMonthPop = true"/>
         </div>
     </section>
 

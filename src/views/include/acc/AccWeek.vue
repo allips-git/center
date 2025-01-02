@@ -33,7 +33,6 @@
 import StatisticsList from '@/components/list/StatisticsList.vue'
 import AccDay from '@/views/include/acc/AccDay.vue'
 import AccInfo from '@/views/include/acc/AccInfo.vue'
-import AccountList from '@/components/list/AccountList.vue'
 import { onMounted } from 'vue';
 import { usePopupStore, useAccStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
