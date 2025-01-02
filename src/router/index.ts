@@ -23,6 +23,7 @@ import ConmateModal from "@/views/customer/ConmateModal.vue";
 import ConDoc from "@/views/customer/ConDoc.vue";
 import CustomerOrderList from "@/views/customer/OrderList.vue";
 import OutOrderDoc from "@/views/customer/OutOrderDoc.vue";
+import OutOrderMateModal from "@/views/customer/OutOrderMateModal.vue";
 import FactoryList from "@/views/factory/FactoryList.vue";
 // import OutInput from "@/views/factory/OutInput.vue";
 import OutDetail from "@/views/factory/OutDetail.vue";
@@ -144,6 +145,12 @@ const routes = [
         meta: { title: '견적서 공유 화면', gubun: 'Y' }
     },
     {
+        path: "/customer/outOrderMate",
+        name: "outOrderMate",
+        component: OutOrderMateModal,
+        meta: { title: '외주 발주서', gubun: 'Y' }
+    },
+    {
         path: "/customer/conMate",
         name: "ConmateModal",
         component: ConmateModal,
@@ -162,7 +169,7 @@ const routes = [
         meta: { title: '발주서' }
     },
     {
-        path: "/outOrderDoc",
+        path: "/customer/outOrderDoc",
         name: "outOrderDoc",
         component: OutOrderDoc,
         meta: { title: '외주 발주서', gubun: 'Y' }

@@ -7,18 +7,15 @@ import { getAxiosData, getCardColumns, getConvertDate } from '@/assets/js/functi
 interface State {
     ceNm        : string;
     faNm        : string;
-    clientNm    : string;
-    imgUrl      : string;
     headers     : [],
     list        : [],
     sizeYn      : boolean;
 }
 
-export const useConMateStore = defineStore('orderDoc', {
+export const useOutOrderMateStore = defineStore('outOrderMate', {
     state: (): State => ({
         ceNm        : '',
         faNm        : '',
-        clientNm    : '',
         headers     : [],
         list        : [],
         sizeYn      : false
@@ -38,10 +35,10 @@ export const useConMateStore = defineStore('orderDoc', {
 
                 const headers = [
                     { label: "매장번호", value: res.data['info']['tel'] },
-                    { label: "시공명", value: res.data['info']['addr'] },
-                    { label: "주문일", value: res.data['info']['addrDetail'] },
-                    { label: "출고일", value: getConvertDate(new Date(res.data['info']['estiDt']), 'yy.mm.dd.w') },
-                    { label: "배송명", value: getConvertDate(new Date(res.data['info']['conDt']), 'yy.mm.dd.w') },
+                    { label: "시공명", value: res.data['info']['clientNm']+' 고객' },
+                    { label: "주문일", value: getConvertDate(new Date(res.data['info']['ordDt']), 'yy.mm.dd.w') },
+                    { label: "출고일", value: getConvertDate(new Date(res.data['info']['outDt']), 'yy.mm.dd.w') },
+                    { label: "배송명", value: `(${res.data['info']['shippingGbNm']}) ${res.data['info']['addr']} ${res.data['info']['addrDetail']}` },
                     { label: "요청사항", value: res.data['info']['memo'] }
                 ];
 
@@ -52,7 +49,7 @@ export const useConMateStore = defineStore('orderDoc', {
                 res.data['location'].map(location => {
                     list.push({
                         title     : location.title,
-                        cardLists : res.data['orderList'].map(esti => {
+                        cardLists : res.data['outList'].map(esti => {
                             if(location.title === esti.title)
                             {
                                 const rows = [];
@@ -90,6 +87,11 @@ export const useConMateStore = defineStore('orderDoc', {
                                             split   : esti.split === '001' ? '양개' : '편개',
                                             size    : esti.totalUnit + esti.unitNm
                                         });
+                                    break;
+                                    case '004':
+                                        rows.push({
+                                            qty : esti.cnt
+                                        })
                                     break;
                                 }
 

@@ -149,6 +149,7 @@ const getDelete = (edCd: string) => {
 }
 
 const getBtnProcess = async (type: string, edCd: string) => {
+    console.log(type);
     switch(type)
     {
         case 'primary':
@@ -163,6 +164,11 @@ const getBtnProcess = async (type: string, edCd: string) => {
             await order.getEdCd(edCd);
             getPopupOpen('outOrderSet');
         }
+        break;
+        case 'secondary':
+            /** 외주 공장 발주완료 */
+            await order.getEdCd(edCd);
+            router.push({ path : '/customer/outOrderMate' });
         break;
         case 'warn':
             /** 시스템 공장 발주취소 */
