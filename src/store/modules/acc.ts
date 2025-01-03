@@ -208,6 +208,10 @@ export const useAccStore = defineStore('acc', {
         getSearchDt(dt: string)
         {
             this.searchDt = new Date(dt);
+        },
+        getStCd(stCd: string)
+        {
+            this.stCd = stCd;
         }
     }
 });

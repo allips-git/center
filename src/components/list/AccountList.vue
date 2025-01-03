@@ -10,7 +10,7 @@
         </div>
         <ul class="flex flex-col gap-1 *:flex *:gap-2 *:justify-between">
             <li class="">
-                <p class="w-10 text-gray-500">메출</p>
+                <p class="w-10 text-gray-500">매출</p>
                 <span class="font-bold text-right">{{ saleAmt }}</span>
             </li>
 
