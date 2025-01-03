@@ -60,7 +60,7 @@ import { usePopupStore, useCalendarStore } from '@/store';
 import { getAxiosData, getConvertDate, getTokenOut } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
-const calenaderEditPop = ref(true)
+const calenaderEditPop = ref(false)
 const confirm   = useConfirm();
 const popup     = usePopupStore();
 const calendar  = useCalendarStore();

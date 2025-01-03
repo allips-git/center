@@ -23,12 +23,15 @@ export const useOutOrderMateStore = defineStore('outOrderMate', {
     actions : {
         async getInfo(params)
         {
+            console.log(params);
+
             try
             {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/orderV1/getOutOrderDoc`, params);
 
                 console.log(res);
+                
                 this.ceNm       = res.data['info']['ceNm'];
                 this.faNm       = res.data['info']['faNm'];
                 this.clientNm   = res.data['info']['clientNm'];

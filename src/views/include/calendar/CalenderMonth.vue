@@ -20,27 +20,11 @@
 
         <Dialog v-model:visible="popup['pop']['calendarDetail']" header="일정" 
             :modal=true position="center" class="border-0 custom-dialog-bottom"
-            @update:visible="getPopupClose('calendarSet', true)">
+            @update:visible="getPopupClose('calendarDetail', true)">
             <div class="z-50 overflow-hidden w-full max-w-[full] bg-white h-full">
                 <div ref="modalContentRef" class="!containerh-full">
                     <div class="flex items-center justify-between px-5 py-3 pr-1">
                         <h1 class="text-xl font-bold">{{ calendar['monthDetail']['date'] }}</h1>
-                    </div>
-                    <div class="p-3 overflow-auto bg-gray-50 max-h-96">
-                        <ul class="flex flex-col gap-2">
-                            <li v-for="(item, index) in calendar['monthDetail']['list']" :key="index" 
-                                :class="`flex items-center justify-between w-full p-3 bg-gray-200 bg-${item['stCd'] === '001' ? 'blue' : 'red'}-100 rounded-md`"
-                                @click="getMonthDataInfo(item['emCd'])">
-                                <div class="flex gap-1">
-                                    <b>{{ item['clientNm'] }}</b>
-                                    <span>・</span>
-                                    <p class="">{{ item['stNm'] }}</p>
-                                </div>
-                                <p class="text-sm">
-                                    {{ item['stCd'] === '001' ? item['startTime'] : item['startTime'] + '~' + item['endTime'] }}
-                                </p>
-                            </li>
-                        </ul>
                     </div>
                 </div>
                 <div class="p-3 overflow-auto bg-gray-50 max-h-96">
@@ -61,7 +45,7 @@
                 </div>
                 
                 <div class="bg-white *:w-full flex gap-1 py-2 px-2">
-                    <Button label="일 캘린더 보기" text severity="secondary" @click.stop="router.push('/calendar/day')"/>
+                    <Button label="일 캘린더 보기" text severity="secondary"/>
                     <!-- <Button label="새 일정" text icon="pi pi-plus" class="*:!font-bold" @click="calenderSetPop= true"/> -->
                 </div>
             </div>
@@ -77,7 +61,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import koLocale from '@fullcalendar/core/locales/ko'; 
 import DatePicker from 'primevue/datepicker';
 import { useConfirm } from "primevue/useconfirm";
-import { ref, nextTick, watch, onMounted, onBeforeUnmount } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { usePopupStore, useCalendarStore } from '@/store';
 import { getAxiosData, getConvertDate, getTokenOut } from '@/assets/js/function';
@@ -89,67 +73,10 @@ const popup         = usePopupStore();
 const calendar      = useCalendarStore();
 
 const locale            = 'ko';
-const modalStyle        = ref({});
 const selectedDate      = ref('');
 const modalContentRef   = ref<HTMLElement | null>(null);
 
 const { getPopupOpen, getPopupClose } = usePopup();
-
-const toggle = (event) => {
-    getPopupOpen('calendarDetail');
-    // nextTick(() => {
-    //     const modalHeight       = modalContentRef.value?.offsetHeight || 150;
-    //     const modalWidth        = modalContentRef.value?.offsetWidth || 300;
-    //     const viewportWidth     = window.innerWidth;
-    //     const viewportHeight    = window.innerHeight;
-
-    //     let left = 0;
-    //     let top  = 0;
-
-    // if (event) 
-    // {
-    //     // event 객체에서 좌표 가져오기
-    //     left = event.pageX;
-    //     top = event.pageY;
-    // }
-
-    // // 뷰포트 초과 여부를 판단하여 위치 조정
-    // if (left + modalWidth > viewportWidth) 
-    // {
-    //     left = viewportWidth - modalWidth - 10; // 오른쪽 경계 초과 시 조정
-    // }
-
-    // if (top + modalHeight > viewportHeight) 
-    // {
-    //     top = viewportHeight - modalHeight - 10; // 아래쪽 경계 초과 시 조정
-    // }
-
-    // // 모달 스타일 업데이트
-    // modalStyle.value = {
-    //     position    : 'fixed',
-    //     left        : `${left}px`,
-    //     top         : `${top}px`
-    // };
-    
-    // // 이전 선택 해제
-    // if (previousDate.value) 
-    // {
-    //     const previousDateCell = document.querySelector(`[data-date="${previousDate.value}"]`);
-    //     if (previousDateCell) 
-    //     {
-    //         previousDateCell.classList.remove('selected-date'); // 이전 선택된 날짜 클래스 제거
-    //     }
-    // }
-
-    // // 선택된 날짜의 배경색 변경
-    // const dateCell = document.querySelector(`[data-date="${selectedDate.value}"]`);
-
-    //     if (dateCell) 
-    //     {
-    //         dateCell.classList.add('selected-date'); // 선택된 날짜에 클래스 추가
-    //     }
-    // });
-};
 
 const dateClick = async (info) => {
     await getPopupClose('calendarDetail', true);
@@ -160,7 +87,7 @@ const dateClick = async (info) => {
         previousDate.value = selectedDate.value; // 이전 날짜 저장
         // 선택한 날짜 저장
         selectedDate.value = info.dateStr;
-        toggle({}); 
+        getPopupOpen('calendarDetail');
     }
 };
 
@@ -266,17 +193,6 @@ const calendarOptions = {
 
 onMounted(async () => {
     await window.addEventListener('resize', handleResize); // resize 이벤트 리스너 추가
-    const calendarEl = document.querySelector('.fc'); // FullCalendar의 최상위 DOM 요소 선택
-    if (calendarEl) 
-    {
-        await calendarEl.addEventListener('touchstart', (event) => {
-            const left = event.cilck[0].clientX;
-            const top = event.cilck[0].clientY;
-            
-            toggle({});
-        });
-    }
-
     await getMonthData();
 });
 
@@ -297,10 +213,6 @@ watch(() => calendar.searchDt, async (newDate) => {
         fullCalendar.value.getApi().gotoDate(newDate);
     }
 });
-
-// onBeforeUnmount(() => {
-//     window.removeEventListener('resize', handleResize); // 컴포넌트 언마운트 시 리스너 제거
-// });
 </script>
 
 <style lang="scss">

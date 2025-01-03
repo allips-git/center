@@ -26,8 +26,8 @@
     <section class="w-full custom-right-tab">
         <Tabs value="0" class="w-full">
             <TabList class="justify-end">
-                <Tab value="0" class="text-lg font-bold" @click="acc.getStCd('003')">계약 9건</Tab>
-                <Tab value="1" class="text-lg font-bold" @click="acc.getStCd('012')">결제 12건</Tab>
+                <Tab value="0" class="text-lg font-bold" @click="getTab('003')">계약</Tab>
+                <Tab value="1" class="text-lg font-bold" @click="getTab('012')">결제</Tab>
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
@@ -41,17 +41,37 @@
                                 <template v-for="(item, index) in acc.list" :key="index">
                                     <AccountList v-if="date['stDt'] === item.stDt" 
                                         :clientNm="item.clientNm" 
-                                        :stNm="item.stCd === '003' ? '계약' : '결제'" 
+                                        :stNm="'계약'" 
                                         :addr="item.addr + ' ' + item.addrDetail"
-                                        :saleAmt="item.saleAmt" 
-                                        :purcAmt="item.purcAmt" 
-                                        :rev="item.rev" />
+                                        :saleAmt="getAmt(item.totalSaleAmt)" 
+                                        :purcAmt="getAmt(item.totalPurcAmt)" 
+                                        :rev="getAmt(item.rev)" />
                                 </template>
                             </template>
                         </div>
                     </div>
                 </TabPanel>
-                <TabPanel value="0"></TabPanel>
+                <TabPanel value="1">
+                    <div class="">
+                        <div>
+                            <template v-for="(date, dIndex) in acc.dateList" :key="dIndex">
+                                <div class="flex items-center gap-2 px-4 py-2">
+                                    <p class="flex-none text-gray-400">{{ date['stDt'] }}</p>
+                                    <div class="w-full h-px bg-gray-200"></div>
+                                </div>
+                                <template v-for="(item, index) in acc.list" :key="index">
+                                    <AccountList v-if="date['stDt'] === item.stDt" 
+                                        :clientNm="item.clientNm" 
+                                        :stNm="'결제'" 
+                                        :addr="item.addr + ' ' + item.addrDetail"
+                                        :saleAmt="getAmt(item.totalSaleAmt)" 
+                                        :purcAmt="getAmt(item.totalPurcAmt)" 
+                                        :rev="getAmt(item.rev)" />
+                                </template>
+                            </template>
+                        </div>
+                    </div>
+                </TabPanel>
             </TabPanels>
         </Tabs>
     </section>
@@ -85,6 +105,11 @@ const { getPopupOpen, getPopupClose } = usePopup();
 
 const getAmt = (amt: number) => {
     return getCommas(Number(amt));
+}
+
+const getTab = async (stCd: string) => {
+    await acc.getStCd(stCd);
+    await acc.getAccAll();
 }
 
 onMounted(() => {

@@ -89,7 +89,7 @@ export const estiBlindMsg = (params: EstiBlindMsg): { msg: string; id: string, s
         {
             if((Number(params['height']) < Number(params['minHeight'])) || (Number(params['height']) > Number(params['maxHeight'])))
             {
-                return { msg : `해당 제품 최소 세로 ${params['minHeight']}cm, 최대 가로 ${params['maxHeight']}cm 입니다.`, id : 'bHeight', state : false };
+                return { msg : `해당 제품 최소 세로 ${params['minHeight']}cm, 최대 세로 ${params['maxHeight']}cm 입니다.`, id : 'bHeight', state : false };
             }
         }
     }

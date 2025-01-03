@@ -15,7 +15,7 @@
                     <ul>
                         <li class="flex gap-3 px-5 py-3 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
                             <div class="max-w-[78px]">
-                                <img src="/src/assets/img/test.png" class="w-full h-[87px] rounded-lg object-cover" alt="">
+                                <img :src="getImage(item.imgUrl)" class="w-full h-[87px] rounded-lg object-cover" alt="">
                             </div>
                             <div class="w-full">
                                 <div class="flex justify-between">
@@ -103,6 +103,10 @@ const getPopOpen = (popNm: string) => {
 
 const getPopClose = (gb: boolean, popNm: string) => {
     getPopupClose(popNm, gb);
+}
+
+const getImage = (imgUrl: string) => {
+    return 'https://elasticbeanstalk-ap-northeast-2-627549176645.s3.ap-northeast-2.amazonaws.com/' + imgUrl;
 }
 
 const getSysDetail = (faCd: string, appGb: string) => {
