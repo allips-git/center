@@ -224,6 +224,29 @@ export const useClientStore = defineStore('client', {
                 console.log(e);
             }
         },
+        async getInfo()
+        {
+            const params = {
+                clientCd : this.clientCd
+            };
+
+            console.log(params);
+
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/clientV1/getInfo`, params);
+
+                console.log(res);
+
+                this.type = 'U';
+                this.info = res.data['info'];
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        },
         async getDetail()
         {
             try
@@ -268,8 +291,10 @@ export const useClientStore = defineStore('client', {
         },
         async getReset()
         {
+            this.type   = 'I';
             this.person = [];
             this.group  = [{ value : 'N', label : '신규입력' }];
+            this.msg    = getMsg();
             this.info   = getInfo();
         }
     },

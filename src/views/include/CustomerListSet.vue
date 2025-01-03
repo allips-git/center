@@ -48,7 +48,7 @@
             <small class="text-red-500">{{ client['msg']['groupNm'] }}</small>
         </IftaLabel>
         <div class="bottom-modal-absol-box">
-            <Button type="button" label="명세서 이동" class="w-full" size="large" @click="getSaveNext"/>
+            <Button type="button" :label="client['type'] === 'I' ? '명세서 이동' : '저장'" class="w-full" size="large" @click="getSaveNext"/>
         </div>
     </div>
     <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:9999;-webkit-overflow-scrolling:touch;">
@@ -135,15 +135,15 @@ const getSaveNext = () => {
     }
 
     confirm.require({
-        message     : '고객등록 후 명세표로 이동하시겠습니까?',
-        header      : '고객등록',
+        message     : client['type'] === 'I' ? '고객등록 후 명세표로 이동하시겠습니까?' : '고객 정보를 저장하시겠습니까?',
+        header      : '고객저장',
         rejectProps : {
-            label       : '뒤로이동',
+            label       : client['type'] === 'I' ? '뒤로이동' : '취소',
             severity    : 'secondary',
             outlined    : true
         },
         acceptProps : {
-            label: '명세표 이동'
+            label: client['type'] === 'I' ? '명세표 이동' : '저장하기'
         },
         accept : async () => {
             const params = {
@@ -159,6 +159,11 @@ const getSaveNext = () => {
                 'groupNm'       : client['info']['groupNm']
             }
 
+            if(client['type'] === 'U')
+            {
+                params['clientCd'] = client['clientCd'];
+            }
+
             console.log(params);
 
             try
@@ -166,9 +171,17 @@ const getSaveNext = () => {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/clientV1/getResult`, params);
 
-                client.getDataSet(res.data['clientCd']);
+                if(client['type'] === 'I')
+                {
+                    client.getDataSet(res.data['clientCd']);
+                    router.push({ path : '/customer/detail' });
+                }
+                else
+                {
+                    client.getDetail();
+                }
+                
                 getPopupClose(true, 'clientSet');
-                router.push({ path : '/customer/detail' });
             }
             catch(e)
             {

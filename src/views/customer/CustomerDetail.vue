@@ -4,7 +4,7 @@
         <section class="p-5 pb-0">
             <div class="flex items-center justify-between">
                 <h1 class="text-lg font-bold ">{{ client['detail']['clientNm'] }}</h1>
-                <Button label="정보수정" outlined severity="secondary" size="small"/>
+                <Button label="정보수정" outlined severity="secondary" size="small" @click="getClientModify"/>
             </div>
             <ul class="flex flex-col gap-4 mt-5 text-sm rounded-md">
                 <li class="flex items-center">
@@ -94,23 +94,20 @@
             @update:visible="getPopClose(true, 'itemSet')">
             <ProductRegister/>
         </Dialog>
-        
+        <Dialog v-model:visible="popup['pop']['clientSet']" header="고객 등록" 
+            :modal=true position="center" class="custom-dialog-bottom"
+            @update:visible="getPopClose(true, 'clientSet')">
+            <CustomerListSet/>
+        </Dialog>
     </main>
-    <!-- <Dialog v-model:visible="popup['pop']['ordList']"  header="발주서" 
-        :modal=true position="center" class="custom-dialog-bottom"
-        @update:visible="getPopClose(true, 'ordList')">
-        <OrderList/>
-    </Dialog> -->
 </template>
     
 <script setup lang="ts">
-import { ref } from 'vue' 
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import ProcessCard from "@/components/card/ProcessCard.vue";
 import ProductChoice from "@/views/include/ProductChoice.vue";
 import ProductRegister from "@/views/include/ProductRegister.vue";
-
-const de = ref (true)
+import CustomerListSet from '@/views/include/CustomerListSet.vue'
 import Tabs from 'primevue/tabs';
 import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
@@ -146,6 +143,12 @@ const getNewEsti = () => {
 
 const getPopClose = (gb: boolean, popNm: string) => {
     getPopupClose(popNm, gb);
+}
+
+const getClientModify = async () => {
+    getPopupOpen('clientSet');
+    await client.getReset();
+    await client.getInfo();
 }
 
 onMounted(() => {
