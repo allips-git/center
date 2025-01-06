@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useJoinStore } from '@/store/modules/join';
+import { useJoinStore } from '@/store';
 
 const IMP = window.IMP;
 IMP.init("imp36139043");
@@ -50,7 +50,6 @@ async function getDanalToken()
         });
     
         const res    = await instance.get(`https://data.planorder.kr/api/danal/getToken`);
-        console.log(res);
         const token  = res.data;
 
         return {
@@ -80,7 +79,7 @@ async function getDanal(uid, token)
     const join      = useJoinStore();
     const params    = {
         impUid  : uid,
-        token   : token
+        token   : token['response']['access_token']
     };
 
     try 
@@ -95,11 +94,8 @@ async function getDanal(uid, token)
         if(result.response.certified)
         {
             /** 본인인증 성공 */
-            join.getAuth({
-                name : result.response.name,
-                tel  : result.response.phone
-            });
-
+            join.getAuth(result.response.name, result.response.phone);
+            
             return {
                 status  : true,
                 data    : '',

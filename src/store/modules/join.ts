@@ -35,7 +35,7 @@ interface CenterInfo {
     ceNm        : string;
     area        : string;
     gb          : string;
-    einNum      : string;
+    einNum      : null | number;
     ceoNm       : string;
     zip         : number;
     addr        : string;
@@ -47,6 +47,7 @@ interface Msg {
     id      : string;
     pw      : string;
     pwChk   : string;
+    einFile : string;
 }
 
 interface State {
@@ -55,6 +56,7 @@ interface State {
     auth        : AuthInfo;
     login       : LoginInfo;
     center      : CenterInfo;
+    msg         : Msg;
 }
 
 const getAgreeInfo = (gb): AgreeInfo => {
@@ -90,9 +92,9 @@ const getLoginInfo = (): LoginInfo => {
 const getCenterInfo = (): CenterInfo => {
     return {
         ceNm        : '',
-        area        : '',
+        area        : 'SE',
         gb          : 'P',
-        einNum      : '',
+        einNum      : null,
         ceoNm       : '',
         zip         : '',
         addr        : '',
@@ -105,13 +107,14 @@ const getMsg = (): Msg => {
     return {
         id      : '',
         pw      : '',
-        pwChk   : ''
+        pwChk   : '',
+        einFile : ''
     }
 }
 
 export const useJoinStore = defineStore('join', {
     state: (): State => ({
-        certified   : true,
+        certified   : false,
         agree       : getAgreeInfo(false),
         auth        : getAuthInfo(),
         login       : getLoginInfo(),
@@ -119,6 +122,11 @@ export const useJoinStore = defineStore('join', {
         msg         : getMsg()
     }),
     actions: {
+        getMsgSet(msg: string, name: string)
+        {
+            this.msg        = getMsg();
+            this.msg[name]  = msg;
+        },
         getCertified(state: boolean)
         {
             this.certified = state;
@@ -126,6 +134,25 @@ export const useJoinStore = defineStore('join', {
         getAgree(status: boolean)
         {
             this.agree = getAgreeInfo(status);
+        },
+        getAuth(name: string, tel: number)
+        {
+            this.auth['name'] = name;
+            this.auth['tel']  = tel;
+        },
+        getFile(file: File, fileName: string)
+        {
+            this.login['einFile']['file'] = file;
+            this.login['einFile']['name'] = fileName;
+        },
+        getReset()
+        {
+            this.certified  = false;
+            this.agree      = getAgreeInfo(false);
+            this.auth       = getAuthInfo();
+            this.login      = getLoginInfo();
+            this.center     = getCenterInfo();
+            this.msg        = getMsg();
         }
     }
 });

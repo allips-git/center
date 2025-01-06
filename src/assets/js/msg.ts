@@ -1,3 +1,90 @@
+interface JoinFirstParams {
+    id      : string;
+    pw      : string;
+    pwChk   : string;
+    einFile : string;
+}
+
+/**
+ * @description 회원가입 시 유효성 검사 1
+ */
+export const joinFirstMsg = (params: JoinFirstParams): { msg: string; id: string, state: boolean } => {
+    if(params['id'] === '')
+    {
+        return { msg : '이메일을 입력해주세요.', id : 'id', state : false };
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const stat       = emailRegex.test(params['id']);
+
+    if(!stat)
+    {
+        return { msg : '잘못된 이메일 형식입니다.', id : 'id', state : false };
+    }
+
+    if(params['pw'] === '')
+    {
+        return { msg : '비밀번호를 입력해주세요.', id : 'pw', state : false };
+    }
+
+    if(params['pwChk'] === '')
+    {
+        return { msg : '비밀번호 확인란을 입력해주세요.', id : 'pwChk', state : false };
+    }
+
+    if(params['pw'] !== params['pwChk'])
+    {
+        return { msg : '비밀번호가 일치하지 않습니다.', id : 'pwChk', state : false };
+    }
+
+    if(params['pw'].length < 4)
+    {
+        return { msg : '비밀번호는 4자리 이상 입력해주세요.', id : 'pw', state : false };
+    }
+
+    return { msg : '', id : '', state : true };
+}
+
+interface JoinSecondParams {
+    ceNm   : string;
+    einNum : string;
+    ceoNm  : string;
+    addr   : string;
+    tel    : string;
+}
+
+/**
+ * @description 회원가입 시 유효성 검사 1
+ */
+export const joinSecondMsg = (params: JoinSecondParams): { msg: string; id: string, state: boolean } => {
+    if(params['faNm'] === '')
+    {
+        return { msg : '센터 시설명을 입력해주세요', id : 'faNm', state : false };
+    }
+
+    if(params['einNum'] === '')
+    {
+        return { msg : '사업지 등록번호를 입력해주세요.', id : 'einNum', state : false };
+    }
+
+    if(params['ceoNm'] === '')
+    {
+        return { msg : '대표자 이름을 입력해주세요.', id : 'ceoNm', state : false };
+    }
+
+    if(params['addr'] === '')
+    {
+        return { msg : '주소를 입력해주세요.', id : 'addr', state : false };
+    }
+
+    if(params['ceoTel'] === '')
+    {
+        return { msg : '공장 대표 연락처를 입력해주세요.', id : 'ceoTel', state : false };
+    }
+
+    return { msg : '', id : '', state : true };
+}
+
 interface ClientMsg {
     clientNm    : string;
     tel         : string;

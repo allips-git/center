@@ -14,13 +14,13 @@
 
                         <IftaLabel class="w-full">
                             <label for="pw">비밀번호</label>
-                            <InputText id="pw" v-model="join['login']['pw']" placeholder="비밀번호를 입력해주세요" class="w-full"/>
+                            <InputText type="password" id="pw" v-model="join['login']['pw']" placeholder="비밀번호를 입력해주세요" class="w-full"/>
                             <small v-if="join['msg']['pw'] !== ''" class="text-red-500">{{ join['msg']['pw'] }}</small>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
                             <label for="pw">비밀번호 확인</label>
-                            <InputText id="pwChk" v-model="join['login']['pwChk']" placeholder="비밀번호를 다시 한 번 입력해주세요" class="w-full"/>    
+                            <InputText type="password" id="pwChk" v-model="join['login']['pwChk']" placeholder="비밀번호를 다시 한 번 입력해주세요" class="w-full"/>    
                             <small v-if="join['msg']['pwChk'] !== ''" class="text-red-500">{{ join['msg']['pwChk'] }}</small>
                         </IftaLabel>
 
@@ -35,7 +35,7 @@
                         <small v-if="join['msg']['einFile'] !== ''" class="text-red-500">{{ join['msg']['einFile'] }}</small>
                     </div>
                     <div class="mobile-fiex-bottom">
-                        <Button label="동의하고 계속하기" class="w-full" />
+                        <Button label="다음" class="w-full" @click="getNext"/>
                     </div>
                 </div>
             </template>
@@ -50,7 +50,9 @@ import InputIcon from 'primevue/inputicon';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import { useJoinStore } from '@/store';
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
+import { getFileCheck } from '@/assets/js/function';
+import { joinFirstMsg } from '@/assets/js/msg';
 
 const join      = useJoinStore();
 const router    = useRouter();
@@ -60,6 +62,48 @@ const einFile   = ref<HTMLInputElement | null>(null);
 const getFileBtn = () => {
     einFile.value?.click();
 };
+
+const getFile = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    const files  = target.files;
+    const file   = files[0];
+
+    const fileCheck = getFileCheck(file, 10);
+
+    if(!fileCheck['stat'])
+    {
+        join.getMsgSet(fileCheck['msg'], 'einFile');
+    }
+    else
+    {
+        join.getFile(file, file.name);
+    }
+};
+
+const getNext = () => {
+    const checkParams = {
+        id      : join['login']['id'],
+        pw      : join['login']['pw'],
+        pwChk   : join['login']['pwChk'],
+        einFile : join['login']['einFile']['name']
+    };
+
+    const result = joinFirstMsg(checkParams);
+
+    if(!result['state'])
+    {
+        join.getMsgSet(result['msg'], result['id']);
+        const inputElement = document.getElementById(result['id']);
+        if (inputElement) 
+        {
+            inputElement.focus();
+        }
+
+        return false;
+    }
+
+    router.push({ path : `/join/joinSecond` });
+}
 
 onMounted(()=>{
     if(!join.certified)

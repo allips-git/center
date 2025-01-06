@@ -156,6 +156,34 @@ export const getAmt = (data: Array, type: string) => {
 }
 
 /**
+ * @description 파일 체크
+ */
+export const getFileCheck = (file: File, size: number): string | boolean => {
+    if(!file)
+    {
+        return { stat : false, msg : t('toast.invalid_file_format_image') } //'올바른 파일 형식이 아닙니다. jpg, png, pdf 형식만 가능합니다.'
+    }
+
+    const allowedExtensions: string[] = ['.jpg', '.jpeg', '.png', '.pdf'];
+    const fileExtension: string = file.name.toLowerCase().substr(file.name.lastIndexOf('.'));
+
+    if (!allowedExtensions.includes(fileExtension)) 
+    {
+        return { stat : false, msg : t('toast.invalid_file_format_image') } //'올바른 파일 형식이 아닙니다. jpg, png, pdf 형식만 가능합니다.'
+    }
+  
+    const maxSize: number = size * 1024 * 1024;
+
+    if (file.size > maxSize) 
+        
+    {
+        return { stat : false, msg : t('toast.file_size_exceeded', { size: size.toString() })  }; // `파일 크기가 ${size}MB를 초과합니다.`
+    }
+  
+    return { stat : true, msg : '' };
+}
+
+/**
  * @description 날짜 추가
  */
 export const getAddDate = (days: number) => {
