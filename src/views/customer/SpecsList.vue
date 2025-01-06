@@ -14,27 +14,22 @@
         <div class="gray-bar"></div>
         <section class="px-5">
             <CalculateCard title="제품 결제 내역" :calcs="esti['payList']" totalTitle="총 결제 금액" :totalAmt="getAmt(esti['payList'], 'total')" :showtoggle="true">
-                <div class="flex flex-col gap-5 mt-3">                    
-                    <InputGroup @click="getPopupOpen('disAmtSet')">
-                        <IftaLabel class="w-full">
-                            <InputText :value="getAmtInfo('dcAmt')" class="w-full" readonly/>
-                            <label>할인 금액</label>
-                        </IftaLabel>
-                        <InputGroupAddon><span class="text-sm text-blue-600">원</span></InputGroupAddon>
-                    </InputGroup>
-            
-                    <InputGroup @click="getPopupOpen('addAmtSet')">
-                        <IftaLabel class="w-full">
-                            <InputText :value="getAmtInfo('addAmt')" class="w-full" readonly/>
-                            <label>추가 금액</label>
-                        </IftaLabel>
-                        <InputGroupAddon><span class="text-sm text-red-600">원</span></InputGroupAddon>
-                    </InputGroup>
-
-                    <div class="flex justify-between">
-                        <p>천원단위 절삭</p>
-                        <ToggleSwitch v-model="esti['cutInfo']['gubun']" @change="getCut"/>
+                <div class="flex flex-col gap-5 py-3 ">                    
+                    <div class="relative flex items-center justify-center">
+                        <p class="w-[100px] text-sm flex-none">할인 금액</p>
+                        <InputNumber class="*:!text-blue-500 inputNumber-color *:!rounded-sm" @click="getPopupOpen('disAmtSet')" :value="getAmtInfo('dcAmt')" readonly/>
+                        <span class="absolute text-sm text-blue-500 right-4 bottom-2.5">원</span>
                     </div>
+
+                    <div class="relative flex items-center justify-center">
+                        <p class="w-[100px] text-sm flex-none">추가 금액</p>
+                        <InputNumber class="*:!text-red-500 inputNumber-color *:!rounded-sm" @click="getPopupOpen('addAmtSet')" :value="getAmtInfo('addAmt')" readonly/>
+                        <span class="absolute text-sm text-red-500 right-4 bottom-2.5">원</span>
+                    </div>
+                </div>
+                <div class="flex justify-between my-5">
+                    <p>천원단위 절삭</p>
+                    <ToggleSwitch v-model="esti['cutInfo']['gubun']" @change="getCut"/>
                 </div>
             </CalculateCard>
         </section>
@@ -94,6 +89,7 @@ import ContractModal from '@/views/customer/ContractModal.vue'
 import ProductChoice from "@/views/include/ProductChoice.vue";
 import ProductRegister from "@/views/include/ProductRegister.vue";
 import ToggleSwitch from 'primevue/toggleswitch';
+import InputNumber  from 'primevue/inputnumber';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router';

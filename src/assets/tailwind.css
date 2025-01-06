@@ -68,7 +68,7 @@
     @apply flex flex-col gap-5
   }
   .mobile-fiex-bottom{
-    @apply fixed md:relative bottom-0 left-0 w-full p-5 border-t md:p-0 mt-10
+    @apply fixed md:relative bottom-0 left-0 w-full p-4 border-t md:p-0 mt-10 pt-2
   }
   .gray-bar{
     @apply my-5 bg-gray-100 w-full h-2
@@ -90,8 +90,14 @@
     @apply px-4 py-3 font-bold border border-gray-200 rounded-lg bg-gray-50
   }
   .capsuel_sky{
-    @apply  px-4 py-1 text-white rounded-full bg-sky-500
+    @apply  px-3 py-px text-white rounded-full bg-sky-500
   }
   .inputNumber-color{
     @apply *:!text-right w-full  *:!pr-8 font-bold
+  }
+  .modal-backheader{
+    @apply h-[48px] sticky top-0 flex w-full items-center px-2 md:border-b shadow-sm md:shadow-none bg-white z-50 md:border-gray-100
+  }
+  .modal-backheader-title{
+    @apply absolute text-base font-bold -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 md:relative md:-translate-y-0 md:-translate-x-0 md:top-0 md:left-2
   }

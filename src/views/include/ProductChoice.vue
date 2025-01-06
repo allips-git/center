@@ -1,40 +1,42 @@
 <template>
     <div>
-        <div class="p-4 flex flex-col gap-5">
+        <div class="flex flex-col gap-5 p-4">
             <div class="flex gap-2">
                 <Select v-model="product['fcCd']" placeholder="브랜드 선택" :options="product['option']" optionLabel="label" optionValue="value" @change="getList"/> 
-                <IconField class="table-search-input w-full">
+                <IconField class="w-full table-search-input">
                     <InputIcon class="z-10">
-                        <i class="pi pi-search z-10" />
+                        <i class="z-10 pi pi-search" />
                     </InputIcon>
                     <InputText v-model="product['search']" placeholder="제품명 검색" class="w-full" @keyup.enter="getList"/>
                 </IconField>
             </div>
         </div>
-        <div class="flex gap-2 px-4 pb-2 w-full">
-            <Button label="실측 둘러보기" outlined rounded />
-            <Button label="커튼 실측" outlined rounded @click="getExItem('EX000001')"/>
-            <Button label="블라인드 실측" outlined rounded @click="getExItem('EX000002')"/>
+        <div class="flex w-full gap-2 px-4 pb-2">
+            <Button label="실측 둘러보기" size="small" rounded />
+            <Button label="커튼 실측" size="small" rounded @click="getExItem('EX000001')"/>
+            <Button label="블라인드 실측" size="small" rounded @click="getExItem('EX000002')"/>
         </div>
         <ul class="flex flex-col">
             <li v-for="(item, index) in product['list']" :key="index" class="border-b">
-                <div class="flex justify-between items-center px-5 py-4">
-                    <div :for="item['itemCd']" class="label-checkbox-box  items-center" @click="toggleSubList(index, item['itemCd'])">
-                        <RadioButton :inputId="item['itemCd']" v-model="product['itemCd']" :value="item['itemCd']"/>
-                        <label :for="item['itemCd']" class="flex items-center">
+                <div class="flex flex-col items-center gap-1 px-5 py-4" @click="toggleSubList(index, item['itemCd'])">
+                    <div :for="item['itemCd']" class="items-center w-full">
+                        <!-- <RadioButton :inputId="item['itemCd']" v-model="product['itemCd']" :value="item['itemCd']"/> -->
+                        <label :for="item['itemCd']" class="flex items-center font-bold">
                             {{ item.itemNm }} 
-                            <Badge v-if="item['noUsed']" value="주문불가" severity="danger" class="ml-2"></Badge>
+                            <span v-if="item['noUsed']" class="ml-2 text-red-500">(주문불가)</span>
                         </label>
                     </div>
-                    <p class="text-sm flex-none">{{ item['unit'] }} {{ getAmt(item['amt']) }}원</p>
+                    <p class="w-full text-sm text-gray-400">{{ item['unit'] }}</p>
+                    <p class="w-full text-sm">{{ getAmt(item['amt']) }}원</p>
                 </div>
                 <ul class="bg-gray-50" v-if="isActive(index) && !item['noUsed']">
-                    <li v-for="(color, colorIndex) in item.colorLists" :key="colorIndex" :class="color" class="pl-10 py-4 border-b border-gray-200 last:border-b-0">
-                        <div class="label-checkbox-box" @click="getItemChoice(color['icCd'])">
-                            <RadioButton />
-                            <label class="flex items-center">
+                    <li v-for="(color, colorIndex) in item.colorLists" :key="colorIndex" :class="color" class="px-5 py-4 text-center border-b border-gray-200 last:border-b-0">
+                        <div class="" @click="getItemChoice(color['icCd'])">
+                            <!-- <RadioButton /> -->
+                            <label class="flex items-center justify-center w-full text-center" :class="{ 'text-red-500': color['useYn'] === 'N' }">
                                 {{ color['icNm'] }}
-                                <Badge v-if="color['useYn'] === 'N'" value="주문불가" severity="danger" class="ml-2"></Badge>
+                                <span v-if="color['useYn'] === 'N'">(주문불가)</span>
+                                <!-- <Badge  value="주문불가" severity="danger" class="ml-2"></Badge> -->
                             </label>
                         </div>
                     </li>
