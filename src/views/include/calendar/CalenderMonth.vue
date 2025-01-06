@@ -12,11 +12,11 @@
             <Button size="large" icon="pi pi-plus" class="!size-full" rounded @click="calenderSetPop= true"></Button>
         </div> -->
         
-        <!-- <Dialog v-model:visible="popup['pop']['calendarSet']" header="일정" 
+        <Dialog v-model:visible="popup['pop']['calendarSet']" header="일정" 
             :modal=true position="center" class="border-0 custom-dialog-bottom"
             @update:visible="getPopupClose('calendarSet', true)">
             <CalenderSet/>
-        </Dialog> -->
+        </Dialog>
 
         <Dialog v-model:visible="popup['pop']['calendarDetail']" header="일정" 
             :modal=true position="center" class="border-0 custom-dialog-bottom"

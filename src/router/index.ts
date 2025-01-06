@@ -61,6 +61,8 @@ import CouponMenu from "@/views/setting/CouponMenu.vue";
 import CouponDetail from "@/views/setting/CouponDetail.vue";
 import SettingAuth from "@/views/setting/SettingAuth.vue";
 
+import Splash from "@/views/Splash.vue";
+
 
 
 
@@ -392,6 +394,13 @@ const routes = [
         name: "SettingAuth",
         component: SettingAuth,
         meta: { title: "사업자 인증" }    
+    },
+
+    {
+        path: "/Splash",
+        name: "Splash",
+        component: Splash,
+        meta: { title: "스플래쉬 이미지" }    
     },
 ]
 

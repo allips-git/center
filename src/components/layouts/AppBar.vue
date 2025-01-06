@@ -2,12 +2,12 @@
     <ul class="sticky bottom-0 left-0 w-full gap-4 px-3 h-[56px] bg-gray-50 md:hidden flex ">
       <li 
         class="flex flex-col items-center cursor-pointer py-0.5 justify-evenly w-full"
-        :class="{ '*:text-indigo-600': isActive(item.link) }"
+        :class="{ '*:fill-sky-500 *:text-sky-500': isActive(item.link) }"
         v-for="item in SideHeaderItems" 
         :key="item.id" 
         @click="handleClick(item)"
       >
-        <span class="pi !text-xl text-gray-400" :class="item.iconClass"></span> 
+        <component :is="item.icon" class="fill-gray-400 size-6" />  
         <p class="text-sm font-normal text-gray-400 duration-300">{{ item.label }}</p>
       </li>
     </ul>
@@ -30,6 +30,11 @@
   import { useRouter, useRoute } from 'vue-router';
   import Drawer from 'primevue/drawer';
   import SideHeader from '@/components/layouts/SideHeader.vue';
+  import IconHome from '@/components/icons/IconHome.vue'
+  import IconCalendar from '@/components/icons/IconCalendar.vue'
+  import IconBarGraph from '@/components/icons/IconBarGraph.vue'
+  import IconArrowGraph from '@/components/icons/IconArrowGraph.vue'
+  import IconMore from '@/components/icons/IconMore.vue'
   
   const moSideHeader = ref(false); // 기본값을 false로 설정
   
@@ -48,11 +53,11 @@
   const router = useRouter();
   
   const SideHeaderItems = ref([
-    { id: 1, label: '홈', link: '/', iconClass: 'pi-home' }, 
-    { id: 2, label: '캘린더', link: '/calendar', iconClass: 'pi-calendar' }, 
-    { id: 3, label: '회계', link: '/acc', iconClass: 'pi-money-bill' },
-    { id: 4, label: '통계', link: '/average', iconClass: 'pi-chart-line' },
-    { id: 5, label: '더보기', iconClass: 'pi-bars' },
+    { id: 1, label: '홈', link: '/', icon: IconHome }, 
+    { id: 2, label: '캘린더', link: '/calendar', icon: IconCalendar }, 
+    { id: 3, label: '회계', link: '/acc', icon: IconBarGraph },
+    { id: 4, label: '통계', link: '/average', icon: IconArrowGraph },
+    { id: 5, label: '더보기', icon: IconMore },
   ]);
   
   // 클릭 핸들러
