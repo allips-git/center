@@ -2,19 +2,22 @@
     <div class="w-full border border-gray-200 rounded"> 
         <h1 class="px-4 py-2 text-base font-bold text-left bg-gray-50">{{ title }}</h1>
         <!-- 개별 카드 v-for  -->
-        <div class="px-4 pt-3 pb-3 border-t first:border-t-0" v-for="(card, index) in cards" :key="index" @click="emit('get-modify', card['edCd'])">
+        <div class="flex flex-col items-start justify-start px-4 pt-3 pb-3 border-t first:border-t-0" v-for="(card, index) in cards" :key="index" @click="emit('get-modify', card['edCd'])">
             <!-- 카드 상단 -->
-            <div v-if="card.showDelete" class="flex justify-end">
-                <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])"/>
-            </div>            
-            <section>
-                <div class="flex items-end justify-between mt-2 mb-5 text-base">
+             <div class="flex items-center justify-between w-full">
+                <h2 class="mb-1 text-sm text-gray-400">{{ card.productTitle }}</h2>
+                <div v-if="card.showDelete" class="flex justify-end">
+                    <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-14"/>
+                </div>            
+             </div>
+            <section class="w-full">
+                <div class="flex items-end justify-between w-full mt-2 mb-5 text-base">
                     <div class="">
                         <h2 class="mb-1 text-sm text-gray-400">{{ card.productTitle }}</h2>
                         <h3 :class="`font-bold text-${card.isRed ? 'red' : 'blue'}-600`">{{ card.colorTitle }}</h3>
                         <!-- <h3 class="font-bold text-red-600">{{ card.colorTitle }}</h3> -->
                     </div>
-                    <p class="text-lg font-bold">{{ getAmt(card.amt) }}원</p>
+                    <p class="font-bold">{{ getAmt(card.amt) }}원</p>
                 </div>
             </section>
             <!-- 테이블 -->
@@ -61,15 +64,15 @@
             </section>
 
             <!-- 지시사항  -->
-            <section class="px-3 py-1 my-2 text-sm text-gray-600 border border-gray-100 rounded-md bg-gray-50">
-                <p class="font-bold">지시사항: <span class="font-normal">{{ card['spanText'] }}</span></p>
+            <section class="flex items-center justify-start w-auto px-3 py-1 my-2 mt-3 text-sm text-orange-400 rounded-full bg-orange-50">
+                <p class="font-bold">지시사항: <span class="">{{ card['spanText'] }}</span></p>
             </section>
             <!-- 버튼 -->
             <!-- 버튼타입 // severity="" // primary(시스템),success(외주),secondary(시스템/외주 발주완료),warn(발주취소),danger(발주 취소 요청) -->
-            <div class="w-full *:w-full mt-4">
+            
                 <Button v-if="card['showButton'] && index === cards.length -1" 
-                    :label="card['buttonText']" :severity="card['buttonType']" size="small" @click="getBtnProcess(card['buttonType'], card['edCd'])"/>
-            </div>
+                    :label="card['buttonText']" :severity="card['buttonType']" size="small" @click="getBtnProcess(card['buttonType'], card['edCd'])" class="*:w-full mt-4"/>
+            
         </div>
     </div>
 </template>

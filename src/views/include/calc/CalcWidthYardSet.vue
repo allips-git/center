@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col gap-3 *:flex *:gap-4">
+    <div class="flex flex-col gap-6 *:flex *:gap-2">
 
         <div>
             <IftaLabel class="w-full">
@@ -12,106 +12,100 @@
                 <label>가공방법</label>
             </IftaLabel>
         </div>
-
-        <div>
-            <IftaLabel class="w-full">
-            <Select v-model="esti['curtain']['addColor']" :options="data['addColor']" optionLabel="name" optionValue="value" class="w-full"/>
-                <label>색상추가</label>
-            </IftaLabel>
-    
-            <IftaLabel class="w-full">
-                <Select v-model="esti['curtain']['shape']" :options="data['shape']" optionLabel="name" optionValue="value" class="w-full" />
-                <label>형상선택</label>
-            </IftaLabel>
-        </div>
-        <div>
-            <IftaLabel class="w-full">
-            <Select v-model="esti['curtain']['split']" :options="data['split']" optionLabel="name" optionValue="value" class="w-full" />
-                <label>분할</label>
-            </IftaLabel>
-
-            <IftaLabel class="w-full">
-            <label>수량</label>
-            <InputNumber inputId="cQty" v-model="esti['curtain']['cQty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">
-                <template #incrementbuttonicon>
-                    <span class="pi pi-plus" />
-                </template>
-                <template #decrementbuttonicon>
-                    <span class="pi pi-minus" />
-                </template>
-            </InputNumber>
-            <small class="text-red-500">{{ esti['msg']['curtain'][`cQty`] }}</small>
-            </IftaLabel>
-        </div>
-
-        <div>
-            <IftaLabel class="w-full">
-                <label>가로(CM)<span class="ml-1 text-red-600">*</span></label>
-                <InputText v-keyfilter.int id="cWidth" v-model="esti['common']['width']" class="w-full" @update:modelValue="esti.getUnitCalc()"/>
-                <small class="text-red-500">{{ esti['msg']['curtain'][`cWidth`] }}</small>
-            </IftaLabel>
-    
-            <IftaLabel class="w-full">
-                <label>세로(CM)</label>
-                <InputText v-keyfilter.int id="cHeight" v-model="esti['common']['height']" class="w-full" @update:modelValue="esti.getUnitCalc()"/>
-                <small class="text-red-500">{{ esti['msg']['curtain'][`cHeight`] }}</small>
-            </IftaLabel>
-        </div>
-
-        <div>
-            <IftaLabel class="w-full">
-                <Select v-model="esti['curtain']['use']" :options="data['usage']" optionLabel="name" optionValue="value" class="w-full" @update:modelValue="esti.getUnitCalc()"/>
-                <label>원단 사용량</label>
-            </IftaLabel>
-    
-            <InputGroup>
+        <div class="flex gap-2">
+            <div class="flex w-full gap-2">
                 <IftaLabel class="w-full">
-                    <label class="!text-indigo-600 !font-bold">최종계산<span class="ml-1 text-red-600">*</span></label>
-                    <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full" @input="getSize"/>
+                <Select v-model="esti['curtain']['addColor']" :options="data['addColor']" optionLabel="name" optionValue="value" class="w-full"/>
+                    <label>색상추가</label>
                 </IftaLabel>
-                <InputGroupAddon>
-                    <span class="!text-indigo-600 !font-bold">{{ esti['common']['unitNm'] }}</span>
-                </InputGroupAddon>
-            </InputGroup>
-        </div>
-        <small class="text-red-500">{{ esti['msg']['curtain'][`cSize`] }}</small>
-    
-        <div v-if="esti['curtain']['addColor'] === 'T'" class="py-5 flex-col border-y mt">
-            <h2 class="text-sm text-indigo-600 font-bold">안쪽 컬러를 선택해주세요.</h2>
-            <div class="flex gap-4">
+        
                 <IftaLabel class="w-full">
-                    <label>안쪽컬러 <span class="ml-1 text-red-600">*</span></label>
+                    <Select v-model="esti['curtain']['shape']" :options="data['shape']" optionLabel="name" optionValue="value" class="w-full" />
+                    <label>형상선택</label>
+                </IftaLabel>
+            </div>
+            <div class="flex w-full gap-2">
+                <IftaLabel class="w-full">
+                <Select v-model="esti['curtain']['split']" :options="data['split']" optionLabel="name" optionValue="value" class="w-full" />
+                    <label>분할</label>
+                </IftaLabel>
+    
+                <IftaLabel class="w-full">
+                <label>수량</label>
+                <InputNumber inputId="cQty" v-model="esti['curtain']['cQty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">
+                    <template #incrementbuttonicon>
+                        <span class="pi pi-plus" />
+                    </template>
+                    <template #decrementbuttonicon>
+                        <span class="pi pi-minus" />
+                    </template>
+                </InputNumber>
+                <small class="text-red-500">{{ esti['msg']['curtain'][`cQty`] }}</small>
+                </IftaLabel>
+            </div>
+        </div>
+
+        <div>
+            <div class="flex w-full gap-2">
+                <IftaLabel class="w-full">
+                    <label>가로(CM)<span class="ml-1 text-red-600">*</span></label>
+                    <InputText v-keyfilter.int id="cWidth" v-model="esti['common']['width']" class="w-full !font-bold" @update:modelValue="esti.getUnitCalc()"/>
+                    <small class="text-red-500">{{ esti['msg']['curtain'][`cWidth`] }}</small>
+                </IftaLabel>
+        
+                <IftaLabel class="w-full">
+                    <label>세로(CM)</label>
+                    <InputText v-keyfilter.int id="cHeight" v-model="esti['common']['height']" class="w-full !font-bold" @update:modelValue="esti.getUnitCalc()"/>
+                    <small class="text-red-500">{{ esti['msg']['curtain'][`cHeight`] }}</small>
+                </IftaLabel>
+            </div>
+    
+            <div class="flex w-full gap-2">
+                <IftaLabel class="w-full">
+                    <Select v-model="esti['curtain']['use']" :options="data['usage']" optionLabel="name" optionValue="value" class="w-full !font-bold" @update:modelValue="esti.getUnitCalc()"/>
+                    <label>원단 사용량</label>
+                </IftaLabel>
+                <div class="relative w-full">
+                    <IftaLabel class="w-full">
+                        <label class="!font-bold">최종계산</label>
+                        <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full !pr-8 text-right !text-sky-500 !font-bold" @input="getSize"/>
+                    </IftaLabel>
+                    <span class="absolute text-sm translate-y-1/2 right-4 bottom-1/2">{{ esti['common']['unitNm'] }}</span>
+                    <!-- <span class="absolute">원</span> -->
+                    <small class="text-red-500">{{ esti['msg']['curtain'][`cSize`] }}</small>
+                </div>
+            </div>
+        </div>
+    
+        <div v-if="esti['curtain']['addColor'] === 'T'" class="flex-col py-5 border-dashed border-y mt">
+            <h2 class="mb-2 text-sm text-sky-500">안쪽 컬러를 선택해주세요.</h2>
+            <div class="grid grid-cols-4 gap-2">
+                <IftaLabel class="w-full col-span-3">
+                    <label>안쪽컬러</label>
                     <Select v-model="esti['curtain']['inColor']" :options="esti.inColorList" optionLabel="icNm" optionValue="icCd" placeholder="안쪽 컬러를 선택해주세요." class="w-full" />
                 </IftaLabel>
-        
-                <InputGroup class="max-w-[200px]">
+                <div class="relative w-full col-span-1">
                     <IftaLabel class="w-full">
-                        <label class="!text-indigo-600 !font-bold">최종계산<span class="ml-1 text-red-600">*</span></label>
-                        <InputText v-keyfilter.int id="inSize" v-model="esti['curtain']['inSize']" class="w-full" />
+                        <InputText v-keyfilter.int id="inSize" v-model="esti['curtain']['inSize']" class="w-full !pr-8 text-right !text-sky-500 !font-bold" />
                     </IftaLabel>
-                    <InputGroupAddon>
-                        <span class="!text-indigo-600 !font-bold">{{ esti['common']['unitNm'] }}</span>
-                    </InputGroupAddon>
-                </InputGroup>
+                    <span class="absolute text-sm translate-y-1/2 right-4 bottom-1/2">{{ esti['common']['unitNm'] }}</span>
+                    <small v-if="esti['msg']['curtain'][`inColor`] !== ''" class="text-red-500">{{ esti['msg']['curtain'][`inColor`] }}</small>
+                    <small v-if="esti['msg']['curtain'][`inSize`] !== ''" class="text-red-500">{{ esti['msg']['curtain'][`inSize`] }}</small>
+                </div>
             </div>
-            <small v-if="esti['msg']['curtain'][`inColor`] !== ''" class="text-red-500">{{ esti['msg']['curtain'][`inColor`] }}</small>
-            <small v-if="esti['msg']['curtain'][`inSize`] !== ''" class="text-red-500">{{ esti['msg']['curtain'][`inSize`] }}</small>
+            
         
-            <div class="flex gap-4">
-                <IftaLabel class="w-full">
+            <div class="grid grid-cols-4 gap-2">
+                <IftaLabel class="w-full col-span-3">
                     <label>기둥 컬러</label>
                     <InputText :value="`${esti['common']['itemNm']} / ${esti['common']['icNm']}`" class="w-full" disabled/>
                 </IftaLabel>
-        
-                <InputGroup class="max-w-[200px]">
+                <div class="relative w-full col-span-1">
                     <IftaLabel class="w-full">
-                        <label class="!text-indigo-600 !font-bold">최종계산</label>
-                        <InputText v-model="esti.outSize" class="w-full" disabled/>
+                        <InputText v-model="esti.outSize" class="w-full !pr-8 text-right !text-sky-500 !font-bold" disabled/>
                     </IftaLabel>
-                    <InputGroupAddon>
-                        <span class="!text-indigo-600 !font-bold">{{ esti['common']['unitNm'] }}</span>
-                    </InputGroupAddon>
-                </InputGroup>
+                    <span class="absolute text-sm translate-y-1/2 right-4 bottom-1/2">{{ esti['common']['unitNm'] }}</span>
+                </div>
             </div>
         </div>
     </div>

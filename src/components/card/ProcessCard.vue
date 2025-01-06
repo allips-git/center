@@ -3,29 +3,29 @@
      <div class="w-full p-4 border border-gray-200 rounded">
          <div class="flex justify-between pb-4 font-bold border-b border-neutral-100">
              <h1>{{ props.info['stNm'] }}</h1>
-             <h2 class="text-xl">{{ getAmt(props.info['totalSaleAmt']) }}원</h2>
+             <h2 class="">{{ getAmt(props.info['totalSaleAmt']) }}원</h2>
          </div>
 
          <ul class="flex mt-5">
             <li class="w-1/4 flex flex-col gap-1 *:first:rounded-l-full *:last:rounded-r-full">
-                <div class="w-full h-2 mb-2" :class="props['info']['conDt'] !== '' ? 'bg-indigo-500' : 'bg-gray-200'" ></div>
-                <p class="text-sm text-center text-gray-600">계약 완료</p>
-                <p class="text-sm text-center text-gray-400">{{ getDate(props.info['conDt']) }}</p>
+                <div class="w-full h-2 mb-2" :class="props['info']['conDt'] !== '' ? 'bg-sky-500' : 'bg-gray-200'" ></div>
+                <p class="text-sm text-center" :class="props['info']['conDt'] !== '' ? 'text-gray-900' : ''" >계약 완료</p>
+                <p class="text-xs text-center " :class="props['info']['conDt'] !== '' ? 'text-gray-400' : ''">{{ getDate(props.info['conDt']) }}</p>
             </li>
             <li class="w-1/4 flex flex-col gap-1 *:first:rounded-l-full *:last:rounded-r-full">
-                <div class="w-full h-2 mb-2" :class="props['info']['preDt'] !== '' ? 'bg-indigo-500' : 'bg-gray-200'" ></div>
-                <p class="text-sm text-center text-gray-600">발주 완료</p>
-                <p class="text-sm text-center text-gray-400">{{ getDate(props.info['preDt']) }}</p>
+                <div class="w-full h-2 mb-2" :class="props['info']['preDt'] !== '' ? 'bg-sky-500' : 'bg-gray-200'" ></div>
+                <p class="text-sm text-center" :class="props['info']['preDt'] !== '' ? 'text-gray-900' : ''">발주 완료</p>
+                <p class="text-xs text-center" :class="props['info']['preDt'] !== '' ? 'text-gray-400' : ''" >{{ getDate(props.info['preDt']) }}</p>
             </li>
             <li class="w-1/4 flex flex-col gap-1 *:first:rounded-l-full *:last:rounded-r-full">
-                <div class="w-full h-2 mb-2" :class="props['info']['deliConDt'] !== '' ? 'bg-indigo-500' : 'bg-gray-200'" ></div>
-                <p class="text-sm text-center text-gray-600">시공 완료</p>
-                <p class="text-sm text-center text-gray-400">{{ getDate(props.info['deliConDt']) }}</p>
+                <div class="w-full h-2 mb-2" :class="props['info']['deliConDt'] !== '' ? 'bg-sky-500 *:font-bold' : 'bg-gray-200'" ></div>
+                <p class="text-sm text-center text-gray-600" :class="props['info']['deliConDt'] !== '' ? 'text-gray-900' : ''">시공 완료</p>
+                <p class="text-xs text-center text-gray-400" :class="props['info']['deliConDt'] !== '' ? 'text-gray-400' : ''">{{ getDate(props.info['deliConDt']) }}</p>
             </li>
             <li class="w-1/4 flex flex-col gap-1 *:first:rounded-l-full *:last:rounded-r-full">
-                <div class="w-full h-2 mb-2" :class="props['info']['payDt'] !== '' ? 'bg-indigo-500' : 'bg-gray-200'" ></div>
-                <p class="text-sm text-center text-gray-600">결제 완료</p>
-                <p class="text-sm text-center text-gray-400">{{ getDate(props.info['payDt']) }}</p>
+                <div class="w-full h-2 mb-2" :class="props['info']['payDt'] !== '' ? 'bg-sky-500' : 'bg-gray-200'" ></div>
+                <p class="text-sm text-center text-gray-600" :class="props['info']['payDt'] !== '' ? 'text-gray-900' : ''">결제 완료</p>
+                <p class="text-xs text-center text-gray-400" :class="props['info']['payDt'] !== '' ? 'text-gray-400' : ''">{{ getDate(props.info['payDt']) }}</p>
             </li>
         </ul>
 

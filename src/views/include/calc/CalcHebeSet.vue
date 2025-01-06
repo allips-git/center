@@ -1,19 +1,19 @@
 <template>
-<div class="flex flex-col gap-3 *:flex *:gap-4">
-    <div>
-        <IftaLabel class="w-full">
+<div class="grid grid-cols-4 gap-x-2 gap-y-5">
+    
+        <IftaLabel class="w-full col-span-2">
             <label>설치위치<span class="ml-1 text-red-600">*</span></label>
             <InputText v-model="esti['common']['location']" placeholder="기타" class="w-full"/>
         </IftaLabel>
 
-        <IftaLabel class="w-full">
+        <IftaLabel class="w-full col-span-2">
             <Select v-model="esti['blind']['division']" :options="data['division']" 
                 optionLabel="name" optionValue="value" class="w-full" @change="esti.getDivisionSet()"/>
             <label>분할</label>
         </IftaLabel>
-    </div>
+    
 
-    <div>
+    
         <IftaLabel class="w-full">
             <label>가로 (CM)<span class="ml-1 text-red-600">*</span></label>
             <InputText v-keyfilter.int id="bWidth" v-model="esti['common']['width']" class="w-full" @update:modelValue="esti.getUnitCalc()"/>
@@ -25,10 +25,10 @@
             <InputText v-keyfilter.int id="bHeight" v-model="esti['common']['height']" class="w-full" @update:modelValue="esti.getUnitCalc()"/>
             <small class="text-red-500">{{ esti['msg']['blind']['bHeight'] }}</small>
         </IftaLabel>
-    </div>
+    
 
 
-    <template class="">
+    <template class="flex col-span-2 overflow-visible">
         <!-- 분할없음 -->
         <div class="flex gap-3" v-if="esti['blind']['division'] === 1">
             <IftaLabel class="w-full">
@@ -57,7 +57,7 @@
             </IftaLabel>
         </div>
         <!-- 분할 있음 -->
-        <div class="flex gap-3 w-full" v-if="esti['blind']['division'] > 1">
+        <div class="flex w-full gap-3" v-if="esti['blind']['division'] > 1">
             <IftaLabel class="w-full">
                 <label>수량</label>
                 <InputNumber inputId="bQty" v-model="esti['blind']['bQty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">
@@ -74,17 +74,26 @@
         </div>
     </template>
     <!-- 회베 분할 -->
-    <template v-if="esti['blind']['division'] > 1">
+    <template class="col-span-1" v-if="esti['blind']['division'] > 1">
         <!-- v-for -->
-        <template>
+        <template class="flex col-span-4">
             <div class="w-full">
                 <p class="text-brand text-sm mb-2.5">분할 {{ esti['blind']['division'] }} 창 (아래값만 입력해주세요.)</p>
-                <div class="w-full flex flex-col gap-4">
-                    <div v-for="(item, index) in esti['blind']['divSpec']" :key="index" class=" flex gap-3 w-full">
-                        <InputText v-keyfilter.int :id="'bWidth'+index" v-model="item['width']" class="w-full" @input="getDivBlindWidth(index)"/>
-                        <InputText v-keyfilter.int v-model="esti['common']['height']"  class="w-full"/>
-                        <Select v-model="item['handle']" :options="data['handle']" optionLabel="name" optionValue="value" class="w-full" />
-                        <InputText v-model="item['size']" class="w-full" disabled/>
+                <div class="flex flex-col w-full gap-4">
+                    <div v-for="(item, index) in esti['blind']['divSpec']" :key="index" class="flex w-full gap-3 ">
+                        <IftaLabel class="w-full">
+                            <InputText v-keyfilter.int :id="'bWidth'+index" v-model="item['width']" class="w-full" @input="getDivBlindWidth(index)"/>
+                        </IftaLabel>
+                        <IftaLabel class="w-full">
+                            <InputText v-keyfilter.int v-model="esti['common']['height']"  class="w-full"/>
+                        </IftaLabel>
+                        <IftaLabel class="w-full">
+                            <Select v-model="item['handle']" :options="data['handle']" optionLabel="name" optionValue="value" class="w-full" />
+                        </IftaLabel>
+                        <IftaLabel class="w-full">
+                            <label for=""></label>
+                            <InputText v-model="item['size']" class="w-full" disabled/>
+                        </IftaLabel>
                     </div>
                     <small class="text-red-500">{{ esti['msg']['blind'][`bWidth${index}`] }}</small>
                 </div>
