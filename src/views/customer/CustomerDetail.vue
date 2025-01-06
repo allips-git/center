@@ -6,29 +6,29 @@
                 <h1 class="text-lg font-bold ">{{ client['detail']['clientNm'] }}</h1>
                 <Button label="정보수정" outlined severity="secondary" size="small"/>
             </div>
-            <ul class="flex flex-col gap-4 mt-5 text-sm rounded-md">
+            <ul class="flex flex-col gap-3 mt-3 text-sm rounded-md">
                 <li class="flex items-center">
-                    <p class="w-24 text-gray-600 whitespace-nowrap">전화번호</p>
+                    <p class="w-24 text-gray-500 whitespace-nowrap">전화번호</p>
                     <p class="capsuel_sky">{{ client['detail']['tel'] }}</p>
                 </li>
                 <li class="flex items-center">
-                    <p class="w-24 text-gray-600 whitespace-nowrap">주소</p>
+                    <p class="w-24 text-gray-500 whitespace-nowrap">주소</p>
                     <p class="capsuel_sky">({{ client['detail']['zip'] }}) {{ client['detail']['addr'] }}</p>
                 </li>
                 <li class="flex">
-                    <p class="w-24 text-gray-600 whitespace-nowrap">상세주소</p>
+                    <p class="w-24 text-gray-500 whitespace-nowrap">상세주소</p>
                     <p>{{ client['detail']['addrDetail'] }}</p>
                 </li>
                 <li class="flex">
-                    <p class="w-24 text-gray-600 whitespace-nowrap">등록일</p>
+                    <p class="w-24 text-gray-500 whitespace-nowrap">등록일</p>
                     <p>{{ client['detail']['regDt'] }}</p>
                 </li>
                 <li class="flex">
-                    <p class="w-24 text-gray-600 whitespace-nowrap">담당자</p>
+                    <p class="w-24 text-gray-500 whitespace-nowrap">담당자</p>
                     <p>{{ client['detail']['person'] }}</p>
                 </li>
                 <li class="flex">
-                    <p class="w-24 text-gray-600 whitespace-nowrap">그룹명</p>
+                    <p class="w-24 text-gray-500 whitespace-nowrap">그룹명</p>
                     <p>{{ client['detail']['groupNm'] }}</p>
                 </li>
             </ul>
@@ -84,14 +84,26 @@
         </div>
 
         <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
-            :modal=true position="center" class="custom-dialog-bottom"
+            :modal=true position="center" class="custom-dialog-bottom backPopup"
             @update:visible="getPopClose(true, 'itemList')">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="popup['pop']['itemList'] = false" severity="contrast" text icon="pi pi-arrow-left"/>
+                    <h2 class="modal-backheader-title">제품선택</h2>
+                </div>
+            </template>
             <ProductChoice/>
         </Dialog>
     
         <Dialog v-model:visible="popup['pop']['itemSet']" header="제품등록" 
-            :modal=true position="center" class="custom-dialog-bottom"
+            :modal=true position="center" class="custom-dialog-bottom backPopup"
             @update:visible="getPopClose(true, 'itemSet')">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="popup['pop']['itemSet'] = false" severity="contrast" text icon="pi pi-arrow-left"/>
+                    <h2 class="modal-backheader-title">제품등록</h2>
+                </div>
+            </template>
             <ProductRegister/>
         </Dialog>
         

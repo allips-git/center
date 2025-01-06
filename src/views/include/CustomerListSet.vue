@@ -44,7 +44,7 @@
 
         <IftaLabel v-if="client['info']['groupCd'] === 'N'" class="label-input-box">
             <InputText id="groupNm" v-model="client['info']['groupNm']"/>
-            <label>그룹명 입력</label>
+            <label>그룹명</label>
             <small class="text-red-500">{{ client['msg']['groupNm'] }}</small>
         </IftaLabel>
         <div class="bottom-modal-absol-box">

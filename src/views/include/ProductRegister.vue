@@ -1,16 +1,16 @@
 <template>
 <main>
-    
-    <div class="bottom-modal-contents-box !pb-20">
-        <div class="w-full flex justify-end">
-            <Button label="제품 변경" outlined @click="getItemChange"/>
+    <div class="bottom-modal-contents-box !px-0 !pb-20">
+        <div class="absolute z-50 flex justify-end top-[8px] right-[8px]">
+            <Button label="제품 변경" size="small" outlined @click="getItemChange"/>
         </div>    
-        <div class="text-base font-bold flex justify-between bg-gray-50 p-2 px-4 rounded-lg border border-indigo-300">
-            <h2>{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
-            <p class="text-indigo-600">({{ esti['common']['unitSize'] }}{{ esti['common']['unitNm'] }}) {{ getAmt(esti['common']['saleUnit']) }}원</p>
+        <div class="flex justify-between px-5 text-base font-bold">
+            <h2 class="px-3 rounded-full pypx bg-cyan-100 text-cyan-600">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
+            <p class="">({{ esti['common']['unitSize'] }}{{ esti['common']['unitNm'] }}) {{ getAmt(esti['common']['saleUnit']) }}원</p>
         </div>
+        <div class="gray-bar !my-0"></div>
         <!-- 입력 계산기 컴포넌트 -->
-        <div class="">
+        <div class="px-5">
             <!-- 회베 -->
             <CalcHebeSet v-if="esti['common']['unit'] === '001'"/>
             <!-- 폭 , 야드 -->
@@ -20,16 +20,16 @@
         </div>
 
         <!-- 옵션 더보기 -->
-        <section class="">
-            <div class="custom_accordion w-full">
+        <section class="px-5">
+            <div class="w-full custom_accordion">
                 <Accordion value="0">
                     <AccordionPanel class="*:pb-0 " value="0" >
                         <AccordionHeader class="!gap-2 !justify-end">
-                            <p class="font-bold text-sm pb-0">옵션 더보기</p>
+                            <p class="pb-0 text-sm font-bold">옵션 더보기</p>
                             </AccordionHeader>
                         <AccordionContent class="w-full">
                             <div class="flex flex-col gap-5">
-                                <div class="flex w-full mt-3 gap-4">
+                                <div class="flex w-full gap-4 mt-3">
                                     <IftaLabel class="w-full">
                                         <Select placeholder="선택" class="w-full" />
                                         <label for="emali">옵션명</label>
@@ -51,14 +51,15 @@
                 </Accordion>
             </div>
         </section>
-        <div class="">
+        <div class="gray-bar !my-0"></div>
+        <div class="px-5">
             <CalculateCard title="총 단위" :showtitle="true" 
                 :unit="esti['total']['totalUnitSize']+esti['common']['unitNm']"
                 :calcs="esti['totalAmtInfo']" totalTitle="총 금액" :totalAmt="esti['total']['totalSaleAmt']" :showUnit="true"/>
         </div>
     </div>
     <div class="bottom-modal-absol-box">
-        <Button type="button" label="저장" @click="getEstiSave" :disabled="status" class="w-full"></Button>
+        <Button type="button" label="저장" @click="getEstiSave" :disabled="status" size="large" class="w-full"></Button>
     </div>    
 </main>
 </template>
@@ -284,7 +285,7 @@ const getFocus = (id: string) => {
 
 <style lang="scss">
 .p-inputnumber-button{
-    width: 56px !important;
+    width: 20px !important;
     overflow: visible !important;
 }
 .p-iftalabel {

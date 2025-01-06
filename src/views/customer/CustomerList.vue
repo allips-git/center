@@ -63,8 +63,14 @@
         header="고객 등록" 
         :modal=true
         position="center"
-        class="custom-dialog-bottom"
+        class="custom-dialog-bottom backPopup"
         @update:visible="getPopClose(true, 'clientSet')">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="popup['pop']['clientSet'] = false" severity="contrast" text icon="pi pi-arrow-left"/>
+                <h2 class="modal-backheader-title">고객등록</h2>
+            </div>
+        </template>
             <CustomerListSet/>
         </Dialog>
        </div>

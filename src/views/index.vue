@@ -45,7 +45,7 @@
                 </div>
                 <div class="flex items-end justify-between main-card-container-box-padding">
                     <div class="flex flex-col gap-1">
-                        <p class="text-sm text-gray-600">공장전체</p>
+                        <p class="text-sm text-gray-400">공장전체</p>
                         <p class="text-2xl font-bold text-sky-500">{{ main['factoryCnt'] }}</p>
                     </div>
                     <button class="text-xl font-bold text-gray-300">></button>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="flex items-end justify-between main-card-container-box-padding">
                     <div class="flex flex-col gap-1">
-                        <p class="text-sm text-gray-600">배송 대기</p>
+                        <p class="text-sm text-gray-400">배송 대기</p>
                         <p class="text-2xl font-bold text-yellow-300">0</p>
                     </div>
                     <button class="text-xl font-bold text-gray-300">></button>
