@@ -8,12 +8,12 @@
             </div>
             <ul class="flex flex-col gap-3 mt-3 text-sm rounded-md">
                 <li class="flex items-center">
-                    <p class="w-24 text-gray-500 whitespace-nowrap">전화번호</p>
-                    <p class="capsuel_sky">{{ client['detail']['tel'] }}</p>
+                    <p class="w-24 text-gray-600 whitespace-nowrap">전화번호</p>
+                    <p class="capsuel_sky" @click="getNavi('tel', client['detail']['tel'])">{{ client['detail']['tel'] }}</p>
                 </li>
                 <li class="flex items-center">
-                    <p class="w-24 text-gray-500 whitespace-nowrap">주소</p>
-                    <p class="capsuel_sky">({{ client['detail']['zip'] }}) {{ client['detail']['addr'] }}</p>
+                    <p class="w-24 text-gray-600 whitespace-nowrap">주소</p>
+                    <p class="capsuel_sky" @click="getNavi('addr', client['detail']['addr'])">({{ client['detail']['zip'] }}) {{ client['detail']['addr'] }}</p>
                 </li>
                 <li class="flex">
                     <p class="w-24 text-gray-500 whitespace-nowrap">상세주소</p>
@@ -134,6 +134,20 @@ const client    = useClientStore();
 const esti      = useEstiStore();
 
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getNavi = (name: string, val: string) => {
+    if(name === 'addr')
+    {
+        window.ReactNativeWebView.postMessage(JSON.stringify({ type : 'address' , value : val}));
+    }
+    else if(name === 'tel')
+    {
+        const phoneNumber   = val;
+        const telHref       = 'tel:' + phoneNumber;
+
+        window.location.href = telHref;
+    }
+}
 
 const getList = (tab: number) => {
     switch(tab)

@@ -66,7 +66,7 @@ import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useClientStore } from '@/store';
-import { getAxiosData, getDaumPopupPosition } from '@/assets/js/function';
+import { getAxiosData, getConvertDate, getDaumPopupPosition } from '@/assets/js/function';
 import { clientMsg } from '@/assets/js/msg';
 import { usePopup } from '@/assets/js/popup';
 
@@ -148,7 +148,7 @@ const getSaveNext = () => {
         accept : async () => {
             const params = {
                 'type'          : client['type'],
-                'estiDt'        : client['info']['estiDt'],
+                'estiDt'        : getConvertDate(client['info']['estiDt'], 'yyyy-mm-dd hh:ii'),
                 'clientNm'      : client['info']['clientNm'],
                 'tel'           : client['info']['tel'],
                 'zip'           : client['info']['zip'],
