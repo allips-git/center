@@ -8,11 +8,11 @@
             </div>
             <ul class="flex flex-col gap-3 mt-3 text-sm rounded-md">
                 <li class="flex items-center">
-                    <p class="w-24 text-gray-600 whitespace-nowrap">전화번호</p>
+                    <p class="w-24 text-gray-500 whitespace-nowrap">전화번호</p>
                     <p class="capsuel_sky" @click="getNavi('tel', client['detail']['tel'])">{{ client['detail']['tel'] }}</p>
                 </li>
                 <li class="flex items-center">
-                    <p class="w-24 text-gray-600 whitespace-nowrap">주소</p>
+                    <p class="w-24 text-gray-500 whitespace-nowrap">주소</p>
                     <p class="capsuel_sky" @click="getNavi('addr', client['detail']['addr'])">({{ client['detail']['zip'] }}) {{ client['detail']['addr'] }}</p>
                 </li>
                 <li class="flex">
