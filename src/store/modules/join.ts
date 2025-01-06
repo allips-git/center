@@ -56,6 +56,7 @@ interface State {
     auth        : AuthInfo;
     login       : LoginInfo;
     center      : CenterInfo;
+    msg         : Msg;
 }
 
 const getAgreeInfo = (gb): AgreeInfo => {
@@ -113,7 +114,7 @@ const getMsg = (): Msg => {
 
 export const useJoinStore = defineStore('join', {
     state: (): State => ({
-        certified   : true,
+        certified   : false,
         agree       : getAgreeInfo(false),
         auth        : getAuthInfo(),
         login       : getLoginInfo(),
@@ -134,10 +135,24 @@ export const useJoinStore = defineStore('join', {
         {
             this.agree = getAgreeInfo(status);
         },
+        getAuth(name: string, tel: number)
+        {
+            this.auth['name'] = name;
+            this.auth['tel']  = tel;
+        },
         getFile(file: File, fileName: string)
         {
             this.login['einFile']['file'] = file;
             this.login['einFile']['name'] = fileName;
+        },
+        getReset()
+        {
+            this.certified  = false;
+            this.agree      = getAgreeInfo(false);
+            this.auth       = getAuthInfo();
+            this.login      = getLoginInfo();
+            this.center     = getCenterInfo();
+            this.msg        = getMsg();
         }
     }
 });

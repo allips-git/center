@@ -14,6 +14,14 @@ export const joinFirstMsg = (params: JoinFirstParams): { msg: string; id: string
         return { msg : '이메일을 입력해주세요.', id : 'id', state : false };
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const stat       = emailRegex.test(params['id']);
+
+    if(!stat)
+    {
+        return { msg : '잘못된 이메일 형식입니다.', id : 'id', state : false };
+    }
+
     if(params['pw'] === '')
     {
         return { msg : '비밀번호를 입력해주세요.', id : 'pw', state : false };

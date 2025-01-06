@@ -43,7 +43,7 @@
 
                         <IftaLabel>
                             <IconField>
-                                <InputText placeholder="주소를 검색해주세요." class="w-full" readonly @click="getAddr"/>
+                                <InputText v-model="join['center']['addr']" placeholder="주소를 검색해주세요." class="w-full" readonly @click="getAddr"/>
                                 <InputIcon class="pi pi-search" />
                             </IconField>
                             <label>주소</label>
@@ -136,14 +136,16 @@ const getCloseDaumPost = () => {
 
 const getResultCheck = () => {
     const checkParams = {
-        faNm    : join['factory']['faNm'],
-        einNum  : join['factory']['einNum'],
-        ceoNm   : join['factory']['ceoNm'],
-        addr    : join['factory']['addr'],
-        tel     : join['factory']['tel']
+        faNm    : join['center']['faNm'],
+        einNum  : join['center']['einNum'],
+        ceoNm   : join['center']['ceoNm'],
+        addr    : join['center']['addr'],
+        tel     : join['center']['tel']
     };
 
     const result = joinSecondMsg(checkParams);
+
+    console.log(result);
 
     if(!result['state'])
     {
@@ -195,7 +197,9 @@ const getResult = async () => {
         agree3      : join['agree']['choice']['yn'] ? 'Y' : 'N'
     }
 
-    formData.append('joinDto', new Blob([JSON.stringify(params)], {
+    console.log(JSON.stringify(params, null, 2))
+
+    formData.append('request', new Blob([JSON.stringify(params)], {
         type: 'application/json'
     }));
 
@@ -203,12 +207,13 @@ const getResult = async () => {
 
     try
     {
-        await axios.put('https://data.planorder.kr/joinV1/getJoin', formData, {
+        await axios.put('https://po-data.plansys.kr/v1/center/join/dataProc', formData, {
             headers: {
                 'Content-Type' : 'multipart/form-data'
             }
         });
 
+        join.getReset();
         router.push({path : `/login`});
     }
     catch(e)
