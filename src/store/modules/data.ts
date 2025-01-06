@@ -3,6 +3,29 @@ import { defineStore } from 'pinia';
 export const useDataStore = defineStore('data', {
     state: () => {
         return {
+            area: [
+                { name: '서울', value: 'SE' },
+                { name: '부산', value: 'BS' },
+                { name: '대구', value: 'DG' },
+                { name: '대전', value: 'DJ' },
+                { name: '광주', value: 'GJ' },
+                { name: '인천', value: 'IC' },
+                { name: '세종', value: 'SJ' },
+                { name: '울산', value: 'US' },
+                { name: '경기', value: 'KG' },
+                { name: '강원', value: 'GW' },
+                { name: '충북', value: 'CN' },
+                { name: '충남', value: 'CS' },
+                { name: '전북', value: 'JN' },
+                { name: '전남', value: 'JS' },
+                { name: '경북', value: 'KN' },
+                { name: '경남', value: 'KS' },
+                { name: '제주', value: 'JJ' }
+            ],
+            einGb: [
+                { name: '법인', value: 'P' }, 
+                { name: '개인', value: 'L' }
+            ],
             clientStat : [
                 { value : '',    name : '전체'}, /** 견적대기 */
                 { value : '001', name : '대기'}, /** 견적대기 */

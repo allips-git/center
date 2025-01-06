@@ -35,7 +35,7 @@ interface CenterInfo {
     ceNm        : string;
     area        : string;
     gb          : string;
-    einNum      : string;
+    einNum      : null | number;
     ceoNm       : string;
     zip         : number;
     addr        : string;
@@ -47,6 +47,7 @@ interface Msg {
     id      : string;
     pw      : string;
     pwChk   : string;
+    einFile : string;
 }
 
 interface State {
@@ -90,9 +91,9 @@ const getLoginInfo = (): LoginInfo => {
 const getCenterInfo = (): CenterInfo => {
     return {
         ceNm        : '',
-        area        : '',
+        area        : 'SE',
         gb          : 'P',
-        einNum      : '',
+        einNum      : null,
         ceoNm       : '',
         zip         : '',
         addr        : '',
@@ -105,7 +106,8 @@ const getMsg = (): Msg => {
     return {
         id      : '',
         pw      : '',
-        pwChk   : ''
+        pwChk   : '',
+        einFile : ''
     }
 }
 
@@ -119,6 +121,11 @@ export const useJoinStore = defineStore('join', {
         msg         : getMsg()
     }),
     actions: {
+        getMsgSet(msg: string, name: string)
+        {
+            this.msg        = getMsg();
+            this.msg[name]  = msg;
+        },
         getCertified(state: boolean)
         {
             this.certified = state;
@@ -126,6 +133,11 @@ export const useJoinStore = defineStore('join', {
         getAgree(status: boolean)
         {
             this.agree = getAgreeInfo(status);
+        },
+        getFile(file: File, fileName: string)
+        {
+            this.login['einFile']['file'] = file;
+            this.login['einFile']['name'] = fileName;
         }
     }
 });
