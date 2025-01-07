@@ -13,25 +13,26 @@
         <section class="px-5">
             <div class="p-4 mt-5 text-sm border border-gray-200 rounded">
             <div class="flex flex-col gap-2">
+                <h1 class="text-base" >세부정보</h1>
                 <dl class="flex items-center justify-between">
-                    <dt class="text-gray-600">견적일</dt>
-                    <dd class="font-bold">{{ ord['info']['estiDt'] }}</dd>
+                    <dt class="text-gray-500">견적일</dt>
+                    <dd class="">{{ ord['info']['estiDt'] }}</dd>
                 </dl>
                 <dl class="flex items-center justify-between">
-                    <dt class="text-gray-600">계약일</dt>
-                    <dd class="font-bold">{{ ord['info']['conDt'] }}</dd>
+                    <dt class="text-gray-500">계약일</dt>
+                    <dd class="">{{ ord['info']['conDt'] }}</dd>
                 </dl>
                 <dl class="flex items-center justify-between">
-                    <dt class="text-gray-600">시공일</dt>
-                    <dd class="font-bold">{{ ord['info']['deliDt'] }}</dd>
+                    <dt class="text-gray-500">시공일</dt>
+                    <dd class="">{{ ord['info']['deliDt'] }}</dd>
                 </dl>
                 <dl class="flex items-center justify-between">
-                    <dt class="text-gray-600">설치 예상시간</dt>
-                    <dd class="font-bold">{{ ord['info']['insTime'] }}</dd>
+                    <dt class="text-gray-500">설치 예상시간</dt>
+                    <dd class="">{{ ord['info']['insTime'] }}</dd>
                 </dl>
                 <dl class="flex items-center justify-between">
-                    <dt class="text-gray-600">시공 담당자</dt>
-                    <dd class="font-bold">{{ ord['info']['insUser'] }}</dd>
+                    <dt class="text-gray-500">시공 담당자</dt>
+                    <dd class="">{{ ord['info']['insUser'] }}</dd>
                 </dl>
             </div>
             </div>

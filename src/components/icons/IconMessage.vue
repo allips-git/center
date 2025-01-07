@@ -1,0 +1,5 @@
+<template>
+    <svg width="100" height="100" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path id="Vector" d="M12.6 2.8H11.9V8.4C11.9 8.785 11.585 9.1 11.2 9.1H2.8V9.8C2.8 10.57 3.43 11.2 4.2 11.2H11.2L14 14V4.2C14 3.43 13.37 2.8 12.6 2.8ZM10.5 6.3V1.4C10.5 0.63 9.87 0 9.1 0H1.4C0.63 0 0 0.63 0 1.4V10.5L2.8 7.7H9.1C9.87 7.7 10.5 7.07 10.5 6.3Z" />
+    </svg>
+</template>

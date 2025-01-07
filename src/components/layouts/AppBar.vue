@@ -26,7 +26,7 @@
   </template>
   
   <script setup lang="ts">
-  import { ref, defineProps } from 'vue';
+  import { ref, defineProps, markRaw } from 'vue';
   import { useRouter, useRoute } from 'vue-router';
   import Drawer from 'primevue/drawer';
   import SideHeader from '@/components/layouts/SideHeader.vue';
@@ -53,12 +53,12 @@
   const router = useRouter();
   
   const SideHeaderItems = ref([
-    { id: 1, label: '홈', link: '/', icon: IconHome }, 
-    { id: 2, label: '캘린더', link: '/calendar', icon: IconCalendar }, 
-    { id: 3, label: '회계', link: '/acc', icon: IconBarGraph },
-    { id: 4, label: '통계', link: '/average', icon: IconArrowGraph },
-    { id: 5, label: '더보기', icon: IconMore },
-  ]);
+  { id: 1, label: '홈', link: '/', icon: markRaw(IconHome) }, 
+  { id: 2, label: '캘린더', link: '/calendar', icon: markRaw(IconCalendar) }, 
+  { id: 3, label: '회계', link: '/acc', icon: markRaw(IconBarGraph) },
+  { id: 4, label: '통계', link: '/average', icon: markRaw(IconArrowGraph) },
+  { id: 5, label: '더보기', icon: markRaw(IconMore) },
+]);
   
   // 클릭 핸들러
   const handleClick = (item: { id: number; link: string; label: string }) => {

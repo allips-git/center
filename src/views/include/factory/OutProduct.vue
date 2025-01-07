@@ -1,16 +1,16 @@
 <template>
-<main class="p-4">
+<main class="py-4">
     <div class="">
-        <div class="flex gap-2 mb-4">
-            <IconField class="table-search-input w-full">
+        <div class="flex gap-2 px-5 mb-4">
+            <IconField class="w-full table-search-input">
                 <InputIcon>
                     <i class="pi pi-search" />
                 </InputIcon>
                 <InputText v-model="factory['out']['itemSearch']" placeholder="제품명 검색" class="w-full" @keyup.enter="factory.getOutFactoryItemList()"/>
             </IconField>
         </div>
-        <section class="border-b py-4">
-            <div class="flex justify-between items-center">
+        <section class="">
+            <div class="flex items-center justify-end px-5 ">
                 <!-- <p class="text-lg font-bold text-indigo-600">블라인드</p> -->
                 <Button label="제품 추가" showIcon icon="pi pi-plus" size="small" rounded @click="getOutItemSet" />
             </div>

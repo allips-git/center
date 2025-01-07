@@ -32,7 +32,7 @@
                         </div>
                         <div class="flex flex-col">
                             <span class="text-sm text-right text-gray-400">{{ item.date }}</span>
-                            <p class="font-bold">{{ item.amt }}원</p>
+                            <p class="font-bold text-right">{{ item.amt }}원</p>
                         </div>
                     </div>
                 </li>

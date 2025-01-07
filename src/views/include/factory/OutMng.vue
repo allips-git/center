@@ -1,77 +1,90 @@
 <template>
 <main class="p-5 !pb-32">
-    <div class="flex justify-end">
-            <Button v-if="factory['out']['itemType'] === 'U'" label="제품 삭제" size="small" severity="danger" @click="getOutItemDelete"/>
-        </div>
     <div class="input-layout-box">
-        <div class="flex justify-between w-full items-center">
+        <div class="flex items-center justify-between w-full mb-2">
             <h1 class="font-bold">제품명<span class="ml-0.5 text-red-500">*</span></h1>
+            <Button v-if="factory['out']['itemType'] === 'U'" label="제품 삭제" size="small" severity="danger" outlined @click="getOutItemDelete"/>
         </div>
-        <IftaLabel class="w-full">
-            <InputText id="itemNm" v-model="factory['out']['itemInfo']['itemNm']" class="w-full" autocomplete="off"/>
-            <label>제품 이름</label>
-            <small class="text-red-500">{{ factory['out']['itemMsg']['itemNm'] }}</small>
-        </IftaLabel>
+        <div class="relative flex items-center justify-center">
+            <p class="w-[100px] flex-none">제품 이름</p>
+            <div class="w-full">
+                <InputText id="itemNm" v-model="factory['out']['itemInfo']['itemNm']" class="w-full" autocomplete="off"/>
+                <small class="text-red-500">{{ factory['out']['itemMsg']['itemNm'] }}</small>
+            </div>
+        </div>
 
         <h1 class="mt-4 font-bold">색상 추가<span class="ml-0.5 text-red-500">*</span></h1>
-        <div v-for="(item, index) in factory['out']['itemInfo']['colors']" :key="index" class="flex gap-2">
-            <template v-if="item['delYn'] === 'N'">
-                <IftaLabel class="w-full">
-                    <InputText :id="`icNm${index}`" v-model="item['icNm']" class="w-full" autocomplete="off"/>
-                    <label>색상이름</label>
-                </IftaLabel>
-                <Button v-if="index === 0" label="색상 추가" class="w-28" @click="getAddColor"/>
-                <Button v-if="index !== 0" label="삭제" class="w-28" severity="danger" outlined @click="factory.getOutDelColor(index)"/>
-            </template>
+        
+        <div class="relative flex items-start justify-center">
+            <p class="w-[100px] flex-none pt-2">색상추가</p>
+            <div class="flex flex-col w-full gap-2">
+                <div v-for="(item, index) in factory['out']['itemInfo']['colors']" :key="index" class="">
+                <template v-if="item['delYn'] === 'N'">
+                    <div class="flex gap-2">
+                        <InputText :id="`icNm${index}`" v-model="item['icNm']" class="w-full" autocomplete="off"/>
+                        <div class="flex-none w-[5.5rem]">
+                            <Button v-if="index === 0" label="색상 추가" class="flex-none w-full" @click="getAddColor"/>
+                            <Button v-if="index !== 0" label="삭제" class="flex-none w-full" severity="secondary" @click="factory.getOutDelColor(index)"/>
+                        </div>
+                    </div>
+                    <small class="text-red-500">{{ factory['out']['itemMsg']['colors'] }}</small>
+                </template>
+            </div>
+            </div>
         </div>
-        <small class="text-red-500">{{ factory['out']['itemMsg']['colors'] }}</small>
+
+
 
         <h1 class="mt-4 font-bold">옵션 설정<span class="ml-0.5 text-red-500">*</span></h1>
-        <InputGroup>
-            <IftaLabel class="w-full flex gap-2">
-                <InputNumber inputId="size" v-model="factory['out']['itemInfo']['size']" class="w-full" autocomplete="off"/>
-                <label>기본 단위</label>
-            </IftaLabel>
-            <Select class="!w-40 !border-l-[0.5px] !focus:border-l-2 custom_select" 
-                v-model="factory['out']['itemInfo']['unit']" :options="data['unit']" optionLabel="name" optionValue="value" />
-        </InputGroup>
-        <small class="text-red-500">{{ factory['out']['itemMsg']['size'] }}</small>
 
-        <InputGroup v-if="factory['out']['itemInfo']['unit'] !== '004'">
-            <IftaLabel class="w-full flex gap-2">
-                <InputNumber inputId="minHeight" v-model="factory['out']['itemInfo']['minHeight']" class="w-full" autocomplete="off"/>
-                <label>기본 높이</label>
-            </IftaLabel>
-            <InputGroupAddon>cm</InputGroupAddon>
-        </InputGroup>
-        <small class="text-red-500">{{ factory['out']['itemMsg']['minHeight'] }}</small>
+        <div class="relative flex items-center justify-center w-full">
+            <p class="w-[100px] flex-none">기본 단위</p>
+            <div>
+                <div class="flex w-full gap-2">
+                    <InputNumber inputId="size" v-model="factory['out']['itemInfo']['size']" class="w-full *:w-full *:!text-center font-bold" autocomplete="off"/>
+                    <Select class="w-full !border-l-[0.5px] !focus:border-l-2 custom_select" 
+                    v-model="factory['out']['itemInfo']['unit']" :options="data['unit']" optionLabel="name" optionValue="value" />
+                </div>
+                <small class="text-red-500">{{ factory['out']['itemMsg']['size'] }}</small>
+            </div>    
+        </div>
 
-        <InputGroup v-if="factory['out']['itemInfo']['unit'] === '003'">
-            <IftaLabel class="w-full flex gap-2">
-                <InputNumber inputId="pokSpec" v-model="factory['out']['itemInfo']['pokSpec']" class="w-full" autocomplete="off"/>
-                <label>원단 폭</label>
-            </IftaLabel>
-            <InputGroupAddon>cm</InputGroupAddon>
-        </InputGroup>
-        <small class="text-red-500">{{ factory['out']['itemMsg']['pokSpec'] }}</small>
+        <div class="relative flex items-center justify-center w-full" v-if="factory['out']['itemInfo']['unit'] !== '004'">
+            <p class="w-[100px] flex-none">기본 높이</p>
+            <div class="w-full">
+                <InputNumber v-model="factory['sys']['itemInfo']['saleAmt']" class="w-full *:!pr-10 inputNumber-color"/>
+                <small class="text-red-500">{{ factory['out']['itemMsg']['minHeight'] }}</small>
+            </div>
+            <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">cm</span>
+        </div>
 
-        <InputGroup>
-            <IftaLabel class="w-full flex gap-2">
-                <InputNumber inputId="purcAmt" v-model="factory['out']['itemInfo']['purcAmt']" class="w-full" autocomplete="off"/>
-                <label>매입 가격</label>
-            </IftaLabel>
-            <InputGroupAddon>원</InputGroupAddon>
-        </InputGroup>
-        <small class="text-red-500">{{ factory['out']['itemMsg']['purcAmt'] }}</small>
+        <div class="relative flex items-center justify-center w-full" v-if="factory['out']['itemInfo']['unit'] === '003'">
+            <p class="w-[100px] flex-none">원단 폭</p>
+            <div class="w-full">
+                <InputNumber inputId="pokSpec" v-model="factory['out']['itemInfo']['pokSpec']" class="w-full inputNumber-color" autocomplete="off"/>
+                <small class="text-red-500">{{ factory['out']['itemMsg']['pokSpec'] }}</small>
+            </div>
+            <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">cm</span>
+        </div>
 
-        <InputGroup>
-            <IftaLabel class="w-full flex gap-2">
-                <InputNumber inputId="saleAmt" v-model="factory['out']['itemInfo']['saleAmt']" class="w-full" autocomplete="off"/>
-                <label>판매 가격</label>
-            </IftaLabel>
-            <InputGroupAddon>원</InputGroupAddon>
-        </InputGroup>
-        <small class="text-red-500">{{ factory['out']['itemMsg']['saleAmt'] }}</small>
+        <div class="relative flex items-center justify-center w-full">
+            <p class="w-[100px] flex-none">매입 가격</p>
+            <div class="w-full">
+                <InputNumber inputId="purcAmt" v-model="factory['out']['itemInfo']['purcAmt']" class="w-full inputNumber-color" autocomplete="off"/>
+                <small class="text-red-500">{{ factory['out']['itemMsg']['purcAmt'] }}</small>
+            </div>
+            <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
+        </div>
+
+        <div class="relative flex items-center justify-center w-full">
+            <p class="w-[100px] flex-none">판매가격</p>
+            <div class="w-full">
+                <InputNumber inputId="saleAmt" v-model="factory['out']['itemInfo']['saleAmt']" class="w-full inputNumber-color" autocomplete="off"/>
+                <small class="text-red-500">{{ factory['out']['itemMsg']['saleAmt'] }}</small>
+            </div>
+            <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
+        </div>
+
 
         <div class="bottom-fixed-btn-box">
             <Button label="저장" size="large" @click="getOutItemSave"/>
@@ -81,9 +94,6 @@
 </template>
 
 <script setup lang="ts">
-import IftaLabel from 'primevue/iftalabel';
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
 import InputNumber from 'primevue/inputnumber';
 import { useConfirm } from "primevue/useconfirm";
 import { useDataStore, useFactoryStore } from '@/store';

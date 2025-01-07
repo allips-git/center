@@ -1,19 +1,18 @@
 <template>
     <div class="input-layout-box">
-        <InputGroup>
-            <IftaLabel class="w-full">
-                <InputNumber v-model="info['dcInfo']['val']" class="w-full" @update:modelValue="(value) => getDcInput(value)" />
-                <label>할인 금액 입력</label>
-            </IftaLabel>
-            <InputGroupAddon class="custom-InputGroupAddon">
+        <h1 class="mb-4 font-medium text-center">할인</h1>
+        <InputGroup class="">
+            <InputGroupAddon class="custom-InputGroupAddon !overflow-hidden !rounded-sm">
                 <SelectButton v-model="info['dcInfo']['unit']" 
                     :options="data['discount']" optionLabel="label" optionValue="value" class="custom-input-select-btn" 
                     @change="getValCheck"/>
             </InputGroupAddon>
+            <IftaLabel class="w-full btn-input-set">
+                <InputNumber v-model="info['dcInfo']['val']" class="w-full" @update:modelValue="(value) => getDcInput(value)" />
+            </IftaLabel>
         </InputGroup>
         <IftaLabel class="w-full">
-            <Textarea v-model="info['dcInfo']['memo']" rows="3" cols="30" class="w-full" />
-            <label>메모입력</label>
+            <Textarea v-model="info['dcInfo']['memo']" autoResize cols="30" rows="1" class="w-full" placeholder="메모" />
         </IftaLabel>
         <div class="mt-2 btn-2-layout-box">
             <Button severity="secondary" label="취소" @click="emit('getClose')"/>
@@ -55,13 +54,55 @@ const getValCheck = () => {
 </script>
 
 <style lang="scss" >
+
+.custom-InputGroupAddon{
+    border-radius: 0 !important;
+
+    .p-selectbutton .p-togglebutton{
+        border-width: 0px !important;
+    }
+    &.p-inputgroupaddon:first-child{
+        border-radius: 0 !important; 
+    }
+}
+.btn-input-set{
+    border-radius: 0px !important;
+    .p-inputnumber{
+        border-radius: 0px !important;
+        input{
+            border-radius: 0px !important;
+            
+        }
+    }
+}
+
+
 .custom-input-select-btn{
     height: 100% !important;
+    border-radius: 0 !important;
+    
     &.p-selectbutton .p-togglebutton:first-child{
         border-radius: 0 !important;
     }
+    
     > button{
         height: 100%;
+    }
+    &.p-selectbutton .p-togglebutton:last-child{
+        border-radius: 0 !important;
+    }
+    .p-togglebutton{
+        background-color: transparent;
+    }
+    .p-togglebutton-checked{
+        background-color: var(--p-primary-500) !important; 
+        &:before{
+        background-color: var(--p-primary-500) !important; 
+        
+        }
+        .p-togglebutton-content{
+            color: white;
+        }
     }
 }
 .custom-InputGroupAddon{

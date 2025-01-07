@@ -27,14 +27,14 @@ import OutOrderMateModal from "@/views/customer/OutOrderMateModal.vue";
 import FactoryList from "@/views/factory/FactoryList.vue";
 // import OutInput from "@/views/factory/OutInput.vue";
 import OutDetail from "@/views/factory/OutDetail.vue";
-import OutProduct from "@/views/factory/OutProduct.vue";
+// import OutProduct from "@/views/factory/OutProduct.vue";
 // import OutMng from "@/views/factory/OutMng.vue";
 import FactoryDetail from "@/views/factory/FactoryDetail.vue";
 import SysProduct from "@/views/factory/ProductInfo.vue";
 import PlantalkMain from "@/views/plantalk/PlantalkMain.vue";
-// import PlantalkRes from "@/views/plantalk/PlantalkAlert.vue"
+import PlantalkRes from "@/views/plantalk/PlantalkAlert.vue"
 // import PlantalkSend from "@/views/plantalk/PlantalkMessage.vue"
-// import PlantalkDetail from "@/views/plantalk/ScheduleAlert.vue";
+import PlantalkDetail from "@/views/plantalk/ScheduleAlert.vue";
 import MessageView from "@/views/message/MessageView.vue";
 import SettingView from "@/views/setting/SettingView.vue";
 import TimeSetting from "@/views/setting/TimeSetting.vue";
@@ -194,12 +194,12 @@ const routes = [
         component: OutDetail,
         meta: { title: '외주공장 상세' }
     },
-    {
-        path: "/factory/outProduct",
-        name: "OutProduct",
-        component: OutProduct,
-        meta: { title: '외주공장 제품 리스트' }
-    },
+    // {
+    //     path: "/factory/outProduct",
+    //     name: "OutProduct",
+    //     component: OutProduct,
+    //     meta: { title: '외주공장 제품 리스트' }
+    // },
     // {
     //     path: "/factory/outMng",
     //     name: "OutMng",
@@ -230,24 +230,24 @@ const routes = [
         component: PlantalkMain,
         meta: { title: '플랜톡' }
     },
-    // {
-    //     path: "/plantalk/res",
-    //     name: "PlantalkRes",
-    //     component: PlantalkRes,
-    //     meta: { title: '플랜톡 예약된 알림' }
-    // },
+    {
+        path: "/plantalk/res",
+        name: "PlantalkRes",
+        component: PlantalkRes,
+        meta: { title: '플랜톡 예약된 알림' }
+    },
     // {
     //     path: "/plantalk/send",
     //     name: "PlantalkSend",
     //     component: PlantalkSend,
     //     meta: { title: '플랜톡 발송 내역' }
     // },
-    // {
-    //     path: "/plantalk/detail",
-    //     name: "PlantalkDetail",
-    //     component: PlantalkDetail,
-    //     meta: { title: '플랜톡 상세' }
-    // },
+    {
+        path: "/plantalk/detail",
+        name: "PlantalkDetail",
+        component: PlantalkDetail,
+        meta: { title: '플랜톡 상세' }
+    },
     {
         path: "/acc",
         name: "AccView",

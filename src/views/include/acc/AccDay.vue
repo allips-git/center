@@ -4,9 +4,11 @@
             <AccInfo :saleAmt="getAmt(acc.daySaleAmt)" :purcAmt="getAmt(acc.dayPurcAmt)" :margin="acc.dayMargin"/>
         </section>
         <div class="mt-5"></div>
+        <div class="gray-bar"></div>
         <section>
-            <div class="px-4 py-2 font-bold text-lx bg-gray-50">
-                <p class="text-indigo-600">{{ getDate(acc.searchDt) }}</p>
+            <div class="flex items-center px-4 py-2 ">
+                <p class="mr-2 text-sm text-gray-600 whitespace-nowrap">{{ getDate(acc.searchDt) }}</p>
+                <div class="w-full h-px bg-gray-300"></div>
             </div>
             <template v-for="(item, index) in acc['dayList']" :key="index">
                 <AccountList :clientNm="item['clientNm']" :stNm="item['stNm']" :addr="item['addr']+' '+item['addrDetail']"

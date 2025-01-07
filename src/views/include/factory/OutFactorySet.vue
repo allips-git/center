@@ -43,7 +43,7 @@
             </IftaLabel>
         </div>
         <div class="bottom-modal-absol-box">
-            <Button type="button" label="저장" @click="getOutFactorySave" class="w-full"></Button>
+            <Button type="button" size="large" label="저장" @click="getOutFactorySave" class="w-full" ></Button>
         </div>
     </div>
     <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:9999;-webkit-overflow-scrolling:touch;">

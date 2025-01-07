@@ -1,31 +1,14 @@
 <template>
-    <li class="flex flex-col justify-between px-4 py-4 text-sm border-b border-gray-200 first:mt-3">
-        <div>
-            <div class="flex gap-2 text-xs">
-                <div class="flex gap-2">
-                    <p class="text-gray-500">평균 마진</p>
-                    <p class="font-bold">{{ margin }}%</p>
-                </div>
-                <p class="text-gray-400">|</p>
-                <div class="flex gap-2">
-                    <p class="">결제대기</p>
-                    <p class="font-bold text-red-500">{{ waitAmt }}원</p>
-                </div>                    
+    <li class="flex items-center justify-between px-4 py-4 border-b border-gray-100 first:mt-3">
+        <div class="flex flex-col text-gray-500">
+            <p class="font-bold text-gray-900">{{ date }} </p>
+            <div class="flex flex-col mt-1 text-sm">
+                <p>평균 마진 : {{ margin }}%</p>
+                <p>월간 수익 : {{ rev }}원</p>
+                <p>결제 대기 : {{ waitAmt }}원</p>
             </div>
         </div>
-        <div class="flex justify-between">
-            <b class="flex items-center gap-1.5 mb-2 text-lg">
-                {{ date }} 
-                <span class="text-sm text-gray-400">></span>
-            </b>
-            <div class="flex flex-col items-end">
-                <p class="text-lg font-bold text-green-500">{{ saleAmt }}원</p>
-                <div class="flex gap-1">
-                    <p class="">수익</p>
-                    <p class="font-bold">{{ rev }}원</p>
-                </div>
-            </div>
-        </div>
+        <p class="text-lg font-bold text-green-500">{{ saleAmt }}원</p>
     </li>
 </template>
 

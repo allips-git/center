@@ -1,10 +1,11 @@
 <template>
     <div class="p-4 bg-white border border-gray-200 rounded">
         <div class="">
-            <div v-if="showtitle" class="flex items-center justify-between pb-3 text-lg font-bold border-b border-gray-100">
+            <div v-if="showtitle" class="flex items-center justify-between pb-3 text-base font-bold border-b border-gray-100">
                 <h4 class="">{{ title }}</h4>
                 <!-- 단위 -->
                 <p class="text-lg text-indigo-600"><span class="ml-0.5">{{ unit }}</span></p>
+                <!-- <Button label="거래원장 출력" /> -->
             </div>
             <div v-if="showtoggle" class="custom_accordion">
                 <Accordion value="0">
@@ -46,7 +47,7 @@
 
                 <dl class="flex items-center justify-between pt-3 font-bold border-t border-dotted">
                     <dt class="text-xl">{{ totalTitle }}</dt>
-                    <dd class="flex items-center text-indigo-600">
+                    <dd class="flex items-center text-blue-600">
                         <p class="text-xl">{{ getAmt(totalAmt) }}</p> 
                         <span class="text-sm ml-0.5">원</span>
                     </dd>
