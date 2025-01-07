@@ -14,6 +14,7 @@ interface PayList {
     amt     : number;
     red     : boolean;
     blue    : boolean;
+    memo    : string;
 }
 
 interface AmtInfo {
@@ -54,17 +55,17 @@ interface Pay {
  */
 const getPayList = (): PayList[] => {
     return [
-        {name : 'itemAmt',      amtGb : '', title: '상품 금액',         amt: 0, red: false, blue: false},
-        {name : 'itemTax',      amtGb : '', title: '부가세',            amt: 0, red: false, blue: false},
-        {name : 'shapeAmt',     amtGb : '', title: '형상 금액',         amt: 0, red: false, blue: false},
-        {name : 'heightAmt',    amtGb : '', title: '세로길이 추가금액', amt: 0, red: false, blue: false},
-        {name : 'addAmt',       amtGb : '001', title: '추가',              amt: 0, red: true, blue: false},
-        {name : 'dcAmt',        amtGb : '002', title: '할인',              amt: 0, red: true, blue: false},
-        {name : 'cutAmt',       amtGb : '003', title: '절삭 할인',         amt: 0, red: true, blue: false},
-        {name : 'conAmt',       amtGb : '004', title: '계약 선금',         amt: 0, red: false, blue: true},
-        {name : 'lastAddAmt',   amtGb : '005', title: '최종 추가',         amt: 0, red: true, blue: false},
-        {name : 'lastDcAmt',    amtGb : '006', title: '최종 할인',         amt: 0, red: true, blue: false},
-        {name : 'payAmt',       amtGb : '007', title: '결제 금액',         amt: 0, red: false, blue: true}
+        {name : 'itemAmt',      amtGb : '', title: '상품 금액',         amt: 0, red: false, blue: false, memo : ''},
+        {name : 'itemTax',      amtGb : '', title: '부가세',            amt: 0, red: false, blue: false, memo : ''},
+        {name : 'shapeAmt',     amtGb : '', title: '형상 금액',         amt: 0, red: false, blue: false, memo : ''},
+        {name : 'heightAmt',    amtGb : '', title: '세로길이 추가금액', amt: 0, red: false, blue: false, memo : ''},
+        {name : 'addAmt',       amtGb : '001', title: '추가',              amt: 0, red: true, blue: false, memo : ''},
+        {name : 'dcAmt',        amtGb : '002', title: '할인',              amt: 0, red: true, blue: false, memo : ''},
+        {name : 'cutAmt',       amtGb : '003', title: '절삭 할인',         amt: 0, red: true, blue: false, memo : ''},
+        {name : 'conAmt',       amtGb : '004', title: '계약 선금',         amt: 0, red: false, blue: true, memo : ''},
+        {name : 'lastAddAmt',   amtGb : '005', title: '최종 추가',         amt: 0, red: true, blue: false, memo : ''},
+        {name : 'lastDcAmt',    amtGb : '006', title: '최종 할인',         amt: 0, red: true, blue: false, memo : ''},
+        {name : 'payAmt',       amtGb : '007', title: '결제 금액',         amt: 0, red: false, blue: true, memo : ''}
     ]
 }
 
@@ -270,7 +271,7 @@ export const useOrderStore = defineStore('order', {
                 this.getItemAmt('itemTax', Number(res.data['itemTax']));
 
                 res.data['amtList'].map((amt) => {
-                    this.getPayAmt(amt['amtGb'], Number(amt['amt']))
+                    this.getPayAmt(amt['amtGb'], Number(amt['amt']), amt['memo'])
                 });
 
                 const [hours, minutes] = res.data['info']['insTime'].split(':').map(Number);
@@ -300,13 +301,14 @@ export const useOrderStore = defineStore('order', {
                 item.amt = Number(amt);
             }
         },
-        getPayAmt(amtGb: string, amt: number)
+        getPayAmt(amtGb: string, amt: number, memo: string)
         {
             const item = this.payList.find(item => item.amtGb === amtGb);
             
             if(item)
             {
-                item.amt = Number(amt);
+                item.amt  = Number(amt);
+                item.memo = memo;
             }
         },
         getAmtInfo(name: string, info: AmtInfo)

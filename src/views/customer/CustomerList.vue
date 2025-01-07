@@ -32,7 +32,7 @@
                         </div>
                         <div class="flex flex-col">
                             <span class="text-sm text-right text-gray-400">{{ item.date }}</span>
-                            <p class="font-bold">{{ item.amt }}원</p>
+                            <p class="font-bold">{{ getAmt(item.amt) }}원</p>
                         </div>
                     </div>
                 </li>
@@ -69,6 +69,7 @@ import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDataStore, usePopupStore, useClientStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
+import { getCommas } from '@/assets/js/function';
 
 const data      = useDataStore();
 const popup     = usePopupStore();
@@ -84,6 +85,10 @@ const getPopOpen = () => {
 
 const getPopClose = (gb: boolean, popNm: string) => {
     getPopupClose(popNm, gb);
+}
+
+const getAmt = (amt: number) => {
+    return getCommas(Number(amt));
 }
 
 const getStatusClass = (step: number) => {
