@@ -1,8 +1,8 @@
 <template>
     <main>
-        <div class="p-5">
-            <div class="flex gap-2">
-                <IconField class="table-search-input w-full">
+        <div class="">
+            <div class="flex gap-2 px-5">
+                <IconField class="w-full table-search-input">
                     <InputIcon>
                         <i class="pi pi-search" />
                     </InputIcon>
@@ -10,7 +10,7 @@
                 </IconField>
             </div>
 
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col">
                 <MoreCard v-for="(item, index) in factory['sys']['itemList']" :key="index"
                     :itemNm="item['itemNm']" :size="item['size']" :unitNm="item['unitNm']" :saleAmt="item['saleAmt']" :purcAmt="item['purcAmt']"
                     @click="getItemDetail(item['itemCd'])"/>

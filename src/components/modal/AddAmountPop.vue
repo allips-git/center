@@ -1,18 +1,18 @@
 <template>
     <div class="input-layout-box">
+        <h1 class="mb-4 font-medium text-center">추가 금액</h1>
         <InputGroup>
-            <IftaLabel class="w-full">
-                <InputNumber v-model="info['addInfo']['val']" class="w-full"/>
-                <label>할인 금액 입력</label>
-            </IftaLabel>
-            <InputGroupAddon class="custom-InputGroupAddon">
+            <InputGroupAddon class="custom-InputGroupAddon !overflow-hidden !rounded-sm">
                 <SelectButton v-model="value" :options="options" class="custom-input-select-btn" disabled/>
             </InputGroupAddon>
+            <IftaLabel class="w-full">
+                <InputNumber v-model="info['addInfo']['val']" class="w-full"/>
+            </IftaLabel>
         </InputGroup>
         <IftaLabel class="w-full">
-            <Textarea v-model="info['addInfo']['memo']" rows="3" cols="30" class="w-full" />
-            <label>메모입력</label>
+            <Textarea v-model="info['addInfo']['memo']" autoResize cols="30" rows="1"  class="w-full" placeholder="메모입력" />
         </IftaLabel>
+        
         <div class="mt-2 btn-2-layout-box">
             <Button severity="secondary" label="취소" @click="emit('getClose')"/>
             <Button label="확인" @click="emit('getApply')"/>

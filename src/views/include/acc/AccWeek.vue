@@ -2,15 +2,16 @@
     <main>
         <section class="px-5 pt-5">
             <section class="flex items-center justify-between mb-1">
-                <h1 class="text-xl font-bold">{{ acc.year }}년 {{ acc.month }}월</h1>
+                <h1 class="mb-3 text-xl font-bold">{{ acc.year }}년 {{ acc.month }}월</h1>
             </section>
             <AccInfo :saleAmt="getAmt(acc.weekSaleAmt)" :purcAmt="getAmt(acc.weekPurcAmt)" :margin="acc.weekMargin"/>
         </section>
             <div class="mt-5"></div> 
+            <div class="gray-bar"></div>
         <section>
             <template v-for="(item, index) in acc['weekData']" :key="index">
                 <ul>
-                    <li class="px-4 py-2 font-bold text-lx bg-gray-50">
+                    <li class="px-4 pb-2 font-bold border-b border-gray-200 text-lx text-sky-400">
                         <p>{{ acc['month'] }}월 {{ item['week'] }}주차</p>
                     </li>
                     <template v-for="(week, wIndex) in acc['weekList']" :key="wIndex">

@@ -2,12 +2,11 @@
     <BackHeader :title="factory['out']['detail']['header'][0]['value']+' 상세 정보'" />
     <main class="!pb-36">
         <div class="relative">
-            <section class="relative rounded-t-xl overflow-hidden bg-white">
+            <section class="relative overflow-hidden bg-white rounded-t-xl">
                 <InfoCard :title="factory['out']['detail']['header'][0]['value']" 
                     :info="factory['out']['detail']['header']" :btnLabel="'수정하기'"
                     @get-btn="getPopOpen('outFactorySet')"/>
             </section>
-
             <div class="gray-bar"></div>
 
             <section class="px-5">
@@ -16,10 +15,10 @@
             </section>
         </div>
     </main>
-    <div class="bottom-fixed-btn-box flex-col border-t">
-        <div class="flex font-bold text-lg mb-1 justify-between">
+    <div class="flex-col border-t bottom-fixed-btn-box">
+        <div class="flex justify-between mb-1 text-lg font-bold">
             <p >총 제품</p>
-            <p class="text-indigo-600">{{ factory['out']['detail']['itemCnt'] }}개</p>
+            <p class="text-blue-600">{{ factory['out']['detail']['itemCnt'] }}개</p>
         </div>
         <Button label="제품 설정하기" size="large" @click="getPopupOpen('outFactoryItemList')"/>
     </div>

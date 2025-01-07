@@ -1,40 +1,33 @@
 <template>
 <main class="p-5 !pb-32">
     <div class="form-gap-box">
-        
-        <IftaLabel class="label-input-box">
-            <DatePicker id="insTime"  showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd"/>
-            <label>주문일</label>
-        </IftaLabel>
+        <div class="relative flex items-center justify-center w-full">
+            <p class="w-[100px] flex-none">계약일</p>            
+            <DatePicker id="insTime"  showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd" class="w-full"/>
+        </div>
 
-        <IftaLabel class="label-input-box">
-            <DatePicker id="insTime"  showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd"/>
-            <label>출고일</label>
-        </IftaLabel>
+        <div class="relative flex items-center justify-center w-full">
+            <p class="w-[100px] flex-none">출고일</p>            
+            <DatePicker id="insTime"  showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd" class="w-full"/>
+        </div>
 
-        <div class="label-input-box">
-            <div class="flex gap-2">
-                <IftaLabel class="label-input-box max-w-48">
-                    <label>배송 방법</label>
-                    <Select placeholder="선택해주세요."/>
-                </IftaLabel>
-
-                <IftaLabel class="label-input-box ">
-                    <label>주소</label>
-                    <InputText placeholder="주소를 입력하세요" />
-                </IftaLabel>
+        <div class="relative flex items-center justify-center w-full">
+            <p class="w-[100px] flex-none">배송</p>            
+            <div class="flex w-full gap-2">
+                <Select class="w-32" />
+                <InputText placeholder="주소를 입력하세요" class="w-full" />
             </div>
         </div>
 
-        <IftaLabel class="label-input-box ">
-            <label>상세 주소</label>
-            <InputText placeholder="상세 주소를 입력하세요" />
-        </IftaLabel>
+        <div class="relative flex items-center justify-center w-full">
+            <p class="w-[100px] flex-none">배송지 상세</p>            
+            <InputText placeholder="상세주소를 입력하세요" class="w-full"/>
+        </div>
 
-        <IftaLabel class="label-input-box ">
-            <label>배송 요청사항</label>
-            <InputText placeholder="배송 요청사항을 입력하세요." />
-        </IftaLabel>
+        <div class="relative flex items-center justify-center w-full">
+            <p class="w-[100px] flex-none">배송 요청사항</p>            
+            <InputText placeholder="비고" class="w-full" />
+        </div>
         
         <div class="mt-2 btn-2-layout-box bottom-fixed-btn-box">
             <Button label="시스템 발주"/>

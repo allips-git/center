@@ -1,8 +1,8 @@
 <template>
 <main>
-    <div class="bottom-modal-contents-box !px-0 !pb-20">
-        <div class="absolute z-50 flex justify-end top-[8px] right-[8px]">
-            <Button label="제품 변경" size="small" outlined @click="getItemChange"/>
+    <div class="bottom-modal-contents-box !px-0 !pb-20 z-10">
+        <div class="absolute !z-[100] flex justify-end top-[8px] right-[8px]">
+            <Button label="제품 변경" size="small" outlined @click="getItemChange" class="!z-[100]"/>
         </div>    
         <div class="flex justify-between px-5 text-base font-bold">
             <h2 class="px-3 rounded-full pypx bg-cyan-100 text-cyan-600">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>

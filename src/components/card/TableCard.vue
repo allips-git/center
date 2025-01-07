@@ -5,7 +5,7 @@
         <div class="flex flex-col items-start justify-start px-4 pt-3 pb-3 border-t first:border-t-0" v-for="(card, index) in cards" :key="index" @click="emit('get-modify', card['edCd'])">
             <!-- 카드 상단 -->
              <div class="flex items-center justify-between w-full">
-                <h2 class="mb-1 text-sm text-gray-400">{{ card.productTitle }}</h2>
+                <h2 class="text-sm text-gray-400">{{ card.productTitle }}</h2>
                 <div v-if="card.showDelete" class="flex justify-end">
                     <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-14"/>
                 </div>            
@@ -71,7 +71,7 @@
             <!-- 버튼타입 // severity="" // primary(시스템),success(외주),secondary(시스템/외주 발주완료),warn(발주취소),danger(발주 취소 요청) -->
             
                 <Button v-if="card['showButton'] && index === cards.length -1" 
-                    :label="card['buttonText']" :severity="card['buttonType']" size="small" @click="getBtnProcess(card['buttonType'], card['edCd'])" class="*:w-full mt-4"/>
+                    :label="card['buttonText']" :severity="card['buttonType']"  @click="getBtnProcess(card['buttonType'], card['edCd'])" class="w-full mt-4"/>
             
         </div>
     </div>

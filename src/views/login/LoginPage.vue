@@ -4,8 +4,8 @@
     pt:root:class="!border-0 !bg-transparent w-full md:w-[400px] md:h-auto !min-h-[600px] h-full !max-h-screen justify-start" 
     pt:mask:class="bg-white backdrop-blur-sm">
         <template #container>
-            <BackHeader title="로그인" />
-            <div class="flex flex-col px-6 pb-8 mt-10 rounded-2xl sm:mt-0">
+            <BackHeader title="로그인"  class="md:hidden" />
+            <div class="flex flex-col px-6 pb-8 mt-10 rounded-2xl sm:mt-10">
                 <div class="flex flex-col items-center justify-center">
                     <IconLogo class="w-12 fill-sky-500"/>
                     <p class="w-full mt-5 mb-10 text-2xl font-extrabold text-center"><span class="text-sky-500 rext">PLAN ORDER</span></p>

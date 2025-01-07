@@ -1,47 +1,45 @@
 <template>
     <main class="p-5 !pb-32">
         <div class="input-layout-box">
-            <div class="flex justify-between w-full items-center">
-                <h1 class="font-bold">제품명</h1>
+            <div class="flex items-center justify-between w-full mb-2">
+                <h1 class="font-bold">제품명<span class="ml-1 text-sm text-red-500">*</span></h1>
+                <!-- <Button label="삭제" size="small" severity="danger" outlined/> -->
             </div>
-            <IftaLabel class="w-full">
+
+            <div class="relative flex items-center justify-center">
+                <p class="w-[100px] flex-none">제품이름</p>
                 <InputText :value="factory['sys']['itemInfo']['itemNm']" class="w-full" disabled/>
-                <label>제품 이름</label>
-            </IftaLabel>
-    
-            <h1 class="mt-4 font-bold">색상</h1>
-            <div v-for="(item, index) in factory['sys']['itemInfo']['colors']" :key="index" class="flex gap-2">
-                <IftaLabel class="w-full">
-                    <InputText :value="item['icNm']" class="w-full" disabled/>
-                    <label>색상이름</label>
-                </IftaLabel>
             </div>
-    
+            
+            <h1 class="mt-4 font-bold">색상추가<span class="ml-1 text-sm text-red-500">*</span></h1>
+            <div class="relative flex items-start justify-center">
+                <p class="w-[100px] flex-none pt-2">색상이름</p>
+                <div class="flex flex-col w-full gap-2">
+                    <InputText :value="item['icNm']" class="w-full" disabled v-for="(item, index) in factory['sys']['itemInfo']['colors']" :key="index"/>
+                </div>
+            </div>
+
             <h1 class="mt-4 font-bold">옵션 설정<span class="ml-0.5 text-red-500">*</span></h1>
-            <InputGroup>
-                <IftaLabel class="w-full flex gap-2">
+            <div class="relative flex items-center justify-center">
+                <p class="w-[100px] flex-none">기본 단위</p>
+                <div class="flex w-full gap-2">
                     <InputText :value="factory['sys']['itemInfo']['size']" class="w-full" disabled/>
-                    <label>기본 단위</label>
-                </IftaLabel>
-                <InputText :value="factory['sys']['itemInfo']['unitNm']" class="!w-40 !border-l-[0.5px] !focus:border-l-2 custom_select" disabled/>
-            </InputGroup>
-    
-            <InputGroup>
-                <IftaLabel class="w-full flex gap-2">
-                    <InputText :value="getAmt(factory['sys']['itemInfo']['purcAmt'])" class="w-full" disabled/>
-                    <label>매입 가격</label>
-                </IftaLabel>
-                <InputGroupAddon>원</InputGroupAddon>
-            </InputGroup>
-    
-            <InputGroup>
-                <IftaLabel class="w-full flex gap-2">
-                    <InputNumber v-model="factory['sys']['itemInfo']['saleAmt']" class="w-full"/>
-                    <label>판매 가격</label>
-                </IftaLabel>
-                <InputGroupAddon>원</InputGroupAddon>
-            </InputGroup>
-    
+                    <InputText :value="factory['sys']['itemInfo']['unitNm']" class="!w-40 !border-l-[0.5px] !focus:border-l-2 custom_select" disabled/>
+                </div>
+            </div>
+
+            <div class="relative flex items-center justify-center">
+                <p class="w-[100px] flex-none">매입 가격</p>
+                <InputText :value="getAmt(factory['sys']['itemInfo']['purcAmt'])" class="w-full !text-right !pr-8" disabled/>
+                <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
+            </div>
+
+            <div class="relative flex items-center justify-center">
+                <p class="w-[100px] flex-none">판매 가격</p>
+                <InputNumber v-model="factory['sys']['itemInfo']['saleAmt']" class="w-full"/>
+                <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
+            </div>
+
             <div class="bottom-fixed-btn-box">
                 <Button label="저장" size="large" @click="getSysItemSave"/>
             </div>
@@ -50,9 +48,6 @@
 </template>
     
 <script setup lang="ts">
-import IftaLabel from 'primevue/iftalabel';
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
 import InputNumber from 'primevue/inputnumber';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue';

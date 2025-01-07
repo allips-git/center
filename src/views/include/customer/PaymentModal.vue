@@ -18,13 +18,13 @@
                 :modelValue="getAmtInfo('lastAddAmt')" placeholder="추가 금액을 입력하세요"
                 readonly @click="getPopupOpen('addAmtSet')"
                 />
-                <span class="absolute text-sm text-blue-500 right-4 bottom-2.5">원</span>
+                <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
             </div>
 
             <div class="relative flex items-center justify-center">
                 <p class="w-[100px] flex-none">최종 결제금액</p>
                 <InputNumber class="*:!text-blue-500 inputNumber-color" :modelValue="getTotalAmt()" placeholder="최종 결제 금액을 입력하세요"/>
-                <span class="absolute text-sm text-blue-500 right-4 bottom-2.5">원</span>
+                <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
             </div>
         </section>
 
@@ -41,7 +41,7 @@
                                 <InputNumber class="*:!text-blue-500 inputNumber-color *:w-full" 
                                 :modelValue="getTotalAmt()" placeholder="잔금을 입력하세요" readonly
                                 />
-                                <span class="absolute text-sm text-blue-500 right-4 bottom-2.5">원</span>
+                                <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
                             </div>
                         </div>
                     </div>

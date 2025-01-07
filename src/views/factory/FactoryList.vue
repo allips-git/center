@@ -1,7 +1,7 @@
 <template>
 <main>
     <BackHeader title="공장" />
-    <div class="relative">
+    <div class="relative mt-2 custom-left-tab">
         <Tabs value="0">
             <TabList>
                 <Tab value="0">플랜오더 공장</Tab>
@@ -9,43 +9,46 @@
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
-                    <div class="flex justify-end w-full px-5 pt-3">
-                        <Button label="공장코드 추가" icon="pi pi-plus" size="small" @click="getPopOpen('sysFactorySearch')"/>
-                    </div>
-                    <ul>
-                        <li class="flex gap-3 px-5 py-3 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
-                            <div class="max-w-[78px]">
-                                <img :src="getImage(item.imgUrl)" class="w-full h-[87px] rounded-lg object-cover" alt="">
-                            </div>
-                            <div class="w-full">
-                                <div class="flex justify-between">
-                                    <p class="mb-1 font-bold">{{ item.faNm }}</p>
-                                    <div class="text-sm text-right *:px-3 *:py-1 *:rounded-full font-bold">
-                                        <p v-if="item['appGb'] === 'E'" class="text-blue-500 ">승인 대기</p>
-                                        <p v-if="item['appGb'] === 'N'" class="text-orange-500">반려</p>
+                    <div class="pt-3 pb-20">
+                        <div class="fixed flex justify-end w-full pt-3 md:px-5 bottom-4 right-4">
+                            <Button label="공장코드 추가" icon="pi pi-plus" size="large" @click="getPopOpen('sysFactorySearch')"/>
+                        </div>
+                        <ul class="w-full">
+                            <li class="flex gap-3 px-5 py-4 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
+                                    <img :src="getImage(item.imgUrl)" class="w-full max-w-[78px] h-[87px] rounded-lg object-cover" alt="">
+                                
+                                <div class="w-[calc(100%-78px)]">
+                                    <div class="flex justify-between">
+                                        <p class="mb-1 font-bold">{{ item.faNm }}</p>
+                                        <div class="text-sm text-right *:px-3 *:py-1 *:rounded-full font-bold">
+                                            <p v-if="item['appGb'] === 'E'" class="text-blue-500 ">승인 대기</p>
+                                            <p v-if="item['appGb'] === 'N'" class="text-orange-500">반려</p>
+                                        </div>
                                     </div>
+                                    <p class="text-sm text-gray-600">{{ item.tel }}</p>
+                                    <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
+                                    <!-- <div class="flex flex-wrap gap-1 mt-2">
+                                        <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
+                                        <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
+                                    </div> -->
                                 </div>
-                                <p class="text-sm text-gray-600">{{ item.tel }}</p>
-                                <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
-                                <!-- <div class="flex flex-wrap gap-1 mt-2">
-                                    <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
-                                    <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
-                                </div> -->
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </TabPanel>
                 <TabPanel value="1">
-                    <div class="flex justify-end w-full px-5 pt-3">
-                        <Button label="외주공장 추가" icon="pi pi-plus" size="small" @click="getPopOpen('outFactorySet')" />
-                    </div>
+                    <div class="pt-3 pb-20">
+                        <div class="fixed flex justify-end w-full pt-3 md:px-5 bottom-4 right-4">
+                            <Button label="외주공장 추가" icon="pi pi-plus" size="large" @click="getPopOpen('outFactorySet')" />
+                        </div>
                     <ul>
                         <li class="flex flex-col px-4 py-3 border-b" v-for="(item, index) in factory['out']['list']" :key="index" @click="getOutDetail(item.fcCd)">
                             <p class="mb-1 font-bold">{{ item.faNm }}</p>
-                            <p class="text-sm text-gray-600">{{ item.tel }}</p>
+                            <p class="text-sm text-gray-900">{{ item.tel }}</p>
                             <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
                         </li>
                     </ul>
+                    </div>
                 </TabPanel>
             </TabPanels>
         </Tabs>
@@ -59,7 +62,7 @@
     </Dialog>
 
     <!-- 외주 공장 저장 다이얼로그 -->
-    <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주공장 저장" 
+    <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주공장 등록" 
         :modal=true position="center" :dismissableMask="true" class="custom-dialog-bottom"
         @update:visible="getPopClose(true, 'outFactorySet')">
         <OutFactorySet/>

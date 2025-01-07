@@ -18,7 +18,7 @@
                     <div class="relative flex items-center justify-center">
                         <p class="w-[100px] text-sm flex-none">할인 금액</p>
                         <InputNumber class="*:!text-blue-500 inputNumber-color *:!rounded-sm" @click="getPopupOpen('disAmtSet')" :value="getAmtInfo('dcAmt')" readonly/>
-                        <span class="absolute text-sm text-blue-500 right-4 bottom-2.5">원</span>
+                        <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
                     </div>
 
                     <div class="relative flex items-center justify-center">
@@ -35,8 +35,8 @@
         </section>
     </main>
     <div class="bottom-fixed-btn-box">
-        <Button label="견적서 저장" size="large" @click="getEstiSave"/>
-        <Button label="계약서 이동" severity="secondary" size="large" @click="getPopupOpen('conInfoSet')"/>
+        <Button label="견적서 저장" severity="secondary" size="large" @click="getEstiSave"/>
+        <Button label="계약서 이동" size="large" @click="getPopupOpen('conInfoSet')"/>
     </div>
 
     <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 
@@ -56,14 +56,26 @@
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
-        :modal=true position="center" class="custom-dialog-bottom"
+        :modal=true position="center" class="custom-dialog-bottom backPopup"
         @update:visible="getPopupClose('itemList', true)">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="popup['pop']['itemList'] = false" severity="contrast" text icon="pi pi-arrow-left"/>
+                <h2 class="modal-backheader-title">제품선택</h2>
+            </div>
+        </template>
         <ProductChoice/>
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['itemSet']" header="제품등록" 
-        :modal=true position="center" class="custom-dialog-bottom"
+        :modal=true position="center" class="custom-dialog-bottom backPopup"
         @update:visible="getPopupClose('itemSet', true)">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="popup['pop']['itemSet'] = false" severity="contrast" text icon="pi pi-arrow-left"/>
+                <h2 class="modal-backheader-title">제품선택</h2>
+            </div>
+        </template>
         <ProductRegister/>
     </Dialog>
     

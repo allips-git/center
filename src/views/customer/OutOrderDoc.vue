@@ -1,8 +1,9 @@
 <template>
-    <BackHeader :title="mate['ceNm']+' 발주서'" />
+    <!-- <BackHeader :title="mate['ceNm']+' 발주서'" /> -->
+    <p class="pt-6 text-xl font-bold text-center">{{ mate['ceNm']+' 발주서' }}</p>
     <main class="!pb-36">
         <div class="relative">
-            <section class="relative rounded-t-xl overflow-hidden bg-white">
+            <section class="relative overflow-hidden bg-white rounded-t-xl">
                 <InfoCard :title="'수신 : '+mate['faNm']" :info="mate['headers']" />
                 <div class="gray-bar"></div>
 

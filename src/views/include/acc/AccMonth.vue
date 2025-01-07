@@ -14,7 +14,7 @@
            <div class="mt-5 gray-bar"></div> 
         <section>
             <ul>
-                <li class="px-4 py-2 font-bold text-gray-500 border-b border-gray-100 text-lx ">
+                <li class="px-4 py-2 font-bold text-gray-500 border-b border-gray-200 text-lx ">
                     <p>{{ acc.year }}년</p>
                 </li>
                 <template v-for="(item, index) in acc['monthList']" :key="index">
@@ -23,12 +23,12 @@
                 </template>
             </ul>
         </section>
+        <Dialog v-model:visible="popup['pop']['accWeek']" header="주간 분석" 
+            :modal=true position="center" class="custom-dialog-bottom"
+            @update:visible="getPopupClose('accWeek', true)">
+            <AccWeek/>
+        </Dialog>
     </main>
-    <Dialog v-model:visible="popup['pop']['accWeek']" header="주간 분석" 
-        :modal=true position="center" class="custom-dialog-bottom"
-        @update:visible="getPopupClose('accWeek', true)">
-        <AccWeek/>
-    </Dialog>
 </template>
 
 <script setup lang="ts">
