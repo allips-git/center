@@ -149,7 +149,7 @@ const getOrder = () => {
         },
         accept : async () => {
             const params = {
-                edCd        : order['outInfo']['edCd'],
+                edCd        : order['edCd'],
                 ordDt       : order['outInfo']['ordDt'],
                 outDt       : order['outInfo']['outDt'],
                 shippingGb  : order['outInfo']['shippingGb'],

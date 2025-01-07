@@ -57,6 +57,18 @@ interface History {
     stNm    : string;
 }
 
+interface Edit {
+    clientNm    : string;
+    stCd        : string;
+    stDt        : string;
+    tel         : string;
+    addr        : string;
+    addrDetail  : string;
+    insTime     : string;
+    insCnt      : string;
+    memo        : string;
+}
+
 interface Info {
     stCd        : string;
     clientNm    : string;
@@ -76,7 +88,22 @@ interface State {
     daySelIndex : number;
     dayEvents   : DayEvents[];
     person      : Person[];
+    edit        : Edit;
     info        : Info;
+}
+
+const getEdit = (): Edit => {
+    return {
+        clientNm    : '',
+        stCd        : '',
+        stDt        : '',
+        tel         : '',
+        addr        : '',
+        addrDetail  : '',
+        insTime     : '',
+        insCnt      : '',
+        memo        : ''
+    }
 }
 
 const getInfo = (): Info => {
@@ -104,13 +131,50 @@ export const useCalendarStore = defineStore('calendar', {
         daySelIndex : 0,
         dayEvents   : [],
         person      : [],
+        edit        : getEdit(),
         info        : getInfo()
     }),
     getters : {
         initialDate : (state) => getConvertDate(state.searchDt, 'yyyy-mm-dd')
     },
     actions : {
-        async getInfo()
+        async getEditInfo()
+        {
+            const params = {
+                emCd : this.emCd
+            };
+
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/calendarV1/getEditInfo`, params);
+
+                console.log(res);
+
+                const [hours, minutes] = res.data['info']['insTime'].split(':').map(Number);
+
+                const edit = {
+                    clientNm    : res.data['info']['clientNm'],
+                    stCd        : res.data['info']['stCd'],
+                    stDt        : res.data['info']['stDt'],
+                    tel         : res.data['info']['tel'],
+                    addr        : res.data['info']['addr'],
+                    addrDetail  : res.data['info']['addrDetail'],
+                    insTime     : `${hours}시간 ${minutes ? minutes : 0}분`,
+                    insCnt      : res.data['cnt'].map(item => `${item.insName} ${item.cnt}개`).join(', '),
+                    memo        : res.data['info']['memo']
+                };
+
+                this.edit = edit;
+
+                console.log(this.edit);
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        },
+        async getDetailInfo()
         {
             const params = {
                 emCd : this.emCd
@@ -152,7 +216,7 @@ export const useCalendarStore = defineStore('calendar', {
             catch(e)
             {
                 console.log(e);
-            }            
+            }
         },
         async getMonthData()
         {

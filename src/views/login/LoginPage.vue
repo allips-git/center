@@ -92,6 +92,10 @@ const getLogin = async () => {
     if(result)
     {
         router.push({ path : `/` });
+        if (typeof window.ReactNativeWebView !== 'undefined') 
+        {
+            window.ReactNativeWebView.postMessage(JSON.stringify({ message: 'login success' }));
+        }
     }
     else
     {
