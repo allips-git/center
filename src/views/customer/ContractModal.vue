@@ -96,6 +96,9 @@ const getConMove = () => {
             label: '계약'
         },
         accept : async () => {
+            con['conInfo']['conDt']  = getConvertDate(con['conInfo']['conDt'], 'yyyy-mm-dd hh:ii');
+            con['conInfo']['deliDt'] = getConvertDate(con['conInfo']['deliDt'], 'yyyy-mm-dd hh:ii');
+
             const params = {
                 emCd        : esti['emCd'],
                 clientCd    : client['clientCd'],

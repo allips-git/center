@@ -239,8 +239,11 @@ export const useClientStore = defineStore('client', {
 
                 console.log(res);
 
+                const info      = res.data['info'];
+                info['estiDt']  = new Date(info['estiDt']);
+
                 this.type = 'U';
-                this.info = res.data['info'];
+                this.info = info;
             }
             catch(e)
             {

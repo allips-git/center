@@ -15,15 +15,16 @@
         </p>
     </div>
     <div class="py-3">
-        <Select v-model="calendar['edit']['stCd']" :options="getStCd()" optionLabel="label" optionValue="value" class="w-40 !rounded-full" size="small" />
+        <Select v-model="calendar['edit']['stCd']" :options="getStCd()" optionLabel="label" optionValue="value" class="w-40 !rounded-full" size="small" 
+            @update:modelValue="(value) => getStCdChange(value)"/>
     </div>
     <div class="flex flex-col items-start gap-2 text-gray-500">
         <p>{{ getDate() }}</p>
         <p class="px-3 py-px text-white rounded-full bg-sky-500">{{ calendar['edit']['tel'] }}</p>
         <p class="px-3 py-px text-white rounded-full bg-sky-500">{{ calendar['edit']['addr'] }}</p>
         <p>상세주소 : {{ calendar['edit']['addrDetail'] }}</p>
-        <p v-if="calendar['edit']['stCd'] === '006'">설치 예상시간 : {{ calendar['edit']['insTime'] }}</p>
-        <p v-if="calendar['edit']['stCd'] === '006'">설치 수량 : {{ calendar['edit']['insCnt'] }}</p>
+        <p v-if="calendar['edit']['stCd'] === '006' || calendar['edit']['stCd'] === '011'">설치 예상시간 : {{ calendar['edit']['insTime'] }}</p>
+        <p v-if="calendar['edit']['stCd'] === '006' || calendar['edit']['stCd'] === '011'">설치 수량 : {{ calendar['edit']['insCnt'] }}</p>
     </div>
     <div class="w-full px-3 mt-4 mb-5 ml-4 border-l-2 border-gray-300 min-h-12">
         <p class="text-gray-400">{{ calendar['edit']['memo'] }}</p>
@@ -39,11 +40,14 @@
 import IconAvatar from '@/components/icons/IconAvatar.vue';
 import IconPlay from '@/components/icons/IconPlay.vue';
 import Iconpencil from '@/components/icons/Iconpencil.vue';
+import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue';
 import { useDataStore, useCalendarStore } from '@/store';
 import { getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
+import { getAxiosData, getTokenOut } from '@/assets/js/function';
 
+const confirm  = useConfirm();
 const data     = useDataStore();
 const calendar = useCalendarStore();
 
@@ -51,7 +55,7 @@ const { getPopupOpen, getPopupClose } = usePopup();
 
 const getDetail = async () => {
     await calendar.getDetailInfo();
-    getPopupClose('calendarEdit', true)
+    getPopupClose('calendarEdit', true);
     getPopupOpen('calendarSet');
 }
 
@@ -60,13 +64,82 @@ const getDate = () => {
 }
 
 const getStCd = () => {
-    if(calendar['edit']['stCd'] === '006')
+    if(calendar['edit']['stCd'] === '006' || calendar['edit']['stCd'] === '011')
     {
         return data['stCd'].filter(item => item.value === '006' || item.value === '011');
     }
     else
     {
         return data['stCd'].filter(item => item.value === '001' || item.value === 'N');
+    }
+}
+
+const getStCdChange = (stCd: string) => {
+    if(stCd === 'N' || stCd === '011')
+    {
+        const msg   = `해당 일정을 ${stCd === 'N' ? '견적취소' : '시공완료'} 상태로 변경하시겠습니까?`;
+
+        confirm.require({
+            message     : msg,
+            header      : '상태 변경',
+            rejectProps : {
+                label       : '취소',
+                severity    : 'secondary',
+                outlined    : true
+            },
+            acceptProps : {
+                label: '확인'
+            },
+            accept : async () => {
+                const params = {
+                    emCd  : calendar.emCd,
+                    stCd  : stCd
+                };
+
+                console.log(params);
+
+                try
+                {
+                    const instance  = await getAxiosData();
+                    await instance.post(`https://data.planorder.kr/calendarV1/getStCdChange`, params);
+                    await calendar.getMonthData();
+                    await calendar.getDayData();
+                    getPopupClose('calendarEdit', true);
+                }
+                catch(e)
+                {
+                    console.log(e);
+                    if(e.response.status === 401)
+                    {
+                        getTokenOut();
+                    }
+                    else
+                    {
+                        alert('일정 상태 변경 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                    }
+                }
+            },
+            reject : () => {
+                if(stCd === 'N')
+                {
+                    calendar['edit']['stCd'] = '001';
+                }
+                else
+                {
+                    calendar['edit']['stCd'] = '006';
+                }
+            },
+            onHide : () => {
+                if(stCd === 'N')
+                {
+                    calendar['edit']['stCd'] = '001';
+                }
+                else
+                {
+                    calendar['edit']['stCd'] = '006';
+                }
+            }
+        });
     }
 }
 

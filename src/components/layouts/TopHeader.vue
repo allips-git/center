@@ -36,7 +36,7 @@
         </Button>
         <Popover class="" ref="notificationPopover" dismissable> 
             <div class="flex flex-col">
-                <Button :label="t('btn.logout')" icon="pi pi-sign-out" severity="danger" text  size="small" @click="getLogOut"/>
+                <Button :label="'로그아웃'" icon="pi pi-sign-out" severity="danger" text  size="small" @click="getLogOut"/>
             </div>
         </Popover>
 
@@ -58,40 +58,37 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, watch, defineEmits,onMounted } from 'vue';
+import { ref, nextTick, defineEmits } from 'vue';
 
 // import { changeLanguage } from '@/locales/i18n'; // named import로 수정
 import IconAvatar from '@/components/icons/IconAvatar.vue';
 import IconLogo from '@/components/icons/IconLogo.vue';
 import Button from 'primevue/button';
 import Popover from 'primevue/popover';
-import TieredMenu from 'primevue/tieredmenu';
 import Drawer from 'primevue/drawer';
 import SideHeader from '@/components/layouts/SideHeader.vue'
-import Alarm from '@/components/Alarm.vue'
+import { useRouter } from 'vue-router';
+import { useLoginStore } from '@/store';
 
-const headerState = ref(true); // 불리언 변수, 중요 여부
-
-
-const headMenu = ref([]); // 메뉴 항목을 정의합니다.
-const hoveredIndex = ref(-1); // 현재 hover된 인덱스를 저장합니다.
-
+const router = useRouter();
 
 const emit = defineEmits<{
   (e: 'toggleHeader'): void;
 }>();
 
 function handleClick() {
+    console.log('test');
   emit('toggleHeader'); // 부모에 toggleHeader 이벤트를 발생시킴
 }
 
 const moSideHeader = ref(false);
 
-// const login = useLoginStore();
+const login = useLoginStore();
 
-// const getLogOut = () => {
-//     login.getLogout();
-// }
+const getLogOut = () => {
+    login.getLogout();
+    router.push({ path : '/login' });
+}
 
 const toggleDarkMode = () => {
     const element = document.querySelector('html');
