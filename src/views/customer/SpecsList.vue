@@ -79,9 +79,6 @@
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import TableCard from '@/components/card/TableCard.vue'
 import CalculateCard from "@/components/card/CalculateCard.vue";
-import IftaLabel from 'primevue/iftalabel';
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
 import Dialog from 'primevue/dialog';
 import SaleAmountPop from '@/components/modal/SaleAmountPop.vue'
 import AddAmountPop from '@/components/modal/addAmountPop.vue'
@@ -137,7 +134,7 @@ const getDisApply = () => {
         const dcAmt  = Math.round(amt/100 * esti['dcInfo']['val']);
 
         esti['dcInfo']['amt'] = -dcAmt;
-        esti.getPayAmt('dcAmt', -dcAmt);
+        esti.getPayAmt('dcAmt', -dcAmt, esti['dcInfo']['memo']);
     }
 
     /** 절삭단위 체크된 경우 재적용 */
@@ -156,7 +153,7 @@ const getAddApply = () => {
     getPopupClose(true, 'addAmtSet');
 
     esti['addInfo']['amt'] = esti['addInfo']['val'];
-    esti.getPayAmt('addAmt', Number(esti['addInfo']['val']));
+    esti.getPayAmt('addAmt', Number(esti['addInfo']['val']), esti['addInfo']['memo']);
 
     /** 할인 단위가 %일 시 할인 금액 재적용 */
     if(esti['dcInfo']['unit'] === 'P')
@@ -165,7 +162,7 @@ const getAddApply = () => {
         const dcAmt  = Math.round(amt/100 * esti['dcInfo']['val']);
 
         esti['dcInfo']['amt'] = -dcAmt;
-        esti.getPayAmt('dcAmt', -dcAmt);
+        esti.getPayAmt('dcAmt', -dcAmt, esti['dcInfo']['memo']);
     }
 
     /** 절삭단위 체크된 경우 재적용 */

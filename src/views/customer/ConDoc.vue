@@ -38,7 +38,7 @@ const route = useRoute();
 const mate  = useConMateStore();
 
 onMounted(() => {
-    mate.getInfo({ emCd : atob(route.query.cd) });
+    mate.getInfo({ emCd : atob(route.query.cd) }, 'N');
 })
 </script>
 

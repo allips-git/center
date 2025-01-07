@@ -3,6 +3,7 @@
  */
 import { defineStore } from 'pinia';
 import { getAxiosData, getCardColumns, getConvertDate } from '@/assets/js/function';
+import axios from 'axios';
 
 interface PayList {
     name    : string;
@@ -11,6 +12,7 @@ interface PayList {
     amt     : number;
     red     : boolean;
     blue    : boolean;
+    memo    : string;
 }
 
 /**
@@ -18,14 +20,14 @@ interface PayList {
  */
 const getPayList = (): PayList => {
     return [
-        {name : 'itemAmt',      amtGb : '', title: '상품 금액',         amt: 0, red: false, blue: false},
-        {name : 'itemTax',      amtGb : '', title: '부가세',            amt: 0, red: false, blue: false},
-        {name : 'shapeAmt',     amtGb : '', title: '형상 금액',         amt: 0, red: false, blue: false},
-        {name : 'heightAmt',    amtGb : '', title: '세로길이 추가금액', amt: 0, red: false, blue: false},
-        {name : 'addAmt',       amtGb : '001', title: '추가',              amt: 0, red: true, blue: false},
-        {name : 'dcAmt',        amtGb : '002', title: '할인',              amt: 0, red: true, blue: false},
-        {name : 'cutAmt',       amtGb : '003', title: '절삭 할인',         amt: 0, red: true, blue: false},
-        {name : 'conAmt',       amtGb : '004', title: '계약 선금',         amt: 0, red: false, blue: true}
+        {name : 'itemAmt',      amtGb : '', title: '상품 금액',         amt: 0, red: false, blue: false, memo : ''},
+        {name : 'itemTax',      amtGb : '', title: '부가세',            amt: 0, red: false, blue: false, memo : ''},
+        {name : 'shapeAmt',     amtGb : '', title: '형상 금액',         amt: 0, red: false, blue: false, memo : ''},
+        {name : 'heightAmt',    amtGb : '', title: '세로길이 추가금액', amt: 0, red: false, blue: false, memo : ''},
+        {name : 'addAmt',       amtGb : '001', title: '추가',              amt: 0, red: true, blue: false, memo : ''},
+        {name : 'dcAmt',        amtGb : '002', title: '할인',              amt: 0, red: true, blue: false, memo : ''},
+        {name : 'cutAmt',       amtGb : '003', title: '절삭 할인',         amt: 0, red: true, blue: false, memo : ''},
+        {name : 'conAmt',       amtGb : '004', title: '계약 선금',         amt: 0, red: false, blue: true, memo : ''}
     ]
 }
 
@@ -50,12 +52,22 @@ export const useEstiMateStore = defineStore('estiMate', {
     getters: {
     },
     actions : {
-        async getInfo(params)
+        async getInfo(params, yn: Y | N = 'Y')
         {
+            let res;
+            params['yn'] = yn;
+
             try
             {
-                const instance  = await getAxiosData();
-                const res       = await instance.post(`https://data.planorder.kr/estiV1/getEstiMateInfo`, params);
+                if(yn === 'N')
+                {
+                    res = await axios.post(`https://data.planorder.kr/estiV1/getEstiMateInfo`, params);
+                }
+                else
+                {
+                    const instance  = await getAxiosData();
+                    res = await instance.post(`https://data.planorder.kr/estiV1/getEstiMateInfo`, params);
+                }
 
                 console.log(res);
                 this.ceNm = res.data['info']['ceNm'];
@@ -148,7 +160,7 @@ export const useEstiMateStore = defineStore('estiMate', {
                 this.getItemAmt('itemTax', Number(res.data['itemTax']));
 
                 res.data['amtList'].map((amt) => {
-                    this.getPayAmt(amt['amtGb'], Number(amt['amt']));
+                    this.getPayAmt(amt['amtGb'], Number(amt['amt']), amt['memo']);
                 });
 
             }
@@ -166,13 +178,14 @@ export const useEstiMateStore = defineStore('estiMate', {
                 item.amt = Number(amt);
             }
         },
-        getPayAmt(amtGb: string, amt: number)
+        getPayAmt(amtGb: string, amt: number, memo: string='')
         {
             const item = this.payList.find(item => item.amtGb === amtGb);
 
             if(item)
             {
-                item.amt = Number(amt);
+                item.amt  = Number(amt);
+                item.memo = memo;
             }
         }
     }

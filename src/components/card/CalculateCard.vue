@@ -25,7 +25,11 @@
                 <dl v-if="Number(calc.amt) !== 0 || calc.title === '제품 금액' || calc.title === '이달 매입금'" class="flex items-center justify-between">
                     <dt class="text-base text-neutral-500">
                         {{ calc.title }}
-                        <!-- <span v-if="calc.memo !== ''" class="text-red-500">({{ calc.memo }})</span> -->
+                        <span v-if="calc.memo !== ''" :class="{
+                        'text-red-500' : calc.red,
+                        'text-blue-500': calc.blue,
+                        'text-neutral-700': !calc.red && !calc.blue
+                    }">({{ calc.memo }})</span>
                     </dt>
                     <dd class="text-lg font-bold text-right" :class="{
                         'text-red-500' : calc.red,
