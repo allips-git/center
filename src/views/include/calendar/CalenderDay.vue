@@ -27,26 +27,10 @@
                 <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm" @click="calendar.getSearchDt(new Date())">당일</div>
             </div>
         </div>
-
-        <!-- <div class="fixed z-50 bottom-4 right-4 size-12">
-            <Button size="large" icon="pi pi-plus" class="!size-full" rounded @click="calenderSetPop= true"></Button>
-        </div> -->
-        <Dialog v-model:visible="popup['pop']['calendarSet']" header="일정" 
-            :modal=true position="center" class="border-0 custom-dialog-bottom"
-            @update:visible="getPopupClose('calendarSet', true)">
-            <CalenderSet/>
-        </Dialog>
-
-        <Dialog v-model:visible="calenaderEditPop" header="일정" 
-            :modal=true position="center" class="border-0 custom-dialog-bottom">
-            <CalenaderEdit/>
-        </Dialog>
     </main>
 </template>
   
 <script setup lang="ts">
-import CalenderSet from '@/views/include/calendar/CalenderSet.vue'
-import CalenaderEdit from '@/views/include/calendar/CalenaderEdit.vue'
 import FullCalendar from '@fullcalendar/vue3';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -56,13 +40,10 @@ import 'swiper/swiper-bundle.css';
 import { useConfirm } from "primevue/useconfirm";
 import { ref, onMounted, watch } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { usePopupStore, useCalendarStore } from '@/store';
+import { useCalendarStore } from '@/store';
 import { getAxiosData, getConvertDate, getTokenOut } from '@/assets/js/function';
-import { usePopup } from '@/assets/js/popup';
 
-const calenaderEditPop = ref(false)
 const confirm   = useConfirm();
-const popup     = usePopupStore();
 const calendar  = useCalendarStore();
 
 // 캘린더 옵션 설정

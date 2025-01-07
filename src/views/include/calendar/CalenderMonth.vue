@@ -7,54 +7,10 @@
         <div class="h-[calc(100vh-167px)] w-full md:h-[calc(100vh-171px)]">
             <FullCalendar :options="{ ... calendarOptions, events : calendar['monthEvents']}" ref="fullCalendar"/>
         </div>
-
-        <!-- <div class="fixed z-50 bottom-4 right-4 size-12">
-            <Button size="large" icon="pi pi-plus" class="!size-full" rounded @click="calenderSetPop= true"></Button>
-        </div> -->
-        
-        <Dialog v-model:visible="popup['pop']['calendarSet']" header="일정" 
-            :modal=true position="center" class="border-0 custom-dialog-bottom"
-            @update:visible="getPopupClose('calendarSet', true)">
-            <CalenderSet/>
-        </Dialog>
-
-        <Dialog v-model:visible="popup['pop']['calendarDetail']" header="일정" 
-            :modal=true position="center" class="border-0 custom-dialog-bottom"
-            @update:visible="getPopupClose('calendarDetail', true)">
-            <div class="z-50 overflow-hidden w-full max-w-[full] bg-white h-full">
-                <div ref="modalContentRef" class="!containerh-full">
-                    <div class="flex items-center justify-between px-5 py-3 pr-1">
-                        <h1 class="text-xl font-bold">{{ calendar['monthDetail']['date'] }}</h1>
-                    </div>
-                </div>
-                <div class="p-3 overflow-auto bg-gray-50 max-h-96">
-                    <ul class="flex flex-col gap-2">
-                        <li v-for="(item, index) in calendar['monthDetail']['list']" :key="index" 
-                            :class="`flex items-center justify-between w-full p-3 bg-${item['stCd'] === '001' ? 'blue' : 'red'}-100 rounded-lg`"
-                            @click="getMonthDataInfo(item['emCd'])">
-                            <div class="flex gap-1">
-                                <b>{{ item['clientNm'] }}</b>
-                                <span>・</span>
-                                <p class="">{{ item['stNm'] }}</p>
-                            </div>
-                            <p class="text-sm">
-                                {{ item['stCd'] === '001' ? item['startTime'] : item['startTime'] + '~' + item['endTime'] }}
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="bg-white *:w-full flex gap-1 py-2 px-2">
-                    <Button label="일 캘린더 보기" text severity="secondary"/>
-                    <!-- <Button label="새 일정" text icon="pi pi-plus" class="*:!font-bold" @click="calenderSetPop= true"/> -->
-                </div>
-            </div>
-        </Dialog>
     </main>
 </template>
   
 <script setup lang="ts">
-import CalenderSet from '@/views/include/calendar/CalenderSet.vue';
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -62,19 +18,15 @@ import koLocale from '@fullcalendar/core/locales/ko';
 import DatePicker from 'primevue/datepicker';
 import { useConfirm } from "primevue/useconfirm";
 import { ref, watch, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { usePopupStore, useCalendarStore } from '@/store';
+import { useCalendarStore } from '@/store';
 import { getAxiosData, getConvertDate, getTokenOut } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
-const router        = useRouter();
 const confirm       = useConfirm();
-const popup         = usePopupStore();
 const calendar      = useCalendarStore();
 
 const locale            = 'ko';
 const selectedDate      = ref('');
-const modalContentRef   = ref<HTMLElement | null>(null);
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
@@ -93,13 +45,6 @@ const dateClick = async (info) => {
 
 // 이전 선택된 날짜를 저장할 ref 추가
 const previousDate = ref(null);
-
-const getMonthDataInfo = async (emCd: string) => {
-    getPopupClose('calendarDetail', true)
-    getPopupOpen('calendarSet');
-    await calendar.getEmCd(emCd);
-    await calendar.getInfo();
-}
 
 const getUpdate = async () => {
     await getMonthData();

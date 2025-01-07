@@ -27,6 +27,7 @@ interface Pop {
     paymentSet          : boolean;
     calendarSet         : boolean;
     calendarDetail      : boolean;
+    calendarEdit        : boolean;
 }
 
 interface State {
@@ -57,7 +58,8 @@ const getPopInfo = (): Pop => {
         accDay              : false,
         paymentSet          : false,
         calendarSet         : false,
-        calendarDetail      : false
+        calendarDetail      : false,
+        calendarEdit        : false
     }
 }
 
