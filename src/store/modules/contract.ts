@@ -26,7 +26,7 @@ interface MsgInfo {
  */
 const getConInfo = (): ConInfo => {
     return {
-        conDt   : getConvertDate(new Date(), 'yyyy-mm-dd hh:ii'),
+        conDt   : new Date(),
         deliDt  : '',
         insTime : '',
         person  : '',
