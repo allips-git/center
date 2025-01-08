@@ -56,13 +56,14 @@ import DatePicker from 'primevue/datepicker';
 import Textarea from 'primevue/textarea';
 import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
-import { useDataStore, useOrderStore } from '@/store';
+import { useDataStore, useOrderStore, useEstiStore } from '@/store';
 import { getAxiosData, getTokenOut, getDaumPopupPosition } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
 const confirm       = useConfirm();
 const data          = useDataStore();
 const order         = useOrderStore();
+const esti          = useEstiStore();
 const addrMsg       = ref('');
 const addrDetailMsg = ref('');
 
@@ -135,7 +136,7 @@ const getOrder = () => {
     }
     
     confirm.require({
-        message     : '발주 정보를 저장 후 웹 링크로 공유하시겠습니까?',
+        message     : '시스템 발주 처리하시겠습니까?',
         header      : '시스템 발주',
         rejectProps : {
             label       : '취소',
@@ -163,6 +164,7 @@ const getOrder = () => {
             {
                 const instance  = await getAxiosData();
                 await instance.post(`https://data.planorder.kr/orderV1/getSysOrderResult`, params);
+                await order.getList({ emCd : esti['emCd'] });
                 getPopupClose('sysOrderSet', true);
             }
             catch(e)
