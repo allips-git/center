@@ -75,9 +75,10 @@ const calendarOptions = {
             html: `<div class="text-gray-900 truncate border-0 ${arg.event.classNames.join(' ')}">${arg.event.title}</div>`
         }
     },
-    eventDrop: function(info) {
+    eventDrop: async function(info) {
+        // await getPopupOpen('confirm');
+        
         const { event } = info;
-
         const data = event._def.extendedProps;
 
         const preDt = getConvertDate(new Date(data['stDt']), 'yyyy-mm-dd');
@@ -127,10 +128,12 @@ const calendarOptions = {
             reject : () => {
                 /** 드래그한 이벤트 취소 */
                 info.revert();
+                // getPopupClose('confirm', true);
             },
             onHide : () => {
                 /** 드래그한 이벤트 취소 */
                 info.revert();
+                // getPopupClose('confirm', true);
             }
         });
     }

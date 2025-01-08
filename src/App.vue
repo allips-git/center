@@ -26,12 +26,14 @@
 <script setup lang="ts">
 import { ref, onMounted,computed } from 'vue';
 import { useRoute } from 'vue-router'; // useRoute 임포트
+// import { usePopupStore } from '@/store';
 
 import SideHeader from '@/components/layouts/SideHeader.vue';
 import TopHeader from '@/components/layouts/TopHeader.vue';
 import AppBar from '@/components/layouts/AppBar.vue';
 import ConfirmDialog from 'primevue/confirmdialog';
 
+// const popup = usePopupStore();
 const setWideSide = ref(false); // wideSide 상태를 정의
 
 const toggleHeader = () => {
