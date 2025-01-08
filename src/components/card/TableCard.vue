@@ -153,12 +153,14 @@ const getDelete = (edCd: string) => {
 }
 
 const getBtnProcess = async (type: string, edCd: string) => {
-    console.log(type);
     switch(type)
     {
         case 'primary':
         {
             /** 시스템 공장 발주 */
+            await order.getSysInfoReset();
+            await order.getEdCd(edCd);
+            getPopupOpen('sysOrderSet');
         }
         break;
         case 'success':

@@ -117,7 +117,8 @@ interface State {
     dcInfo      : AmtInfo;
     addInfo     : AmtInfo;
     info        : Info;
-    outInfo     : OrderInfo;
+    sysInfo     : Order;
+    outInfo     : Order;
     pay         : Pay;
 }
 
@@ -129,11 +130,10 @@ export const useOrderStore = defineStore('order', {
         dcInfo      : getAmtInfo(),
         addInfo     : getAmtInfo(),
         info        : getInfo(),
+        sysInfo     : getOrder(),
         outInfo     : getOrder(),
         pay         : getPay()
     }),
-    getters: {
-    },
     actions : {
         async getList(params)
         {
@@ -192,6 +192,11 @@ export const useOrderStore = defineStore('order', {
                                             size    : order.totalUnit + order.unitNm
                                         });
                                     break;
+                                    case '004':
+                                        rows.push({
+                                            qty : order.cnt
+                                        })
+                                    break;
                                 }
 
                                 if(order.shape === 'Y')
@@ -220,7 +225,7 @@ export const useOrderStore = defineStore('order', {
                                     {
                                         case '005': /** 발주대기 */
                                             buttonText = '시스템 발주';
-                                            buttonType = 'success';
+                                            buttonType = 'primary';
                                         break;
                                         case '006': /** 발주완료 */
                                             buttonText = '배송완료';
@@ -246,11 +251,11 @@ export const useOrderStore = defineStore('order', {
                                     edCd         : order.edCd,
                                     ordGb        : order.ordGb,
                                     detailStCd   : order.detailStCd,
-                                    productTitle : order.colorTitle === '' ? '' : order.productTitle,
-                                    colorTitle   : order.colorTitle === '' ? order.productTitle : '',
+                                    productTitle : order.productTitle,
+                                    colorTitle   : order.colorTitle,
                                     showDelete   : false,
                                     amt          : Number(order.totalSaleAmt) + Number(order.totalSaleTax),
-                                    isRed        : true,
+                                    isRed        : false,
                                     columns      : getCardColumns(order.unit),
                                     rows         : rows,
                                     showTag      : tags.length > 0 ? true : false,
@@ -319,6 +324,15 @@ export const useOrderStore = defineStore('order', {
         {
             this.edCd = edCd;
         },
+        getSysInfoAddrReset()
+        {
+            this.sysInfo.zip    = null;
+            this.sysInfo.addr   = '';
+        },
+        getSysInfoReset()
+        {
+            this.sysInfo = getOrder();
+        },
         getOutInfoAddrReset()
         {
             this.outInfo.zip    = null;
@@ -335,6 +349,7 @@ export const useOrderStore = defineStore('order', {
             this.dcInfo      = getAmtInfo();
             this.addInfo     = getAmtInfo();
             this.info        = getInfo();
+            this.sysInfo     = getOrder();
             this.outInfo     = getOrder();
             this.pay         = getPay();
         }
