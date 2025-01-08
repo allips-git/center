@@ -37,9 +37,9 @@ export const joinFirstMsg = (params: JoinFirstParams): { msg: string; id: string
         return { msg : '비밀번호가 일치하지 않습니다.', id : 'pwChk', state : false };
     }
 
-    if(params['pw'].length < 4)
+    if(params['pw'].length < 8)
     {
-        return { msg : '비밀번호는 4자리 이상 입력해주세요.', id : 'pw', state : false };
+        return { msg : '비밀번호는 8자리 이상 입력해주세요.', id : 'pw', state : false };
     }
 
     return { msg : '', id : '', state : true };
@@ -308,8 +308,9 @@ export const estiEaMsg = (params: EstiEaMsg): { msg: string; id: string, state: 
 }
 
 interface ContractMsg {
-    deliDt  : string;
-    insTime : string;
+    deliDt      : string;
+    insHour     : number;
+    insMinute   : number;
 }
 
 /**
@@ -321,7 +322,7 @@ export const contractMsg = (params: ContractMsg): { msg: string; id: string, sta
         return { msg : '시공일을 입력해주세요.', id : 'deliDt', state : false };
     }
 
-    if(params['insTime'] === '')
+    if(Number(params['insHour']) === 0 && Number(params['insMinute']) === 0)
     {
         return { msg : '설치시간을 입력해주세요.', id : 'insTime', state : false };
     }

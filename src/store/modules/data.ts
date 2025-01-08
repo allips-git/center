@@ -62,6 +62,8 @@ export const useDataStore = defineStore('data', {
                 { name : '없음', value : 'N' }
             ],
             addPrice : Array.from({ length: 10 }, (v, i) => ({ value: i, name : i+'%' })),
+            hours   : Array.from({ length: 20 }, (v, i) => ({ value: i, name : i+'시간' })),
+            minute  : Array.from({ length: 60 }, (v, i) => ({ value: i, name : i+'분' })),
             vat : [
                 { name : '발행', value : 'Y' },
                 { name : '미발행', value : 'N' }

@@ -2,18 +2,19 @@
  * @description 계약 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
-import { getAxiosData, getConvertDate } from '@/assets/js/function';
+import { getAxiosData } from '@/assets/js/function';
 
 type Nullable<T> = T | null;
 
 interface ConInfo {
-    conDt   : string;
-    deliDt  : string;
-    insTime : string;
-    person  : string;
-    payGb   : string;
-    amt     : Nullable<number>;
-    memo    : string;
+    conDt       : string;
+    deliDt      : string;
+    insHour     : number;
+    insMinute   : number;
+    person      : string;
+    payGb       : string;
+    amt         : Nullable<number>;
+    memo        : string;
 }
 
 interface MsgInfo {
@@ -26,13 +27,14 @@ interface MsgInfo {
  */
 const getConInfo = (): ConInfo => {
     return {
-        conDt   : new Date(),
-        deliDt  : '',
-        insTime : '',
-        person  : '',
-        payGb   : '001',
-        amt     : 0,
-        memo    : ''
+        conDt       : new Date(),
+        deliDt      : '',
+        insHour     : 0,
+        insMinute   : 0,
+        person      : '',
+        payGb       : '001',
+        amt         : 0,
+        memo        : ''
     }
 }
 
@@ -54,8 +56,6 @@ export const useContractStore = defineStore('contract', {
         msg     : getMsgInfo(),
         person  : []
     }),
-    getters: {
-    },
     actions : {
         async getData(params)
         {
@@ -66,15 +66,15 @@ export const useContractStore = defineStore('contract', {
 
                 console.log(res);
 
-                this.person             = res.data['person'];
-                this.conInfo['person']  = res.data['person'][0]['value'];
+                this.person                 = res.data['person'];
+                this.conInfo['person']      = res.data['person'][0]['value'];
+                this.conInfo['insHour']     = res.data['insTime']['hours'];
+                this.conInfo['insMinute']   = res.data['insTime']['minutes'];
 
-                const date = getConvertDate(new Date(), 'yyyy-mm-dd')
-
-                if(res.data['insTime']['hours'] !== 0 || res.data['insTime']['minutes'] !== 0)
-                {
-                    this.conInfo['insTime'] = new Date(`${date} ${String(res.data['insTime']['hours']).padStart(2, "0")}:${res.data['insTime']['minutes']}`);
-                }
+                // if(res.data['insTime']['hours'] !== 0 || res.data['insTime']['minutes'] !== 0)
+                // {
+                //     this.conInfo['insTime'] = new Date(`${date} ${String(res.data['insTime']['hours']).padStart(2, "0")}:${res.data['insTime']['minutes']}`);
+                // }
             }
             catch(e)
             {
@@ -88,8 +88,8 @@ export const useContractStore = defineStore('contract', {
         },
         getReset()
         {
-            this.conInfo = getConInfo();
-            this.msgInfo = getMsgInfo();
+            this.conInfo    = getConInfo();
+            this.msg        = getMsgInfo();
         }
     }
 });

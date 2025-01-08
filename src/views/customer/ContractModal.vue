@@ -18,14 +18,16 @@
             <div class="relative flex items-center justify-center w-full">
                 <p class="w-[100px]  flex-none">설치시간</p>
                 <div class="flex w-full gap-2 *:w-full">
-                    <Select placeholder="시"/>
-                    <Select placeholder="분"/>
+                    <Select v-model="con['conInfo']['insHour']" :options="data['hours']" optionLabel="name" optionValue="value" placeholder="시"/>
+                    <Select v-model="con['conInfo']['insMinute']" :options="data['minute']" optionLabel="name" optionValue="value" placeholder="분"/>
                 </div>
+                <small class="text-red-500">{{ con['msg']['insTime'] }}</small>
                 <!-- <div class="flex flex-col w-full gap-1">
                     <DatePicker id="insTime" v-model="con['conInfo']['insTime']" showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd" showTime timeOnly hourFormat="24"/>
                     <small class="text-red-500">{{ con['msg']['insTime'] }}</small>
                 </div> -->
-            </div>            
+            </div>
+
             <div class="relative flex items-center justify-center w-full">
                 <p class="w-[100px] flex-none">시공 담당</p>
                 <Select class="w-full" v-model="con['conInfo']['person']" :options="con['person']" optionLabel="label" optionValue="value"/>
@@ -50,7 +52,6 @@
 </template>
 
 <script setup lang="ts">
-import IftaLabel from 'primevue/iftalabel';
 import InputNumber from 'primevue/inputnumber';
 import DatePicker from 'primevue/datepicker';
 import Textarea from 'primevue/textarea';
@@ -73,8 +74,9 @@ const { getPopupClose } = usePopup();
 
 const getConMove = () => {
     const checkParams = {
-        deliDt  : con['conInfo']['deliDt'],
-        insTime : con['conInfo']['insTime']
+        deliDt      : con['conInfo']['deliDt'],
+        insHour     : con['conInfo']['insHour'],
+        insMinute   : con['conInfo']['insMinute']
     }
 
     const result = contractMsg(checkParams);
@@ -107,7 +109,7 @@ const getConMove = () => {
                 addInfo     : esti['addInfo'],
                 dcInfo      : esti['dcInfo'],
                 cutInfo     : esti['cutInfo'],
-                insTime     : getConvertDate(con['conInfo']['insTime'], 'hh:ii'),
+                insTime     : `${con['conInfo']['insHour']}:${con['conInfo']['insMinute']}`,
                 conInfo     : con['conInfo']
             }
 
