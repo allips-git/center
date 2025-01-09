@@ -167,8 +167,8 @@ export const useOrderStore = defineStore('order', {
                                             rows.push(...order.detail.map(dItem => ({
                                                 width   : dItem.width,
                                                 height  : dItem.height,
-                                                leftQty : dItem.handle === '좌' ? 1 : 0,
-                                                rightQty: dItem.handle === '우' ? 1 : 0,
+                                                leftQty : dItem.handle === 'L' ? 1 : 0,
+                                                rightQty: dItem.handle === 'R' ? 1 : 0,
                                                 size    : dItem.size + order.unitNm
                                             })));
                                         }
@@ -228,17 +228,17 @@ export const useOrderStore = defineStore('order', {
                                             buttonType = 'primary';
                                         break;
                                         case '006': /** 발주완료 */
-                                            buttonText = '배송완료';
-                                            buttonType = 'secondary';
+                                            buttonText = '발주 취소 요청';
+                                            buttonType = 'warn';
                                         break;
                                         // case '007': /** 발주취소 */
                                         // break;
-                                        // case '008': /** 발주 승인취소 */
-                                            
-                                        // break;
+                                        case '008': /** 발주 승인취소 */
+                                            buttonText = '발주 취소 요청 중';                                          
+                                        break;
                                         case '009': /** 발주진행 */
                                             buttonText = '발주 취소';
-                                            buttonType = 'warn';
+                                            buttonType = 'help';
                                         break;
                                         case '010': /** 발주승인 */
                                             buttonText = '발주 취소 요청';

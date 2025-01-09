@@ -176,7 +176,7 @@ const getBtnProcess = async (type: string, edCd: string) => {
             await order.getEdCd(edCd);
             router.push({ path : '/customer/outOrderMate' });
         break;
-        case 'warn':
+        case 'help':
             /** 시스템 공장 발주취소 */
             await order.getEdCd(edCd);
 
@@ -226,8 +226,46 @@ const getBtnProcess = async (type: string, edCd: string) => {
                 }
             });
         break;
-        case 'danger':
-            /** 시스템 공장 발주 취소요청 */
+        case 'warn':
+            /** 시스템 공장 발주 취소 요청 */
+            await order.getEdCd(edCd);
+
+            confirm.require({
+                message     : '발주 취소 요청하시겠습니까?',
+                header      : '발주 취소 요청',
+                rejectProps : {
+                    label       : '취소',
+                    severity    : 'secondary',
+                    outlined    : true
+                },
+                acceptProps : {
+                    label: '확인'
+                },
+                accept : async () => {
+                    const params = {
+                        edCd : order['edCd']
+                    }
+
+                    try
+                    {
+                        const instance  = await getAxiosData();
+                        await instance.post(`https://data.planorder.kr/orderV1/getSysOrderCancelRequest`, params);
+                        await order.getList({ emCd : esti['emCd'] });
+                    }
+                    catch(e)
+                    {
+                        console.log(e);
+                        if(e.response.status === 401)
+                        {
+                            getTokenOut();
+                        }
+                        else
+                        {
+                            alert('발주 취소 요청 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                        }
+                    }
+                }
+            });
         break;
     }
 }
