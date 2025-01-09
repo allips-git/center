@@ -120,8 +120,6 @@
             </ul>
         </section>
 
-        <div class="gray-bar"></div>
-
         <!-- <section class="pb-10">
             <h2 class="px-4 pt-2 text-lg font-bold">키워드별 매출 기여도</h2>
             <div class="flex justify-center px-10 py-5">

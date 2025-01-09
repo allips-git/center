@@ -23,7 +23,7 @@
 </main>
 
 <Dialog v-model:visible="popup['pop']['outFactoryItemSet']" header="외주공장 제품관리" 
-    :modal=true position="center" :dismissableMask="true" class="custom-dialog-bottom"
+    :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom"
     @update:visible="getPopClose(true, 'outFactoryItemSet')">
     <OutMng/>
 </Dialog>

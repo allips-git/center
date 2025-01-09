@@ -48,7 +48,7 @@
     v-model:visible="plantalkMessagePop" 
     header="발송내역" 
     :modal=true
-    position="center"
+    position="bottom"
     class="custom-dialog-bottom"
     :style="{ zIndex: 5000!}"
     >

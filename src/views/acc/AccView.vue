@@ -79,7 +79,7 @@
     </main>
 
     <Dialog v-model:visible="popup['pop']['accMonth']" header="월간 분석" 
-        :modal=true position="center" class="custom-dialog-bottom"
+        :modal=true position="bottom" class="custom-dialog-bottom"
         @update:visible="getPopupClose('accMonth', true)">
         <AccMonth/>
     </Dialog>

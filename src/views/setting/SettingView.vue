@@ -80,14 +80,14 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const storeSettings = ref([
-    { name: '매장설정', path: '/setting_store' },
+    { name: '매장설정', path: 'setting/setting_store' },
     { name: '플랜톡', path: '/plantalk' },
     { name: '멤버관리', path: '/setting/member_list' },
     { name: '할인 설정', path: '/setting/coupon_menu' },
     { name: '시공시간 설정', path: '/setting/time_setting' },
-    { name: '고정비용 등록', path: '/setting/staticPay' },
+    { name: '고정비용 등록', path: '/setting/static_pay' },
     { name: '푸쉬 알림', path: '/setting' },
-    { name: '회원정보 변경', path: '/member-info-change' },
+    { name: '회원정보 변경', path: '/setting' },
     { name: '사업자 인증', path: '/setting/setting_auth' },
     { name: '계약서 관리', path: '/setting' },
 ]);

@@ -44,19 +44,19 @@
     </div>
 
     <Dialog v-model:visible="popup['pop']['sysOrderSet']"  header="시스템 발주 정보" 
-        :modal=true position="center" class="custom-dialog-bottom"
+        :modal=true position="bottom" class="custom-dialog-bottom"
         @update:visible="getPopupClose('sysOrderSet', true)">
         <SysOrderInfo/>
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['outOrderSet']"  header="외주 발주 정보" 
-        :modal=true position="center" class="custom-dialog-bottom"
+        :modal=true position="bottom" class="custom-dialog-bottom"
         @update:visible="getPopupClose('outOrderSet', true)">
         <OutOrderInfo/>
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['paymentSet']"  header="최종 결제 입력" 
-        :modal=true position="center" class="custom-dialog-bottom"
+        :modal=true position="bottom" class="custom-dialog-bottom"
         @update:visible="getPopupClose('paymentSet', true)">
         <PaymentModal/>
     </Dialog>

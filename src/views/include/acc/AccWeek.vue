@@ -24,7 +24,7 @@
     </main>
 
     <Dialog v-model:visible="popup['pop']['accDay']" header="일간 분석" 
-        :modal=true position="center" class="custom-dialog-bottom"
+        :modal=true position="bottom" class="custom-dialog-bottom"
         @update:visible="getPopupClose('accDay', true)">
         <AccDay/>
     </Dialog>
