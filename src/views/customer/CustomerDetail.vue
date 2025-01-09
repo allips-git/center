@@ -84,7 +84,7 @@
         </div>
 
         <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
-            :modal=true position="center" class="custom-dialog-bottom backPopup"
+            :modal=true position="bottom" class="custom-dialog-bottom backPopup"
             @update:visible="getPopClose(true, 'itemList')">
             <template #header>
                 <div class="modal-backheader">
@@ -96,7 +96,7 @@
         </Dialog>
     
         <Dialog v-model:visible="popup['pop']['itemSet']" header="제품등록" 
-            :modal=true position="center" class="custom-dialog-bottom backPopup"
+            :modal=true position="bottom" class="custom-dialog-bottom backPopup"
             @update:visible="getPopClose(true, 'itemSet')">
             <template #header>
                 <div class="modal-backheader">
@@ -107,7 +107,7 @@
             <ProductRegister/>
         </Dialog>
         <Dialog v-model:visible="popup['pop']['clientSet']" header="고객 등록" 
-            :modal=true position="center" class="custom-dialog-bottom"
+            :modal=true position="bottom" class="custom-dialog-bottom"
             @update:visible="getPopClose(true, 'clientSet')">
             <CustomerListSet/>
         </Dialog>

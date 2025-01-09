@@ -8,7 +8,7 @@
             <li class="flex items-center px-1 py-3 ">
                 <span class="w-8"
                 :class="setWideSide ? '' : '!w-auto'"
-                ><IconAvatar class="w-6 text-indigo-300"/></span>
+                ><IconAvatar class="w-6 mr-2 text-blue-300"/></span>
                 <p v-if="setWideSide || drawerClass" class="text-gray-900">디자인 윈도우</p>
             </li>
             <li 

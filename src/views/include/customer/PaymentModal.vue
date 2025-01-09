@@ -59,7 +59,7 @@
     </div>
     
     <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 
-        :modal=true position="center" class="min-w-96 custom-dialog-center" :dismissableMask="true"
+        :modal=true position="bottom" class="min-w-96 custom-dialog-center" :dismissableMask="true"
         @update:visible="getPopupClose('disAmtSet', true)">
         <div class="pt-3">
             <SaleAmountPop :gubun="'P'" @getApply="getDisApply" @getClose="getPopupClose('disAmtSet', true)"/>
@@ -67,7 +67,7 @@
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['addAmtSet']" header="추가 가격 입력" 
-        :modal=true position="center" class="min-w-96 custom-dialog-center" :dismissableMask="true"
+        :modal=true position="bottom" class="min-w-96 custom-dialog-center" :dismissableMask="true"
         @update:visible="getPopupClose('addAmtSet', true)">
         <div class="pt-3">
             <AddAmountPop :gubun="'P'" @getApply="getAddApply" @getClose="getPopupClose('addAmtSet', true)"/>

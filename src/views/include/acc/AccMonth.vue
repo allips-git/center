@@ -24,7 +24,7 @@
             </ul>
         </section>
         <Dialog v-model:visible="popup['pop']['accWeek']" header="주간 분석" 
-            :modal=true position="center" class="custom-dialog-bottom"
+            :modal=true position="bottom" class="custom-dialog-bottom"
             @update:visible="getPopupClose('accWeek', true)">
             <AccWeek/>
         </Dialog>

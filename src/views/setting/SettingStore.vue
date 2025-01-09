@@ -4,7 +4,7 @@
         <main class="pt-5 pb-28">
             <section class="px-5">
                 <div class="flex flex-col gap-1">
-                    <p>프로필 사진</p>
+                    <p class="text-xs text-gray-500">프로필 사진</p>
                     <div class="relative size-32 ">
                         <div class="relative flex items-center justify-center overflow-hidden border border-gray-200 rounded-lg size-32">
                             <img src="../../assets/img/test.png" class="aspect-square size-full" alt="">
@@ -52,18 +52,18 @@
                     <label>홍보 홈페이지 URL</label>
                 </IftaLabel>
 
-                <div class="ifta-label-box">
-                    <ul class="flex justify-start gap-3 mt-2 font-bold">
+                <div class="relative ifta-label-box">
+                    <ul class="flex justify-center gap-4 mt-2 font-bold">
                         <li 
                         v-for="(day, index) in days" 
                         :key="day" 
                         @click="toggleDay(index)" 
-                        :class="{'bg-blue-500 text-white': selectedDays[index], 'bg-transparent': !selectedDays[index]}" 
-                        class="p-2 transition-colors duration-300 border border-gray-200 rounded-full cursor-pointer"
+                        :class="{'bg-sky-500 text-white': selectedDays[index], 'bg-transparent': !selectedDays[index]}" 
+                        class="py-2.5 px-2 transition-colors duration-300 border border-gray-200 rounded-full cursor-pointer"
                         >{{ day }}
                     </li>
                     </ul>
-                    <label class="ifta-label">매장운영일</label>
+                    <label class="absolute ifta-label -top-2">매장운영일</label>
                 </div>
 
                 <IftaLabel class="label-input-box">
@@ -84,8 +84,8 @@
 
             </section>
         </main>
-        <div class="bottom-fixed-btn-box">
-            <Button label="저장" size="large"/>
+        <div class="mobile-fiex-bottom">
+            <Button label="저장" size="large" />
         </div>
     </div>
 </template>

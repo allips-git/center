@@ -28,7 +28,7 @@
     v-model:visible="GroupMessagePop" 
     header="발송 상세 내역" 
     :modal=true
-    position="center"
+    position="bottom"
     class="custom-dialog-bottom"
     >
         <GroupMessagePopup/>
@@ -51,7 +51,7 @@ import { FilterMatchMode } from '@primevue/core/api';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 
 
-const GroupMessagePop = ref (true)
+const GroupMessagePop = ref (false)
  
 const loading = ref(false);
 const globalFilter = ref('');

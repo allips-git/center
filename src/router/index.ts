@@ -285,7 +285,7 @@ const routes = [
         meta: { title: "설정" }
     },
     {
-        path: "/setting/staticPay",
+        path: "/setting/static_pay",
         name: "StaticPayView",
         component: StaticPayView,
         meta: { title: "고정비용 관리" }
@@ -297,7 +297,7 @@ const routes = [
         meta: { title: "시공시간 설정" }
     },
     {
-        path: "/setting/staticPayIng",
+        path: "/setting/static_pay/detail",
         name: "StaticPayIng",
         component: StaticPayIng,
         meta: { title: "고정비용 저장" }
