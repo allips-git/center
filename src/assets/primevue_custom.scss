@@ -302,9 +302,16 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .p-button{
     border-radius: 2px !important;
 }
+
+.p-button-help{
+    background: #DBB071 !important;
+    border: 1px solid #DBB071 !important;
+}
+
 .p-button-rounded{
     border-radius: 9999px !important;
 }
+
 .p-confirmdialog{
     min-width: 300px ;
 }

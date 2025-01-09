@@ -710,7 +710,7 @@ export const useEstiStore = defineStore('esti', {
                     info = getYardCalc(this.common, this.curtain);
         
                     this.total['totalQty']          = Number(this.curtain['cQty']);
-                    this.total['totalUnitSize']     = Number(this.curtain['size']);
+                    this.total['totalUnitSize']     = Number(this.curtain['size']) * Number(this.curtain['cQty']);
                     
                     this.total['totalShapeSaleAmt']    = Number(info['shapeSaleAmt']);
                     this.total['totalShapeSaleTax']    = Number(info['shapeSaleTax']);
@@ -730,7 +730,7 @@ export const useEstiStore = defineStore('esti', {
                     info = getPokCalc(this.common, this.curtain);
         
                     this.total['totalQty']             = Number(this.curtain['cQty']);
-                    this.total['totalUnitSize']        = Number(this.curtain['size']);
+                    this.total['totalUnitSize']        = Number(this.curtain['size']) * Number(this.curtain['cQty']);
         
                     this.total['totalHeightSaleAmt']   = Number(info['heightSaleAmt']);
                     this.total['totalHeightSaleTax']   = Number(info['heightSaleTax']);

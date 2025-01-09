@@ -48,7 +48,7 @@
             <InputText :value="''+domain+'/customer/estiDoc?cd='+emCd+''" readonly @click="getEstiDoc"/>
         </div>
         <div class="pt-4 btn-2-layout-box">
-            <Button label="견적서 링크 발송"/>
+            <Button label="견적서 링크 발송" @click="getNavi"/>
         </div>
     </section>
     </template>
@@ -73,6 +73,10 @@ const getEstiDoc = () => {
     const value = event.target.value;
 
     window.open(value, '_blank');
+}
+
+const getNavi = () => {
+    window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'share', value: `${domain}/customer/estiDoc?cd=${emCd}` }));
 }
 
 onMounted(() => {

@@ -50,6 +50,10 @@
                     <p>{{ item }}</p>
                     <div><IconPlay class="w-2 fill-gray-600"/></div>
                 </li>
+                <li class="flex justify-between px-2 py-4 border-b hover:bg-gray-50" @click="getJoinOut">
+                    <p>회원탈퇴</p>
+                    <div><IconPlay class="w-2 fill-gray-600"/></div>
+                </li>
             </ul>
         </section>
 
@@ -75,9 +79,15 @@ import IconAvatar from '@/components/icons/IconAvatar.vue';
 import IconPlay from '@/components/icons/IconPlay.vue';
 import Badge from 'primevue/badge';
 
+import { useConfirm } from "primevue/useconfirm";
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-const router = useRouter();
+import { getAxiosData, getTokenOut } from '@/assets/js/function';
+import { useLoginStore } from '@/store';
+
+const confirm = useConfirm();
+const router  = useRouter();
+const login   = useLoginStore();
 
 const storeSettings = ref([
     { name: '매장설정', path: 'setting/setting_store' },
@@ -99,8 +109,44 @@ const navigateTo = (item) => {
 const termsList = ref([
     '사용약관',
     '개인정보 처리방침',
-    '개인정보 수집 이용 동의서',
+    '개인정보 수집 이용 동의서'
 ]);
+
+const getJoinOut = () => {
+    confirm.require({
+        message     : '정말로 회원 탈퇴하시겠습니까?',
+        header      : '회원 탈퇴',
+        rejectProps : {
+            label       : '취소',
+            severity    : 'secondary',
+            outlined    : true
+        },
+        acceptProps : {
+            label: '확인'
+        },
+        accept : async () => {
+            try
+            {
+                const instance  = await getAxiosData();
+                await instance.post(`https://data.planorder.kr/login/getJoinOut`);
+                login.getLogout();
+                router.push({ path : '/login' });
+            }
+            catch(e)
+            {
+                console.log(e);
+                if(e.response.status === 401)
+                {
+                    getTokenOut();
+                }
+                else
+                {
+                    alert('회원 탈퇴 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                }
+            }
+        }
+    });
+}
 
 </script>
 

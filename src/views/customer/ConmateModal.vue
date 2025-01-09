@@ -47,7 +47,7 @@
             <InputText :value="''+domain+'/customer/conDoc?cd='+emCd+''" readonly @click="getConDoc"/>
         </div>
         <div class="pt-4 btn-2-layout-box">
-            <Button label="계약서 링크 발송"/>
+            <Button label="계약서 링크 발송" @click="getNavi"/>
         </div>
     </section>
     </template>
@@ -72,6 +72,10 @@ const getConDoc = () => {
     const value = event.target.value;
 
     window.open(value, '_blank');
+}
+
+const getNavi = () => {
+    window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'share', value: `${domain}/customer/conDoc?cd=${emCd}` }));
 }
 
 onMounted(() => {
