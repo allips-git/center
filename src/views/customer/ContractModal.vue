@@ -37,7 +37,7 @@
                 <p class="w-[100px] flex-none">선금</p>
                 <div class="flex w-full gap-2">
                     <Select v-model="con['conInfo']['payGb']" :options="data['payGb']" optionLabel="label" optionValue="value" class="w-full"/>
-                    <InputNumber v-model="con['conInfo']['amt']" class="w-full"/>
+                    <InputNumber v-model="con['conInfo']['amt']" class="w-full *:w-full"/>
                 </div>
             </div>
             <div class="relative flex items-center justify-center w-full">

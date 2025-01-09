@@ -17,13 +17,13 @@
                 <div class="flex flex-col gap-5 py-3 ">                    
                     <div class="relative flex items-center justify-center">
                         <p class="w-[100px] text-sm flex-none">할인 금액</p>
-                        <InputNumber class="*:!text-blue-500 inputNumber-color *:!rounded-sm" @click="getPopupOpen('disAmtSet')" :value="getAmtInfo('dcAmt')" readonly/>
+                        <InputText class="*:!text-blue-500 inputNumber-color *:!rounded-sm" @click="getPopupOpen('disAmtSet')" :value="getAmtInfo('dcAmt')" readonly/>
                         <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
                     </div>
 
                     <div class="relative flex items-center justify-center">
                         <p class="w-[100px] text-sm flex-none">추가 금액</p>
-                        <InputNumber class="*:!text-red-500 inputNumber-color *:!rounded-sm" @click="getPopupOpen('addAmtSet')" :value="getAmtInfo('addAmt')" readonly/>
+                        <InputText class="*:!text-red-500 inputNumber-color *:!rounded-sm" @click="getPopupOpen('addAmtSet')" :value="getAmtInfo('addAmt')" readonly/>
                         <span class="absolute text-sm text-red-500 right-4 bottom-2.5">원</span>
                     </div>
                 </div>
