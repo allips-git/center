@@ -2,10 +2,10 @@
     <BackHeader title="고정비용" />
     <main class="">
         <section class="px-5 pt-5">
-            <h1 class="mb-2 text-xl font-bold">전체 <span class="text-indigo-600">1</span>건</h1>
-            <div class="flex items-center gap-2">
+            <h1 class="mb-2 text-xl font-bold">전체 <span class="text-sky-500">1건</span></h1>
+            <div class="flex items-center gap-2 font-bold">
                 <p>월간 고정 지출</p>
-                <p class="text-lg font-bold">126,123<span class="text-base ml-0.5">원</span></p>
+                <p class="text-xl font-bold">126,123<span class="text-base ml-0.5">원</span></p>
             </div>
         </section>
         

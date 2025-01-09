@@ -51,11 +51,11 @@
 
         <div class="relative flex items-center justify-center w-full" v-if="factory['out']['itemInfo']['unit'] !== '004'">
             <p class="w-[100px] flex-none">기본 높이</p>
-            <div class="w-full">
-                <InputNumber v-model="factory['sys']['itemInfo']['saleAmt']" class="w-full *:!pr-10 inputNumber-color"/>
+            <div class="relative w-full">
+                <InputNumber v-model="factory['out']['itemInfo']['minHeight']" class="w-full *:!pr-10 inputNumber-color"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['minHeight'] }}</small>
+                <span class="absolute text-sm text-blue-500 right-4 top-3">cm</span>
             </div>
-            <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">cm</span>
         </div>
 
         <div class="relative flex items-center justify-center w-full" v-if="factory['out']['itemInfo']['unit'] === '003'">
@@ -64,7 +64,7 @@
                 <InputNumber inputId="pokSpec" v-model="factory['out']['itemInfo']['pokSpec']" class="w-full inputNumber-color" autocomplete="off"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['pokSpec'] }}</small>
             </div>
-            <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">cm</span>
+            <span class="absolute text-sm text-blue-500 right-4 top-3">cm</span>
         </div>
 
         <div class="relative flex items-center justify-center w-full">
@@ -73,7 +73,7 @@
                 <InputNumber inputId="purcAmt" v-model="factory['out']['itemInfo']['purcAmt']" class="w-full inputNumber-color" autocomplete="off"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['purcAmt'] }}</small>
             </div>
-            <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
+            <span class="absolute text-sm text-blue-500 right-4 top-3">원</span>
         </div>
 
         <div class="relative flex items-center justify-center w-full">
@@ -82,7 +82,7 @@
                 <InputNumber inputId="saleAmt" v-model="factory['out']['itemInfo']['saleAmt']" class="w-full inputNumber-color" autocomplete="off"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['saleAmt'] }}</small>
             </div>
-            <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
+            <span class="absolute text-sm text-blue-500 right-4 top-3">원</span>
         </div>
 
 

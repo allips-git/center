@@ -66,7 +66,7 @@
             v-model:visible="plantalkDetailPop" 
             header="플랜톡 설정" 
             :modal=true
-            position="center"
+            position="bottom"
             class="custom-dialog-bottom"
             >
             <ScheduleAlert/>

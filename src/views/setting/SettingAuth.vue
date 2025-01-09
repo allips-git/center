@@ -25,22 +25,22 @@
         </div>
     </section>
 
-    <div class="!items-start !justify-start label-checkbox-box">
+    <div class="!justify-start label-checkbox-box">
         <RadioButton class="pt-1" />
-        <div class="flex flex-col gap-0.5  !items-start ">
-            <label for="">일반양식</label>
+        <div class="flex flex-col gap-0.5 ">
+            <label class="text-sm" for="">사업자 등록번호 없음</label>
             <p class="text-sm text-gray-400">사업자번호 확인이 어려우시면 체크해주세요</p>
         </div>
     </div>
     
-        <InputGroup>
+        <div class="flex gap-4">
             <IftaLabel class="w-full">
                 <InputText id="username" class="w-full"/>
                 <label for="emali">사업자 등록번호 조회</label>
             </IftaLabel>
-            <Button label="검증" class="flex-none" />    
-        </InputGroup>
-
+            <Button label="검증" class="flex-none w-20" />    
+        </div>
+        
                 <IftaLabel class="w-full">
                     <InputText id="username" class="w-full"/>
                     <label for="emali">사업자 명</label>
@@ -66,9 +66,9 @@
                     <label for="emali">세금계산서 이메일</label>
                 </IftaLabel>
             </section>
-            <div class="bottom-fixed-btn-box md:!absolute">
-                <Button label="맴버 추가" size="large"/>
-            </div>
+            <!-- <div class="bottom-fixed-btn-box md:!absolute">
+                <Button label="저장" size="large"/>
+            </div> -->
     </main>
 </template>
 
@@ -76,10 +76,7 @@
 import { ref } from 'vue';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import IftaLabel from 'primevue/iftalabel';
-import IconField from 'primevue/iconfield';
-import InputIcon from 'primevue/inputicon';
 import RadioButton from 'primevue/radiobutton';
-import InputGroup from 'primevue/inputgroup';
 
 </script>
 

@@ -1,5 +1,8 @@
 <template>
-    <BackHeader title="사업자 인증"/>
+    <div class="relative">
+        <BackHeader title="고정비용 등록"/>
+        <Button label="비용 삭제" size="small" severity="danger" outlined class="!absolute  right-4 bottom-1/2 translate-y-1/2 z-[90]"/>
+    </div>
     <main class="p-5 pb-20">
         <section class="form-gap-box">
             <IftaLabel class="w-full">

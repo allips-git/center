@@ -20,7 +20,7 @@
             </div>
                     
             <ul class="flex flex-col">
-                <li v-for="(item, index) in client['list']" :key="index" class="flex items-center justify-between w-full px-5 py-2" @click="getInfo(item.clientCd)">
+                <li v-for="(item, index) in client['list']" :key="index" class="flex items-center justify-between w-full px-5 py-3" @click="getInfo(item.clientCd)">
                     <!-- 상태 -->
                     <div :class="getStatusClass(item.step)" class="flex items-center justify-center mr-4 text-sm font-bold text-white rounded-md size-10">
                         {{ getStatusName(item.step) }}
@@ -42,7 +42,7 @@
         <Dialog v-model:visible="popup['pop']['clientSet']" 
         header="고객 등록" 
         :modal=true
-        position="center"
+        position="bottom"
         class="custom-dialog-bottom backPopup"
         @update:visible="getPopClose(true, 'clientSet')">
         <template #header>

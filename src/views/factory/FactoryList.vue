@@ -56,14 +56,14 @@
 
     <!-- 공장 코드 추가 다이얼로그 -->
     <Dialog v-model:visible="popup['pop']['sysFactorySearch']" header="공장코드 추가" 
-        :modal=true position="center" class="custom-dialog-bottom"
+        :modal=true position="bottom" class="custom-dialog-bottom"
         @update:visible="getPopClose(true, 'sysFactorySearch')">
         <FactorySearch/>
     </Dialog>
 
     <!-- 외주 공장 저장 다이얼로그 -->
     <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주공장 등록" 
-        :modal=true position="center" :dismissableMask="true" class="custom-dialog-bottom"
+        :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom"
         @update:visible="getPopClose(true, 'outFactorySet')">
         <OutFactorySet/>
     </Dialog>

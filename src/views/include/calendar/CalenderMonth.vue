@@ -1,7 +1,7 @@
 <template>
     <main class="relative h-[100%-48px] month-custom">
         <div class="flex justify-center py-4 border-b border-gray-200">
-            <DatePicker v-model="calendar['searchDt']" view="month" dateFormat="yy.mm'월'" class="custom-select" 
+            <DatePicker v-model="calendar['searchDt']" view="month" dateFormat="yy.mm'월'" class="custom-select !max-w-[120px] *:!pl-5 *:!pr-1.5" 
                 :locale="locale" showIcon fluid iconDisplay="input" @update:modelValue="getUpdate" />
         </div>
         <div class="h-[calc(100vh-167px)] w-full md:h-[calc(100vh-171px)]">

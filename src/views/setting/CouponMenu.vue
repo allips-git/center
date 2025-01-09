@@ -1,30 +1,22 @@
 <template>
     <div>
-        <BackHeader title="할인설정"/>
+        <BackHeader title="쿠폰 메뉴"/>
         <main class="pt-5 pb-32 pc-contents-h-box">
-            <p class="px-5 text-lg font-bold">쿠폰 메뉴</p>
             <section class="form-gap-box">
                 <ul>
                     <!-- v-for -->
-                    <li class="flex items-center justify-between p-4 border-b">
-                            <div class="flex items-center gap-4 ">
-                                <div  class="flex items-center gap-2 font-bold">
-                                    <p class="text-lg">쿠폰 이름</p>
-                                    <span class="-gray-400 text">・</span>
-                                    <span class="text-xl text-indigo-600">20%</span>
-                                </div>  
-                            </div>
-                        <span class="pi pi-angle-right !text-xl text-gray-400"></span>
-                    </li>
-                    <li class="flex items-center justify-between p-4 border-b">
-                            <div class="flex items-center gap-4 ">
-                                <div  class="flex items-center gap-2 font-bold">
-                                    <p class="text-lg">쿠폰 이름</p>
-                                    <span class="-gray-400 text">・</span>
-                                    <span class="text-xl text-indigo-600">20%</span>
-                                </div>  
-                            </div>
-                        <span class="pi pi-angle-right !text-xl text-gray-400"></span>
+                    <li 
+                      v-for="(coupon, index) in coupons" 
+                      :key="index" 
+                      class="flex items-center justify-between w-full px-5 py-4"
+                    >
+                        <div class="flex items-center gap-4">
+                            <div class="flex items-center gap-3 font-bold">
+                                <p class="text-lg">{{ coupon.name }}</p>
+                                <span class="text-xl text-sky-400">{{ coupon.discount }}%</span>
+                            </div>  
+                        </div>
+                        <IconPlay class="fill-gray-400 size-2.5" />
                     </li>
                 </ul>
             </section>
@@ -39,10 +31,17 @@
 
 <script setup lang="ts">
 import BackHeader from '@/components/layouts/BackHeader.vue'
+import IconPlay from '@/components/icons/IconPlay.vue'
+import { ref } from 'vue';
 
-
-
-
+// 더미 데이터
+const coupons = ref([
+    { name: '첫 구매 할인', discount: 20 },
+    { name: '회원 가입 기념', discount: 15 },
+    { name: '재구매 할인', discount: 10 },
+    { name: '특별 이벤트', discount: 25 },
+    { name: '생일 쿠폰', discount: 30 },
+]);
 </script>
 
 <style lang="scss">
