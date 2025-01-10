@@ -1,7 +1,7 @@
 <template>
 <main>
     <div class="z-50 overflow-hidden w-full max-w-[full] bg-white h-full">
-        <div ref="modalContentRef" class="!containerh-full">
+        <div class="!containerh-full">
             <div class="flex items-center justify-between px-5 py-3 pr-1">
                 <h1 class="text-xl font-bold">{{ calendar['monthDetail']['date'] }}</h1>
             </div>
@@ -24,7 +24,7 @@
         </div>
         
         <div class="bg-white *:w-full flex gap-1 py-2 px-2">
-            <Button label="일 캘린더 보기" text severity="secondary" @click="router.push({ path : '/calendar/day' })"/>
+            <Button label="일 캘린더 보기" text severity="secondary" @click="getNext"/>
             <!-- <Button label="새 일정" text icon="pi pi-plus" class="*:!font-bold" @click="calenderSetPop= true"/> -->
         </div>
     </div>
@@ -32,21 +32,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCalendarStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
 const router            = useRouter();
 const calendar          = useCalendarStore();
-const modalContentRef   = ref<HTMLElement | null>(null);
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
 const getMonthDataInfo = async (emCd: string) => {
-    getPopupClose('calendarDetail', true)
+    getPopupClose('calendarDetail', true);
     getPopupOpen('calendarEdit');
     await calendar.getEmCd(emCd);
+}
+
+const getNext = async () => {
+    await getPopupClose('calendarDetail', true);
+    router.push({ path : '/calendar/day' })
 }
 </script>
 
