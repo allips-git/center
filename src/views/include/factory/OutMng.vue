@@ -52,7 +52,7 @@
         <div class="relative flex items-center justify-center w-full" v-if="factory['out']['itemInfo']['unit'] !== '004'">
             <p class="w-[100px] flex-none">기본 높이</p>
             <div class="relative w-full">
-                <InputNumber v-model="factory['out']['itemInfo']['minHeight']" class="w-full *:!pr-10 inputNumber-color"/>
+                <InputNumber v-model="factory['out']['itemInfo']['minHeight']" class="w-full *:w-full *:!pr-10 inputNumber-color"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['minHeight'] }}</small>
                 <span class="absolute text-sm text-blue-500 right-4 top-3">cm</span>
             </div>
@@ -61,7 +61,7 @@
         <div class="relative flex items-center justify-center w-full" v-if="factory['out']['itemInfo']['unit'] === '003'">
             <p class="w-[100px] flex-none">원단 폭</p>
             <div class="w-full">
-                <InputNumber inputId="pokSpec" v-model="factory['out']['itemInfo']['pokSpec']" class="w-full inputNumber-color" autocomplete="off"/>
+                <InputNumber inputId="pokSpec" v-model="factory['out']['itemInfo']['pokSpec']" class="w-full *:w-full inputNumber-color" autocomplete="off"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['pokSpec'] }}</small>
             </div>
             <span class="absolute text-sm text-blue-500 right-4 top-3">cm</span>
@@ -70,7 +70,7 @@
         <div class="relative flex items-center justify-center w-full">
             <p class="w-[100px] flex-none">매입 가격</p>
             <div class="w-full">
-                <InputNumber inputId="purcAmt" v-model="factory['out']['itemInfo']['purcAmt']" class="w-full inputNumber-color" autocomplete="off"/>
+                <InputNumber inputId="purcAmt" v-model="factory['out']['itemInfo']['purcAmt']" class="w-full *:w-full inputNumber-color" autocomplete="off"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['purcAmt'] }}</small>
             </div>
             <span class="absolute text-sm text-blue-500 right-4 top-3">원</span>
@@ -79,7 +79,7 @@
         <div class="relative flex items-center justify-center w-full">
             <p class="w-[100px] flex-none">판매가격</p>
             <div class="w-full">
-                <InputNumber inputId="saleAmt" v-model="factory['out']['itemInfo']['saleAmt']" class="w-full inputNumber-color" autocomplete="off"/>
+                <InputNumber inputId="saleAmt" v-model="factory['out']['itemInfo']['saleAmt']" class="w-full *:w-full inputNumber-color" autocomplete="off"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['saleAmt'] }}</small>
             </div>
             <span class="absolute text-sm text-blue-500 right-4 top-3">원</span>

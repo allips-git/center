@@ -49,8 +49,6 @@ export const useEstiMateStore = defineStore('estiMate', {
         payList : getPayList(),
         sizeYn  : false
     }),
-    getters: {
-    },
     actions : {
         async getInfo(params, yn: Y | N = 'Y')
         {
@@ -142,7 +140,7 @@ export const useEstiMateStore = defineStore('estiMate', {
                                     productTitle : esti.productTitle,
                                     colorTitle   : esti.colorTitle,
                                     amt          : Number(esti.totalSaleAmt) + Number(esti.totalSaleTax),
-                                    isRed        : esti.productTitle === '' ? true : false,
+                                    isRed        : esti.productTitle ? false : true,
                                     columns      : getCardColumns(esti.unit),
                                     rows         : rows,
                                     showTag      : tags.length > 0 ? true : false,
@@ -159,9 +157,16 @@ export const useEstiMateStore = defineStore('estiMate', {
                 this.getItemAmt('itemAmt', Number(res.data['itemAmt']));
                 this.getItemAmt('itemTax', Number(res.data['itemTax']));
 
-                res.data['amtList'].map((amt) => {
-                    this.getPayAmt(amt['amtGb'], Number(amt['amt']), amt['memo']);
-                });
+                if(res.data['amtList'].length === 0)
+                {
+                    this.payList = getPayList();
+                }
+                else
+                {
+                    res.data['amtList'].map((amt) => {
+                        this.getPayAmt(amt['amtGb'], Number(amt['amt']), amt['memo']);
+                    });
+                }
 
             }
             catch(e)

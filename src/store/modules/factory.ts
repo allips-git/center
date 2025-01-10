@@ -454,7 +454,7 @@ export const useFactoryStore = defineStore('factory', {
                 ];
 
                 this.out.detail.info    = [
-                    { name : 'amt', amtGb: '', title: '이달 매입금', amt: res.data['purcAmt'], red: false, blue: false }
+                    { name : 'amt', amtGb: '', title: '이달 매입금', amt: res.data['purcAmt'], red: false, blue: false, memo : '' }
                 ];
 
                 this.out.detail.totalAmt = res.data['totalAmt'];
