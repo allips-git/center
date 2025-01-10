@@ -7,6 +7,13 @@ import { getAxiosData } from '@/assets/js/function';
 type Nullable<T>    = T | null;
 type AppGb          = 'Y' | 'N' | 'E'; /** Y : 승인 / N : 거절 / E : 대기기 */
 
+interface SysSearchInfo {
+    faCd        : string;
+    faNm        : string;
+    einItem     : string;
+    person      : string;
+}
+
 interface SysList {
     faCd        : string;
     faNm        : string;
@@ -129,6 +136,15 @@ interface OutMsg {
     addr    : string;
 }
 
+const getSysSearchInfo = (): SysSearchInfo => {
+    return {
+        faCd        : '',
+        faNm        : '',
+        einItem     : '',
+        person      : ''
+    }
+}
+
 const getSysInfo = (): SysInfo => {
     return {
         faNm        : '',
@@ -211,7 +227,8 @@ const getOutMsg = (): OutMsg => {
 
 interface State {
     sys : {
-        serachFaCd  : string;
+        searchFaCd  : string;
+        searchInfo  : SysSearchInfo;
         faCd        : string;
         list        : SysList[];
         info        : SysInfo;
@@ -243,7 +260,8 @@ interface State {
 export const useFactoryStore = defineStore('factory', {
     state: (): State => ({
         sys : {
-            serachFaCd  : '',
+            searchFaCd  : '',
+            searchInfo  : getSysSearchInfo(),
             faCd        : '',
             list        : [],
             info        : getSysInfo(),
@@ -303,7 +321,7 @@ export const useFactoryStore = defineStore('factory', {
         async getSysFactorySearch()
         {
             const params    = {
-                faCd : this.sys['serachFaCd']
+                faCd : this.sys['searchFaCd']
             };
 
             try
@@ -320,7 +338,7 @@ export const useFactoryStore = defineStore('factory', {
                     person      : res.data['info']['person']
                 }
 
-                this.sys.info = info;
+                this.sys.searchInfo = info;
                 return { status : true, code : 2000, message : 'success' };
             }
             catch(e)
@@ -592,8 +610,8 @@ export const useFactoryStore = defineStore('factory', {
         },
         getSysInfoReset()
         {
-            this.sys.serachFaCd = '';
-            this.sys.info       = getSysInfo();
+            this.sys.searchFaCd = '';
+            this.sys.searchInfo = getSysSearchInfo();
             this.sys.msg        = getSysMsg();
         },
         getOutInfoReset()
