@@ -17,7 +17,7 @@
                         <h3 :class="`font-bold text-${card.isRed ? 'red' : 'blue'}-600`">{{ card.colorTitle }}</h3>
                         <!-- <h3 class="font-bold text-red-600">{{ card.colorTitle }}</h3> -->
                     </div>
-                    <p class="font-bold">{{ getAmt(card.amt) }}원</p>
+                    <p class="font-bold">{{ card.amt ? getAmt(card.amt)+'원' : '' }}</p>
                 </div>
             </section>
             <!-- 테이블 -->

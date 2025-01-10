@@ -20,7 +20,6 @@
 </template>
     
 <script setup lang="ts">
-import BackHeader from '@/components/layouts/BackHeader.vue'
 import InfoCard from "@/components/card/InfoCard.vue";
 import TableCard from "@/components/card/TableCard.vue";
 import { onMounted } from 'vue';
@@ -31,8 +30,7 @@ const route = useRoute();
 const mate  = useOutOrderMateStore();
 
 onMounted(() => {
-    console.log(atob(route.query.cd));
-    mate.getInfo({ edCd : atob(route.query.cd) });
+    mate.getInfo({ edCd : atob(route.query.cd) }, 'N');
 })
 </script>
 

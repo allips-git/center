@@ -6,7 +6,7 @@
             <h1 class="mb-2 text-lg font-bold">금액 조정</h1>
             <div class="relative flex items-center justify-center">
                 <p class="w-[100px] flex-none">할인 금액</p>
-                <InputNumber  class="*:!text-red-500 inputNumber-color" :modelValue="getAmtInfo('lastDcAmt')" placeholder="할인 금액을 입력하세요" 
+                <InputNumber  class="*:!text-red-500 inputNumber-color *:w-full" :modelValue="getAmtInfo('lastDcAmt')" placeholder="할인 금액을 입력하세요" 
                 readonly @click="getPopupOpen('disAmtSet')"
                 />
                 <span class="absolute text-sm text-red-500 right-4 bottom-2.5">원</span>
@@ -14,7 +14,7 @@
 
             <div class="relative flex items-center justify-center">
                 <p class="w-[100px] flex-none">추가 금액</p>
-                <InputNumber class="*:!text-blue-500 inputNumber-color" 
+                <InputNumber class="*:!text-blue-500 inputNumber-color *:w-full" 
                 :modelValue="getAmtInfo('lastAddAmt')" placeholder="추가 금액을 입력하세요"
                 readonly @click="getPopupOpen('addAmtSet')"
                 />
@@ -23,7 +23,7 @@
 
             <div class="relative flex items-center justify-center">
                 <p class="w-[100px] flex-none">최종 결제금액</p>
-                <InputNumber class="*:!text-blue-500 inputNumber-color" :modelValue="getTotalAmt()" placeholder="최종 결제 금액을 입력하세요"/>
+                <InputNumber class="*:!text-blue-500 inputNumber-color *:w-full" :modelValue="getTotalAmt()" placeholder="최종 결제 금액을 입력하세요"/>
                 <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
             </div>
         </section>

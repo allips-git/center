@@ -3,7 +3,7 @@
         <div class="form-gap-box">
             <IftaLabel>
                 <IconField>
-                    <InputText id="sysFaCd" v-model="factory['sys']['serachFaCd']" class="w-full" @keyup.enter="getSearch"/>
+                    <InputText id="sysFaCd" v-model="factory['sys']['searchFaCd']" class="w-full" @keyup.enter="getSearch"/>
                     <InputIcon class="pi pi-search" />
                 </IconField>
                 <small class="text-red-500">{{ factory['sys']['msg']['sysFaCd'] }}</small>
@@ -12,17 +12,17 @@
 
             <IftaLabel class="w-full">
                 <label for="faNm">공장 이름</label>
-                <InputText v-model="factory['sys']['info']['faNm']" class="w-full" disabled/>
+                <InputText v-model="factory['sys']['searchInfo']['faNm']" class="w-full" disabled/>
             </IftaLabel>
 
             <IftaLabel class="w-full">
                 <label for="einItem">종목</label>
-                <InputText v-model="factory['sys']['info']['einItem']" class="w-full" disabled/>    
+                <InputText v-model="factory['sys']['searchInfo']['einItem']" class="w-full" disabled/>    
             </IftaLabel>
 
             <IftaLabel class="w-full">
                 <label for="person">담당자 성명</label>
-                <InputText v-model="factory['sys']['info']['person']" class="w-full" disabled/>    
+                <InputText v-model="factory['sys']['searchInfo']['person']" class="w-full" disabled/>    
             </IftaLabel>
         </div>
         <div class="bottom-modal-absol-box">
@@ -37,7 +37,7 @@ import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import { useConfirm } from "primevue/useconfirm";
 import { useFactoryStore } from '@/store';
-import { getAxiosData } from '@/assets/js/function';
+import { getAxiosData, getTokenOut } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
 const factory   = useFactoryStore();
@@ -62,7 +62,7 @@ const getSearch = async () => {
 }
 
 const getSysFactoryApply = () => {
-    if(factory['sys']['info']['faCd'] === '')
+    if(factory['sys']['searchInfo']['faCd'] === '')
     {
         factory.getSysMsgSet('공장 코드를 검색해주세요.');
         getFocus('sysFaCd');
@@ -82,7 +82,7 @@ const getSysFactoryApply = () => {
         },
         accept : async () => {
             const params = {
-                faCd : factory['sys']['info']['faCd']
+                faCd : factory['sys']['searchInfo']['faCd']
             };
 
             try
@@ -97,7 +97,7 @@ const getSysFactoryApply = () => {
                 console.log(e);
                 if(e.response.status === 401)
                 {
-                    alert('토큰 만료');
+                    getTokenOut();
                 }
                 else
                 {

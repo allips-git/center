@@ -28,10 +28,9 @@ const calendar      = useCalendarStore();
 const locale            = 'ko';
 const selectedDate      = ref('');
 
-const { getPopupOpen, getPopupClose } = usePopup();
+const { getPopupOpen } = usePopup();
 
 const dateClick = async (info) => {
-    await getPopupClose('calendarDetail', true);
     await calendar.getMonthDetail(info['dateStr']);
     
     if(calendar['monthDetail']['list'].length !== 0)

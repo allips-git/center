@@ -3,6 +3,7 @@
  */
 import { defineStore } from 'pinia';
 import { getAxiosData, getCardColumns, getConvertDate } from '@/assets/js/function';
+import axios from 'axios';
 
 interface State {
     ceNm        : string;
@@ -21,14 +22,22 @@ export const useOutOrderMateStore = defineStore('outOrderMate', {
         sizeYn      : false
     }),
     actions : {
-        async getInfo(params)
+        async getInfo(params, yn: Y | N = 'Y')
         {
-            console.log(params);
+            let res;
+            params['yn'] = yn;
 
             try
             {
-                const instance  = await getAxiosData();
-                const res       = await instance.post(`https://data.planorder.kr/orderV1/getOutOrderDoc`, params);
+                if(yn === 'N')
+                {
+                    res = await axios.post(`https://data.planorder.kr/orderV1/getOutOrderDoc`, params);
+                }
+                else
+                {
+                    const instance  = await getAxiosData();
+                    res = await instance.post(`https://data.planorder.kr/orderV1/getOutOrderDoc`, params);
+                }
 
                 console.log(res);
                 
@@ -107,7 +116,7 @@ export const useOutOrderMateStore = defineStore('outOrderMate', {
                                     edCd         : esti.edCd,
                                     productTitle : esti.productTitle,
                                     colorTitle   : esti.colorTitle,
-                                    amt          : Number(esti.totalSaleAmt) + Number(esti.totalSaleTax),
+                                    // amt          : Number(esti.totalSaleAmt) + Number(esti.totalSaleTax),
                                     isRed        : esti.productTitle === '' ? true : false,
                                     columns      : getCardColumns(esti.unit),
                                     rows         : rows,
