@@ -7,6 +7,7 @@ import { getAxiosData } from '@/assets/js/function';
 interface StCnt {
     count : number;
     label : string;
+    stCd  : string;
 }
 
 interface MsgList {
@@ -25,11 +26,12 @@ interface State {
 
 const getStCnt = (): StCnt[] => {
     return [
-        { count: 0, label: "견적" },
-        { count: 0, label: "발주" },
-        { count: 0, label: "시공" },
-        { count: 0, label: "결제" },
-        { count: 0, label: "A/S" }
+        // { count: 0, label: "대기", stCd : '001' },
+        { count: 0, label: "견적", stCd : '002' },
+        { count: 0, label: "발주", stCd : '003' },
+        { count: 0, label: "시공", stCd : '006' },
+        { count: 0, label: "결제", stCd : '011' },
+        { count: 0, label: "A/S", stCd : '' }
     ]
 }
 

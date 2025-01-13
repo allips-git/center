@@ -283,6 +283,10 @@ export const useClientStore = defineStore('client', {
                 console.log(e);
             }
         },
+        getStCd(stCd: string)
+        {
+            this.stCd = stCd;
+        },
         getMsgSet(msg: string, name: string)
         {
             this.msg        = getMsg();
