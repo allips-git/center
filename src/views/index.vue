@@ -1,6 +1,6 @@
 <template>
 <div class="w-full md:grid md:grid-cols-[1fr_300px] gap-8 items-start bg-gray-100 min-h-[calc(100vh-60px)] pb-[60px]">
-    <main class="w-full gap-y-5 gap-x-2.5 grid grid-cols-12">
+    <main class="w-full gap-y-4 gap-x-2.5 grid grid-cols-12">
         <section class="w-full col-span-12">
             <div class="relative w-full h-full px-10 py-5 overflow-hidden bg-blue-100 rounded-md">
                 <p class="mb-3 text-gray-600"> #아주 쉬운 플랜오더 가이드 </p>
@@ -16,7 +16,7 @@
         <section class="col-span-12 px-5">
             <div class="main-card-container-box">
                 <div class="main-card-tilte-box">
-                    <h2 class="flex items-center justify-center">전체 고객</h2>
+                    <h2 class="flex items-center justify-center text-base">전체 고객</h2>
                     <div class="flex items-center gap-2">
                         <span class="text-xl font-bold">{{ main['clientCnt'] }}명</span>
                         <div class="block w-px h-5 bg-gray-200"></div>
@@ -38,12 +38,12 @@
         <section class="col-span-6 pl-5 mb-5 md:mb-0 md:pl-0">
             <div class="main-card-container-box">
                 <div class="main-card-tilte-box">
-                    <h2 class="flex items-center justify-center gap-2">
+                    <h2 class="flex items-center justify-center gap-2 text-base">
                         <img src="@/assets/img/img-factory.svg" alt="공장" title="공장" class="size-6"/>
                         공장
                     </h2>
                 </div>
-                <router-link to="/factory/list" class="flex items-end justify-between main-card-container-box-padding">
+                <router-link to="/factory/list" class="flex items-end justify-between !pt-2 main-card-container-box-padding">
                     <div class="flex flex-col gap-1">
                         <p class="text-sm text-gray-400">공장전체</p>
                         <p class="text-2xl font-bold text-sky-500">{{ main['factoryCnt'] }}</p>
@@ -56,17 +56,17 @@
         <section class="col-span-6 pr-5 md:pr-0">
             <div class="main-card-container-box">
                 <div class="main-card-tilte-box">
-                    <h2 class="flex items-center justify-center gap-2">
+                    <h2 class="flex items-center justify-center gap-2 text-base">
                         <img src="@/assets/img/img-truck.svg" alt="배송 대기" title="배송 대기" class="size-6"/>
                         배송대기</h2>
                 </div>
-                <div class="flex items-end justify-between main-card-container-box-padding">
+                <router-link to="/factory/list" class="flex items-end justify-between !pt-2 main-card-container-box-padding">
                     <div class="flex flex-col gap-1">
                         <p class="text-sm text-gray-400">배송 대기</p>
                         <p class="text-2xl font-bold text-yellow-300">0</p>
                     </div>
                     <button class="text-xl font-bold text-gray-300">></button>
-                </div>
+                </router-link>
             </div>
         </section>
 
@@ -76,17 +76,17 @@
             <div class="main-card-container-box">
                 <div class="main-card-tilte-box">
                     <div class="flex items-center justify-center gap-2">
-                        <div class="flex items-center justify-center p-2 bg-yellow-300 rounded-full size-10">
+                        <div class="flex items-center justify-center p-2 bg-yellow-300 rounded-full size-9">
                             <img src="@/assets/img/icon-kakao.svg" alt="카카오톡" title="카카오톡" class="mx-auto"/>
                         </div>
                         
                         <div class="ml-1.5">
                             <div class="flex items-center gap-2">
-                                <h2>플랜톡</h2>
+                                <h2 class="text-base">플랜톡</h2>
                                 <span v-if="main['kakaoYn'] === 'N'" class="px-1.5 text-xs text-white bg-red-500 rounded-full">OFF</span>
                                 <span v-else class="px-1.5 text-xs text-white rounded-full bg-sky-400">ON</span>
                             </div>
-                            <div v-if="main['kakaoYn'] === 'Y'" class="flex gap-2 text-sm text-gray-400">
+                            <div v-if="main['kakaoYn'] === 'Y'" class="flex gap-2 text-sm font-normal text-gray-400">
                                 <span>0개 사용중</span>
                                 <span>|</span>
                                 <span>잔여 포인트<span class="font-bold">50P</span></span>
@@ -130,7 +130,7 @@
                 <div class="main-card-tilte-box !py-3">
                     <h2 class="flex items-center justify-center gap-2">
                         매장전용 메세지</h2>
-                    <Button label="메세지 추가 >" size="small" class="!py-0.5"></Button>
+                    <Button label="메세지 추가" size="small" class="!py-0.5"></Button>
                 </div>
                 <ul class="main-card-container-box-padding max-h-[500px] overflow-y-auto !py-1 scroll-bar-thin">
                     <li v-for="(item, index) in main['msgList']" :key="index" class="flex items-center justify-between flex-none w-full py-3 border-b last:border-b-0 scroll-">
