@@ -38,7 +38,7 @@
         </div>
         <div class="pt-4 btn-2-layout-box">
 
-            <Button label="링크 발주" severity="success"/>
+            <Button label="링크 발주" severity="success" @click="getNavi"/>
         </div>
     </section>
 </template>
@@ -62,6 +62,10 @@ const getOutOrderDoc = () => {
     const value = event.target.value;
 
     window.open(value, '_blank');
+}
+
+const getNavi = () => {
+    window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'share', value: `${domain}/customer/outOrderDoc?cd=${edCd}` }));
 }
 
 onMounted(() => {

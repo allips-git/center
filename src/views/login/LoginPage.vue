@@ -24,10 +24,10 @@
                         <InputText id="pw" v-model="pwData" placeholder="비밀번호를 입력해주세요." type="password" @keyup.enter="getEnter" class="w-full"/>
                     </IftaLabel>
                     <div class="flex items-center justify-between">
-                        <div class="label-checkbox-box">
+                        <!-- <div class="label-checkbox-box">
                             <RadioButton />
                             <label for="">자동 로그인</label>
-                        </div>
+                        </div> -->
                         <div class="flex items-center self-center flex-none gap-1">
                             <router-link to="">
                                 <Button label="아이디 찾기" text severity="secondary" />
@@ -54,7 +54,7 @@ import Dialog from 'primevue/dialog';
 import IconLogo from '@/components/icons/IconLogo.vue'
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import IftaLabel from 'primevue/iftalabel';
-import RadioButton from 'primevue/radiobutton';
+// import RadioButton from 'primevue/radiobutton';
 
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';

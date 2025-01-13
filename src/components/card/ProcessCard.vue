@@ -181,6 +181,9 @@ const getFirstBtnClick = () => {
         case '006': case '012':
             router.push({ path: '/customer/orderList' });
         break;
+        case '011':
+            router.push({ path: '/customer/orderList' });
+        break;
     }
 }
 
