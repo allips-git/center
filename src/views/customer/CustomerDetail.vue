@@ -177,8 +177,8 @@ const getClientModify = async () => {
     await client.getInfo();
 }
 
-onMounted(() => {
-    client.getDetail();
+onMounted(async () => {
+    await client.getDetail();
 })
 
 </script>

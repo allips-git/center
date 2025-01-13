@@ -32,7 +32,7 @@
     
         <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주공장 저장" 
             :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom"
-            @update:visible="getPopClose(true, 'outFactorySet')">
+            @update:visible="getPopupClose('outFactorySet', true)">
             <OutFactorySet/>
         </Dialog>
     </main>

@@ -26,7 +26,7 @@
 
                         <IftaLabel>
                             <IconField>
-                                <InputText id="username" placeholder="사업자 등록증을 업로드 해주세요." variant="filled" class="w-full" readonly @click="getFileBtn"/>
+                                <InputText :value="join['login']['einFile']['name']" placeholder="사업자 등록증을 업로드 해주세요." variant="filled" class="w-full" readonly @click="getFileBtn"/>
                                 <input type="file" id="einFile" ref="einFile" style="display:none" accept="image/*" @change="getFile"/>
                                 <InputIcon class="pi pi-file-arrow-up" />
                             </IconField>
