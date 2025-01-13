@@ -23,7 +23,8 @@
     @apply p-4
   }
   .main-card-tilte-box{
-    @apply font-bold flex justify-between items-center w-full border-b pt-4 pb-2 border-gray-100 py-1 px-5 text-lg
+    @apply font-bold flex justify-between items-center w-full pt-4 pb-0 border-gray-100 py-1 px-5 text-lg
+    /* border-b  */
   }
   .custom-table-column-min-w{
     @apply whitespace-nowrap
