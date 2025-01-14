@@ -41,10 +41,12 @@ import { useConfirm } from "primevue/useconfirm";
 import { ref, onMounted, watch } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { useCalendarStore } from '@/store';
+import { usePopup } from '@/assets/js/popup';
 import { getAxiosData, getConvertDate, getTokenOut } from '@/assets/js/function';
 
 const confirm   = useConfirm();
 const calendar  = useCalendarStore();
+const { getPopupOpen } = usePopup();
 
 // 캘린더 옵션 설정
 const calendarOptions = {
@@ -74,6 +76,12 @@ const calendarOptions = {
                         <span calss="w-full">${arg.event.end ? arg.event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}</span>
                     </div>`
         };
+    },
+    eventClick: async function (info) {
+        await calendar.getIkey(info.event._def.extendedProps['ikey']);
+        await calendar.getEmCd(info.event._def.extendedProps['emCd']);
+
+        getPopupOpen('calendarEdit');
     },
     eventDrop: function(info) {
         const { event } = info;
