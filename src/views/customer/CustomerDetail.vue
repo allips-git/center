@@ -13,7 +13,7 @@
                 </li>
                 <li class="flex items-center">
                     <p class="w-24 text-gray-500 whitespace-nowrap">주소</p>
-                    <p class="capsuel_sky" @click="getNavi('addr', client['detail']['addr'])">({{ client['detail']['zip'] }}) {{ client['detail']['addr'] }}</p>
+                    <p class="capsuel_sky" :data-address="client['detail']['addr']" @click="getNavi('addr', client['detail']['addr'])">({{ client['detail']['zip'] }}) {{ client['detail']['addr'] }}</p>
                 </li>
                 <li class="flex">
                     <p class="w-24 text-gray-500 whitespace-nowrap">상세주소</p>

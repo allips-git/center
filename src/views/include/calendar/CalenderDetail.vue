@@ -10,7 +10,7 @@
             <ul class="flex flex-col gap-2">
                 <li v-for="(item, index) in calendar['monthDetail']['list']" :key="index" 
                     :class="`flex items-center justify-between w-full p-3 bg-${item['stCd'] === '001' ? 'blue' : 'red'}-100 rounded-lg`"
-                    @click="getMonthDataInfo(item['emCd'])">
+                    @click="getMonthDataInfo(item['ikey'], item['emCd'])">
                     <div class="flex gap-1">
                         <b>{{ item['clientNm'] }}</b>
                         <span>・</span>
@@ -41,9 +41,11 @@ const calendar          = useCalendarStore();
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
-const getMonthDataInfo = async (emCd: string) => {
+const getMonthDataInfo = async (ikey: number, emCd: string) => {
+    console.log(emCd);
     getPopupClose('calendarDetail', true);
     getPopupOpen('calendarEdit');
+    await calendar.getIkey(ikey);
     await calendar.getEmCd(emCd);
 }
 

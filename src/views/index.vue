@@ -21,14 +21,14 @@
                         <span class="text-xl font-bold">{{ main['clientCnt'] }}명</span>
                         <div class="block w-px h-5 bg-gray-200"></div>
                         <div class="overflow-hidden rounded-full">
-                            <router-link to="/customer/list" class="flex items-center justify-center size-6 bg-sky-500">
+                            <div class="flex items-center justify-center size-6 bg-sky-500" @click="getStCd('')">
                                 <span class="text-white pi pi-plus"></span>
-                            </router-link>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <ul class="grid grid-cols-5 main-card-container-box-padding">
-                    <li v-for="(item, index) in main['stCnt']" :key="index" class="flex flex-col items-center justify-center gap-2 border-r last:border-r-0">
+                    <li v-for="(item, index) in main['stCnt']" :key="index" class="flex flex-col items-center justify-center gap-2 border-r last:border-r-0" @click="getStCd(item['stCd'])">
                         <p class="text-xl font-bold text-sky-500">{{ item.count }}</p>
                         <p class="text-sm text-gray-400">{{ item.label }}</p>
                     </li>
@@ -150,11 +150,17 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useMainStore } from '@/store';
-import PaymentModal from './include/customer/PaymentModal.vue';
+import { useMainStore, useClientStore } from '@/store';
+import { useRouter } from 'vue-router';
 
+const main   = useMainStore();
+const client = useClientStore();
+const router = useRouter();
 
-const main  = useMainStore();
+const getStCd = async (stCd: string) => {
+    await client.getStCd(stCd);
+    router.push({ path : '/customer/list' });
+}
 
 onMounted(() => {
     main.getData();

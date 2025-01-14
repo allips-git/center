@@ -5,6 +5,7 @@ import { defineStore } from 'pinia';
 import { getAxiosData, getConvertDate } from '@/assets/js/function';
 
 interface MonthEvents {
+    ikey        : number;
     emCd        : string;
     clientCd    : string;
     title       : string;
@@ -34,6 +35,7 @@ interface DayList {
 }
 
 interface DayEvents {
+    ikey        : number;
     emCd        : string;
     clientCd    : string;
     title       : string;
@@ -81,7 +83,7 @@ interface Info {
 
 interface State {
     searchDt    : Date;
-    emCd        : string;
+    ikey        : null | number;
     monthEvents : MonthEvents[];
     monthDetail : MonthDetail;
     dayList     : DayList[];
@@ -121,6 +123,7 @@ const getInfo = (): Info => {
 export const useCalendarStore = defineStore('calendar', {
     state: (): State => ({
         searchDt    : new Date(),
+        ikey        : null,
         emCd        : '',
         monthEvents : [],
         monthDetail : {
@@ -141,7 +144,7 @@ export const useCalendarStore = defineStore('calendar', {
         async getEditInfo()
         {
             const params = {
-                emCd : this.emCd
+                ikey : this.ikey
             };
 
             try
@@ -155,7 +158,7 @@ export const useCalendarStore = defineStore('calendar', {
 
                 const edit = {
                     clientNm    : res.data['info']['clientNm'],
-                    stCd        : res.data['info']['stCd'],
+                    stCd        : res.data['info']['stCd'] === '001' || res.data['info']['stCd'] === '002' ? 'Y' : res.data['info']['stCd'],
                     stDt        : res.data['info']['stDt'],
                     tel         : res.data['info']['tel'],
                     addr        : res.data['info']['addr'],
@@ -252,11 +255,12 @@ export const useCalendarStore = defineStore('calendar', {
                 endDt.setMinutes(endDt.getMinutes() + minutes);
 
                 return {
+                    ikey        : data['ikey'],
                     emCd        : data['emCd'],
                     clientNm    : data['title'],
                     startTime   : getConvertDate(startDt, 'monthCalendarInfo'),
                     endTime     : getConvertDate(endDt, 'monthCalendarInfo'),
-                    stNm        : data['stCd'] === '001' ? '견적' : '시공',
+                    stNm        : data['stNm'],
                     stCd        : data['stCd']
                 }
             });
@@ -308,6 +312,10 @@ export const useCalendarStore = defineStore('calendar', {
         getSearchDt(newDate: Date)
         {
             this.searchDt   = newDate;
+        },
+        getIkey(ikey: number)
+        {
+            this.ikey = ikey;
         },
         getEmCd(emCd: string)
         {

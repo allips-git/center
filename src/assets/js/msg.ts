@@ -79,7 +79,7 @@ export const joinSecondMsg = (params: JoinSecondParams): { msg: string; id: stri
 
     if(params['ceoTel'] === '')
     {
-        return { msg : '공장 대표 연락처를 입력해주세요.', id : 'ceoTel', state : false };
+        return { msg : '대표 연락처를 입력해주세요.', id : 'ceoTel', state : false };
     }
 
     return { msg : '', id : '', state : true };
