@@ -70,7 +70,7 @@ const getStCd = () => {
     }
     else
     {
-        return data['stCd'].filter(item => item.value === '001' || item.value === 'N');
+        return data['stCd'].filter(item => item.value === 'Y' || item.value === 'N');
     }
 }
 
@@ -115,7 +115,18 @@ const getStCdChange = (stCd: string) => {
                     }
                     else
                     {
-                        alert('일정 상태 변경 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                        switch(e.response.data['code'])
+                        {
+                            case 4000:
+                                alert('일정 상태 변경 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                            break;
+                            case 4100:
+                                alert('해당 견적에는 발주처리 또는 진행 중인 제품이 존재하여, 취소가 불가능합니다.');
+                            break;
+                            case 4200:
+                                alert('해당 견적서의 발주처리가 완료되어야 시공완료 처리가능합니다.');
+                            break;
+                        }
                     }
                 }
             },

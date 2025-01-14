@@ -46,8 +46,16 @@
 
             <h2 class="mt-4 setting-list-header">플랜오더 약관</h2>
             <ul>
-                <li v-for="(item, index) in termsList" :key="index" class="flex justify-between px-2 py-4 border-b hover:bg-gray-50">
-                    <p>{{ item }}</p>
+                <li class="flex justify-between px-2 py-4 border-b hover:bg-gray-50">
+                    <p>사용약관</p>
+                    <div><IconPlay class="w-2 fill-gray-600"/></div>
+                </li>
+                <li class="flex justify-between px-2 py-4 border-b hover:bg-gray-50" @click="router.push({ path : '/setting/privacy' })">
+                    <p>개인정보 처리방침</p>
+                    <div><IconPlay class="w-2 fill-gray-600"/></div>
+                </li>
+                <li class="flex justify-between px-2 py-4 border-b hover:bg-gray-50">
+                    <p>개인정보 수집 이용 동의서</p>
                     <div><IconPlay class="w-2 fill-gray-600"/></div>
                 </li>
                 <li class="flex justify-between px-2 py-4 border-b hover:bg-gray-50" @click="getJoinOut">
@@ -105,12 +113,6 @@ const storeSettings = ref([
 const navigateTo = (item) => {
     router.push(item.path); // 해당 경로로 이동
 };
-
-const termsList = ref([
-    '사용약관',
-    '개인정보 처리방침',
-    '개인정보 수집 이용 동의서'
-]);
 
 const getJoinOut = () => {
     confirm.require({
