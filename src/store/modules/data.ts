@@ -97,7 +97,7 @@ export const useDataStore = defineStore('data', {
             stCd : [
                 { value : 'Y' ,   label : '견적' },
                 { value : 'N' ,   label : '견적취소' },
-                { value : '006' , label : '시공대기' },
+                { value : '013' , label : '시공대기' },
                 { value : '011' , label : '시공완료' }
             ]
         };

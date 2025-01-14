@@ -11,7 +11,7 @@
             </p>
         </div>
         <p class="flex-none text-lg font-bold text-sky-500">
-            {{ calendar['edit']['stCd'] === '006' ? '시공' : '견적' }}
+            {{ calendar['edit']['stCd'] === 'Y' ? '견적' : '시공' }}
         </p>
     </div>
     <div class="py-3">
@@ -64,9 +64,9 @@ const getDate = () => {
 }
 
 const getStCd = () => {
-    if(calendar['edit']['stCd'] === '006' || calendar['edit']['stCd'] === '011')
+    if(calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011')
     {
-        return data['stCd'].filter(item => item.value === '006' || item.value === '011');
+        return data['stCd'].filter(item => item.value === '013' || item.value === '011');
     }
     else
     {
@@ -124,7 +124,7 @@ const getStCdChange = (stCd: string) => {
                                 alert('해당 견적에는 발주처리 또는 진행 중인 제품이 존재하여, 취소가 불가능합니다.');
                             break;
                             case 4200:
-                                alert('해당 견적서의 발주처리가 완료되어야 시공완료 처리가능합니다.');
+                                alert('해당 견적서는 이미 시공완료 처리되었거나, 발주처리가 완료되어야 시공완료 처리가능합니다.');
                             break;
                         }
                     }

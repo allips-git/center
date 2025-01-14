@@ -9,7 +9,7 @@
         <div class="p-3 overflow-auto bg-gray-50 max-h-96">
             <ul class="flex flex-col gap-2">
                 <li v-for="(item, index) in calendar['monthDetail']['list']" :key="index" 
-                    :class="`flex items-center justify-between w-full p-3 bg-${item['stCd'] === '001' ? 'blue' : 'red'}-100 rounded-lg`"
+                    :class="`flex items-center justify-between w-full p-3 bg-${getStCdColor(item['stCd'])}-100 rounded-lg`"
                     @click="getMonthDataInfo(item['ikey'], item['emCd'])">
                     <div class="flex gap-1">
                         <b>{{ item['clientNm'] }}</b>
@@ -42,11 +42,25 @@ const calendar          = useCalendarStore();
 const { getPopupOpen, getPopupClose } = usePopup();
 
 const getMonthDataInfo = async (ikey: number, emCd: string) => {
-    console.log(emCd);
     getPopupClose('calendarDetail', true);
     getPopupOpen('calendarEdit');
     await calendar.getIkey(ikey);
     await calendar.getEmCd(emCd);
+}
+
+const getStCdColor = (stCd: string) => {
+    if(stCd === '001')
+    {
+        return 'blue';
+    }
+    else if(stCd === '013')
+    {
+        return 'red';
+    }
+    else
+    {
+        return 'gray';
+    }
 }
 
 const getNext = async () => {

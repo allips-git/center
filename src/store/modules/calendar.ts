@@ -293,6 +293,7 @@ export const useCalendarStore = defineStore('calendar', {
                     const eDt = getConvertDate(new Date(), 'yyyy-mm-dd')+'T'+getConvertDate(endDt, 'hh:ii');
 
                     return {
+                        ikey        : item.ikey,
                         emCd        : item.emCd,
                         clientCd    : item.clientCd,
                         title       : item.title,
