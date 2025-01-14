@@ -1,9 +1,9 @@
 <template>
     <Dialog v-model:visible="visible"
         pt:root:class="!border-0 !bg-transparent w-full md:w-[500px] md:h-auto h-full !max-h-screen" 
-        pt:mask:class="backdrop-blur-sm bg-white">
+        pt:mask:class="bg-white backdrop-blur-sm">
             <template #container>
-                <BackHeader title="매장회원가입 1/2"/>
+                <BackHeader title="매장 회원가입 1/2"/>
                 <div class="modal-page-padding">
                     <div class="form-gap-box">
                         <IftaLabel class="w-full">

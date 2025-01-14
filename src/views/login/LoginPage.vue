@@ -33,8 +33,8 @@
                                 <Button label="아이디 찾기" text severity="secondary" />
                             </router-link>
                             <span class="text-gray-400">|</span>
-                            <router-link to="">
-                                <Button label="비밀번호 찾기" text severity="secondary" />
+                            <router-link to="join/find_password">
+                                <Button label="비밀번호 찾기" text severity="secondary"/>
                             </router-link>
                         </div>
                     </div>

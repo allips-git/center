@@ -12,6 +12,8 @@ import Login from "@/views/login/LoginPage.vue";
 import Agree from "@/views/login/JoinAgree.vue";
 import JoinFirst from "@/views/login/JoinFirst.vue";
 import JoinSecond from "@/views/login/JoinSecond.vue";
+import FindPassword from "@/views/login/FindPassword.vue";
+import ChangePassword from "@/views/login/ChangePassword.vue";
 import CustomerList from "@/views/customer/CustomerList.vue";
 // import CustomerRegister from "@/views/customer/CustomerRegister.vue";
 import CustomerDetail from "@/views/customer/CustomerDetail.vue";
@@ -98,6 +100,22 @@ const routes = [
         component: JoinSecond,
         meta : { gubun: 'Y' }
     },
+
+    {
+        path: "/join/find_password",
+        name: "FindPassword",
+        component: FindPassword,
+        meta : { gubun: 'Y' }
+    },
+
+    {
+        path: "/join/change_password",
+        name: "ChangePassword",
+        component: ChangePassword,
+        meta : { gubun: 'Y' }
+    },
+
+    
     {
         path: "/",
         name: "MainPage",

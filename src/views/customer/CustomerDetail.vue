@@ -106,7 +106,7 @@
             </template>
             <ProductRegister/>
         </Dialog>
-        <Dialog v-model:visible="popup['pop']['clientSet']" header="고객 등록" 
+        <Dialog v-model:visible="popup['pop']['clientSet']" header="고객 정보 수정" 
             :modal=true position="bottom" class="custom-dialog-bottom"
             @update:visible="getPopClose(true, 'clientSet')">
             <CustomerListSet/>
