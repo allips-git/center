@@ -1,5 +1,5 @@
 <template>
-<header class="bg-white h-[3.3125rem] px-4 border-b border-gray-100 flex justify-between items-center md:pl-4 md:pr-3 w-full z-50 dark:bg-zinc-800 dark:border-zinc-700 no-print  top-0 md:h-[60px] md:shadow-[0px_1px_4px_1px_rgba(0,0,0,0.05)] flex-none">
+<header class="bg-white h-[48px] border-b border-gray-100 flex justify-between items-center md:pl-4 md:pr-3 px-3 w-full z-50 dark:bg-zinc-800 dark:border-zinc-700 no-print  top-0 md:h-[60px] md:shadow-[0px_1px_4px_1px_rgba(0,0,0,0.05)] flex-none">
     <div class="flex items-center gap-2"> 
         <!-- <div class="pc-hidden">
             <Button icon="pi pi-bars" severity="contrast" text  plain size="large" @click="moSideHeader=true"/>
@@ -8,26 +8,42 @@
             <Button icon="pi pi-bars" variant="text" rounded severity="contrast" text  plain size="large" @click="handleClick"/>
         </div>
         <!-- pc button -->
-        <div class="flex items-center justify-between flex-none md:gap-1">
+        <div class="flex items-center flex-none gap-1">
+            <li class="w-full h-[32px] md:h-[48px] pl-2 flex items-center justify-center"><IconLogo class="fill-indigo-600 dark:fill-indigo-500 size-7"/></li>            
             <router-link class="" to="/"><p class="hidden text-2xl text-indigo-600 md:blockfont-extrabold whitespace-nowrap dark:text-indigo-500">PlanOrder Center</p></router-link>
-            <Button class="w-[1.875rem] !p-0 flex items-center justify-center h-12" text plain @click="toggleNotificationPopover($event)">
-                <IconAvatar class="*:text-blue-200 w-7 h-7 md:w-9 md:h-9"/>
-            </Button>
         </div>
     </div>
-    <h1 class="text-sm font-bold">디자인 윈도우</h1>
-            <IconBell class="fill-t-lv2"/>
     
-    <div class="items-center hidden gap-2 md:flex">
-        <Button class="w-[1.875rem] !p-0 flex items-center justify-center h-12" text plain @click="toggleNotificationPopover($event)">
+    <div class="flex items-center gap-2">
+        <!-- <Button class="*:!text-xl" icon="pi pi-bell" severity="contrast" text plain  @click="toggleAlarmPopover($event)" />
+        <Popover class="custom-popover" ref="AlarmPopover" dismissable> 
+            <div class="w-full p-3 overflow-y-auto min-w-80 max-w-96 max-h-96">
+                <h1 class="mb-2 text-sm font-bold">알림</h1>
+                <Alarm :headerState="headerState"/>
+            </div>
+        </Popover> -->
+        <!-- <Button class="*:!text-2xl h-12" icon="pi pi-cog" severity="contrast" text  plain @click="toggle"/>
+        <TieredMenu ref="menu" id="overlay_tmenu" :model="items" popup>
+            <template #item="{ item, props }">
+                <a class="flex items-center !gap-1" v-bind="props.action" inert>
+                    <span class="!text-sm" :class="item.icon" />
+                    <span class="text-sm">{{ item.label }}</span>
+                </a>
+            </template>
+        </TieredMenu> -->
+        <Button class="w-12 !p-0 flex items-center justify-center h-12" text plain @click="toggleNotificationPopover($event)">
             <IconAvatar class="*:text-blue-200 w-7 h-7 md:w-9 md:h-9"/>
         </Button>
+        <Popover class="" ref="notificationPopover" dismissable> 
+            <div class="flex flex-col">
+                <Button :label="'로그아웃'" icon="pi pi-sign-out" severity="danger" text  size="small" @click="getLogOut"/>
+            </div>
+        </Popover>
+
+        <!-- <div class="pc-hidden">
+            <Button icon="pi pi-bars" severity="contrast" text  plain size="large" @click="moSideHeader=true"/>
+        </div> -->
     </div>
-    <Popover class="" ref="notificationPopover" dismissable> 
-        <div class="flex flex-col">
-            <Button :label="'로그아웃'" icon="pi pi-sign-out" severity="danger" text  size="small" @click="getLogOut"/>
-        </div>
-    </Popover>
 </header>
     <Drawer v-model:visible="moSideHeader" header="" class="custom-drawer" position="left">
         <template #header>
@@ -53,7 +69,6 @@ import Drawer from 'primevue/drawer';
 import SideHeader from '@/components/layouts/SideHeader.vue'
 import { useRouter } from 'vue-router';
 import { useLoginStore } from '@/store';
-import IconBell from '../icons/IconBell.vue';
 
 const router = useRouter();
 
