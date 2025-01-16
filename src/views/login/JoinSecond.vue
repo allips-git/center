@@ -4,13 +4,13 @@
         pt:mask:class="bg-white backdrop-blur-sm">
             <template #container>
                 <BackHeader title="매장 회원가입 2/2"/>
-                <div class="modal-page-padding">
+                <div class="!pb-20 overflow-y-auto modal-page-padding">
                     <div class="p-4 mb-8 rounded-lg bg-gray-50">
-                        <p class="">
+                        <p class="text-sm">
                             플랜오더에 등록하실 운영 중인 매장시설 정보와 플랜 및 문자메시지 등 플랜오더 이용을 위한 결제수단을 입력해주세요.<br>
                             <b>* 안심하세요! 결제수단을 등록해도, 2주 무료체험 기간 동안 절대 결제가 일어나지 않고 언제든 해지 가능해요.</b>
                         </p>
-                        <span class="block mt-4 text-sm text-gray-400">무료체험 기간 동안 이용을 해지하지 않으시면 무료체험 종료일 오전 10시에 자동으로 결제되며, 매월 25일 정기결제가 이루어집니다.</span>
+                        <span class="block mt-4 text-gray-400 text-10">무료체험 기간 동안 이용을 해지하지 않으시면 무료체험 종료일 오전 10시에 자동으로 결제되며, 매월 25일 정기결제가 이루어집니다.</span>
                     </div>
                     <div class="form-gap-box">
                         <IftaLabel class="w-full">

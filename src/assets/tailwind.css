@@ -17,20 +17,20 @@
     @apply text-lg font-bold mb-3
   }
   .main-card-container-box{
-    @apply shadow-sm bg-white rounded-lg border border-gray-100 w-full
+    @apply bg-white rounded-lg border border-gray-100 w-full shadow-custom px-3.5 py-4
   }
-  .main-card-container-box-padding{
-    @apply p-4
-  }
+  /* .main-card-container-box-padding{
+    @apply 
+  } */
   .main-card-tilte-box{
-    @apply font-bold flex justify-between items-center w-full pt-4 pb-0 border-gray-100 py-1 px-5 text-lg
+    @apply font-bold flex justify-between items-center w-full border-gray-100 text-base
     /* border-b  */
   }
   .custom-table-column-min-w{
     @apply whitespace-nowrap
   }
   .page-title{
-    @apply text-2xl font-bold px-4 pt-8 pb-2
+    @apply font-bold px-4 pt-8 pb-2
   }
   .label-checkbox-box{
     @apply flex gap-2 items-center w-full
@@ -44,6 +44,15 @@
   .bottom-modal-sticky-box{
     @apply w-full sticky bottom-0
   }
+  .agree_padding-x{
+    @apply px-[1.8125rem]
+  }
+  .vali_text{
+    @apply absolute text-red-500 bottom-1 text-10
+  }
+  .vali_text-tran{
+    @apply text-transparent text-10
+  }
 
 
   .bottom-modal-sticky-box{
@@ -51,7 +60,7 @@
   }
 
   .bottom-modal-absol-box{
-    @apply w-full absolute bottom-0 left-0 p-4 bg-white border border-t border-gray-100 pt-3
+    @apply w-full absolute bottom-0 left-0 p-4 bg-white border border-t border-gray-100 pt-2
   }
   .bottom-fixed-btn-box{
     @apply w-full fixed bottom-0 left-0 p-4 bg-white flex gap-2 *:w-full border-t border-gray-200 z-[100]
@@ -69,7 +78,7 @@
     @apply flex flex-col gap-5
   }
   .mobile-fiex-bottom{
-    @apply fixed md:relative bottom-0 left-0 w-full *:w-full p-4 border-t md:p-0 mt-10 pt-2.5 z-[100] bg-white
+    @apply fixed md:relative bottom-0 left-0 w-full *:w-full px-4 border-t md:p-0 mt-10 pt-2 z-[100] bg-white pb-3.5
   }
   .gray-bar{
     @apply my-5 bg-gray-100 w-full h-2
