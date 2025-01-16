@@ -40,6 +40,7 @@ import PlantalkDetail from "@/views/plantalk/ScheduleAlert.vue";
 import MessageView from "@/views/message/MessageView.vue";
 import SettingView from "@/views/setting/SettingView.vue";
 import TimeSetting from "@/views/setting/TimeSetting.vue";
+import Privacy from "@/views/setting/Privacy.vue";
 import StaticPayView from "@/views/setting/StaticPay.vue";
 import StaticPayIng from "@/views/setting/StaticPayUpdate.vue";
 import AccView from "@/views/acc/AccView.vue";
@@ -412,6 +413,13 @@ const routes = [
         name: "SettingAuth",
         component: SettingAuth,
         meta: { title: "사업자 인증" }    
+    },
+
+    {
+        path: "/setting/privacy",
+        name: "Privacy",
+        component: Privacy,
+        meta: { title: "개인정보 처리방침" }
     },
 
     {

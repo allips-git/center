@@ -46,11 +46,11 @@ export const joinFirstMsg = (params: JoinFirstParams): { msg: string; id: string
 }
 
 interface JoinSecondParams {
-    ceNm   : string;
-    einNum : string;
-    ceoNm  : string;
-    addr   : string;
-    tel    : string;
+    ceNm    : string;
+    einNum  : string;
+    ceoNm   : string;
+    addr    : string;
+    ceoTel  : string;
 }
 
 /**

@@ -91,6 +91,14 @@ async function getDanal(uid, token)
         const res    = await instance.post(`https://data.planorder.kr/api/danal/getDanalCheckInfo`, params);
         const result = res.data;
 
+        const age = calculateAge(result['response']['birthday']);
+
+        if(age < 14)
+        {
+            alert('인증 사용자는 만 14세 이상이 아닙니다. 만 14세 이상 가입가능합니다.');
+            return;
+        }
+
         if(result.response.certified)
         {
             /** 본인인증 성공 */
@@ -138,4 +146,23 @@ function getRandomStr(length)
     }
     
     return result;
+}
+
+/**
+ * @description 만 나이 계산
+ */
+function calculateAge(birth: string)
+{
+    const today         = new Date();
+    const birthDate     = new Date(birth);
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) 
+    {
+        age--;
+    }
+
+    return age;
 }
