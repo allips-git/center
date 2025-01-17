@@ -1,48 +1,51 @@
 <template>
+    <!-- style="background-image: radial-gradient(circle at left top, var(--p-surface-0), var(--p-primary-50))" -->
+    <!-- pt:mask:class="bg-white backdrop-blur-sm" -->
 <Dialog v-model:visible="visible"
-    style="background-image: radial-gradient(circle at left top, var(--p-surface-0), var(--p-primary-50))"
-    pt:root:class="!border-0 !bg-transparent w-full md:w-[400px] md:h-auto !min-h-[600px] h-full !max-h-screen justify-start" 
-    pt:mask:class="bg-white backdrop-blur-sm">
+    pt:root:class="!border-0 !bg-transparent w-full md:w-[400px] md:h-auto !min-h-[600px] h-full !max-h-screen justify-start">
         <template #container>
             <BackHeader title="로그인"  class="md:hidden" />
-            <div class="flex flex-col px-6 pb-8 mt-10 rounded-2xl sm:mt-10">
+            <div class="flex flex-col px-4 pb-8 mt-5 rounded-2xl sm:mt-10">
                 <div class="flex flex-col items-center justify-center">
-                    <IconLogo class="w-12 fill-sky-500"/>
-                    <p class="w-full mt-5 mb-10 text-2xl font-extrabold text-center"><span class="text-sky-500 rext">PLAN ORDER</span></p>
+                    <IconLogo class="w-[3.25rem] fill-[#00AEF2]"/>
+                    <p class="w-full mt-[1.5625rem] mb-10 text-lg font-bold text-center noto"><span class="text-[#00AEF2] rext">PLAN ORDER</span></p>
                 </div>
                 <div class="hidden mt-10 mb-10 md:block">
                     <p class="flex flex-col items-center justify-center text-2xl font-bold">로그인</p>
                 </div>
-                <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-6">
                     <IftaLabel class="w-full">
                         <label for="username" class="">이메일</label>
-                        <InputText id="id" v-model="idData" placeholder="이메일을 입력해주세요." @keyup.enter="getEnter" class="w-full"/>
+                        <IconField>
+                            <InputText id="id" v-model="idData" placeholder="이메일을 입력해주세요." @keyup.enter="getEnter" class="w-full"/>
+                            <InputIcon><IconInputX/></InputIcon>
+                        </IconField>
                     </IftaLabel>
 
                     <IftaLabel>
                         <label for="pw" class="">비밀번호</label>
-                        <InputText id="pw" v-model="pwData" placeholder="비밀번호를 입력해주세요." type="password" @keyup.enter="getEnter" class="w-full"/>
+                        <IconField>
+                            <InputText id="pw" v-model="pwData" placeholder="비밀번호를 입력해주세요." type="password" @keyup.enter="getEnter" class="w-full"/>
+                            <InputIcon><IconEye/></InputIcon>
+                        </IconField>
                     </IftaLabel>
-                    <div class="flex items-center justify-between">
+                </div>
+                <div class="flex items-center justify-end mt-4">
                         <!-- <div class="label-checkbox-box">
                             <RadioButton />
                             <label for="">자동 로그인</label>
                         </div> -->
-                        <div class="flex items-center self-center flex-none gap-1">
-                            <router-link to="">
-                                <Button label="아이디 찾기" text severity="secondary" />
-                            </router-link>
-                            <span class="text-gray-400">|</span>
-                            <router-link to="join/find_password">
-                                <Button label="비밀번호 찾기" text severity="secondary"/>
-                            </router-link>
+                        <div class="flex items-center self-center flex-none gap-3 text-t-lv2">
+                            <router-link to="" class="text-xs">아이디 찾기</router-link>
+                            <span class="text-xs">|</span>
+                            <router-link to="join/find_password" class="text-xs">비밀번호 찾기</router-link>
                         </div>
                     </div>
-                </div>
-                <Button label="이메일 로그인" size="large" class="w-full mt-4" @click="getLogin"/>
-                <div class="flex items-center justify-center w-full mt-4">
-                    <span class="text-gray-600">계정이 없으신가요?</span>
-                    <Button label="회원가입" class="!*:font-bold" text @click="router.push({ path : '/join/agree' })"/>
+                <Button label="이메일 로그인" class="w-full mt-6" @click="getLogin"/>
+                <div class="flex items-center justify-center w-full gap-[1.125rem] mt-6">
+                    <span class="text-sm text-t-lv2">계정이 없으신가요?</span>
+                    <router-link to="/join/agree" class="text-sm font-bold text-p-lv2">회원가입</router-link>
+                    <!-- <Button label="회원가입" class="!*:font-bold" text @click="router.push({ path : '/join/agree' })"/> -->
                 </div>
             </div>
         </template>
@@ -54,11 +57,14 @@ import Dialog from 'primevue/dialog';
 import IconLogo from '@/components/icons/IconLogo.vue'
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import IftaLabel from 'primevue/iftalabel';
-// import RadioButton from 'primevue/radiobutton';
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
 
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLoginStore } from '@/store';
+import IconInputX from '@/components/icons/IconInputX.vue';
+import IconEye from '@/components/icons/IconEye.vue';
 
 const login     = useLoginStore();
 const router    = useRouter();

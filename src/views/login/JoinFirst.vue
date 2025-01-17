@@ -4,24 +4,36 @@
         pt:mask:class="bg-white backdrop-blur-sm">
             <template #container>
                 <BackHeader title="매장 회원가입 1/2"/>
-                <div class="modal-page-padding">
+                <div class="px-4 pt-10">
                     <div class="form-gap-box">
-                        <IftaLabel class="w-full">
+                        <IftaLabel class="relative w-full">
                             <label for="id">이메일</label>
-                            <InputText id="id" v-model="join['login']['id']" placeholder="이메일을 입력해주세요." class="w-full"/>
-                            <small v-if="join['msg']['id'] !== ''" class="text-red-500">{{ join['msg']['id'] }}</small>
+                            <IconField>
+                                <InputText id="id" v-model="join['login']['id']" placeholder="이메일을 입력해주세요." class="w-full"/>
+                                <InputIcon><IconInputX/></InputIcon>
+                            </IconField>
+                            <small v-if="join['msg']['id'] !== ''" class="vali_text">{{ join['msg']['id'] }}</small>
+                            <small v-if="join['msg']['id'] !== ''" class="vali_text-tran">none</small>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
                             <label for="pw">비밀번호</label>
-                            <InputText type="password" id="pw" v-model="join['login']['pw']" placeholder="비밀번호를 입력해주세요" class="w-full"/>
-                            <small v-if="join['msg']['pw'] !== ''" class="text-red-500">{{ join['msg']['pw'] }}</small>
+                            <IconField>
+                                <InputText type="password" id="pw" v-model="join['login']['pw']" placeholder="비밀번호를 입력해주세요" class="w-full"/>
+                                <InputIcon><IconEye/></InputIcon>
+                            </IconField>
+                            <small v-if="join['msg']['pw'] !== ''" class="vali_text">{{ join['msg']['pw'] }}</small>
+                            <small v-if="join['msg']['pw'] !== ''" class="vali_text-tran">none</small>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
                             <label for="pw">비밀번호 확인</label>
-                            <InputText type="password" id="pwChk" v-model="join['login']['pwChk']" placeholder="비밀번호를 다시 한 번 입력해주세요" class="w-full"/>    
-                            <small v-if="join['msg']['pwChk'] !== ''" class="text-red-500">{{ join['msg']['pwChk'] }}</small>
+                            <IconField>
+                                <InputText type="password" id="pwChk" v-model="join['login']['pwChk']" placeholder="비밀번호를 다시 한 번 입력해주세요" class="w-full"/>    
+                                <InputIcon><IconEye/></InputIcon>
+                            </IconField>
+                            <small v-if="join['msg']['pwChk'] !== ''" class="vali_text">{{ join['msg']['pwChk'] }}</small>
+                            <small v-if="join['msg']['pwChk'] !== ''" class="vali_text-tran">none</small>
                         </IftaLabel>
 
                         <IftaLabel>
@@ -32,11 +44,14 @@
                             </IconField>
                             <label>사업자 등록증 업로드</label>
                         </IftaLabel>
-                        <small v-if="join['msg']['einFile'] !== ''" class="text-red-500">{{ join['msg']['einFile'] }}</small>
-                    </div>
-                    <div class="mobile-fiex-bottom">
+                        <small v-if="join['msg']['einFile'] !== ''" class="vali_text">{{ join['msg']['einFile'] }}</small>
+                        <small v-if="join['msg']['einFile'] !== ''" class="vali_text-tran">none</small>
+
                         <Button label="다음" class="w-full" @click="getNext"/>
                     </div>
+                    <!-- <div class="mobile-fiex-bottom">
+                        <Button label="다음" class="w-full" @click="getNext"/>
+                    </div> -->
                 </div>
             </template>
         </Dialog>
@@ -48,6 +63,8 @@ import IftaLabel from 'primevue/iftalabel';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import BackHeader from '@/components/layouts/BackHeader.vue'
+import IconInputX from '@/components/icons/IconInputX.vue';
+import IconEye from '@/components/icons/IconEye.vue';
 import { useJoinStore } from '@/store';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';

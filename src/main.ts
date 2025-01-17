@@ -52,6 +52,9 @@ const MyPreset = definePreset(Aura, {
             900: '{sky.900}',
             950: '{sky.950}'
         },
+        sky:{
+            500: '#00AEF2',
+        },
         overlay: {
             popover: {
                 padding: '0.75rem',
@@ -60,8 +63,9 @@ const MyPreset = definePreset(Aura, {
         colorScheme: {
             light: {
                 formField: {
-                    placeholderColor: '{surface.400}',
+                    placeholderColor: '#C1C1C1',
                     disabledBackground: '{surface.100}',
+                    borderColor:'#E4E5E9'
                 },
             },
         }

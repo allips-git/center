@@ -1,20 +1,22 @@
 <template>
-    <header class="h-[48px] sticky top-0 flex w-full items-center px-2 md:border-b shadow-sm md:shadow-none bg-white z-50 md:border-gray-100">
-        <Button 
+    <header class="h-[3.125rem] sticky top-0 flex w-full items-center px-4 md:shadow-none bg-white z-50 md:border-gray-100">
+        <!-- <Button 
             plain 
             text 
             rounded 
             icon="pi pi-arrow-left" 
-            @click="goBack"
-            class="!block pc-hidden md:!hidden"
-        />
-        <h1 class="absolute text-base font-bold -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 md:relative md:-translate-y-0 md:-translate-x-0 md:top-0 md:left-2">{{ title }}</h1>
+            
+            class="!block pc-hidden md:!hidden !text-l-lv0"
+        /> -->
+        <IconArrowForward class="mt-0.5 fill-l-lv0 size-6" @click="goBack"/>
+        <h1 class="absolute text-sm font-bold -translate-x-1/2 -translate-y-1/2 text-t-lv1 left-1/2 top-1/2 md:relative md:-translate-y-0 md:-translate-x-0 md:top-0 md:left-2">{{ title }}</h1>
     </header>
 </template>
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
 import { useRouter } from 'vue-router'; // useRouter 임포트
+import IconArrowForward from '../icons/IconArrowForward.vue';
 
 const props = defineProps({
     title: {

@@ -248,8 +248,16 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     .p-autocomplete-input-multiple,
     .p-cascadeselect-label,
     .p-treeselect-label{
-      padding-block: 0.725rem !important;
+      padding-block: 0.78125rem !important;
+      padding-inline: 0.875rem !important;
       border-radius: 2px !important;
+      font-size: 0.8125rem;
+      line-height: 0.9375rem;
+      height: 2.5rem;
+      &::placeholder{
+        color: #C1C1C1;
+        font-weight: 400;
+      }
     }
     .p-select{
       border-radius: 2px !important;
@@ -259,14 +267,20 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     border-radius: 2px !important;
 }
 .p-iftalabel label{
-    top: -4px !important;
+    top: -0.375rem !important;
     background-color: white !important;
-    padding-inline: 1px;
     width: auto;
+    left: 0.375rem !important;
+    font-size: 0.625rem !important;
+    color: #999999 !important;
 }
 .p-iftalabel .p-inputicon{
     top: 50% !important;
     transform:translateY(-50%) !important;
+}
+.p-inputtext{
+    padding-block: var(--p-inputtext-padding-y);
+    box-shadow: none !important;
 }
 .p-inputnumber-horizontal {
     
@@ -295,12 +309,21 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         text-align: center;
     }
 }
-.p-inputtext{
-    padding-block: var(--p-inputtext-padding-y);
-}
 
 .p-button{
     border-radius: 2px !important;
+    .p-button-label{
+        font-weight: 600 !important;
+        font-size: 0.875rem;
+    }
+    &.p-button-sm{
+        padding-block: 0.1875rem;
+        padding-inline:0.5rem;
+        .p-button-label{
+            font-size: 0.75rem !important;
+        }
+        
+    }
 }
 
 .p-button-help{
@@ -317,4 +340,31 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 }
 :root{
     --p-form-field-padding-y:0.5rem !important
+}
+.custom-circle-check{
+    flex: none;
+    width: 1.625rem !important;
+    height: 1.625rem !important;
+    .p-checkbox-box{
+        border-radius: 99999px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 1.625rem !important;
+        height: 1.625rem !important;
+        svg{
+            display: none;
+        }
+        &::after{
+        content: '';    
+        display: block;
+        background-color: #ffffff;
+        width: 0.75rem;
+        height: 0.75rem;
+        border-radius: 9999999px !important;
+        }
+    }
+    input{
+    
+    }
 }
