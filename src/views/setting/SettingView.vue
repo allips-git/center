@@ -67,7 +67,7 @@
 
         <section class="px-4">
             <p class="my-5 text-center text-gray-400">version 1.1.0.8c</p>
-            <Button label="로그아웃" severity="secondary" class="w-full"  />
+            <Button label="로그아웃" severity="secondary" class="w-full" @click="getLogOut"/>
         </section>
 
         <section class="px-5 py-6 my-5 border-t border-gray-200">
@@ -148,6 +148,11 @@ const getJoinOut = () => {
             }
         }
     });
+}
+
+const getLogOut = () => {
+    login.getLogout();
+    router.push({ path : '/login' });
 }
 
 </script>

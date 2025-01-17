@@ -419,7 +419,7 @@ const routes = [
         path: "/setting/privacy",
         name: "Privacy",
         component: Privacy,
-        meta: { title: "개인정보 처리방침" }
+        meta: { title: "개인정보 처리방침", gubun: 'Y' }
     },
 
     {

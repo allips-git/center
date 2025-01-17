@@ -85,7 +85,7 @@
                             <InputText v-keyfilter.int :id="'bWidth'+index" v-model="item['width']" class="w-full" @input="getDivBlindWidth(index)"/>
                         </IftaLabel>
                         <IftaLabel class="w-full">
-                            <InputText v-keyfilter.int v-model="esti['common']['height']"  class="w-full"/>
+                            <InputText v-keyfilter.int v-model="esti['common']['height']" class="w-full" @input="getEqual"/>
                         </IftaLabel>
                         <IftaLabel class="w-full">
                             <Select v-model="item['handle']" :options="data['handle']" optionLabel="name" optionValue="value" class="w-full" />
