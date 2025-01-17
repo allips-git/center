@@ -230,7 +230,7 @@ const getEstiSave = () => {
 
             params['itemCnt']           = esti['total']['totalQty'];
 
-            console.log(params);
+            console.log(JSON.stringify(params, null, 2));
 
             try
             {

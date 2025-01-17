@@ -31,7 +31,7 @@
 
                         <IftaLabel class="w-full">
                             <label>사업자 등록 번호</label>
-                            <InputNumber id="einNum" v-model="join['center']['einNum']" placeholder="- 없이 입력해주세요." class="w-full"/>
+                            <InputText id="einNum" v-model="join['center']['einNum']" placeholder="- 없이 입력해주세요." class="w-full"/>
                             <small v-if="join['msg']['einNum'] !== ''" class="text-red-500">{{ join['msg']['einNum'] }}</small>
                         </IftaLabel>
 
@@ -74,7 +74,6 @@
     </template>
     
 <script setup lang="ts">
-import InputNumber from 'primevue/inputnumber';
 import Dialog from 'primevue/dialog';
 import SelectButton from 'primevue/selectbutton';
 import IftaLabel from 'primevue/iftalabel';
@@ -140,7 +139,7 @@ const getResultCheck = () => {
         einNum  : join['center']['einNum'],
         ceoNm   : join['center']['ceoNm'],
         addr    : join['center']['addr'],
-        tel     : join['center']['tel']
+        ceoTel  : join['center']['ceoTel']
     };
 
     const result = joinSecondMsg(checkParams);
@@ -219,6 +218,20 @@ const getResult = async () => {
     catch(e)
     {
         console.log(e);
+        if(e.response.data === 'duplicate')
+        {
+            join.getMsgSet('이미 사용 중인 계정입니다.', 'id');
+            const inputElement = document.getElementById('id');
+            if (inputElement) 
+            {
+                inputElement.focus();
+            }
+            router.push({ path : '/join/joinFirst' });
+        }
+        else
+        {
+            alert('회원가입 도중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+        }
     }
 }
 

@@ -1,11 +1,13 @@
 <template>
-    <iframe :src="file" width="100%" frameborder="0"></iframe>
+  <iframe :src="googleDocsUrl" height="100%"></iframe>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import privacy from '@/assets/file/privacy.pdf';
 
-const file = ref('@/src/assets/file/privacy.pdf');
+const googleDocsUrl = `https://docs.google.com/gview?url=${window.location.origin}${privacy}&embedded=true`;
+
+console.log(googleDocsUrl);
 </script>
 
 <style lang="scss">
