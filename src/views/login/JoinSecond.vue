@@ -52,7 +52,7 @@
 
                         <IftaLabel class="w-full">
                             <label>상세주소</label>
-                            <InputText id="addrDetail" placeholder="상세 주소를 입력해주세요." class="w-full"/>
+                            <InputText id="addrDetail" v-model="join['center']['addrDetail']" placeholder="상세 주소를 입력해주세요." class="w-full"/>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">

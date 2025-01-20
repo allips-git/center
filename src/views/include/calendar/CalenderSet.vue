@@ -71,7 +71,7 @@ import { getAxiosData, getConvertDate, getTokenOut } from '@/assets/js/function'
 const calendar = useCalendarStore();
 
 const getStCheck = () => {
-    return calendar['info']['stCd'] !== '006' ? true : false
+    return calendar['edit']['stCd'] === 'Y' ? true : false
 }
 
 const getModify = async (target: string, value: string) => {
