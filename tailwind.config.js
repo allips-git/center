@@ -35,6 +35,7 @@ export default {
         't-lv4' :'#C1C1C1',
         't-lv5' :'#FFFFFF',
 
+        'p-lv0' :'#292D77',
         'p-lv1' :'#233CF9',
         'p-lv2' :'#0176F9',
         'p-lv3' :'#409AFF',
@@ -43,6 +44,8 @@ export default {
         'p-lv6' :'#C2D7FF',
         'p-lv7' :'#ABC9FB',
         'p-lv8' :'#78BBFF',
+        
+        
 
         'l-lv0' :'#727981',
         'l-lv1' :'#',
@@ -57,6 +60,7 @@ export default {
       },
       boxShadow: {
         'custom': '0 2px 2px 0 rgba(0, 0, 0, 0.06)',
+        'custom-y': '0 -4px 4px 0 rgba(0, 0, 0, 0.06)',
       },
     },
   },
