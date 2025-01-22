@@ -98,7 +98,6 @@ import ContractModal from '@/views/customer/ContractModal.vue'
 import ProductChoice from "@/views/include/ProductChoice.vue";
 import ProductRegister from "@/views/include/ProductRegister.vue";
 import ToggleSwitch from 'primevue/toggleswitch';
-import InputNumber  from 'primevue/inputnumber';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router';
@@ -137,8 +136,10 @@ const getDisApply = () => {
 
     if(esti['dcInfo']['unit'] === 'F')
     {
-        esti['dcInfo']['amt'] = Number(esti['dcInfo']['val']);
-        esti.getPayAmt('dcAmt', -Number(esti['dcInfo']['val']));
+        const dcAmt = Number(esti['dcInfo']['val']);
+        
+        esti['dcInfo']['amt'] = -dcAmt;
+        esti.getPayAmt('dcAmt', -dcAmt, esti['dcInfo']['memo']);
     }
     else
     {
@@ -159,6 +160,8 @@ const getDisApply = () => {
         esti['cutInfo']['val'] = -cutAmt;
         esti.getPayAmt('cutAmt', -cutAmt);
     }
+
+    console.log(esti['dcInfo']);
 }
 
 const getAddApply = () => {

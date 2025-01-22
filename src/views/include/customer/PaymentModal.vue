@@ -106,8 +106,10 @@ const getDisApply = () => {
 
     if(order['dcInfo']['unit'] === 'F')
     {
-        order['dcInfo']['amt'] = Number(order['dcInfo']['val']);
-        order.getPayAmt('006', -Number(order['dcInfo']['val']));
+        const dcAmt = Number(order['dcInfo']['val']);
+
+        order['dcInfo']['amt'] = -dcAmt;
+        order.getPayAmt('006', -dcAmt, order['dcInfo']['memo']);
     }
     else
     {
@@ -115,7 +117,7 @@ const getDisApply = () => {
         const dcAmt  = Math.round(amt/100 * order['dcInfo']['val']);
 
         order['dcInfo']['amt'] = -dcAmt;
-        order.getPayAmt('006', -dcAmt);
+        order.getPayAmt('006', -dcAmt, order['dcInfo']['memo']);
     }
 }
 
@@ -161,6 +163,8 @@ const getPay = () => {
                 memo        : order['pay']['memo'],
                 totalAmt    : getTotalAmt()
             };
+
+            console.log(params);
 
             try
             {
