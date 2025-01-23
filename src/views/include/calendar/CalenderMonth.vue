@@ -1,10 +1,14 @@
 <template>
     <main class="relative h-[100%-48px] month-custom">
-        <div class="flex justify-center py-4 border-b border-gray-200">
-            <DatePicker v-model="calendar['searchDt']" view="month" dateFormat="yy.mm'월'" class="custom-select !max-w-[120px] *:!pl-5 *:!pr-1.5" 
-                :locale="locale" showIcon fluid iconDisplay="input" @update:modelValue="getUpdate" />
+        <div class="flex justify-center pb-3.5">
+            <DatePicker v-model="calendar['searchDt']" view="month" dateFormat="yy.mm'월'" class="custom-datapicker *:!text-10 !max-w-[98px] *:!pl-1 *:!pr-1.5" 
+                :locale="locale" showIcon fluid iconDisplay="input" @update:modelValue="getUpdate">
+                <template #inputicon="slotProps" class="!pl-1">
+                    <IconPlay class="rotate-90 !fill-gray-500"/>
+                </template>
+            </DatePicker>
         </div>
-        <div class="h-[calc(100vh-167px)] w-full md:h-[calc(100vh-171px)]">
+        <div class="h-[calc(100vh-147px)] w-full md:h-[calc(100vh-171px)]">
             <FullCalendar :options="{ ... calendarOptions, events : calendar['monthEvents']}" ref="fullCalendar"/>
         </div>
     </main>
@@ -16,6 +20,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import koLocale from '@fullcalendar/core/locales/ko'; 
 import DatePicker from 'primevue/datepicker';
+import IconPlay from '@/components/icons/IconPlay.vue'
 import { useConfirm } from "primevue/useconfirm";
 import { ref, watch, onMounted } from 'vue';
 import { useCalendarStore } from '@/store';

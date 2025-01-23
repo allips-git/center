@@ -33,11 +33,19 @@
     --fc-now-indicator-color: red;
   }
   .month-custom{
+    border-top-width: 0px !important;
       .fc-scrollgrid-section.fc-scrollgrid-section-header {
         font-size: 0.75rem !important;
       }
+      .fc-col-header-cell-cushion{
+        font-weight: 400;
+        font-size: 11px;
+        color: #7D7C78;
+      }
+
       .fc-col-header {
-        border-bottom-width:  1px !important;
+        border-bottom-width:0px !important;
+        border-top-width: 0px !important;
       }
       .fc-theme-standard th{
         border-width: 0px !important;
@@ -46,6 +54,8 @@
       .fc-theme-standard td{
         border-width: 0px !important;
         border-bottom-width: 1px !important;
+        justify-content: center;
+        align-items: center;
             .fc-daygrid-day-top{
              flex-direction: row;
              padding-left: 0.25rem;
@@ -66,10 +76,11 @@
      
       }
       .fc-daygrid-day-number{
-     
+        font-size: 10px;
         border-radius: 9999px;
-        width: 24px;
-        height: 24px;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -78,10 +89,10 @@
       // 오늘 날짜 배경색
       .fc-daygrid-day.fc-day-today{
         // background-color: var(--p-primary-50) !important;
-        background-color: transparent !important;
+        background-color: #FCF2E6 !important;
             .fc-daygrid-day-number{
-                color: white;
-                background-color: var(--p-primary-500) !important;
+                // color: white;
+                // background-color: var(--p-primary-500) !important;
             }
       }
       .fc-daygrid-day{

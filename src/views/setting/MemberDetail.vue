@@ -1,42 +1,44 @@
 <template>
-    <BackHeader title="맴버 상세"/>
+    <BackHeader title="맴버상세"/>
     <main class="relative pb-32 pc-contents-h-box">
         <section class="">
-        <div class="flex items-center justify-between p-4 pb-0">
+        <div class="flex items-center justify-between py-3.5 p-4 pb-0">
             <div class="flex items-center gap-3 ">
-                <IconAvatar class="fill-sky-400 size-14"/>
+                <IconAvatar class="fill-[#78BBFF] size-[51px]"/>
                 <div  class="flex flex-col">
                     <p class="font-bold">이름</p>
-                    <div class="flex flex-col text-xs text-gray-400">
+                    <div class="flex flex-col font-bold text-t-lv4 text-10">
                         <span class="">011-9871-1212</span>
                         <span class="">대표</span> 
                     </div>
                 </div>
             </div>
-            <div class="flex items-center justify-center rounded-full size-12">
+            <div class="flex items-center justify-center rounded-full">
                 <IconPhone />
             </div>
         </div>
     </section>
-    <div class="gray-bar"></div>
+    <div class="px-4">
+        <div class="gray-bar !bg-[#E5E5EC] !h-px  w-full"></div>
+    </div>
     <section class="">
-        <h2 class="px-5 text-lg font-bold">이력</h2>
+        <!-- <h2 class="px-5 text-lg font-bold">이력</h2> -->
         <ul class="w-full mt-4">
     <li 
       v-for="(item, index) in dummyData" 
       :key="index" 
-      class="flex items-center justify-between w-full gap-2 px-5 py-2"
+      class="flex items-center justify-between w-full gap-2 px-5 py-2.5"
     >
-      <div class="flex items-center gap-2 w-[calc(100%-120px)]">
+      <div class="flex items-center text-xs gap-2 w-[calc(100%-120px)]">
         <div class="flex-none rounded-full size-3"
         :class="item.status === '수정' ? 'bg-yellow-300' : item.status === '삭제' ? 'bg-red-400' : 'bg-sky-400'"
         ></div>
-        <div class="flex items-center">
-          (<b class="text-sm truncate max-w-[53px]">{{ item.clientName }}</b>)
+        <div class="flex items-center text-t-lv2">
+          (<b class="truncate max-w-[55px] w-full">{{ item.clientName }}</b>)
         </div>
-        <p class="text-sm truncate">{{ item.estimateText }}</p>
+        <p class="truncate text-t-lv2">{{ item.estimateText }}</p>
       </div>
-      <span class="flex-none w-[120px] text-xs text-right text-gray-500">{{ item.timestamp }}</span>
+      <span class="text-right text-t-lv2 text-10 whitespace-nowrap">{{ item.timestamp }}</span>
     </li>
   </ul>
     </section>

@@ -32,9 +32,12 @@
                 <IftaLabel>
                     <IconField>
                         <InputText  class="w-full" readonly placeholder="주소를 입력해주세요."/>
-                        <InputIcon class="pi pi-search" />
+                        <InputIcon>
+                            <IconSpot/>
+                        </InputIcon>
                     </IconField>
                     <label>주소</label>
+                    <!-- <small class="text-red-500">ㅁㄴㅁ</small> -->
                 </IftaLabel>
 
                 <IftaLabel class="label-input-box">
@@ -43,7 +46,10 @@
                 </IftaLabel>
     
                 <IftaLabel class="w-full">
-                    <Select id="username" class="w-full"/>
+                    <div class="w-full custom-select-arrow">
+                        <Select id="username" class="w-full"/>
+                        <IconPlay class="absolute rotate-90 top-3 right-2 *:fill-gray-400 -z-10"/>
+                    </div>
                     <label for="emali">권한 등급</label>
                 </IftaLabel>
 
@@ -56,10 +62,12 @@
 </template>
 
 <script setup lang="ts">
+import IconSpot from '@/components/icons/IconSpot.vue';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import IftaLabel from 'primevue/iftalabel';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
+import IconPlay from '@/components/icons/IconPlay.vue';
 
 
 

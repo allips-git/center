@@ -1,11 +1,11 @@
 <template>
 <main>
     <BackHeader title="공장" />
-    <div class="relative mt-2 custom-left-tab">
+    <div class="relative px-4 mt-2 custom-left-tab">
         <Tabs value="0">
             <TabList>
                 <Tab value="0">플랜오더 공장</Tab>
-                <Tab value="1">외주공장</Tab>
+                <Tab value="1">외주 공장</Tab>
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
@@ -14,7 +14,7 @@
                             <Button label="공장코드 추가" icon="pi pi-plus" size="large" @click="getPopOpen('sysFactorySearch')"/>
                         </div>
                         <ul class="w-full">
-                            <li class="flex gap-3 px-5 py-4 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
+                            <li class="flex gap-3 py-4 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
                                     <img :src="getImage(item.imgUrl)" class="w-full max-w-[78px] h-[87px] rounded-lg object-cover" alt="">
                                 
                                 <div class="w-[calc(100%-78px)]">
@@ -42,10 +42,10 @@
                             <Button label="외주공장 추가" icon="pi pi-plus" size="large" @click="getPopOpen('outFactorySet')" />
                         </div>
                     <ul>
-                        <li class="flex flex-col px-4 py-3 border-b" v-for="(item, index) in factory['out']['list']" :key="index" @click="getOutDetail(item.fcCd)">
-                            <p class="mb-1 font-bold">{{ item.faNm }}</p>
-                            <p class="text-sm text-gray-900">{{ item.tel }}</p>
-                            <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
+                        <li class="flex flex-col py-4 border-b" v-for="(item, index) in factory['out']['list']" :key="index" @click="getOutDetail(item.fcCd)">
+                            <p class="mb-1 text-sm font-bold">{{ item.faNm }}</p>
+                            <p class="text-t-lv-1 text-10">{{ item.tel }}</p>
+                            <p class="text-gray-400 text-10">{{ item.addr + ' ' + item.addrDetail }}</p>
                         </li>
                     </ul>
                     </div>

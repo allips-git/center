@@ -2,9 +2,9 @@
     <div class="p-4 bg-white border border-gray-200 rounded">
         <div class="">
             <div v-if="showtitle" class="flex items-center justify-between pb-3 text-base font-bold border-b border-gray-100">
-                <h4 class="">{{ title }}</h4>
+                <h4 class="text-sm">{{ title }}</h4>
                 <!-- 단위 -->
-                <p class="text-lg text-indigo-600"><span class="ml-0.5">{{ unit }}</span></p>
+                <p class="text-indigo-600 text"><span class="ml-0.5">{{ unit }}</span></p>
                 <!-- <Button label="거래원장 출력" /> -->
             </div>
             <div v-if="showtoggle" class="custom_accordion">
@@ -24,7 +24,7 @@
             <div class="flex flex-col gap-2 py-3 border-dashed border-y">
              <template v-for="(calc, index) in calcs" :key="index">
                 <dl v-if="Number(calc.amt) !== 0 || calc.title === '제품 금액' || calc.title === '이달 매입금'" class="flex items-center justify-between">
-                    <dt class="text-base text-neutral-500">
+                    <dt class="text-xs text-t-lv2">
                         {{ calc.title }}
                         <span v-if="calc.memo !== ''" :class="{
                         'text-red-500' : calc.red,
@@ -32,7 +32,7 @@
                         'text-neutral-700': !calc.red && !calc.blue
                     }">({{ calc.memo }})</span>
                     </dt>
-                    <dd class="text-lg font-bold text-right" :class="{
+                    <dd class="text-xs font-bold text-right" :class="{
                         'text-red-500' : calc.red,
                         'text-blue-500': calc.blue,
                         'text-neutral-700': !calc.red && !calc.blue
@@ -50,10 +50,9 @@
                 </dl> -->
 
                 <dl class="flex items-center justify-between pt-3 font-bold border-t border-dotted">
-                    <dt class="text-xl">{{ totalTitle }}</dt>
-                    <dd class="flex items-center text-blue-600">
-                        <p class="text-xl">{{ getAmt(totalAmt) }}</p> 
-                        <span class="text-sm ml-0.5">원</span>
+                    <dt class="">{{ totalTitle }}</dt>
+                    <dd class="flex items-end text-p-lv4">
+                        <p class="text-lg ">{{ getAmt(totalAmt) }}<span class="text-xs ml-0.5 font-normal">원</span></p> 
                     </dd>
                 </dl>
             

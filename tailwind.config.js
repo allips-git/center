@@ -10,6 +10,7 @@ export default {
   ],
   theme: {
     fontSize: {
+      8:['0.5rem',],
       10: ['0.625rem',], // fontSize: 10px, lineHeight: 12px
       11: ['0.6875rem',], // fontSize: 11px, lineHeight: 12px
       xs: ['0.75rem',],    // fontSize: 12px, lineHeight: 14px
@@ -20,6 +21,7 @@ export default {
       lg: ['1.25rem',],  // fontSize: 20px, lineHeight: 22px
       22: ['1.375rem',],  // fontSize: 20px, lineHeight: 22px
       xl: ['1.5rem',],   // fontSize: 24px, lineHeight: 26px
+      28: ['1.75rem',]  // fontSize: 28px, lineHeight: 26px
     },
     extend: {
       screens: {
@@ -44,8 +46,6 @@ export default {
         'p-lv6' :'#C2D7FF',
         'p-lv7' :'#ABC9FB',
         'p-lv8' :'#78BBFF',
-        
-        
 
         'l-lv0' :'#727981',
         'l-lv1' :'#',
@@ -53,6 +53,10 @@ export default {
         'l-lv3' :'#E5E5EC',
         'l-lv4' :'#',
         'l-lv5' :'#F6F6F6',
+
+        'bg-lv1':"#F8F9FA",
+
+        
         
         sky: {
           500: '#00AEF2', // 기본 sky.500 색상 변경

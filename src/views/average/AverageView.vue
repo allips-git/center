@@ -1,23 +1,27 @@
 <template>
     <main>
         <BackHeader title="통계"/>
-        <div class="flex justify-between p-5 pb-0">
+        <div class="flex justify-between p-5 pb-6">
             <div>
-                <p class="text-xl font-bold text-green-500">{{ getAmt(aver['totalAmt']) }} 원</p>
-                <p class="font-bold">{{ getConvertDate(aver['searchDt'], 'aver') }} 총 손익</p>
+                <p class="text-sm font-bold">{{ getConvertDate(aver['searchDt'], 'aver') }} 총 손익</p>
+                <p class="font-bold text-green-500 text-28">{{ getAmt(aver['totalAmt']) }} 원</p>
             </div>
             <div>
                 <DatePicker v-model="aver['searchDt']" view="month" dateFormat="yy년 mm'월'" 
-                    class="w-40 custom-select" :locale="'ko'" showIcon fluid iconDisplay="input"
-                    @update:modelValue="aver.getData()"/>
+                    class="custom-datapicker *:!text-10 !max-w-[98px] h-[33px] *:!pl-1 *:!pr-1.5 bg-gray" :locale="'ko'" showIcon fluid iconDisplay="input"
+                    @update:modelValue="aver.getData()">
+                    <template #inputicon="slotProps" class="!pl-1">
+                    <IconPlay class="rotate-90 !fill-gray-500"/>
+                </template>
+            </DatePicker>
             </div>
         </div>
 
         <div class="gray-bar"></div>
 
-        <section class="px-5 ">
-            <h2 class="pt-2 mb-4 text-lg font-bold">요약</h2>
-            <div class="w-full h-5 overflow-hidden rounded-full bg-gray-50 ">
+       <section class="px-4">
+            <h2 class="pt-2 mb-6 text-base font-bold">요약</h2>
+            <div class="w-full h-[22px] overflow-hidden bg-gray-200 rounded-full ">
                 <div class="flex items-center h-full *:h-full">
                     <div :class="`bg-blue-400`" :style="{ width: `${aver.saleAmtPercent}`}" >
                         <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.saleAmtPercent }}</p>
@@ -34,29 +38,29 @@
                 </div>
             </div>
             <!--  border border-gray-200 rounded-md -->
-            <ul class="flex flex-col gap-2 p-4 pb-0 mt-4">
+            <ul class="flex flex-col gap-1.5  mt-[1.625rem] text-xs text-t-lv1">
                 <li class="flex justify-between gap-5">
-                    <div class="flex items-center gap-2">
-                        <span class="block bg-blue-400 rounded-full size-3"></span>
+                    <div class="flex items-center gap-3.5">
+                        <span class="block bg-blue-400 rounded-full size-[11px]"></span>
                         <p>매출</p>
                     </div>
-                    <p class="text-lg font-bold">{{ getAmt(aver['saleAmt']) }}원</p>
+                    <p class="text-sm font-bold text-t-lv2">{{ getAmt(aver['saleAmt']) }}원</p>
                 </li>
 
                 <li class="flex justify-between gap-5">
-                    <div class="flex items-center gap-2">
-                        <span class="block bg-yellow-400 rounded-full size-3"></span>
+                    <div class="flex items-center gap-3.5">
+                        <span class="block bg-yellow-400 rounded-full size-[11px]"></span>
                         <p>매입</p>
                     </div>
-                    <p class="text-lg font-bold ">{{ getAmt(aver['purcAmt']) }}원</p>
+                    <p class="text-sm font-bold text-t-lv2">{{ getAmt(aver['purcAmt']) }}원</p>
                 </li>
 
                 <li class="flex justify-between gap-5">
-                    <div class="flex items-center gap-2">
-                        <span class="block bg-red-400 rounded-full size-3"></span>
+                    <div class="flex items-center gap-3.5">
+                        <span class="block bg-red-400 rounded-full size-[11px]"></span>
                         <p>비용</p>
                     </div>
-                    <p class="text-lg font-bold">{{ getAmt(aver['fixedAmt']) }}원</p>
+                    <p class="text-sm font-bold text-t-lv2">{{ getAmt(aver['fixedAmt']) }}원</p>
                 </li>
             </ul>
         </section>
@@ -64,12 +68,12 @@
         <div class="gray-bar"></div>
 
         <section class="my-4">
-            <div class="w-full bg-white">
+            <div class="w-full py-3 bg-white">
                 <div class="px-4 pt-2">
-                    <h2 class="text-lg font-bold">이달 고객 매출 순위</h2>
+                    <h2 class="text-base font-bold">이달 고객 매출 순위</h2>
                     <span class="text-sm text-gray-400">최고 10명</span>
                 </div>
-                <ul class="px-5 mt-4">
+                <ul class="px-4 mt-4">
                     <li v-for="(item, index) in aver['clientRank']" :key="index" class="flex items-center justify-between py-3">
                             <div class="flex items-center gap-2 ">
                                 <p class="w-2 font-bold">{{ index + 1 }}</p>
@@ -85,9 +89,9 @@
         <div class="gray-bar"></div>
 
         <section class="my-4">
-            <h2 class="px-4 pt-2 mb-4 text-lg font-bold">결제 수단</h2>
+            <h2 class="px-4 pt-2 mb-6 text-base font-bold">결제 수단</h2>
             <div class="px-4">
-                <div class="w-full h-5 overflow-hidden rounded-full bg-gray-50 ">
+                <div class="w-full h-5 overflow-hidden bg-gray-200 rounded-full ">
                     <div class="flex items-center h-full *:h-full">
                         <div :class="`bg-blue-400`" :style="{ width: `${aver.accountPercent}`}" >
                             <p v-if="aver.accountPercent !== '0%'"  class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.accountPercent }}</p>
@@ -105,17 +109,17 @@
                 </div>
             </div>
             
-            <ul class="flex flex-col gap-2 p-4 pb-0 mx-4 mt-4">
+            <ul class="flex flex-col gap-2.5 mx-4 pt-6">
                 <li v-for="(item, index) in aver['payList']" :key="index" class="flex justify-between gap-5">
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-3.5 text-xs text-t-lv1">
                         <span v-if="item['codeSub'] === '001'" class="block bg-blue-300 rounded-full size-3"></span>
                         <span v-if="item['codeSub'] === '002'" class="block bg-yellow-400 rounded-full size-3"></span>
                         <span v-if="item['codeSub'] === '003'" class="block bg-green-400 rounded-full size-3"></span>
                         <p>{{ item['codeNm'] }} {{ item['cnt'] }}회</p>
                     </div>
-                    <p v-if="item['codeSub'] === '001'" class="text-lg font-bold ">{{ getAmt(item['amt']) }}원</p>
-                    <p v-if="item['codeSub'] === '002'" class="text-lg font-bold">{{ getAmt(item['amt']) }}원</p>
-                    <p v-if="item['codeSub'] === '003'" class="text-lg font-bold">{{ getAmt(item['amt']) }}원</p>
+                    <p v-if="item['codeSub'] === '001'" class="text-sm font-bold text-t-lv2">{{ getAmt(item['amt']) }}원</p>
+                    <p v-if="item['codeSub'] === '002'" class="text-sm font-bold text-t-lv2">{{ getAmt(item['amt']) }}원</p>
+                    <p v-if="item['codeSub'] === '003'" class="text-sm font-bold text-t-lv2">{{ getAmt(item['amt']) }}원</p>
                 </li>
             </ul>
         </section>
@@ -150,6 +154,7 @@
 <script setup lang="ts">
 import BackHeader from '@/components/layouts/BackHeader.vue'
 // import Avatar from 'primevue/avatar';
+import IconPlay from '@/components/icons/IconPlay.vue'
 import DatePicker from 'primevue/datepicker';
 import IconAvatar from '@/components/icons/IconAvatar.vue';
 import { onMounted } from 'vue';
