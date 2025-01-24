@@ -12,7 +12,7 @@
                     @update:modelValue="aver.getData()">
                     <template #inputicon="slotProps" class="!pl-1">
                     <IconPlay class="rotate-90 !fill-gray-500"/>
-                </template>
+                    </template>
             </DatePicker>
             </div>
         </div>

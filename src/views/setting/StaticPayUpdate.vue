@@ -11,7 +11,11 @@
             </IftaLabel>
 
             <IftaLabel class="w-full">
-                <DatePicker showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd"  showTime hourFormat="24"/>
+                <DatePicker showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd"  showTime hourFormat="24">
+                <template #inputicon="slotProps" class="!pl-1">
+                    <IconCalendarDot class=" !fill-gray-500"/>
+                </template>
+                </DatePicker>
                 <label for="emali">고정 지출 일자</label>
             </IftaLabel>
 
@@ -21,7 +25,10 @@
             </IftaLabel>
 
             <IftaLabel class="w-full">
-                <Select class="w-full"/>
+                <div class="h-10 custom-select-arrow">
+                    <Select class="w-full"/>
+                    <IconPlay class="absolute rotate-90 top-3 right-2 *:fill-gray-400 -z-10"/>
+                </div>
                 <label for="emali">분류선택</label>
             </IftaLabel>
 
@@ -42,6 +49,8 @@ import BackHeader from '@/components/layouts/BackHeader.vue'
 import IftaLabel from 'primevue/iftalabel';
 import DatePicker from 'primevue/datepicker';
 import Textarea from 'primevue/textarea';
+import IconCalendarDot from '@/components/icons/IconCalendarDot.vue';
+import IconPlay from '@/components/icons/IconPlay.vue';
 
 
 </script>

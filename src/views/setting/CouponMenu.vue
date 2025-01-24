@@ -12,11 +12,11 @@
                     >
                         <div class="flex items-center gap-4">
                             <div class="flex items-center gap-3 font-bold">
-                                <p class="text-lg">{{ coupon.name }}</p>
-                                <span class="text-xl text-sky-400">{{ coupon.discount }}%</span>
+                                <p class="">{{ coupon.name }}</p>
+                                <span class="text-lg text-sky-400">{{ coupon.discount }}%</span>
                             </div>  
                         </div>
-                        <IconPlay class="fill-gray-400 size-2.5" />
+                        <IconPlay class="!fill-l-lv0 size-[18px]" />
                     </li>
                 </ul>
             </section>

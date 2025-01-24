@@ -1,7 +1,7 @@
 <template>
     <div>
         <BackHeader title="쿠폰 메뉴 설정"/>
-        <main class="pt-5 pb-32 pc-contents-h-box">
+        <main class="px-4 pb-32 pc-contents-h-box">
         <div class="relative mt-2 custom-left-tab">
             <Tabs value="0">
                 <TabList>
@@ -10,30 +10,30 @@
                 </TabList>
                 <TabPanels>
                     <TabPanel value="0">
-                        <section class="px-5 mt-3 form-gap-box !gap-8 pt-3">
-                            <div class="relative flex items-center justify-center w-full">
-                                <label class="w-[150px] flex-none">쿠폰이름</label>
-                                <InputText class="w-full font-bold text-right !border-0 !border-b" placeholder="쿠폰이름 입력"/>
+                        <section class="mt-3 form-gap-box !gap-8 pt-3">
+                            <div class="relative flex items-center justify-between w-full text-sm">
+                                <label class="w-[150px] flex-none text-t-lv3">쿠폰이름</label>
+                                <InputText class="w-full font-medium text-right !border-0 !border-b max-w-[124px] !pr-0" placeholder="쿠폰이름 입력"/>
                             </div>
 
-                            <div class="relative flex items-center justify-center w-full">
-                                <label class="w-[150px] flex-none">할인 금액 입력</label>
-                                <InputNumber class="w-full font-bold *!text-right inputNumber-color *:!border-0 *:!border-b" />
-                                <span class="absolute font-bold  translate-y-1/2 right-3.5 bottom-1/2">원</span>
+                            <div class="relative flex items-center justify-between w-full text-sm">
+                                <label class="w-[100px] flex-none text-t-lv3">할인 금액 입력</label>
+                                <InputNumber class="w-full font-bold *!text-right inputNumber-color *:!border-0 *:!border-b *:w-full max-w-[124px] *:!pr-4" />
+                                <span class="absolute right-0 font-bold translate-y-1/2 bottom-1/2">원</span>
                             </div>
                         </section>
                     </TabPanel>
                     <TabPanel value="1">
-                        <section class="px-5 mt-3 form-gap-box !gap-8 pt-3">
-                            <div class="relative flex items-center justify-center w-full">
-                                <label class="w-[150px] flex-none">쿠폰이름</label>
-                                <InputText class="w-full font-bold text-right !border-0 !border-b" placeholder="쿠폰이름 입력"/>
+                        <section class="mt-3 form-gap-box !gap-8 pt-3">
+                            <div class="relative flex items-center justify-between w-full text-sm">
+                                <label class="w-[150px] flex-none text-t-lv3">쿠폰이름</label>
+                                <InputText class="w-full font-medium text-right !border-0 !border-b max-w-[124px] !pr-0" placeholder="쿠폰이름 입력"/>
                             </div>
 
-                            <div class="relative flex items-center justify-center w-full">
-                                <label class="w-[150px] flex-none">할인 금액 입력</label>
-                                <InputNumber class="w-full font-bold *!text-right inputNumber-color *:!border-0 *:!border-b" />
-                                <span class="absolute font-bold  translate-y-1/2 right-3.5 bottom-1/2">%</span>
+                            <div class="relative flex items-center justify-between w-full text-sm">
+                                <label class="w-[100px] flex-none text-t-lv3">할인율</label>
+                                <InputNumber class="w-full font-bold *!text-right inputNumber-color *:!border-0 *:!border-b *:w-full max-w-[124px] *:!pr-4" />
+                                <span class="absolute right-0 font-bold translate-y-1/2 bottom-1/2">%</span>
                             </div>
                         </section>
                     </TabPanel>
@@ -42,7 +42,7 @@
         </div>
             <div class="bottom-fixed-btn-box md:!absolute">
                 <route-link to="/setting/coupon_detail">
-                    <Button label="쿠폰 만들기" size="large" class="w-full"/>
+                    <Button label="쿠폰 추가" size="large" class="w-full"/>
                 </route-link>
             </div>
         </main>
