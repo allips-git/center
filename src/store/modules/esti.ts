@@ -525,7 +525,7 @@ export const useEstiStore = defineStore('esti', {
                 /** 할인 금액 */
                 if(res.data['dcAmt'])
                 {
-                    this.getPayAmt('dcAmt', Number(res.data['dcAmt']['amt']), res.data['dcAmt']['amt']);
+                    this.getPayAmt('dcAmt', Number(res.data['dcAmt']['amt']), res.data['dcAmt']['memo']);
                     this.getAmtInfo('dcInfo', res.data['dcAmt']);
                 }
                 else

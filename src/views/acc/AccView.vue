@@ -42,7 +42,7 @@
                                     <template v-for="(item, index) in acc.list" :key="index">
                                         <AccountList v-if="date['stDt'] === item.stDt" 
                                             :clientNm="item.clientNm" 
-                                            :stNm="'계약대기'" 
+                                            :stNm="'계약'" 
                                             :addr="item.addr + ' ' + item.addrDetail"
                                             :saleAmt="getAmt(item.totalSaleAmt)" 
                                             :purcAmt="getAmt(item.totalPurcAmt)" 

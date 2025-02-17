@@ -3,7 +3,7 @@
     <BackHeader :title="factory['sys']['info']['faNm']" />
     <div class="!pb-36">
         <section class="overflow-hidden aspect-video rounded-b-md">
-            <img src="@/assets/img/test.png" class="object-cover w-full aspect-video" alt="">
+            <img :src="getImage(factory['sys']['info']['filePath'])" class="object-cover w-full aspect-video" alt="">
         </section>
     
         <section class="">
@@ -100,15 +100,17 @@
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import ProductInfo from "@/views/include/factory/ProductInfo.vue";
 import ProductMng from "@/views/include/factory/ProductMng.vue";
-import CalculateCard from "@/components/card/CalculateCard.vue";
 import { onMounted } from 'vue';
 import { usePopupStore, useFactoryStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
-import NoticeCard from '@/components/card/NoticeCard.vue';
 
 const popup     = usePopupStore();
 const factory   = useFactoryStore();
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getImage = (imgUrl: string) => {
+    return 'https://elasticbeanstalk-ap-northeast-2-627549176645.s3.ap-northeast-2.amazonaws.com/' + imgUrl;
+}
 
 onMounted(async () => {
     await factory.getSysFactoryDetail();

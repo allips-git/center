@@ -15,7 +15,7 @@
             </Button>
         </div>
     </div>
-    <h1 class="text-sm font-bold">디자인 윈도우</h1>
+    <h1 class="text-sm font-bold">{{ login['name'] }}</h1>
             <IconBell class="fill-t-lv2"/>
     
     <div class="items-center hidden gap-2 md:flex">

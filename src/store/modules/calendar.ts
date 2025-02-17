@@ -147,6 +147,8 @@ export const useCalendarStore = defineStore('calendar', {
                 ikey : this.ikey
             };
 
+            console.log(params);
+
             try
             {
                 const instance  = await getAxiosData();

@@ -66,6 +66,11 @@ const calendarOptions = {
     dayMaxEvents        : true,
     initialDate         : getConvertDate(calendar.searchDt, 'yyyy-mm-dd'),
     dateClick           : dateClick,
+    eventClick          : async function(e) {
+        getPopupOpen('calendarEdit');
+        await calendar.getIkey(e.event._def.extendedProps.ikey);
+        await calendar.getEmCd(e.event._def.extendedProps.emCd);
+    },
     dayCellContent      : function(info) {
         return { html: info.date.getDate().toString() }; 
     },
