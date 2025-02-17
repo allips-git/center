@@ -65,6 +65,7 @@ import InputIcon from 'primevue/inputicon';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import IconInputX from '@/components/icons/IconInputX.vue';
 import IconEye from '@/components/icons/IconEye.vue';
+import axios from 'axios';
 import { useJoinStore } from '@/store';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -97,7 +98,7 @@ const getFile = (event: Event) => {
     }
 };
 
-const getNext = () => {
+const getNext = async () => {
     const checkParams = {
         id      : join['login']['id'],
         pw      : join['login']['pw'],
@@ -119,7 +120,30 @@ const getNext = () => {
         return false;
     }
 
-    router.push({ path : `/join/joinSecond` });
+    try
+    {
+        const res = await axios.post('https://data.planorder.kr/joinV1/getIdCheck', { id : join['login']['id'] });
+
+        console.log(res);
+        router.push({ path : `/join/joinSecond` });
+    }
+    catch(e)
+    {
+        console.log(e);
+        if(e.response.data['code'] === 4100)
+        {
+            join.getMsgSet('이미 사용 중인 계정입니다.', 'id');
+            const inputElement = document.getElementById('id');
+            if (inputElement) 
+            {
+                inputElement.focus();
+            }
+        }
+        else
+        {
+            alert('회원가입 도중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+        }
+    }
 }
 
 onMounted(()=>{

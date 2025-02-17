@@ -9,7 +9,7 @@
                 <span class="w-8"
                 :class="setWideSide ? '' : '!w-auto'"
                 ><IconAvatar class="w-6 mr-2 text-blue-300"/></span>
-                <p v-if="setWideSide || drawerClass" class="text-gray-900">디자인 윈도우</p>
+                <p v-if="setWideSide || drawerClass" class="text-gray-900">{{ login['name'] }}</p>
             </li>
             <li 
             class="flex items-center cursor-pointer py-0.5 hover:bg-indigo-50 px-2 rounded-md font-bold group justify-start"
@@ -26,6 +26,7 @@
 <script setup lang="ts">
 import { ref, defineProps } from 'vue';
 import { useRouter } from 'vue-router';
+import { useLoginStore } from '@/store';
 import IconAvatar from '@/components/icons/IconAvatar.vue';
 
 const props = defineProps({
@@ -34,12 +35,11 @@ const props = defineProps({
     },
     setWideSide: {
         type: Boolean
-    },
-   
+    }
 });
 
-// Vue Router 가져오기
 const router = useRouter();
+const login  = useLoginStore();
 
 const SideHeaderItems = ref([
   { id: 1, label: '캘린더', link: '/calendar', iconClass: 'pi-calendar' }, 

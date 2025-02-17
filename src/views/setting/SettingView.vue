@@ -7,8 +7,8 @@
                     <IconAvatar class="text-sky-400 size-full"/>
                 </div>
                 <div class="flex flex-col">
-                    <h1>디자인 윈도우</h1>
-                    <span class="text-sm text-sky-500">대표님</span>
+                    <h1>{{ login['name'] }}</h1>
+                    <span class="text-sm text-sky-500">님</span>
                 </div>
             </div>
         </section>
