@@ -1,14 +1,14 @@
 <template>
-    <ul class="sticky bottom-0 left-0 w-full gap-4 px-3 h-[56px] bg-gray-50 md:hidden flex ">
+    <ul class="sticky bottom-0 left-0 w-full gap-4 px-3 h-[56px] bg-white md:hidden flex shadow-custom-y">
       <li 
         class="flex flex-col items-center cursor-pointer py-0.5 justify-evenly w-full"
-        :class="{ '*:fill-sky-500 *:text-sky-500': isActive(item.link) }"
+        :class="{ '*:fill-p-lv0 *:text-p-lv0': isActive(item.link) }"
         v-for="item in SideHeaderItems" 
         :key="item.id" 
         @click="handleClick(item)"
       >
-        <component :is="item.icon" class="fill-gray-400 size-6" />  
-        <p class="text-sm font-normal text-gray-400 duration-300">{{ item.label }}</p>
+        <component :is="item.icon" class="fill-[#D8D8DC] size-6" />  
+        <p class="font-bold text-[#D8D8DC] duration-300 text-10">{{ item.label }}</p>
       </li>
     </ul>
   
