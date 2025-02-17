@@ -2,7 +2,7 @@
  * @description 견적 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
-import { getHebe, getPok, eaCalculation } from '@/assets/js/order';
+import { getHebe, getPok, getYard, eaCalculation } from '@/assets/js/order';
 import { getHebeCalc, getPokCalc, getYardCalc } from '@/assets/js/calcAndProcess';
 import { getAxiosData, getCardColumns } from '@/assets/js/function';
 
