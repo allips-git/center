@@ -22,8 +22,6 @@ export const useTimeStore = defineStore('time', {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/timeSettingV1/getTime`);
 
-                console.log(res);
-
                 this.curtainTime    = res.data['curtainTime'];
                 this.blindTime      = res.data['blindTime'];
             }
