@@ -42,7 +42,6 @@ import SettingView from "@/views/setting/SettingView.vue";
 import TimeSetting from "@/views/setting/TimeSetting.vue";
 import Privacy from "@/views/setting/Privacy.vue";
 import StaticPayView from "@/views/setting/StaticPay.vue";
-import StaticPayIng from "@/views/setting/StaticPayUpdate.vue";
 import AccView from "@/views/acc/AccView.vue";
 // import AccMonth from "@/views/acc/AccMonth.vue";
 // import AccWeek from "@/views/acc/AccWeek.vue";
@@ -315,13 +314,6 @@ const routes = [
         component: TimeSetting,
         meta: { title: "시공시간 설정" }
     },
-    {
-        path: "/setting/static_pay/detail",
-        name: "StaticPayIng",
-        component: StaticPayIng,
-        meta: { title: "고정비용 저장" }
-    },
-
     {
         path: "/test",
         name: "CalenderTest",

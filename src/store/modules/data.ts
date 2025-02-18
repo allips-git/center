@@ -99,6 +99,13 @@ export const useDataStore = defineStore('data', {
                 { value : 'N' ,   label : '견적취소' },
                 { value : '013' , label : '시공대기' },
                 { value : '011' , label : '시공완료' }
+            ],
+            fxGb : [
+                { value : '001' ,   label : '인건비' },
+                { value : '002' ,   label : '차량관련' },
+                { value : '003' ,   label : '임대료' },
+                { value : '004' ,   label : '매장 운영비' },
+                { value : '005' ,   label : '기타' },
             ]
         };
     },
