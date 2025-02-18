@@ -19,6 +19,7 @@ import { useFactoryStore } from './modules/factory';
 import { useAccStore } from './modules/acc';
 import { useAverageStore } from './modules/average';
 import { useCalendarStore } from './modules/calendar';
+import { useTimeStore } from './modules/time';
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
@@ -45,5 +46,6 @@ export {
     useFactoryStore,
     useAccStore,
     useAverageStore,
-    useCalendarStore
+    useCalendarStore,
+    useTimeStore
 };
