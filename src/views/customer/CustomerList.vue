@@ -41,7 +41,7 @@
         </section>
         <Button label="고객 신규 등록" icon="pi pi-plus" class="!fixed flex-none bottom-4 right-4" size="large" @click="getPopOpen"/>
         <Dialog v-model:visible="popup['pop']['clientSet']" 
-        header="고객 등록" 
+        header="고객 등록"
         :modal=true
         position="bottom"
         class="custom-dialog-bottom backPopup"

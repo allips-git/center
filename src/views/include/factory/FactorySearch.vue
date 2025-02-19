@@ -3,7 +3,7 @@
         <div class="form-gap-box">
             <IftaLabel>
                 <IconField>
-                    <InputText id="sysFaCd" v-model="factory['sys']['searchFaCd']" class="w-full" @keyup.enter="getSearch"/>
+                    <InputText id="sysFaCd" v-model="factory['sys']['searchFaCd']" class="w-full" @keyup.enter="getSearch" @click="getSearch"/>
                     <InputIcon class="pi pi-search" />
                 </IconField>
                 <small class="text-red-500 text-10">{{ factory['sys']['msg']['sysFaCd'] }}</small>
