@@ -9,14 +9,14 @@
             </div>
         </section>
         
-        <div class="gray-bar"></div>
+        <div class="gray-bar !my-2.5"></div>
 
-        <section class="">
+        <section class="text-sm">
             <div class="flex items-center justify-between px-4">
                 <h2 class="text-lg font-bold">내 고정비 목록</h2>
                 <Button label="고정비 등록" size="small" @click="getPopup"/>
             </div>
-            <ul class="flex flex-col">
+            <ul class="flex flex-col px-5">
                 <!-- v-for -->
                 <li v-for="(item, index) in cost['list']" :key="index" class="flex items-center justify-between px-5 py-4 border-b first:mt-5" @click="getInfo(item['fxCd'])">
                     <div>

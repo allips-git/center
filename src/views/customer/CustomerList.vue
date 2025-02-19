@@ -5,15 +5,16 @@
             <div class="flex items-center justify-between px-4 mt-5 mb-2 no-print">
                 <div class="flex self-center justify-between w-full ">
                     <div class="flex w-full gap-2">
-                        <div class="flex w-full gap-2 max-w-[90px]">
-                            <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="w-full" @change="getList"/>
+                        <div class="flex relative w-full gap-2 max-w-[90px] bg-gray-100 h-8 *:!border-0">
+                            <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="relative z-10 w-full mini_select" @change="getList"/>
+                            <IconPlay class="absolute rotate-90 top-2 right-2 *:fill-gray-400"/>
                         </div>
                         
-                        <IconField class="table-search-input w-full max-w-[300px]">
-                            <InputIcon>
-                                <i class="pi pi-search" />
+                        <IconField class="table-search-input w-full max-w-[400px] sm:max-w-full h-8 !bg-gray-100 *:!border-0">
+                            <InputIcon class="flex items-center justify-center !translate-y-1/4">
+                                <i class="pi pi-search !text-11 text-gray-600 !font-balck" />
                             </InputIcon>
-                            <InputText v-model="client['search']" placeholder="고객명,주소,전화번호로 검색해주세요." class="w-full" @keyup.enter="getList"/>
+                            <InputText v-model="client['search']" placeholder="이름,주소,전화번호로 검색" class="w-full h-8 mini_input !bg-gray-100 !pl-[35px]" @keyup.enter="getList"/>
                         </IconField>
                     </div>
                 </div>
@@ -40,7 +41,7 @@
         </section>
         <Button label="고객 신규 등록" icon="pi pi-plus" class="!fixed flex-none bottom-4 right-4" size="large" @click="getPopOpen"/>
         <Dialog v-model:visible="popup['pop']['clientSet']" 
-        header="고객 등록" 
+        header="고객 등록"
         :modal=true
         position="bottom"
         class="custom-dialog-bottom backPopup"
@@ -70,6 +71,7 @@ import { useRouter } from 'vue-router';
 import { useDataStore, usePopupStore, useClientStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 import { getCommas } from '@/assets/js/function';
+import IconPlay from '@/components/icons/IconPlay.vue';
 
 const data      = useDataStore();
 const popup     = usePopupStore();

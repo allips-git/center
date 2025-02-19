@@ -2,7 +2,7 @@
 <main class="py-4">
     <div class="">
         <div class="flex gap-2 px-5 mb-4">
-            <IconField class="w-full table-search-input">
+            <IconField class="w-full table-search-input gray_input">
                 <InputIcon>
                     <i class="pi pi-search" />
                 </InputIcon>
@@ -12,7 +12,10 @@
         <section class="">
             <div class="flex items-center justify-end px-5 ">
                 <!-- <p class="text-lg font-bold text-indigo-600">블라인드</p> -->
-                <Button label="제품 추가" showIcon icon="pi pi-plus" size="small" rounded @click="getOutItemSet" />
+                 <div class="pl-2 pr-1 gap-2 text-10 py-[2.5px] text-p-lv4 rounded-full flex items-center justify-center bg-[#CDE8FD]" @click="getOutItemSet">
+                    <p class="pb-px">제품 추가</p>
+                    <IconAddCircle class="size-[18px]"/>
+                </div>
             </div>
             <div class="flex flex-col gap-4">
                 <MoreCard v-for="(item, index) in factory['out']['itemList']" :key="index" :itemNm="item['itemNm']" :size="item['size']" :unitNm="item['unitNm']" 
@@ -23,8 +26,14 @@
 </main>
 
 <Dialog v-model:visible="popup['pop']['outFactoryItemSet']" header="외주공장 제품관리" 
-    :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom"
+    :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom backPopup"
     @update:visible="getPopClose(true, 'outFactoryItemSet')">
+    <template #header>
+        <div class="modal-backheader">
+            <Button @click="popup['pop']['outFactoryItemSet'] = false" severity="contrast" text icon="pi pi-arrow-left"/>
+            <h2 class="modal-backheader-title">외주공장 제품관리</h2>
+        </div>
+    </template>
     <OutMng/>
 </Dialog>
 </template>
@@ -38,6 +47,8 @@ import OutMng from "@/views/include/factory/OutMng.vue";
 import { onMounted } from 'vue';
 import { usePopupStore, useFactoryStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
+import IconMore from '@/components/icons/IconMore.vue';
+import IconAddCircle from '@/components/icons/IconAddCircle.vue';
 
 const popup     = usePopupStore();
 const factory   = useFactoryStore();

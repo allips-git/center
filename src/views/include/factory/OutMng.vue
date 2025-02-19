@@ -1,14 +1,14 @@
 <template>
 <main class="p-5 !pb-32">
-    <div class="input-layout-box">
+    <div class="text-sm input-layout-box">
         <div class="flex items-center justify-between w-full mb-2">
             <h1 class="font-bold">제품명<span class="ml-0.5 text-red-500">*</span></h1>
             <Button v-if="factory['out']['itemType'] === 'U'" label="제품 삭제" size="small" severity="danger" outlined @click="getOutItemDelete"/>
         </div>
         <div class="relative flex items-center justify-center">
-            <p class="w-[100px] flex-none">제품 이름</p>
+            <p class="w-[100px] flex-none text-13 text-t-lv3">제품 이름</p>
             <div class="w-full">
-                <InputText id="itemNm" v-model="factory['out']['itemInfo']['itemNm']" class="w-full" autocomplete="off"/>
+                <InputText id="itemNm" v-model="factory['out']['itemInfo']['itemNm']" class="w-full row_input" autocomplete="off"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['itemNm'] }}</small>
             </div>
         </div>
@@ -16,15 +16,15 @@
         <h1 class="mt-4 font-bold">색상 추가<span class="ml-0.5 text-red-500">*</span></h1>
         
         <div class="relative flex items-start justify-center">
-            <p class="w-[100px] flex-none pt-2">색상추가</p>
+            <p class="w-[100px] flex-none pt-2 text-13 text-t-lv3">색상 이름</p>
             <div class="flex flex-col w-full gap-2">
                 <div v-for="(item, index) in factory['out']['itemInfo']['colors']" :key="index" class="">
                 <template v-if="item['delYn'] === 'N'">
                     <div class="flex gap-2">
-                        <InputText :id="`icNm${index}`" v-model="item['icNm']" class="w-full" autocomplete="off"/>
-                        <div class="flex-none w-[5.5rem]">
-                            <Button v-if="index === 0" label="색상 추가" class="flex-none w-full" @click="getAddColor"/>
-                            <Button v-if="index !== 0" label="삭제" class="flex-none w-full" severity="secondary" @click="factory.getOutDelColor(index)"/>
+                        <InputText :id="`icNm${index}`" v-model="item['icNm']" class="w-full row_input" autocomplete="off"/>
+                        <div class="flex-none w-[3.125rem] h-10">
+                            <Button v-if="index === 0" label="컬러 추가" class="flex-none w-full *:!text-10 !px-0 *:!pb-0.5  h-full" @click="getAddColor"/>
+                            <Button v-if="index !== 0" label="삭제" class="flex-none w-full *:!text-10 !px-0 *:!pb-0.5  h-full" severity="secondary" @click="factory.getOutDelColor(index)"/>
                         </div>
                     </div>
                     <small class="text-red-500">{{ factory['out']['itemMsg']['colors'] }}</small>
@@ -39,11 +39,14 @@
 
         <div class="relative flex items-center justify-center w-full">
             <p class="w-[100px] flex-none">기본 단위</p>
-            <div>
+            <div class="w-full">
                 <div class="flex w-full gap-2">
-                    <InputNumber inputId="size" v-model="factory['out']['itemInfo']['size']" class="w-full *:w-full *:!text-center font-bold" autocomplete="off"/>
-                    <Select class="w-full !border-l-[0.5px] !focus:border-l-2 custom_select" 
-                    v-model="factory['out']['itemInfo']['unit']" :options="data['unit']" optionLabel="name" optionValue="value" />
+                    <InputNumber inputId="size"  v-model="factory['out']['itemInfo']['size']" class="w-full *:w-full *:!text-center font-bold row_input" autocomplete="off"/>
+                    <div class="h-10 custom-select-arrow">
+                        <Select class="w-full" 
+                        v-model="factory['out']['itemInfo']['unit']" :options="data['unit']" optionLabel="name" optionValue="value" />
+                        <IconPlay class="absolute rotate-90 top-3 right-2 *:fill-gray-400 -z-10"/>
+                    </div>
                 </div>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['size'] }}</small>
             </div>    
@@ -52,42 +55,42 @@
         <div class="relative flex items-center justify-center w-full" v-if="factory['out']['itemInfo']['unit'] !== '004'">
             <p class="w-[100px] flex-none">기본 높이</p>
             <div class="relative w-full">
-                <InputNumber v-model="factory['out']['itemInfo']['minHeight']" class="w-full *:w-full *:!pr-10 inputNumber-color"/>
+                <InputNumber v-model="factory['out']['itemInfo']['minHeight']" class="w-full *:w-full *:!pr-10 row_input inputNumber-color"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['minHeight'] }}</small>
-                <span class="absolute text-sm text-blue-500 right-4 top-3">cm</span>
+                <span class="absolute text-sm text-t-lv1 right-4 top-2.5">cm</span>
             </div>
         </div>
 
         <div class="relative flex items-center justify-center w-full" v-if="factory['out']['itemInfo']['unit'] === '003'">
             <p class="w-[100px] flex-none">원단 폭</p>
             <div class="w-full">
-                <InputNumber inputId="pokSpec" v-model="factory['out']['itemInfo']['pokSpec']" class="w-full *:w-full inputNumber-color" autocomplete="off"/>
+                <InputNumber inputId="pokSpec" v-model="factory['out']['itemInfo']['pokSpec']" class="w-full *:w-full row_input inputNumber-color" autocomplete="off"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['pokSpec'] }}</small>
             </div>
-            <span class="absolute text-sm text-blue-500 right-4 top-3">cm</span>
+            <span class="absolute text-13 text-t-lv1 right-4 top-2.5">cm</span>
         </div>
 
         <div class="relative flex items-center justify-center w-full">
             <p class="w-[100px] flex-none">매입 가격</p>
             <div class="w-full">
-                <InputNumber inputId="purcAmt" v-model="factory['out']['itemInfo']['purcAmt']" class="w-full *:w-full inputNumber-color" autocomplete="off"/>
+                <InputNumber inputId="purcAmt" v-model="factory['out']['itemInfo']['purcAmt']" class="w-full row_input *:w-full inputNumber-color" autocomplete="off"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['purcAmt'] }}</small>
             </div>
-            <span class="absolute text-sm text-blue-500 right-4 top-3">원</span>
+            <span class="absolute text-13 text-t-lv1 right-4 top-2.5">원</span>
         </div>
 
         <div class="relative flex items-center justify-center w-full">
             <p class="w-[100px] flex-none">판매가격</p>
             <div class="w-full">
-                <InputNumber inputId="saleAmt" v-model="factory['out']['itemInfo']['saleAmt']" class="w-full *:w-full inputNumber-color" autocomplete="off"/>
+                <InputNumber inputId="saleAmt" v-model="factory['out']['itemInfo']['saleAmt']" class="w-full *:w-full row_input inputNumber-color" autocomplete="off"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['saleAmt'] }}</small>
             </div>
-            <span class="absolute text-sm text-blue-500 right-4 top-3">원</span>
+            <span class="absolute text-13 text-t-lv1 right-4 top-2.5">원</span>
         </div>
 
 
-        <div class="bottom-fixed-btn-box">
-            <Button label="저장" size="large" @click="getOutItemSave"/>
+        <div class="w-full bottom-modal-absol-box">
+            <Button label="저장" class="w-full" @click="getOutItemSave"/>
         </div>
     </div>
 </main>
@@ -95,6 +98,8 @@
 
 <script setup lang="ts">
 import InputNumber from 'primevue/inputnumber';
+import IconPlay from '@/components/icons/IconPlay.vue';
+
 import { useConfirm } from "primevue/useconfirm";
 import { useDataStore, useFactoryStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';

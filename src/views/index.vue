@@ -1,6 +1,6 @@
 <template>
 <div class="w-full md:grid md:grid-cols-[1fr_300px] gap-8 items-start bg-gray-100 min-h-[calc(100vh-60px)] pb-[60px]">
-    <main class="w-full gap-y-[0.875rem] gap-x-2.5 grid grid-cols-12">
+    <main class="w-full gap-y-[0.875rem] gap-x-[0.625rem] grid grid-cols-12">
         <section class="w-full col-span-12">
             <div class="relative w-full px-5 overflow-hidden bg-blue-100 rounded-md h-[9.1875rem] flex justify-between items-center">
                 <div class="flex flex-col">
@@ -15,7 +15,7 @@
             </div>
         </section>
     
-        <section class="col-span-12 px-5">
+        <section class="col-span-12 px-4">
             <div class="flex flex-col gap-3 main-card-container-box">
                 <div class="main-card-tilte-box">
                     <h2 class="flex items-center justify-center text-base">전체 고객</h2>
@@ -73,7 +73,7 @@
         </section>
 
     </main>
-    <aside class="grid w-full grid-cols-1 gap-5 px-5 md:px-0">
+    <aside class="grid w-full grid-cols-1 gap-5 px-4 md:px-0">
         <section class="w-full">
             <div class="main-card-container-box">
                 <div class="main-card-tilte-box">

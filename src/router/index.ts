@@ -424,7 +424,10 @@ const routes = [
 
 const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        return { top: 0 }; // 페이지 변경 시 항상 최상단으로 스크롤
+    }
 });
 
 router.beforeEach( async (to, from, next) => {
@@ -467,6 +470,7 @@ router.beforeEach( async (to, from, next) => {
         }
     }
 });
+
 
 const getTokenCheck = async () => {
     const login = useLoginStore();

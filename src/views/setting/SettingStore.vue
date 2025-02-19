@@ -1,23 +1,23 @@
 <template>
     <div>
         <BackHeader title="매장 설정"/>
-        <main class="pt-5 pb-28">
+        <main class="pt-3 pb-28">
             <section class="px-5">
                 <div class="flex flex-col gap-1">
-                    <p class="text-xs text-gray-500">프로필 사진</p>
-                    <div class="relative size-32 ">
-                        <div class="relative flex items-center justify-center overflow-hidden border border-gray-200 rounded-lg size-32">
+                    <p class="text-10 text-t-lv3">프로필 사진</p>
+                    <div class="relative size-[95px] ">
+                        <div class="relative flex items-center justify-center overflow-hidden border border-gray-200 rounded-lg size-[95px]">
                             <img src="../../assets/img/test.png" class="aspect-square size-full" alt="">
                             <!-- <i class="!text-4xl pi pi-image text-gray-400" /> -->
                         </div>
-                        <div class="absolute z-10 flex items-center justify-center overflow-hidden bg-white border border-gray-200 rounded-full -bottom-2 -right-2 size-10">
-                            <Button text outlined icon="pi pi-plus"/>
+                        <div class="absolute z-10 flex items-center justify-center overflow-hidden bg-white rounded-[10px] blur-back -bottom-1 -right-1 size-[29px]">
+                            <IconPlus/>
                         </div>
                     </div>
                 </div>
             </section>
-            <div class="gray-bar"></div>
-            <section class="px-5 form-gap-box">
+            <!-- <div class="gray-bar"></div> -->
+            <section class="px-4 form-gap-box mt-[30px]">
                 <IftaLabel class="w-full">
                     <InputText id="username" class="w-full"/>
                     <label for="emali">매장이름<span class="ml-0.5 text-red-500">*</span></label>
@@ -26,7 +26,9 @@
                 <IftaLabel>
                     <IconField>
                         <InputText  class="w-full" readonly placeholder="주소를 입력해주세요."/>
-                        <InputIcon class="pi pi-search" />
+                        <InputIcon>
+                            <IconSpot/>
+                        </InputIcon>
                     </IconField>
                     <label>주소<span class="ml-0.5 text-red-500">*</span></label>
                     <!-- <small class="text-red-500">ㅁㄴㅁ</small> -->
@@ -38,7 +40,10 @@
                 </IftaLabel>
     
                 <IftaLabel class="w-full">
-                    <Select id="username" class="w-full"/>
+                    <div class="w-full custom-select-arrow">
+                        <Select id="username" class="w-full"/>
+                        <IconPlay class="absolute rotate-90 top-3 right-2 *:fill-gray-400 -z-10"/>
+                    </div>
                     <label for="emali">서비스 분야<span class="ml-0.5 text-red-500">*</span></label>
                 </IftaLabel>
 
@@ -53,22 +58,25 @@
                 </IftaLabel>
 
                 <div class="relative ifta-label-box">
-                    <ul class="flex justify-center gap-4 mt-2 font-bold">
+                    <ul class="flex justify-center gap-3 mt-2 font-bold">
                         <li 
                         v-for="(day, index) in days" 
                         :key="day" 
                         @click="toggleDay(index)" 
                         :class="{'bg-sky-500 text-white': selectedDays[index], 'bg-transparent': !selectedDays[index]}" 
-                        class="py-2.5 px-2 transition-colors duration-300 border border-gray-200 rounded-full cursor-pointer"
+                        class="py-2.5 px-2 transition-colors duration-300 border border-gray-200 rounded-full cursor-pointer text-xs"
                         >{{ day }}
                     </li>
                     </ul>
-                    <label class="absolute ifta-label -top-2">매장운영일</label>
+                    <label class="absolute left-1.5 ifta-label -top-1 !text-10 !text-[#999999]">매장운영일</label>
                 </div>
 
                 <IftaLabel class="label-input-box">
-                    <Select/>
-                    <label>매장 운영시간</label>
+                    <div class="w-full custom-select-arrow">
+                        <Select class="w-full"/>
+                        <IconPlay class="absolute rotate-90 top-3 right-2 *:fill-gray-400 -z-10"/>
+                    </div>
+                    <label for="">매장 운영시간</label>
                 </IftaLabel>
 
     
@@ -99,6 +107,9 @@ import Textarea from 'primevue/textarea';
 import FileUpload from 'primevue/fileupload';
 
 import { ref } from 'vue';
+import IconPlus from '@/components/icons/IconPlus.vue';
+import IconSpot from '@/components/icons/IconSpot.vue';
+import IconPlay from '@/components/icons/IconPlay.vue';
 
 const days = ['월', '화', '수', '목', '금', '토', '일'];
 const selectedDays = ref(Array(days.length).fill(false)); // 초기값을 false로 설정한 배열
@@ -109,5 +120,8 @@ const toggleDay = (index) => {
 </script>
 
 <style lang="scss">
-
+.blur-back{
+    backdrop-filter: blur(20px);
+    background-color: rgba(169, 173, 168, 0.3) ;
+}
 </style>
