@@ -1,6 +1,6 @@
 <template>
     <div class="relative">
-        <BackHeader title="고정비용 저장장"/>
+        <BackHeader title="고정비용 저장"/>
         <Button v-if="cost['type'] === 'U'" label="비용 삭제" size="small" severity="danger" outlined class="!absolute  right-4 bottom-1/2 translate-y-1/2 z-[90]" @click="getDelete"/>
     </div>
     <main class="p-5 pb-20">
@@ -57,7 +57,7 @@ const { getPopupClose } = usePopup();
 const getDelete = async () => {
     confirm.require({
         message     : '해당 고정비용을 삭제하시겠습니까?',
-        header      : '삭제제',
+        header      : '삭제',
         rejectProps : {
             label       : '취소',
             severity    : 'secondary',

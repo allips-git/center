@@ -68,7 +68,7 @@
                 <div class="relative w-full">
                     <IftaLabel class="w-full">
                         <label class="!font-bold">최종계산</label>
-                        <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full !pr-8 text-right !text-sky-500 !font-bold" @input="getSize"/>
+                        <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full !pr-8 text-left !text-sky-500 !font-bold" @input="getSize"/>
                     </IftaLabel>
                     <span class="absolute text-sm translate-y-1/2 right-4 bottom-1/2">{{ esti['common']['unitNm'] }}</span>
                     <!-- <span class="absolute">원</span> -->
@@ -86,7 +86,7 @@
                 </IftaLabel>
                 <div class="relative w-full col-span-1">
                     <IftaLabel class="w-full">
-                        <InputText v-keyfilter.int id="inSize" v-model="esti['curtain']['inSize']" class="w-full !pr-8 text-right !text-sky-500 !font-bold" />
+                        <InputText v-keyfilter.int id="inSize" v-model="esti['curtain']['inSize']" class="w-full !pr-8 text-left !text-sky-500 !font-bold" />
                     </IftaLabel>
                     <span class="absolute text-sm translate-y-1/2 right-4 bottom-1/2">{{ esti['common']['unitNm'] }}</span>
                     <small v-if="esti['msg']['curtain'][`inColor`] !== ''" class="text-red-500">{{ esti['msg']['curtain'][`inColor`] }}</small>
@@ -102,7 +102,7 @@
                 </IftaLabel>
                 <div class="relative w-full col-span-1">
                     <IftaLabel class="w-full">
-                        <InputText v-model="esti.outSize" class="w-full !pr-8 text-right !text-sky-500 !font-bold" disabled/>
+                        <InputText v-model="esti.outSize" class="w-full !pr-8 text-left !text-sky-500 !font-bold" disabled/>
                     </IftaLabel>
                     <span class="absolute text-sm translate-y-1/2 right-4 bottom-1/2">{{ esti['common']['unitNm'] }}</span>
                 </div>
@@ -114,8 +114,6 @@
 <script setup lang="ts">
 import InputText from 'primevue/inputtext'; 
 import InputNumber from 'primevue/inputnumber';
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
 import IftaLabel from 'primevue/iftalabel';
 import { useDataStore, useEstiStore } from '@/store';
 

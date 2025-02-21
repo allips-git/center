@@ -21,7 +21,7 @@
     
                     <IftaLabel class="label-input-box ">
                         <label>주소</label>
-                        <InputText v-model="order['sysInfo']['addr']" :disabled="order['sysInfo']['shippingGb'] === '001' ? true : false" 
+                        <InputText v-model="order['sysInfo']['addr']" :disabled="order['sysInfo']['shippingGb'] === '001' || order['sysInfo']['shippingGb'] === '005' ? true : false" 
                             readonly @click="getAddr"/>
                     </IftaLabel>
                 </div>
@@ -54,7 +54,7 @@ import IftaLabel from 'primevue/iftalabel';
 import InputText from 'primevue/inputtext';
 import DatePicker from 'primevue/datepicker';
 import Textarea from 'primevue/textarea';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 import { useDataStore, useOrderStore, useEstiStore } from '@/store';
 import { getAxiosData, getTokenOut, getDaumPopupPosition } from '@/assets/js/function';
@@ -71,6 +71,10 @@ const { getPopupClose } = usePopup();
 
 const getShippingGb = () => {
     if(order['sysInfo']['shippingGb'] === '001')
+    {
+        order.getData();
+    }
+    else
     {
         order.getSysInfoAddrReset();
     }
@@ -121,19 +125,19 @@ const getCloseDaumPost = () => {
 }
 
 const getOrder = () => {
-    if(order['sysInfo']['shippingGb'] !== '001' && order['sysInfo']['addr'] === '')
+    if((order['sysInfo']['shippingGb'] !== '001' && order['sysInfo']['shippingGb'] !== '005') && order['sysInfo']['addr'] === '')
     {
         addrMsg.value = '주소를 검색해주세요.';
         return false;
     }
 
-    if(order['sysInfo']['addrDetail'] === '')
-    {
-        addrMsg.value       = '';
-        addrDetailMsg.value = '상세 주소를 입력해주세요.';
-        document.getElementById("addrDetail").focus();
-        return false;
-    }
+    // if(order['sysInfo']['addrDetail'] === '')
+    // {
+    //     addrMsg.value       = '';
+    //     addrDetailMsg.value = '상세 주소를 입력해주세요.';
+    //     document.getElementById("addrDetail").focus();
+    //     return false;
+    // }
     
     confirm.require({
         message     : '시스템 발주 처리하시겠습니까?',
@@ -182,4 +186,10 @@ const getOrder = () => {
         }
     });
 }
+
+onMounted(async () => {
+    await order.getData();
+
+    console.log(order.sysInfo);
+})
 </script>
