@@ -135,6 +135,24 @@ export const useOrderStore = defineStore('order', {
         pay         : getPay()
     }),
     actions : {
+        async getData()
+        {
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/orderV1/getData`);
+    
+                console.log(res);
+
+                this.sysInfo.zip        = res.data['info']['zip'];
+                this.sysInfo.addr       = res.data['info']['addr'];
+                this.sysInfo.addrDetail = res.data['info']['addrDetail'];
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        },
         async getList(params)
         {
             try
