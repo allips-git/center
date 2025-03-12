@@ -55,7 +55,7 @@
         <div class="px-5">
             <CalculateCard title="총 단위" :showtitle="true" 
                 :unit="esti['total']['totalUnitSize']+esti['common']['unitNm']"
-                :calcs="esti['totalAmtInfo']" totalTitle="총 금액" :totalAmt="esti['total']['totalSaleAmt']" :showUnit="true"/>
+                :calcs="esti['totalAmtInfo']" totalTitle="총 금액" :totalAmt="esti['total']['totalSaleAmt'] + esti['total']['totalSaleTax']" :showUnit="true"/>
         </div>
     </div>
     <div class="bottom-modal-absol-box">

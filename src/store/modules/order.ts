@@ -58,7 +58,7 @@ const getPayList = (): PayList[] => {
         {name : 'itemAmt',      amtGb : '', title: '상품 금액',         amt: 0, red: false, blue: false, memo : ''},
         {name : 'itemTax',      amtGb : '', title: '부가세',            amt: 0, red: false, blue: false, memo : ''},
         {name : 'shapeAmt',     amtGb : '', title: '형상 금액',         amt: 0, red: false, blue: false, memo : ''},
-        {name : 'heightAmt',    amtGb : '', title: '세로길이 추가금액', amt: 0, red: false, blue: false, memo : ''},
+        {name : 'heightAmt',    amtGb : '', title: '세로길이 추가금액',  amt: 0, red: false, blue: false, memo : ''},
         {name : 'addAmt',       amtGb : '001', title: '추가',              amt: 0, red: true, blue: false, memo : ''},
         {name : 'dcAmt',        amtGb : '002', title: '할인',              amt: 0, red: true, blue: false, memo : ''},
         {name : 'cutAmt',       amtGb : '003', title: '절삭 할인',         amt: 0, red: true, blue: false, memo : ''},
@@ -292,6 +292,8 @@ export const useOrderStore = defineStore('order', {
 
                 this.getItemAmt('itemAmt', Number(res.data['itemAmt']));
                 this.getItemAmt('itemTax', Number(res.data['itemTax']));
+                this.getItemAmt('shapeAmt', Number(res.data['shapeAmt']));
+                this.getItemAmt('heightAmt', Number(res.data['heightAmt']));
 
                 res.data['amtList'].map((amt) => {
                     this.getPayAmt(amt['amtGb'], Number(amt['amt']), amt['memo'])

@@ -20,6 +20,8 @@ interface ItemInfo {
     unitNm      : string;
     saleUnit    : number;
     purcUnit    : number;
+    vat         : Y | N;
+    vmRate      : number;
 }
 
 interface ExInfo {
@@ -89,7 +91,9 @@ const getItemInfo = (): ItemInfo => {
         unitNm      : '',
         unitSize    : 0,
         saleUnit    : 0,
-        purcUnit    : 0
+        purcUnit    : 0,
+        vat         : 'Y',
+        vmRate      : 0
     }
 }
 

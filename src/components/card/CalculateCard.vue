@@ -30,7 +30,7 @@
                         'text-red-500' : calc.red,
                         'text-blue-500': calc.blue,
                         'text-neutral-700': !calc.red && !calc.blue
-                    }">({{ calc.memo }})</span>
+                    }">{{ calc.memo ? `(${calc.memo})` : '' }}</span>
                     </dt>
                     <dd class="text-xs font-bold text-right" :class="{
                         'text-red-500' : calc.red,

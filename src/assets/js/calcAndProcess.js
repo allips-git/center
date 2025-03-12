@@ -38,7 +38,8 @@ export function getHebeCalc(common, blind)
         option   : [], /** 옵션 추후 추가 필요 */
         dcUnit   : common['dcUnit'],
         dcAmt    : Number(common['dcAmt']),
-        vat      : common['vat']
+        vat      : common['vat'],
+        vmRate   : common['vmRate']
     };
 
     return hebeCalculation(params);
@@ -61,7 +62,8 @@ export function getYardCalc(common, curtain)
         option          : [], /** 옵션 추후 추가 필요 */
         dcUnit          : common['dcUnit'],
         dcAmt           : Number(common['dcAmt']),
-        vat             : common['vat']
+        vat             : common['vat'],
+        vmRate          : common['vmRate']
     };
 
     return yardCalculation(params);
@@ -86,7 +88,8 @@ export function getPokCalc(common, curtain)
         option          : [], /** 옵션 추후 추가 필요 */
         dcUnit          : common['dcUnit'],
         dcAmt           : Number(common['dcAmt']),
-        vat             : common['vat']
+        vat             : common['vat'],
+        vmRate          : common['vmRate']
     };
 
     return pokCalculation(params);

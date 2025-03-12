@@ -156,6 +156,8 @@ export const useEstiMateStore = defineStore('estiMate', {
 
                 this.getItemAmt('itemAmt', Number(res.data['itemAmt']));
                 this.getItemAmt('itemTax', Number(res.data['itemTax']));
+                this.getItemAmt('shapeAmt', Number(res.data['shapeAmt']));
+                this.getItemAmt('heightAmt', Number(res.data['heightAmt']));
 
                 if(res.data['amtList'].length === 0)
                 {

@@ -197,7 +197,8 @@ const getCommonInfo = (): CommonInfo => {
         purcUnit : null,    /** 매입 단가 */
         dcUnit   : '',      /** 할인 구분 */
         dcAmt    : null,    /** 할인 금액 */
-        vat      : 'N',     /** 부가세 여부 (Y : 포함 / N : 미포함) */
+        vat      : 'N',     /** 부가세 여부 (Y : 포함 / N : 미포함), 매입금액 계산용 */
+        vmRate   : 0,       /** 부가세율, 매입금액 계산용 */
         memo     : ''       /** 지시사항 */
     }
 }
@@ -404,7 +405,8 @@ export const useEstiStore = defineStore('esti', {
     getters: {
         totalAmtInfo : (state) => {
             const info = [
-                { title : '제품 금액', amt : state.total['totalItemSaleAmt'] + state.total['totalItemSaleTax'] },
+                { title : '제품 금액', amt : state.total['totalItemSaleAmt'] },
+                { title : '부가세', amt : state.total['totalItemSaleTax'] },
                 { title : '옵션 금액', amt : state.total['totalOptionSaleAmt'] + state.total['totalOptionSaleTax'] },
                 { title : '형상 금액', amt : state.total['totalShapeSaleAmt'] + state.total['totalShapeSaleTax'] },
                 { title : '세로길이 추가 금액', amt : state.total['totalHeightSaleAmt'] + state.total['totalHeightSaleTax'] }
@@ -509,6 +511,8 @@ export const useEstiStore = defineStore('esti', {
 
                 this.getPayAmt('itemAmt', Number(res.data['itemAmt']));
                 this.getPayAmt('itemTax', Number(res.data['itemTax']));
+                this.getPayAmt('shapeAmt', Number(res.data['shapeAmt']));
+                this.getPayAmt('heightAmt', Number(res.data['heightAmt']));
 
                 /** 추가 금액 */
                 if(res.data['addAmt'])
@@ -750,7 +754,8 @@ export const useEstiStore = defineStore('esti', {
                         option  : [],
                         dcUnit  : this.common['dcUnit'],
                         dcAmt   : this.common['dcAmt'],
-                        vat     : this.common['vat']
+                        vat     : this.common['vat'],
+                        vmRate  : this.common['vmRate']
                     });
             
                     this.total['totalQty']      = Number(this.ea['qty']);
