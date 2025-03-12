@@ -114,7 +114,8 @@ export function getPok(data)
  *    	'option'		=>	'옵션',
  *    	'dcAmt'	        => 	'금액조정',
  *    	'dcUnit'	    =>  '할인단위(금액조정단위)',
- *    	'vat'			=>	'부가세'
+ *    	'vat'			=>	'부가세',
+ * 		'vmRate'		=>	'부가세율'
  * )
  * @return 계산된 EA 값
  * */
@@ -161,14 +162,22 @@ export function eaCalculation(data)
 	//매입
 	let purcAmt = itemPurcAmt + optionPurcAmt;
 	//매출
-	let saleAmt = itemSaleAmt + optionSaleAmt;
+	const amt   = itemSaleAmt + optionSaleAmt;
+	let saleAmt = amt;
+	let saleTax = getVatAmt('Y', amt);
+
+	let dcAmt   = dcCalculation(saleAmt, data['dcUnit'], data['dcAmt']);
+	let dcTax   = data['dcUnit'] === 'PC' ? dcCalculation(saleTax, data['dcUnit'], data['dcAmt']) : 0;
+
+	saleAmt = saleAmt + dcAmt;
+	saleTax = saleTax + dcTax;
 
 	//매입 제품 금액
 	result['itemPurcAmt'] = itemPurcAmt;
-	result['itemPurcTax'] = getVatAmt(data['vat'], itemPurcAmt);
+	result['itemPurcTax'] = data['vat'] === 'Y' ? getVatRateAmt(data['vmRate'], itemPurcAmt) : 0;
 	//매출 제품 금액
 	result['itemSaleAmt'] = itemSaleAmt;
-	result['itemSaleTax'] = getVatAmt(data['vat'] , itemSaleAmt);
+	result['itemSaleTax'] = getVatAmt('Y', itemSaleAmt);
 
 	//매입 옵션 금액(옵션별 총금액)
 	result['optionPurcAmt'] = ibo_amt;
@@ -180,22 +189,22 @@ export function eaCalculation(data)
 
 	for(let i = 0; i < data['option'].length; i++)
     {
-		ibo_tax[i] = getVatAmt(data['vat'] , ibo_amt[i]);
-		iso_tax[i] = getVatAmt(data['vat'] , iso_amt[i]);
+		ibo_tax[i] = getVatAmt('Y' , ibo_amt[i]);
+		iso_tax[i] = getVatAmt('Y' , iso_amt[i]);
 	}
 
 	result['optionPurcTax'] = ibo_tax;
 	result['optionSaleTax'] = iso_tax;
 
 	//금액조정 금액
-	result['dcAmt'] = dcCalculation(saleAmt, data['dcUnit'], data['dcAmt']);
+	result['dcAmt'] = dcAmt + dcTax;
 
 	//회배
 	result['ea'] = ea;
 	result['totalPurcAmt'] = purcAmt;
-	result['totalPurcTax'] = getVatAmt(data['vat'] , result['totalPurcAmt']);
-	result['totalSaleAmt'] = saleAmt + result['dcAmt'];
-	result['totalSaleTax'] = getVatAmt(data['vat'] , result['totalSaleAmt']);
+	result['totalPurcTax'] = data['vat'] === 'Y' ? getVatRateAmt(data['vmRate'], result['totalPurcAmt']) : 0;
+	result['totalSaleAmt'] = saleAmt;
+	result['totalSaleTax'] = saleTax;
 
 	return result;
 }
@@ -212,7 +221,8 @@ export function eaCalculation(data)
  *    	'option'		=>	'옵션',
  *    	'dcAmt'	        => 	'금액조정',
  *    	'dcUnit'	    =>  '할인단위(금액조정단위)',
- *    	'vat'			=>	'부가세'
+ *    	'vat'			=>	'부가세',
+ * 		'vmRate'		=>	'부가세율'
  * )
  * @return 계산된 회배 값
  * */
@@ -227,7 +237,12 @@ export function hebeCalculation(data)
 	let isItemPurcTax = [];
 
 	let itemPurcAmt = 0;
+	let itemPurcTax = 0;
 	let itemSaleAmt = 0;
+	let itemSaleTax = 0;
+
+	let dcAmt = 0;
+	let dcTax = 0;
 
 	/** 옵션 금액 */
 	let optionList      = [];
@@ -253,13 +268,26 @@ export function hebeCalculation(data)
 
 			//매입 금액
 			isItemPurcAmt[i] = Math.round(Number(data['hebe'][j]) * Number(data['purcAmt']));
-			isItemPurcTax[i] = getVatAmt(data['vat'] , isItemPurcAmt[i]);
+			isItemPurcTax[i] = data['vat'] === 'Y' ? getVatRateAmt(data['vmRate'] , isItemPurcAmt[i]) : 0;
+
 			itemPurcAmt += isItemPurcAmt[i];
+			itemPurcTax += isItemPurcTax[i];
 
 			//매출 금액
-			isItemSaleAmt[i] = Math.round(Number(data['hebe'][j]) * Number(data['saleAmt']));
-			isItemSaleTax[i] = getVatAmt(data['vat'] , isItemSaleAmt[i]);
+			const isSaleAmt = Math.round(Number(data['hebe'][j]) * Number(data['saleAmt']));
+			const isSaleTax = getVatAmt('Y' , isSaleAmt);
+
+			if(data['dcUnit'] === 'PC')
+			{
+				dcAmt += dcCalculation(isSaleAmt, data['dcUnit'], data['dcAmt']);
+				dcTax += dcCalculation(isSaleTax, data['dcUnit'], data['dcAmt']);
+			}
+			
+			isItemSaleAmt[i] = isSaleAmt;
+			isItemSaleTax[i] = isSaleTax;
+
 			itemSaleAmt += isItemSaleAmt[i];
+			itemSaleTax += isItemSaleTax[i];
 
 			//회배 계산
 			hebe = Math.round((Number(hebe) + Number(data['hebe'][j])) * 10) / 10;
@@ -302,13 +330,26 @@ export function hebeCalculation(data)
     {
 		//매입 금액
 		isItemPurcAmt[0] = Math.round(Number(data['hebe'][0]) * Number(data['qty']) * Number(data['purcAmt']));
-		isItemPurcTax[0] = getVatAmt(data['vat'], isItemPurcAmt[0]);
+		isItemPurcTax[0] = data['vat'] === 'Y' ? getVatRateAmt(data['vmRate'], isItemPurcAmt[0]) : 0;
+
 		itemPurcAmt += isItemPurcAmt[0];
+		itemPurcTax += isItemPurcTax[0];
 
 		//매출 금액
-		isItemSaleAmt[0] = Math.round(Number(data['hebe'][0]) * Number(data['qty']) * Number(data['saleAmt']));
-		isItemSaleTax[0] = getVatAmt(data['vat'] , isItemSaleAmt[0]);
+		const isSaleAmt = Math.round(Number(data['hebe'][0]) * Number(data['qty']) * Number(data['saleAmt']));
+		const isSaleTax = getVatAmt('Y' , isSaleAmt);
+
+		if(data['dcUnit'] === 'PC')
+		{
+			dcAmt += dcCalculation(isSaleAmt, data['dcUnit'], data['dcAmt']);
+			dcTax += dcCalculation(isSaleTax, data['dcUnit'], data['dcAmt']);
+		}
+		
+		isItemSaleAmt[0] = isSaleAmt;
+		isItemSaleTax[0] = isSaleTax;
+
 		itemSaleAmt += isItemSaleAmt[0];
+		itemSaleTax += isItemSaleTax[0];
 
 		//회배 계산(개별 회배 * 수량)
 		hebe = Math.round(Number(data['hebe'][0]) * Number(data['qty']) * 10) / 10;
@@ -347,10 +388,17 @@ export function hebeCalculation(data)
 		}
 	}
 
+	if(data['dcUnit'] !== 'PC')
+	{
+		dcAmt = dcCalculation(0, data['dcUnit'], data['dcAmt']);
+	}
+
 	//매입
 	let purcAmt = itemPurcAmt + optionPurcAmt;
+	let purcTax = itemPurcTax;
 	//매출
 	let saleAmt = itemSaleAmt + optionSaleAmt;
+	let saleTax = itemSaleTax;
 
 	//개별금액
 	result['eachItemPurcAmt']  = isItemPurcAmt;
@@ -363,11 +411,11 @@ export function hebeCalculation(data)
 
 	//매입 제품 금액
 	result['itemPurcAmt'] = itemPurcAmt;
-	result['itemPurcTax'] = getVatAmt(data['vat'] , itemPurcAmt);
+	result['itemPurcTax'] = purcTax;
 
 	//매출 제품 금액
 	result['itemSaleAmt'] = itemSaleAmt;
-	result['itemSaleTax'] = getVatAmt(data['vat'] , itemSaleAmt);
+	result['itemSaleTax'] = saleTax;
 
 	//매입 옵션 금액(옵션별 총금액)
 	result['optionPurcAmt'] = ibo_amt;	//['옵션1' , '옵션2']
@@ -379,23 +427,23 @@ export function hebeCalculation(data)
 
 	for(let i = 0; i < data['option'].length; i++)
     {
-		ibo_tax[i] = getVatAmt(data['vat'] , ibo_amt[i]);
-		iso_tax[i] = getVatAmt(data['vat'] , iso_amt[i]);
+		ibo_tax[i] = getVatAmt('Y' , ibo_amt[i]);
+		iso_tax[i] = getVatAmt('Y' , iso_amt[i]);
 	}
 
 	result['optionPurcTax'] = ibo_tax;
 	result['optionSaleTax'] = iso_tax;
 
 	//금액조정 금액
-	result['dcAmt'] = dcCalculation(saleAmt, data['dcUnit'], data['dcAmt']);
+	result['dcAmt'] = dcAmt + dcTax;
 
 	//회배
 	result['hebe'] = hebe;
 
 	result['totalPurcAmt'] = purcAmt;
-	result['totalPurcTax'] = getVatAmt(data['vat'] , result['totalPurcAmt']);
-	result['totalSaleAmt'] = saleAmt + result['dcAmt'];
-	result['totalSaleTax'] = getVatAmt(data['vat'] , result['totalSaleAmt']);
+	result['totalPurcTax'] = purcTax;
+	result['totalSaleAmt'] = saleAmt + dcAmt;
+	result['totalSaleTax'] = saleTax + dcTax;
 
 	return result;
 }
@@ -414,7 +462,8 @@ export function hebeCalculation(data)
  *    	option          : '옵션',
  *    	dcAmt           : '금액조정',
  *    	dcUnit          : '금액조정단위',
- *    	vat             : '부가세'
+ *    	vat             : '부가세',
+ * 		vmRate			: '부가세율'
  * }
  * 
  * @return 계산된 야드 값
@@ -428,15 +477,21 @@ export function yardCalculation(data)
 	yard = Math.round(Number(data['yard']) * Number(data['qty']) * 10) / 10;
 
 	let itemPurcAmt = Math.round(yard * Number(data['purcAmt']));
+	let itemPurcTax = data['vat'] === 'Y' ? getVatRateAmt(data['vmRate'], itemPurcAmt) : 0;
 	let itemSaleAmt = Math.round(yard * Number(data['saleAmt']));
+	let itemSaleTax = getVatAmt('Y' , itemSaleAmt);
 
 	let shapePurcAmt = 0;
+	let shapePurcTax = 0;
 	let shapeSaleAmt = 0;
+	let shapeSaleTax = 0;
 
 	if(data['shapeGb'] === 'Y')
     {
 		shapePurcAmt = Math.round(yard * Number(data['shapePurcAmt']));
+		shapePurcTax = data['vat'] === 'Y' ? getVatRateAmt(data['vmRate'], shapePurcAmt) : 0;
 		shapeSaleAmt = Math.round(yard * Number(data['shapeSaleAmt']));
+		shapeSaleTax = getVatAmt('Y' , shapeSaleAmt);
 	}
 
 	let optionPurcAmt = 0;		//총합계에 사용할 매입 금액
@@ -478,21 +533,28 @@ export function yardCalculation(data)
 
 	//매입
 	let purcAmt = itemPurcAmt + shapePurcAmt + optionPurcAmt;
+	let purcTax = itemPurcTax + shapePurcTax;
 	//매출
-	let saleAmt = itemSaleAmt + shapeSaleAmt + optionSaleAmt;
+	const amt = itemSaleAmt + shapeSaleAmt + optionSaleAmt;
+
+	let saleAmt = amt;
+	let saleTax = itemSaleTax + shapeSaleTax;
+
+	let dcAmt   = dcCalculation(saleAmt, data['dcUnit'], data['dcAmt']);
+	let dcTax   = data['dcUnit'] === 'PC' ? dcCalculation(saleTax, data['dcUnit'], data['dcAmt']) : 0;
 
 	//매입 제품 금액
 	result['itemPurcAmt'] = itemPurcAmt;
-	result['itemPurcTax'] = getVatAmt(data['vat'] , itemPurcAmt);
+	result['itemPurcTax'] = itemPurcTax;
 	//매출 제품 금액
 	result['itemSaleAmt'] = itemSaleAmt;
-	result['itemSaleTax'] = getVatAmt(data['vat'] , itemSaleAmt);
+	result['itemSaleTax'] = itemSaleTax;
 	//매입 형상 금액
 	result['shapePurcAmt'] = shapePurcAmt;
-	result['shapePurcTax'] = getVatAmt(data['vat'] , shapePurcAmt);
+	result['shapePurcTax'] = shapePurcTax;
 	//매출 형상 금액
 	result['shapeSaleAmt'] = shapeSaleAmt;
-	result['shapeSaleTax'] = getVatAmt(data['vat'] , shapeSaleAmt);
+	result['shapeSaleTax'] = shapeSaleTax;
 
 	//매입 옵션 금액(옵션별 총금액)
 	result['optionPurcAmt'] = ibo_amt;
@@ -512,14 +574,14 @@ export function yardCalculation(data)
 	result['optionSaleTax'] = iso_tax;
 
 	//금액조정 금액
-	result['dcAmt'] = dcCalculation(saleAmt , data['dcUnit'] , data['dcAmt']);
+	result['dcAmt'] = dcAmt + dcTax;
 
 	//야드
 	result['yard'] = yard;
 	result['totalPurcAmt'] = purcAmt;
-	result['totalPurcTax'] = getVatAmt(data['vat'], result['totalPurcAmt']);
-	result['totalSaleAmt'] = saleAmt + result['dcAmt'];
-	result['totalSaleTax'] = getVatAmt(data['vat'], result['totalSaleAmt']);
+	result['totalPurcTax'] = purcTax;
+	result['totalSaleAmt'] = saleAmt + dcAmt;
+	result['totalSaleTax'] = saleTax + dcTax;
 
 	return result;
 }
@@ -543,7 +605,8 @@ export function yardCalculation(data)
  *    	option          : '옵션',
  *    	dcAmt           : '금액조정',
  *    	dcUnit          : '금액조정단위',
- *    	vat	            : '부가세'
+ *    	vat	            : '부가세',
+ * 		vmRate			: '부가세율'
  * }
  * @return 계산된 회배 값
  * */
@@ -556,21 +619,29 @@ export function pokCalculation(data)
 	pok = Math.round(Number(data['pok']) * Number(data['qty']) * 10) / 10;
 
 	let itemPurcAmt = Math.round(pok * Number(data['purcAmt']));
+	let itemPurcTax = data['vat'] === 'Y' ? getVatRateAmt(data['vmRate'], Math.round(pok * Number(data['purcAmt']))) : 0;
 	let itemSaleAmt = Math.round(pok * Number(data['saleAmt']));
+	let itemSaleTax = getVatAmt('Y' , itemSaleAmt);
 
 	//형상금액
 	let shapePurcAmt = 0;
+	let shapePurcTax = 0;
 	let shapeSaleAmt = 0;
+	let shapeSaleTax = 0;
 
 	if(data['shapeGb'] === 'Y')
     {
 		shapePurcAmt = Math.round(pok * Number(data['shapePurcAmt']));
+		shapePurcTax = data['vat'] === 'Y' ? getVatRateAmt(data['vmRate'], shapePurcAmt) : 0;
 		shapeSaleAmt = Math.round(pok * Number(data['shapeSaleAmt']));
+		shapeSaleTax = getVatAmt('Y' , shapeSaleAmt);
 	}
 
 	//세로길이 추가금액
 	let heightPurcAmt = 0;
+	let heightPurcTax = 0;
 	let heightSaleAmt = 0;
+	let heightSaleTax = 0;
 
 	//차이 선언
 	let heightDiff = 0;
@@ -591,7 +662,9 @@ export function pokCalculation(data)
     {
 		//세로길이 추가금액 계산식 => ((제품금액 + 형상금액) / 100) * 퍼센트
 		heightPurcAmt = Math.round(((itemPurcAmt + shapePurcAmt) / 100) * percent);
+		heightPurcTax = data['vat'] === 'Y' ? getVatRateAmt(data['vmRate'], Math.round(((itemPurcAmt + shapePurcAmt) / 100) * percent)) : 0;
 		heightSaleAmt = Math.round(((itemSaleAmt + shapeSaleAmt) / 100) * percent);
+		heightSaleTax = getVatAmt('Y' , Math.round(((itemSaleAmt + shapeSaleAmt) / 100) * percent));
 	}
 
 	//옵션
@@ -634,27 +707,34 @@ export function pokCalculation(data)
 
 	//매입
 	let purcAmt = itemPurcAmt + shapePurcAmt + heightPurcAmt + optionPurcAmt;
+	let purcTax = itemPurcTax + shapePurcTax + heightPurcTax;
 	//매출
-	let saleAmt = itemSaleAmt + shapeSaleAmt + heightSaleAmt + optionSaleAmt;
+	const amt = itemSaleAmt + shapeSaleAmt + heightSaleAmt + optionSaleAmt;
+
+	let saleAmt = amt;
+	let saleTax =  getVatAmt('Y' , amt);
+
+	let dcAmt   = dcCalculation(saleAmt, data['dcUnit'], data['dcAmt']);
+	let dcTax   = data['dcUnit'] === 'PC' ? dcCalculation(saleTax, data['dcUnit'], data['dcAmt']) : 0;
 
 	//매입 제품 금액
 	result['itemPurcAmt'] = itemPurcAmt;
-	result['itemPurcTax'] = getVatAmt(data['vat'], itemPurcAmt);
+	result['itemPurcTax'] = itemPurcTax;
 	//매출 제품 금액
 	result['itemSaleAmt'] = itemSaleAmt;
-	result['itemSaleTax'] = getVatAmt(data['vat'] , itemSaleAmt);
+	result['itemSaleTax'] = itemSaleTax;
 	//매입 형상 금액
 	result['shapePurcAmt'] = shapePurcAmt;
-	result['shapePurcTax'] = getVatAmt(data['vat'] , shapePurcAmt);
+	result['shapePurcTax'] = shapePurcTax;
 	//매출 형상 금액
 	result['shapeSaleAmt'] = shapeSaleAmt;
-	result['shapeSaleTax'] = getVatAmt(data['vat'] , shapeSaleAmt);
+	result['shapeSaleTax'] = shapeSaleTax;
 	//매입 세로길이 추가금
 	result['heightPurcAmt'] = heightPurcAmt;
-	result['heightPurcTax'] = getVatAmt(data['vat'] , heightPurcAmt);
+	result['heightPurcTax'] = heightPurcTax;
 	//매출 세로길이 추가금
 	result['heightSaleAmt'] = heightSaleAmt;
-	result['heightSaleTax'] = getVatAmt(data['vat'] , heightSaleAmt);
+	result['heightSaleTax'] = heightSaleTax;
 
 	//매입 옵션 금액(옵션별 총금액)
 	result['optionPurcAmt'] = ibo_amt;
@@ -679,11 +759,9 @@ export function pokCalculation(data)
 	//폭
 	result['pok'] = pok;
 	result['totalPurcAmt'] = purcAmt;
-	result['totalPurcTax'] = getVatAmt(data['vat'] , result['totalPurcAmt']);
-	result['totalSaleAmt'] = saleAmt + result['dcAmt'];
-	result['totalSaleTax'] = getVatAmt(data['vat'] , result['totalSaleAmt']);
-
-	console.log(result);
+	result['totalPurcTax'] = purcTax;
+	result['totalSaleAmt'] = saleAmt + dcAmt;
+	result['totalSaleTax'] = saleTax + dcTax;
 
 	return result;
 }
@@ -722,7 +800,7 @@ export function optionCalculation(data, n, vat)
  * */
 export function dcCalculation(amt , dcUnit , dcAmt) 
 {
-	if(dcUnit !== "")
+	if(dcUnit !== "" && dcUnit !== 'N')
     {
 		switch (dcUnit) 
         {
@@ -759,4 +837,15 @@ export function getVatAmt(vat, amt)
         //세액 계산안함
 		return 0;
 	}
+}
+
+/**
+ * @description 부가세율에 따른 부가세 금액 계산
+ * @param  {number} vmRate - 부가세율 (정수, 예: 10이면 10%)
+ * @param  {number} amt - 원금액
+ * @return {number} 계산된 부가세 금액 (반올림 처리됨)
+ */
+export function getVatRateAmt(vmRate, amt)
+{
+	return Math.round(Number(amt) * (Number(vmRate) / 100));
 }
