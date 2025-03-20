@@ -1,8 +1,11 @@
 /**
- * @description 발주 처리 관련 모듈 pinia
+ * @description 결제 처리 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
-import { getAxiosData, getCardColumns, getAddDate, getConvertDate } from '@/assets/js/function';
+import { getAxiosData, getCardColumns } from '@/assets/js/function';
+
+type Nullable<T>    = T | null;
+type AmtUnitType    = 'F' | 'P'; /** F : 금액(원) / P : %(퍼센트) */
 
 interface PayList {
     name    : string;
@@ -14,13 +17,26 @@ interface PayList {
     memo    : string;
 }
 
-interface Order {
-    ordDt       : string;
-    outDt       : string;
-    shippingGb  : string;
-    zip         : null | number;
-    addr        : string;
-    addrDetail  : string;
+interface AmtInfo {
+    unit : AmtUnitType;
+    val  : Nullable<string>;
+    amt  : Nullable<string>;
+    memo : string;
+}
+
+interface Info {
+    stCd    : string;
+    estiDt  : string;
+    conDt   : string;
+    deliDt  : string;
+    insTime : string;
+    insUser : string;
+}
+
+interface Pay {
+    totalPayAmt : number;
+    payGb       : string;
+    payAmt      : number;
     memo        : string;
 }
 
@@ -32,18 +48,42 @@ const getPayList = (): PayList[] => {
         {name : 'itemAmt',      amtGb : '', title: '상품 금액',         amt: 0, red: false, blue: false, memo : ''},
         {name : 'itemTax',      amtGb : '', title: '부가세',            amt: 0, red: false, blue: false, memo : ''},
         {name : 'shapeAmt',     amtGb : '', title: '형상 금액',         amt: 0, red: false, blue: false, memo : ''},
-        {name : 'heightAmt',    amtGb : '', title: '세로길이 추가금액',  amt: 0, red: false, blue: false, memo : ''}
+        {name : 'heightAmt',    amtGb : '', title: '세로길이 추가금액',  amt: 0, red: false, blue: false, memo : ''},
+        {name : 'addAmt',       amtGb : '001', title: '추가',              amt: 0, red: true, blue: false, memo : ''},
+        {name : 'dcAmt',        amtGb : '002', title: '할인',              amt: 0, red: true, blue: false, memo : ''},
+        {name : 'cutAmt',       amtGb : '003', title: '절삭 할인',         amt: 0, red: true, blue: false, memo : ''},
+        {name : 'conAmt',       amtGb : '004', title: '계약 선금',         amt: 0, red: false, blue: true, memo : ''},
+        {name : 'lastAddAmt',   amtGb : '005', title: '최종 추가',         amt: 0, red: true, blue: false, memo : ''},
+        {name : 'lastDcAmt',    amtGb : '006', title: '최종 할인',         amt: 0, red: true, blue: false, memo : ''},
+        {name : 'payAmt',       amtGb : '007', title: '결제 금액',         amt: 0, red: false, blue: true, memo : ''}
     ]
 }
 
-const getOrder = (): Order => {
+const getAmtInfo = (): AmtInfo => {
     return {
-        ordDt       : getConvertDate(new Date(), 'yyyy-MM-dd'),
-        outDt       : getConvertDate(getAddDate(3), 'yyyy-MM-dd'),
-        shippingGb  : '001',
-        zip         : null,
-        addr        : '',
-        addrDetail  : '',
+        unit : 'F',
+        val  : null,
+        amt  : null,
+        memo : ''
+    }
+}
+
+const getInfo = (): Info => {
+    return {
+        stCd    : '',
+        estiDt  : '',
+        conDt   : '',
+        deliDt  : '',
+        insTime : '',
+        insUser : ''
+    }
+}
+
+const getPay = (): Pay => {
+    return {
+        totalPayAmt : 0,
+        payGb       : '001',
+        payAmt      : 0,
         memo        : ''
     }
 }
@@ -52,48 +92,29 @@ interface State {
     edCd        : string;
     list        : [];
     payList     : PayList[];
-    sysInfo     : Order;
-    outInfo     : Order;
+    dcInfo      : AmtInfo;
+    addInfo     : AmtInfo;
+    info        : Info;
+    pay         : Pay;
 }
 
-export const useOrderStore = defineStore('order', {
+export const usePayStore = defineStore('pay', {
     state: (): State => ({
         edCd        : '',
         list        : [],
         payList     : getPayList(),
-        sysInfo     : getOrder(),
-        outInfo     : getOrder()
+        dcInfo      : getAmtInfo(),
+        addInfo     : getAmtInfo(),
+        info        : getInfo(),
+        pay         : getPay()
     }),
-    getters : {
-        totalAmt : (state) => {
-            return state.payList.reduce((acc, cur) => acc + cur.amt, 0);
-        }
-    },
     actions : {
-        async getData()
-        {
-            try
-            {
-                const instance  = await getAxiosData();
-                const res       = await instance.post(`https://data.planorder.kr/orderV1/getData`);
-    
-                console.log(res);
-
-                this.sysInfo.zip        = res.data['info']['zip'];
-                this.sysInfo.addr       = res.data['info']['addr'];
-                this.sysInfo.addrDetail = res.data['info']['addrDetail'];
-            }
-            catch(e)
-            {
-                console.log(e);
-            }
-        },
         async getList(params)
         {
             try
             {
                 const instance  = await getAxiosData();
-                const res       = await instance.post(`https://data.planorder.kr/orderV1/getList`, params);
+                const res       = await instance.post(`https://data.planorder.kr/payV1/getList`, params);
 
                 console.log(res);
                 const list = [];
@@ -207,7 +228,7 @@ export const useOrderStore = defineStore('order', {
                                     productTitle : order.productTitle,
                                     colorTitle   : order.colorTitle,
                                     showDelete   : false,
-                                    amt          : Number(order.totalPurcAmt) + Number(order.totalPurcTax),
+                                    amt          : Number(order.totalSaleAmt) + Number(order.totalSaleTax),
                                     isRed        : false,
                                     columns      : getCardColumns(order.unit),
                                     rows         : rows,
@@ -229,6 +250,23 @@ export const useOrderStore = defineStore('order', {
                 this.getItemAmt('itemTax', Number(res.data['itemTax']));
                 this.getItemAmt('shapeAmt', Number(res.data['shapeAmt']));
                 this.getItemAmt('heightAmt', Number(res.data['heightAmt']));
+
+                res.data['amtList'].map((amt) => {
+                    this.getPayAmt(amt['amtGb'], Number(amt['amt']), amt['memo'])
+                });
+
+                const [hours, minutes] = res.data['info']['insTime'].split(':').map(Number);
+
+                const info = {
+                    stCd    : res.data['info']['stCd'],
+                    estiDt  : res.data['info']['estiDt'],
+                    conDt   : res.data['info']['conDt'],
+                    deliDt  : res.data['info']['deliDt'],
+                    insTime : `${hours}시간 ${minutes}분`,
+                    insUser : res.data['info']['insUser']
+                }
+
+                this.info = info;
             }
             catch(e)
             {
@@ -244,38 +282,36 @@ export const useOrderStore = defineStore('order', {
                 item.amt = Number(amt);
             }
         },
+        getPayAmt(amtGb: string, amt: number, memo: string)
+        {
+            const item = this.payList.find(item => item.amtGb === amtGb);
+            
+            if(item)
+            {
+                item.amt  = Number(amt);
+                item.memo = memo;
+            }
+        },
+        getAmtInfo(name: string, info: AmtInfo)
+        {
+            this[name] = info;
+        },
         getEdCd(edCd: string)
         {
             this.edCd = edCd;
-        },
-        getSysInfoAddrReset()
-        {
-            this.sysInfo.zip    = null;
-            this.sysInfo.addr   = '';
-        },
-        getSysInfoReset()
-        {
-            this.sysInfo = getOrder();
-        },
-        getOutInfoAddrReset()
-        {
-            this.outInfo.zip    = null;
-            this.outInfo.addr   = '';
-        },
-        getOutInfoReset()
-        {
-            this.outInfo = getOrder();
         },
         getReset()
         {
             this.list        = [];
             this.payList     = getPayList();
-            this.sysInfo     = getOrder();
-            this.outInfo     = getOrder();
+            this.dcInfo      = getAmtInfo();
+            this.addInfo     = getAmtInfo();
+            this.info        = getInfo();
+            this.pay         = getPay();
         }
     },
     persist: {
-        key     : 'order',
+        key     : 'pay',
         storage : localStorage,
         paths   : ['edCd']
     }

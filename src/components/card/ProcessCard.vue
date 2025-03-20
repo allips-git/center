@@ -122,7 +122,7 @@ const getDateAndTime = (date) => {
 
 const getPayInfo = () => {
     esti.getEmCd(props['info']['emCd']);
-    router.push({ path: '/customer/orderList' })
+    router.push({ path: '/customer/payList' })
 }
 
 const getFirstBtnText = () => {
@@ -178,11 +178,11 @@ const getFirstBtnClick = () => {
         case '003':
             router.push({ path : '/customer/conMate' });
         break;
-        case '006': case '012':
+        case '006': 
             router.push({ path: '/customer/orderList' });
         break;
-        case '011':
-            router.push({ path: '/customer/orderList' });
+        case '012': case '011':
+            router.push({ path: '/customer/payList' });
         break;
     }
 }
@@ -233,7 +233,7 @@ const getSecondBtnClick = () => {
             });
         break;
         case '011': case '012':
-            router.push({ path: '/customer/orderList' });
+            router.push({ path: '/customer/payList' });
         break;
     }
 }
@@ -291,6 +291,16 @@ const getProcess = (value: string) => {
                 alert('계약 진행 후 확인 가능합니다.');
             }
         break;
+        case 'O':
+            if(props.info['stCd'] !== '002')
+            {
+                router.push({ path : '/customer/orderList' });
+            }
+            else
+            {
+                alert('계약 완료 후 확인 가능합니다.');
+            }
+        break;
         case 'T':
         break;
         case 'N':
@@ -341,6 +351,7 @@ const getProcess = (value: string) => {
 const moreBtnList = ref([
     { name: '견적서 발송', value : 'E' },
     { name: '계약서 발송', value : 'C' },
+    { name: '발주서 보기', value : 'O' },
     { name: '네비게이션', value : 'T' },
     { name: '명세표 취소', value : 'N' }
 ]);

@@ -23,8 +23,8 @@
         <p class="px-3 py-px text-white rounded-full bg-sky-500">{{ calendar['edit']['tel'] }}</p>
         <p class="px-3 py-px text-white rounded-full bg-sky-500">{{ calendar['edit']['addr'] }}</p>
         <p>상세주소 : {{ calendar['edit']['addrDetail'] }}</p>
-        <p v-if="calendar['edit']['stCd'] === '006' || calendar['edit']['stCd'] === '011'">설치 예상시간 : {{ calendar['edit']['insTime'] }}</p>
-        <p v-if="calendar['edit']['stCd'] === '006' || calendar['edit']['stCd'] === '011'">설치 수량 : {{ calendar['edit']['insCnt'] }}</p>
+        <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 예상시간 : {{ calendar['edit']['insTime'] }}</p>
+        <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 수량 : {{ calendar['edit']['insCnt'] }}</p>
     </div>
     <div class="w-full px-3 mt-4 mb-5 ml-4 border-l-2 border-gray-300 min-h-12">
         <p class="text-gray-400">{{ calendar['edit']['memo'] }}</p>

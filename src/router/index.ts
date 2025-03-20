@@ -1,12 +1,6 @@
 import { createWebHistory, createRouter, } from "vue-router";
 import { usePopupStore, useLoginStore } from '@/store';
 
-// RouteMeta 인터페이스 정의
-interface RouteMeta {
-    showTopHeader?: boolean; // showTopHeader 메타 필드 정의
-    showAppFooter?: boolean
-  }
-
 import Index from "@/views/index.vue";
 import Login from "@/views/login/LoginPage.vue";
 import Agree from "@/views/login/JoinAgree.vue";
@@ -24,6 +18,7 @@ import EstiDoc from "@/views/customer/EstiDoc.vue";
 import ConmateModal from "@/views/customer/ConmateModal.vue";
 import ConDoc from "@/views/customer/ConDoc.vue";
 import CustomerOrderList from "@/views/customer/OrderList.vue";
+import CustomerPayList from "@/views/customer/PayList.vue";
 import OutOrderDoc from "@/views/customer/OutOrderDoc.vue";
 import OutOrderMateModal from "@/views/customer/OutOrderMateModal.vue";
 import FactoryList from "@/views/factory/FactoryList.vue";
@@ -187,6 +182,12 @@ const routes = [
         name: "CustomerOrderList",
         component: CustomerOrderList,
         meta: { title: '발주서' }
+    },
+    {
+        path: "/customer/payList",
+        name: "CustomerPayList",
+        component: CustomerPayList,
+        meta: { title: '계약서' }
     },
     {
         path: "/customer/outOrderDoc",
@@ -425,7 +426,8 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
-    scrollBehavior(to, from, savedPosition) {
+    scrollBehavior() 
+    {
         return { top: 0 }; // 페이지 변경 시 항상 최상단으로 스크롤
     }
 });
