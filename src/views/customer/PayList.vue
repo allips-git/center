@@ -1,5 +1,5 @@
 <template>
-    <BackHeader title="결제서" />
+    <BackHeader title="계약서" />
     <main class="main-bottom-fixed-pd">
         <div class="flex flex-col gap-5 px-4">
             <TableCard v-for="(table, index) in pay['list']" :key="index" :title="table.title" :cards="table.cardLists"
