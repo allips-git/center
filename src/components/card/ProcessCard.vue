@@ -122,7 +122,7 @@ const getDateAndTime = (date) => {
 
 const getPayInfo = () => {
     esti.getEmCd(props['info']['emCd']);
-    router.push({ path: '/customer/orderList' })
+    router.push({ path: '/customer/payList' })
 }
 
 const getFirstBtnText = () => {
@@ -178,11 +178,11 @@ const getFirstBtnClick = () => {
         case '003':
             router.push({ path : '/customer/conMate' });
         break;
-        case '006': case '012':
+        case '006': 
             router.push({ path: '/customer/orderList' });
         break;
-        case '011':
-            router.push({ path: '/customer/orderList' });
+        case '012': case '011':
+            router.push({ path: '/customer/payList' });
         break;
     }
 }
@@ -233,7 +233,7 @@ const getSecondBtnClick = () => {
             });
         break;
         case '011': case '012':
-            router.push({ path: '/customer/orderList' });
+            router.push({ path: '/customer/payList' });
         break;
     }
 }

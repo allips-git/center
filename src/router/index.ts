@@ -24,6 +24,7 @@ import EstiDoc from "@/views/customer/EstiDoc.vue";
 import ConmateModal from "@/views/customer/ConmateModal.vue";
 import ConDoc from "@/views/customer/ConDoc.vue";
 import CustomerOrderList from "@/views/customer/OrderList.vue";
+import CustomerPayList from "@/views/customer/PayList.vue";
 import OutOrderDoc from "@/views/customer/OutOrderDoc.vue";
 import OutOrderMateModal from "@/views/customer/OutOrderMateModal.vue";
 import FactoryList from "@/views/factory/FactoryList.vue";
@@ -187,6 +188,12 @@ const routes = [
         name: "CustomerOrderList",
         component: CustomerOrderList,
         meta: { title: '발주서' }
+    },
+    {
+        path: "/customer/payList",
+        name: "CustomerPayList",
+        component: CustomerPayList,
+        meta: { title: '결제서' }
     },
     {
         path: "/customer/outOrderDoc",
