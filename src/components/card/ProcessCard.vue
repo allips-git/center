@@ -179,7 +179,7 @@ const getFirstBtnClick = () => {
             router.push({ path : '/customer/conMate' });
         break;
         case '006': 
-            router.push({ path: '/customer/orderList' });
+            router.push({ path: '/customer/payList' });
         break;
         case '012': case '011':
             router.push({ path: '/customer/payList' });
