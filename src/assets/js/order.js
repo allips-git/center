@@ -1,3 +1,63 @@
+/**
+ * @description 반올림 단위 계산
+ * @author 김원명, @version 1.0, @last date 2025/04/02
+ * @data = {
+ * 		roundGb : '반올림 단위 값',
+ * 		value	: '계산할 값'
+ * }
+ * @return 반올림 갑 적용된 값
+ */
+export function getRoundCalc (value, roundGb='001') 
+{
+	let calcValue	= 0;
+	let decimalPart = value - Math.trunc(value);
+
+	switch(roundGb)
+	{
+		case '001':	/** 1단위 */
+			calcValue = Math.round(value);
+		break;
+		case '002':	/** 0.5단위 */
+			if(decimalPart < 0.25)
+			{
+				/** 0.25 값 미만일 시 버림 처리 */
+				calcValue = Math.floor(value);
+			}
+			else if(decimalPart >= 0.25 && decimalPart < 0.75)
+			{
+				/** 0.25 값 이상 && 0.75 값 미만일 시 0.5 값 처리 */
+				calcValue = Math.floor(value) + 0.5;
+			}
+			else if(decimalPart >= 0.75)
+			{
+				/** 0.75 값 이상일 시 1 값 처리 */
+				calcValue = Math.ceil(value);
+			}
+			else
+			{
+				/** 나머지 값 그대로 (혹시 몰라 처리) */
+				calcValue = value;
+			}
+		break;
+		case '003': /** 0.1단위 */
+		{
+			let secondDecimalPlace = Math.round((decimalPart * 100) % 10);
+			if (secondDecimalPlace >= 5) 
+			{
+				/** 소수점 두 번째 자리가 5 이상이면 반올림 */
+				calcValue = Math.floor(value * 10 + 0.5) / 10;
+			}
+			else 
+			{
+				/** 그렇지 않으면 버림 처리 */
+				calcValue = Math.floor(value * 10) / 10;
+			}
+		}
+		break;
+	}
+
+	return Number(calcValue);
+}
 
 /**
  * @description EA 계산
@@ -17,9 +77,10 @@ export function getEa(data)
  * @description 가로,세로 길이에 따른 회배 계산
  * @author 김원명, @version 1.0, @last date 2023/10/06
  * @data = {
- *      width  : '가로',
- *      height : '세로',
- *      size   : '규격'
+ *      width  	: '가로',
+ *      height 	: '세로',
+ *      size   	: '규격',
+ * 		roundGb	: '반올림 구분'
  * }
  * @return 계산된 회배 값
  * */
@@ -29,11 +90,11 @@ export function getHebe(data)
 
 	if(hebe > Number(data['size']))
     {
-		return Math.ceil(hebe * 10) / 10;
+		return getRoundCalc(hebe, data['roundGb']);
 	}
     else
     {
-		return Math.ceil(Number(data['size']) * 10) / 10;
+		return Number(data['size']);
 	}
 }
 
@@ -44,28 +105,29 @@ export function getHebe(data)
  *      width   : '가로',
  *      usage   : '원단 사용량',
  *      size    : '최소 야드 단위',
- *      los     : '완제품가공 로스'
+ *      los     : '완제품가공 로스',
+ * 		roundGb	: '반올림 구분'
  * }
  * @return 계산된 야드 값
  * */
 export function getYard(data) 
 {
 	if(Number(data['width']) > 0)
-    {
-		let yard = Math.round(((Number(data['width']) * Number(data['usage']) + Number(data['los'])) / 90) * 10) / 10;
+	{
+		let yard = (Number(data['width']) * Number(data['usage']) + Number(data['los'])) / 90;
 		let size = Number(data['size']);
 
 		if(yard > size)
-        {
-			return yard;
+		{
+			return getRoundCalc(yard, data['roundGb']);
 		}
-        else
-        {
+		else
+		{
 			return size;
 		}
 	}
-    else
-    {
+	else
+	{
 		return 0;
 	}
 }
@@ -78,28 +140,29 @@ export function getYard(data)
  *      usage   : '원단사용량',
  *      size    : '최소 폭 단위',
  *      los     : '폭당 가공로스',
- *      pokSpec : '원단폭 규격'
+ *      pokSpec : '원단폭 규격',
+ * 		roundGb	: '반올림 구분'
  * }
  * @return 계산된 폭 값
  * */
 export function getPok(data) 
 {
 	if(Number(data['width']) > 0)
-    {
-		let pok  = Math.round((Number(data['width']) * Number(data['usage']) + Number(data['los'])) / Number(data['pokSpec']));
+	{
+		let pok  = (Number(data['width']) * Number(data['usage']) + Number(data['los'])) / Number(data['pokSpec']);
 		let size = Number(data['size']);
 
 		if(pok > size)
-        {
-			return pok;
+		{
+			return getRoundCalc(pok, data['roundGb']);
 		}
-        else
-        {
+		else
+		{
 			return size;
 		}
 	}
-    else
-    {
+	else
+	{
 		return 0;
 	}
 }

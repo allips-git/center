@@ -15,13 +15,14 @@ export function getHebeCalc(common, blind)
     if(division === 1)
     {
         const data = {
-            width  : Number(common['width']),
-            height : Number(common['height']),
-            size   : Number(common['unitSize'])
+            width   : Number(common['width']),
+            height  : Number(common['height']),
+            size    : Number(common['unitSize']),
+            roundGb : common['roundGb']
         };
 
         hebe.push(getHebe(data));
-    }
+    } 
     else
     {
         blind['divSpec'].forEach(item => {
@@ -171,6 +172,7 @@ export function getCommonParams(common)
         unitSize    : common['unitSize'],
         saleUnit    : common['saleUnit'],
         purcUnit    : common['purcUnit'],
+        roundGb     : common['roundGb'],
         memo        : common['memo']
     }
 

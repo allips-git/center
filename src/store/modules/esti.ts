@@ -30,7 +30,9 @@ interface CommonInfo {
     purcUnit : Nullable<number>;
     dcUnit   : string;
     dcAmt    : Nullable<number>;
+    roundGb  : string;
     vat      : YnType;
+    vmRate   : number;
     memo     : string;
 }
 
@@ -199,6 +201,7 @@ const getCommonInfo = (): CommonInfo => {
         dcAmt    : null,    /** 할인 금액 */
         vat      : 'N',     /** 부가세 여부 (Y : 포함 / N : 미포함), 매입금액 계산용 */
         vmRate   : 0,       /** 부가세율, 매입금액 계산용 */
+        roundGb  : '001',   /** 반올림 구분 */
         memo     : ''       /** 지시사항 */
     }
 }
@@ -631,9 +634,10 @@ export const useEstiStore = defineStore('esti', {
                     height : this.common['height'],
                     handle : i === 0 ? 'L' : 'R',
                     size   : getHebe({
-                        width  : specInfo[i] !== undefined ? specInfo[i]['width'] : '',
-                        height : Number(this.common['height']),
-                        size   : Number(this.common['unitSize'])
+                        width   : specInfo[i] !== undefined ? specInfo[i]['width'] : '',
+                        height  : Number(this.common['height']),
+                        size    : Number(this.common['unitSize']),
+                        roundGb : this.common['roundGb']
                     })
                 }
         
@@ -659,9 +663,10 @@ export const useEstiStore = defineStore('esti', {
                 {
                     this.blind['divSpec'][i]['width'] = (i === (division-1) ? lastWidth : divisionWidth);
                     this.blind['divSpec'][i]['size']  = getHebe({
-                        width  : i === (division-1) ? lastWidth : divisionWidth,
-                        height : this.common['height'],
-                        size   : 0
+                        width   : i === (division-1) ? lastWidth : divisionWidth,
+                        height  : this.common['height'],
+                        size    : 0,
+                        roundGb : this.common['roundGb']
                     })
                 }
             }
@@ -669,9 +674,10 @@ export const useEstiStore = defineStore('esti', {
         getDivBlindWidth(index: number)
         {
             this.blind['divSpec'][index]['size']  = getHebe({
-                width  : this.blind['divSpec'][index]['width'],
-                height : Number(this.common['height']),
-                size   : 0
+                width   : this.blind['divSpec'][index]['width'],
+                height  : Number(this.common['height']),
+                size    : 0,
+                roundGb : this.common['roundGb']
             });
 
             const total = this.blind['divSpec'].reduce((acc, val) => acc + Number(val['width']), 0);
@@ -708,7 +714,8 @@ export const useEstiStore = defineStore('esti', {
                         width   : Number(this.common['width']),
                         usage   : Number(this.curtain['use']),
                         size    : Number(this.common['unitSize']),
-                        los     : this.curtain['los']
+                        los     : this.curtain['los'],
+                        roundGb : this.common['roundGb']
                     });
         
                     info = getYardCalc(this.common, this.curtain);
@@ -728,7 +735,8 @@ export const useEstiStore = defineStore('esti', {
                         usage   : Number(this.curtain['use']),
                         size    : Number(this.common['unitSize']),
                         pokSpec : this.curtain['pokSpec'],
-                        los     : this.curtain['los']
+                        los     : this.curtain['los'],
+                        roundGb : this.common['roundGb']
                     });
                     
                     info = getPokCalc(this.common, this.curtain);
