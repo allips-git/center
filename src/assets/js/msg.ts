@@ -429,3 +429,26 @@ export const outFactoryItemMsg = (params: OutFactoryItemMsg): { msg: string; id:
 
     return { msg : '', id : '', state : true };
 }
+
+
+interface CouponMsg {
+    cpNm    : string;
+    val     : string;
+}
+
+/**
+ * @description 쿠폰 저장 시 유효성 검사
+ */
+export const couponMsg = (params: CouponMsg): { msg: string; id: string, state: boolean } => {
+    if(params['cpNm'] === '')
+    {
+        return { msg : '쿠폰이름을을 입력해주세요.', id : 'cpNm', state : false };
+    }
+
+    if(!Number(params['val']) || Number(params['val'] === 0))
+    {
+        return { msg : '할인금액 또는 할인율을 입력해주세요.', id : 'val', state : false };
+    }
+
+    return { msg : '', id : '', state : true };
+}
