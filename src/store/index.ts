@@ -22,6 +22,7 @@ import { useAverageStore } from './modules/average';
 import { useCalendarStore } from './modules/calendar';
 import { useTimeStore } from './modules/time';
 import { useCostStore } from './modules/cost';
+import { useCouponStore } from './modules/coupon';
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
@@ -51,5 +52,6 @@ export {
     useAverageStore,
     useCalendarStore,
     useTimeStore,
-    useCostStore
+    useCostStore,
+    useCouponStore
 };

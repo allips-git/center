@@ -55,7 +55,6 @@ import MemberAuthSetting from "@/views/setting/MemberAuthSetting.vue";
 import MemberDetail from "@/views/setting/MemberDetail.vue";
 import MemberEdit from "@/views/setting/MemberEdit.vue";
 import CouponMenu from "@/views/setting/CouponMenu.vue";
-import CouponDetail from "@/views/setting/CouponDetail.vue";
 import SettingAuth from "@/views/setting/SettingAuth.vue";
 
 import Splash from "@/views/Splash.vue";
@@ -392,13 +391,6 @@ const routes = [
         name: "CouponMenu",
         component: CouponMenu,
         meta: { title: "할인 설정 쿠폰 목록" }    
-    },
-
-    {
-        path: "/setting/coupon_detail",
-        name: "CouponDetail",
-        component: CouponDetail,
-        meta: { title: "할인 설정 쿠폰 설정" }    
     },
 
     {
