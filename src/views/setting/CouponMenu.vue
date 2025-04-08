@@ -5,8 +5,8 @@
             <section class="form-gap-box">
                 <ul>
                     <!-- v-for -->
-                    <li v-for="(coupon, index) in coupon['list']" :key="index" class="flex items-center justify-between w-full px-5 py-4">
-                        <div class="flex items-center gap-4" @click="getInfo(coupon.cpCd)">
+                    <li v-for="(coupon, index) in coupon['list']" :key="index" class="flex items-center justify-between w-full px-5 py-4" @click="getInfo(coupon.cpCd)">
+                        <div class="flex items-center gap-4">
                             <div class="flex items-center gap-3 font-bold">
                                 <p class="">{{ coupon.cpNm }}</p>
                                 <span class="text-lg text-sky-400">{{ getCommas(Number(coupon.val)) }}{{ coupon.unit }}</span>
