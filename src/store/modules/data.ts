@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { getAxiosData } from '@/assets/js/function';
 
 export const useDataStore = defineStore('data', {
     state: () => {
@@ -106,7 +107,38 @@ export const useDataStore = defineStore('data', {
                 { value : '003' ,   label : '임대료' },
                 { value : '004' ,   label : '매장 운영비' },
                 { value : '005' ,   label : '기타' },
-            ]
+            ],
+            coupon : []
         };
     },
+    actions : {
+        /** 쿠폰 데이터 가져오기 */
+        async getCoupon()
+        {
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/api/commonData/getCoupon`);
+
+                console.log(res);
+
+                const list = [{ label : '선택취소', value : '', unit : 'P', val : '' }];
+
+                res.data['list'].map(item => {
+                    list.push({
+                        label   : item['label'],
+                        value   : item['value'],
+                        unit    : item['unit'],
+                        val     : item['val']
+                    });
+                });
+
+                this.coupon = list;
+            }
+            catch (e)
+            {
+                console.error(e);
+            }
+        }
+    }
 });

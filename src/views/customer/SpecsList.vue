@@ -17,7 +17,7 @@
                 <div class="flex flex-col gap-5 py-3 ">                    
                     <div class="relative flex items-center justify-center">
                         <p class="w-[100px] text-sm flex-none">할인 금액</p>
-                        <InputText class="*:!text-blue-500 inputNumber-color *:!rounded-sm" @click="getPopupOpen('disAmtSet')" :value="getAmtInfo('dcAmt')" readonly/>
+                        <InputText class="*:!text-blue-500 inputNumber-color *:!rounded-sm" @click="getDisAmtPopup" :value="getAmtInfo('dcAmt')" readonly/>
                         <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
                     </div>
 
@@ -101,16 +101,22 @@ import ToggleSwitch from 'primevue/toggleswitch';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router';
-import { usePopupStore, useEstiStore } from '@/store';
+import { useDataStore, usePopupStore, useEstiStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 import { getAmt, getAxiosData, getTokenOut } from '@/assets/js/function';
 
 const confirm   = useConfirm();
 const router    = useRouter();
+const data      = useDataStore();
 const popup     = usePopupStore();
 const esti      = useEstiStore();
 
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getDisAmtPopup = async () => {
+    await data.getCoupon();
+    getPopupOpen('disAmtSet');
+}
 
 const getEstiAdd = () => {
     esti.getType('I');

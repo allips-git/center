@@ -1,6 +1,9 @@
 <template>
     <div class="input-layout-box">
         <h1 class="mb-4 font-medium text-center">할인</h1>
+        <IftaLabel class="w-full">
+            <Select v-model="info['dcInfo']['cpCd']" :options="data['coupon']" optionLabel="label" optionValue="value" class="w-full" placeholder="쿠폰선택" @change="getCoupon"/>
+        </IftaLabel>
         <InputGroup class="">
             <InputGroupAddon class="custom-InputGroupAddon !overflow-hidden !rounded-sm">
                 <SelectButton v-model="info['dcInfo']['unit']" 
@@ -22,6 +25,7 @@
 </template>
 
 <script setup lang="ts">
+import Select from 'primevue/select';
 import IftaLabel from 'primevue/iftalabel';
 import InputNumber from 'primevue/inputnumber';
 import InputGroup from 'primevue/inputgroup';
@@ -38,7 +42,16 @@ const emit  = defineEmits(['getApply', 'getClose']);
 const data  = useDataStore();
 const info  = props['gubun'] === 'E' ? useEstiStore() : usePayStore();
 
-console.log(info);
+const getCoupon = () => {
+    const coupon        = info['dcInfo']['cpCd'];
+    const couponData    = data['coupon'].find((item) => item.value === coupon);
+
+    if(couponData)
+    {
+        info['dcInfo']['val']   = couponData.val;
+        info['dcInfo']['unit']  = couponData.unit;
+    }
+}
 
 const getDcInput = (amt: number) => {
     if(info['dcInfo']['unit'] === 'P' && amt > 100)
