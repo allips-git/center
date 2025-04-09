@@ -7,7 +7,7 @@
             <div class="relative flex items-center justify-center">
                 <p class="w-[100px] flex-none">할인 금액</p>
                 <InputNumber  class="*:!text-red-500 inputNumber-color *:w-full" :modelValue="getAmtInfo('lastDcAmt')" placeholder="할인 금액을 입력하세요" 
-                readonly @click="getPopupOpen('disAmtSet')"
+                readonly @click="getDisAmtPopup"
                 />
                 <span class="absolute text-sm text-red-500 right-4 bottom-2.5">원</span>
             </div>
@@ -94,6 +94,11 @@ const esti      = useEstiStore();
 const pay       = usePayStore();
 
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getDisAmtPopup = async () => {
+    await data.getCoupon();
+    getPopupOpen('disAmtSet');
+}
 
 const getAmtInfo = (name) => {
     const info = pay['payList'].find(item => item.name === name);

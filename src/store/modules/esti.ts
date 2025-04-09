@@ -125,6 +125,7 @@ interface PayList {
 }
 
 interface AmtInfo {
+    cpCd : string;
     unit : AmtUnitType;
     val  : Nullable<string>;
     amt  : Nullable<string>;
@@ -322,6 +323,7 @@ const getPayList = (): PayList => {
 
 const getAmtInfo = (): AmtInfo => {
     return {
+        cpCd : '',
         unit : 'F',
         val  : null,
         amt  : null,
