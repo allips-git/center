@@ -452,3 +452,35 @@ export const couponMsg = (params: CouponMsg): { msg: string; id: string, state: 
 
     return { msg : '', id : '', state : true };
 }
+
+interface SettingMsg {
+    cpNm    : string;
+    val     : string;
+}
+
+/**
+ * @description 매장 설정 시 유효성 검사
+ */
+export const settingMsg = (params: SettingMsg): { msg: string; id: string, state: boolean } => {
+    if(params['ceNm'] === '')
+    {
+        return { msg : '매장이름을 입력해주세요.', id : 'ceNm', state : false };
+    }
+
+    if(params['addr'] === '')
+    {
+        return { msg : '주소를 검색해주세요.', id : 'addr', state : false };
+    }
+
+    if(params['addrDetail'] === '')
+    {
+        return { msg : '상세주소를 입력해주세요.', id : 'addrDetail', state : false };
+    }
+
+    if(params['tel'] === '')
+    {
+        return { msg : '대표 전화번호를 입력해주세요.', id : 'tel', state : false };
+    }
+
+    return { msg : '', id : '', state : true };
+}
