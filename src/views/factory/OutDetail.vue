@@ -29,7 +29,7 @@
             @update:visible="getPopupClose('outFactoryItemList', true)">
             <template #header>
                 <div class="modal-backheader">
-                    <Button @click="popup['pop']['outFactoryItemList'] = false" severity="contrast" text icon="pi pi-arrow-left"/>
+                    <Button @click="getPopupClose('outFactoryItemList', true)" severity="contrast" text icon="pi pi-arrow-left"/>
                     <h2 class="modal-backheader-title">외주 공장 제품정보</h2>
                 </div>
             </template>

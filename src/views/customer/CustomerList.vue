@@ -48,7 +48,7 @@
         @update:visible="getPopClose(true, 'clientSet')">
         <template #header>
             <div class="modal-backheader">
-                <Button @click="popup['pop']['clientSet'] = false" severity="contrast" text icon="pi pi-arrow-left"/>
+                <Button @click="getPopClose(true, 'clientSet')" severity="contrast" text icon="pi pi-arrow-left"/>
                 <h2 class="modal-backheader-title">고객등록</h2>
             </div>
         </template>

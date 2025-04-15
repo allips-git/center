@@ -53,7 +53,6 @@ import memberMng from "@/views/setting/MemberMng.vue";
 import MemberAuthSetting from "@/views/setting/MemberAuthSetting.vue";
 
 import MemberDetail from "@/views/setting/MemberDetail.vue";
-import MemberEdit from "@/views/setting/MemberEdit.vue";
 import CouponMenu from "@/views/setting/CouponMenu.vue";
 import SettingAuth from "@/views/setting/SettingAuth.vue";
 
@@ -377,13 +376,6 @@ const routes = [
         name: "MemberAuthSetting",
         component: MemberAuthSetting,    
         meta: { title: "맴버 권한 설정" }    
-    },
-
-    {
-        path: "/setting/member_edit",
-        name: "MemberEdit",
-        component: MemberEdit,
-        meta: { title: "맴버 설정" }    
     },
 
     {

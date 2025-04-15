@@ -4,12 +4,14 @@ import axios from 'axios';
 interface State {
     token   : null | string;
     name    : string;
+    rank    : C | M | B | C;
 }
 
 export const useLoginStore = defineStore('login', {
     state: (): State => ({
         token   : null,
-        name    : ''
+        name    : '',
+        rank    : ''
     }),
     actions: {
         async getLogin(params) {
@@ -19,6 +21,7 @@ export const useLoginStore = defineStore('login', {
                 console.log(res);
                 this.token = res.data['access_token'];
                 this.name  = res.data['name'];
+                this.rank  = res.data['rank'];
 
                 return true;
             }

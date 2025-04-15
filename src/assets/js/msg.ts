@@ -484,3 +484,45 @@ export const settingMsg = (params: SettingMsg): { msg: string; id: string, state
 
     return { msg : '', id : '', state : true };
 }
+
+interface MemberMsg {
+    id      : string;
+    name    : string;
+    tel     : string;
+    addr    : string;
+}
+
+/**
+ * @description 멤버 저장 시 유효성 검사
+ */
+export const memberMsg = (params: MemberMsg): { msg: string; id: string, state: boolean } => {
+    if(params['id'] === '')
+    {
+        return { msg : 'ID를 입력해주세요.', id : 'id', state : false };
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const stat       = emailRegex.test(params['id']);
+
+    if(!stat)
+    {
+        return { msg : '잘못된 이메일 형식입니다.', id : 'id', state : false };
+    }
+
+    if(params['name'] === '')
+    {
+        return { msg : '이름을 입력해주세요.', id : 'name', state : false };
+    }
+
+    if(params['tel'] === '')
+    {
+        return { msg : '대표 전화번호를 입력해주세요.', id : 'tel', state : false };
+    }
+
+    if(params['addr'] === '')
+    {
+        return { msg : '주소를 검색해주세요.', id : 'addr', state : false };
+    }
+
+    return { msg : '', id : '', state : true };
+}

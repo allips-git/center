@@ -102,6 +102,12 @@
   .capsuel_sky{
     @apply  px-2 py-0.5 pb-[2.5px] text-white rounded-full bg-sky-500 text-11 flex items-center justify-center
   }
+  .capsuel_gray{
+    @apply  px-2 py-0.5 pb-[2.5px] text-white rounded-full bg-gray-500 text-11 flex items-center justify-center
+  }
+  .capsuel_yellow{
+    @apply  px-2 py-0.5 pb-[2.5px] text-white rounded-full bg-yellow-400 text-11 flex items-center justify-center
+  }
   .inputNumber-color{
     @apply *:!text-right w-full  *:!pr-8 font-bold
   }
