@@ -60,7 +60,7 @@
         @update:visible="getPopupClose('itemList', true)">
         <template #header>
             <div class="modal-backheader">
-                <Button @click="popup['pop']['itemList'] = false" severity="contrast" text icon="pi pi-arrow-left"/>
+                <Button @click="getPopClose(true, 'itemList')" severity="contrast" text icon="pi pi-arrow-left"/>
                 <h2 class="modal-backheader-title">제품선택</h2>
             </div>
         </template>
@@ -72,7 +72,7 @@
         @update:visible="getPopupClose('itemSet', true)">
         <template #header>
             <div class="modal-backheader">
-                <Button @click="popup['pop']['itemSet'] = false" severity="contrast" text icon="pi pi-arrow-left"/>
+                <Button @click="getPopupClose('itemSet', true)" severity="contrast" text icon="pi pi-arrow-left"/>
                 <h2 class="modal-backheader-title">제품선택</h2>
             </div>
         </template>

@@ -31,6 +31,7 @@ interface Pop {
     calendarEdit        : boolean;
     staticSet           : boolean;
     couponDetail        : boolean;
+    memberSet           : boolean;
 }
 
 interface State {
@@ -65,7 +66,8 @@ const getPopInfo = (): Pop => {
         calendarDetail      : false,
         calendarEdit        : false,
         staticSet           : false,
-        couponDetail        : false
+        couponDetail        : false,
+        memberSet           : false
     }
 }
 

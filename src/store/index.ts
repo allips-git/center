@@ -6,6 +6,7 @@ import { useDataStore } from './modules/data';
 import { usePopupStore } from './modules/popup';
 import { useJoinStore } from './modules/join';
 import { useLoginStore } from './modules/login';
+import { useInviteJoinStore } from './modules/inviteJoin';
 import { useMainStore } from './modules/main';
 import { useClientStore } from './modules/client';
 import { useProductStore } from './modules/product';
@@ -24,6 +25,7 @@ import { useTimeStore } from './modules/time';
 import { useCostStore } from './modules/cost';
 import { useCouponStore } from './modules/coupon';
 import { useSettingStore } from './modules/setting';
+import { useMemberStore } from './modules/member';
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
@@ -38,6 +40,7 @@ export {
     usePopupStore,
     useJoinStore,
     useLoginStore,
+    useInviteJoinStore,
     useMainStore,
     useClientStore,
     useProductStore,
@@ -55,5 +58,6 @@ export {
     useTimeStore,
     useCostStore,
     useCouponStore,
-    useSettingStore
+    useSettingStore,
+    useMemberStore
 };

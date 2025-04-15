@@ -30,7 +30,7 @@
     @update:visible="getPopClose(true, 'outFactoryItemSet')">
     <template #header>
         <div class="modal-backheader">
-            <Button @click="popup['pop']['outFactoryItemSet'] = false" severity="contrast" text icon="pi pi-arrow-left"/>
+            <Button @click="getPopClose(true, 'outFactoryItemSet')" severity="contrast" text icon="pi pi-arrow-left"/>
             <h2 class="modal-backheader-title">외주공장 제품관리</h2>
         </div>
     </template>

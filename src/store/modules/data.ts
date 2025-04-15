@@ -108,7 +108,12 @@ export const useDataStore = defineStore('data', {
                 { value : '004' ,   label : '매장 운영비' },
                 { value : '005' ,   label : '기타' },
             ],
-            coupon : []
+            coupon : [],
+            rank   : [
+                { value : 'M', label : '매니저' },
+                { value : 'B', label : '기본' },
+                { value : 'L', label : '최소' }
+            ]
         };
     },
     actions : {

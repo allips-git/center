@@ -76,7 +76,7 @@
         @update:visible="getPopupClose('sysFactoryItemList', true)">
         <template #header>
             <div class="modal-backheader">
-                <Button @click="popup['pop']['sysFactoryItemList'] = false" severity="contrast" text icon="pi pi-arrow-left"/>
+                <Button @click="getPopupClose('sysFactoryItemList', true)" severity="contrast" text icon="pi pi-arrow-left"/>
                 <h2 class="modal-backheader-title">제품정보</h2>
             </div>
         </template>
@@ -87,7 +87,7 @@
         @update:visible="getPopupClose('sysFactoryItemSet', true)">
         <template #header>
             <div class="modal-backheader">
-                <Button @click="popup['pop']['sysFactoryItemSet'] = false" severity="contrast" text icon="pi pi-arrow-left"/>
+                <Button @click="getPopupClose('sysFactoryItemSet', true)" severity="contrast" text icon="pi pi-arrow-left"/>
                 <h2 class="modal-backheader-title">제품관리</h2>
             </div>
         </template>
