@@ -127,7 +127,7 @@
                 </div>
             </div>
         </section>
-        <section class="">
+        <!-- <section class="">
             <div class="main-card-container-box pt-[1.375rem] px-4 !pb-[1.875rem]">
                 <div class="main-card-tilte-box">
                     <h2 class="flex items-center justify-center gap-2 text-18">
@@ -147,7 +147,7 @@
                     </li>
                 </ul>
             </div>
-        </section>
+        </section> -->
     </aside>
 </div>  
 </template>

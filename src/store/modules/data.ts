@@ -113,6 +113,15 @@ export const useDataStore = defineStore('data', {
                 { value : 'M', label : '매니저' },
                 { value : 'B', label : '기본' },
                 { value : 'L', label : '최소' }
+            ],
+            parking : [
+                { value : 'Y', label : '무료' },
+                { value : 'N', label : '불가능' },
+                { value : 'C', label : '유료' },
+                { value : 1, label : '1시간' },
+                { value : 2, label : '2시간' },
+                { value : 3, label : '3시간' },
+                { value : 4, label : '4시간' }
             ]
         };
     },
