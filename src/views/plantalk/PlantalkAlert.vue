@@ -68,8 +68,7 @@ import PlantalkMessage from "@/views/include/plantalk/PlantalkMessage.vue";
 import IconAvatar from '@/components/icons/IconAvatar.vue';
 import IconMessage from '@/components/icons/IconMessage.vue';
 import IconNotice from '@/components/icons/IconNotice.vue';
-import BackHeader from '@/components/layouts/BackHeader.vue'
-import Tag from 'primevue/tag';
+import BackHeader from '@/components/layouts/BackHeader.vue';
 import Popover from 'primevue/popover';
 import CalenaderEdit from '../include/calendar/CalenaderEdit.vue';
 
