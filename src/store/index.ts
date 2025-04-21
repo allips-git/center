@@ -26,7 +26,6 @@ import { useCostStore } from './modules/cost';
 import { useCouponStore } from './modules/coupon';
 import { useSettingStore } from './modules/setting';
 import { useMemberStore } from './modules/member';
-import { useKakaoStore } from './modules/kakao';
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
@@ -60,6 +59,5 @@ export {
     useCostStore,
     useCouponStore,
     useSettingStore,
-    useMemberStore,
-    useKakaoStore
+    useMemberStore
 };

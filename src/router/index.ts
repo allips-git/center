@@ -31,6 +31,7 @@ import SysProduct from "@/views/factory/ProductInfo.vue";
 import PlantalkMain from "@/views/plantalk/PlantalkMain.vue";
 import PlantalkRes from "@/views/plantalk/PlantalkAlert.vue"
 // import PlantalkSend from "@/views/plantalk/PlantalkMessage.vue"
+import PlantalkDetail from "@/views/plantalk/ScheduleAlert.vue";
 import MessageView from "@/views/message/MessageView.vue";
 import SettingView from "@/views/setting/SettingView.vue";
 import TimeSetting from "@/views/setting/TimeSetting.vue";
@@ -258,6 +259,12 @@ const routes = [
     //     component: PlantalkSend,
     //     meta: { title: '플랜톡 발송 내역' }
     // },
+    {
+        path: "/plantalk/detail",
+        name: "PlantalkDetail",
+        component: PlantalkDetail,
+        meta: { title: '플랜톡 상세' }
+    },
     {
         path: "/acc",
         name: "AccView",
