@@ -97,12 +97,12 @@
                             </div>
                         </div>
                     </div>
-                    <Button label="설정" severity="secondary" size="small" class=""></Button>
+                    <Button v-if="main['kakaoYn'] === 'Y'" label="설정" severity="secondary" size="small" class="" @click="router.push({ path : '/plantalk' });"></Button>
                 </div>
                 <div class="main-card-container-box-padding">
-                    <div v-if="main['kakaoYn'] === 'N'">
+                    <div v-if="!main['kakaoYn'] || main['kakaoYn'] === 'N'">
                         <p class="bg-yellow-100 rounded py-2 px-2.5 text-sm w-full ">일일이 세팅하지 말고, 꼭 필요한 예약 메시지를 자동으로 고객에게 전달해 보세요!</p>
-                        <Button label="플랜톡 사용하기" class="w-full mt-5" ></Button>
+                        <Button label="플랜톡 사용하기" class="w-full mt-5" @click="getPlanTalk"></Button>
                     </div>        
                     <ul v-else class="grid grid-cols-2 gap-2 *:bg-gray-50 *:p-3 *:rounded-lg *:flex *:flex-col *:gap-px text-10 mt-[0.875rem]">
                         <li>
@@ -153,20 +153,45 @@
 </template>
 
 <script setup lang="ts">
+import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue';
-import { useMainStore, useClientStore } from '@/store';
+import { useMainStore, useClientStore, useKakaoStore } from '@/store';
 import { useRouter } from 'vue-router';
-import PaymentModal from './include/customer/PaymentModal.vue';
 import IconAddCircle from '@/components/icons/IconAddCircle.vue';
 import IconLeftArrow from '@/components/icons/IconLeftArrow.vue';
 
-const main   = useMainStore();
-const client = useClientStore();
-const router = useRouter();
+const confirm   = useConfirm();
+const main      = useMainStore();
+const client    = useClientStore();
+const kakao     = useKakaoStore();
+const router    = useRouter();
 
 const getStCd = async (stCd: string) => {
     await client.getStCd(stCd);
     router.push({ path : '/customer/list' });
+}
+
+const getPlanTalk = () => {
+    confirm.require({
+        message     : '카카오톡을 사용하시겠습니까?',
+        header      : '카카오톡',
+        rejectProps : {
+            label       : '취소',
+            severity    : 'secondary',
+            outlined    : true
+        },
+        acceptProps : {
+            label: '확인'
+        },
+        accept : async () => {
+            const data = await kakao.getKakaoActive();
+
+            if(data['result'])
+            {
+                main.getData();
+            }
+        }
+    });
 }
 
 onMounted(() => {

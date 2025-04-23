@@ -40,53 +40,61 @@ export const getConvertDate = (date: Date, type: string): string => {
     const s  = String(date.getSeconds()).padStart(2, '0');
     const yy = y.toString().substring(2, 4);
 
-	const weekStr = ['일', '월', '화', '수', '목', '금', '토'];
-	const w       = weekStr[date.getDay()];
+    const weekStr = ['일', '월', '화', '수', '목', '금', '토'];
+    const w       = weekStr[date.getDay()];
 
     let result: string;
+
+    const hourNum = date.getHours();
+    const ampm = hourNum < 12 ? '오전' : '오후';
+    const hour12 = hourNum % 12 === 0 ? 12 : hourNum % 12;
+    const hour12Str = hour12 < 10 ? '0' + hour12 : hour12.toString();
 
     switch (type) {
         case 'aver':
             result = `${y}년 ${m}월`;
-        break;
+            break;
         case 'accWeek':
             result = `${m}월 ${d}일 (${w})`;
-        break;
+            break;
         case 'monthCalendar':
             result = `${y}년 ${m}월 ${d}일 (${w})`;
-        break;
+            break;
         case 'monthCalendarInfo':
             result = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-        break;
+            break;
         case 'dayCalendar':
             result = `${y}-${m}-${d}T${h}:${i}`;
-        break;
-		case "yyyymm":
-			result = y+''+m;
-		break;
-        case "yyyy-mm-dd":
+            break;
+        case 'yyyymm':
+            result = y+''+m;
+            break;
+        case 'yyyy-mm-dd':
             result = `${y}-${m}-${d}`;
             break;
-        case "yy-mm-dd":
+        case 'yy-mm-dd':
             result = `${yy}-${m}-${d}`;
             break;
-        case "yy.mm.dd":
+        case 'yy.mm.dd':
             result = `${yy}.${m}.${d}`;
             break;
-        case "mm%dd%w%" :
+        case 'mm%dd%w%':
             result = m+'.'+d+'('+w+')';
             break;
-        case "mm%dd%w% hh:ii" :
+        case 'mm%dd%w% hh:ii':
             result = m+'.'+d+'('+w+') '+h+':'+i;
             break;
-        case "yyyy-mm-dd hh:ii" :
+        case 'yyyy-mm-dd hh:ii':
             result = `${y}-${m}-${d} ${h}:${i}`;
             break;
-        case "yy.mm.dd.w" :
+        case 'yy.mm.dd.w':
             result = yy +'. '+m+'. '+d+' ('+w+')';
             break;
-        case "hh:ii" :
+        case 'hh:ii':
             result = `${h}:${i}`;
+            break;
+        case 'a hh:ii':
+            result = `${ampm} ${hour12Str}:${i}`;
             break;
         default:
             result = `${y}-${m}-${d}`;
