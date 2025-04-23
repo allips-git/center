@@ -18,7 +18,7 @@
                             <p class="cursor-pointer text-11 text-p-lv4">충전하기</p>
                             <!-- <Button label="충전하기" size="small" /> -->
                         </li>
-                        <li class="col-span-1 bg-gray-50" @click="goToPage('예약된 알림', '/plantalk/res')">
+                        <li class="col-span-1 bg-gray-50" @click="goToPage('/plantalk/res', 'Y')">
                             <div class="flex items-center justify-between">
                                 <div class="flex flex-col gap-1">
                                     <h5 class="font-bold text-t-lv1">예약된 알림</h5>
@@ -27,7 +27,7 @@
                                 <IconPlay class="size-[18px] fill-gray-400"/>
                             </div>
                         </li>
-                        <li class="col-span-1 bg-gray-50" @click="goToPage('발송 메시지보기', '/plantalk/res')">
+                        <li class="col-span-1 bg-gray-50" @click="goToPage('/plantalk/res', 'N')">
                             <div class="flex items-center justify-between">
                                 <div class="flex flex-col gap-1">
                                     <h5 class="font-bold text-t-lv1">발송 메시지보기</h5>
@@ -44,7 +44,7 @@
                 <section class="px-5 pt-6">
                     <h1 class="text-sm font-bold">알림</h1>
                     <ul class="flex flex-col py-2 *:border-b   *:py-4  *:border-l-lv5">
-                        <li v-for="(item, index) in kakao['list']" :key="index" class="flex items-center justify-between" @click="getDetail(item.kdCd)">
+                        <li v-for="(item, index) in kakao['list']" :key="index" class="flex items-center justify-between" @click="goToDetail(item['kdCd'])">
                             <div>
                                 <div class="flex items-center gap-2">
                                     <p class="font-bold text-13 text-t-lv2">{{ item.kdNm }}</p>
@@ -67,7 +67,7 @@
             @update:visible="getPopupClose('kakaoDetail', true)">
             <template #header>
                 <div class="modal-backheader">
-                    <Button @click="getPopClose(true, 'kakaoDetail')" severity="contrast" text icon="pi pi-arrow-left"/>
+                    <Button @click="getPopupClose('kakaoDetail', true)" severity="contrast" text icon="pi pi-arrow-left"/>
                     <h2 class="modal-backheader-title">플랜톡 설정</h2>
                 </div>
             </template>
@@ -85,27 +85,25 @@ import { useRouter } from 'vue-router';
 import { usePopupStore, useKakaoStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
-const popup  = usePopupStore();
-const kakao  = useKakaoStore();
+const popup = usePopupStore();
+const kakao = useKakaoStore();
 const router = useRouter();
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
-const goToPage = (title: string, path: string) => {
-    // 제목을 localStorage에 저장
-    localStorage.setItem('pageTitle', title);
-    // 페이지 이동
+const goToPage = async (path: string, resGb: string) => {
+    await kakao.getResGb(resGb);
     router.push(path);
 };
 
-const getDetail = async (kdCd: string) => {
+const goToDetail = async (kdCd: string) => {
     await kakao.getKdCd(kdCd);
     await kakao.getKakaoInfo();
     getPopupOpen('kakaoDetail');
 }
 
 onMounted(() => {
-    kakao.getKakaoList();
+    kakao.getKakao();
 })
 
  </script>

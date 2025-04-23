@@ -31,15 +31,16 @@
                                 <span class="">{{ getMsg() }}</span>
                             </li>
                             <li>
-                                <p class="">견적일: 견적일</p>    
+                                <p class="">{{ getDateText() }}</p>    
                                 <p> 대표번호: 매장 대표번호</p>
                             </li>
                             <li class="*:px-2 font-bold *:bg-gray-100 *:border *:rounded-sm flex items-start justify-center flex-col gap-3">
+                                <p v-if="kakao['info']['account'] && kakao['info']['kdGb'] === '004'">계좌: 계좌정보(샵설정 > 등록계좌)</p>
                                 <p v-if="kakao['info']['person']">담당자: {{ getStNm() }} 담당 맴버</p>
                                 <p v-if="kakao['info']['shopAddr']">주소: 매장주소 + 상세주소</p>
                                 <p>주차: {{ getPark() }} </p>
                                 <p v-if="kakao['info']['url']">홈페이지: URL</p>
-                                <Button v-if="kakao['info']['kdGb'] === '002'" label="계약서 상세"  class="w-full mt-2 !bg-yellow-300 !border-yellow-300 !text-gray-900 !cursor-default"></Button>
+                                <Button v-if="kakao['info']['kdGb'] === '002'" label="계약서 상세"  class="w-full mt-2 !bg-gray-200 !border-gray-200 !text-gray-900 !cursor-default"></Button>
                             </li>
                         </ul>
                     </div>
@@ -49,6 +50,10 @@
     
         <section>
            <ul class="flex flex-col py-3 *:border-b *:p-4 *:border-gray-200 *:flex *:justify-between *:items-center">
+                <li v-if="kakao['info']['kdGb'] === '004'">
+                    <p>계좌 정보 표기 여부</p>
+                    <ToggleSwitch v-model="kakao['info']['account']" @change="getToggle('account')"/>
+                </li>
                 <li>
                     <p>고객 이름 표시 여부</p>
                     <ToggleSwitch v-model="kakao['info']['client']" @change="getToggle('client')"/>
@@ -116,9 +121,25 @@ const getMsg = () => {
         case '003':
             return '금일 시공일 입니다. 감사합니다 :)';
         case '004':
-            return '입금 부탁드리겠습니다 :)';
+            return '(금액)원 입금 부탁드리겠습니다 :)';
         case '005':
             return 'A/S 요청';
+    }
+}
+
+const getDateText = () => {
+    switch(kakao['info']['kdGb'])
+    {
+        case '001':
+            return '견적일: 견적일';
+        case '002':
+            return '계약일: 계약일';
+        case '003':
+            return '시공일: 시공일 시간';
+        case '004':
+            return '일정: 견적일';
+        case '005':
+            return 'A/S 요청일: A/S일자';
     }
 }
 
@@ -179,7 +200,7 @@ const getResult = (params) => {
         {
             if(params['id'] === 'useYn')
             {
-                kakao.getKakaoList();
+                kakao.getKakao();
             }
 
             alert('변경되었습니다.');
