@@ -4,6 +4,13 @@
 import { defineStore } from 'pinia';
 import { getAxiosData, getConvertDate } from '@/assets/js/function';
 
+interface List {
+    kdCd        : string;
+    kdNm        : string;
+    descrip     : string;
+    useYn       : boolean;
+}
+
 interface Info {
     kdGb        : string;
     kdNm        : string;
@@ -240,6 +247,7 @@ export const useKakaoStore = defineStore('kakao', {
             this.searchDt    = new Date();
             this.start       = 0;
             this.more        = true;
+            this.dateList    = [];
             this.sendList    = [];
         },
         getResGb(resGb: Y | N)
