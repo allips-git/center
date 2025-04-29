@@ -1,8 +1,8 @@
 <template>
-<div class="px-5 py-4 ">
+<div class="py-4">
     <div class="flex items-start justify-between">
-        <div class="gap-2">
-            <div class="flex items-center gap-2">
+        <div class="gap-4">
+            <div class="flex items-center gap-4">
                 <h2 class="text-lg font-bold">{{ clientNm }}</h2>
                 <Tag severity="info" :value="stNm" class="!text-xs"></Tag>
             </div>

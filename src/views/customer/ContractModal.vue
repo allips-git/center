@@ -1,8 +1,8 @@
 <template>
     <div class="p-5">
-        <div class="form-gap-box">
+        <div class="text-sm form-gap-box">
 
-            <div class="relative flex items-center justify-center w-full">
+            <div class="relative flex items-center justify-center w-full ">
                 <p class="w-[100px] flex-none">계약일</p>
                 <DatePicker v-model="con['conInfo']['conDt']" showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd" showTime hourFormat="24" class="w-full"/>
             </div>

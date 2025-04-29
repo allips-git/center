@@ -2,29 +2,84 @@
 <main>
         <BackHeader title="회계" />
         <main class="w-full">
-            <section class="px-5 pt-5">
+            <section class="p-4 md:p-6">
             <div class="relative w-full bg-white ">
                 <ul>
-                    <li class="flex items-center gap-2">
-                        <p class="w-20 text-gray-600">매출</p>
-                        <p class="text-xl font-bold">{{ getAmt(acc['mainHeader']['saleAmt']) }}원</p>
+                    <li class="flex items-center gap-4">
+                        <p class="text-gray-600">매출</p>
+                        <p class="text-lg font-bold md:text-xl">{{ getAmt(acc['mainHeader']['saleAmt']) }}원</p>
                     </li>
-                    <li class="flex items-center gap-2">
-                        <p class="w-20 text-gray-600">매입</p>
-                        <p class="text-xl font-bold">{{ getAmt(acc['mainHeader']['purcAmt']) }}원</p>
+                    <li class="flex items-center gap-4">
+                        <p class="text-gray-600">매입</p>
+                        <p class="text-lg font-bold md:text-xl">{{ getAmt(acc['mainHeader']['purcAmt']) }}원</p>
                     </li>
-                    <li class="flex items-center gap-2">
-                        <p class="w-20 text-gray-600">마진</p>
-                        <p class="text-xl font-bold text-green-500">{{ acc['mainHeader']['margin'] }}%</p>
+                    <li class="flex items-center gap-4">
+                        <p class="text-gray-600 ">마진</p>
+                        <p class="text-lg font-bold text-green-500 md:text-xl">{{ acc['mainHeader']['margin'] }}%</p>
                     </li>
                 </ul>
 
-                <Button label="전체 기록 보기" severity="secondary" class="!absolute right-0 top-0" size="small" @click="getPopupOpen('accMonth')"/>
+                <Button label="전체 기록 보기" severity="secondary" class="!absolute right-0 top-0" size="large" @click="getPopupOpen('accMonth')"/>
             </div>
         </section>
 
         <div class="gray-bar"></div>
-        <section class="w-full custom-right-tab">
+        <div>
+ 
+    <div class="px-4 md:px-6">
+        <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
+      <div>
+        <nav class="flex -mb-px space-x-8" aria-label="Tabs">
+          <a v-for="tab in tabs" :key="tab.name" :href="tab.href" :class="[tab.current ? 'border-sky-500 border-b-4 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium']" :aria-current="tab.current ? 'page' : undefined">{{ tab.name }}</a>
+        </nav>
+      </div>
+      <TabPanels>
+            <TabPanel value="0">
+                        
+                            
+                <template v-for="(date, dIndex) in acc.dateList" :key="dIndex">
+                    <div class="flex items-center gap-4 pt-4">
+                        <p class="flex-none text-gray-400">{{ date['stDt'] }}</p>
+                        <div class="w-full h-px bg-gray-200"></div>
+                    </div>
+                    <template v-for="(item, index) in acc.list" :key="index">
+                        <AccountList v-if="date['stDt'] === item.stDt" 
+                            :clientNm="item.clientNm" 
+                            :stNm="'계약'" 
+                            :addr="item.addr + ' ' + item.addrDetail"
+                            :saleAmt="getAmt(item.totalSaleAmt)" 
+                            :purcAmt="getAmt(item.totalPurcAmt)" 
+                            :rev="getAmt(item.rev)" />
+                    </template>
+                </template>
+                            
+                        
+            </TabPanel>
+            <TabPanel value="1">
+                        <div class="hidden">
+                            <div>
+                                <template v-for="(date, dIndex) in acc.dateList" :key="dIndex">
+                                    <div class="flex items-center gap-2 px-4 py-2">
+                                        <p class="flex-none text-gray-400">{{ date['stDt'] }}</p>
+                                        <div class="w-full h-px bg-gray-200"></div>
+                                    </div>
+                                    <template v-for="(item, index) in acc.list" :key="index">
+                                        <AccountList v-if="date['stDt'] === item.stDt" 
+                                            :clientNm="item.clientNm" 
+                                            :stNm="'결제'" 
+                                            :addr="item.addr + ' ' + item.addrDetail"
+                                            :saleAmt="getAmt(item.totalSaleAmt)" 
+                                            :purcAmt="getAmt(item.totalPurcAmt)" 
+                                            :rev="getAmt(item.rev)" />
+                                    </template>
+                                </template>
+                            </div>
+                        </div>
+            </TabPanel>
+        </TabPanels>
+    </div>
+  </div>
+        <section class="hidden w-full custom-right-tab">
             <Tabs value="0" class="w-full">
                 <TabList class="justify-end">
                     <Tab value="0" class="text-lg font-bold" @click="getTab('003')">계약</Tab>
@@ -78,11 +133,26 @@
         </section>
     </main>
 
-    <Dialog v-model:visible="popup['pop']['accMonth']" header="월간 분석" 
-        :modal=true position="bottom" class="custom-dialog-bottom"
+    <!-- <Dialog v-model:visible="popup['pop']['accMonth']" header="월간 분석" 
+        :modal=true position="center" class="custom-dialog-bottom"
         @update:visible="getPopupClose('accMonth', true)">
         <AccMonth/>
-    </Dialog>
+    </Dialog> -->
+
+    <Dialog v-model:visible="popup['pop']['accMonth']" 
+        header="월간 분석"
+        :modal=true
+        position="center"
+        class="custom-dialog-bottom backPopup"
+        @update:visible="getPopupClose('accMonth', true)">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopupClose('accMonth', true)" severity="contrast" text icon="pi pi-times" iconPos="right"/>
+                <h2 class="modal-backheader-title">월간 분석</h2>
+            </div>
+        </template>
+            <AccMonth/>
+        </Dialog>
 </main>
 </template>
 
@@ -117,6 +187,12 @@ const getTab = async (stCd: string) => {
 onMounted(() => {
     acc.getAccAll();
 })
+
+const tabs = [
+  { name: '계약', href: '#', current: true },
+  { name: '결제', href: '#', current: false },
+
+]
 
 </script>
 

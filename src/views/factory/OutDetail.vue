@@ -3,14 +3,14 @@
         <BackHeader :title="factory['out']['detail']['header'][0]['value']+' 상세 정보'" />
         <main class="!pb-36">
             <div class="relative">
-                <section class="relative overflow-hidden bg-white rounded-t-xl">
+                <section class="relative p-6 overflow-hidden bg-white rounded-t-xl">
                     <InfoCard :title="factory['out']['detail']['header'][0]['value']" 
                         :info="factory['out']['detail']['header']" :btnLabel="'수정하기'"
                         @get-btn="getPopOpen('outFactorySet')"/>
                 </section>
                 <div class="gray-bar"></div>
     
-                <section class="px-5">
+                <section class="p-6">
                     <CalculateCard :showtitle="true" :calcs="factory['out']['detail']['info']" title="매입 거래원장" 
                         totalTitle="총 결제 금액" :totalAmt="factory['out']['detail']['totalAmt']"/>
                 </section>
@@ -25,20 +25,34 @@
         </div>
     
         <Dialog v-model:visible="popup['pop']['outFactoryItemList']" header="외주공장 제품정보" 
-            :modal=true position="bottom" class="custom-dialog-bottom backPopup"
+            :modal=true position="center" class="custom-dialog-full"
             @update:visible="getPopupClose('outFactoryItemList', true)">
             <template #header>
                 <div class="modal-backheader">
-                    <Button @click="getPopupClose('outFactoryItemList', true)" severity="contrast" text icon="pi pi-arrow-left"/>
+                    <Button @click="getPopupClose('outFactoryItemList', true)" severity="contrast" text icon="pi pi-times"/>
                     <h2 class="modal-backheader-title">외주 공장 제품정보</h2>
                 </div>
             </template>
             <OutProduct/>
         </Dialog>
+
+     
     
-        <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주공장 저장" 
+        <!-- <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주공장 저장" 
             :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom "
             @update:visible="getPopupClose('outFactorySet', true)">
+            <OutFactorySet/>
+        </Dialog> -->
+
+        <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주 공장 저장" 
+            :modal=true position="center" class="custom-dialog-bottom" 
+            @update:visible="getPopClose('outFactorySet', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'outFactorySet')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">외주 공장 저장</h2>
+                </div>
+            </template>
             <OutFactorySet/>
         </Dialog>
     </main>

@@ -1,7 +1,7 @@
 <template>
     <BackHeader title="고정비용" />
     <main class="">
-        <section class="px-5 pt-5">
+        <section class="p-6">
             <h1 class="mb-2 text-xl font-bold">전체 <span class="text-sky-500">{{ cost['cnt'] }}건</span></h1>
             <div class="flex items-center gap-2 font-bold">
                 <p>월간 고정 지출</p>
@@ -11,12 +11,12 @@
         
         <div class="gray-bar !my-2.5"></div>
 
-        <section class="text-sm">
-            <div class="flex items-center justify-between px-4">
+        <section class="p-6 text-sm">
+            <div class="flex items-center justify-between">
                 <h2 class="text-lg font-bold">내 고정비 목록</h2>
                 <Button label="고정비 등록" size="small" @click="getPopup"/>
             </div>
-            <ul class="flex flex-col px-5">
+            <ul class="flex flex-col">
                 <!-- v-for -->
                 <li v-for="(item, index) in cost['list']" :key="index" class="flex items-center justify-between px-5 py-4 border-b first:mt-5" @click="getInfo(item['fxCd'])">
                     <div>
@@ -32,11 +32,24 @@
             </ul>
         </section>
     </main>
-    <Dialog v-model:visible="popup['pop']['staticPaySet']" header="고정비용 저장" 
+    <!-- <Dialog v-model:visible="popup['pop']['staticPaySet']" header="고정비용 저장" 
         :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom"
         @update:visible="getPopupClose('staticPaySet', true)">
         <StaticPaySet/>
-    </Dialog>
+    </Dialog> -->
+
+    <Dialog v-model:visible="popup['pop']['staticPaySet']" header="고정비용 저장" 
+            :modal=true position="center" class="custom-dialog-bottom" 
+            @update:visible="getPopupClose('staticPaySet', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'staticPaySet')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">고정 비용 저장</h2>
+                </div>
+            </template>
+        <StaticPaySet/>
+
+        </Dialog> 
 </template>
 
 <script setup lang="ts">

@@ -2,24 +2,24 @@
     <div>
         <BackHeader title="설정" />
         <main class="pb-5">
-            <section class="p-4">
+            <section class="p-4 md:p-6">
                 <div class="flex gap-2 px-4 py-3.5 border border-gray-200 rounded-sm">
                     <div class="!size-[33px] flex items-center justify-center">
                         <IconAvatar class="fill-[#78BBFF]  size-full"/>
                     </div>
-                    <div class="flex flex-col gap-0.5">
+                    <div class="flex items-center gap-0.5">
                         <h1>{{ login['name'] }}</h1>
                         <span class="text-sm text-sky-500">님</span>
                     </div>
                 </div>
             </section>
-            <section class="px-5">
-                <ul class="border *:text-xs *:border-b last:border-b-0 border-l-lv3 rounded-sm bg-bg-lv1 *:flex *:justify-between *:items-center *:p-4">
+            <section class="px-4 pb-4 md:px-6 md:pb-6">
+                <ul class="border *:text-sm *:border-b last:border-b-0 border-l-lv3 rounded-sm bg-bg-lv1 *:flex *:justify-between *:items-center *:p-4">
                     <li>
                         <div class="flex items-center">
                             <p>요금제</p>
                             <div class="ml-2"> 
-                                <span class="px-2 pb-px text-white rounded-full text-10 bg-p-lv4">스탠다드</span>
+                                <span class="px-2 pb-px text-xs font-light text-white rounded-full bg-p-lv4">스탠다드</span>
                             </div>
                         </div>
                         <p class="text-p-lv2 text-10">사용 가능 기한 2022년 10월 10일 까지</p>
@@ -36,7 +36,7 @@
                 </ul>
             </section>
             <div class="gray-bar"></div>
-            <section class="px-4">
+            <section class="p-4 md:p-6">
                 <h2 class="setting-list-header">정보설정</h2>
                 <ul>
                     <li v-for="(item, index) in storeSettings" :key="index" class="flex items-center text-sm justify-between py-4 border-b hover:bg-gray-50 text-t-lv1 pl-3.5" @click="navigateTo(item)">
@@ -45,6 +45,10 @@
                     </li>
                 </ul>
     
+            </section>
+            <div class="gray-bar"></div>
+            <section class="p-4 md:p-6">
+
                 <h2 class="setting-list-header">플랜오더 약관</h2>
                 <ul class="*:text-sm text-t-lv1">
                     <li class="flex justify-between pl-2.5 py-4 border-b hover:bg-gray-50">

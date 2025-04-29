@@ -27,11 +27,24 @@
             <Button label="멤버 추가" size="large" @click="getPopup"/>
         </div>
     </main>
-    <Dialog v-model:visible="popup['pop']['memberSet']" header="멤버 저장" 
+    <!-- <Dialog v-model:visible="popup['pop']['memberSet']" header="멤버 저장" 
         :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom"
         @update:visible="getPopupClose('memberSet', true)">
         <MemberEdit/>
-    </Dialog>
+    </Dialog> -->
+
+
+    <Dialog v-model:visible="popup['pop']['memberSet']" header="멤버 저장" 
+            :modal=true position="center" class="custom-dialog-bottom" 
+            @update:visible="getPopupClose('memberSet', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'memberSet')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">멤버 정보 저장</h2>
+                </div>
+            </template>
+            <MemberEdit/>
+        </Dialog> 
 </template>
 
 <script setup lang="ts">

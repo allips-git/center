@@ -1,6 +1,5 @@
 <template>
     <div>
-        <BackHeader title="맴버정보 저장"/>
         <main class="pt-5 pb-28 pc-contents-h-box">
 
             <section class="px-5 form-gap-box">

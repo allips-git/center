@@ -2,18 +2,18 @@
 <main>
     <main class="pt-5 pb-10">
         <section class="px-5">
-            <h1 class="text-xl font-bold">{{ kakao['info']['kdNm'] }}</h1>
+            <h1 class="font-bold">{{ kakao['info']['kdNm'] }}</h1>
             <p class="mt-2 text-sm text-gray-400">{{ kakao['info']['descrip'] }}</p>
         </section>
         
         <section class="flex items-center justify-between px-5 py-4 my-5 bg-gray-50 flax">
-            <p class="font-bold">자동 알림 보내기</p>
+            <p class="text-sm font-bold">자동 알림 보내기</p>
             <ToggleSwitch v-model="kakao['info']['useYn']" @change="getToggle('useYn')"/>
         </section>
     
         <section class="px-5">
             <div class="flex items-center justify-between">
-                <p class="font-bold">알림내용 미리보기</p>
+                <p class="text-sm font-bold">알림내용 미리보기</p>
                 <Button label="테스트 발송" size="small" />
             </div>
             <div class="flex flex-col items-center justify-center w-full px-4 py-10 mt-5 bg-kakaoBg rounded-2xl">

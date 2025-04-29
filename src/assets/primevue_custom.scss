@@ -73,22 +73,41 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
      }
 }
 
+.custom-dialog-full{
+    max-height: 100% !important;
+    border-radius: 0 !important;
+}
+
+.custom-dialog-full.p-dialog{
+    width: 100%;
+    height: 100% !important;
+    .p-dialog-close-button{
+        display: none;
+    }
+}
+
 .custom-dialog-bottom.p-dialog{
     // min-height: 100vh;
     margin: 0 !important;
     position: relative;
     border-radius:  0.5rem 0.5rem 0px 0;
+    overflow: hidden;
     margin-top: 1rem !important;
     width: 100%;
     max-width: calc(100% - 1rem) !important;
     max-height: calc(100% - 1rem) !important;
     height: 100% !important;
     @include respond-to(md) {
-        // max-width: calc(100% - 3rem) !important;
-        max-width: 500px !important;
-        height: auto !important;
+        // width: calc(100% - 3rem) !important;
+        max-width: 660px !important;
+        // max-width: 500px !important;
+        height: 90% !important;
         min-height: 80%;
         border-radius:  0.5rem;
+                
+    }
+    .p-dialog-close-button{
+        display: none;
     }
     .p-dialog-content{
         padding: 0;
@@ -97,10 +116,15 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     &.backPopup{
         width: 100%;
         height: 100%;
-        max-width: 100% !important;
+        max-width: 660px !important;
         max-height: 100% !important;
         margin-top: 0rem !important;
         border-radius: 0 !important;
+
+        @media screen and (min-width: 670px) {
+            border-radius: 8px !important;
+            overflow: hidden;
+        }
         .p-dialog-header{
             padding: 0px;
             
@@ -109,6 +133,8 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
             }
         }
     }
+   
+   
     .p-dialog-header, .p-drawer-header{
         padding: 0.25rem 20px;
         padding-right: 8px;
@@ -132,11 +158,16 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 }
 .custom-dialog-center{
     .p-dialog-header, .p-drawer-header{
-        padding: 0.25rem 20px;
+        padding: 0.25rem;
+        width: 100%;
         .p-dialog-title , .p-drawer-title{
             font-size: 13px;
         }
     }
+    .p-dialog-close-button{
+        display: none;
+    }
+    
     
 }
 .custom-popover-listbox{
@@ -230,6 +261,29 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .p-inputtext,.p-select,.p-textarea{
     border-radius: 2px !important;
 }
+
+.p-inputtext {
+    &::placeholder {
+        font-size: 14px;
+        font-weight: 200;
+    }
+}
+
+.p-select-label.p-placeholder {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.p-select-label {
+    &::placeholder {font-size: 14px;}
+}
+
+.p-inputtext.p-component.p-placeholder{
+    font-size: 14px;
+    font-weight: 300;
+}
+
+
 .p-iftalabel {
     .p-inputtext,
     .p-textarea,
@@ -246,11 +300,17 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
       height: 2.5rem;
       &::placeholder{
         color: #C1C1C1;
-        font-weight: 400;
+        font-weight: 300;
+        font-size: 14px;
       }
     }
     .p-textarea{
         height: auto !important;
+     
+    }
+
+    .p-textarea.p-placeholder{
+        font-size: 12px;
     }
     .p-select{
       border-radius: 2px !important;
@@ -378,7 +438,14 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     svg{
         opacity: 0;
     }
+    .p-placeholder{
+        font-size: 14px;
+    }
+    
 }
+
+
+
 .mini_input{
     
     border: 0;
@@ -399,7 +466,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         }
         .p-datepicker-input{
             border-radius: 99999px !important;
-            font-size: 0.875rem;
+            font-size: 1rem ;
             padding-top: 0.325rem;
             padding-bottom:  0.325rem;
             padding-left: 0.75rem !important;

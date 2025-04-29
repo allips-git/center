@@ -1,5 +1,5 @@
 <template>
-<main class="py-4">
+<main class="">
     <div class="">
         <div class="flex gap-2 px-5 mb-4">
             <IconField class="w-full table-search-input gray_input">
@@ -26,11 +26,11 @@
 </main>
 
 <Dialog v-model:visible="popup['pop']['outFactoryItemSet']" header="외주공장 제품관리" 
-    :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom backPopup"
-    @update:visible="getPopClose(true, 'outFactoryItemSet')">
+    :modal=true position="center" :dismissableMask="true" class="custom-dialog-bottom backPopup"
+    @update:visible="getPopupClose(true, 'outFactoryItemSet')">
     <template #header>
-        <div class="modal-backheader">
-            <Button @click="getPopClose(true, 'outFactoryItemSet')" severity="contrast" text icon="pi pi-arrow-left"/>
+        <div class="modal-fullheader">
+            <Button @click="getPopupClose(true, 'outFactoryItemSet')" severity="contrast" text icon="pi pi-arrow-left"/>
             <h2 class="modal-backheader-title">외주공장 제품관리</h2>
         </div>
     </template>

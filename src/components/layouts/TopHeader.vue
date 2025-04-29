@@ -18,11 +18,11 @@
     <h1 class="text-sm font-bold">{{ login['name'] }}</h1>
             <IconBell class="fill-t-lv2"/>
     
-    <div class="items-center hidden gap-2 md:flex">
+    <!-- <div class="items-center gap-2 lg:hidden md:flex">
         <Button class="w-[1.875rem] !p-0 flex items-center justify-center h-12" text plain @click="toggleNotificationPopover($event)">
             <IconAvatar class="*:text-blue-200 w-7 h-7 md:w-9 md:h-9"/>
         </Button>
-    </div>
+    </div> -->
     <Popover class="" ref="notificationPopover" dismissable> 
         <div class="flex flex-col">
             <Button :label="'로그아웃'" icon="pi pi-sign-out" severity="danger" text  size="small" @click="getLogOut"/>

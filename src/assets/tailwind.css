@@ -33,7 +33,7 @@
     @apply font-bold px-4 pt-8 pb-2
   }
   .label-checkbox-box{
-    @apply flex gap-2 items-center w-full
+    @apply flex gap-2 items-center 
   }
   .modal-page-padding{
     @apply p-5 md:p-8
@@ -65,12 +65,12 @@
   .bottom-fixed-btn-box{
     @apply w-full fixed bottom-0 left-0 pb-3.5 px-4 pt-2 bg-white flex gap-2 *:w-full border-t border-gray-200 z-[100]
   }
-  .btn-2-layout-box{
+  /* .btn-2-layout-box{
     @apply w-full bg-white flex gap-2 *:w-full
-  }
-  .main-bottom-fixed-pd{
-    @apply pb-24 pt-5
-  }
+  } */
+  /* .main-bottom-fixed-pd{
+    @apply 
+  } */
   .label-input-box{
     @apply w-full *:w-full flex flex-col gap-1
   }
@@ -81,7 +81,7 @@
     @apply fixed md:relative bottom-0 left-0 w-full *:w-full px-4 border-t md:p-0 mt-10 pt-2 z-[100] bg-white pb-3.5
   }
   .gray-bar{
-    @apply my-3.5 bg-[#F7F7F7] w-full h-2
+    @apply bg-[#F7F7F7] w-full h-2
   }
   .input-layout-box{
     @apply flex flex-col gap-2.5
@@ -93,14 +93,14 @@
   .ifta-label-box{
     @apply border border-gray-200 px-3 pt-3 pb-3 relative rounded-sm shadow-sm
   }
-  .pc-contents-h-box{
-    @apply md:min-h-[calc(100vh-108px)] md:relative
-  }
+  /* .pc-contents-h-box{
+    @apply 
+  } */
   .setting-list-header{
     @apply px-4 py-3 font-bold border border-gray-200 rounded-lg bg-gray-50
   }
   .capsuel_sky{
-    @apply  px-2 py-0.5 pb-[2.5px] text-white rounded-full bg-sky-500 text-11 flex items-center justify-center
+    @apply  px-2 py-0.5 pb-[2.5px] text-white rounded-full bg-sky-500 text-11 flex items-center justify-center text-ellipsis
   }
   .capsuel_gray{
     @apply  px-2 py-0.5 pb-[2.5px] text-white rounded-full bg-gray-500 text-11 flex items-center justify-center
@@ -112,10 +112,18 @@
     @apply *:!text-right w-full  *:!pr-8 font-bold
   }
   .modal-backheader{
-    @apply h-[50px] sticky top-0 flex w-full items-center px-2 md:border-b md:shadow-none bg-white z-50 md:border-gray-100
+    @apply h-[50px] sticky relative top-0 flex w-full items-center justify-end px-2 md:border-b md:shadow-none bg-white z-50 md:border-gray-100
+  }
+
+  .popup {
+    @apply max-h-[90%]
+  }
+
+  .modal-fullheader{
+    @apply h-[50px] sticky relative top-0 flex w-full items-center justify-between px-2 md:border-b md:shadow-none bg-white z-50 md:border-gray-100
   }
   .modal-backheader-title{
-    @apply text-sm absolute font-bold -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 md:relative md:-translate-y-0 md:-translate-x-0 md:top-0 md:left-2
+    @apply text-sm absolute font-bold -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 
   }
   .mini_select{
     @apply !h-8 *:!text-10 items-center justify-center !bg-transparent

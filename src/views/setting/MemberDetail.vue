@@ -42,11 +42,24 @@
                 <Button label="권한설정" size="large" class="w-full"/>
             </router-link>
         </div>
-        <Dialog v-model:visible="popup['pop']['memberSet']" header="멤버 저장" 
+        <!-- <Dialog v-model:visible="popup['pop']['memberSet']" header="멤버 저장" 
             :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom"
             @update:visible="getPopupClose('memberSet', true)">
             <MemberEdit/>
-        </Dialog>
+        </Dialog> -->
+
+
+     <Dialog v-model:visible="popup['pop']['clientSet']" header="멤버 저장" 
+            :modal=true position="center" class="custom-dialog-bottom" 
+            @update:visible="getPopClose('memberSet', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopClose(true, 'memberSet')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">멤버 정보 저장</h2>
+                </div>
+            </template>
+            <MemberEdit/>
+        </Dialog> 
     </main>
 </template>
 

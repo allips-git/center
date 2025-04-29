@@ -1,11 +1,11 @@
 <template>
     <div>
         <BackHeader title="쿠폰 메뉴"/>
-        <main class="pt-5 pb-32 pc-contents-h-box">
+        <main class="p-6 pc-contents-h-box">
             <section class="form-gap-box">
                 <ul>
                     <!-- v-for -->
-                    <li v-for="(coupon, index) in coupon['list']" :key="index" class="flex items-center justify-between w-full px-5 py-4" @click="getInfo(coupon.cpCd)">
+                    <li v-for="(coupon, index) in coupon['list']" :key="index" class="flex items-center justify-between w-full py-4" @click="getInfo(coupon.cpCd)">
                         <div class="flex items-center gap-4">
                             <div class="flex items-center gap-3 font-bold">
                                 <p class="">{{ coupon.cpNm }}</p>
@@ -21,11 +21,24 @@
             <Button label="쿠폰 추가" size="large" class="w-full" @click="getPopup"/>
         </div>
     </div>
-    <Dialog v-model:visible="popup['pop']['couponDetail']" header="쿠폰 저장" 
+    <!-- <Dialog v-model:visible="popup['pop']['couponDetail']" header="쿠폰 저장" 
         :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom"
         @update:visible="getPopupClose('couponDetail', true)">
         <CouponDetail/>
-    </Dialog>
+    </Dialog> -->
+
+    <Dialog v-model:visible="popup['pop']['couponDetail']" header="쿠폰 저장" 
+            :modal=true position="center" class="custom-dialog-bottom" 
+            @update:visible="getPopupClose('couponDetail', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'couponDetail')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">쿠폰 메뉴 설정</h2>
+                </div>
+            </template>
+        <CouponDetail/>
+
+        </Dialog> 
 </template>
 
 <script setup lang="ts">
