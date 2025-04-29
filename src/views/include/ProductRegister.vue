@@ -1,12 +1,12 @@
 <template>
 <main>
     <div class="bottom-modal-contents-box !px-0 !pb-20 z-10">
-        <div class="absolute !z-[100] flex justify-end top-[8px] right-[8px]">
+        <!-- <div class="absolute !z-[100] flex justify-end top-[8px] right-[8px]">
             <Button label="제품 변경" size="small" outlined @click="getItemChange" class="!z-[100]"/>
-        </div>    
-        <div class="flex justify-between px-5 text-base font-bold">
-            <h2 class="px-3 rounded-full pypx bg-cyan-100 text-cyan-600">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
-            <p class="">({{ esti['common']['unitSize'] }}{{ esti['common']['unitNm'] }}) {{ getAmt(esti['common']['saleUnit']) }}원</p>
+        </div>     -->
+        <div class="flex justify-between px-5 text-base">
+            <h2 class="px-4 py-1 text-sm font-bold rounded-full bg-cyan-100 text-cyan-600">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
+            <p class="font-bold">({{ esti['common']['unitSize'] }}{{ esti['common']['unitNm'] }}) {{ getAmt(esti['common']['saleUnit']) }}원</p>
         </div>
         <div class="gray-bar !my-0"></div>
         <!-- 입력 계산기 컴포넌트 -->
@@ -25,7 +25,7 @@
                 <Accordion value="0">
                     <AccordionPanel class="*:pb-0 " value="0" >
                         <AccordionHeader class="!gap-2 !justify-end">
-                            <p class="pb-0 text-sm font-bold">옵션 더보기</p>
+                            <p class="pb-0 text-xs font-bold">옵션 더보기</p>
                             </AccordionHeader>
                         <AccordionContent class="w-full">
                             <div class="flex flex-col gap-5">

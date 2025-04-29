@@ -1,9 +1,9 @@
 <template>
-    <div class="flex items-center justify-between px-5 pt-5 pb-2 font-bold">
-        <h2 class="font-bold">{{ title }}</h2>
-        <Button v-if="btnLabel" :label="btnLabel" size="small" severity="secondary" outlined @click="getBtn"></Button>
+    <div class="flex items-center justify-between font-bold">
+        <h2 class="pb-4 font-bold">{{ title }}</h2>
+        <Button v-if="btnLabel" :label="btnLabel" size="large" severity="secondary" outlined @click="getBtn"></Button>
     </div>
-    <ul class="flex flex-col gap-2 p-5 pt-0 text-xs rounded-md">
+    <ul class="flex flex-col gap-2 text-sm rounded-md">
         <li v-for="(info, index) in props.info" :key="index" class="flex">
             <p class="w-24 text-t-lv2 whitespace-nowrap">{{ info.label }}</p>
             <p :class="{ 'capsuel_sky ': info.label === '전화번호' }">{{ info.value }}

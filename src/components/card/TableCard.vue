@@ -1,8 +1,8 @@
 <template>
     <div class="w-full border border-gray-200 rounded"> 
-        <h1 class="px-4 py-2 text-base font-bold text-left bg-gray-50">{{ title }}</h1>
+        <h1 class="p-4 text-base font-bold text-left bg-gray-50">{{ title }}</h1>
         <!-- 개별 카드 v-for  -->
-        <div class="flex flex-col items-start justify-start px-4 pt-3 pb-3 border-t first:border-t-0" v-for="(card, index) in cards" :key="index" @click="emit('get-modify', card['edCd'])">
+        <div class="flex flex-col items-start justify-start p-4 border-t first:border-t-0" v-for="(card, index) in cards" :key="index" @click="emit('get-modify', card['edCd'])">
             <!-- 카드 상단 -->
              <div class="flex items-center justify-between w-full">
                 <h2 class="text-sm text-gray-400">{{ card.productTitle }}</h2>
@@ -11,7 +11,7 @@
                 </div>            
              </div>
             <section class="w-full">
-                <div class="flex items-end justify-between w-full mt-2 mb-5 text-base">
+                <div class="flex items-end justify-between w-full mb-4 text-base">
                     <div class="">
                         <!-- <h2 class="mb-1 text-sm text-gray-400">{{ card.productTitle }}</h2> -->
                         <h3 :class="`font-bold text-${card.isRed ? 'red' : 'blue'}-600`">{{ card.colorTitle }}</h3>

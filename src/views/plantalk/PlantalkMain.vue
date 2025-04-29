@@ -2,8 +2,8 @@
     <main>
         <main>
             <BackHeader title="플랜톡"/>
-            <div class="py-5">
-                <section class="px-4">
+            <div class="">
+                <section class="p-4 md:p-6">
                     <div class="flex items-center gap-1">
                         <h1 class="font-bold">플랜톡</h1>
                         <div class="text-base">
@@ -11,17 +11,17 @@
                             <p v-if="kakao['status']" class="font-extrabold text-p-lv4">ON</p>            
                         </div>
                     </div>
-                    <p class="mt-px text-11 text-t-lv3">알림 <span class="font-bold text-p-lv4">{{ kakao['cnt'] }}</span>종을 사용중입니다.</p>
-                    <ul class="grid grid-cols-2 gap-3 text-11 mt-2 *:px-2.5 *:py-3 *:rounded-lg">
+                    <p class="mt-px text-sm text-t-lv3">알림 <span class="font-bold text-p-lv4">{{ kakao['cnt'] }}</span>종을 사용중입니다.</p>
+                    <ul class="grid grid-cols-2 gap-3 text-sm mt-2 *:px-2.5 *:py-3 *:rounded-lg">
                         <li class="flex flex-col justify-between col-span-2 gap-1 bg-yellow-50">
-                            <p class="font-medium text-11">플랜톡 잔여 포인트 {{ kakao['point'] }}P</p>
-                            <p class="cursor-pointer text-11 text-p-lv4">충전하기</p>
+                            <p class="text-sm font-medium">플랜톡 잔여 포인트 {{ kakao['point'] }}P</p>
+                            <p class="cursor-pointer text-p-lv4">충전하기</p>
                             <!-- <Button label="충전하기" size="small" /> -->
                         </li>
                         <li class="col-span-1 bg-gray-50" @click="goToPage('/plantalk/res', 'Y')">
                             <div class="flex items-center justify-between">
                                 <div class="flex flex-col gap-1">
-                                    <h5 class="font-bold text-t-lv1">예약된 알림</h5>
+                                    <h5 class="font-medium text-t-lv1">예약된 알림</h5>
                                     <p class="text-t-lv3">상세보기</p>
                                 </div>
                                 <IconPlay class="size-[18px] fill-gray-400"/>
@@ -30,7 +30,7 @@
                         <li class="col-span-1 bg-gray-50" @click="goToPage('/plantalk/res', 'N')">
                             <div class="flex items-center justify-between">
                                 <div class="flex flex-col gap-1">
-                                    <h5 class="font-bold text-t-lv1">발송 메시지보기</h5>
+                                    <h5 class="font-medium text-t-lv1">발송 메시지보기</h5>
                                     <p class="text-t-lv3">오늘<span class="ml-1 text-p-lv4">{{ kakao['sendCnt'] }}건</span></p>
                                 </div>
                                 <IconPlay class="size-[18px] fill-gray-400"/>
@@ -41,7 +41,7 @@
         
                 <!-- <div class="gray-bar"></div> -->
         
-                <section class="px-5 pt-6">
+                <section class="p-4 md:p-6">
                     <h1 class="text-sm font-bold">알림</h1>
                     <ul class="flex flex-col py-2 *:border-b   *:py-4  *:border-l-lv5">
                         <li v-for="(item, index) in kakao['list']" :key="index" class="flex items-center justify-between" @click="goToDetail(item['kdCd'])">
@@ -63,16 +63,18 @@
             </div>                       
         </main>
         <Dialog v-model:visible="popup['pop']['kakaoDetail']" header="플랜톡 설정" 
-            :modal=true position="bottom" class="custom-dialog-bottom"
+            :modal=true position="center" class="custom-dialog-bottom" 
             @update:visible="getPopupClose('kakaoDetail', true)">
             <template #header>
                 <div class="modal-backheader">
-                    <Button @click="getPopupClose('kakaoDetail', true)" severity="contrast" text icon="pi pi-arrow-left"/>
+                    <Button @click="getPopupClose(true, 'kakaoDetail')" severity="contrast" text icon="pi pi-times"/>
                     <h2 class="modal-backheader-title">플랜톡 설정</h2>
                 </div>
             </template>
             <ScheduleAlert/>
         </Dialog>
+
+      
     </main>
 </template>
 

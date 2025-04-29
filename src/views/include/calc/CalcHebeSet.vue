@@ -14,13 +14,13 @@
     
 
     
-        <IftaLabel class="w-full">
+        <IftaLabel class="w-full col-span-2">
             <label>가로 (CM)<span class="ml-1 text-red-600">*</span></label>
             <InputText v-keyfilter.int id="bWidth" v-model="esti['common']['width']" class="w-full" @update:modelValue="esti.getUnitCalc()"/>
             <small class="text-red-500">{{ esti['msg']['blind']['bWidth'] }}</small>
         </IftaLabel>
 
-        <IftaLabel class="w-full">
+        <IftaLabel class="w-full col-span-2">
             <label>세로 (CM)<span class="ml-1 text-red-600">*</span></label>
             <InputText v-keyfilter.int id="bHeight" v-model="esti['common']['height']" class="w-full" @update:modelValue="esti.getUnitCalc()"/>
             <small class="text-red-500">{{ esti['msg']['blind']['bHeight'] }}</small>
@@ -28,9 +28,9 @@
     
 
 
-    <template class="flex col-span-2 overflow-visible">
+    <template class="flex col-span-4 overflow-visible">
         <!-- 분할없음 -->
-        <div class="flex gap-3" v-if="esti['blind']['division'] === 1">
+        <div class="flex w-full gap-2" v-if="esti['blind']['division'] === 1">
             <IftaLabel class="w-full">
                 <label>수량 (좌)</label>
                 <InputNumber inputId="leftQty" v-model="esti['blind']['leftQty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">

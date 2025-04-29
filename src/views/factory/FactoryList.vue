@@ -1,7 +1,63 @@
 <template>
 <main>
     <BackHeader title="공장" />
-    <div class="relative px-4 mt-2 custom-left-tab">
+    <div class="hidden px-6">
+        
+        <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
+        <div >
+        <div>
+            <nav class="flex -mb-px space-x-8" aria-label="Tabs">
+          <a v-for="tab in tabs" :key="tab.name" :href="tab.href" :class="[tab.current ? 'border-sky-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium']" :aria-current="tab.current ? 'page' : undefined">{{ tab.name }}</a>
+        </nav>
+        <TabPanels>
+                <TabPanel value="0">
+                    <div class="pt-3 pb-20">
+                        <div class="fixed bottom-20 right-4 md:bottom-4">
+                            <Button label="공장코드 추가" icon="pi pi-plus" size="large" @click="getPopOpen('sysFactorySearch')"/>
+                        </div>
+                       
+                        <ul class="w-full">
+                            <li class="flex gap-3 py-4 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
+                                    <img :src="getImage(item.imgUrl)" class="w-full max-w-[78px] h-[87px] rounded-lg object-cover" alt="">
+                                
+                                <div class="w-[calc(100%-78px)]">
+                                    <div class="flex justify-between">
+                                        <p class="mb-1 font-bold">{{ item.faNm }}</p>
+                                        <div class="text-sm text-right *:px-3 *:py-1 *:rounded-full font-bold">
+                                            <p v-if="item['appGb'] === 'E'" class="text-blue-500 ">승인 대기</p>
+                                            <p v-if="item['appGb'] === 'N'" class="text-orange-500">반려</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-600">{{ item.tel }}</p>
+                                    <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
+                                 
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </TabPanel>
+                <TabPanel value="1">
+                    <div class="hidden pt-3 pb-20">
+
+                        <div class="fixed bottom-20 right-4 md:bottom-4">
+                            <Button label="외주공장 추가" icon="pi pi-plus" size="large" @click="getPopOpen('outFactorySet')" />
+                        </div>
+                        
+                    <ul>
+                        <li class="flex flex-col py-4 border-b" v-for="(item, index) in factory['out']['list']" :key="index" @click="getOutDetail(item.fcCd)">
+                            <p class="mb-1 text-sm font-bold">{{ item.faNm }}</p>
+                            <p class="text-t-lv-1 text-10">{{ item.tel }}</p>
+                            <p class="text-gray-400 text-10">{{ item.addr + ' ' + item.addrDetail }}</p>
+                        </li>
+                    </ul>
+                    </div>
+                </TabPanel>
+            </TabPanels>
+      </div>
+    </div>
+  </div>
+    
+    <div class="relative px-4 md:px-6 custom-left-tab">
         <Tabs value="0">
             <TabList>
                 <Tab value="0">플랜오더 공장</Tab>
@@ -10,11 +66,12 @@
             <TabPanels>
                 <TabPanel value="0">
                     <div class="pt-3 pb-20">
-                        <div class="fixed flex justify-end w-full pt-3 md:px-5 bottom-4 right-4">
+                        <div class="fixed bottom-20 right-4 md:bottom-4">
                             <Button label="공장코드 추가" icon="pi pi-plus" size="large" @click="getPopOpen('sysFactorySearch')"/>
                         </div>
+                       
                         <ul class="w-full">
-                            <li class="flex gap-3 py-4 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
+                            <li class="flex gap-4 py-4 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
                                     <img :src="getImage(item.imgUrl)" class="w-full max-w-[78px] h-[87px] rounded-lg object-cover" alt="">
                                 
                                 <div class="w-[calc(100%-78px)]">
@@ -38,35 +95,65 @@
                 </TabPanel>
                 <TabPanel value="1">
                     <div class="pt-3 pb-20">
-                        <div class="fixed flex justify-end w-full pt-3 md:px-5 bottom-4 right-4">
+
+                        <div class="fixed bottom-20 right-4 md:bottom-4">
                             <Button label="외주공장 추가" icon="pi pi-plus" size="large" @click="getPopOpen('outFactorySet')" />
                         </div>
+                        
                     <ul>
                         <li class="flex flex-col py-4 border-b" v-for="(item, index) in factory['out']['list']" :key="index" @click="getOutDetail(item.fcCd)">
-                            <p class="mb-1 text-sm font-bold">{{ item.faNm }}</p>
-                            <p class="text-t-lv-1 text-10">{{ item.tel }}</p>
-                            <p class="text-gray-400 text-10">{{ item.addr + ' ' + item.addrDetail }}</p>
+                            <p class="mb-1 font-bold">{{ item.faNm }}</p>
+                            <p class="text-sm text-t-lv-1">{{ item.tel }}</p>
+                            <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
                         </li>
                     </ul>
                     </div>
                 </TabPanel>
             </TabPanels>
         </Tabs>
+
+
     </div>
 
     <!-- 공장 코드 추가 다이얼로그 -->
-    <Dialog v-model:visible="popup['pop']['sysFactorySearch']" header="공장코드 추가" 
-        :modal=true position="bottom" class="custom-dialog-bottom"
+
+    <Dialog v-model:visible="popup['pop']['sysFactorySearch']" 
+        header="공장코드 추가"
+        :modal=true
+        position="center"
+        class="custom-dialog-bottom backPopup"
         @update:visible="getPopClose(true, 'sysFactorySearch')">
-        <FactorySearch/>
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopClose(true, 'clientSet')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
+                <h2 class="modal-backheader-title">공장 코드 추가</h2>
+            </div>
+        </template>
+            <FactorySearch/>
     </Dialog>
 
     <!-- 외주 공장 저장 다이얼로그 -->
-    <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주공장 등록" 
+    <!-- <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주공장 등록" 
         :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom"
         @update:visible="getPopClose(true, 'outFactorySet')">
         <OutFactorySet/>
+    </Dialog> -->
+
+    <Dialog v-model:visible="popup['pop']['outFactorySet']" 
+        header="외주공장 등록"
+        :modal=true
+        position="center"
+        class="custom-dialog-bottom backPopup"
+        @update:visible="getPopClose(true, 'outFactorySet')">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopClose(true, 'outFactorySet')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
+                <h2 class="modal-backheader-title">외주 공장 등록</h2>
+            </div>
+        </template>
+            <OutFactorySet/>
     </Dialog>
+
 </main>
 </template>
 
@@ -128,6 +215,12 @@ const getOutDetail = (fcCd: string) => {
 onMounted(() => {
     factory.getList();
 })
+
+const tabs = [
+  { name: '플랜오더 공장', href: '#', current: true },
+  { name: '외주공장', href: '#', current: false },
+  
+]
 </script>
 
 <style lang="scss">

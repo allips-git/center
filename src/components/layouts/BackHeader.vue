@@ -1,13 +1,6 @@
 <template>
-    <header class="h-[3.125rem] sticky top-0 flex w-full items-center px-4 md:shadow-none bg-white z-50 md:border-gray-100">
-        <!-- <Button 
-            plain 
-            text 
-            rounded 
-            icon="pi pi-arrow-left" 
-            
-            class="!block pc-hidden md:!hidden !text-l-lv0"
-        /> -->
+    <header class="h-[3.125rem] sticky top-0 flex w-full items-center p-4 md:p-6 md:shadow-none bg-white z-50 md:border-gray-100">
+       
         <IconArrowForward class="mt-0.5 fill-l-lv0 size-6" @click="goBack"/>
         <h1 class="absolute text-sm font-bold -translate-x-1/2 -translate-y-1/2 text-t-lv1 left-1/2 top-1/2 md:relative md:-translate-y-0 md:-translate-x-0 md:top-0 md:left-2">{{ title }}</h1>
     </header>

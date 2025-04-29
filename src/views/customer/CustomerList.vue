@@ -2,7 +2,7 @@
     <main>
         <BackHeader title="고객" />
         <section class="">
-            <div class="flex items-center justify-between px-4 mt-5 mb-2 no-print">
+            <div class="flex items-center justify-between px-4 mb-2 md:px-6 no-print">
                 <div class="flex self-center justify-between w-full ">
                     <div class="flex w-full gap-2">
                         <div class="flex relative w-full gap-2 max-w-[90px] bg-gray-100 h-8 *:!border-0">
@@ -10,7 +10,7 @@
                             <IconPlay class="absolute rotate-90 top-2 right-2 *:fill-gray-400"/>
                         </div>
                         
-                        <IconField class="table-search-input w-full max-w-[400px] sm:max-w-full h-8 !bg-gray-100 *:!border-0">
+                        <IconField class="table-search-input w-full  sm:max-w-full h-8 !bg-gray-100 *:!border-0">
                             <InputIcon class="flex items-center justify-center !translate-y-1/4">
                                 <i class="pi pi-search !text-11 text-gray-600 !font-balck" />
                             </InputIcon>
@@ -21,7 +21,7 @@
             </div>
                     
             <ul class="flex flex-col">
-                <li v-for="(item, index) in client['list']" :key="index" class="flex items-center justify-between flex-none w-full px-5 py-3" @click="getInfo(item.clientCd)">
+                <li v-for="(item, index) in client['list']" :key="index" class="flex items-center justify-between flex-none w-full p-4 md:px-6" @click="getInfo(item.clientCd)">
                     <!-- 상태 -->
                     <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none mr-4 text-sm font-bold text-white rounded-md size-11">
                         {{ getStatusName(item.step) }}
@@ -39,16 +39,19 @@
                 </li>
             </ul>
         </section>
-        <Button label="고객 신규 등록" icon="pi pi-plus" class="!fixed flex-none bottom-4 right-4" size="large" @click="getPopOpen"/>
+
+        <div class="fixed bottom-20 right-4 md:bottom-4">
+            <Button label="고객 신규 등록" icon="pi pi-plus" size="large" @click="getPopOpen"/>
+        </div>
         <Dialog v-model:visible="popup['pop']['clientSet']" 
         header="고객 등록"
         :modal=true
-        position="bottom"
+        position="center"
         class="custom-dialog-bottom backPopup"
         @update:visible="getPopClose(true, 'clientSet')">
         <template #header>
             <div class="modal-backheader">
-                <Button @click="getPopClose(true, 'clientSet')" severity="contrast" text icon="pi pi-arrow-left"/>
+                <Button @click="getPopClose(true, 'clientSet')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
                 <h2 class="modal-backheader-title">고객등록</h2>
             </div>
         </template>

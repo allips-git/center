@@ -1,9 +1,11 @@
 <template>
     <div class="relative">
-        <BackHeader title="고정비용 저장"/>
-        <Button v-if="cost['type'] === 'U'" label="비용 삭제" size="small" severity="danger" outlined class="!absolute  right-4 bottom-1/2 translate-y-1/2 z-[90]" @click="getDelete"/>
     </div>
-    <main class="p-5 pb-20">
+    <main class="p-5 pb-20 ">
+        <div class="flex justify-end mb-5">
+
+            <Button v-if="cost['type'] === 'U'" label="비용 삭제" size="small" severity="danger" outlined class="w-[80px]" @click="getDelete"/>
+        </div>
         <section class="form-gap-box">
             <IftaLabel class="w-full">
                 <InputText v-model="cost['info']['title']" class="w-full"/>

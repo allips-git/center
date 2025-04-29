@@ -1,7 +1,6 @@
 <template>
     <div>
-        <BackHeader title="쿠폰 메뉴 설정"/>
-        <main class="px-4 pb-32 pc-contents-h-box">
+        <main class="px-4 pc-contents-h-box">
         <div class="relative mt-2 custom-left-tab">
             <Tabs :value="coupon['info']['unit'] === 'F' ? '0' : '1'">
                 <TabList>

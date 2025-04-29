@@ -12,7 +12,7 @@
                 <label>가공방법</label>
             </IftaLabel>
         </div>
-        <div class="flex gap-2">
+        <div class="flex flex-col !gap-6 md:flex md:flex-row md:!gap-2">
             <div class="flex w-full gap-2">
                 <IftaLabel class="w-full">
                 <Select v-model="esti['curtain']['addColor']" :options="data['addColor']" optionLabel="name" optionValue="value" class="w-full"/>
@@ -46,7 +46,7 @@
         </div>
 
         <div>
-            <div class="flex w-full gap-2">
+            <div class="flex flex-col w-full gap-6">
                 <IftaLabel class="w-full">
                     <label>가로(CM)<span class="ml-1 text-red-600">*</span></label>
                     <InputText v-keyfilter.int id="cWidth" v-model="esti['common']['width']" class="w-full !font-bold" @update:modelValue="esti.getUnitCalc()"/>
@@ -60,7 +60,7 @@
                 </IftaLabel>
             </div>
     
-            <div class="flex w-full gap-2">
+            <div class="flex flex-col w-full gap-6">
                 <IftaLabel class="w-full">
                     <Select v-model="esti['curtain']['use']" :options="data['usage']" optionLabel="name" optionValue="value" class="w-full !font-bold" @update:modelValue="esti.getUnitCalc()"/>
                     <label>원단 사용량</label>

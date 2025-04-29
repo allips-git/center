@@ -5,16 +5,16 @@
     >
         <ul class="flex flex-col w-full gap-4 px-3 "
         >
-            <li class="flex items-center px-1 py-3 ">
-                <span class="w-8"
-                :class="setWideSide ? '' : '!w-auto'"
+            <li class="flex items-center justify-center px-1 py-3 ">
+                <span class="w-6"
+                :class="setWideSide ? '' : '!w-6'"
                 ><IconAvatar class="w-6 mr-2 text-blue-300"/></span>
                 <p v-if="setWideSide || drawerClass" class="text-gray-900">{{ login['name'] }}</p>
             </li>
             <li 
-            class="flex items-center cursor-pointer py-0.5 hover:bg-indigo-50 px-2 rounded-md font-bold group justify-start"
+            class="flex items-center justify-center cursor-pointer py-0.5 hover:bg-indigo-50 px-2 rounded-md font-bold group justify-start"
             v-for="item in SideHeaderItems" :key="item.id" @click="navigateTo(item.link)" >
-            <div class="flex items-center w-8 h-7 group-hover:text-indigo-600" :class="setWideSide || drawerClass ? '' : '!w-auto'">
+            <div class="flex items-center w-8 h-8 group-hover:text-indigo-600" :class="setWideSide || drawerClass ? '' : '!w-auto'">
                 <span class="pi" :class="item.iconClass"></span> <!-- PrimeVue 아이콘 클래스 -->
             </div>
                 <p v-if="setWideSide || drawerClass" class="duration-300 group-hover:text-indigo-600" >{{ item.label }}</p>

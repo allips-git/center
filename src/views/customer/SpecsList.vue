@@ -4,7 +4,7 @@
         <Button label="제품 추가 등록" size="small" class="!absolute right-4 top-1/2 -translate-y-1/2 z-50" @click="getEstiAdd"/>
     </div>
     <main class="main-bottom-fixed-pd">
-        <section class="px-5">
+        <section class="p-6">
             <div class="flex flex-col gap-5">
                 <TableCard v-for="(table, index) in esti['list']" :key="index" :title="table.title" :cards="table.cardLists"
                     :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag" :showButton="table.showButton"
@@ -12,7 +12,7 @@
             </div>
         </section>
         <div class="gray-bar"></div>
-        <section class="px-5">
+        <section class="p-6">
             <CalculateCard title="제품 결제 내역" :calcs="esti['payList']" totalTitle="총 결제 금액" :totalAmt="getAmt(esti['payList'], 'total')" :showtoggle="true">
                 <div class="flex flex-col gap-5 py-3 ">                    
                     <div class="relative flex items-center justify-center">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="flex justify-between my-5">
-                    <p>천원단위 절삭</p>
+                    <p class="text-sm">천원단위 절삭</p>
                     <ToggleSwitch v-model="esti['cutInfo']['gubun']" @change="getCut"/>
                 </div>
             </CalculateCard>
@@ -39,28 +39,56 @@
         <Button label="계약서 이동" size="large" @click="getPopupOpen('conInfoSet')"/>
     </div>
 
-    <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 
-        :modal=true position="bottom" class="min-w-96 custom-dialog-center" :dismissableMask="true"
+    <!-- <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 
+        :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissableMask="true"
         @update:visible="getPopupClose('disAmtSet', true)">
         <div class="pt-3">
+            <SaleAmountPop :gubun="'E'" @getApply="getDisApply" @getClose="getPopupClose('disAmtSet', true)"/>
+        </div>
+    </Dialog> -->
+
+    <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 
+            :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissable-mask="true"
+            @update:visible="getPopupClose(true, 'disAmtSet')">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'disAmtSet')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">할인 가격 입력</h2>
+                </div>
+            </template>
+            <div class="pt-3">
             <SaleAmountPop :gubun="'E'" @getApply="getDisApply" @getClose="getPopupClose('disAmtSet', true)"/>
         </div>
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['addAmtSet']" header="추가 가격 입력" 
+            :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissable-mask="true"
+            @update:visible="getPopupClose(true, 'addAmtSet')">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'addAmtSet')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">추가 가격 입력</h2>
+                </div>
+            </template>
+            <div class="pt-3">
+            <AddAmountPop :gubun="'E'" @getApply="getAddApply" @getClose="getPopupClose('addAmtSet', true)"/>
+        </div>
+    </Dialog>
+
+    <!-- <Dialog v-model:visible="popup['pop']['addAmtSet']" header="추가 가격 입력" 
         :modal=true position="bottom" class="min-w-96 custom-dialog-center" :dismissableMask="true"
         @update:visible="getPopupClose('addAmtSet', true)">
         <div class="pt-3">
             <AddAmountPop :gubun="'E'" @getApply="getAddApply" @getClose="getPopupClose('addAmtSet', true)"/>
         </div>
-    </Dialog>
+    </Dialog> -->
 
     <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
-        :modal=true position="bottom" class="custom-dialog-bottom backPopup"
+        :modal=true position="center" class="custom-dialog-full"
         @update:visible="getPopupClose('itemList', true)">
         <template #header>
             <div class="modal-backheader">
-                <Button @click="getPopClose(true, 'itemList')" severity="contrast" text icon="pi pi-arrow-left"/>
+                <Button @click="getPopupClose(true, 'itemList')" severity="contrast" text icon="pi pi-times"/>
                 <h2 class="modal-backheader-title">제품선택</h2>
             </div>
         </template>
@@ -68,22 +96,34 @@
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['itemSet']" header="제품등록" 
-        :modal=true position="bottom" class="custom-dialog-bottom backPopup"
+        :modal=true position="center" class="custom-dialog-bottom backPopup"
         @update:visible="getPopupClose('itemSet', true)">
         <template #header>
-            <div class="modal-backheader">
+            <div class="modal-fullheader">
                 <Button @click="getPopupClose('itemSet', true)" severity="contrast" text icon="pi pi-arrow-left"/>
-                <h2 class="modal-backheader-title">제품선택</h2>
+                <h2 class="modal-backheader-title">제품등록</h2>
             </div>
         </template>
         <ProductRegister/>
     </Dialog>
-    
+<!--     
     <Dialog v-model:visible="popup['pop']['conInfoSet']" header="계약 정보" 
         :modal=true position="bottom" class="custom-dialog-bottom"
         @update:visible="getPopupClose('conInfoSet', true)">
         <ContractModal/>
-    </Dialog>
+    </Dialog> -->
+
+    <Dialog v-model:visible="popup['pop']['conInfoSet']" header="계약 정보" 
+            :modal=true position="center" class="custom-dialog-bottom" 
+            @update:visible="getPopupClose('conInfoSet', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'kakaoDetail')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">계약 정보</h2>
+                </div>
+            </template>
+            <ContractModal/>
+        </Dialog>
     
 </template>
 

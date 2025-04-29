@@ -1,9 +1,9 @@
 <template>
     <main>
         <BackHeader title="고객상세" />
-        <section class="p-5 pb-0">
+        <section class="p-6">
             <div class="flex items-center justify-between">
-                <h1 class="text-lg font-bold ">{{ client['detail']['clientNm'] }}</h1>
+                <h2 class="font-bold">{{ client['detail']['clientNm'] }}</h2>
                 <Button label="정보수정" outlined severity="secondary" size="small" @click="getClientModify"/>
             </div>
             <ul class="flex flex-col gap-3 mt-3 text-sm rounded-md">
@@ -36,13 +36,13 @@
         <div class="gray-bar !mb-1"></div>
         <Tabs value="0" class="w-full">
             <TabList class="">
-                <Tab value="0" class="flex items-center justify-center w-1/3 gap-2">판매중 <span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['ing'] }}</span></Tab>
-                <Tab value="1" class="flex items-center justify-center w-1/3 gap-2">판매완료 <span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['comp'] }}</span></Tab>
-                <Tab value="2" class="flex items-center justify-center w-1/3 gap-2">판매취소<span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['cancel'] }}</span></Tab>
+                <Tab value="0" class="flex items-center justify-center w-1/3 gap-2 text-sm md:text-base">판매중 <span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['ing'] }}</span></Tab>
+                <Tab value="1" class="flex items-center justify-center w-1/3 gap-2 text-sm md:text-base">판매완료 <span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['comp'] }}</span></Tab>
+                <Tab value="2" class="flex items-center justify-center w-1/3 gap-2 text-sm md:text-base">판매취소<span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['cancel'] }}</span></Tab>
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
-                    <div class="p-5 !pb-20 flex flex-col gap-5">
+                    <div class="flex flex-col gap-5 p-5">
                         <section v-for="(item, index) in getList(1)" :key="index">
                             <ProcessCard :info="item"/>
                         </section>
@@ -54,23 +54,23 @@
                     </div>
                 </TabPanel>
                 <TabPanel value="1">
-                    <div class="p-5 !pb-20 flex flex-col gap-5">
+                    <div class="flex flex-col gap-5 p-5">
                         <section v-for="(item, index) in getList(2)" :key="index">
                             <ProcessCard :info="item"/>
                         </section>
-                        <div class="flex flex-col items-center justify-center gap-2 py-10 text-center" v-if="getList(2).length === 0">
+                        <div class="flex flex-col items-center justify-center gap-2 py-10 text-center h-[312px]" v-if="getList(2).length === 0">
                             <div class="flex items-center justify-center rounded-full bg-red-50 size-16 "> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
                             <p class="text-center">판매완료된 항목이 없습니다.</p>
                         </div>
                     </div>
                 </TabPanel>
                 <TabPanel value="2">
-                    <div class="p-5 !pb-20 flex flex-col gap-5">
+                    <div class="flex flex-col gap-5 p-5">
                         <section v-for="(item, index) in getList(3)" :key="index">
                             <ProcessCard :info="item"/>
                         </section>
 
-                        <div class="flex flex-col items-center justify-center gap-2 py-10 text-center" v-if="getList(3).length === 0">
+                        <div class="flex flex-col items-center justify-center gap-2 py-10 text-center h-[312px]" v-if="getList(3).length === 0">
                             <div class="flex items-center justify-center rounded-full bg-red-50 size-16 "> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
                             <p class="text-center">판매취소된 항목이 없습니다.</p>
                         </div>
@@ -79,16 +79,16 @@
                 </TabPanel>
             </TabPanels>
         </Tabs>
-        <div class="fixed bottom-4 right-4">
+        <div class="flex justify-center">
             <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getNewEsti" />
         </div>
 
         <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
-            :modal=true position="bottom" class="custom-dialog-bottom backPopup"
+            :modal=true position="center" class="custom-dialog-full"
             @update:visible="getPopClose(true, 'itemList')">
             <template #header>
                 <div class="modal-backheader">
-                    <Button @click="getPopClose(true, 'itemList')" severity="contrast" text icon="pi pi-arrow-left"/>
+                    <Button @click="getPopClose(true, 'itemList')" severity="contrast" text icon="pi pi-times"/>
                     <h2 class="modal-backheader-title">제품선택</h2>
                 </div>
             </template>
@@ -96,20 +96,35 @@
         </Dialog>
     
         <Dialog v-model:visible="popup['pop']['itemSet']" header="제품등록" 
-            :modal=true position="bottom" class="custom-dialog-bottom backPopup"
+            :modal=true position="center" class="custom-dialog-bottom"
             @update:visible="getPopClose(true, 'itemSet')">
             <template #header>
-                <div class="modal-backheader">
+                <div class="modal-fullheader">
                     <Button @click="getPopClose(true, 'itemSet')" severity="contrast" text icon="pi pi-arrow-left"/>
                     <h2 class="modal-backheader-title">제품등록</h2>
+                    <Button label="제품 변경" size="small" outlined @click="getItemChange" class="!z-[100]"/>
                 </div>
             </template>
             <ProductRegister/>
         </Dialog>
-        <Dialog v-model:visible="popup['pop']['clientSet']" header="고객 정보 수정" 
-            :modal=true position="bottom" class="custom-dialog-bottom"
+
+        <!-- <Dialog v-model:visible="popup['pop']['clientSet']" header="고객 정보 수정" 
+            :modal=true position="center" class="custom-dialog-bottom"
             @update:visible="getPopClose(true, 'clientSet')">
             <CustomerListSet/>
+        </Dialog> -->
+
+        <Dialog v-model:visible="popup['pop']['clientSet']" header="고객 정보 수정" 
+            :modal=true position="center" class="custom-dialog-bottom" 
+            @update:visible="getPopClose('clientSet', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'kakaoDetail')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">고객 정보 수정</h2>
+                </div>
+            </template>
+            <CustomerListSet/>
+
         </Dialog>
     </main>
 </template>
@@ -134,6 +149,11 @@ const client    = useClientStore();
 const esti      = useEstiStore();
 
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getItemChange = () => {
+    getPopupClose(true, 'itemSet');
+    getPopupOpen('itemList');
+}
 
 const getNavi = (name: string, val: string) => {
     if(name === 'addr')

@@ -4,7 +4,7 @@
         <main class="pb-20 pc-contents-h-box">
             <section class="pt-5 pb-5 mx-5 border-b ">
                 <h1 class="mb-2 text-sm font-bold text-t-lv1">기본시공 시간</h1>
-                <p class="text-t-lv3 text-11">견적서 작성 진행시 중복되는 기본서비스 (인테리어 자재) 시간을 차감하여 정확한 전체 시공시간 계산을 도와주는 기능입니다.</p>
+                <p class="text-xs text-t-lv3">견적서 작성 진행시 중복되는 기본서비스 (인테리어 자재) 시간을 차감하여 정확한 전체 시공시간 계산을 도와주는 기능입니다.</p>
             </section>
             
             <section class="px-5 mt-3 form-gap-box !gap-8 pt-3 text-lv-1">
