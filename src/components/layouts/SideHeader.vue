@@ -1,18 +1,18 @@
 <template>
-    <aside class="max-h-screen md:h-[calc(100vh-60px)] bg-white md:border-r border-gray-200 w-[200px] flex-none sticky"
+    <aside class="max-h-screen h-full bg-white md:border-r border-gray-200 w-[200px] flex-none sticky"
     :class="drawerClass ? '!flex !w-[200px] !justify-start'  : 'hidden md:!flex ' ,
     setWideSide ? 'w-[180px] overflow-y-auto flex-none' : 'w-auto justify-center'"
     >
         <ul class="flex flex-col w-full gap-4 px-3 "
         >
-            <li class="flex items-center justify-center px-1 py-3 ">
+            <li class="flex justify-start gap-3 px-1 py-3 ">
                 <span class="w-6"
                 :class="setWideSide ? '' : '!w-6'"
                 ><IconAvatar class="w-6 mr-2 text-blue-300"/></span>
                 <p v-if="setWideSide || drawerClass" class="text-gray-900">{{ login['name'] }}</p>
             </li>
             <li 
-            class="flex items-center justify-center cursor-pointer py-0.5 hover:bg-indigo-50 px-2 rounded-md font-bold group justify-start"
+            class="flex items-center cursor-pointer py-0.5 hover:bg-indigo-50 px-2 rounded-md font-bold group justify-start"
             v-for="item in SideHeaderItems" :key="item.id" @click="navigateTo(item.link)" >
             <div class="flex items-center w-8 h-8 group-hover:text-indigo-600" :class="setWideSide || drawerClass ? '' : '!w-auto'">
                 <span class="pi" :class="item.iconClass"></span> <!-- PrimeVue 아이콘 클래스 -->

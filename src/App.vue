@@ -10,7 +10,7 @@
             :setWideSide="setWideSide"
             :drawerClass="false"
             />
-        <div class="z-0 w-full h-full overflow-y-auto" :class="{ 'pb-[56px] md:pb-0' :  showAppFooter }" ref="listRef">
+        <div class="z-0 w-full h-[100%] overflow-y-auto" :class="{ 'pb-[56px] md:pb-0' :  showAppFooter }" ref="listRef">
             <RouterView class="relative w-full"/>
         </div>
         <ConfirmDialog></ConfirmDialog>

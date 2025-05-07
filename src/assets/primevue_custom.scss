@@ -84,6 +84,15 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     .p-dialog-close-button{
         display: none;
     }
+    .p-dialog-header{
+        padding: 0;
+    }
+    .p-dialog-content{
+        padding: 16px;
+        @include respond-to(md) {
+            padding: 24px;
+        }
+    }
 }
 
 .custom-dialog-bottom.p-dialog{
@@ -134,13 +143,17 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         }
     }
    
+    
    
     .p-dialog-header, .p-drawer-header{
-        padding: 0.25rem 20px;
-        padding-right: 8px;
+       padding: 0;
+        @include respond-to(md) {
+            // padding: 0 24px;
+        }
         .p-dialog-title , .p-drawer-title{
             font-size: 1rem;
         }
+
     }
     .p-dialog-maximize-button{
         display: none;
@@ -156,6 +169,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
     
 }
+
 .custom-dialog-center{
     .p-dialog-header, .p-drawer-header{
         padding: 0.25rem;
@@ -262,10 +276,20 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     border-radius: 2px !important;
 }
 
-.p-inputtext {
-    &::placeholder {
+
+// 이게 작동하는거
+
+.p-iconfield .p-inputtext:not(:first-child) {
+    font-size: 12px;
+    &::placeholder{
+        font-size: 12px;
+    }
+    @include respond-to(md){
         font-size: 14px;
-        font-weight: 200;
+        &::placeholder{
+            font-size: 14px;
+            font-weight: 300;
+        }
     }
 }
 
@@ -278,10 +302,11 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     &::placeholder {font-size: 14px;}
 }
 
-.p-inputtext.p-component.p-placeholder{
-    font-size: 14px;
-    font-weight: 300;
+.p-button-text.p-button-contrast {
+    width: 18px;
 }
+
+
 
 
 .p-iftalabel {
@@ -301,7 +326,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
       &::placeholder{
         color: #C1C1C1;
         font-weight: 300;
-        font-size: 14px;
+        font-size: 12px;
       }
     }
     .p-textarea{

@@ -1,27 +1,83 @@
 <template>
-    <main class="h-[calc(100vh-60px)]">
+    <main class="h-full overflow-y-scroll md:pb-[0] pb-[56px]">
         <BackHeader title="일정"/>
         <div class="md:grid items-start justify-start md:grid-cols-[1fr_400px] md:h-[calc(100vh-108px)]">
             <CalenderMonth class="flex-grow md:w-full md:block"/>
             <CalenderDay class="flex-grow hidden border-l border-gray-200 md:w-full md:block md:max-w-[400px] md:h-full" />
         </div>
+        <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-4 left-1/2 md:hidden">
+                <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm" @click="calendar.getSearchDt(new Date())">일별</div>
+            </div>
+<!-- 
         <Dialog v-model:visible="popup['pop']['calendarSet']" header="일정" 
             :modal=true position="bottom" class="border-0 custom-dialog-bottom"
             @update:visible="getPopupClose('calendarSet', true)">
             <CalenderSet/>
+        </Dialog> -->
+
+        <Dialog v-model:visible="popup['pop']['calendarSet']" 
+        header="일정"
+        :modal=true
+        position="center"
+        class="custom-dialog-bottom backPopup"
+        :dismissableMask="true"
+        @update:visible="getPopupClose(true, 'calendarSet')">
+        <template #header>
+            <div class="modal-fullheader">
+                <Button @click="getPopupClose(true, 'calendarEdit')" severity="contrast" text icon="pi pi-arrow-left" iconPos="right"/>
+                <!-- 버튼 클릭시 뒤로 가게 수정 필요 -->
+                <h2 class="modal-backheader-title">일정 상세</h2>
+            </div>
+        </template>
+        <CalenderSet/>
+
         </Dialog>
 
-        <Dialog v-model:visible="popup['pop']['calendarDetail']" header="일정" 
+        <!-- <Dialog v-model:visible="popup['pop']['calendarDetail']" header="일정" 
             :modal=true position="bottom" class="border-0 custom-dialog-bottom"
             @update:visible="getPopupClose('calendarDetail', true)">
             <CalenderDetail/>
+        </Dialog> -->
+
+        <Dialog v-model:visible="popup['pop']['calendarDetail']" 
+        header="일정"
+        :modal=true
+        position="center"
+        class="custom-dialog-bottom backPopup"
+        :dismissableMask="true"
+        @update:visible="getPopupClose(true, 'calendarDetail')">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopupClose(true, 'calendarDetail')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
+                <h2 class="modal-backheader-title">일정 상세</h2>
+            </div>
+        </template>
+        <CalenaderEdit/>
         </Dialog>
 
-        <Dialog v-model:visible="popup['pop']['calendarEdit']" header="일정" 
+        <!-- <Dialog v-model:visible="popup['pop']['calendarEdit']" header="일정" 
             :modal=true position="bottom" class="border-0 custom-dialog-bottom"
             @update:visible="getPopupClose('calendarEdit', true)">
             <CalenaderEdit/>
-        </Dialog>
+        </Dialog> -->
+
+        <Dialog v-model:visible="popup['pop']['calendarEdit']" 
+        header="일정"
+        :modal=true
+        position="center"
+        class="custom-dialog-bottom backPopup"
+        :dismissableMask="true"
+        @update:visible="getPopupClose(true, 'calendarEdit')">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopupClose(true, 'calendarEdit')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
+                <h2 class="modal-backheader-title">일정 편집</h2>
+            </div>
+        </template>
+        <CalenaderEdit/>
+
+    </Dialog>
+
     </main>
 </template>
 

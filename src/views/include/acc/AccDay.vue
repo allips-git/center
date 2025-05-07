@@ -1,19 +1,21 @@
 <template>
     <main>
-        <section class="px-5 pt-5">
+        <section class="p-4 md:p-6">
             <AccInfo :saleAmt="getAmt(acc.daySaleAmt)" :purcAmt="getAmt(acc.dayPurcAmt)" :margin="acc.dayMargin"/>
         </section>
-        <div class="mt-5"></div>
         <div class="gray-bar"></div>
-        <section>
-            <div class="flex items-center px-4 py-2 ">
+        <section class="px-4 md:px-6">
+            <div class="flex items-center py-4 md:py-6">
                 <p class="mr-2 text-sm text-gray-600 whitespace-nowrap">{{ getDate(acc.searchDt) }}</p>
                 <div class="w-full h-px bg-gray-300"></div>
             </div>
-            <template v-for="(item, index) in acc['dayList']" :key="index">
-                <AccountList :clientNm="item['clientNm']" :stNm="item['stNm']" :addr="item['addr']+' '+item['addrDetail']"
-                    :saleAmt="getAmt(item['saleAmt'])" :purcAmt="getAmt(item['purcAmt'])" :rev="getAmt(item['rev'])"/>
-            </template>
+            <div class="">
+                <template v-for="(item, index) in acc['dayList']" :key="index">
+                    <AccountList class="py-0" :clientNm="item['clientNm']" :stNm="item['stNm']" :addr="item['addr']+' '+item['addrDetail']"
+                        :saleAmt="getAmt(item['saleAmt'])" :purcAmt="getAmt(item['purcAmt'])" :rev="getAmt(item['rev'])"/>
+                </template>
+
+            </div>
         </section>
     </main>
 </template>

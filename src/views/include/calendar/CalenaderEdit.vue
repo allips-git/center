@@ -1,12 +1,12 @@
 <template>
-<section class="p-4">
-    <div class="flex items-center gap-2 mb-5">
+<section class="p-6">
+    <div class="flex items-center gap-4 mb-5">
         <IconAvatar class="size-12 fill-sky-400"/>
         <div class="w-full">
             <p class="text-xs text-sky-500">일정</p>
             <p class="flex items-center text-lg font-bold">{{ calendar['edit']['clientNm'] }} 
                 <span class="flex items-center justify-center ml-2 text-sm text-gray-400 size-4" @click="getDetail">
-                    <IconPlay class="size-2 fill-gray-400"/>
+                    <IconPlay class="size-4 fill-gray-400"/>
                 </span>
             </p>
         </div>
@@ -18,7 +18,7 @@
         <Select v-model="calendar['edit']['stCd']" :options="getStCd()" optionLabel="label" optionValue="value" class="w-40 !rounded-full" size="small" 
             @update:modelValue="(value) => getStCdChange(value)"/>
     </div>
-    <div class="flex flex-col items-start gap-2 text-gray-500">
+    <div class="flex flex-col items-start gap-4 text-gray-500">
         <p>{{ getDate() }}</p>
         <p class="px-3 py-px text-white rounded-full bg-sky-500">{{ calendar['edit']['tel'] }}</p>
         <p class="px-3 py-px text-white rounded-full bg-sky-500">{{ calendar['edit']['addr'] }}</p>
@@ -31,7 +31,7 @@
     </div>
 
     <div class="flex justify-end">
-        <Iconpencil class="fill-gray-500 size-8"/>
+        <Iconpencil class="fill-gray-500 size-4"/>
     </div>
 </section>
 </template>

@@ -4,13 +4,13 @@
         <!-- <div class="absolute !z-[100] flex justify-end top-[8px] right-[8px]">
             <Button label="제품 변경" size="small" outlined @click="getItemChange" class="!z-[100]"/>
         </div>     -->
-        <div class="flex justify-between px-5 text-base">
+        <div class="flex justify-between px-4 text-base md:px-6">
             <h2 class="px-4 py-1 text-sm font-bold rounded-full bg-cyan-100 text-cyan-600">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
             <p class="font-bold">({{ esti['common']['unitSize'] }}{{ esti['common']['unitNm'] }}) {{ getAmt(esti['common']['saleUnit']) }}원</p>
         </div>
         <div class="gray-bar !my-0"></div>
         <!-- 입력 계산기 컴포넌트 -->
-        <div class="px-5">
+        <div class="px-4 md:px-6">
             <!-- 회베 -->
             <CalcHebeSet v-if="esti['common']['unit'] === '001'"/>
             <!-- 폭 , 야드 -->
@@ -20,7 +20,7 @@
         </div>
 
         <!-- 옵션 더보기 -->
-        <section class="px-5">
+        <section class="px-4 md:px-6">
             <div class="w-full custom_accordion">
                 <Accordion value="0">
                     <AccordionPanel class="*:pb-0 " value="0" >
@@ -51,8 +51,8 @@
                 </Accordion>
             </div>
         </section>
-        <div class="gray-bar !my-0"></div>
-        <div class="px-5">
+        <div class="gray-bar"></div>
+        <div class="p-4 md:px-6">
             <CalculateCard title="총 단위" :showtitle="true" 
                 :unit="esti['total']['totalUnitSize']+esti['common']['unitNm']"
                 :calcs="esti['totalAmtInfo']" totalTitle="총 금액" :totalAmt="esti['total']['totalSaleAmt'] + esti['total']['totalSaleTax']" :showUnit="true"/>

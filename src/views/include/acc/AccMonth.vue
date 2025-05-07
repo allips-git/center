@@ -1,20 +1,20 @@
 <template>
     <main>
-        <section class="px-5 pt-5">
-            <div class="relative w-full ">
-                <section class="flex items-center justify-between mb-1">
+        <section class="p-4 md:p-6">
+            <div class="relative flex flex-col w-full gap-4">
+                <section class="flex items-center justify-between">
                     <h1 class="text-xl font-bold">{{ acc.year }}년</h1>
                     <DatePicker v-model="acc.searchDt" view="year" dateFormat="yy년" 
-                        class="w-40 custom-select" :locale="'ko'" showIcon fluid iconDisplay="input"
+                        class="w-32 custom-select" :locale="'ko'" showIcon fluid iconDisplay="input"
                         @update:modelValue="acc.getMonData()" />
                 </section>
                 <AccInfo :saleAmt="getAmt(acc.monthSaleAmt)" :purcAmt="getAmt(acc.monthPurcAmt)" :margin="acc.monthMargin"/>
             </div>
         </section>
-           <div class="mt-5 gray-bar"></div> 
+           <div class="gray-bar"></div> 
         <section>
-            <ul>
-                <li class="px-4 py-2 font-bold text-gray-500 border-b border-gray-200 text-lx ">
+            <ul class="p-4 md:p-6">
+                <li class="pb-4 font-bold text-gray-500 border-b border-gray-200 text-lx ">
                     <p>{{ acc.year }}년</p>
                 </li>
                 <template v-for="(item, index) in acc['monthList']" :key="index">
@@ -23,10 +23,27 @@
                 </template>
             </ul>
         </section>
-        <Dialog v-model:visible="popup['pop']['accWeek']" header="주간 분석" 
+        <!-- <Dialog v-model:visible="popup['pop']['accWeek']" header="주간 분석" 
             :modal=true position="bottom" class="custom-dialog-bottom"
             @update:visible="getPopupClose('accWeek', true)">
             <AccWeek/>
+        </Dialog> -->
+
+        <Dialog v-model:visible="popup['pop']['accWeek']" 
+        header="주간 분석"
+        :modal=true
+        position="center"
+        class="custom-dialog-bottom backPopup"
+        dismissable-mask="true"
+        @update:visible="getPopupClose('accWeek', true)">
+        <template #header>
+            <div class="modal-fullheader">
+                <Button @click="getPopupClose('accWeek', true)" severity="contrast" text icon="pi pi-arrow-left" iconPos="right"/>
+                <h2 class="modal-backheader-title">주간 분석</h2>
+            </div>
+        </template>
+        <AccWeek/>
+
         </Dialog>
     </main>
 </template>

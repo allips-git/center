@@ -51,10 +51,16 @@
             <Button type="button" :label="client['type'] === 'I' ? '명세서 이동' : '저장'" class="w-full" size="large" @click="getSaveNext"/>
         </div>
     </div>
-    <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:9999;-webkit-overflow-scrolling:touch;">
-        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" @click="getCloseDaumPost()" alt="닫기 버튼">
+    <div id="layer" style="overflow:hidden;z-index:9999;-webkit-overflow-scrolling:touch;position:absolute;top:50%;transform: translate(-50%,-50%);left:50%;">
+        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-10px;top:-3px;z-index:1" @click="getCloseDaumPost()" alt="닫기 버튼">
     </div>
 </template>
+
+<style>
+#layer {
+    background-color: aqua;
+}
+</style>
 
 <script setup lang="ts">
 import IftaLabel from 'primevue/iftalabel';
@@ -105,7 +111,7 @@ const getAddr = () => {
         width               : '100%',
         height              : '100%',
         submitMode          : false, // 뒤로가기 히스토리 남기지 않도록 설정
-        maxSuggestItems     : 5
+        maxSuggestItems     : 5,
     }).embed(layer);
 
     getDaumPopupPosition(layer);

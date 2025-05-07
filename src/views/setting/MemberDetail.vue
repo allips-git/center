@@ -18,13 +18,13 @@
                 </div>
             </div>
         </section>
-        <div class="px-4">
+        <div class="p-4">
             <div class="gray-bar !bg-[#E5E5EC] !h-px  w-full"></div>
         </div>
         <section class="">
             <!-- <h2 class="px-5 text-lg font-bold">이력</h2> -->
-            <ul class="w-full mt-4">
-                <li v-for="(item, index) in member['history']" :key="index" class="flex items-center justify-between w-full gap-2 px-5 py-2.5">
+            <ul class="w-full">
+                <li v-for="(item, index) in member['history']" :key="index" class="flex items-center justify-between w-full gap-2 px-4 md:px-6 py-2.5">
                 <div class="flex items-center text-xs gap-2 w-[calc(100%-120px)]">
                     <div class="flex-none rounded-full size-3" :class="item.codeSub === '001' ? 'bg-yellow-300' : item.codeSub === 'N' ? 'bg-red-400' : 'bg-sky-400'"></div>
                     <div class="flex items-center text-t-lv2">
@@ -36,7 +36,7 @@
                 </li>
             </ul>
         </section>
-        <div class="bottom-fixed-btn-box md:!absolute">
+        <div class="bottom-fixed-btn-box">
             <Button label="맴버정보 수정" size="large" severity="secondary" class="w-full" @click="getPopup"/>
             <router-link to="/setting/member_auth">
                 <Button label="권한설정" size="large" class="w-full"/>
