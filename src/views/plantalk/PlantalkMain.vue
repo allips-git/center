@@ -1,6 +1,6 @@
 <template>
-    <main>
-        <main>
+    <main class="h-full pb-20 overflow-y-scroll">
+        <main class="">
             <BackHeader title="플랜톡"/>
             <div class="">
                 <section class="p-4 md:p-6">
@@ -12,7 +12,7 @@
                         </div>
                     </div>
                     <p class="mt-px text-sm text-t-lv3">알림 <span class="font-bold text-p-lv4">{{ kakao['cnt'] }}</span>종을 사용중입니다.</p>
-                    <ul class="grid grid-cols-2 gap-3 text-sm mt-2 *:px-2.5 *:py-3 *:rounded-lg">
+                    <ul class="grid grid-cols-2 gap-4 text-sm mt-4 *:p-4 *:rounded-lg">
                         <li class="flex flex-col justify-between col-span-2 gap-1 bg-yellow-50">
                             <p class="text-sm font-medium">플랜톡 잔여 포인트 {{ kakao['point'] }}P</p>
                             <p class="cursor-pointer text-p-lv4">충전하기</p>
@@ -43,7 +43,7 @@
         
                 <section class="p-4 md:p-6">
                     <h1 class="text-sm font-bold">알림</h1>
-                    <ul class="flex flex-col py-2 *:border-b   *:py-4  *:border-l-lv5">
+                    <ul class="flex flex-col *:border-b   *:py-4  *:border-l-lv5">
                         <li v-for="(item, index) in kakao['list']" :key="index" class="flex items-center justify-between" @click="goToDetail(item['kdCd'])">
                             <div>
                                 <div class="flex items-center gap-2">

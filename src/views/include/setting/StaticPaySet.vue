@@ -1,7 +1,6 @@
 <template>
-    <div class="relative">
-    </div>
-    <main class="p-5 pb-20 ">
+   
+    <main class="px-4 pt-4 pb-[75px] md:p-6 ">
         <div class="flex justify-end mb-5">
 
             <Button v-if="cost['type'] === 'U'" label="비용 삭제" size="small" severity="danger" outlined class="w-[80px]" @click="getDelete"/>
@@ -33,7 +32,7 @@
             </IftaLabel>
         </section>
     </main>
-    <div class="bottom-fixed-btn-box">
+    <div class="bottom-fixed-btn-box !bottom-0">
         <Button :disalbed="status" label="저장" size="large" @click="getResult"/>
     </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
 <main>
-    <section class="px-5">
+    <section class="p-6">
         <div class="flex items-center justify-between">
             <div class="flex items-center w-full gap-2">
                 <IconAvatar class="text-indigo-300 !size-16"/>
@@ -13,7 +13,7 @@
         </div>
     </section>
     <div class="gray-bar"></div>
-    <section class="px-5">
+    <section class="p-6">
         <div class="form-gap-box">
             <IftaLabel class="w-full">
                 <Select v-model="calendar['info']['estiPerson']" :options="calendar['person']" class="w-full"
@@ -42,10 +42,10 @@
         
     </section>
     <div class="gray-bar"></div>
-    <section class="">
-        <h2 class="px-5 text-lg font-bold">수정기록</h2>
+    <section class="p-6">
+        <h2 class="text-lg font-bold">수정기록</h2>
         <ul class="flex flex-col">
-            <li v-for="(item, index) in calendar['info']['history']" :key="index" class="flex items-center gap-2 px-4 py-4 border-b first:mt-2">
+            <li v-for="(item, index) in calendar['info']['history']" :key="index" class="flex items-center gap-4 py-4 border-b first:mt-4">
             <IconAvatar class="text-indigo-300 !size-10"/>
             <div>
                 <div class="flex items-center gap-1">

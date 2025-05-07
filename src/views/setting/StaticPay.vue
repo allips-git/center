@@ -1,7 +1,7 @@
 <template>
     <BackHeader title="고정비용" />
-    <main class="">
-        <section class="p-6">
+    <main class="pb-[56px] md:pb-0">
+        <section class="p-4 md:p-6">
             <h1 class="mb-2 text-xl font-bold">전체 <span class="text-sky-500">{{ cost['cnt'] }}건</span></h1>
             <div class="flex items-center gap-2 font-bold">
                 <p>월간 고정 지출</p>
@@ -9,16 +9,16 @@
             </div>
         </section>
         
-        <div class="gray-bar !my-2.5"></div>
+        <div class="gray-bar"></div>
 
-        <section class="p-6 text-sm">
+        <section class="flex flex-col gap-4 p-4 text-sm md:p-6">
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-bold">내 고정비 목록</h2>
                 <Button label="고정비 등록" size="small" @click="getPopup"/>
             </div>
             <ul class="flex flex-col">
                 <!-- v-for -->
-                <li v-for="(item, index) in cost['list']" :key="index" class="flex items-center justify-between px-5 py-4 border-b first:mt-5" @click="getInfo(item['fxCd'])">
+                <li v-for="(item, index) in cost['list']" :key="index" class="flex items-center justify-between py-4 border-b" @click="getInfo(item['fxCd'])">
                     <div>
                         <p class="font-bold ">{{ item['fxNm'] }}</p>
                         <p class="text-sm text-gray-400" >{{ item['title'] }}</p>

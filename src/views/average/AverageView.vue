@@ -1,5 +1,5 @@
 <template>
-    <main>
+    <main class="h-[100%] overflow-y-scroll pb-20">
         <BackHeader title="통계"/>
         <div class="flex justify-between p-4 md:p-6">
             <div>

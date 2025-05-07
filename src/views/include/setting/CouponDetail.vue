@@ -1,6 +1,6 @@
 <template>
     <div>
-        <main class="px-4 pc-contents-h-box">
+        <main class="px-4 md:px-6 pc-contents-h-box">
         <div class="relative mt-2 custom-left-tab">
             <Tabs :value="coupon['info']['unit'] === 'F' ? '0' : '1'">
                 <TabList>
@@ -38,7 +38,7 @@
                 <small class="text-red-500">{{ msg }}</small>
             </Tabs>   
         </div>
-            <div class="bottom-fixed-btn-box md:!absolute">
+            <div class="bottom-fixed-btn-box !bottom-0">
                 <route-link to="/setting/coupon_detail">
                     <Button label="저장" size="large" class="w-full" @click="getSave"/>
                 </route-link>

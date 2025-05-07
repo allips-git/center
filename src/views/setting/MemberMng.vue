@@ -6,11 +6,11 @@
             <IconSetting class="size-[17px] fill-l-lv0" />
         </div>
     </div>
-    <main class="pb-32 pc-contents-h-box">
-        <ul class="">
+    <main class="px-4 pt-4 pb-32 md:px-6 md:pt-6">
+        <ul class="flex flex-col gap-4">
             <!-- v-for -->
-            <li v-for="item, index in member['list']" :key="index" class="flex items-center justify-between px-4 py-4" @click="getDetail(item['state'], item['userCd'])">
-                <div class="flex items-center gap-2.5 ">
+            <li v-for="item, index in member['list']" :key="index" class="flex items-center justify-between" @click="getDetail(item['state'], item['userCd'])">
+                <div class="flex items-center gap-4">
                     <IconAvatar class="fill-sky-400 size-9"/>
                     <div  class="flex flex-col">
                         <p class="font-bold ">{{ item['userNm'] }}</p>
@@ -23,10 +23,10 @@
                 <p v-else-if="item['state'] === 'P'" class="capsuel_sky" @click.stop="getAppr(item['userCd'])">승인대기중</p>
             </li>
         </ul>
-        <div class="bottom-fixed-btn-box md:!absolute">
-            <Button label="멤버 추가" size="large" @click="getPopup"/>
-        </div>
     </main>
+    <div class="bottom-fixed-btn-box">
+        <Button label="멤버 추가" size="large" @click="getPopup"/>
+    </div>
     <!-- <Dialog v-model:visible="popup['pop']['memberSet']" header="멤버 저장" 
         :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom"
         @update:visible="getPopupClose('memberSet', true)">

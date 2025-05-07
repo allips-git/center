@@ -1,5 +1,5 @@
 <template>
-<main>
+<main class="h-full overflow-y-scroll">
         <BackHeader title="회계" />
         <main class="w-full">
             <section class="p-4 md:p-6">
@@ -59,7 +59,7 @@
                         <div class="hidden">
                             <div>
                                 <template v-for="(date, dIndex) in acc.dateList" :key="dIndex">
-                                    <div class="flex items-center gap-2 px-4 py-2">
+                                    <div class="flex items-center gap-4 pt-4">
                                         <p class="flex-none text-gray-400">{{ date['stDt'] }}</p>
                                         <div class="w-full h-px bg-gray-200"></div>
                                     </div>

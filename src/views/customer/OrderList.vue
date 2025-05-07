@@ -1,31 +1,35 @@
 <template>
-    <BackHeader title="발주서" />
-    <main class="main-bottom-fixed-pd">
-        <div class="flex flex-col gap-5 px-4">
-            <TableCard v-for="(table, index) in ord['list']" :key="index" :title="table.title" :cards="table.cardLists"
-                :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag" :showButton="table.showButton"/>
+    <main class="pb-[130px] md:pb-[75px]">
+        <BackHeader title="발주서" />
+        <main class="main-bottom-fixed-pd">
+            <section class="p-4 md:p-6">
+                <div class="flex flex-col gap-5">
+                    <TableCard v-for="(table, index) in ord['list']" :key="index" :title="table.title" :cards="table.cardLists"
+                        :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag" :showButton="table.showButton"/>
+                </div>
+            </section>
+            <div class="gray-bar"></div>
+            <section class="p-4 md:p-6">
+                <CalculateCard title="제품 결제 내역" :calcs="ord['payList']" totalTitle="총 결제 금액" :totalAmt="ord.totalAmt" :showtoggle="true" />
+            </section>
+        </main>
+        <div class="!bottom-[56px] md:!bottom-0 bottom-fixed-btn-box">
+            <Button label="확인" size="large" severity="secondary" @click="router.go(-1)"/>
         </div>
-        <div class="gray-bar"></div>
-        <section class="px-5">
-            <CalculateCard title="제품 결제 내역" :calcs="ord['payList']" totalTitle="총 결제 금액" :totalAmt="ord.totalAmt" :showtoggle="true" />
-        </section>
-        <div class="gray-bar"></div>
+    
+        <Dialog v-model:visible="popup['pop']['sysOrderSet']"  header="시스템 발주 정보" 
+            :modal=true position="bottom" class="custom-dialog-bottom"
+            @update:visible="getPopupClose('sysOrderSet', true)">
+            <SysOrderInfo/>
+        </Dialog>
+    
+        <Dialog v-model:visible="popup['pop']['outOrderSet']"  header="외주 발주 정보" 
+            :modal=true position="bottom" class="custom-dialog-bottom"
+            @update:visible="getPopupClose('outOrderSet', true)">
+            <OutOrderInfo/>
+        </Dialog>
+
     </main>
-    <div class="bottom-fixed-btn-box">
-        <Button label="확인" size="large" severity="secondary" @click="router.go(-1)"/>
-    </div>
-
-    <Dialog v-model:visible="popup['pop']['sysOrderSet']"  header="시스템 발주 정보" 
-        :modal=true position="bottom" class="custom-dialog-bottom"
-        @update:visible="getPopupClose('sysOrderSet', true)">
-        <SysOrderInfo/>
-    </Dialog>
-
-    <Dialog v-model:visible="popup['pop']['outOrderSet']"  header="외주 발주 정보" 
-        :modal=true position="bottom" class="custom-dialog-bottom"
-        @update:visible="getPopupClose('outOrderSet', true)">
-        <OutOrderInfo/>
-    </Dialog>
 </template>
 
 <script setup lang="ts">

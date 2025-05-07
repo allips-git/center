@@ -1,7 +1,7 @@
 <template>
-    <main>
+    <main class="pb-[56px]">
         <BackHeader title="고객상세" />
-        <section class="p-6">
+        <section class="p-4 md:p-6">
             <div class="flex items-center justify-between">
                 <h2 class="font-bold">{{ client['detail']['clientNm'] }}</h2>
                 <Button label="정보수정" outlined severity="secondary" size="small" @click="getClientModify"/>
@@ -42,7 +42,7 @@
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
-                    <div class="flex flex-col gap-5 p-5">
+                    <div class="flex flex-col gap-5 p-4 md:p-6">
                         <section v-for="(item, index) in getList(1)" :key="index">
                             <ProcessCard :info="item"/>
                         </section>
@@ -54,7 +54,7 @@
                     </div>
                 </TabPanel>
                 <TabPanel value="1">
-                    <div class="flex flex-col gap-5 p-5">
+                    <div class="flex flex-col gap-5 p-4 md:p-6">
                         <section v-for="(item, index) in getList(2)" :key="index">
                             <ProcessCard :info="item"/>
                         </section>
@@ -79,7 +79,7 @@
                 </TabPanel>
             </TabPanels>
         </Tabs>
-        <div class="flex justify-center">
+        <div class="flex justify-center pb-5">
             <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getNewEsti" />
         </div>
 
@@ -100,7 +100,7 @@
             @update:visible="getPopClose(true, 'itemSet')">
             <template #header>
                 <div class="modal-fullheader">
-                    <Button @click="getPopClose(true, 'itemSet')" severity="contrast" text icon="pi pi-arrow-left"/>
+                    <Button @click="getPopClose(true, 'itemSet')" severity="contrast" text icon="pi pi-arrow-left" class="flex justify-start"/>
                     <h2 class="modal-backheader-title">제품등록</h2>
                     <Button label="제품 변경" size="small" outlined @click="getItemChange" class="!z-[100]"/>
                 </div>
@@ -119,7 +119,7 @@
             @update:visible="getPopClose('clientSet', true)">
             <template #header>
                 <div class="modal-backheader">
-                    <Button @click="getPopupClose(true, 'kakaoDetail')" severity="contrast" text icon="pi pi-times"/>
+                    <Button @click="getPopupClose(true, 'kakaoDetail')" severity="contrast" text icon="pi pi-times" />
                     <h2 class="modal-backheader-title">고객 정보 수정</h2>
                 </div>
             </template>

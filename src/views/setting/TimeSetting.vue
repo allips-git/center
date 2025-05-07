@@ -7,7 +7,7 @@
                 <p class="text-xs text-t-lv3">견적서 작성 진행시 중복되는 기본서비스 (인테리어 자재) 시간을 차감하여 정확한 전체 시공시간 계산을 도와주는 기능입니다.</p>
             </section>
             
-            <section class="px-5 mt-3 form-gap-box !gap-8 pt-3 text-lv-1">
+            <section class="p-4 md:p-6 form-gap-box !gap-8 pt-3 text-lv-1">
                 <div class="relative flex items-center justify-center w-full">
                     <label class="w-[200px] flex-none">커튼 1개당 시공시간 (분)</label>
                     <InputText v-keyfilter.num v-model="time['curtainTime']" class="w-full !pr-8 font-bold text-right inputNumber-color !border-0 !border-b"/>
@@ -23,7 +23,7 @@
             <div class="flex flex-col items-center justify-center pt-5 card">
                 <Message v-if="msg" severity="info">시공시간이 저장되었습니다.</Message>
             </div>
-            <div class="bottom-fixed-btn-box md:!absolute">
+            <div class="bottom-fixed-btn-box !bottom-[56px] md:!bottom-0">
                 <Button :disabled="status" label="저장" size="large" @click="getTimeSave"/>
             </div>
         </main>
