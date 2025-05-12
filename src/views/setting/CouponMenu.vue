@@ -9,7 +9,7 @@
                         <div class="flex items-center gap-4">
                             <div class="flex items-center gap-3 font-bold">
                                 <p class="">{{ coupon.cpNm }}</p>
-                                <span class="text-lg text-sky-400">{{ getCommas(Number(coupon.val)) }}{{ coupon.unit }}</span>
+                                <span class="text-data text-sky-400">{{ getCommas(Number(coupon.val)) }}{{ coupon.unit }}</span>
                             </div>  
                         </div>
                         <IconPlay class="!fill-l-lv0 size-[18px]" />
@@ -17,7 +17,7 @@
                 </ul>
             </section>
         </main>
-        <div class="bottom-fixed-btn-box md:!absolute">
+        <div class="bottom-fixed-btn-box md:!absolute !bottom-0">
             <Button label="쿠폰 추가" size="large" class="w-full" @click="getPopup"/>
         </div>
     </div>

@@ -18,19 +18,22 @@
         <section class="col-span-12">
             <div class="flex flex-col gap-4 main-card-container-box">
                 <div class="main-card-tilte-box">
-                    <h2 class="flex items-center justify-center text-base">전체 고객</h2>
+                    <h2 class="flex items-center justify-center title-lg">전체 고객</h2>
                     <div class="flex items-center gap-3.5">
-                        <span class="flex items-center font-bold text-22">{{ main['clientCnt'] }}명
-                            <!-- <p class="text-base leading-[22px]">명</p> -->
-                        </span>
+                        <div class="flex items-center">
+                            <span class="flex items-center text-data text-t-lv1">{{ main['clientCnt'] }}
+                            </span>
+                            <p class="title-lg">명</p>
+
+                        </div>
                         <div class="block w-px h-5 bg-gray-200"></div>
                             <IconAddCircle @click="getStCd('')"/>
-                    </div>
+                        </div>
                 </div>
                 <ul class="grid grid-cols-5 pt-3 main-card-container-box-padding">
                     <li v-for="(item, index) in main['stCnt']" :key="index" class="flex flex-col items-center justify-center border-r h-[2.4375rem] gap-[0.3125rem] last:border-r-0" @click="getStCd(item['stCd'])">
-                        <p class="text-lg font-bold text-sky-500 h-[1.4375rem] flex items-center">{{ item.count }}</p>
-                        <p class="text-xs text-gray-400">{{ item.label }}</p>
+                        <p class="text-data text-sky-500 h-[1.4375rem] flex items-center">{{ item.count }}</p>
+                        <p class="text-caption">{{ item.label }}</p>
                     </li>
                 </ul>
             </div>
@@ -38,16 +41,16 @@
         <section class="col-span-6 ">
             <div class="main-card-container-box">
                 <div class="main-card-tilte-box">
-                    <h2 class="flex items-center justify-center gap-2 text-sm">
+                    <h2 class="flex items-center justify-center gap-2 title-lg">
                         <img src="@/assets/img/img-factory.svg" alt="공장" title="공장" class="w-[0.9375rem]"/>
                         공장
                     </h2>
                 </div>
                 <router-link to="/factory/list" class="flex items-end justify-between !pt-px main-card-container-box-padding">
                     <div class="flex flex-col w-full gap-px">
-                        <p class="text-xs text-t-lv4">공장전체</p>
+                        <p class="text-caption">공장전체</p>
                         <div class="flex items-center justify-between w-full">
-                            <p class="flex h-[1.375rem] items-center font-bold text-sky-500 text-22">{{ main['factoryCnt'] }}</p>
+                            <p class="flex h-[1.375rem] items-center text-data text-sky-500">{{ main['factoryCnt'] }}</p>
                             <IconLeftArrow class="fill-l-lv2"/>
                         </div>
                     </div>
@@ -58,15 +61,15 @@
         <section class="col-span-6 ">
             <div class="main-card-container-box">
                 <div class="main-card-tilte-box">
-                    <h2 class="flex items-center justify-center gap-2 text-sm">
+                    <h2 class="flex items-center justify-center gap-2 title-lg">
                         <img src="@/assets/img/img-truck.svg" alt="배송 대기" title="배송 대기" class="w-[0.9375rem]"/>
                         배송대기</h2>
                 </div>
                 <router-link to="/factory/list" class="flex items-end justify-between !pt-px main-card-container-box-padding">
                     <div class="flex flex-col w-full gap-px">
-                        <p class="flex items-center text-xs text-t-lv4">배송 대기</p>
+                        <p class="flex items-center text-caption">배송 대기</p>
                         <div class="flex items-center justify-between w-full">
-                            <p class="font-bold items-center flex h-[1.375rem] text-yellow-300 text-22">0</p>
+                            <p class="text-data items-center flex h-[1.375rem] text-yellow-300">0</p>
                             <IconLeftArrow class="fill-l-lv2"/>
                         </div>
                     </div>
@@ -85,16 +88,16 @@
                     
                     <div class="">
                         <div class="flex items-center gap-1">
-                            <h2 class="text-sm">플랜톡</h2>
+                            <h2 class="title-lg">플랜톡</h2>
                             <span v-if="main['kakaoYn'] === 'N'" class="text-xs text-t-lv3">OFF</span>
                             <span v-else class="text-xs rounded-full text-sky-500">ON</span>
                             <!-- <span v-if="main['kakaoYn'] === 'N'" class="px-1.5 text-xs text-white bg-red-500 rounded-full">OFF</span>
                             <span v-else class="px-1.5 text-xs text-white rounded-full bg-sky-400">ON</span> -->
                         </div>
-                        <div v-if="main['kakaoYn'] === 'Y'" class="flex gap-2 text-xs font-normal text-t-lv4">
+                        <div v-if="main['kakaoYn'] === 'Y'" class="flex gap-2 text-caption !font-normal">
                             <span>0개 사용중</span>
                             <span>|</span>
-                            <span>잔여 포인트 <span class="font-bold">50P</span></span>
+                            <span>잔여 포인트 <span class="">50P</span></span>
                         </div>
                     </div>
                 </div>
@@ -105,7 +108,7 @@
                     <p class="bg-yellow-100 rounded py-2 px-2.5 text-sm w-full ">일일이 세팅하지 말고, 꼭 필요한 예약 메시지를 자동으로 고객에게 전달해 보세요!</p>
                     <Button label="플랜톡 사용하기" class="w-full mt-5" ></Button>
                 </div>        
-                <ul v-else class="grid grid-cols-2 gap-4 *:bg-gray-50 *:p-3 *:rounded-lg *:flex *:flex-col *:gap-px text-10 mt-[0.875rem]">
+                <ul v-else class="grid grid-cols-2 gap-4 *:bg-gray-50 *:p-3 *:rounded-lg *:flex *:flex-col *:gap-px text-xs mt-[0.875rem]">
                     <li>
                         <h5 class="font-bold">예약된 알림</h5>
                         <div class="flex items-center justify-between">

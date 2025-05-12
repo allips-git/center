@@ -230,7 +230,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     .p-tablist-tab-list{
         justify-content: end;
         gap: 1.5rem !important;
-        padding-right: 1.5rem;
+        // padding-right: 1.5rem;
         border: none;
     }
     .p-tab-active{
@@ -240,8 +240,11 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
             border-color: var(--p-tabs-tab-active-border-color);
         }
     }
+    .p-tablist-active-bar {
+        display: none;
+    }
     .p-tab{
-        border-bottom-width: 3px;
+        // border-bottom-width: 3px;
         padding: 0.5rem 0rem;
         border-color: transparent;
         color: var(--p-tabs-tab-color);
@@ -257,11 +260,16 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
     .p-tab-active{
         &.p-tab{
+            // transition: 0.5s;
             color: #404040;
             border-bottom-width: 3px;
             border-color: var(--p-tabs-tab-active-border-color);
             font-weight: 700;
         }
+    }
+
+    .p-tablist-active-bar {
+        display: none;
     }
     .p-tab{
         color: #7D7C78 ;

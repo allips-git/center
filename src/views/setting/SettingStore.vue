@@ -1,7 +1,7 @@
 <template>
     <div class="h-full overflow-y-auto">
         <BackHeader title="매장 설정"/>
-        <main class="pt-3 pb-[125px] md:pb-[89px]">
+        <main class="pt-3 pb-[140px] md:pb-[160px]">
             <section class="px-4 md:px-6">
                 <div class="flex flex-col gap-1">
                     <p class="text-10 text-t-lv3">프로필 사진</p>

@@ -8,16 +8,16 @@
                         <IconAvatar class="fill-[#78BBFF]  size-full"/>
                     </div>
                     <div class="flex items-center gap-0.5">
-                        <h1>{{ login['name'] }}</h1>
+                        <h1 class="font-bold text-t-lv1">{{ login['name'] }}</h1>
                         <span class="text-sm text-sky-500">님</span>
                     </div>
                 </div>
             </section>
             <section class="px-4 pb-4 md:px-6 md:pb-6">
-                <ul class="border *:text-sm *:border-b last:border-b-0 border-l-lv3 rounded-sm bg-bg-lv1 *:flex *:justify-between *:items-center *:p-4">
+                <ul class="border *:border-b last:border-b-0 border-l-lv3 rounded-sm bg-bg-lv1 *:flex *:justify-between *:items-center *:p-4">
                     <li>
                         <div class="flex items-center">
-                            <p>요금제</p>
+                            <p class="!text-t-lv1 text-desc">요금제</p>
                             <div class="ml-2"> 
                                 <span class="px-2 pb-px text-xs font-light text-white rounded-full bg-p-lv4">스탠다드</span>
                             </div>
@@ -25,45 +25,43 @@
                         <p class="text-p-lv2 text-10">사용 가능 기한 2022년 10월 10일 까지</p>
                     </li>
                     <li>
-                        <p>플랜 포인트</p>
+                        <p class="!text-t-lv1 text-desc">플랜 포인트</p>
                         <p class="text-p-lv2 text-10">2400p</p>
                     </li>
     
                     <li>
-                        <p>샵 맴버 인원</p>
+                        <p class="!text-t-lv1 text-desc">샵 멤버 인원</p>
                         <p class="text-p-lv2 text-10">1/3 사용중</p>
                     </li>
                 </ul>
             </section>
-            <div class="gray-bar"></div>
-            <section class="p-4 md:p-6">
-                <h2 class="setting-list-header">정보설정</h2>
+            <section class="p-4 pb-0 md:p-6 md:pb-0">
+                <h2 class="text-con setting-list-header text-t-lv1">정보설정</h2>
                 <ul>
-                    <li v-for="(item, index) in storeSettings" :key="index" class="flex items-center text-sm justify-between py-4 border-b hover:bg-gray-50 text-t-lv1 pl-3.5" @click="navigateTo(item)">
+                    <li v-for="(item, index) in storeSettings" :key="index" class="flex items-center justify-between p-4 text-sm border-b hover:bg-gray-50 text-t-lv1" @click="navigateTo(item)">
                         <p>{{ item.name }}</p>
                         <div class="flex items-center justify-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
                     </li>
                 </ul>
     
             </section>
-            <div class="gray-bar"></div>
-            <section class="p-4 md:p-6">
+            <section class="p-4 pt-0 md:p-6 md:pt-0">
 
-                <h2 class="setting-list-header">플랜오더 약관</h2>
+                <h2 class="text-con setting-list-header text-t-lv1 !border-t-0">플랜오더 약관</h2>
                 <ul class="*:text-sm text-t-lv1">
-                    <li class="flex justify-between pl-2.5 py-4 border-b hover:bg-gray-50">
+                    <li class="flex justify-between p-4 border-b hover:bg-gray-50">
                         <p>사용약관</p>
                         <div class="flex items-center justify-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
                     </li>
-                    <li class="flex justify-between pl-2.5 py-4 border-b hover:bg-gray-50" @click="router.push({ path : '/setting/privacy' })">
+                    <li class="flex justify-between p-4 border-b hover:bg-gray-50" @click="router.push({ path : '/setting/privacy' })">
                         <p>개인정보 처리방침</p>
                         <div class="flex items-center justify-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
                     </li>
-                    <li class="flex justify-between pl-2.5 py-4 border-b hover:bg-gray-50">
+                    <li class="flex justify-between p-4 border-b hover:bg-gray-50">
                         <p>개인정보 수집 이용 동의서</p>
                         <div class="flex items-center justify-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
                     </li>
-                    <li class="flex justify-between pl-2.5 py-4 border-b hover:bg-gray-50" @click="getJoinOut">
+                    <li class="flex justify-between p-4 border-b hover:bg-gray-50" @click="getJoinOut">
                         <p>회원탈퇴</p>
                         <div class="flex items-center justify-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
                     </li>

@@ -99,7 +99,7 @@
 
 
   .setting-list-header{
-    @apply px-4 py-3 font-bold border border-gray-200 rounded-lg bg-gray-50
+    @apply px-4 py-3 font-bold border border-gray-200 bg-gray-50
   }
   .capsuel_sky{
     @apply  px-2 py-0.5 pb-[2.5px] text-white rounded-full bg-sky-500 text-11 flex items-center justify-center text-ellipsis
@@ -132,4 +132,38 @@
   }
   .mini_input{
     @apply !text-10
+  }
+
+  
+  /* 폰트정리 */
+  .title-lg{
+    @apply text-base md:text-18 lg:text-lg text-t-lv1
+  }
+
+  .title-md{
+    @apply text-base md:text-18 text-t-lv1
+  }
+
+  .title-sm{
+    @apply text-sm md:text-base text-t-lv1
+  }
+
+  .text-data{
+    @apply font-bold text-18 md:text-lg
+  }
+
+  .text-con{
+    @apply text-sm md:text-base text-t-lv1
+  }
+
+  .text-desc{
+    @apply text-xs md:text-sm text-t-lv4
+  }
+
+  .text-caption{
+    @apply text-10 md:text-xs text-t-lv2
+  }
+
+  .tab-header{
+    @apply text-sm lg:text-base
   }

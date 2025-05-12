@@ -10,7 +10,7 @@
                 </span>
             </p>
         </div>
-        <p class="flex-none text-lg font-bold text-sky-500">
+        <p class="flex-none font-bold text-18 text-sky-500">
             {{ calendar['edit']['stCd'] === 'Y' ? '견적' : '시공' }}
         </p>
     </div>
@@ -20,8 +20,8 @@
     </div>
     <div class="flex flex-col items-start gap-4 text-gray-500">
         <p>{{ getDate() }}</p>
-        <p class="px-3 py-px text-white rounded-full bg-sky-500">{{ calendar['edit']['tel'] }}</p>
-        <p class="px-3 py-px text-white rounded-full bg-sky-500">{{ calendar['edit']['addr'] }}</p>
+        <p class="px-3 py-px text-sm text-white rounded-full bg-sky-500">{{ calendar['edit']['tel'] }}</p>
+        <p class="px-3 py-px text-sm text-white rounded-full bg-sky-500">{{ calendar['edit']['addr'] }}</p>
         <p>상세주소 : {{ calendar['edit']['addrDetail'] }}</p>
         <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 예상시간 : {{ calendar['edit']['insTime'] }}</p>
         <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 수량 : {{ calendar['edit']['insCnt'] }}</p>

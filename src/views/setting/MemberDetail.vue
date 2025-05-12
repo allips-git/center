@@ -6,8 +6,8 @@
                 <div class="flex items-center gap-3 ">
                     <IconAvatar class="fill-[#78BBFF] size-[51px]"/>
                     <div  class="flex flex-col">
-                        <p class="font-bold">{{ member['detail']['userNm'] }}</p>
-                        <div class="flex flex-col font-bold text-t-lv4 text-10">
+                        <p class="font-bold title-md">{{ member['detail']['userNm'] }}</p>
+                        <div class="flex flex-col font-bold text-t-lv4 text-desc">
                             <span class="">{{ member['detail']['tel'] }}</span>
                             <span class="">{{ member['detail']['rank'] }}</span> 
                         </div>
@@ -25,14 +25,14 @@
             <!-- <h2 class="px-5 text-lg font-bold">이력</h2> -->
             <ul class="w-full">
                 <li v-for="(item, index) in member['history']" :key="index" class="flex items-center justify-between w-full gap-2 px-4 md:px-6 py-2.5">
-                <div class="flex items-center text-xs gap-2 w-[calc(100%-120px)]">
+                <div class="flex items-center text-desc gap-2 w-[calc(100%-120px)]">
                     <div class="flex-none rounded-full size-3" :class="item.codeSub === '001' ? 'bg-yellow-300' : item.codeSub === 'N' ? 'bg-red-400' : 'bg-sky-400'"></div>
                     <div class="flex items-center text-t-lv2">
                         (<b class="truncate max-w-[55px] w-full">{{ item.clientNm }}</b>)
                     </div>
                     <p class="truncate text-t-lv2">{{ item.codeNm }} 처리하였습니다.</p>
                 </div>
-                <span class="text-right text-t-lv2 text-10 whitespace-nowrap">{{ item.regDt }}</span>
+                <span class="text-right text-t-lv2 text-caption whitespace-nowrap">{{ item.regDt }}</span>
                 </li>
             </ul>
         </section>

@@ -23,17 +23,17 @@
             <ul class="flex flex-col">
                 <li v-for="(item, index) in client['list']" :key="index" class="flex items-center justify-between flex-none w-full p-4 md:px-6" @click="getInfo(item.clientCd)">
                     <!-- 상태 -->
-                    <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none mr-4 text-sm font-bold text-white rounded-md size-11">
+                    <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none text-xs font-bold text-white rounded-md md:text-sm size-11">
                         {{ getStatusName(item.step) }}
                     </div>
                     <div class="flex justify-between gap-2 w-[calc(100%-3.75rem)]">
                         <div class="flex flex-col flex-grow min-w-0">
-                            <p class="font-bold">{{ item.clientNm }}</p>
-                            <span class="flex-1 text-xs text-gray-400 truncate">{{ item.addr }} {{ item.addrDetail }}</span>
+                            <p class="font-bold text-con">{{ item.clientNm }}</p>
+                            <span class="flex-1 truncate text-desc">{{ item.addr }} {{ item.addrDetail }}</span>
                         </div>
                         <div class="flex flex-col whitespace-nowrap">
-                            <span class="text-sm text-right text-gray-400">{{ item.date }}</span>
-                            <p class="font-bold text-right">{{ getAmt(item.amt) }}원</p>
+                            <span class="text-right text-desc">{{ item.date }}</span>
+                            <p class="font-bold text-right text-con">{{ getAmt(item.amt) }}원</p>
                         </div>
                     </div>
                 </li>

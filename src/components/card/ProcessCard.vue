@@ -1,7 +1,7 @@
 <template>
     <!-- 프로세스 카드 -->
      <div class="w-full p-6 border border-gray-200 rounded">
-         <div class="flex justify-between pb-4 font-bold border-b border-neutral-100">
+         <div class="flex justify-between pb-4 font-bold border-b border-neutral-100 title-md">
              <h1>{{ props.info['stNm'] }}</h1>
              <h2 class="">{{ getAmt(props.info['totalSaleAmt']) }}원</h2>
          </div>
