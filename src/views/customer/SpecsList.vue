@@ -140,6 +140,7 @@ import ProductRegister from "@/views/include/ProductRegister.vue";
 import ToggleSwitch from 'primevue/toggleswitch';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue'
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDataStore, usePopupStore, useEstiStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
@@ -150,6 +151,12 @@ const router    = useRouter();
 const data      = useDataStore();
 const popup     = usePopupStore();
 const esti      = useEstiStore();
+
+const sideBarWidth = ref(200);
+
+function toggleSidebar() {
+    sideBarWidth.value = sideBarWidth.value === 200 ? 56 : 200
+}
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
