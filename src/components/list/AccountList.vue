@@ -4,23 +4,23 @@
         <div class="gap-4">
             <div class="flex items-center gap-4">
                 <h2 class="font-bold text-con">{{ clientNm }}</h2>
-                <Tag severity="info" :value="stNm" class="!text-xs"></Tag>
+                <Tag severity="info" :value="stNm" rounded class="!text-xs !bg-p-lv5 !text-p-lv4"></Tag>
             </div>
-            <p class="mt-2 text-gray-400 text-desc">{{ addr }}</p>
+            <p class="mt-2 text-desc">{{ addr }}</p>
         </div>
         <ul class="flex flex-col gap-1 *:flex *:gap-2 *:justify-between *:items-center">
             <li class="">
-                <p class="w-10 text-desc !text-t-lv2">매출</p>
+                <p class="w-10 text-desc">매출</p>
                 <span class="font-bold text-right text-con">{{ saleAmt }}</span>
             </li>
 
             <li class="">
-                <p class="w-10 text-desc !text-t-lv2">매입</p>
+                <p class="w-10 text-desc">매입</p>
                 <span class="font-bold text-right text-con">{{ purcAmt }}</span>
             </li>
 
             <li class="">
-                <p class="w-10 text-desc !text-t-lv2">수익</p>
+                <p class="w-10 text-desc">수익</p>
                 <span class="font-bold text-right !text-green-500 text-con">{{ rev }}</span>
             </li>
         </ul>

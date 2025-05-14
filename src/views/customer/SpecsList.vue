@@ -33,7 +33,7 @@
                 </div>
             </CalculateCard>
         </section>
-        <div class="bottom-fixed-btn-box">
+        <div class="bottom-fixed-btn-box md:!w-[calc(100vw-200px)] md:!left-[200px]">
             <Button label="견적서 저장" severity="secondary" size="large" @click="getEstiSave"/>
             <Button label="계약서 이동" size="large" @click="getPopupOpen('conInfoSet')"/>
         </div>
@@ -47,13 +47,13 @@
         </div>
     </Dialog> -->
 
-    <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 
+    <Dialog v-model:visible="popup['pop']['disAmtSet']" 
             :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissable-mask="true"
             @update:visible="getPopupClose(true, 'disAmtSet')">
             <template #header>
                 <div class="modal-backheader">
                     <Button @click="getPopupClose(true, 'disAmtSet')" severity="contrast" text icon="pi pi-times"/>
-                    <h2 class="modal-backheader-title">할인 가격 입력</h2>
+                    <h2 class="modal-backheader-title">할인</h2>
                 </div>
             </template>
             <div class="pt-3">

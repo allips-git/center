@@ -3,7 +3,7 @@
         <section class="p-4 md:p-6">
             <div class="relative flex flex-col w-full gap-4">
                 <section class="flex items-center justify-between">
-                    <h1 class="text-xl font-bold">{{ acc.year }}년</h1>
+                    <h1 class="font-bold text-data">{{ acc.year }}년</h1>
                     <DatePicker v-model="acc.searchDt" view="year" dateFormat="yy년" 
                         class="w-32 custom-select" :locale="'ko'" showIcon fluid iconDisplay="input"
                         @update:modelValue="acc.getMonData()" />

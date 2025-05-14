@@ -3,7 +3,7 @@
     <div class="text-sm input-layout-box">
         <div class="flex items-center justify-between w-full mb-2">
             <h1 class="font-bold">제품명<span class="ml-0.5 text-red-500">*</span></h1>
-            <Button v-if="factory['out']['itemType'] === 'U'" label="제품 삭제" size="small" severity="danger" outlined @click="getOutItemDelete"/>
+            <Button v-if="factory['out']['itemType'] === 'U'" label="삭제" size="small" severity="danger" class="!border-l-lv4" outlined @click="getOutItemDelete"/>
         </div>
         <div class="relative flex items-center justify-center">
             <p class="w-[100px] flex-none text-13 text-t-lv3">제품 이름</p>

@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="p-3 overflow-auto bg-gray-50 max-h-96">
-            <ul class="flex flex-col gap-4">
+            <ul class="flex flex-col gap-4 text-desc">
                 <li v-for="(item, index) in calendar['monthDetail']['list']" :key="index" 
                     :class="`flex items-center justify-between w-full p-3 bg-${getStCdColor(item['stCd'])}-100 rounded-lg`"
                     @click="getMonthDataInfo(item['ikey'], item['emCd'])">

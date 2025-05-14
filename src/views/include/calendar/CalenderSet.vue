@@ -6,7 +6,7 @@
                 <IconAvatar class="text-indigo-300 !size-16"/>
                 <div>
                     <p class="text-sm text-indigo-600">고객</p>
-                    <h2 class="text-lg font-bold">{{ calendar['info']['clientNm'] }}</h2>
+                    <h2 class="font-bold title-lg">{{ calendar['info']['clientNm'] }}</h2>
                 </div>
             </div>
             <span class="pi pi-angle-right"></span>
@@ -43,11 +43,11 @@
     </section>
     <div class="gray-bar"></div>
     <section class="p-6">
-        <h2 class="text-base font-bold">수정기록</h2>
+        <h2 class="font-bold text-desc">수정기록</h2>
         <ul class="flex flex-col">
             <li v-for="(item, index) in calendar['info']['history']" :key="index" class="flex items-center gap-4 py-4 border-b first:mt-4">
             <IconAvatar class="text-indigo-300 !size-10"/>
-            <div>
+            <div class="text-desc !text-t-lv1">
                 <div class="flex items-center gap-1">
                 <b>{{ item.name }}</b>
                 <span>・</span>
