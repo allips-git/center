@@ -94,16 +94,16 @@
                 <div class="w-full h-5 overflow-hidden bg-gray-200 rounded-full ">
                     <div class="flex items-center h-full *:h-full">
                         <div :class="`bg-blue-400`" :style="{ width: `${aver.accountPercent}`}" >
-                            <p v-if="aver.accountPercent !== '0%'"  class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.accountPercent }}</p>
+                            <p v-if="aver.accountPercent !== '0%'"  class="flex items-center justify-end h-full pr-3 text-right text-white text-desc">{{ aver.accountPercent }}</p>
                         </div>
         
                         <div :class="`bg-yellow-400`" :style="{ width: `${aver.cashPercent}` }" >
-                            <p v-if="aver.cashPercent !== '0%'" class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.cashPercent }}</p>
+                            <p v-if="aver.cashPercent === '0%'" class="flex items-center justify-end h-full pr-3 text-right text-white text-desc">{{ aver.cashPercent }}</p>
                         </div>
         
-                        <div :class="`bg-green-400`" :style="{ width: `${aver.cardPercent}` }">
+                        <div :class="`bg-red-400`" :style="{ width: `${aver.cardPercent}` }">
                             <!-- 0%센트 일때 안보이게 처리 (글자 겹칩 현상 발생함) -->
-                            <p v-if="aver.cardPercent !== '0%'"  class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.cardPercent }}</p>
+                            <p v-if="aver.cardPercent === '0%'"  class="flex items-center justify-end h-full pr-3 text-right text-white text-desc">{{ aver.cardPercent }}</p>
                         </div>
                     </div>
                 </div>

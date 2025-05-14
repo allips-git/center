@@ -72,8 +72,6 @@ const getDelete = async () => {
                 fxCd : cost['fxCd']
             }
 
-            status.value = true;
-
             try
             {
                 const instance  = await getAxiosData();
@@ -94,8 +92,6 @@ const getDelete = async () => {
                     alert('고정비용 저장 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
                 }
             }
-
-            status.value = false;
         }
     });
 }
