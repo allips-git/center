@@ -1,15 +1,15 @@
 <template>
     <div>
         <BackHeader title="쿠폰 메뉴"/>
-        <main class="p-6 pc-contents-h-box">
+        <main class="p-4 overflow-x-auto md:p-6 pb-[131px] md:pb-[75px]">
             <section class="form-gap-box">
-                <ul>
+                <ul class="flex flex-col gap-4">
                     <!-- v-for -->
-                    <li v-for="(coupon, index) in coupon['list']" :key="index" class="flex items-center justify-between w-full py-4" @click="getInfo(coupon.cpCd)">
+                    <li v-for="(coupon, index) in coupon['list']" :key="index" class="flex items-center justify-between w-full gap-4" @click="getInfo(coupon.cpCd)">
                         <div class="flex items-center gap-4">
                             <div class="flex items-center gap-3 font-bold">
                                 <p class="">{{ coupon.cpNm }}</p>
-                                <span class="text-lg text-sky-400">{{ getCommas(Number(coupon.val)) }}{{ coupon.unit }}</span>
+                                <span class="text-data text-sky-400">{{ getCommas(Number(coupon.val)) }}{{ coupon.unit }}</span>
                             </div>  
                         </div>
                         <IconPlay class="!fill-l-lv0 size-[18px]" />
@@ -17,7 +17,7 @@
                 </ul>
             </section>
         </main>
-        <div class="bottom-fixed-btn-box md:!absolute">
+        <div class="bottom-fixed-btn-box md:!absolute !bottom-0">
             <Button label="쿠폰 추가" size="large" class="w-full" @click="getPopup"/>
         </div>
     </div>

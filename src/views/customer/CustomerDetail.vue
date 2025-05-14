@@ -1,48 +1,48 @@
 <template>
-    <main>
+    <main class="pb-[56px]">
         <BackHeader title="고객상세" />
-        <section class="p-6">
+        <section class="p-4 md:p-6">
             <div class="flex items-center justify-between">
-                <h2 class="font-bold">{{ client['detail']['clientNm'] }}</h2>
+                <h2 class="font-bold title-md">{{ client['detail']['clientNm'] }}</h2>
                 <Button label="정보수정" outlined severity="secondary" size="small" @click="getClientModify"/>
             </div>
-            <ul class="flex flex-col gap-3 mt-3 text-sm rounded-md">
+            <ul class="flex flex-col gap-3 mt-3 rounded-md text-desc !text-t-lv2">
                 <li class="flex items-center">
-                    <p class="w-24 text-gray-500 whitespace-nowrap">전화번호</p>
+                    <p class="w-24 whitespace-nowrap">전화번호</p>
                     <p class="capsuel_sky" @click="getNavi('tel', client['detail']['tel'])">{{ client['detail']['tel'] }}</p>
                 </li>
                 <li class="flex items-center">
-                    <p class="w-24 text-gray-500 whitespace-nowrap">주소</p>
+                    <p class="w-24 whitespace-nowrap">주소</p>
                     <p class="capsuel_sky" :data-address="client['detail']['addr']" @click="getNavi('addr', client['detail']['addr'])">({{ client['detail']['zip'] }}) {{ client['detail']['addr'] }}</p>
                 </li>
                 <li class="flex">
-                    <p class="w-24 text-gray-500 whitespace-nowrap">상세주소</p>
-                    <p>{{ client['detail']['addrDetail'] }}</p>
+                    <p class="w-24 whitespace-nowrap">상세주소</p>
+                    <p class="text-t-lv1">{{ client['detail']['addrDetail'] }}</p>
                 </li>
                 <li class="flex">
-                    <p class="w-24 text-gray-500 whitespace-nowrap">등록일</p>
-                    <p>{{ client['detail']['regDt'] }}</p>
+                    <p class="w-24 whitespace-nowrap">등록일</p>
+                    <p class="text-t-lv1">{{ client['detail']['regDt'] }}</p>
                 </li>
                 <li class="flex">
-                    <p class="w-24 text-gray-500 whitespace-nowrap">담당자</p>
-                    <p>{{ client['detail']['person'] }}</p>
+                    <p class="w-24 whitespace-nowrap">담당자</p>
+                    <p class="text-t-lv1"> {{ client['detail']['person'] }}</p>
                 </li>
                 <li class="flex">
-                    <p class="w-24 text-gray-500 whitespace-nowrap">그룹명</p>
-                    <p>{{ client['detail']['groupNm'] }}</p>
-                </li>
+                    <p class="w-24 whitespace-nowrap">그룹명</p>
+                    <p class="text-t-lv1">{{ client['detail']['groupNm'] }}</p>
+                </li> 
             </ul>
         </section>
         <div class="gray-bar !mb-1"></div>
         <Tabs value="0" class="w-full">
             <TabList class="">
-                <Tab value="0" class="flex items-center justify-center w-1/3 gap-2 text-sm md:text-base">판매중 <span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['ing'] }}</span></Tab>
-                <Tab value="1" class="flex items-center justify-center w-1/3 gap-2 text-sm md:text-base">판매완료 <span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['comp'] }}</span></Tab>
-                <Tab value="2" class="flex items-center justify-center w-1/3 gap-2 text-sm md:text-base">판매취소<span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['cancel'] }}</span></Tab>
+                <Tab value="0" class="flex items-center justify-center w-1/3 gap-2 tab-header">판매중 <span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['ing'] }}</span></Tab>
+                <Tab value="1" class="flex items-center justify-center w-1/3 gap-2 tab-header">판매완료 <span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['comp'] }}</span></Tab>
+                <Tab value="2" class="flex items-center justify-center w-1/3 gap-2 tab-header">판매취소<span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['cancel'] }}</span></Tab>
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
-                    <div class="flex flex-col gap-5 p-5">
+                    <div class="flex flex-col gap-5 p-4 md:p-6">
                         <section v-for="(item, index) in getList(1)" :key="index">
                             <ProcessCard :info="item"/>
                         </section>
@@ -54,7 +54,7 @@
                     </div>
                 </TabPanel>
                 <TabPanel value="1">
-                    <div class="flex flex-col gap-5 p-5">
+                    <div class="flex flex-col gap-5 p-4 md:p-6">
                         <section v-for="(item, index) in getList(2)" :key="index">
                             <ProcessCard :info="item"/>
                         </section>
@@ -65,7 +65,7 @@
                     </div>
                 </TabPanel>
                 <TabPanel value="2">
-                    <div class="flex flex-col gap-5 p-5">
+                    <div class="flex flex-col gap-5 p-5 md:p-6">
                         <section v-for="(item, index) in getList(3)" :key="index">
                             <ProcessCard :info="item"/>
                         </section>
@@ -79,7 +79,7 @@
                 </TabPanel>
             </TabPanels>
         </Tabs>
-        <div class="flex justify-center">
+        <div class="flex justify-center pb-5">
             <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getNewEsti" />
         </div>
 
@@ -100,7 +100,7 @@
             @update:visible="getPopClose(true, 'itemSet')">
             <template #header>
                 <div class="modal-fullheader">
-                    <Button @click="getPopClose(true, 'itemSet')" severity="contrast" text icon="pi pi-arrow-left"/>
+                    <Button @click="getPopClose(true, 'itemSet')" severity="contrast" text icon="pi pi-arrow-left" class="flex justify-start"/>
                     <h2 class="modal-backheader-title">제품등록</h2>
                     <Button label="제품 변경" size="small" outlined @click="getItemChange" class="!z-[100]"/>
                 </div>
@@ -119,7 +119,7 @@
             @update:visible="getPopClose('clientSet', true)">
             <template #header>
                 <div class="modal-backheader">
-                    <Button @click="getPopupClose(true, 'kakaoDetail')" severity="contrast" text icon="pi pi-times"/>
+                    <Button @click="getPopupClose(true, 'kakaoDetail')" severity="contrast" text icon="pi pi-times" />
                     <h2 class="modal-backheader-title">고객 정보 수정</h2>
                 </div>
             </template>

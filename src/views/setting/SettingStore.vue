@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="h-full overflow-y-auto">
         <BackHeader title="매장 설정"/>
-        <main class="pt-3 pb-28">
-            <section class="px-5">
+        <main class="pt-3 pb-[140px] md:pb-[160px]">
+            <section class="px-4 md:px-6">
                 <div class="flex flex-col gap-1">
                     <p class="text-10 text-t-lv3">프로필 사진</p>
                     <div class="relative size-[95px] ">
@@ -18,7 +18,7 @@
                 </div>
             </section>
             <!-- <div class="gray-bar"></div> -->
-            <section class="px-4 form-gap-box mt-[30px]">
+            <section class="px-4 md:px-6 form-gap-box mt-[30px]">
                 <IftaLabel class="w-full">
                     <InputText id="ceNm" v-model="setting['info']['ceNm']" class="w-full"/>
                     <label>매장이름<span class="ml-0.5 text-red-500">*</span></label>
@@ -106,11 +106,9 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-5 py-3 ">
-                    <div class="w-full custom-select-arrow">
-                        <p>모든 공휴일은 휴무에요</p>
+                <div class="flex justify-between w-full">
+                        <p class="text-t-lv2">모든 공휴일은 휴무에요</p>
                         <ToggleSwitch v-model="setting['info']['holiday']"/>
-                    </div>
                 </div>
     
                 <IftaLabel class="w-full">
@@ -118,7 +116,7 @@
                     <Textarea v-model="setting['info']['memo']" autoResize rows="3" cols="30" class="w-full" />
                 </IftaLabel>
             </section>
-            <div class="mobile-fiex-bottom">
+            <div class="bottom-fixed-btn-box">
                 <Button label="저장" size="large" @click="getSave"/>
             </div>
         </main>

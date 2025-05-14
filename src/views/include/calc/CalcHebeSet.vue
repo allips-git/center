@@ -1,5 +1,5 @@
 <template>
-<div class="grid grid-cols-4 gap-x-2 gap-y-5">
+<div class="grid grid-cols-4 gap-x-4 gap-y-5">
     
         <IftaLabel class="w-full col-span-2">
             <label>설치위치<span class="ml-1 text-red-600">*</span></label>
@@ -30,7 +30,7 @@
 
     <template class="flex col-span-4 overflow-visible">
         <!-- 분할없음 -->
-        <div class="flex w-full gap-2" v-if="esti['blind']['division'] === 1">
+        <div class="flex w-full gap-4" v-if="esti['blind']['division'] === 1">
             <IftaLabel class="w-full">
                 <label>수량 (좌)</label>
                 <InputNumber inputId="leftQty" v-model="esti['blind']['leftQty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">

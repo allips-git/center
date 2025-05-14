@@ -1,12 +1,12 @@
 <template>
     <div class="flex items-center justify-between font-bold">
-        <h2 class="pb-4 font-bold">{{ title }}</h2>
+        <h2 class="pb-4 font-bold title-md">{{ title }}</h2>
         <Button v-if="btnLabel" :label="btnLabel" size="large" severity="secondary" outlined @click="getBtn"></Button>
     </div>
-    <ul class="flex flex-col gap-2 text-sm rounded-md">
+    <ul class="flex flex-col gap-2 rounded-md text-desc">
         <li v-for="(info, index) in props.info" :key="index" class="flex">
-            <p class="w-24 text-t-lv2 whitespace-nowrap">{{ info.label }}</p>
-            <p :class="{ 'capsuel_sky ': info.label === '전화번호' }">{{ info.value }}
+            <p class="w-24 !text-t-lv2 whitespace-nowrap">{{ info.label }}</p>
+            <p :class="{ 'capsuel_sky !text-t-lv5': info.label === '전화번호'}" class="text-t-lv1">{{ info.value }}
                 <ul v-if="info.label === '영업시간'" class="flex flex-col gap-1 mt-1">
                     <li v-for="(extraItem, extraIndex) in info.extra" :key="extraIndex" >
                         {{ extraItem }}

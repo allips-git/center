@@ -17,9 +17,9 @@ export default {
       13:['0.8125rem',],  // fontSize: 13px
       sm: ['0.875rem'],    // fontSize: 14px, lineHeight: 16px
       base: ['1rem',],   // fontSize: 16px, lineHeight: 18px
-      18: ['1.125rem',],   // fontSize: 16px, lineHeight: 18px
+      18: ['1.125rem',],   // fontSize: 18px, lineHeight: 18px
       lg: ['1.25rem',],  // fontSize: 20px, lineHeight: 22px
-      22: ['1.375rem',],  // fontSize: 20px, lineHeight: 22px
+      22: ['1.375rem',],  // fontSize: 22px, lineHeight: 22px
       xl: ['1.5rem',],   // fontSize: 24px, lineHeight: 26px
       28: ['1.75rem',]  // fontSize: 28px, lineHeight: 26px
     },

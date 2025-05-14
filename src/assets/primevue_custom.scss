@@ -84,6 +84,15 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     .p-dialog-close-button{
         display: none;
     }
+    .p-dialog-header{
+        padding: 0;
+    }
+    .p-dialog-content{
+        padding: 16px;
+        @include respond-to(md) {
+            padding: 24px;
+        }
+    }
 }
 
 .custom-dialog-bottom.p-dialog{
@@ -134,13 +143,17 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         }
     }
    
+    
    
     .p-dialog-header, .p-drawer-header{
-        padding: 0.25rem 20px;
-        padding-right: 8px;
+       padding: 0;
+        @include respond-to(md) {
+            // padding: 0 24px;
+        }
         .p-dialog-title , .p-drawer-title{
             font-size: 1rem;
         }
+
     }
     .p-dialog-maximize-button{
         display: none;
@@ -156,6 +169,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
     
 }
+
 .custom-dialog-center{
     .p-dialog-header, .p-drawer-header{
         padding: 0.25rem;
@@ -216,7 +230,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     .p-tablist-tab-list{
         justify-content: end;
         gap: 1.5rem !important;
-        padding-right: 1.5rem;
+        // padding-right: 1.5rem;
         border: none;
     }
     .p-tab-active{
@@ -226,8 +240,11 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
             border-color: var(--p-tabs-tab-active-border-color);
         }
     }
+    .p-tablist-active-bar {
+        display: none;
+    }
     .p-tab{
-        border-bottom-width: 3px;
+        // border-bottom-width: 3px;
         padding: 0.5rem 0rem;
         border-color: transparent;
         color: var(--p-tabs-tab-color);
@@ -243,11 +260,16 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
     .p-tab-active{
         &.p-tab{
+            // transition: 0.5s;
             color: #404040;
             border-bottom-width: 3px;
             border-color: var(--p-tabs-tab-active-border-color);
             font-weight: 700;
         }
+    }
+
+    .p-tablist-active-bar {
+        display: none;
     }
     .p-tab{
         color: #7D7C78 ;
@@ -262,10 +284,20 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     border-radius: 2px !important;
 }
 
-.p-inputtext {
-    &::placeholder {
+
+// 이게 작동하는거
+
+.p-iconfield .p-inputtext:not(:first-child) {
+    font-size: 12px;
+    &::placeholder{
+        font-size: 12px;
+    }
+    @include respond-to(md){
         font-size: 14px;
-        font-weight: 200;
+        &::placeholder{
+            font-size: 14px;
+            font-weight: 300;
+        }
     }
 }
 
@@ -278,10 +310,11 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     &::placeholder {font-size: 14px;}
 }
 
-.p-inputtext.p-component.p-placeholder{
-    font-size: 14px;
-    font-weight: 300;
+.p-button-text.p-button-contrast {
+    width: 18px;
 }
+
+
 
 
 .p-iftalabel {
@@ -301,7 +334,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
       &::placeholder{
         color: #C1C1C1;
         font-weight: 300;
-        font-size: 14px;
+        font-size: 12px;
       }
     }
     .p-textarea{

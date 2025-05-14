@@ -60,8 +60,8 @@
     <div class="relative px-4 md:px-6 custom-left-tab">
         <Tabs value="0">
             <TabList>
-                <Tab value="0">플랜오더 공장</Tab>
-                <Tab value="1">외주 공장</Tab>
+                <Tab value="0" class="tab-header">플랜오더 공장</Tab>
+                <Tab value="1" class="tab-header">외주 공장</Tab>
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
@@ -76,14 +76,14 @@
                                 
                                 <div class="w-[calc(100%-78px)]">
                                     <div class="flex justify-between">
-                                        <p class="mb-1 font-bold">{{ item.faNm }}</p>
-                                        <div class="text-sm text-right *:px-3 *:py-1 *:rounded-full font-bold">
-                                            <p v-if="item['appGb'] === 'E'" class="text-blue-500 ">승인 대기</p>
+                                        <p class="mb-1 font-bold text-con">{{ item.faNm }}</p>
+                                        <div class="text-desc text-right *:px-3 *:py-1 *:rounded-full font-bold">
+                                            <p v-if="item['appGb'] === 'E'" class="text-p-lv3 ">승인 대기</p>
                                             <p v-if="item['appGb'] === 'N'" class="text-orange-500">반려</p>
                                         </div>
                                     </div>
-                                    <p class="text-sm text-gray-600">{{ item.tel }}</p>
-                                    <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
+                                    <p class="!text-t-lv1 text-desc">{{ item.tel }}</p>
+                                    <p class="!text-t-lv2 text-desc">{{ item.addr + ' ' + item.addrDetail }}</p>
                                     <!-- <div class="flex flex-wrap gap-1 mt-2">
                                         <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
                                         <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
@@ -102,9 +102,9 @@
                         
                     <ul>
                         <li class="flex flex-col py-4 border-b" v-for="(item, index) in factory['out']['list']" :key="index" @click="getOutDetail(item.fcCd)">
-                            <p class="mb-1 font-bold">{{ item.faNm }}</p>
-                            <p class="text-sm text-t-lv-1">{{ item.tel }}</p>
-                            <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
+                            <p class="mb-1 font-bold text-con">{{ item.faNm }}</p>
+                            <p class="text-desc !text-t-lv1">{{ item.tel }}</p>
+                            <p class="!text-t-lv2 text-desc">{{ item.addr + ' ' + item.addrDetail }}</p>
                         </li>
                     </ul>
                     </div>

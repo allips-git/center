@@ -1,5 +1,5 @@
 <template>
-    <li class="flex items-center justify-between px-4 py-4 border-b border-gray-100 first:mt-3">
+    <li class="flex items-center justify-between py-4 border-b border-gray-100 first:mt-3">
         <div class="flex flex-col text-gray-500">
             <p class="font-bold text-gray-900">{{ date }} </p>
             <div class="flex flex-col mt-1 text-sm">

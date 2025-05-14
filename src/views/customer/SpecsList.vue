@@ -1,9 +1,9 @@
 <template>
-    <div class="sticky top-0 z-10 w-full bg-white">
+    <div class="sticky top-0 z-10 w-full bg-white ">
         <BackHeader title="명세서" />
         <Button label="제품 추가 등록" size="small" class="!absolute right-4 top-1/2 -translate-y-1/2 z-50" @click="getEstiAdd"/>
     </div>
-    <main class="main-bottom-fixed-pd">
+    <main class="main-bottom-fixed-pd pb-[121px]">
         <section class="p-6">
             <div class="flex flex-col gap-5">
                 <TableCard v-for="(table, index) in esti['list']" :key="index" :title="table.title" :cards="table.cardLists"
@@ -33,11 +33,11 @@
                 </div>
             </CalculateCard>
         </section>
+        <div class="bottom-fixed-btn-box">
+            <Button label="견적서 저장" severity="secondary" size="large" @click="getEstiSave"/>
+            <Button label="계약서 이동" size="large" @click="getPopupOpen('conInfoSet')"/>
+        </div>
     </main>
-    <div class="bottom-fixed-btn-box">
-        <Button label="견적서 저장" severity="secondary" size="large" @click="getEstiSave"/>
-        <Button label="계약서 이동" size="large" @click="getPopupOpen('conInfoSet')"/>
-    </div>
 
     <!-- <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 
         :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissableMask="true"
