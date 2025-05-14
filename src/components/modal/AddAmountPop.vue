@@ -1,6 +1,5 @@
 <template>
     <div class="input-layout-box">
-        <h1 class="mb-4 font-medium text-center">추가 금액</h1>
         <InputGroup>
             <InputGroupAddon class="custom-InputGroupAddon !overflow-hidden !rounded-sm">
                 <SelectButton v-model="value" :options="options" class="custom-input-select-btn" disabled/>
@@ -13,7 +12,7 @@
             <Textarea v-model="info['addInfo']['memo']" autoResize cols="30" rows="1"  class="w-full" placeholder="메모입력" />
         </IftaLabel>
         
-        <div class="mt-2 btn-2-layout-box">
+        <div class="grid grid-cols-2 gap-2 mt-2 btn-2-layout-box">
             <Button severity="secondary" label="취소" @click="emit('getClose')"/>
             <Button label="확인" @click="emit('getApply')"/>
         </div>

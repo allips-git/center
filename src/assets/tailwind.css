@@ -63,7 +63,7 @@
     @apply w-full absolute bottom-0 left-0 pb-3.5 px-4 pt-2 bg-white border border-t border-gray-100
   }
   .bottom-fixed-btn-box{
-    @apply w-full fixed bottom-[56px] left-0 p-4 bg-white flex gap-4 *:w-full border-t border-gray-200 z-[100] md:bottom-[0]
+    @apply w-full fixed bottom-[56px] left-0 p-4 bg-white flex gap-4 *:w-full border-t border-gray-200 z-[100] md:bottom-[0]  md:!w-[calc(100vw-200px)] md:!left-[200px]
   }
   /* .btn-2-layout-box{
     @apply w-full bg-white flex gap-2 *:w-full

@@ -1,36 +1,36 @@
 <template>
     <BackHeader title="계약서" />
-    <main class="main-bottom-fixed-pd">
-        <div class="flex flex-col gap-5 px-4">
+    <main class="pb-32 main-bottom-fixed-pd">
+        <div class="flex flex-col gap-5 p-4 md:p-6">
             <TableCard v-for="(table, index) in pay['list']" :key="index" :title="table.title" :cards="table.cardLists"
                 :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag" :showButton="table.showButton"/>
         </div>
         <div class="gray-bar"></div>
-        <section class="px-5">
+        <section class="p-4 md:p-6">
             <CalculateCard title="제품 결제 내역" :calcs="pay['payList']" totalTitle="총 결제 금액" :totalAmt="getAmt(pay['payList'], 'total')" :showtoggle="true" />
         </section>
         <div class="gray-bar"></div>
-        <section class="px-5">
-            <div class="p-4 mt-5 text-sm border border-gray-200 rounded">
+        <section class="p-4 md:p-6">
+            <div class="p-6 text-sm border border-gray-200 rounded ">
             <div class="flex flex-col gap-2">
-                <h1 class="text-base" >세부정보</h1>
-                <dl class="flex items-center justify-between">
+                <h1 class="title-md" >세부정보</h1>
+                <dl class="flex items-center justify-between text-con"> 
                     <dt class="text-gray-500">견적일</dt>
                     <dd class="">{{ pay['info']['estiDt'] }}</dd>
                 </dl>
-                <dl class="flex items-center justify-between">
+                <dl class="flex items-center justify-between text-con">
                     <dt class="text-gray-500">계약일</dt>
                     <dd class="">{{ pay['info']['conDt'] }}</dd>
                 </dl>
-                <dl class="flex items-center justify-between">
+                <dl class="flex items-center justify-between text-con">
                     <dt class="text-gray-500">시공일</dt>
                     <dd class="">{{ pay['info']['deliDt'] }}</dd>
                 </dl>
-                <dl class="flex items-center justify-between">
+                <dl class="flex items-center justify-between text-con">
                     <dt class="text-gray-500">설치 예상시간</dt>
                     <dd class="">{{ pay['info']['insTime'] }}</dd>
                 </dl>
-                <dl class="flex items-center justify-between">
+                <dl class="flex items-center justify-between text-con">
                     <dt class="text-gray-500">시공 담당자</dt>
                     <dd class="">{{ pay['info']['insUser'] }}</dd>
                 </dl>
@@ -38,7 +38,7 @@
             </div>
         </section>
     </main>
-    <div class="bottom-fixed-btn-box">
+    <div class="bottom-fixed-btn-box md:!w-[calc(100vw-200px)] md:!left-[200px]">
         <Button v-if="pay['info']['stCd'] !== '011'" label="확인" size="large" severity="secondary" @click="router.go(-1)"/>
         <Button v-if="pay['info']['stCd'] === '011'" label="최종 결제 입력" size="large" @click="getPopupOpen('paymentSet')"/>
     </div>

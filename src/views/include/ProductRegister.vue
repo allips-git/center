@@ -5,7 +5,7 @@
             <Button label="제품 변경" size="small" outlined @click="getItemChange" class="!z-[100]"/>
         </div>     -->
         <div class="flex justify-between px-4 text-base md:px-6">
-            <h2 class="px-4 py-1 text-sm font-bold rounded-full bg-cyan-100 text-cyan-600">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
+            <h2 class="px-4 py-1 text-xs font-bold rounded-full bg-cyan-100 text-s-lv1">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
             <p class="font-bold">({{ esti['common']['unitSize'] }}{{ esti['common']['unitNm'] }}) {{ getAmt(esti['common']['saleUnit']) }}원</p>
         </div>
         <div class="gray-bar !my-0"></div>

@@ -4,7 +4,7 @@
         <IconAvatar class="size-12 fill-sky-400"/>
         <div class="w-full">
             <p class="text-xs text-sky-500">일정</p>
-            <p class="flex items-center text-lg font-bold">{{ calendar['edit']['clientNm'] }} 
+            <p class="flex items-center font-bold title-md">{{ calendar['edit']['clientNm'] }} 
                 <span class="flex items-center justify-center ml-2 text-sm text-gray-400 size-4" @click="getDetail">
                     <IconPlay class="size-4 fill-gray-400"/>
                 </span>
@@ -18,7 +18,7 @@
         <Select v-model="calendar['edit']['stCd']" :options="getStCd()" optionLabel="label" optionValue="value" class="w-40 !rounded-full" size="small" 
             @update:modelValue="(value) => getStCdChange(value)"/>
     </div>
-    <div class="flex flex-col items-start gap-4 text-gray-500">
+    <div class="flex flex-col items-start gap-4 text-gray-500 text-desc">
         <p>{{ getDate() }}</p>
         <p class="px-3 py-px text-sm text-white rounded-full bg-sky-500">{{ calendar['edit']['tel'] }}</p>
         <p class="px-3 py-px text-sm text-white rounded-full bg-sky-500">{{ calendar['edit']['addr'] }}</p>

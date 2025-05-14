@@ -58,7 +58,7 @@
 <template>
     <BackHeader title="계약서" />
     <main class="w-full overflow-y-scroll pb-60 md:pb-16">
-        <div class="md:grid md:grid-cols-3 md:gap-6 md:relative md:w-[100%]">
+        <div class="md:grid md:grid-cols-3 md:gap-6 md:w-[100%] md:pb-52">
             <div class="md:col-span-1">
                 <div class="md:px-6 md:pl-6 md:pr-0">
                     <h2 class="hidden py-4 font-bold title-lg md:block">고객정보</h2>
@@ -75,7 +75,7 @@
                 <div class="gray-bar md:hidden"></div>
             </div>
 
-            <div class="overflow-y-scroll md:flex-col md:flex md:col-span-2 md:pb-56">
+            <div class="overflow-y-scroll md:flex-col md:flex md:col-span-2 md:w-[100%] md:relative">
                 <section class="p-6 md:pl-0 md:pr-6 md:pt-0">
                     <h2 class="hidden py-4 font-bold title-lg md:block">주문정보</h2>
 
@@ -91,18 +91,11 @@
                     <h2 class="hidden py-4 font-bold title-lg md:block">결제정보</h2>
                     <CalculateCard  :showtitle="true" :calcs="mate['payList']" title="합계 금액" totalTitle="총 합계 금액" :totalAmt="getAmt(mate['payList'], 'total')"/>
                 </section>
-                <div class="gray-bar md:hidden"></div> 
-                <section class="p-6 md:p-0 md:pr-6">
-                    <h2 class="hidden py-4 font-bold title-lg md:block">결제정보</h2>
-                    <CalculateCard  :showtitle="true" :calcs="mate['payList']" title="합계 금액" totalTitle="총 합계 금액" :totalAmt="getAmt(mate['payList'], 'total')"/>
-                </section>
+              
 
             </div>
             
-            <!-- <div class="sm:hidden md:grid md:grid-cols-1 md:bottom-0 md:w-[100%] col-span-3">
-                
-            </div> -->
-            <section class="bottom-0 hidden p-6 bg-white border-t border-gray-200 md:col-span-3 rounded-t-2xl md:block md:fixed w-[87.43%]">
+            <section style="width: calc( 100vw - 200px )" class="bottom-0 hidden w-full p-6 bg-white border-t border-gray-200 md:fixed md:col-span-3 rounded-t-2xl md:block " >
                 <div class="flex justify-between *:flex *:gap-2 *:items-center text-sm">
                 <div>
                 <div class="label-checkbox-box">
@@ -130,6 +123,7 @@
                 <Button label="계약서 링크 발송" @click="getNavi" class="w-full"/>
                 </div>
             </section>
+        
         </div>
         
     </main>

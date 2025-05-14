@@ -61,6 +61,11 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .p-radiobutton:not(.p-disabled):has(.p-radiobutton-input:hover) .p-radiobutton-box{
     border: 5px solid #00AEF2 !important;
 }
+
+.p-radiobutton:not(.p-disabled):has(.p-radiobutton-input:focus) .p-radiobutton-box{
+    border: 5px solid #00AEF2 !important;
+}
+
 .custom-drawer{
     width: auto !important;
     padding-right: 1rem;

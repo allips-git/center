@@ -3,7 +3,7 @@
         <section class="p-4 md:p-6">
             <div class="relative flex flex-col w-full gap-4">
                 <section class="flex items-center justify-between">
-                    <h1 class="text-xl font-bold">{{ acc.year }}년 {{ acc.month }}월</h1>
+                    <h1 class="font-bold text-data">{{ acc.year }}년 {{ acc.month }}월</h1>
                   
                 </section>
                 <AccInfo :saleAmt="getAmt(acc.monthSaleAmt)" :purcAmt="getAmt(acc.monthPurcAmt)" :margin="acc.monthMargin"/>

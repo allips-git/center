@@ -1,5 +1,5 @@
 <template>
-    <main class="pb-[130px] md:pb-[75px]">
+    <main class="pb-[130px] md:pb-32">
         <BackHeader title="발주서" />
         <main class="main-bottom-fixed-pd">
             <section class="p-4 md:p-6">
@@ -13,7 +13,7 @@
                 <CalculateCard title="제품 결제 내역" :calcs="ord['payList']" totalTitle="총 결제 금액" :totalAmt="ord.totalAmt" :showtoggle="true" />
             </section>
         </main>
-        <div class="!bottom-[56px] md:!bottom-0 bottom-fixed-btn-box">
+        <div class="!bottom-[56px] md:!bottom-0 md:!left-[200px] bottom-fixed-btn-box sm:!w-full md:!w-[calc(100vw-200px)]" >
             <Button label="확인" size="large" severity="secondary" @click="router.go(-1)"/>
         </div>
     
@@ -23,12 +23,27 @@
             <SysOrderInfo/>
         </Dialog>
     
-        <Dialog v-model:visible="popup['pop']['outOrderSet']"  header="외주 발주 정보" 
+        <!-- <Dialog v-model:visible="popup['pop']['outOrderSet']"  header="외주 발주 정보" 
             :modal=true position="bottom" class="custom-dialog-bottom"
             @update:visible="getPopupClose('outOrderSet', true)">
             <OutOrderInfo/>
-        </Dialog>
+        </Dialog> -->
 
+        <Dialog v-model:visible="popup['pop']['outOrderSet']" 
+        header="외주 발주 정보"
+        :modal=true
+        position="center"
+        class="custom-dialog-bottom backPopup"
+        @update:visible="getPopupClose(true, 'outOrderSet')">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopupClose(true, 'outOrderSet')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
+                <h2 class="modal-backheader-title">외주발주정보</h2>
+            </div>
+        </template>
+         <OutOrderInfo/>
+
+        </Dialog>
     </main>
 </template>
 

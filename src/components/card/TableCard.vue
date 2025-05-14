@@ -7,7 +7,7 @@
              <div class="flex items-center justify-between w-full">
                 <h2 class="text-gray-400 text-desc">{{ card.productTitle }}</h2>
                 <div v-if="card.showDelete" class="flex justify-end">
-                    <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-14"/>
+                    <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-16 !border-gray-200" />
                 </div>            
              </div>
             <section class="w-full">

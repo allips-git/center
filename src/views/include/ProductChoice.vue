@@ -12,9 +12,9 @@
             </div>
         </div>
         <div class="flex w-full gap-2">
-            <Button label="실측 둘러보기" size="small" rounded />
-            <Button label="커튼 실측" size="small" rounded @click="getExItem('EX000001')"/>
-            <Button label="블라인드 실측" size="small" rounded @click="getExItem('EX000002')"/>
+            <Button label="실측 둘러보기" size="small"/>
+            <Button label="커튼 실측" size="small" @click="getExItem('EX000001')"/>
+            <Button label="블라인드 실측" size="small" @click="getExItem('EX000002')"/>
         </div>
         <ul class="flex flex-col">
             <li v-for="(item, index) in product['list']" :key="index" class="border-b">

@@ -1,6 +1,5 @@
 <template>
     <div class="input-layout-box">
-        <h1 class="mb-4 font-medium text-center">할인</h1>
         <IftaLabel class="w-full">
             <Select v-model="info['dcInfo']['cpCd']" :options="data['coupon']" optionLabel="label" optionValue="value" class="w-full" placeholder="쿠폰선택" @change="getCoupon"/>
         </IftaLabel>
@@ -17,7 +16,7 @@
         <IftaLabel class="w-full">
             <Textarea v-model="info['dcInfo']['memo']" autoResize cols="30" rows="1" class="w-full" placeholder="메모" />
         </IftaLabel>
-        <div class="mt-2 btn-2-layout-box">
+        <div class="grid justify-between grid-cols-2 gap-2 mt-2 btn-2-layout-box">
             <Button severity="secondary" label="취소" @click="emit('getClose')"/>
             <Button label="확인" @click="emit('getApply')"/>
         </div>

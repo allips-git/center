@@ -54,6 +54,8 @@ export default {
         'l-lv4' :'#E4E5E9',
         'l-lv5' :'#F6F6F6',
 
+        's-lv1' : "#6AB2BE",
+
         'bg-lv1':"#F8F9FA",
 
         

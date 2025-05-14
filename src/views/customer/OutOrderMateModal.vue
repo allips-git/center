@@ -1,22 +1,22 @@
 <template>
     <BackHeader :title="mate['ceNm']+' 발주서'" />
-    <main class="!pb-36">
+    <main class="!pb-60 ">
         <div class="relative">
-            <section class="relative overflow-hidden bg-white rounded-t-xl">
+            <section class="relative p-4 overflow-hidden bg-white rounded-t-xl md:p-6">
                 <InfoCard :title="'수신 : '+mate['faNm']" :info="mate['headers']" />
-                <div class="gray-bar !mt-0"></div>
+            </section>
+            <div class="gray-bar !mt-0"></div>
 
-                <section class="px-5">
-                    <div class="flex flex-col gap-5">
-                        <TableCard v-for="(table, index) in mate['list']" :key="index" :title="table.title" :cards="table.cardLists"
-                            :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag"
-                            :showButton="table.showButton"/>
-                    </div>
-                </section>
+            <section class="p-4 md:p-6">
+                <div class="flex flex-col gap-5">
+                    <TableCard v-for="(table, index) in mate['list']" :key="index" :title="table.title" :cards="table.cardLists"
+                        :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag"
+                        :showButton="table.showButton"/>
+                </div>
             </section>
         </div>
     </main>
-    <section class="fixed bottom-0 w-full p-5 overflow-hidden bg-white border-t border-gray-200 rounded-t-2xl">
+    <section class="fixed bottom-[56px] md:bottom-0 w-full p-5 overflow-hidden bg-white border-t border-gray-200 rounded-t-2xl md:!w-[calc(100vw-200px)]">
         <div class="flex justify-end *:flex *:gap-2 *:items-center text-sm w-full">
             <div class="justify-end">
                 <div class="label-checkbox-box">
@@ -38,7 +38,7 @@
         </div>
         <div class="pt-4 btn-2-layout-box">
 
-            <Button label="링크 발주" severity="success" @click="getNavi"/>
+            <Button label="링크 발주" severity="success" @click="getNavi" class="w-[100%]"/>
         </div>
     </section>
 </template>
