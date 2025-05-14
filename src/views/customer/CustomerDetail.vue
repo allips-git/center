@@ -4,7 +4,7 @@
         <section class="p-4 md:p-6">
             <div class="flex items-center justify-between">
                 <h2 class="font-bold title-md">{{ client['detail']['clientNm'] }}</h2>
-                <Button label="정보수정" outlined severity="secondary" size="small" @click="getClientModify"/>
+                <Button label="정보수정" outlined severity="secondary" size="small" @click="getClientModify" class="outlined-button"/>
             </div>
             <ul class="flex flex-col gap-3 mt-3 rounded-md text-desc !text-t-lv2">
                 <li class="flex items-center">
@@ -79,8 +79,12 @@
                 </TabPanel>
             </TabPanels>
         </Tabs>
-        <div class="flex justify-center pb-5">
+        <!-- <div class="flex justify-center pb-5">
             <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getNewEsti" />
+        </div> -->
+
+        <div class="fixed bottom-20 right-4 md:bottom-4">
+            <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getNewEsti"/>
         </div>
 
         <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 

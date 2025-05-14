@@ -57,6 +57,10 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         }
     }
 }
+
+.p-radiobutton:not(.p-disabled):has(.p-radiobutton-input:hover) .p-radiobutton-box{
+    border: 5px solid #00AEF2 !important;
+}
 .custom-drawer{
     width: auto !important;
     padding-right: 1rem;
@@ -397,7 +401,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 }
 
 .p-button{
-    border-radius: 2px !important;
+    border-radius: 4px !important;
     padding-block:0.640625rem !important;
     .p-button-label{
         font-weight: 600 !important;
@@ -405,22 +409,36 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         
     }
     &.p-button-sm{
-        padding-block: 0.1875rem !important;
-        padding-inline:0.5rem !important;
+        padding-block: 0.5rem !important;
+        padding-inline:1rem !important;
         .p-button-label{
             font-size: 0.75rem !important;
         }
-        
+       
     }
     &.p-button-secondary{
-        background-color: #EBEBEB;
+        background-color: #f9fafb;
         color: #7D7C78;
+        border: none;
         .p-button-label{
             color: #7D7C78;
             font-size: 0.75rem 
         }
+     
     }
+    &.outlined-button{
+        background-color: #ffffff;
+        border: 1px solid #E4E5E9;
+        border-radius: 4px;
+    }
+    
 }
+
+.p-button-secondary:not(:disabled):hover{
+    background-color: #e2e8f0;
+    border: none !important;
+}
+
 
 .p-button-help{
     background: #DBB071 !important;

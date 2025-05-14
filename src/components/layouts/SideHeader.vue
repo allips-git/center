@@ -5,11 +5,13 @@
     >
         <ul class="flex flex-col w-full gap-4 px-3 "
         >
-            <li class="flex justify-start gap-3 px-1 py-3 ">
-                <span class="w-6"
-                :class="setWideSide ? '' : '!w-6'"
-                ><IconAvatar class="w-6 mr-2 text-blue-300"/></span>
-                <p v-if="setWideSide || drawerClass" class="text-gray-900">{{ login['name'] }}</p>
+            <li class="">
+                <router-link class="flex justify-start gap-3 px-1 py-3" to="/">
+                    <span class="w-6"
+                    :class="setWideSide ? '' : '!w-6'"
+                    ><IconAvatar class="w-6 mr-2 text-blue-300"/></span>
+                    <p v-if="setWideSide || drawerClass" class="text-gray-900">{{ login['name'] }}</p>
+                </router-link>
             </li>
             <li 
             class="flex items-center cursor-pointer py-0.5 hover:bg-indigo-50 px-2 rounded-md font-bold group justify-start"
@@ -25,7 +27,7 @@
 
 <script setup lang="ts">
 import { ref, defineProps } from 'vue';
-import { useRouter } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 import { useLoginStore } from '@/store';
 import IconAvatar from '@/components/icons/IconAvatar.vue';
 

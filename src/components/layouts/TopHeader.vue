@@ -35,8 +35,8 @@
             </div>
         </template>
         <SideHeader 
-        :drawerClass="true" 
-        @closeDrawer="moSideHeader = false"
+        :drawerClass="false" 
+        @closeDrawer="moSideHeader = true"
         />
     </Drawer>
 </template>
