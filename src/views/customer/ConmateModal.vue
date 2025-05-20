@@ -57,7 +57,7 @@
 
 <template>
     <BackHeader title="계약서" />
-    <main class="w-full overflow-y-scroll pb-60 md:pb-16">
+    <main class="w-full overflow-y-scroll pb-60 md:pb-16" ref="mainRef">
         <div class="md:grid md:grid-cols-3 md:gap-6 md:w-[100%] md:pb-52">
             <div class="md:col-span-1">
                 <div class="md:px-6 md:pl-6 md:pr-0">
@@ -95,66 +95,41 @@
 
             </div>
             
-            <section style="width: calc( 100vw - 200px )" class="bottom-0 hidden w-full p-6 bg-white border-t border-gray-200 md:fixed md:col-span-3 rounded-t-2xl md:block " >
-                <div class="flex justify-between *:flex *:gap-2 *:items-center text-sm">
-                <div>
-                <div class="label-checkbox-box">
-                    <RadioButton />
-                    <label for="">일반양식</label>
-                </div>
-                <div class="label-checkbox-box">
-                    <RadioButton />
-                    <label for="">엑셀양식</label>
-                </div>
-                </div>
-                <div class="flex justify-between">
-                <p>사이즈 숨김</p>
-                <ToggleSwitch v-model="mate['sizeYn']" />
-                </div>
-                </div>
-
-                <div class="pt-4">
-                <IconField>    
-                <InputText class="w-full" :value="''+domain+'/customer/conDoc?cd='+emCd+''" readonly @click="getConDoc"/>
-                <InputIcon class="pi pi-eye" />
-                </IconField>
-                </div>
-                <div class="w-full pt-4 btn-2-layout-box">
-                <Button label="계약서 링크 발송" @click="getNavi" class="w-full"/>
-                </div>
-            </section>
+          
         
         </div>
+        <section :style="{width: mainWidth + 'px', left: mainLeft + 'px',}" class="fixed bottom-0 w-full p-5 overflow-hidden bg-white border-t border-gray-200 rounded-t-2xl pb-[75px] md:pb-0">
+            <div class="flex justify-between *:flex *:gap-2 *:items-center text-sm w-full mb-4">
+                <div>
+                    <div class="label-checkbox-box">
+                        <RadioButton />
+                        <label for="general" class="text-desc">일반양식</label>
+                    </div>
+                    <div class="label-checkbox-box">
+                        <RadioButton />
+                        <label for="excel" class="text-desc">엑셀양식</label>
+                    </div>
+                </div>
+                <div class="flex justify-between text-desc">
+                    <p>사이즈 숨김</p>
+                    <ToggleSwitch v-model="mate['sizeYn']" />
+                </div>
+            </div>
+    
+    
+            <IftaLabel class="w-[100%]">
+                <InputText  :value="''+domain+'/customer/estiDoc?cd='+emCd+''" readonly @click="getEstiDoc" class="w-[100%]"/>
+                <label>발주서 링크</label>
+            </IftaLabel>
+    
+           
+            <div class="py-4 btn-2-layout-box">
+                <Button label="계약서 링크 발송" @click="getNavi" class="w-[100%]"/>
+            </div>
+        </section>
         
     </main>
-    <section class="fixed bottom-0 w-full p-6 pb-20 bg-white border-t border-gray-200 rounded-t-2xl md:pb-0 md:bottom-0 md:hidden">
-        <div class="flex justify-between *:flex *:gap-2 *:items-center text-sm">
-            <div>
-                <div class="label-checkbox-box">
-                    <RadioButton />
-                    <label for="">일반양식</label>
-                </div>
-                <div class="label-checkbox-box">
-                    <RadioButton />
-                    <label for="">엑셀양식</label>
-                </div>
-            </div>
-            <div class="flex justify-between">
-                <p>사이즈 숨김</p>
-                <ToggleSwitch v-model="mate['sizeYn']" />
-            </div>
-        </div>
-
-        <div class="pt-4">
-            <IconField>    
-            <InputText class="w-full" :value="''+domain+'/customer/conDoc?cd='+emCd+''" readonly @click="getConDoc"/>
-            <InputIcon class="pi pi-eye" />
-            </IconField>
-        </div>
-        <div class="w-full pt-4 btn-2-layout-box">
-            <Button label="계약서 링크 발송" @click="getNavi" class="w-full"/>
-        </div>
-    </section>
+   
 </template>
     
     
@@ -167,6 +142,9 @@ import RadioButton from 'primevue/radiobutton';
 import ToggleSwitch from 'primevue/toggleswitch';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
+import IftaLabel from 'primevue/iftalabel';
+
+import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { useEstiStore, useConMateStore } from '@/store';
 import { getAmt } from '@/assets/js/function';
@@ -175,6 +153,29 @@ const esti      = useEstiStore();
 const mate      = useConMateStore();
 const domain    = window.location.origin;
 const emCd      = btoa(esti['emCd']);
+
+const mainRef = ref(null);
+const mainWidth = ref(0);
+const mainLeft = ref(0)
+
+onMounted(() => {
+    const updateMainSize = () => {
+        if (mainRef.value) {
+            mainWidth.value = mainRef.value.offsetWidth
+            mainLeft.value = mainRef.value.offsetLeft
+        }
+    }
+
+    updateMainSize()
+
+    const observer = new ResizeObserver(() => updateMainSize())
+    if (mainRef.value instanceof Element) {
+    updateMainSize()
+    observer.observe(mainRef.value)
+  } else {
+    console.warn('mainRef is not a valid DOM element')
+  }
+});
 
 const getConDoc = () => {
     const value = event.target.value;

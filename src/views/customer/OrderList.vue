@@ -1,5 +1,5 @@
 <template>
-    <main class="pb-[130px] md:pb-32">
+    <main class="pb-[130px] md:pb-32" ref="mainRef">
         <BackHeader title="발주서" />
         <main class="main-bottom-fixed-pd">
             <section class="p-4 md:p-6">
@@ -13,7 +13,14 @@
                 <CalculateCard title="제품 결제 내역" :calcs="ord['payList']" totalTitle="총 결제 금액" :totalAmt="ord.totalAmt" :showtoggle="true" />
             </section>
         </main>
+<!-- 
         <div class="!bottom-[56px] md:!bottom-0 md:!left-[200px] bottom-fixed-btn-box sm:!w-full md:!w-[calc(100vw-200px)]" >
+            <Button label="확인" size="large" severity="secondary" @click="router.go(-1)"/>
+        </div> -->
+
+        <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
+            }" class="bottom-fixed-btn-box" 
+            >
             <Button label="확인" size="large" severity="secondary" @click="router.go(-1)"/>
         </div>
     
@@ -53,10 +60,29 @@ import TableCard from '@/components/card/TableCard.vue'
 import CalculateCard from "@/components/card/CalculateCard.vue";
 import SysOrderInfo from "@/views/include/customer/SysOrderInfo.vue";
 import OutOrderInfo from "@/views/include/customer/OutOrderInfo.vue";
+import { ref } from 'vue';
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { usePopupStore, useEstiStore, useOrderStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
+
+const mainRef = ref(null);
+const mainWidth = ref(0);
+const mainLeft = ref(0)
+
+onMounted(() => {
+    const updateMainSize = () => {
+        if (mainRef.value) {
+            mainWidth.value = mainRef.value.offsetWidth
+            mainLeft.value = mainRef.value.offsetLeft
+        }
+    }
+
+    updateMainSize()
+
+    const observer = new ResizeObserver(() => updateMainSize())
+    observer.observe(mainRef.value)
+});
 
 const router    = useRouter();
 const popup     = usePopupStore();
