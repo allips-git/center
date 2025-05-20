@@ -26,10 +26,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps } from 'vue';
+import { ref, defineProps, onMounted } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import { useLoginStore } from '@/store';
 import IconAvatar from '@/components/icons/IconAvatar.vue';
+
 
 const props = defineProps({
     drawerClass: {

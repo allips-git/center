@@ -31,6 +31,7 @@ import TopHeader from '@/components/layouts/TopHeader.vue';
 import AppBar from '@/components/layouts/AppBar.vue';
 import ConfirmDialog from 'primevue/confirmdialog';
 
+
 const kakao = useKakaoStore();
 // const popup = usePopupStore();
 const setWideSide   = ref(true); // wideSide 상태를 정의

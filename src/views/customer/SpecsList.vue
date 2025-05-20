@@ -3,7 +3,7 @@
         <BackHeader title="명세서" />
         <Button label="제품 추가 등록" size="small" class="!absolute right-4 top-1/2 -translate-y-1/2 z-50" @click="getEstiAdd"/>
     </div>
-    <main class="main-bottom-fixed-pd pb-[121px]">
+    <main class="main-bottom-fixed-pd pb-[121px]" ref="mainRef">
         <section class="p-6">
             <div class="flex flex-col gap-5">
                 <TableCard v-for="(table, index) in esti['list']" :key="index" :title="table.title" :cards="table.cardLists"
@@ -33,19 +33,14 @@
                 </div>
             </CalculateCard>
         </section>
-        <div class="bottom-fixed-btn-box md:!w-[calc(100vw-200px)] md:!left-[200px]">
+      
+        <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
+            }" class="bottom-fixed-btn-box" 
+            >
             <Button label="견적서 저장" severity="secondary" size="large" @click="getEstiSave"/>
             <Button label="계약서 이동" size="large" @click="getPopupOpen('conInfoSet')"/>
         </div>
     </main>
-
-    <!-- <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 
-        :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissableMask="true"
-        @update:visible="getPopupClose('disAmtSet', true)">
-        <div class="pt-3">
-            <SaleAmountPop :gubun="'E'" @getApply="getDisApply" @getClose="getPopupClose('disAmtSet', true)"/>
-        </div>
-    </Dialog> -->
 
     <Dialog v-model:visible="popup['pop']['disAmtSet']" 
             :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissable-mask="true"
@@ -75,14 +70,6 @@
         </div>
     </Dialog>
 
-    <!-- <Dialog v-model:visible="popup['pop']['addAmtSet']" header="추가 가격 입력" 
-        :modal=true position="bottom" class="min-w-96 custom-dialog-center" :dismissableMask="true"
-        @update:visible="getPopupClose('addAmtSet', true)">
-        <div class="pt-3">
-            <AddAmountPop :gubun="'E'" @getApply="getAddApply" @getClose="getPopupClose('addAmtSet', true)"/>
-        </div>
-    </Dialog> -->
-
     <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
         :modal=true position="center" class="custom-dialog-full"
         @update:visible="getPopupClose('itemList', true)">
@@ -106,12 +93,6 @@
         </template>
         <ProductRegister/>
     </Dialog>
-<!--     
-    <Dialog v-model:visible="popup['pop']['conInfoSet']" header="계약 정보" 
-        :modal=true position="bottom" class="custom-dialog-bottom"
-        @update:visible="getPopupClose('conInfoSet', true)">
-        <ContractModal/>
-    </Dialog> -->
 
     <Dialog v-model:visible="popup['pop']['conInfoSet']" header="계약 정보" 
             :modal=true position="center" class="custom-dialog-bottom" 
@@ -140,6 +121,7 @@ import ProductRegister from "@/views/include/ProductRegister.vue";
 import ToggleSwitch from 'primevue/toggleswitch';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue'
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDataStore, usePopupStore, useEstiStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
@@ -150,6 +132,24 @@ const router    = useRouter();
 const data      = useDataStore();
 const popup     = usePopupStore();
 const esti      = useEstiStore();
+
+const mainRef = ref(null);
+const mainWidth = ref(0);
+const mainLeft = ref(0)
+
+onMounted(() => {
+    const updateMainSize = () => {
+        if (mainRef.value) {
+            mainWidth.value = mainRef.value.offsetWidth
+            mainLeft.value = mainRef.value.offsetLeft
+        }
+    }
+
+    updateMainSize()
+
+    const observer = new ResizeObserver(() => updateMainSize())
+    observer.observe(mainRef.value)
+});
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
