@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="text-sm">
                                     <p class="flex-none">[카카오 알림톡] <span class="font-bold">{{ item['kdNm'] }}</span></p>
-                                    <p v-if="getStCheck(item['resDt'])" class="font-bold text-yellow-400">발송준비</p>
+                                    <p v-if="item['status'] === 'R'" class="font-bold text-yellow-400">발송준비</p>
                                     <p v-else class="font-bold text-green-500">발송완료</p>
                                 </div>
                                 <div class="flex gap-3 mt-1">
@@ -87,32 +87,6 @@ const getPopup = async (popNm: string, khCd: string, emCd: string, ikey: string)
     await calendar.getIkey(ikey);
     await calendar.getEmCd(emCd);
     getPopupOpen(popNm);
-}
-
-const getStCheck = (resDt: null | string) => {
-    if(kakao.resGb === 'Y')
-    {
-        if(!resDt)
-        {
-            return false;
-        }
-
-        const targetDate    = new Date(resDt.replace(' ', 'T'));
-        const currentDate   = new Date();
-
-        if(targetDate < currentDate)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-    else
-    {
-        return false;
-    }
 }
 
 onMounted(async () => {
