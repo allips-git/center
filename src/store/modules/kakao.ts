@@ -31,6 +31,7 @@ interface SendList {
     clientNm    : string;
     kdNm        : string;
     tel         : string;
+    status      : string;
     resDt       : string;
     regDt       : string;
 }
@@ -204,6 +205,7 @@ export const useKakaoStore = defineStore('kakao', {
                         clientNm    : item.clientNm,
                         kdNm        : item.kdNm,
                         tel         : item.tel,
+                        status      : item.status,
                         resDt       : item.resDt,
                         regDt       : item.regDt
                     });
