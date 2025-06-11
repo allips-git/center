@@ -1,9 +1,9 @@
 <template>
-    <main class="pb-[56px]">
+    <main class="pb-14">
         <BackHeader title="고객상세" />
         <section class="p-4 md:p-6">
             <div class="flex items-center justify-between">
-                <h2 class="font-bold title-md">{{ client['detail']['clientNm'] }}</h2>
+                <h2 class="text-base font-bold">{{ client['detail']['clientNm'] }}</h2>
                 <Button label="정보수정" outlined severity="secondary" size="small" @click="getClientModify" class="outlined-button"/>
             </div>
             <ul class="flex flex-col gap-3 mt-3 rounded-md text-desc !text-t-lv2">
@@ -83,7 +83,7 @@
             <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getNewEsti" />
         </div> -->
 
-        <div class="fixed bottom-20 right-4 md:bottom-4">
+        <div class="fixed bottom-14 right-4 md:bottom-14 register-button">
             <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getNewEsti"/>
         </div>
 

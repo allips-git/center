@@ -1,13 +1,14 @@
 <template>
-    <main class="pb-[174px] md:pb-[124px]">
+    <main class="pb-[174px] md:pb-[124px]" ref="mainRef">
         <BackHeader :title="factory['out']['detail']['header'][0]['value']+' 상세 정보'" />
-        <main class="">
+        <main class="" >
             <div class="relative">
                 <section class="relative p-4 overflow-hidden bg-white rounded-t-xl md:p-6">
                     <InfoCard :title="factory['out']['detail']['header'][0]['value']" 
                         :info="factory['out']['detail']['header']" :btnLabel="'수정하기'"
                         @get-btn="getPopOpen('outFactorySet')"/>
                 </section>
+
                 <div class="gray-bar"></div>
     
                 <section class="p-4 md:p-6">
@@ -15,14 +16,22 @@
                         totalTitle="총 결제 금액" :totalAmt="factory['out']['detail']['totalAmt']"/>
                 </section>
             </div>
-        </main>
-        <div class="flex-col !border-0 bottom-fixed-btn-box shadow-custom-y">
-            <div class="flex justify-between mb-1 font-bold">
-                <p >총 제품</p>
-                <p class="text-p-lv4">{{ factory['out']['detail']['itemCnt'] }}개</p>
+            
+          
+
+            <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
+            }" class="!flex-col bottom-fixed-btn-box" 
+            >
+            <div class="flex justify-between w-full mb-1 font-bold">
+                    <p >총 제품</p>
+                    <p class="text-p-lv4">{{ factory['out']['detail']['itemCnt'] }}개</p>
+                </div>
+                <Button label="제품 설정하기" size="large" @click="getPopupOpen('outFactoryItemList')"/>
             </div>
-            <Button label="제품 설정하기" size="large" @click="getPopupOpen('outFactoryItemList')"/>
-        </div>
+          
+        </main>
+
+
     
         <Dialog v-model:visible="popup['pop']['outFactoryItemList']" header="외주공장 제품정보" 
             :modal=true position="center" class="custom-dialog-full"
@@ -36,13 +45,6 @@
             <OutProduct/>
         </Dialog>
 
-     
-    
-        <!-- <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주공장 저장" 
-            :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom "
-            @update:visible="getPopupClose('outFactorySet', true)">
-            <OutFactorySet/>
-        </Dialog> -->
 
         <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주 공장 저장" 
             :modal=true position="center" class="custom-dialog-bottom" 
@@ -64,9 +66,29 @@ import CalculateCard from "@/components/card/CalculateCard.vue";
 import InfoCard from "@/components/card/InfoCard.vue";
 import OutProduct from "@/views/include/factory/OutProduct.vue";
 import OutFactorySet from '@/views/include/factory/OutFactorySet.vue'
+import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { usePopupStore, useFactoryStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
+
+const mainRef = ref(null);
+const mainWidth = ref(0);
+const mainLeft = ref(0)
+
+onMounted(() => {
+    const updateMainSize = () => {
+        if (mainRef.value) {
+            mainWidth.value = mainRef.value.offsetWidth
+            mainLeft.value = mainRef.value.offsetLeft
+        }
+    }
+
+    updateMainSize()
+
+    const observer = new ResizeObserver(() => updateMainSize())
+    observer.observe(mainRef.value)
+});
+
 
 const popup     = usePopupStore();
 const factory   = useFactoryStore();

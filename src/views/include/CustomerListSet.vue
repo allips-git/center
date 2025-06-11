@@ -51,8 +51,8 @@
             <Button type="button" :label="client['type'] === 'I' ? '명세서 이동' : '저장'" class="w-full" size="large" @click="getSaveNext"/>
         </div>
     </div>
-    <div id="layer" style="overflow:hidden;z-index:9999;-webkit-overflow-scrolling:touch;position:absolute;top:50%;transform: translate(-50%,-50%);left:50%;">
-        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-10px;top:-3px;z-index:1" @click="getCloseDaumPost()" alt="닫기 버튼">
+    <div id="layer" style="overflow:hidden;z-index:9999;-webkit-overflow-scrolling:touch;position:fixed;top:50%;transform: translate(2%,-50%);left:50%;width: 100%; max-width: 400px;">
+        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:fixed;right:-10px;top:-3px;z-index:1" @click="getCloseDaumPost()" alt="닫기 버튼">
     </div>
 </template>
 

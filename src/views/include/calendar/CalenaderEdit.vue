@@ -4,13 +4,13 @@
         <IconAvatar class="size-12 fill-sky-400"/>
         <div class="w-full">
             <p class="text-xs text-sky-500">일정</p>
-            <p class="flex items-center font-bold title-md">{{ calendar['edit']['clientNm'] }} 
+            <p class="flex items-center text-base font-bold">{{ calendar['edit']['clientNm'] }} 
                 <span class="flex items-center justify-center ml-2 text-sm text-gray-400 size-4" @click="getDetail">
                     <IconPlay class="size-4 fill-gray-400"/>
                 </span>
             </p>
         </div>
-        <p class="flex-none font-bold text-18 text-sky-500">
+        <p class="flex-none text-base font-bold text-sky-500">
             {{ calendar['edit']['stCd'] === 'Y' ? '견적' : '시공' }}
         </p>
     </div>
@@ -18,10 +18,10 @@
         <Select v-model="calendar['edit']['stCd']" :options="getStCd()" optionLabel="label" optionValue="value" class="w-40 !rounded-full" size="small" 
             @update:modelValue="(value) => getStCdChange(value)"/>
     </div>
-    <div class="flex flex-col items-start gap-4 text-gray-500 text-desc">
+    <div class="flex flex-col items-start gap-4 text-xs text-gray-500">
         <p>{{ getDate() }}</p>
-        <p class="px-3 py-px text-sm text-white rounded-full bg-sky-500">{{ calendar['edit']['tel'] }}</p>
-        <p class="px-3 py-px text-sm text-white rounded-full bg-sky-500">{{ calendar['edit']['addr'] }}</p>
+        <p class="px-2 py-[3px] text-xs text-white rounded-full bg-sky-500">{{ calendar['edit']['tel'] }}</p>
+        <p class="px-2 py-[3px] text-xs text-white rounded-full bg-sky-500">{{ calendar['edit']['addr'] }}</p>
         <p>상세주소 : {{ calendar['edit']['addrDetail'] }}</p>
         <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 예상시간 : {{ calendar['edit']['insTime'] }}</p>
         <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 수량 : {{ calendar['edit']['insCnt'] }}</p>

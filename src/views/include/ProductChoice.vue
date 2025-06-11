@@ -11,7 +11,7 @@
                 </IconField>
             </div>
         </div>
-        <div class="flex w-full gap-2">
+        <div class="flex w-full gap-[10px] product-button">
             <Button label="실측 둘러보기" size="small"/>
             <Button label="커튼 실측" size="small" @click="getExItem('EX000001')"/>
             <Button label="블라인드 실측" size="small" @click="getExItem('EX000002')"/>
@@ -33,7 +33,7 @@
                     <li v-for="(color, colorIndex) in item.colorLists" :key="colorIndex" :class="color" class="px-5 py-4 text-center border-b border-gray-200 last:border-b-0">
                         <div class="" @click="getItemChoice(color['icCd'])">
                             <!-- <RadioButton /> -->
-                            <label class="flex items-center justify-center w-full text-center" :class="{ 'text-red-500': color['useYn'] === 'N' }">
+                            <label class="flex items-center justify-center w-full text-sm text-center" :class="{ 'text-red-500': color['useYn'] === 'N' }">
                                 {{ color['icNm'] }}
                                 <span v-if="color['useYn'] === 'N'">(주문불가)</span>
                                 <!-- <Badge  value="주문불가" severity="danger" class="ml-2"></Badge> -->

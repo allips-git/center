@@ -6,9 +6,9 @@
                 <p class="text-sm font-bold text-t-lv1">{{ getConvertDate(aver['searchDt'], 'aver') }} 총 손익</p>
                 <p class="font-bold text-green-500 text-28">{{ getAmt(aver['totalAmt']) }} 원</p>
             </div>
-            <div>
+            <div class="">
                 <DatePicker v-model="aver['searchDt']" view="month" dateFormat="yy년 mm'월'" 
-                    class="custom-datapicker *:!text-sm !max-w-[120px] h-[33px] *:!pl-1 *:!pr-1.5 bg-gray" :locale="'ko'" showIcon fluid iconDisplay="input"
+                    class="custom-datapicker *:!text-sm !max-w-[150px] !w-[120px] h-[33px] *:!pl-1 *:!pr-1.5 bg-gray" :locale="'ko'" showIcon fluid iconDisplay="input"
                     @update:modelValue="aver.getData()">
                     <template #inputicon="slotProps" class="!pl-1">
                     <IconPlay class="rotate-90 !fill-gray-500"/>
@@ -20,7 +20,7 @@
         <div class="gray-bar"></div>
 
        <section class="p-4 md:p-6">
-            <h2 class="mb-4 font-bold title-lg">요약</h2>
+            <h2 class="mb-4 text-base font-bold">요약</h2>
             <div class="w-full h-[22px] overflow-hidden bg-gray-200 rounded-full ">
                 <div class="flex items-center h-full *:h-full">
                     <div :class="`bg-blue-400`" :style="{ width: `${aver.saleAmtPercent}`}" >
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <!--  border border-gray-200 rounded-md -->
-            <ul class="flex flex-col gap-1.5  mt-[1.625rem] text-desc !text-t-lv1">
+            <ul class="flex flex-col gap-1.5  mt-[1.625rem] text-xs !text-t-lv1">
                 <li class="flex justify-between gap-5">
                     <div class="flex items-center gap-3.5">
                         <span class="block bg-blue-400 rounded-full size-[11px]"></span>
@@ -70,17 +70,17 @@
         <section class="p-4 md:p-6">
             <div class="w-full bg-white">
                 <div class="">
-                    <h2 class="font-bold title-lg">이달 고객 매출 순위</h2>
-                    <span class="text-sm text-gray-400">최고 10명</span>
+                    <h2 class="text-base font-bold">이달 고객 매출 순위</h2>
+                    <span class="text-xs text-gray-400">최고 10명</span>
                 </div>
                 <ul class="mt-4">
                     <li v-for="(item, index) in aver['clientRank']" :key="index" class="flex items-center justify-between py-3">
-                            <div class="flex items-center gap-2 title-sm">
+                            <div class="flex items-center gap-2 text-xs">
                                 <p class="w-2 font-bold">{{ index + 1 }}</p>
-                                <IconAvatar class="w-8 text-sky-400"/>
+                                <IconAvatar class="w-[26px] text-sky-400"/>
                                 <p class="">{{ item['clientNm'] }}</p>
                             </div>
-                        <p class="font-bold text-t-lv2">{{ getAmt(item['amt']) }}원</p>
+                        <p class="text-sm font-bold text-t-lv2">{{ getAmt(item['amt']) }}원</p>
                     </li>
                 </ul>
             </div>
@@ -89,7 +89,7 @@
         <div class="gray-bar"></div>
 
         <section class="p-4 md:p-6">
-            <h2 class="mb-6 font-bold title-lg">결제 수단</h2>
+            <h2 class="mb-6 text-base font-bold">결제 수단</h2>
             <div class="">
                 <div class="w-full h-5 overflow-hidden bg-gray-200 rounded-full ">
                     <div class="flex items-center h-full *:h-full">
@@ -111,7 +111,7 @@
             
             <ul class="flex flex-col gap-2.5 pt-6">
                 <li v-for="(item, index) in aver['payList']" :key="index" class="flex justify-between gap-5">
-                    <div class="flex items-center gap-3.5 text-desc !text-t-lv1">
+                    <div class="flex items-center gap-3.5 text-xs !text-t-lv1">
                         <span v-if="item['codeSub'] === '001'" class="block bg-blue-300 rounded-full size-3"></span>
                         <span v-if="item['codeSub'] === '002'" class="block bg-yellow-400 rounded-full size-3"></span>
                         <span v-if="item['codeSub'] === '003'" class="block bg-green-400 rounded-full size-3"></span>

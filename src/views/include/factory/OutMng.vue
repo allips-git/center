@@ -1,5 +1,5 @@
 <template>
-<main class="p-5 !pb-32">
+<main class="p-4 !pb-32">
     <div class="text-sm input-layout-box">
         <div class="flex items-center justify-between w-full mb-2">
             <h1 class="font-bold">제품명<span class="ml-0.5 text-red-500">*</span></h1>
@@ -37,7 +37,7 @@
 
         <h1 class="mt-4 font-bold">옵션 설정<span class="ml-0.5 text-red-500">*</span></h1>
 
-        <div class="relative flex items-center justify-center w-full">
+        <div class="relative flex items-center justify-center w-full text-t-lv3">
             <p class="w-[100px] flex-none">기본 단위</p>
             <div class="w-full">
                 <div class="flex w-full gap-2">
@@ -53,7 +53,7 @@
         </div>
 
         <div class="relative flex items-center justify-center w-full" v-if="factory['out']['itemInfo']['unit'] !== '004'">
-            <p class="w-[100px] flex-none">기본 높이</p>
+            <p class="w-[100px] flex-none text-t-lv3">기본 높이</p>
             <div class="relative w-full">
                 <InputNumber v-model="factory['out']['itemInfo']['minHeight']" class="w-full *:w-full *:!pr-10 row_input inputNumber-color"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['minHeight'] }}</small>
@@ -62,7 +62,7 @@
         </div>
 
         <div class="relative flex items-center justify-center w-full" v-if="factory['out']['itemInfo']['unit'] === '003'">
-            <p class="w-[100px] flex-none">원단 폭</p>
+            <p class="w-[100px] flex-none text-t-lv3">원단 폭</p>
             <div class="w-full">
                 <InputNumber inputId="pokSpec" v-model="factory['out']['itemInfo']['pokSpec']" class="w-full *:w-full row_input inputNumber-color" autocomplete="off"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['pokSpec'] }}</small>
@@ -71,7 +71,7 @@
         </div>
 
         <div class="relative flex items-center justify-center w-full">
-            <p class="w-[100px] flex-none">매입 가격</p>
+            <p class="w-[100px] flex-none text-t-lv3">매입 가격</p>
             <div class="w-full">
                 <InputNumber inputId="purcAmt" v-model="factory['out']['itemInfo']['purcAmt']" class="w-full row_input *:w-full inputNumber-color" autocomplete="off"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['purcAmt'] }}</small>
@@ -80,7 +80,7 @@
         </div>
 
         <div class="relative flex items-center justify-center w-full">
-            <p class="w-[100px] flex-none">판매가격</p>
+            <p class="w-[100px] flex-none text-t-lv3">판매가격</p>
             <div class="w-full">
                 <InputNumber inputId="saleAmt" v-model="factory['out']['itemInfo']['saleAmt']" class="w-full *:w-full row_input inputNumber-color" autocomplete="off"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['saleAmt'] }}</small>

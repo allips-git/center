@@ -2,31 +2,31 @@
     <BackHeader title="고정비용" />
     <main class="pb-[56px] md:pb-0">
         <section class="p-4 md:p-6">
-            <h1 class="mb-2 font-bold text-data">전체 <span class="text-sky-500">{{ cost['cnt'] }}건</span></h1>
+            <h1 class="mb-2 font-bold text-18">전체 <span class="text-sky-500">{{ cost['cnt'] }}건</span></h1>
             <div class="flex items-center gap-2 font-bold">
-                <p class="text-con">월간 고정 지출</p>
-                <p class="flex items-center font-bold">{{ getCommas(cost['amt']) }}<span class="text-md ml-0.5">원</span></p>
+                <p class="text-13">월간 고정 지출</p>
+                <p class="flex items-center font-bold">{{ getCommas(cost['amt']) }}<span class="text-18 ml-0.5">원</span></p>
             </div>
         </section>
         
         <div class="gray-bar"></div>
 
         <section class="flex flex-col gap-4 p-4 text-sm md:p-6">
-            <div class="flex items-center justify-between">
-                <h2 class="font-bold text-con">내 고정비 목록</h2>
+            <div class="flex items-center justify-between alert-button">
+                <h2 class="text-sm font-bold">내 고정비 목록</h2>
                 <Button label="고정비 등록" size="small" @click="getPopup"/>
             </div>
             <ul class="flex flex-col">
                 <!-- v-for -->
                 <li v-for="(item, index) in cost['list']" :key="index" class="flex items-center justify-between py-4 border-b" @click="getInfo(item['fxCd'])">
                     <div>
-                        <p class="font-bold text-con">{{ item['fxNm'] }}</p>
-                        <p class="text-gray-400 text-desc" >{{ item['title'] }}</p>
+                        <p class="text-sm font-bold">{{ item['fxNm'] }}</p>
+                        <p class="text-xs text-gray-400" >{{ item['title'] }}</p>
                     </div>
 
                     <div class="text-right">
-                        <p class="!text-gray-400 text-desc">{{ item['fxDt'] }}</p>
-                        <p class="font-bold text-con">{{ getCommas(Number(item['amt'])) }}원</p>
+                        <p class="!text-gray-400 text-xs">{{ item['fxDt'] }}</p>
+                        <p class="text-sm font-bold">{{ getCommas(Number(item['amt'])) }}원</p>
                     </div>
                 </li>
             </ul>

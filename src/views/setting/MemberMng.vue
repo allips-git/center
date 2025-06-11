@@ -10,15 +10,15 @@
         <ul class="flex flex-col gap-4">
             <!-- v-for -->
             <li v-for="item, index in member['list']" :key="index" class="flex items-center justify-between" @click="getDetail(item['state'], item['userCd'])">
-                <div class="flex items-center gap-4">
+                <div class="flex items-center gap-[10px]">
                     <IconAvatar class="fill-sky-400 size-9"/>
                     <div  class="flex flex-col">
-                        <p class="font-bold text-con ">{{ item['userNm'] }}</p>
-                        <span class="text-t-lv4 text-desc">{{ item['rank'] }}</span>
+                        <p class="text-base font-bold ">{{ item['userNm'] }}</p>
+                        <span class="text-t-lv4 text-10">{{ item['rank'] }}</span>
                     </div>
                 </div>
                 <span v-if="item['state'] === 'Y'" class="pi pi-check text-lg text-sky-500 !font-bold"></span>
-                <p v-else-if="item['state'] === 'E'" class="capsuel_gray">초대중</p>
+                <p v-else-if="item['state'] === 'E'" class="capsuel_gray text-10">초대중</p>
                 <p v-else-if="item['state'] === 'C'" class="capsuel_yellow">심사중</p>
                 <p v-else-if="item['state'] === 'P'" class="capsuel_sky" @click.stop="getAppr(item['userCd'])">승인대기중</p>
             </li>

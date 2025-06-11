@@ -6,14 +6,8 @@
             <CalenderDay class="flex-grow hidden border-l border-gray-200 md:w-full md:block md:max-w-[400px] md:h-full" />
         </div>
         <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-4 left-1/2 md:hidden">
-                <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm" @click="calendar.getSearchDt(new Date())">일별</div>
-            </div>
-<!-- 
-        <Dialog v-model:visible="popup['pop']['calendarSet']" header="일정" 
-            :modal=true position="bottom" class="border-0 custom-dialog-bottom"
-            @update:visible="getPopupClose('calendarSet', true)">
-            <CalenderSet/>
-        </Dialog> -->
+            <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm" @click="calendar.getSearchDt(new Date())">일별</div>
+        </div>
 
         <Dialog v-model:visible="popup['pop']['calendarSet']" 
         header="일정"
@@ -33,12 +27,6 @@
 
         </Dialog>
 
-        <!-- <Dialog v-model:visible="popup['pop']['calendarDetail']" header="일정" 
-            :modal=true position="bottom" class="border-0 custom-dialog-bottom"
-            @update:visible="getPopupClose('calendarDetail', true)">
-            <CalenderDetail/>
-        </Dialog> -->
-
         <Dialog v-model:visible="popup['pop']['calendarDetail']" 
         header="일정"
         :modal=true
@@ -55,12 +43,6 @@
         <CalenaderEdit/>
         </Dialog>
 
-        <!-- <Dialog v-model:visible="popup['pop']['calendarEdit']" header="일정" 
-            :modal=true position="bottom" class="border-0 custom-dialog-bottom"
-            @update:visible="getPopupClose('calendarEdit', true)">
-            <CalenaderEdit/>
-        </Dialog> -->
-
         <Dialog v-model:visible="popup['pop']['calendarEdit']" 
         header="일정"
         :modal=true
@@ -76,7 +58,7 @@
         </template>
         <CalenaderEdit/>
 
-    </Dialog>
+        </Dialog>
 
     </main>
 </template>

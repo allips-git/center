@@ -1,25 +1,26 @@
 <template>
-<main class="h-full overflow-y-scroll">
+<main class="h-full overflow-y-scroll pb-14">
         <BackHeader title="회계" />
         <main class="w-full">
             <section class="p-4 md:p-6">
             <div class="relative w-full bg-white ">
                 <ul>
                     <li class="flex items-center gap-4">
-                        <p class="text-con !text-t-lv3">매출</p>
-                        <p class="font-bold text-data text-t-lv1">{{ getAmt(acc['mainHeader']['saleAmt']) }}원</p>
+                        <p class="text-13 !text-t-lv3">매출</p>
+                        <p class="font-bold text-18 text-t-lv1">{{ getAmt(acc['mainHeader']['saleAmt']) }}원</p>
                     </li>
                     <li class="flex items-center gap-4">
-                        <p class="text-con !text-t-lv3">매입</p>
-                        <p class="font-bold text-data text-t-lv1">{{ getAmt(acc['mainHeader']['purcAmt']) }}원</p>
+                        <p class="text-13 !text-t-lv3">매입</p>
+                        <p class="font-bold text-18 text-t-lv1">{{ getAmt(acc['mainHeader']['purcAmt']) }}원</p>
                     </li>
                     <li class="flex items-center gap-4">
-                        <p class="text-con !text-t-lv3">마진</p>
-                        <p class="font-bold text-green-500 text-data">{{ acc['mainHeader']['margin'] }}%</p>
+                        <p class="text-13 !text-t-lv3">마진</p>
+                        <p class="font-bold text-green-500 text-18">{{ acc['mainHeader']['margin'] }}%</p>
                     </li>
                 </ul>
-
-                <Button label="전체 기록 보기" severity="secondary" class="!absolute right-0 top-0" size="large" @click="getPopupOpen('accMonth')"/>
+                <div class="accbutton">
+                    <Button label="전체 기록 보기" severity="secondary" class="!absolute right-0 top-0" size="large" @click="getPopupOpen('accMonth')"/>
+                </div>
             </div>
         </section>
 

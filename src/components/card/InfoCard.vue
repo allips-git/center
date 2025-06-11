@@ -1,7 +1,7 @@
 <template>
     <div class="flex items-center justify-between font-bold">
         <h2 class="pb-4 font-bold title-md">{{ title }}</h2>
-        <Button v-if="btnLabel" :label="btnLabel" size="large" severity="secondary" outlined @click="getBtn"></Button>
+        <Button v-if="btnLabel" :label="btnLabel" size="small" severity="secondary" outlined @click="getBtn" class="outlined-button"></Button>
     </div>
     <ul class="flex flex-col gap-2 rounded-md text-desc">
         <li v-for="(info, index) in props.info" :key="index" class="flex">

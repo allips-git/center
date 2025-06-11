@@ -39,7 +39,7 @@
                 <Textarea v-model="order['outInfo']['memo']" rows="5" placeholder="배송 요청사항을 입력하세요." />
             </IftaLabel>
             
-            <div class="mt-2 btn-2-layout-box bottom-fixed-btn-box">
+            <div class="mt-2 btn-2-layout-box bottom-fixed-btn-box success-button">
                 <Button :severity="'success'" label="웹 링크로 공유" @click="getOrder"/>
             </div>
         </div>

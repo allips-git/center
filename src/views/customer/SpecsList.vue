@@ -1,10 +1,10 @@
 <template>
-    <div class="sticky top-0 z-10 w-full bg-white ">
+    <div class="sticky top-0 z-10 w-full bg-white product-button">
         <BackHeader title="명세서" />
-        <Button label="제품 추가 등록" size="small" class="!absolute right-4 top-1/2 -translate-y-1/2 z-50" @click="getEstiAdd"/>
+        <Button label="제품 추가 등록" size="small" class="esti-button" @click="getEstiAdd"/>
     </div>
     <main class="main-bottom-fixed-pd pb-[121px]" ref="mainRef">
-        <section class="p-6">
+        <section class="p-4">
             <div class="flex flex-col gap-5">
                 <TableCard v-for="(table, index) in esti['list']" :key="index" :title="table.title" :cards="table.cardLists"
                     :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag" :showButton="table.showButton"
@@ -12,17 +12,17 @@
             </div>
         </section>
         <div class="gray-bar"></div>
-        <section class="p-6">
+        <section class="p-4">
             <CalculateCard title="제품 결제 내역" :calcs="esti['payList']" totalTitle="총 결제 금액" :totalAmt="getAmt(esti['payList'], 'total')" :showtoggle="true">
                 <div class="flex flex-col gap-5 py-3 ">                    
-                    <div class="relative flex items-center justify-center">
-                        <p class="w-[100px] text-sm flex-none">할인 금액</p>
+                    <div class="relative flex items-center justify-center input-custom">
+                        <p class="w-[100px] text-13 flex-none">할인 금액</p>
                         <InputText class="*:!text-blue-500 inputNumber-color *:!rounded-sm" @click="getDisAmtPopup" :value="getAmtInfo('dcAmt')" readonly/>
-                        <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
+                        <span class="absolute text-blue-500 translate-y-1/2 text-13 right-4 bottom-1/2">원</span>
                     </div>
 
-                    <div class="relative flex items-center justify-center">
-                        <p class="w-[100px] text-sm flex-none">추가 금액</p>
+                    <div class="relative flex items-center justify-center input-custom">
+                        <p class="w-[100px] text-13 flex-none">추가 금액</p>
                         <InputText class="*:!text-red-500 inputNumber-color *:!rounded-sm" @click="getPopupOpen('addAmtSet')" :value="getAmtInfo('addAmt')" readonly/>
                         <span class="absolute text-sm text-red-500 right-4 bottom-2.5">원</span>
                     </div>
@@ -74,9 +74,9 @@
         :modal=true position="center" class="custom-dialog-full"
         @update:visible="getPopupClose('itemList', true)">
         <template #header>
-            <div class="modal-backheader">
-                <Button @click="getPopupClose(true, 'itemList')" severity="contrast" text icon="pi pi-times"/>
+            <div class="modal-fullheader">
                 <h2 class="modal-backheader-title">제품선택</h2>
+                <Button @click="getPopupClose('itemList', true)" severity="contrast" text icon="pi pi-arrow-left"/>
             </div>
         </template>
         <ProductChoice/>

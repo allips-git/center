@@ -1,31 +1,31 @@
 <template>
 <main>
     <main class="pt-5 pb-10">
-        <section class="px-5">
+        <section class="px-4">
             <h1 class="font-bold">{{ kakao['info']['kdNm'] }}</h1>
-            <p class="mt-2 text-sm text-gray-400">{{ kakao['info']['descrip'] }}</p>
+            <p class="mt-2 text-gray-400 text-11">{{ kakao['info']['descrip'] }}</p>
         </section>
         
-        <section class="flex items-center justify-between px-5 py-4 my-5 bg-gray-50 flax">
-            <p class="text-sm font-bold">자동 알림 보내기</p>
+        <section class="flex items-center justify-between px-4 py-4 my-5 bg-gray-50 flax">
+            <p class="text-sm">자동 알림 보내기</p>
             <ToggleSwitch v-model="kakao['info']['useYn']" @change="getToggle('useYn')"/>
         </section>
     
-        <section class="px-5">
-            <div class="flex items-center justify-between">
-                <p class="text-sm font-bold">알림내용 미리보기</p>
-                <Button label="테스트 발송" size="small" />
+        <section class="px-4">
+            <div class="flex items-center justify-between alert-button">
+                <p class="text-sm">알림내용 미리보기</p>
+                <Button label="테스트 발송" size="small" class=""/>
             </div>
-            <div class="flex flex-col items-center justify-center w-full px-4 py-10 mt-5 bg-kakaoBg rounded-2xl">
-                <p class="w-auto px-4 py-1 text-sm bg-white bg-opacity-50 rounded-full" v-if="showEditGuide">아래 on/off 버튼을 클릭해 플랜톡 내용을 편집해보세요.</p>
+            <div class="flex flex-col items-center justify-center w-full px-4 py-6 mt-5 bg-kakaoBg rounded-2xl">
+                <p class="w-auto text-11">아래 on/off 버튼을 클릭해 플랜톡 내용을 편집해보세요.</p>
                 <div class="w-full mt-5 overflow-hidden rounded-xl max-w-96">
-                    <div class="py-2 text-center bg-yellow-300"> 알림톡 도착</div>
-                    <div class="p-5 bg-white">
-                        <ul class="flex flex-col gap-4 text-sm">
+                    <div class="py-2 text-center bg-yellow-300 text-13"> 알림톡 도착</div>
+                    <div class="p-4 bg-white">
+                        <ul class="flex flex-col gap-4 text-xs">
                             <li class="">{{ getFirstMsg() }} 알림</li>
                             <li>
                                 <div class="flex items-center gap-1">
-                                    <p v-if="kakao['info']['client']" class="px-2 font-bold bg-gray-100 border rounded-sm ">고객이름</p>
+                                    <p v-if="kakao['info']['client']" class="px-2 bg-gray-100 border rounded-sm ">고객이름</p>
                                     <span class="">고객님</span>
                                 </div>
                                 <span class="">{{ getMsg() }}</span>
@@ -34,7 +34,7 @@
                                 <p class="">{{ getDateText() }}</p>    
                                 <p> 대표번호: 매장 대표번호</p>
                             </li>
-                            <li class="*:px-2 font-bold *:bg-gray-100 *:border *:rounded-sm flex items-start justify-center flex-col gap-3">
+                            <li class="*:px-2 *:bg-gray-100 *:rounded-sm flex items-start justify-center flex-col gap-3 pb-16">
                                 <p v-if="kakao['info']['account'] && kakao['info']['kdGb'] === '004'">계좌: 계좌정보(샵설정 > 등록계좌)</p>
                                 <p v-if="kakao['info']['person']">담당자: {{ getStNm() }} 담당 맴버</p>
                                 <p v-if="kakao['info']['shopAddr']">주소: 매장주소 + 상세주소</p>
@@ -49,7 +49,7 @@
         </section>
     
         <section>
-           <ul class="flex flex-col py-3 *:border-b *:p-4 *:border-gray-200 *:flex *:justify-between *:items-center">
+           <ul class="flex flex-col py-8 p-4 *:border-b *:py-4 *:border-gray-200 *:flex *:justify-between *:items-center text-sm">
                 <li v-if="kakao['info']['kdGb'] === '004'">
                     <p>계좌 정보 표기 여부</p>
                     <ToggleSwitch v-model="kakao['info']['account']" @change="getToggle('account')"/>
@@ -77,9 +77,9 @@
            </ul> 
         </section>
     
-        <section class="px-5 mt-10 text-center">
-            <h2 class="text-lg">카카오톡 발신 계정 연결</h2>
-            <p class="mt-1 text-sm text-gray-400">연동 설정 전에는 플랜오더 대표 계정으로 발송이 되며, <br>
+        <section class="px-5 mt-4 text-center">
+            <h2 class="text-sm">카카오톡 발신 계정 연결</h2>
+            <p class="mt-1 text-gray-400 text-10">연동 설정 전에는 플랜오더 대표 계정으로 발송이 되며, <br>
                 카카오톡 계정 연결 시, 샵 해당 계정으로 고객에게 자동 고객 알림이 발송됩니다.</p>
                 <Button class="w-full mt-5" size="large" severity="secondary" label="카카오 비즈니스 계정 등록"/>
         </section>

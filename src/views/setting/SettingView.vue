@@ -8,7 +8,7 @@
                         <IconAvatar class="fill-[#78BBFF]  size-full"/>
                     </div>
                     <div class="flex items-center gap-0.5">
-                        <h1 class="font-bold text-t-lv1">{{ login['name'] }}</h1>
+                        <h1 class="text-base font-bold text-t-lv1">{{ login['name'] }}</h1>
                         <span class="text-sm text-sky-500">님</span>
                     </div>
                 </div>
@@ -17,26 +17,26 @@
                 <ul class="border *:border-b last:border-b-0 border-l-lv3 rounded-sm bg-bg-lv1 *:flex *:justify-between *:items-center *:p-4">
                     <li>
                         <div class="flex items-center">
-                            <p class="!text-t-lv1 text-desc">요금제</p>
-                            <div class="ml-2"> 
-                                <span class="px-2 pb-px text-xs font-light text-white rounded-full bg-p-lv4">스탠다드</span>
+                            <p class="!text-t-lv1 text-xs">요금제</p>
+                            <div class="flex ml-2 itmes-center"> 
+                                <span class="px-2 py-[3px] text-white rounded-full text-10 bg-p-lv4">스탠다드</span>
                             </div>
                         </div>
-                        <p class="!text-p-lv2 text-caption">사용 가능 기한 2022년 10월 10일 까지</p>
+                        <p class="!text-p-lv2 text-10">사용 가능 기한 2022년 10월 10일 까지</p>
                     </li>
                     <li>
-                        <p class="!text-t-lv1 text-desc">플랜 포인트</p>
-                        <p class="!text-p-lv2 text-caption">2400p</p>
+                        <p class="!text-t-lv1 text-xs">플랜 포인트</p>
+                        <p class="!text-p-lv2 text-10">2400p</p>
                     </li>
     
                     <li>
-                        <p class="!text-t-lv1 text-desc">샵 멤버 인원</p>
-                        <p class="!text-p-lv2 text-caption">1/3 사용중</p>
+                        <p class="!text-t-lv1 text-xs">샵 멤버 인원</p>
+                        <p class="!text-p-lv2 text-10">1/3 사용중</p>
                     </li>
                 </ul>
             </section>
             <section class="p-4 pb-0 md:p-6 md:pb-0">
-                <h2 class="text-con setting-list-header text-t-lv1">정보설정</h2>
+                <h2 class="text-sm setting-list-header text-t-lv1">정보설정</h2>
                 <ul>
                     <li v-for="(item, index) in storeSettings" :key="index" class="flex items-center justify-between p-4 text-sm border-b hover:bg-gray-50 text-t-lv1" @click="navigateTo(item)">
                         <p>{{ item.name }}</p>
@@ -74,7 +74,7 @@
             </section>
     
             <section class="px-5 py-6 my-[52px] border-gray-200 border-y !text-[#505050]">
-                <ul class="flex justify-evenly text-caption">
+                <ul class="flex justify-evenly text-10">
                     <li>회사소개</li>
                     <li>고객센터</li>
                     <li>공지사항</li>

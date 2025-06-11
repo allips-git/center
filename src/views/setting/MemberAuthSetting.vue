@@ -1,7 +1,7 @@
 <template>
     <BackHeader title="맴버 권한 설정"/>
     <main class="relative overflow-y-auto pb-[56px] md:pb-0">
-      <section class="px-5 pt-5 pb-3">
+      <section class="px-4 pt-5 pb-3">
         <div class="flex items-center justify-between w-full">
             <p class="text-sm font-bold">맴버 등급 설정</p>
             <div class="w-auto custom-select-arrow gray-select max-w-20 !h-[30px]">
@@ -15,7 +15,7 @@
       <section>
 
 
-        <ul class="w-full px-4 mt-4 md:px-6">
+        <ul class="w-full px-[14px] py-4 md:px-6">
           <li class="flex items-center justify-between w-full gap-2 text-sm text-t-lv1" v-for="(customer, index) in customers" :key="customer.id">
             <div class="w-full">
               <p class="flex items-center gap-2 p-4 font-bold bg-[#F8F9FA] border border-l-lv3">{{ customer.name }}</p>

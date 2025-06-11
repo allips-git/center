@@ -6,14 +6,14 @@
                 <IconAvatar class="text-indigo-300 !size-16"/>
                 <div>
                     <p class="text-sm text-indigo-600">고객</p>
-                    <h2 class="font-bold title-lg">{{ calendar['info']['clientNm'] }}</h2>
+                    <h2 class="text-base font-bold">{{ calendar['info']['clientNm'] }}</h2>
                 </div>
             </div>
             <span class="pi pi-angle-right"></span>
         </div>
     </section>
     <div class="gray-bar"></div>
-    <section class="p-6">
+    <section class="p-4">
         <div class="form-gap-box">
             <IftaLabel class="w-full">
                 <Select v-model="calendar['info']['estiPerson']" :options="calendar['person']" class="w-full"
@@ -42,16 +42,16 @@
         
     </section>
     <div class="gray-bar"></div>
-    <section class="p-6">
-        <h2 class="font-bold text-desc">수정기록</h2>
+    <section class="p-4">
+        <h2 class="text-sm font-bold text-t-lv4">수정기록</h2>
         <ul class="flex flex-col">
-            <li v-for="(item, index) in calendar['info']['history']" :key="index" class="flex items-center gap-4 py-4 border-b first:mt-4">
+            <li v-for="(item, index) in calendar['info']['history']" :key="index" class="flex items-center gap-4 py-2 first:mt-4">
             <IconAvatar class="text-indigo-300 !size-10"/>
-            <div class="text-desc !text-t-lv1">
+            <div class="text-11 !text-t-lv1">
                 <div class="flex items-center gap-1">
                 <b>{{ item.name }}</b>
                 <span>・</span>
-                <p class="text-sm text-gray-400">{{ item.stDt }}</p>
+                <p class="text-gray-400 text-11">{{ item.stDt }}</p>
                 </div>
                 <p>{{ item.stNm }} 처리되었습니다.</p>
             </div>

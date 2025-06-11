@@ -10,6 +10,19 @@ body {
 .noto{
   font-family: 'Noto Sans KR', sans-serif;
 }
-html {
-  font-size: 16px;
+
+@media screen and (max-width: 375px) {
+  html { font-size: 16px; } /* iPhone SE */
+}
+
+@media screen and (min-width: 376px) and (max-width: 430px) {
+  html { font-size: 16px; } /* 일반 iPhone */
+}
+
+@media screen and (min-width: 431px) and (max-width: 480px) {
+  html { font-size: 17px; } /* 일반 Galaxy */
+}
+
+@media screen and (min-width: 481px) {
+  html { font-size: 18px; } /* Galaxy Ultra, 태블릿, PC */
 }

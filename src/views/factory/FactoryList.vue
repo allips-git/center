@@ -1,62 +1,7 @@
 <template>
 <main>
     <BackHeader title="공장" />
-    <div class="hidden px-6">
-        
-        <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
-        <div >
-        <div>
-            <nav class="flex -mb-px space-x-8" aria-label="Tabs">
-          <a v-for="tab in tabs" :key="tab.name" :href="tab.href" :class="[tab.current ? 'border-sky-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium']" :aria-current="tab.current ? 'page' : undefined">{{ tab.name }}</a>
-        </nav>
-        <TabPanels>
-                <TabPanel value="0">
-                    <div class="pt-3 pb-20">
-                        <div class="fixed bottom-20 right-4 md:bottom-4">
-                            <Button label="공장코드 추가" icon="pi pi-plus" size="large" @click="getPopOpen('sysFactorySearch')"/>
-                        </div>
-                       
-                        <ul class="w-full">
-                            <li class="flex gap-3 py-4 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
-                                    <img :src="getImage(item.imgUrl)" class="w-full max-w-[78px] h-[87px] rounded-lg object-cover" alt="">
-                                
-                                <div class="w-[calc(100%-78px)]">
-                                    <div class="flex justify-between">
-                                        <p class="mb-1 font-bold">{{ item.faNm }}</p>
-                                        <div class="text-sm text-right *:px-3 *:py-1 *:rounded-full font-bold">
-                                            <p v-if="item['appGb'] === 'E'" class="text-blue-500 ">승인 대기</p>
-                                            <p v-if="item['appGb'] === 'N'" class="text-orange-500">반려</p>
-                                        </div>
-                                    </div>
-                                    <p class="text-sm text-gray-600">{{ item.tel }}</p>
-                                    <p class="text-sm text-gray-400">{{ item.addr + ' ' + item.addrDetail }}</p>
-                                 
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </TabPanel>
-                <TabPanel value="1">
-                    <div class="hidden pt-3 pb-20">
-
-                        <div class="fixed bottom-20 right-4 md:bottom-4">
-                            <Button label="외주공장 추가" icon="pi pi-plus" size="large" @click="getPopOpen('outFactorySet')" />
-                        </div>
-                        
-                    <ul>
-                        <li class="flex flex-col py-4 border-b" v-for="(item, index) in factory['out']['list']" :key="index" @click="getOutDetail(item.fcCd)">
-                            <p class="mb-1 text-sm font-bold">{{ item.faNm }}</p>
-                            <p class="text-t-lv-1 text-10">{{ item.tel }}</p>
-                            <p class="text-gray-400 text-10">{{ item.addr + ' ' + item.addrDetail }}</p>
-                        </li>
-                    </ul>
-                    </div>
-                </TabPanel>
-            </TabPanels>
-      </div>
-    </div>
-  </div>
-    
+  
     <div class="relative px-4 md:px-6 custom-left-tab">
         <Tabs value="0">
             <TabList>
@@ -66,7 +11,7 @@
             <TabPanels>
                 <TabPanel value="0">
                     <div class="pt-3 pb-20">
-                        <div class="fixed bottom-20 right-4 md:bottom-4">
+                        <div class="fixed bottom-4 right-4 md:bottom-4 facadd-button">
                             <Button label="공장코드 추가" icon="pi pi-plus" size="large" @click="getPopOpen('sysFactorySearch')"/>
                         </div>
                        
@@ -96,7 +41,7 @@
                 <TabPanel value="1">
                     <div class="pt-3 pb-20">
 
-                        <div class="fixed bottom-20 right-4 md:bottom-4">
+                        <div class="fixed bottom-11 right-4 md:bottom-4 facadd-button">
                             <Button label="외주공장 추가" icon="pi pi-plus" size="large" @click="getPopOpen('outFactorySet')" />
                         </div>
                         
@@ -200,7 +145,7 @@ const getImage = (imgUrl: string) => {
 }
 
 const getSysDetail = (faCd: string, appGb: string) => {
-    if(appGb === 'Y')
+    // if(appGb === 'Y')
     {
         factory.getSysFaCd(faCd);
         router.push({ name: 'FactoryDetail' });
