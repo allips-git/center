@@ -1,8 +1,8 @@
 <template>
-    <div class="flex items-center w-full px-5 pb-4 border-b border-gray-200 first:mt-2 last:mb-3">
+    <div class="flex items-center w-full pb-4 mt-2 border-b border-gray-200 last:mb-3">
         <ul class="flex flex-col gap-0.5 text-gray-600 text-sm  *:flex *:items-center *:justify-start *:gap-2 w-full">
             <li>
-                <h1 class="flex items-center gap-2 font-bold text-con" ><span class="size-1.5 rounded-full bg-green-500 block"></span>{{ itemNm }}</h1>
+                <h1 class="flex items-center gap-2 font-bold text-13" ><span class="size-1.5 rounded-full bg-green-500 block"></span>{{ itemNm }}</h1>
             </li>
             <li class="text-desc">
                 <p>단위</p>

@@ -16,7 +16,7 @@
             </section>
         </div>
     </main>
-    <section class="fixed bottom-[56px] md:bottom-0 w-full p-5 overflow-hidden bg-white border-t border-gray-200 rounded-t-2xl md:!w-[calc(100vw-200px)]">
+    <section class="fixed bottom-[22px] md:bottom-0 w-full p-5 overflow-hidden bg-white border-t border-gray-200 rounded-t-2xl md:!w-[calc(100vw-200px)]">
         <div class="flex justify-end *:flex *:gap-2 *:items-center text-sm w-full">
             <div class="justify-end">
                 <div class="label-checkbox-box">

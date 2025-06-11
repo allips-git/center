@@ -1,16 +1,16 @@
 <template>
-    <ul class="flex flex-col gap-2 title-sm">
-        <li class="flex items-center gap-2">
+    <ul class="flex flex-col gap-2 text-13">
+        <li class="flex items-center gap-[13px]">
             <p class="text-gray-600 ">매출</p>
-            <p class="font-bold text-data">{{ saleAmt }}원</p>
+            <p class="font-bold text-18">{{ saleAmt }}원</p>
         </li>
-        <li class="flex items-center gap-2">
+        <li class="flex items-center gap-[13px]">
             <p class="text-gray-600 ">매입</p>
-            <p class="font-bold text-data">{{ purcAmt }}원</p>
+            <p class="font-bold text-18">{{ purcAmt }}원</p>
         </li>
-        <li class="flex items-center gap-2">
+        <li class="flex items-center gap-[13px]">
             <p class="text-gray-600 ">마진</p>
-            <p class="font-bold text-green-500 text-data">{{ margin }}%</p>
+            <p class="font-bold text-green-500 text-18">{{ margin }}%</p>
         </li>
     </ul>
 </template>

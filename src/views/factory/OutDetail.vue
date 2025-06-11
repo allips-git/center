@@ -9,10 +9,6 @@
                         @get-btn="getPopOpen('outFactorySet')"/>
                 </section>
 
-                <!-- <div class="flex items-center justify-between">
-                    <h2 class="font-bold title-md">{{ client['detail']['clientNm'] }}</h2>
-                    <Button label="정보수정" outlined severity="secondary" size="small" @click="getClientModify" class="outlined-button"/>
-                </div> -->
                 <div class="gray-bar"></div>
     
                 <section class="p-4 md:p-6">
@@ -21,15 +17,7 @@
                 </section>
             </div>
             
-            <!-- <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
-                }"  
-                >
-                <div class="flex justify-between mb-1 font-bold">
-                    <p >총 제품</p>
-                    <p class="text-p-lv4">{{ factory['out']['detail']['itemCnt'] }}개</p>
-                </div>
-                <Button label="제품 설정하기" size="large" @click="getPopupOpen('outFactoryItemList')"/>
-            </div> -->
+          
 
             <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
             }" class="!flex-col bottom-fixed-btn-box" 
@@ -40,14 +28,7 @@
                 </div>
                 <Button label="제품 설정하기" size="large" @click="getPopupOpen('outFactoryItemList')"/>
             </div>
-            <!-- <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
-                    }" class="flex-col !border-0 bottom-fixed-btn-box shadow-custom-y">
-                <div class="flex justify-between mb-1 font-bold">
-                    <p >총 제품</p>
-                    <p class="text-p-lv4">{{ factory['out']['detail']['itemCnt'] }}개</p>
-                </div>
-                <Button label="제품 설정하기" size="large" @click="getPopupOpen('outFactoryItemList')"/>
-            </div> -->
+          
         </main>
 
 
@@ -64,13 +45,6 @@
             <OutProduct/>
         </Dialog>
 
-     
-    
-        <!-- <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주공장 저장" 
-            :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom "
-            @update:visible="getPopupClose('outFactorySet', true)">
-            <OutFactorySet/>
-        </Dialog> -->
 
         <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주 공장 저장" 
             :modal=true position="center" class="custom-dialog-bottom" 

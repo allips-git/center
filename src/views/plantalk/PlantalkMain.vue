@@ -5,52 +5,50 @@
             <div class="">
                 <section class="p-4 md:p-6">
                     <div class="flex items-center gap-1">
-                        <h1 class="font-bold title-md">플랜톡</h1>
+                        <h1 class="text-base font-bold">플랜톡</h1>
                         <div class="text-base">
                             <p v-if="!kakao['status']" class="font-extrabold text-red-500">OFF</p>
                             <p v-if="kakao['status']" class="font-extrabold text-p-lv4">ON</p>            
                         </div>
                     </div>
-                    <p class="mt-px text-caption !text-t-lv3">알림 <span class="font-bold text-p-lv4">{{ kakao['cnt'] }}</span>종을 사용중입니다.</p>
-                    <ul class="grid grid-cols-2 gap-4 text-sm mt-4 *:p-4 *:rounded-lg">
+                    <p class="mt-px text-11 !text-t-lv3">알림 <span class="font-bold text-p-lv4">{{ kakao['cnt'] }}</span>종을 사용중입니다.</p>
+                    <ul class="grid grid-cols-2 gap-[10px] text-sm mt-4 *:p-4 *:rounded-lg">
                         <li class="flex flex-col justify-between col-span-2 gap-1 bg-yellow-50">
-                            <p class="text-caption !font-medium !text-t-lv0">플랜톡 잔여 포인트 {{ kakao['point'] }}P</p>
-                            <p class="cursor-pointer text-caption !text-p-lv4">충전하기</p>
+                            <p class="text-11 !font-medium !text-t-lv0">플랜톡 잔여 포인트 {{ kakao['point'] }}P</p>
+                            <p class="cursor-pointer text-11 !text-p-lv4">충전하기</p>
                             <!-- <Button label="충전하기" size="small" /> -->
                         </li>
                         <li class="col-span-1 bg-gray-50" @click="goToPage('/plantalk/res', 'Y')">
                             <div class="flex items-center justify-between">
-                                <div class="flex flex-col gap-1">
-                                    <h5 class="!font-medium !text-t-lv1 text-caption">예약된 알림</h5>
-                                    <p class="!text-t-lv3 text-caption">상세보기</p>
+                                <div class="flex flex-col gap-1 text-11">
+                                    <h5 class="!font-medium !text-t-lv1">예약된 알림</h5>
+                                    <p class="!text-t-lv3">상세보기</p>
                                 </div>
                                 <IconPlay class="size-[18px] fill-gray-400"/>
                             </div>
                         </li>
                         <li class="col-span-1 bg-gray-50" @click="goToPage('/plantalk/res', 'N')">
                             <div class="flex items-center justify-between">
-                                <div class="flex flex-col gap-1">
-                                    <h5 class="!font-medium !text-t-lv1 text-caption">발송 메시지보기</h5>
-                                    <p class="!text-t-lv3 text-caption">오늘<span class="ml-1 !text-p-lv4">{{ kakao['sendCnt'] }}건</span></p>
+                                <div class="flex flex-col gap-1 text-11">
+                                    <h5 class="!font-medium !text-t-lv1">발송 메시지보기</h5>
+                                    <p class="!text-t-lv3">오늘<span class="ml-1 !text-p-lv4">{{ kakao['sendCnt'] }}건</span></p>
                                 </div>
                                 <IconPlay class="size-[18px] fill-gray-400"/>
                             </div>
                         </li>
                     </ul>
                 </section>
-        
-                <!-- <div class="gray-bar"></div> -->
-        
+                
                 <section class="p-4 md:p-6">
-                    <h1 class="font-bold title-sm">알림</h1>
+                    <h1 class="text-sm font-bold">알림</h1>
                     <ul class="flex flex-col *:border-b   *:py-4  *:border-l-lv5">
                         <li v-for="(item, index) in kakao['list']" :key="index" class="flex items-center justify-between" @click="goToDetail(item['kdCd'])">
                             <div>
                                 <div class="flex items-center gap-2">
-                                    <p class="font-bold title-sm !text-t-lv2">{{ item.kdNm }}</p>
+                                    <p class="font-bold text-13 !text-t-lv2">{{ item.kdNm }}</p>
                                     <img src="@/assets/img/icon-kakaologo.png" alt="kakao" title="kakao" class="size-[18px]"/>
                                 </div>
-                                <p class="mt-2 text-desc text-t-lv4">{{ item.descrip }}</p>
+                                <p class="mt-2 text-xs text-t-lv4">{{ item.descrip }}</p>
                             </div>
                             <div class="flex items-center gap-2 font-bold">
                                 <span v-if="item.useYn" class="text-xs text-white px-1.5 py-0.5 bg-[#2FD159] rounded-full">ON</span>

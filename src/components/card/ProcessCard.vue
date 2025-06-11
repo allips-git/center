@@ -1,7 +1,7 @@
 <template>
     <!-- 프로세스 카드 -->
-     <div class="w-full p-6 border border-gray-200 rounded">
-         <div class="flex justify-between pb-4 font-bold border-b border-neutral-100 title-md">
+     <div class="w-full p-4 border border-gray-200 rounded">
+         <div class="flex justify-between pb-4 text-sm font-bold border-b border-neutral-100">
              <h1>{{ props.info['stNm'] }}</h1>
              <h2 class="">{{ getAmt(props.info['totalSaleAmt']) }}원</h2>
          </div>
@@ -9,34 +9,34 @@
          <ul class="flex mt-5">
             <li class="w-1/4 flex flex-col gap-1 *:first:rounded-l-full *:last:rounded-r-full">
                 <div class="w-full h-2 mb-2" :class="props['info']['conDt'] !== '' ? 'bg-sky-500' : 'bg-gray-200'" ></div>
-                <p class="text-sm text-center" :class="props['info']['conDt'] !== '' ? 'text-gray-900' : ''" >계약 완료</p>
-                <p class="text-xs text-center " :class="props['info']['conDt'] !== '' ? 'text-gray-400' : ''">{{ getDate(props.info['conDt']) }}</p>
+                <p class="text-center text-11" :class="props['info']['conDt'] !== '' ? 'text-gray-900' : ''" >계약 완료</p>
+                <p class="text-center text-10 " :class="props['info']['conDt'] !== '' ? 'text-gray-400' : ''">{{ getDate(props.info['conDt']) }}</p>
             </li>
             <li class="w-1/4 flex flex-col gap-1 *:first:rounded-l-full *:last:rounded-r-full">
                 <div class="w-full h-2 mb-2" :class="props['info']['preDt'] !== '' ? 'bg-sky-500' : 'bg-gray-200'" ></div>
-                <p class="text-sm text-center" :class="props['info']['preDt'] !== '' ? 'text-gray-900' : ''">발주 완료</p>
-                <p class="text-xs text-center" :class="props['info']['preDt'] !== '' ? 'text-gray-400' : ''" >{{ getDate(props.info['preDt']) }}</p>
+                <p class="text-center text-11" :class="props['info']['preDt'] !== '' ? 'text-gray-900' : ''">발주 완료</p>
+                <p class="text-center text-10" :class="props['info']['preDt'] !== '' ? 'text-gray-400' : ''" >{{ getDate(props.info['preDt']) }}</p>
             </li>
             <li class="w-1/4 flex flex-col gap-1 *:first:rounded-l-full *:last:rounded-r-full">
                 <div class="w-full h-2 mb-2" :class="props['info']['deliConDt'] !== '' ? 'bg-sky-500 *:font-bold' : 'bg-gray-200'" ></div>
-                <p class="text-sm text-center text-gray-600" :class="props['info']['deliConDt'] !== '' ? 'text-gray-900' : ''">시공 완료</p>
-                <p class="text-xs text-center text-gray-400" :class="props['info']['deliConDt'] !== '' ? 'text-gray-400' : ''">{{ getDate(props.info['deliConDt']) }}</p>
+                <p class="text-center text-gray-600 text-11" :class="props['info']['deliConDt'] !== '' ? 'text-gray-900' : ''">시공 완료</p>
+                <p class="text-center text-gray-400 text-10" :class="props['info']['deliConDt'] !== '' ? 'text-gray-400' : ''">{{ getDate(props.info['deliConDt']) }}</p>
             </li>
             <li class="w-1/4 flex flex-col gap-1 *:first:rounded-l-full *:last:rounded-r-full">
                 <div class="w-full h-2 mb-2" :class="props['info']['payDt'] !== '' ? 'bg-sky-500' : 'bg-gray-200'" ></div>
-                <p class="text-sm text-center text-gray-600" :class="props['info']['payDt'] !== '' ? 'text-gray-900' : ''">결제 완료</p>
-                <p class="text-xs text-center text-gray-400" :class="props['info']['payDt'] !== '' ? 'text-gray-400' : ''">{{ getDate(props.info['payDt']) }}</p>
+                <p class="text-center text-gray-600 text-11" :class="props['info']['payDt'] !== '' ? 'text-gray-900' : ''">결제 완료</p>
+                <p class="text-center text-gray-400 text-10" :class="props['info']['payDt'] !== '' ? 'text-gray-400' : ''">{{ getDate(props.info['payDt']) }}</p>
             </li>
         </ul>
 
         <div class="my-8">
-            <section v-if="props.info['stCd'] === '001' || props.info['stCd'] === '002'" class="flex flex-col w-full gap-1 text-center">
+            <section v-if="props.info['stCd'] === '001' || props.info['stCd'] === '002'" class="flex flex-col w-full gap-1 text-center text-11">
                 <p class="text-gray-400">견적일</p>
-                <span class="text-base">{{ getDateAndTime(props.info['estiDt']) }}</span>
+                <span class="text-11">{{ getDateAndTime(props.info['estiDt']) }}</span>
             </section>
 
-            <section v-else class="flex gap-2">
-                <p class="w-full text-center text-gray-400">
+            <section v-else class="flex gap-2 text-11">
+                <p class="w-full text-center text-gray-400 ">
                     시공일
                     <span class="block text-gray-900">{{ props.info['deliDt'] === '' ? getDateAndTime(props.info['deliConDt']) : getDateAndTime(props.info['deliDt']) }}</span>
                 </p>
@@ -47,7 +47,7 @@
             </section>
         </div>
 
-        <section class="flex gap-3 *:w-full">
+        <section class="flex gap-2 *:w-full">
             <template v-if="props.info['stCd'] === '001' && props.info['useYn'] === 'Y'">
                 <Button label="제품추가" @click="getEstiAdd"/>
             </template>
@@ -59,7 +59,7 @@
             </template>
             <template v-else>
                 <Button severity="secondary" :label="getFirstBtnText()" @click="getFirstBtnClick"/>
-                <Button :label="getSecondBtnText()" @click="getSecondBtnClick"/>
+                <Button :label="getSecondBtnText()" @click="getSecondBtnClick" class="list-button"/>
             </template>
             <Button v-if="props.info['useYn'] !== 'N' && props.info['stCd'] !== '001'" severity="secondary" icon="pi pi-ellipsis-h" outlined class="flex-none" @click="togglemorePopover" />
             <Popover class="custom-popover-listbox" ref="morePopover" dismissable> 

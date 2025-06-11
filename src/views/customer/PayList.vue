@@ -11,26 +11,26 @@
         </section>
         <div class="gray-bar"></div>
         <section class="p-4 md:p-6">
-            <div class="p-6 text-sm border border-gray-200 rounded ">
+            <div class="p-4 text-sm border border-gray-200 rounded ">
             <div class="flex flex-col gap-2">
                 <h1 class="title-md" >세부정보</h1>
-                <dl class="flex items-center justify-between text-con"> 
+                <dl class="flex items-center justify-between text-13"> 
                     <dt class="text-gray-500">견적일</dt>
                     <dd class="">{{ pay['info']['estiDt'] }}</dd>
                 </dl>
-                <dl class="flex items-center justify-between text-con">
+                <dl class="flex items-center justify-between text-13">
                     <dt class="text-gray-500">계약일</dt>
                     <dd class="">{{ pay['info']['conDt'] }}</dd>
                 </dl>
-                <dl class="flex items-center justify-between text-con">
+                <dl class="flex items-center justify-between text-13">
                     <dt class="text-gray-500">시공일</dt>
                     <dd class="">{{ pay['info']['deliDt'] }}</dd>
                 </dl>
-                <dl class="flex items-center justify-between text-con">
+                <dl class="flex items-center justify-between text-13">
                     <dt class="text-gray-500">설치 예상시간</dt>
                     <dd class="">{{ pay['info']['insTime'] }}</dd>
                 </dl>
-                <dl class="flex items-center justify-between text-con">
+                <dl class="flex items-center justify-between text-13">
                     <dt class="text-gray-500">시공 담당자</dt>
                     <dd class="">{{ pay['info']['insUser'] }}</dd>
                 </dl>

@@ -107,7 +107,7 @@
                 </div>
 
                 <div class="flex justify-between w-full">
-                        <p class="text-t-lv2">모든 공휴일은 휴무에요</p>
+                        <p class="text-sm text-t-lv2">모든 공휴일은 휴무에요</p>
                         <ToggleSwitch v-model="setting['info']['holiday']"/>
                 </div>
     

@@ -3,19 +3,19 @@
         <BackHeader title="시공시간 설정"/>
         <main class="pb-20 pc-contents-h-box">
             <section class="pt-5 pb-5 mx-5 border-b ">
-                <h1 class="mb-2 font-bold text-con text-t-lv1">기본시공 시간</h1>
-                <p class="text-desc text-t-lv3">견적서 작성 진행시 중복되는 기본서비스 (인테리어 자재) 시간을 차감하여 정확한 전체 시공시간 계산을 도와주는 기능입니다.</p>
+                <h1 class="mb-2 text-sm font-bold text-t-lv1">기본시공 시간</h1>
+                <p class="text-11 text-t-lv3">견적서 작성 진행시 중복되는 기본서비스 (인테리어 자재) 시간을 차감하여 정확한 전체 시공시간 계산을 도와주는 기능입니다.</p>
             </section>
             
             <section class="p-4 md:p-6 form-gap-box !gap-8 pt-3 text-lv-1">
                 <div class="relative flex items-center justify-center w-full">
-                    <label class="w-[200px] flex-none title-sm">커튼 1개당 시공시간 (분)</label>
+                    <label class="w-[200px] flex-none text-sm">커튼 1개당 시공시간 (분)</label>
                     <InputText v-keyfilter.num v-model="time['curtainTime']" class="w-full !pr-8 font-bold text-right inputNumber-color !border-0 !border-b"/>
                     <span class="absolute font-bold  translate-y-1/2 right-3.5 bottom-1/2">분</span>
                 </div>
 
                 <div class="relative flex items-center justify-center w-full">
-                    <label class="w-[200px] flex-none title-sm">블라인드 1개당 시공시간 (분)</label>
+                    <label class="w-[200px] flex-none text-sm">블라인드 1개당 시공시간 (분)</label>
                     <InputText v-keyfilter.num v-model="time['blindTime']" class="w-full !pr-8 font-bold text-right inputNumber-color !border-0 !border-b"/>
                     <span class="absolute font-bold  translate-y-1/2 right-3.5 bottom-1/2">분</span>
                 </div>
@@ -23,7 +23,7 @@
             <div class="flex flex-col items-center justify-center pt-5 card">
                 <Message v-if="msg" severity="info">시공시간이 저장되었습니다.</Message>
             </div>
-            <div class="bottom-fixed-btn-box !bottom-[56px] md:!bottom-0">
+            <div class="bottom-fixed-btn-box md:!bottom-0">
                 <Button :disabled="status" label="저장" size="large" @click="getTimeSave"/>
             </div>
         </main>

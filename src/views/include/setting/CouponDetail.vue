@@ -11,11 +11,11 @@
                     <TabPanel value="0">
                         <section class="mt-3 form-gap-box !gap-8 pt-3">
                             <div class="relative flex items-center justify-between w-full text-sm">
-                                <label class="w-[150px] flex-none !text-t-lv3 text-con">쿠폰이름</label>
+                                <label class="w-[150px] flex-none !text-t-lv3 text-sm">쿠폰이름</label>
                                 <InputText :id="'cpNm'" v-model="coupon['info']['cpNm']" class="w-full font-medium text-right !border-0 !border-b max-w-[124px] !pr-0" placeholder="쿠폰이름 입력"/>
                             </div>
                             <div class="relative flex items-center justify-between w-full text-sm">
-                                <label class="w-[100px] flex-none !text-t-lv3 text-con">할인 금액 입력</label>
+                                <label class="w-[100px] flex-none !text-t-lv3 text-sm">할인 금액 입력</label>
                                 <InputNumber :inputId="'val'" v-model="coupon['info']['val']" class="w-full font-bold *!text-right inputNumber-color *:!border-0 *:!border-b *:w-full max-w-[124px] *:!pr-4" />
                                 <span class="absolute right-0 font-bold translate-y-1/2 bottom-1/2">원</span>
                             </div>

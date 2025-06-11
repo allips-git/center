@@ -3,13 +3,13 @@
         <BackHeader title="쿠폰 메뉴"/>
         <main class="p-4 overflow-x-auto md:p-6 pb-[131px] md:pb-[75px]">
             <section class="form-gap-box">
-                <ul class="flex flex-col gap-4">
+                <ul class="flex flex-col">
                     <!-- v-for -->
-                    <li v-for="(coupon, index) in coupon['list']" :key="index" class="flex items-center justify-between w-full gap-4" @click="getInfo(coupon.cpCd)">
-                        <div class="flex items-center gap-4">
+                    <li v-for="(coupon, index) in coupon['list']" :key="index" class="flex items-center justify-between w-full gap-4 py-4" @click="getInfo(coupon.cpCd)">
+                        <div class="flex items-center">
                             <div class="flex items-center gap-3 font-bold">
-                                <p class="">{{ coupon.cpNm }}</p>
-                                <span class="text-data text-sky-400">{{ getCommas(Number(coupon.val)) }}{{ coupon.unit }}</span>
+                                <p class="text-base">{{ coupon.cpNm }}</p>
+                                <span class="text-18 text-sky-400">{{ getCommas(Number(coupon.val)) }}{{ coupon.unit }}</span>
                             </div>  
                         </div>
                         <IconPlay class="!fill-l-lv0 size-[18px]" />
@@ -21,11 +21,6 @@
             <Button label="쿠폰 추가" size="large" class="w-full" @click="getPopup"/>
         </div>
     </div>
-    <!-- <Dialog v-model:visible="popup['pop']['couponDetail']" header="쿠폰 저장" 
-        :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom"
-        @update:visible="getPopupClose('couponDetail', true)">
-        <CouponDetail/>
-    </Dialog> -->
 
     <Dialog v-model:visible="popup['pop']['couponDetail']" header="쿠폰 저장" 
             :modal=true position="center" class="custom-dialog-bottom" 

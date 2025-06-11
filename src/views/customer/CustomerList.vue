@@ -2,7 +2,7 @@
     <main>
         <BackHeader title="고객" />
         <section class="">
-            <div class="flex items-center justify-between px-4 mb-2 md:px-6 no-print">
+            <div class="flex items-center justify-between px-4 py-[10px] md:px-6 no-print ">
                 <div class="flex self-center justify-between w-full ">
                     <div class="flex w-full gap-2">
                         <div class="flex relative w-full gap-2 max-w-[90px] bg-gray-100 h-8 *:!border-0">
@@ -21,12 +21,12 @@
             </div>
                     
             <ul class="flex flex-col">
-                <li v-for="(item, index) in client['list']" :key="index" class="flex items-center justify-between flex-none w-full p-4 md:px-6" @click="getInfo(item.clientCd)">
+                <li v-for="(item, index) in client['list']" :key="index" class="flex items-center gap-[14px] flex-none w-full p-4 md:px-6" @click="getInfo(item.clientCd)">
                     <!-- 상태 -->
-                    <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none text-xs font-bold text-white rounded-md md:text-sm size-11">
+                    <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none text-11 font-bold text-white rounded-md md:text-sm w-[38px] h-[38px] sm:size-11">
                         {{ getStatusName(item.step) }}
                     </div>
-                    <div class="flex justify-between gap-2 w-[calc(100%-3.75rem)]">
+                    <div class="flex justify-between w-full gap-2">
                         <div class="flex flex-col flex-grow min-w-0">
                             <p class="font-bold text-con">{{ item.clientNm }}</p>
                             <span class="flex-1 truncate text-desc">{{ item.addr }} {{ item.addrDetail }}</span>
@@ -40,7 +40,7 @@
             </ul>
         </section>
 
-        <div class="fixed bottom-20 right-4 md:bottom-4">
+        <div class="fixed bottom-14 right-4 md:bottom-4 register-button">
             <Button label="고객 신규 등록" icon="pi pi-plus" size="large" @click="getPopOpen"/>
         </div>
         <Dialog v-model:visible="popup['pop']['clientSet']" 

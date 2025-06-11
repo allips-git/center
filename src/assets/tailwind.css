@@ -17,7 +17,7 @@
     @apply text-lg font-bold mb-3
   }
   .main-card-container-box{
-    @apply bg-white rounded-lg border border-gray-100 w-full shadow-custom p-6
+    @apply bg-white rounded-lg border border-gray-100 w-full shadow-custom sm:p-6 p-4
   }
   /* .main-card-container-box-padding{
     @apply 
@@ -63,7 +63,7 @@
     @apply w-full absolute bottom-0 left-0 pb-3.5 px-4 pt-2 bg-white border border-t border-gray-100
   }
   .bottom-fixed-btn-box{
-    @apply w-full fixed bottom-[56px] left-0 p-4 bg-white flex gap-4 *:w-full border-t border-gray-200 z-[100] md:bottom-[0] 
+    @apply w-full fixed bottom-0 left-0 p-4 bg-white flex gap-2 *:w-full border-t border-gray-200 z-[100] md:bottom-[0] 
      /* md:!w-[calc(100vw-200px)] md:!left-[200px] */
   }
   /* .btn-2-layout-box{
@@ -103,7 +103,7 @@
     @apply px-4 py-3 font-bold border border-gray-200 bg-gray-50
   }
   .capsuel_sky{
-    @apply  px-2 py-0.5 pb-[2.5px] text-white rounded-full bg-sky-500 text-11 flex items-center justify-center text-ellipsis
+    @apply  px-2 py-1 text-white rounded-full bg-sky-500 text-11 flex items-center justify-center text-ellipsis
   }
   .capsuel_gray{
     @apply  px-2 py-0.5 pb-[2.5px] text-white rounded-full bg-gray-500 text-11 flex items-center justify-center
@@ -122,6 +122,10 @@
     @apply max-h-[90%]
   }
 
+  .esti-button {
+    @apply !absolute right-4 top-1/2 -translate-y-1/2 z-50 !p-0
+  }
+
   .modal-fullheader{
     @apply h-[50px] sticky relative top-0 px-4 md:px-6 md:border-b flex w-full items-center justify-between md:shadow-none bg-white z-50 md:border-gray-100
   }
@@ -138,11 +142,11 @@
   
   /* 폰트정리 */
   .title-lg{
-    @apply text-base md:text-18 lg:text-lg text-t-lv1
+    @apply text-sm md:text-base lg:text-18 text-t-lv1
   }
 
   .title-md{
-    @apply text-base md:text-18 text-t-lv1
+    @apply text-sm md:text-18 text-t-lv1
   }
 
   .title-sm{
@@ -150,7 +154,7 @@
   }
 
   .text-data{
-    @apply font-bold text-18 md:text-lg
+    @apply font-bold text-lg
   }
 
   .text-con{
@@ -162,7 +166,7 @@
   }
 
   .text-caption{
-    @apply text-10 md:text-xs text-t-lv2
+    @apply text-10 md:text-xs text-t-lv2 font-normal
   }
 
   .tab-header{

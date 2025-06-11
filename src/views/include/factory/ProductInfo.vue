@@ -1,7 +1,7 @@
 <template>
     <main>
         <div class="">
-            <div class="flex gap-2 px-5">
+            <div class="flex gap-2 py-[10px]">
                 <IconField class="w-full table-search-input">
                     <InputIcon>
                         <i class="pi pi-search" />

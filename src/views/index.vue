@@ -1,5 +1,5 @@
 <template>
-<div class="flex flex-col w-full h-full gap-4 bg-gray-100 md:p-6 md:gap-6 pb-[56px] overflow-y-scroll md:pb-0">
+<div class="flex flex-col w-full h-full gap-[14px] bg-gray-100 md:p-6 md:gap-6 pb-[56px] overflow-y-scroll md:pb-0">
     <section class="w-full col-span-12">
         <div class="relative w-full px-5 overflow-hidden bg-blue-100 rounded-md h-[9.1875rem] flex justify-between items-center">
             <div class="flex flex-col">
@@ -13,17 +13,17 @@
             </div>
         </div>
     </section>
-    <main class="grid w-full grid-cols-12 gap-4 px-4 md:gap-6 md:px-0">
+    <main class="grid w-full grid-cols-12 gap-x-[10px] gap-y-[14px] px-4 md:gap-6 md:px-0">
     
         <section class="col-span-12">
             <div class="flex flex-col gap-4 main-card-container-box">
                 <div class="main-card-tilte-box">
-                    <h2 class="flex items-center justify-center title-lg">전체 고객</h2>
+                    <h2 class="flex items-center justify-center title-md">전체 고객</h2>
                     <div class="flex items-center gap-3.5">
-                        <div class="flex items-center">
-                            <span class="flex items-center text-data text-t-lv1">{{ main['clientCnt'] }}
+                        <div class="flex items-center text-22">
+                            <span class="flex items-center text-t-lv1">{{ main['clientCnt'] }}
                             </span>
-                            <p class="title-lg">명</p>
+                            <p class="">명</p>
 
                         </div>
                         <div class="block w-px h-5 bg-gray-200"></div>
@@ -108,7 +108,7 @@
                     <p class="bg-yellow-100 rounded py-2 px-2.5 text-sm w-full ">일일이 세팅하지 말고, 꼭 필요한 예약 메시지를 자동으로 고객에게 전달해 보세요!</p>
                     <Button label="플랜톡 사용하기" class="w-full mt-5" ></Button>
                 </div>        
-                <ul v-else class="grid grid-cols-2 gap-4 *:bg-gray-50 *:p-3 *:rounded-lg *:flex *:flex-col *:gap-px text-xs mt-[0.875rem]">
+                <ul v-else class="grid grid-cols-2 gap-2 *:bg-gray-50 *:p-3 *:rounded-lg *:flex *:flex-col *:gap-px text-xs mt-[0.875rem]">
                     <li>
                         <h5 class="font-bold">예약된 알림</h5>
                         <div class="flex items-center justify-between">

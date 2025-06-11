@@ -320,9 +320,15 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 }
 
 .p-button-text.p-button-contrast {
-    width: 18px;
+    width: 20px;
 }
 
+
+.input-custom {
+    .p-inputtext {
+        padding: 5px 10px !important;
+    }
+}
 
 
 
@@ -405,13 +411,111 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
-.p-button{
-    border-radius: 4px !important;
-    padding-block:0.640625rem !important;
+.register-button {
+    .p-button {
+        padding: 16px 18px !important;
+        border-radius: 4px !important;
+    }
+}
+
+.list-button {
+    .p-button-label{
+        font-size: 13px !important;
+    }
+}
+
+.esti-button {
+    .p-button {
+       padding: 6px !important;
+    }
+}
+
+.danger-button {
+    .p-button.p-button-sm {
+        padding: 4px !important;
+        border-radius: 2px !important;
+    }
+}
+
+.accbutton{
+    .p-button.p-button-secondary {
+        padding: 10px;
+        .p-button-label{
+            font-size: 0.6875rem;
+        }
+    }
+}
+
+.product-button {
+    .p-button.p-button-sm {
+        padding: 6px 8px !important;
+    }
+}
+
+.bottom-fixed-btn-box{
+    .p-button{
+        .p-button-label{
+            font-size: 13px;
+        }
+    }
+}
+
+.facadd-button {
+    .p-button{
+        border-radius: 4px !important;
+    }
+}
+
+.p-button-outlined.p-button-danger {
+    padding: 5px !important;
     .p-button-label{
         font-weight: 600 !important;
-        font-size: 13px;
+        font-size: 11px;
         
+    }
+}
+
+.alert-button {
+    .p-button.p-button-sm {
+        padding: 6px 8px !important;
+    }
+}
+
+.bottom-fixed-btn-box {
+    .p-button.p-button-secondary{
+        padding: 0 !important;
+        .p-button-label{
+            padding-top: 14px !important;
+            padding-bottom: 14px;
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+    }
+}
+
+.success-button{
+    .p-button.p-button-success{
+        padding: 14px;
+    }
+}
+
+.bottom-modal-absol-box {
+    .p-button{
+        padding: 14px 0px;
+    }
+}
+
+.p-button{
+    border-radius: 2px !important;
+
+    .p-button-label{
+        font-weight: 600 !important;
+        font-size: 12px;
+        
+    }
+    &.p-button-lg{
+        padding-top: 14px;
+        padding-bottom: 14px;
     }
     &.p-button-sm{
         padding-block: 0.5rem !important;
@@ -425,16 +529,23 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         background-color: #f9fafb;
         color: #7D7C78;
         border: none;
+        padding: 14px;
         .p-button-label{
             color: #7D7C78;
-            font-size: 0.75rem 
+            font-size: 0.8125rem;
         }
      
     }
     &.outlined-button{
         background-color: #ffffff;
         border: 1px solid #E4E5E9;
-        border-radius: 4px;
+        border-radius: 4px !important;
+        padding: 6px 16px !important;
+        .p-button-label{
+            font-weight: 400 !important;
+            font-size: 12px;
+            
+        }
     }
     
 }
@@ -516,13 +627,14 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     &.p-datepicker{
         &.bg-gray{
             .p-datepicker-input{
-                background-color: var(--p-gray-100);
-                border-radius: 2px !important;    
+                background-color: var(--p-gray-100) !important;
+                border-radius: 2px !important; 
+                font-size: 0.75rem;   
             }
         }
         .p-datepicker-input{
             border-radius: 99999px !important;
-            font-size: 1rem ;
+            font-size: 0.75rem !important;
             padding-top: 0.325rem;
             padding-bottom:  0.325rem;
             padding-left: 0.75rem !important;
@@ -537,6 +649,17 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
             align-items: center;
             justify-content: center;
             padding: 0px !important;
+        }
+    }
+}
+
+.acc-datepicker {
+    .p-datepicker {
+        width: 6rem;
+        .p-datepicker-input {
+            font-size: 0.75rem !important;
+            background-color: var(--p-gray-100);
+            border: none;
         }
     }
 }
