@@ -123,6 +123,7 @@ export function getCurtainParams(common, curtain)
 
     params['width']     = common['width'];
     params['height']    = common['height'];
+    params['size']      = curtain['size'];
     params['proc']      = curtain['proc'];
     params['los']       = curtain['los'];
     params['addColor']  = curtain['addColor'];

@@ -54,6 +54,9 @@ export function getRoundCalc (value, roundGb='001')
 			}
 		}
 		break;
+        case '004':
+            calcValue = value.toFixed(2);
+		break;
 	}
 
 	return Number(calcValue);
