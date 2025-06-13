@@ -18,7 +18,7 @@
         <section class="col-span-12">
             <div class="flex flex-col gap-4 main-card-container-box">
                 <div class="main-card-tilte-box">
-                    <h2 class="flex items-center justify-center title-md">전체 고객</h2>
+                    <h2 class="flex items-center justify-center text-base">전체 고객</h2>
                     <div class="flex items-center gap-3.5">
                         <div class="flex items-center text-22">
                             <span class="flex items-center text-t-lv1">{{ main['clientCnt'] }}
@@ -41,16 +41,16 @@
         <section class="col-span-6 ">
             <div class="main-card-container-box">
                 <div class="main-card-tilte-box">
-                    <h2 class="flex items-center justify-center gap-2 title-lg">
+                    <h2 class="flex items-center justify-center gap-2 text-sm">
                         <img src="@/assets/img/img-factory.svg" alt="공장" title="공장" class="w-[0.9375rem]"/>
                         공장
                     </h2>
                 </div>
                 <router-link to="/factory/list" class="flex items-end justify-between !pt-px main-card-container-box-padding">
                     <div class="flex flex-col w-full gap-px">
-                        <p class="text-caption">공장전체</p>
+                        <p class="text-10 text-t-lv4">공장전체</p>
                         <div class="flex items-center justify-between w-full">
-                            <p class="flex h-[1.375rem] items-center text-data text-sky-500">{{ main['factoryCnt'] }}</p>
+                            <p class="flex h-[1.375rem] items-center text-22 font-bold text-sky-500">{{ main['factoryCnt'] }}</p>
                             <IconLeftArrow class="fill-l-lv2"/>
                         </div>
                     </div>
@@ -61,15 +61,15 @@
         <section class="col-span-6 ">
             <div class="main-card-container-box">
                 <div class="main-card-tilte-box">
-                    <h2 class="flex items-center justify-center gap-2 title-lg">
+                    <h2 class="flex items-center justify-center gap-2 text-sm">
                         <img src="@/assets/img/img-truck.svg" alt="배송 대기" title="배송 대기" class="w-[0.9375rem]"/>
                         배송대기</h2>
                 </div>
                 <router-link to="/factory/list" class="flex items-end justify-between !pt-px main-card-container-box-padding">
                     <div class="flex flex-col w-full gap-px">
-                        <p class="flex items-center text-caption">배송 대기</p>
+                        <p class="flex items-center text-10 text-t-lv4">배송 대기</p>
                         <div class="flex items-center justify-between w-full">
-                            <p class="text-data items-center flex h-[1.375rem] text-yellow-300">0</p>
+                            <p class="text-22 font-bold items-center flex h-[1.375rem] text-yellow-300">0</p>
                             <IconLeftArrow class="fill-l-lv2"/>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                     
                     <div class="">
                         <div class="flex items-center gap-1">
-                            <h2 class="title-lg">플랜톡</h2>
+                            <h2 class="text-sm">플랜톡</h2>
                             <span v-if="main['kakaoYn'] === 'N'" class="text-xs text-t-lv3">OFF</span>
                             <span v-else class="text-xs rounded-full text-sky-500">ON</span>
                             <!-- <span v-if="main['kakaoYn'] === 'N'" class="px-1.5 text-xs text-white bg-red-500 rounded-full">OFF</span>

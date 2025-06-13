@@ -92,7 +92,7 @@
             @update:visible="getPopClose(true, 'itemList')">
             <template #header>
                 <div class="modal-backheader">
-                    <Button @click="getPopClose(true, 'itemList')" severity="contrast" text icon="pi pi-times"/>
+                    <Button @click="getPopClose(true, 'itemList')" severity="contrast" text icon="pi pi-times""/>
                     <h2 class="modal-backheader-title">제품선택</h2>
                 </div>
             </template>
@@ -103,7 +103,7 @@
             :modal=true position="center" class="custom-dialog-bottom"
             @update:visible="getPopClose(true, 'itemSet')">
             <template #header>
-                <div class="modal-fullheader">
+                <div class="modal-fullheader change-button">
                     <Button @click="getPopClose(true, 'itemSet')" severity="contrast" text icon="pi pi-arrow-left" class="flex justify-start"/>
                     <h2 class="modal-backheader-title">제품등록</h2>
                     <Button label="제품 변경" size="small" outlined @click="getItemChange" class="!z-[100] !bg-p-lv4 !text-white"/>
@@ -119,7 +119,7 @@
         </Dialog> -->
 
         <Dialog v-model:visible="popup['pop']['clientSet']" header="고객 정보 수정" 
-            :modal=true position="center" class="custom-dialog-bottom" 
+            :modal=true position="center" class="custom-dialog-full" 
             @update:visible="getPopClose('clientSet', true)">
             <template #header>
                 <div class="modal-backheader">

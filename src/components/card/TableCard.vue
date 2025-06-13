@@ -64,7 +64,7 @@
             </section>
 
             <!-- 지시사항  -->
-            <section v-if="card['spanText'] !== ''" class="flex items-center justify-start w-auto px-3 py-1 my-2 mt-3 text-sm text-orange-400 rounded-full bg-orange-50">
+            <section v-if="card['spanText'] !== ''" class="flex items-center justify-start w-auto px-3 py-1 my-2 mt-3 text-orange-400 rounded-full text-10 bg-orange-50">
                 <p class="font-bold">지시사항: <span class="">{{ card['spanText'] }}</span></p>
             </section>
             <!-- 버튼 -->

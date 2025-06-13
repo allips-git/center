@@ -91,7 +91,7 @@
     <ProductInfo/>
 </Dialog>
 <Dialog v-model:visible="popup['pop']['sysFactoryItemSet']" header="제품관리" 
-    :modal=true position="center" class="custom-dialog-bottom"
+    :modal=true position="center" class="custom-dialog-full"
     @update:visible="getPopupClose('sysFactoryItemSet', true)">
     <template #header>
         <div class="modal-fullheader">

@@ -2,6 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer base {
+  html.ios .top-header {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  html.ios .app-bar {
+    bottom: env(safe-area-inset-bottom);
+  }
+
+  html.ios .custom-dialog-bottom.p-dialog {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  html.ios .modal-fullheader {
+    padding-top: env(safe-area-inset-top); /* 내용 하단 패딩 */
+  }
+
+  html.ios .header-icon {
+    padding-top: env(safe-area-inset-top); /* 내용 하단 패딩 */
+
+  }
+
+
+  html.ios .modal-backheader {
+    padding-top: env(safe-area-inset-top); /* 내용 하단 패딩 */
+  }
+
+  html.ios .modal-backheader-title {
+    padding-top: env(safe-area-inset-top); /* 내용 하단 패딩 */
+  }
+
+
+  html.ios .custom-dialog-full.p-dialog .p-dialog-content {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  html.ios .custom-dialog-bottom.p-dialog .p-dialog-content {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  html.ios .custom-dialog-bottom.p-dialog {
+    padding-top: env(safe-area-inset-top); /* 전체화면 모달 대응 */
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  html.ios .bottom-modal-sticky-box,
+  html.ios .bottom-modal-absol-box,
+  html.ios .bottom-fixed-btn-box,
+  html.ios .btn-2-layout-box
+   {
+    padding-bottom: env(safe-area-inset-bottom);
+    box-sizing: border-box;
+  }
+
+}
+
+
 /* 색 트렌지션 전역설정 */
 * {
     @apply transition-colors duration-[20ms]; 
@@ -39,7 +97,7 @@
     @apply p-5 md:p-8
   }
   .bottom-modal-contents-box{
-    @apply p-5 flex flex-col gap-5
+    @apply flex flex-col gap-5
   }
   .bottom-modal-sticky-box{
     @apply w-full sticky bottom-0
@@ -56,22 +114,16 @@
 
 
   .bottom-modal-sticky-box{
-    @apply w-full sticky bottom-0
+    @apply w-full sticky bottom-0 bg-white
   }
 
   .bottom-modal-absol-box{
     @apply w-full absolute bottom-0 left-0 pb-3.5 px-4 pt-2 bg-white border border-t border-gray-100
   }
   .bottom-fixed-btn-box{
-    @apply w-full fixed bottom-0 left-0 p-4 bg-white flex gap-2 *:w-full border-t border-gray-200 z-[100] md:bottom-[0] 
-     /* md:!w-[calc(100vw-200px)] md:!left-[200px] */
+    @apply w-full fixed bottom-0 left-0 p-4  bg-white flex gap-2 *:w-full border-t border-gray-200 z-[100] md:bottom-[0] 
   }
-  /* .btn-2-layout-box{
-    @apply w-full bg-white flex gap-2 *:w-full
-  } */
-  /* .main-bottom-fixed-pd{
-    @apply 
-  } */
+
   .label-input-box{
     @apply w-full *:w-full flex flex-col gap-1
   }
@@ -118,6 +170,9 @@
     @apply h-[50px] sticky relative top-0 px-4 md:px-6 flex w-full items-center justify-end md:border-b md:shadow-none bg-white z-50 md:border-gray-100
   }
 
+  .modal-fullheader{
+    @apply h-[50px] sticky relative top-0 px-4 md:px-6 md:border-b flex w-full items-center justify-between md:shadow-none bg-white z-50 md:border-gray-100
+  }
   .popup {
     @apply max-h-[90%]
   }
@@ -126,9 +181,6 @@
     @apply !absolute right-4 top-1/2 -translate-y-1/2 z-50 !p-0
   }
 
-  .modal-fullheader{
-    @apply h-[50px] sticky relative top-0 px-4 md:px-6 md:border-b flex w-full items-center justify-between md:shadow-none bg-white z-50 md:border-gray-100
-  }
   .modal-backheader-title{
     @apply text-sm absolute font-bold -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 
   }
@@ -136,7 +188,11 @@
     @apply !h-8 *:!text-10 md:*:!text-sm items-center justify-center !bg-transparent
   }
   .mini_input{
-    @apply !text-10
+    @apply !text-xs
+  }
+
+  .fc-daygrid-event {
+    @apply text-10
   }
 
   

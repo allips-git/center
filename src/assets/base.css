@@ -1,28 +1,68 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
+html,
+body {
+  padding-top: calc(env(safe-area-inset-top) + 15px);
+  padding-bottom: calc(env(safe-area-inset-top) + 15px);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+html.ios body {
+  padding-top: calc(env(safe-area-inset-top) + 15px);
+  padding-bottom: calc(env(safe-area-inset-top) + 15px);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* html.ios .top-header {
+    padding-top: env(safe-area-inset-top);
+}
+
+@layer base {
+  html.ios .top-header {
+    padding-top: env(safe-area-inset-top);
+  }
+} */
+
+
 body {
   font-family: 'Noto Sans KR', sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
-  font-style: normal;
-  
+  font-style: normal;  
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
+
 .noto{
   font-family: 'Noto Sans KR', sans-serif;
 }
 
 @media screen and (max-width: 375px) {
-  html { font-size: 16px; } /* iPhone SE */
+  html { font-size: 1rem; } /* iPhone SE */
 }
 
 @media screen and (min-width: 376px) and (max-width: 430px) {
-  html { font-size: 16px; } /* 일반 iPhone */
+  html { font-size: 1.1rem; } /* 일반 iPhone */
 }
 
 @media screen and (min-width: 431px) and (max-width: 480px) {
-  html { font-size: 17px; } /* 일반 Galaxy */
+  html { font-size: 1.2rem; } /* 일반 Galaxy */
 }
 
 @media screen and (min-width: 481px) {
-  html { font-size: 18px; } /* Galaxy Ultra, 태블릿, PC */
+  html { font-size: 18px; } 
+}
+
+html.ios body {
+  font-size: 1rem;
+}
+
+html.android body {
+  font-size: 1.2rem;
 }

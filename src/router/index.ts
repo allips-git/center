@@ -8,6 +8,7 @@ import JoinFirst from "@/views/login/JoinFirst.vue";
 import JoinSecond from "@/views/login/JoinSecond.vue";
 import FindPassword from "@/views/login/FindPassword.vue";
 import ChangePassword from "@/views/login/ChangePassword.vue";
+import WaitJoin from "@/views/login/WaitJoin.vue"
 import CustomerList from "@/views/customer/CustomerList.vue";
 // import CustomerRegister from "@/views/customer/CustomerRegister.vue";
 import CustomerDetail from "@/views/customer/CustomerDetail.vue";
@@ -104,6 +105,13 @@ const routes = [
         path: "/join/change_password",
         name: "ChangePassword",
         component: ChangePassword,
+        meta : { gubun: 'Y' }
+    },
+
+    {
+        path: "/join/wait_join",
+        name: "WaitJoin",
+        component: WaitJoin,
         meta : { gubun: 'Y' }
     },
 

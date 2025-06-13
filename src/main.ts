@@ -2,6 +2,19 @@ import './assets/main.css'
 import 'primeicons/primeicons.css';
 import './assets/primevue_custom.scss';
 
+const isAndroid = /Android/i.test(navigator.userAgent);
+const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+if (isAndroid) {
+  document.documentElement.classList.add('android');
+} else if (isIOS) {
+  document.documentElement.classList.add('ios');
+}
+
+if (/iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent) && 'ontouchend' in document) {
+    document.documentElement.classList.add('ios');
+  }
+
 import { createApp } from 'vue'
 
 import { definePreset } from '@primevue/themes';

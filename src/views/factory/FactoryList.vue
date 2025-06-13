@@ -11,7 +11,7 @@
             <TabPanels>
                 <TabPanel value="0">
                     <div class="pt-3 pb-20">
-                        <div class="fixed bottom-4 right-4 md:bottom-4 facadd-button">
+                        <div class="fixed bottom-11 right-4 md:bottom-4 facadd-button">
                             <Button label="공장코드 추가" icon="pi pi-plus" size="large" @click="getPopOpen('sysFactorySearch')"/>
                         </div>
                        

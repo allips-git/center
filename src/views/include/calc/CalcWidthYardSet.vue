@@ -14,9 +14,9 @@
         </div>
     
         <div class="flex flex-col gap-8">
-            <div class="flex gap-2">
+            <div class="flex gap-2 product-select">
                 <IftaLabel class="flex-1 min-w-0">
-                <Select v-model="esti['curtain']['addColor']" :options="data['addColor']" optionLabel="name" optionValue="value" class="w-full" />
+                <Select v-model="esti['curtain']['addColor']" :options="data['addColor']" optionLabel="name" optionValue="value" class="w-full product-select" />
                 <label>색상추가</label>
                 </IftaLabel>
 
@@ -40,7 +40,7 @@
                 </IftaLabel>
             </div>
 
-            <div class="flex gap-2">
+            <div class="flex gap-2 product-select">
                 <IftaLabel class="flex-1 min-w-0">
                 <label>가로(CM)<span class="ml-1 text-red-600">*</span></label>
                 <InputText v-keyfilter.int id="cWidth" v-model="esti['common']['width']" class="w-full !font-bold" @update:modelValue="esti.getUnitCalc()" />

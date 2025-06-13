@@ -90,6 +90,8 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .custom-dialog-full.p-dialog{
     width: 100%;
     height: 100% !important;
+    border: none !important;
+
     .p-dialog-close-button{
         display: none;
     }
@@ -109,6 +111,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     margin: 0 !important;
     position: relative;
     border-radius:  0.5rem 0.5rem 0px 0;
+    border: none !important;
     overflow: hidden;
     margin-top: 1rem !important;
     width: 100%;
@@ -330,10 +333,39 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
+.product-select {
+    .p-iftalabel{
+        .p-select-label{
+            padding-block: 0.7rem !important;
+            padding-inline: 0.7rem !important;
+            font-size: 0.75rem;
+        }
+    }
+    .p-select-dropdown{
+        width: 1rem;
+        justify-content: start;
+        .p-icon{
+            width: 0.8rem;
+        }
+    }
+    .p-inputnumber .p-inputtext{
+        padding-block: 0.7rem !important;
+        padding-inline: 0.7rem !important;
+    }
+}
+.p-select-list-container{
+    font-size: 13px !important;
+}
 
+.mng-input {
+    .p-inputtext{
+        font-size: 0.8125rem;
+    }
+}
 
 .p-iftalabel {
     .p-inputtext,
+    .p-inputnumber,
     .p-textarea,
     .p-select-label,
     .p-multiselect-label,
@@ -418,6 +450,13 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
+.change-button {
+    .p-button.p-button-sm {
+        padding: 6px !important;
+        border-radius: 2px;
+    }
+}
+
 .list-button {
     .p-button-label{
         font-size: 13px !important;
@@ -482,14 +521,13 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 }
 
 .bottom-fixed-btn-box {
-    .p-button.p-button-secondary{
-        padding: 0 !important;
+
+    .p-button{
+        border: none;
         .p-button-label{
-            padding-top: 14px !important;
-            padding-bottom: 14px;
-            padding-left: 14px;
-            padding-right: 14px;
+            font-size: 0.8125rem;
         }
+
     }
 }
 
@@ -529,7 +567,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         background-color: #f9fafb;
         color: #7D7C78;
         border: none;
-        padding: 14px;
+        padding-block: 14px;
         .p-button-label{
             color: #7D7C78;
             font-size: 0.8125rem;
@@ -594,31 +632,51 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         border-radius: 9999999px !important;
         }
     }
-    input{
-    
+
+}
+
+.mini_select {
+    .p-select{
+        background-color: var(--p-gray-100);
+        height: 2.5rem;
+        border-radius: 0px !important;
     }
 }
 .mini_select{
+    height: 2.5rem !important;
     input{
         border: none !important;
     }
     svg{
-        opacity: 0;
+        // opacity: 0;
     }
     .p-placeholder{
-        font-size: 14px;
+    font-size: 13px !important;
     }
-    
+    .p-select-label{
+        padding-right: 5px;
+    }
+
 }
 
-
+.p-iconfield .p-inputtext:not(:first-child) {
+    font-size: 14px !important;
+}
 
 .mini_input{
-    
     border: 0;
+    ::placeholder{
+        font-size: 0.75rem !important;
+    }
+    .p-inputtext {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        height: 2.5rem;
+    }
 }
-.p-iconfield .mini_inpu.p-inputtext:not(:first-child){
+.p-iconfield .mini_input.p-inputtext:not(:first-child){
     padding-inline-start: 35px !important;
+    font-size: 14px;
 }
 
 .custom-datapicker{

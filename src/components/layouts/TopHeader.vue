@@ -1,9 +1,7 @@
 <template>
-<header class="bg-white h-[3.3125rem] px-4 border-b border-gray-100 flex justify-between items-center md:pl-4 md:pr-3 w-full z-50 dark:bg-zinc-800 dark:border-zinc-700 no-print  top-0 md:h-[60px] md:shadow-[0px_1px_4px_1px_rgba(0,0,0,0.05)] flex-none">
+<header class=" bg-white px-4 border-b border-gray-100 flex justify-between items-center md:pl-4 md:pr-3 w-full z-50 dark:bg-zinc-800 dark:border-zinc-700 no-print  top-0 md:h-[60px] md:shadow-[0px_1px_4px_1px_rgba(0,0,0,0.05)] flex-none top-header">
     <div class="flex items-center gap-2"> 
-        <!-- <div class="pc-hidden">
-            <Button icon="pi pi-bars" severity="contrast" text  plain size="large" @click="moSideHeader=true"/>
-        </div> -->
+
         <div class="mobile-hidden">
             <Button icon="pi pi-bars" variant="text" rounded severity="contrast" text  plain size="large" @click="handleClick"/>
         </div>
@@ -17,12 +15,6 @@
     </div>
     <h1 class="text-sm font-bold">{{ login['name'] }}</h1>
             <IconBell class="fill-t-lv2"/>
-    
-    <!-- <div class="items-center gap-2 lg:hidden md:flex">
-        <Button class="w-[1.875rem] !p-0 flex items-center justify-center h-12" text plain @click="toggleNotificationPopover($event)">
-            <IconAvatar class="*:text-blue-200 w-7 h-7 md:w-9 md:h-9"/>
-        </Button>
-    </div> -->
     <Popover class="" ref="notificationPopover" dismissable> 
         <div class="flex flex-col">
             <Button :label="'로그아웃'" icon="pi pi-sign-out" severity="danger" text  size="small" @click="getLogOut"/>

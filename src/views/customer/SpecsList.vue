@@ -37,8 +37,8 @@
         <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
             }" class="bottom-fixed-btn-box" 
             >
-            <Button label="견적서 저장" severity="secondary" size="large" @click="getEstiSave"/>
-            <Button label="계약서 이동" size="large" @click="getPopupOpen('conInfoSet')"/>
+            <Button label="견적서 저장" severity="secondary" size="large" @click="getEstiSave" class="w-full"/>
+            <Button label="계약서 이동" size="large" @click="getPopupOpen('conInfoSet')" class="w-full" />
         </div>
     </main>
 

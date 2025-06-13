@@ -5,16 +5,15 @@
             <div class="flex items-center justify-between px-4 py-[10px] md:px-6 no-print ">
                 <div class="flex self-center justify-between w-full ">
                     <div class="flex w-full gap-2">
-                        <div class="flex relative w-full gap-2 max-w-[90px] bg-gray-100 h-8 *:!border-0">
+                        <div class="flex relative w-full gap-2 max-w-[90px] bg-gray-100 h-10 *:!border-0">
                             <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="relative z-10 w-full mini_select" @change="getList"/>
-                            <IconPlay class="absolute rotate-90 top-2 right-2 *:fill-gray-400"/>
                         </div>
                         
-                        <IconField class="table-search-input w-full  sm:max-w-full h-8 !bg-gray-100 *:!border-0">
+                        <IconField class="table-search-input w-full  sm:max-w-full h-10 !bg-gray-100 *:!border-0  mini_input">
                             <InputIcon class="flex items-center justify-center !translate-y-1/4">
-                                <i class="pi pi-search !text-11 text-gray-600 !font-balck" />
+                                <i class="pi pi-search !text-11 text-gray-600 !font-black" />
                             </InputIcon>
-                            <InputText v-model="client['search']" placeholder="이름,주소,전화번호로 검색" class="w-full h-8 mini_input !bg-gray-100 !pl-[35px]" @keyup.enter="getList"/>
+                            <InputText v-model="client['search']" placeholder="이름,주소,전화번호로 검색" class="w-full h-8 !bg-gray-100 !pl-[35px]" @keyup.enter="getList"/>
                         </IconField>
                     </div>
                 </div>
@@ -23,17 +22,17 @@
             <ul class="flex flex-col">
                 <li v-for="(item, index) in client['list']" :key="index" class="flex items-center gap-[14px] flex-none w-full p-4 md:px-6" @click="getInfo(item.clientCd)">
                     <!-- 상태 -->
-                    <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none text-11 font-bold text-white rounded-md md:text-sm w-[38px] h-[38px] sm:size-11">
+                    <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none font-bold text-white rounded-md text-11 md:text-sm size-10 sm:size-11">
                         {{ getStatusName(item.step) }}
                     </div>
                     <div class="flex justify-between w-full gap-2">
                         <div class="flex flex-col flex-grow min-w-0">
                             <p class="font-bold text-con">{{ item.clientNm }}</p>
-                            <span class="flex-1 truncate text-desc">{{ item.addr }} {{ item.addrDetail }}</span>
+                            <span class="flex-1 text-xs truncate text-t-lv4 whitespace-nowrap max-w-[200px] sm:max-w-[100%]">{{ item.addr }} {{ item.addrDetail }}</span>
                         </div>
                         <div class="flex flex-col whitespace-nowrap">
-                            <span class="text-right text-desc">{{ item.date }}</span>
-                            <p class="font-bold text-right text-con">{{ getAmt(item.amt) }}원</p>
+                            <span class="text-xs text-right text-t-lv4">{{ item.date }}</span>
+                            <p class="text-sm font-bold text-right">{{ getAmt(item.amt) }}원</p>
                         </div>
                     </div>
                 </li>
@@ -47,7 +46,7 @@
         header="고객 등록"
         :modal=true
         position="center"
-        class="custom-dialog-bottom backPopup"
+        class="custom-dialog-full"
         @update:visible="getPopClose(true, 'clientSet')">
         <template #header>
             <div class="modal-backheader">

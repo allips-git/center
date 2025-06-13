@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
 export default {
   darkMode: 'selector',
   // ...
@@ -71,6 +72,9 @@ export default {
     },
   },
   plugins: [
+    plugin(function({ addVariant }) {
+      addVariant('ios', '&.ios &', { respectImportant: false });
+    }),
   ],
 }
 

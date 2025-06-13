@@ -1,17 +1,17 @@
 <template>
     <div class="p-4 bg-white border border-gray-200 rounded">
         <div class="">
-            <div v-if="showtitle" class="flex items-center justify-between pb-3 font-bold border-b border-gray-100 title-con">
-                <h4 class="text-16 text-t-lv1">{{ title }}</h4>
+            <div v-if="showtitle" class="flex items-center justify-between pb-3 text-base font-bold border-b border-gray-100">
+                <h4 class="text-base text-t-lv1">{{ title }}</h4>
                 <!-- 단위 -->
-                <p class="text-indigo-600"><span class="ml-0.5">{{ unit }}</span></p>
+                <p class="text-p-lv4"><span class="ml-0.5">{{ unit }}</span></p>
                 <!-- <Button label="거래원장 출력" /> -->
             </div>
             <div v-if="showtoggle" class="custom_accordion">
                 <Accordion value="0">
                     <AccordionPanel class="*:pb-0 " value="0" >
                         <AccordionHeader class="!gap-2 !px-0 !mb-5">
-                            <p class="w-full pb-0">{{ title }}</p>
+                            <p class="w-full pb-0 text-base">{{ title }}</p>
                             <p class="flex-none pb-0 text-sm font-bold">더보기</p>
                             </AccordionHeader>
                         <AccordionContent class="w-full *:!px-0">

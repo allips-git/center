@@ -1,4 +1,5 @@
 <template>
+  <div class=" sticky bottom-0 h-[56px] app-bar">
     <ul class="sticky bottom-0 left-0 w-full gap-4 px-3 h-[56px] bg-white md:hidden flex shadow-custom-y">
       <li 
         class="flex flex-col items-center cursor-pointer py-0.5 justify-evenly w-full"
@@ -11,6 +12,8 @@
         <p class="font-bold text-[#D8D8DC] duration-300 text-10">{{ item.label }}</p>
       </li>
     </ul>
+
+  </div>
   
     
     <Drawer v-model:visible="moSideHeader" header="" class="custom-drawer" position="right">

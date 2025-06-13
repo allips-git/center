@@ -1,5 +1,5 @@
 <template>
-    <div class="bottom-modal-contents-box !px-4">
+    <div class="bottom-modal-contents-box">
         <IftaLabel class="label-input-box">
             <DatePicker showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd" v-model="client['info']['estiDt']" showTime hourFormat="24"/>
             <label>일자</label>
@@ -51,8 +51,8 @@
             <Button type="button" :label="client['type'] === 'I' ? '명세서 이동' : '저장'" class="w-full" size="large" @click="getSaveNext"/>
         </div>
     </div>
-    <div id="layer" style="overflow:hidden;z-index:9999;-webkit-overflow-scrolling:touch;position:fixed;top:50%;transform: translate(2%,-50%);left:50%;width: 100%; max-width: 400px;">
-        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:fixed;right:-10px;top:-3px;z-index:1" @click="getCloseDaumPost()" alt="닫기 버튼">
+    <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:9999;-webkit-overflow-scrolling:touch;">
+        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" @click="getCloseDaumPost()" alt="닫기 버튼">
     </div>
 </template>
 

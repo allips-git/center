@@ -5,7 +5,7 @@
             <Button label="제품 변경" size="small" outlined @click="getItemChange" class="!z-[100]"/>
         </div>     -->
         <div class="flex justify-between px-4 text-sm md:px-6">
-            <h2 class="px-4 py-1 font-bold rounded-full text-10 bg-cyan-100 text-s-lv1">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
+            <h2 class="px-4 py-2 font-bold rounded-full text-10 bg-cyan-100 text-s-lv1">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
             <p class="font-medium">({{ esti['common']['unitSize'] }}{{ esti['common']['unitNm'] }}) {{ getAmt(esti['common']['saleUnit']) }}원</p>
         </div>
         <div class="gray-bar !my-0"></div>
@@ -22,7 +22,7 @@
         <!-- 옵션 더보기 -->
         <section class="px-4 md:px-6">
             <div class="w-full custom_accordion">
-                <Accordion value="0">
+                <Accordion value="null">
                     <AccordionPanel class="*:pb-0 " value="0" >
                         <AccordionHeader class="!gap-2 !justify-end">
                             <p class="pb-0 text-xs font-bold">옵션 더보기</p>
