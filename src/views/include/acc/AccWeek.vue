@@ -6,7 +6,7 @@
                     <h1 class="font-bold text-18">{{ acc.year }}년 {{ acc.month }}월</h1>
                   
                 </section>
-                <AccInfo :saleAmt="getAmt(acc.monthSaleAmt)" :purcAmt="getAmt(acc.monthPurcAmt)" :margin="acc.monthMargin"/>
+                <AccInfo :saleAmt="getAmt(acc.weekSaleAmt)" :purcAmt="getAmt(acc.weekPurcAmt)" :margin="acc.monthMargin"/>
             </div>
         </section>
         
@@ -18,7 +18,7 @@
                         <p>{{ acc['month'] }}월 {{ item['week'] }}주차</p>
                     </li>
                     <template v-for="(week, wIndex) in acc['weekList']" :key="wIndex">
-                        <StatisticsList :date="getDate(week['date'])" :margin="week['margin']" 
+                        <StatisticsList v-if="item['week'] === week['week']" :date="getDate(week['date'])" :margin="week['margin']" 
                             :waitAmt="getAmt(week['waitAmt'])" :saleAmt="getAmt(week['saleAmt'])" :rev="getAmt(week['rev'])" @click="getDayPopup(week['date'])"/>
                     </template>
                 </ul>
