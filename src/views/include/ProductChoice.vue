@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="flex w-full gap-[10px] product-button">
-            <Button label="실측 둘러보기" size="small"/>
+            <Button label="실측 불러보기" size="small"/>
             <Button label="커튼 실측" size="small" @click="getExItem('EX000001')"/>
             <Button label="블라인드 실측" size="small" @click="getExItem('EX000002')"/>
         </div>

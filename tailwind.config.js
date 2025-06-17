@@ -58,6 +58,7 @@ export default {
         's-lv1' : "#6AB2BE",
 
         'bg-lv1':"#F8F9FA",
+        'bg-lv2':"#F6F6F6",
 
         
         

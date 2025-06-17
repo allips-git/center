@@ -1,14 +1,14 @@
 <template>
 <main class="p-4">
-    <div class="bottom-modal-contents-box !px-0 !pb-20 z-10">
+    <div class="bottom-modal-contents-box !px-0 !pb-20 z-10 !gap-0">
         <!-- <div class="absolute !z-[100] flex justify-end top-[8px] right-[8px]">
             <Button label="제품 변경" size="small" outlined @click="getItemChange" class="!z-[100]"/>
         </div>     -->
-        <div class="flex justify-between px-4 text-sm md:px-6">
-            <h2 class="px-4 py-2 font-bold rounded-full text-10 bg-cyan-100 text-s-lv1">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
+        <div class="flex justify-between py-[5px] text-sm md:px-6">
+            <h2 class="px-2 py-1 font-bold rounded-full text-10 bg-cyan-100 text-s-lv1">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
             <p class="font-medium">({{ esti['common']['unitSize'] }}{{ esti['common']['unitNm'] }}) {{ getAmt(esti['common']['saleUnit']) }}원</p>
         </div>
-        <div class="gray-bar !my-0"></div>
+        <div class="gray-bar my-[14px]"></div>
         <!-- 입력 계산기 컴포넌트 -->
         <div class="">
             <!-- 회베 -->
@@ -22,9 +22,9 @@
         <!-- 옵션 더보기 -->
         <section class="md:px-6">
             <div class="w-full custom_accordion">
-                <Accordion value="null">
+                <Accordion value="null" class="pt-4">
                     <AccordionPanel class="*:pb-0 " value="0" >
-                        <AccordionHeader class="!gap-2 !justify-end">
+                        <AccordionHeader class="!gap-2 !justify-end py-1">
                             <p class="pb-0 text-xs font-bold">옵션 더보기</p>
                             </AccordionHeader>
                         <AccordionContent class="w-full">
@@ -51,8 +51,8 @@
                 </Accordion>
             </div>
         </section>
-        <div class="gray-bar"></div>
-        <div class="">
+        <div class="gray-bar my-[14px]"></div>
+        <div class="mt-[10px]">
             <CalculateCard title="총 단위" :showtitle="true" 
                 :unit="esti['total']['totalUnitSize']+esti['common']['unitNm']"
                 :calcs="esti['totalAmtInfo']" totalTitle="총 금액" :totalAmt="esti['total']['totalSaleAmt'] + esti['total']['totalSaleTax']" :showUnit="true"/>

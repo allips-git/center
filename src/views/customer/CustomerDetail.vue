@@ -6,7 +6,7 @@
                 <h2 class="text-base font-bold">{{ client['detail']['clientNm'] }}</h2>
                 <Button label="정보수정" outlined severity="secondary" size="small" @click="getClientModify" class="outlined-button"/>
             </div>
-            <ul class="flex flex-col gap-3 mt-3 rounded-md text-desc !text-t-lv2">
+            <ul class="flex flex-col gap-3 mt-3 rounded-md text-xs !text-t-lv2">
                 <li class="flex items-center">
                     <p class="w-24 whitespace-nowrap">전화번호</p>
                     <p class="capsuel_sky" @click="getNavi('tel', client['detail']['tel'])">{{ client['detail']['tel'] }}</p>
@@ -17,19 +17,19 @@
                 </li>
                 <li class="flex">
                     <p class="w-24 whitespace-nowrap">상세주소</p>
-                    <p class="text-t-lv1">{{ client['detail']['addrDetail'] }}</p>
+                    <p class="font-medium text-t-lv1">{{ client['detail']['addrDetail'] }}</p>
                 </li>
                 <li class="flex">
                     <p class="w-24 whitespace-nowrap">등록일</p>
-                    <p class="text-t-lv1">{{ client['detail']['regDt'] }}</p>
+                    <p class="font-medium text-t-lv1">{{ client['detail']['regDt'] }}</p>
                 </li>
                 <li class="flex">
                     <p class="w-24 whitespace-nowrap">담당자</p>
-                    <p class="text-t-lv1"> {{ client['detail']['person'] }}</p>
+                    <p class="font-medium text-t-lv1"> {{ client['detail']['person'] }}</p>
                 </li>
                 <li class="flex">
                     <p class="w-24 whitespace-nowrap">그룹명</p>
-                    <p class="text-t-lv1">{{ client['detail']['groupNm'] }}</p>
+                    <p class="font-medium text-t-lv1">{{ client['detail']['groupNm'] }}</p>
                 </li> 
             </ul>
         </section>

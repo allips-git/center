@@ -8,7 +8,7 @@
     
         <section class="">
             <h1 class="px-5 pt-5 pb-2 mb-1 text-sm font-bold">공장 정보</h1>
-            <ul class="flex flex-col gap-4 p-5 pt-0 text-sm rounded-md">
+            <ul class="flex flex-col gap-[10px] p-5 pt-0 text-sm rounded-md">
                 <li class="flex text-xs">
                     <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">혜택</p>
                     <p class="font-medium"><div class="flex items-center justify-center font-bold text-white bg-orange-500 rounded-full size-5">P</div>{{ factory['sys']['info']['boon'] }}</p>
@@ -70,9 +70,9 @@
     </div> -->
 
     <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
-    }" class="!flex-col bottom-fixed-btn-box">
-            <div class="flex justify-between w-full mb-1 font-bold">
-                <p >총 제품</p>
+    }" class="!flex-col bottom-fixed-btn-box !pt-[18px] !gap-4">
+            <div class="flex justify-between w-full text-base font-bold">
+                <p class="">총 제품</p>
                 <p class="text-p-lv4">{{ factory['out']['detail']['itemCnt'] }}개</p>
             </div>
             <Button label="제품 설정하기" size="large" @click="getPopupOpen('sysFactoryItemList')"/>

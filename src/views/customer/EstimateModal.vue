@@ -129,7 +129,7 @@
         </IftaLabel>
 
        
-        <div class="py-4 btn-2-layout-box">
+        <div class="py-4 btn-2-layout-box conbutton">
             <Button label="견적서 링크 발송" @click="getNavi" class="w-[100%]"/>
         </div>
     </section>

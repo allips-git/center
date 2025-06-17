@@ -38,7 +38,7 @@
                 </div>
             </div>
             <!--  border border-gray-200 rounded-md -->
-            <ul class="flex flex-col gap-1.5  mt-[1.625rem] text-xs !text-t-lv1">
+            <ul class="flex flex-col gap-[14px]  mt-[1.625rem] text-xs !text-t-lv1">
                 <li class="flex justify-between gap-5">
                     <div class="flex items-center gap-3.5">
                         <span class="block bg-blue-400 rounded-full size-[11px]"></span>

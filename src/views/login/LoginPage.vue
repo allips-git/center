@@ -40,11 +40,13 @@
                             <span class="text-xs">|</span>
                             <router-link to="join/find_password" class="text-xs">비밀번호 찾기</router-link>
                         </div>
-                    </div>
-                <Button label="이메일 로그인" class="w-full mt-6" @click="getLogin"/>
+                </div>
+                <div class="login-button">
+                    <Button label="이메일 로그인" class="w-full mt-6 !py-[13px]" @click="getLogin"/>
+                </div>
                 <div class="flex items-center justify-center w-full gap-[1.125rem] mt-6">
                     <span class="text-sm text-t-lv2">계정이 없으신가요?</span>
-                    <router-link to="/join/agree" class="text-sm font-bold text-p-lv2">회원가입</router-link>
+                    <router-link to="/join/agree" class="text-sm font-bold text-p-lv4">회원가입</router-link>
                     <!-- <Button label="회원가입" class="!*:font-bold" text @click="router.push({ path : '/join/agree' })"/> -->
                 </div>
             </div>

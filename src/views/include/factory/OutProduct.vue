@@ -3,7 +3,7 @@
     <div class="">
         <div class="flex gap-2 mb-4">
             <IconField class="w-full table-search-input gray_input">
-                <InputIcon>
+                <InputIcon class="flex justify-center">
                     <i class="pi pi-search" />
                 </InputIcon>
                 <InputText v-model="factory['out']['itemSearch']" placeholder="제품명 검색" class="w-full" @keyup.enter="factory.getOutFactoryItemList()"/>
@@ -17,7 +17,7 @@
                     <IconAddCircle class="size-[18px]"/>
                 </div>
             </div>
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col">
                 <MoreCard v-for="(item, index) in factory['out']['itemList']" :key="index" :itemNm="item['itemNm']" :size="item['size']" :unitNm="item['unitNm']" 
                     :saleAmt="item['saleAmt']" :purcAmt="item['purcAmt']" @click="getItemDetail(item['itemCd'])"/>
             </div>

@@ -1,5 +1,5 @@
 <template>
-<div class="grid grid-cols-4 gap-x-4 gap-y-5">
+<div class="grid grid-cols-4 gap-x-4 gap-y-5 mt-[14px]">
     
         <IftaLabel class="w-full col-span-2">
             <label>설치위치<span class="ml-1 text-red-600">*</span></label>

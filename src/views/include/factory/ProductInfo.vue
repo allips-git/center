@@ -2,12 +2,12 @@
     <main>
         <div class="p-4">
             <div class="flex gap-2 py-[10px]">
-                <IconField class="w-full table-search-input">
-                    <InputIcon>
-                        <i class="pi pi-search" />
-                    </InputIcon>
-                    <InputText v-model="factory['sys']['itemSearch']" placeholder="제품명 검색" class="w-full" @keyup.enter="factory.getSysItemList()"/>
-                </IconField>
+                <IconField class="w-full table-search-input gray_input">
+                <InputIcon class="flex justify-center">
+                    <i class="pi pi-search" />
+                </InputIcon>
+                <InputText v-model="factory['sys']['itemSearch']" placeholder="제품명 검색" class="w-full" @keyup.enter="factory.getSysItemList()"/>
+            </IconField>
             </div>
 
             <div class="flex flex-col">

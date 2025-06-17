@@ -47,9 +47,9 @@
                         
                     <ul>
                         <li class="flex flex-col py-4 border-b" v-for="(item, index) in factory['out']['list']" :key="index" @click="getOutDetail(item.fcCd)">
-                            <p class="mb-1 font-bold text-con">{{ item.faNm }}</p>
-                            <p class="text-desc !text-t-lv1">{{ item.tel }}</p>
-                            <p class="!text-t-lv2 text-desc">{{ item.addr + ' ' + item.addrDetail }}</p>
+                            <p class="mb-1 text-sm font-bold">{{ item.faNm }}</p>
+                            <p class="text-10 !text-t-lv1">{{ item.tel }}</p>
+                            <p class="!text-t-lv2 text-10">{{ item.addr + ' ' + item.addrDetail }}</p>
                         </li>
                     </ul>
                     </div>

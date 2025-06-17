@@ -41,7 +41,7 @@
                         <div class="">
                             <div>
                                 <template v-for="(date, dIndex) in acc.dateList" :key="dIndex">
-                                    <div class="flex items-center gap-2 py-2">
+                                    <div class="flex items-center gap-2">
                                         <p class="flex-none text-desc">{{ date['stDt'] }}</p>
                                         <div class="w-full h-px bg-gray-200"></div>
                                     </div>

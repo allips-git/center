@@ -15,7 +15,7 @@
     </div>
 
     <h1 class="text-sm font-bold">{{ login['name'] }}</h1>
-    <IconBell class="fill-t-lv2" @click="open  = true"/>
+    <IconBell class="cursor-pointer fill-t-lv2" @click="open  = true"/>
     <TransitionRoot as="template" :show="open">
         <Dialog class="relative z-10" @close="open = false">
             <div class="fixed inset-0" />
@@ -23,11 +23,14 @@
                     <div class="absolute inset-0 overflow-hidden">
                         <div class="fixed inset-y-0 right-0 flex max-w-full pl-10 pointer-events-none sm:pl-16">
                             <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700" enter-from="translate-x-full" enter-to="translate-x-0" leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0" leave-to="translate-x-full">
-                                <DialogPanel class="w-screen max-w-md pointer-events-auto">
+                                <DialogPanel class="w-screen max-w-md pointer-events-auto ">
                                 <div class="flex flex-col h-full overflow-y-auto bg-white shadow-xl">
-                                    <div class="p-6">
+                                    <div class="p-4">
                                         <div class="flex items-start justify-between">
-                                    <DialogTitle class="text-base font-semibold text-gray-900">알림</DialogTitle>
+                                    <DialogTitle class="flex items-center text-base font-semibold text-gray-900">
+                                        <p>알림</p>
+                                        <IconBell class="fill-t-lv2" />
+                                    </DialogTitle>
                                     <div class="flex items-center ml-3 h-7">
                                         <button type="button" class="relative text-gray-400 bg-white rounded-md hover:text-gray-500 focus-visible:ring-2 focus-visible:ring-indigo-500" @click="open = false">
                                             <span class="absolute -inset-2.5" />
@@ -37,7 +40,21 @@
                                     </div>
                                         </div>
                                     </div>
-                                <div class="border-b border-gray-200"></div>
+                                <div class="border-b border-gray-200">
+                                  
+                                </div>
+                                <div class="h-full bg-bg-lv2">
+                                   <ul>
+                                        <li class="border-b border-[#EAEDF2] p-4">
+                                            <div class="flex justify-between">
+                                                <h3 class="mb-2 text-base">발주가 반려되었습니다.</h3>
+                                                <p class="text-xs">2025.06.07</p>
+                                            </div>
+                                            <h5 class="text-sm text-t-lv2">반려사유</h5>
+                                            <h5 class="text-sm text-t-lv2">반려사유</h5>
+                                        </li>
+                                   </ul>
+                                </div>
                                 </div>
                             </DialogPanel>
                             </TransitionChild>

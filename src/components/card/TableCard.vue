@@ -69,9 +69,11 @@
             </section>
             <!-- 버튼 -->
             <!-- 버튼타입 // severity="" // primary(시스템),success(외주),secondary(시스템/외주 발주완료),warn(발주취소),danger(발주 취소 요청) -->
-            
-                <Button v-if="card['showButton'] && index === cards.length -1" 
-                    :label="card['buttonText']" :severity="card['buttonType']"  @click="getBtnProcess(card['buttonType'], card['edCd'])" class="w-full mt-4"/>
+                <div class="order-button">
+                    <Button v-if="card['showButton'] && index === cards.length -1" 
+                        :label="card['buttonText']" :severity="card['buttonType']"  @click="getBtnProcess(card['buttonType'], card['edCd'])" class="w-full mt-4"/>
+
+                </div>
             
         </div>
     </div>

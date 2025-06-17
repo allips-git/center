@@ -105,8 +105,8 @@
             </div>
             <div class="main-card-container-box-padding">
                 <div v-if="main['kakaoYn'] === 'N'">
-                    <p class="bg-yellow-100 rounded py-2 px-2.5 text-sm w-full ">일일이 세팅하지 말고, 꼭 필요한 예약 메시지를 자동으로 고객에게 전달해 보세요!</p>
-                    <Button label="플랜톡 사용하기" class="w-full mt-5" ></Button>
+                    <p class="bg-yellow-100 rounded py-2 px-2.5 text-10 w-full ">일일이 세팅하지 말고, 꼭 필요한 예약 메시지를 자동으로 고객에게 전달해 보세요!</p>
+                    <Button label="플랜톡 사용하기" class="w-full mt-5" @click="getPlanTalk"></Button>
                 </div>        
                 <ul v-else class="grid grid-cols-2 gap-2 *:bg-gray-50 *:p-3 *:rounded-lg *:flex *:flex-col *:gap-px text-xs mt-[0.875rem]">
                     <li>

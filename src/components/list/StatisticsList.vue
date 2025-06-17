@@ -1,5 +1,5 @@
 <template>
-    <li class="flex items-center justify-between py-[14px] border-b border-gray-100 first:mt-3">
+    <li class="flex items-center justify-between py-[14px] first:mt-3">
         <div class="flex flex-col text-gray-500">
             <p class="font-bold text-gray-900 text-13">{{ date }} </p>
             <div class="flex flex-col mt-1 text-xs !text-t-lv2">
@@ -8,7 +8,7 @@
                 <p>결제 대기 : {{ waitAmt }}원</p>
             </div>
         </div>
-        <p class="text-base text-green-500">{{ saleAmt }}원</p>
+        <p class="text-base font-medium text-green-500">{{ saleAmt }}원</p>
     </li>
 </template>
 

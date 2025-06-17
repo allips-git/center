@@ -89,7 +89,7 @@
         </div>
 
 
-        <div class="w-full bottom-modal-absol-box">
+        <div class="w-full bottom-modal-absol-box outmng-button">
             <Button label="저장" class="w-full" @click="getOutItemSave"/>
         </div>
     </div>
