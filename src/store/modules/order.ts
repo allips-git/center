@@ -142,6 +142,7 @@ export const useOrderStore = defineStore('order', {
                                             height  : order.height,
                                             proc    : order.proc === '001' ? '나비주름' : '평주름',
                                             split   : order.split === '001' ? '양개' : '편개',
+                                            qty     : order.cnt,
                                             size    : order.totalUnit + order.unitNm
                                         });
                                     break;

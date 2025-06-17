@@ -138,13 +138,7 @@ const getTab = async (stCd: string) => {
 
 onMounted(() => {
     acc.getAccAll();
-})
-
-const tabs = [
-  { name: '계약', href: '#', current: true },
-  { name: '결제', href: '#', current: false },
-
-]
+});
 
 </script>
 
