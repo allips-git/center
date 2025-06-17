@@ -121,6 +121,7 @@ export const useConMateStore = defineStore('conMate', {
                                             height  : esti.height,
                                             proc    : esti.proc === '001' ? '나비주름' : '평주름',
                                             split   : esti.split === '001' ? '양개' : '편개',
+                                            qty     : esti.cnt,
                                             size    : esti.totalUnit + esti.unitNm
                                         });
                                     break;
