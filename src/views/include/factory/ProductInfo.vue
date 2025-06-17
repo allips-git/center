@@ -1,6 +1,6 @@
 <template>
     <main>
-        <div class="">
+        <div class="p-4">
             <div class="flex gap-2 py-[10px]">
                 <IconField class="w-full table-search-input">
                     <InputIcon>

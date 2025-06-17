@@ -88,7 +88,7 @@
                     
                     <div class="">
                         <div class="flex items-center gap-1">
-                            <h2 class="text-sm">플랜톡</h2>
+                            <h2 class="text-xs">플랜톡</h2>
                             <span v-if="main['kakaoYn'] === 'N'" class="text-xs text-t-lv3">OFF</span>
                             <span v-else class="text-xs rounded-full text-sky-500">ON</span>
                             <!-- <span v-if="main['kakaoYn'] === 'N'" class="px-1.5 text-xs text-white bg-red-500 rounded-full">OFF</span>

@@ -49,7 +49,9 @@
 
         <section class="flex gap-2 *:w-full">
             <template v-if="props.info['stCd'] === '001' && props.info['useYn'] === 'Y'">
-                <Button label="제품추가" @click="getEstiAdd"/>
+                <div class="add-button">
+                    <Button label="제품추가" @click="getEstiAdd" size="large" class="w-full"/>
+                </div>
             </template>
             <template v-else-if="props.info['stCd'] === '012'">
                 <Button severity="secondary" label="상세보기" @click="getPayInfo"/>

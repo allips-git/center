@@ -47,7 +47,7 @@
 
 
         <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주 공장 저장" 
-            :modal=true position="center" class="custom-dialog-bottom" 
+            :modal=true position="center" class="custom-dialog-full" 
             @update:visible="getPopClose('outFactorySet', true)">
             <template #header>
                 <div class="modal-backheader">

@@ -25,6 +25,10 @@
 
   }
 
+  html.ios .esti-button {
+    top: calc(40% + env(safe-area-inset-top));
+  }
+
 
   html.ios .modal-backheader {
     padding-top: env(safe-area-inset-top); /* 내용 하단 패딩 */

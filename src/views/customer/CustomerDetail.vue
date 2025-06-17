@@ -92,7 +92,7 @@
             @update:visible="getPopClose(true, 'itemList')">
             <template #header>
                 <div class="modal-backheader">
-                    <Button @click="getPopClose(true, 'itemList')" severity="contrast" text icon="pi pi-times""/>
+                    <Button @click="getPopClose(true, 'itemList')" severity="contrast" text icon="pi pi-times"/>
                     <h2 class="modal-backheader-title">제품선택</h2>
                 </div>
             </template>
@@ -100,7 +100,7 @@
         </Dialog>
     
         <Dialog v-model:visible="popup['pop']['itemSet']" header="제품등록" 
-            :modal=true position="center" class="custom-dialog-bottom"
+            :modal=true position="center" class="custom-dialog-full"
             @update:visible="getPopClose(true, 'itemSet')">
             <template #header>
                 <div class="modal-fullheader change-button">

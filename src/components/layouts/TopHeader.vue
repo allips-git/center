@@ -13,14 +13,49 @@
             </Button>
         </div>
     </div>
+
     <h1 class="text-sm font-bold">{{ login['name'] }}</h1>
-            <IconBell class="fill-t-lv2"/>
-    <Popover class="" ref="notificationPopover" dismissable> 
+    <IconBell class="fill-t-lv2" @click="open  = true"/>
+    <TransitionRoot as="template" :show="open">
+        <Dialog class="relative z-10" @close="open = false">
+            <div class="fixed inset-0" />
+                <div class="fixed inset-0 overflow-hidden">
+                    <div class="absolute inset-0 overflow-hidden">
+                        <div class="fixed inset-y-0 right-0 flex max-w-full pl-10 pointer-events-none sm:pl-16">
+                            <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700" enter-from="translate-x-full" enter-to="translate-x-0" leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0" leave-to="translate-x-full">
+                                <DialogPanel class="w-screen max-w-md pointer-events-auto">
+                                <div class="flex flex-col h-full overflow-y-auto bg-white shadow-xl">
+                                    <div class="p-6">
+                                        <div class="flex items-start justify-between">
+                                    <DialogTitle class="text-base font-semibold text-gray-900">알림</DialogTitle>
+                                    <div class="flex items-center ml-3 h-7">
+                                        <button type="button" class="relative text-gray-400 bg-white rounded-md hover:text-gray-500 focus-visible:ring-2 focus-visible:ring-indigo-500" @click="open = false">
+                                            <span class="absolute -inset-2.5" />
+                                            <span class="sr-only">Close panel</span>
+                                            <XMarkIcon class="size-6" aria-hidden="true" />
+                                        </button>
+                                    </div>
+                                        </div>
+                                    </div>
+                                <div class="border-b border-gray-200"></div>
+                                </div>
+                            </DialogPanel>
+                            </TransitionChild>
+                        </div>
+                    </div>
+                </div>
+           
+        </Dialog>
+    </TransitionRoot>
+
+</header>
+<div class="">
+    <Popover class="custom-logout" ref="notificationPopover" dismissable> 
         <div class="flex flex-col">
             <Button :label="'로그아웃'" icon="pi pi-sign-out" severity="danger" text  size="small" @click="getLogOut"/>
         </div>
     </Popover>
-</header>
+</div>
     <Drawer v-model:visible="moSideHeader" header="" class="custom-drawer" position="left">
         <template #header>
             <div class="flex items-center justify-end w-full gap-2" >
@@ -42,11 +77,24 @@ import IconLogo from '@/components/icons/IconLogo.vue';
 import Button from 'primevue/button';
 import Popover from 'primevue/popover';
 import Drawer from 'primevue/drawer';
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  TransitionChild,
+  TransitionRoot,
+} from '@headlessui/vue'
+import { XMarkIcon } from '@heroicons/vue/24/outline'
 import SideHeader from '@/components/layouts/SideHeader.vue'
 import { useRouter } from 'vue-router';
 import { useLoginStore } from '@/store';
 import IconBell from '../icons/IconBell.vue';
 
+const open = ref(false);
 const router = useRouter();
 
 const emit = defineEmits<{

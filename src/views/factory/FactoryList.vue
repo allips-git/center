@@ -66,7 +66,7 @@
         header="공장코드 추가"
         :modal=true
         position="center"
-        class="custom-dialog-bottom backPopup"
+        class="custom-dialog-full"
         @update:visible="getPopClose(true, 'sysFactorySearch')">
         <template #header>
             <div class="modal-backheader">
@@ -88,7 +88,7 @@
         header="외주공장 등록"
         :modal=true
         position="center"
-        class="custom-dialog-bottom backPopup"
+        class="custom-dialog-full"
         @update:visible="getPopClose(true, 'outFactorySet')">
         <template #header>
             <div class="modal-backheader">

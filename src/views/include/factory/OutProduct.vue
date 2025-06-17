@@ -1,5 +1,5 @@
 <template>
-<main class="">
+<main class="p-4">
     <div class="">
         <div class="flex gap-2 mb-4">
             <IconField class="w-full table-search-input gray_input">
@@ -12,7 +12,7 @@
         <section class="">
             <div class="flex items-center justify-end">
                 <!-- <p class="text-lg font-bold text-indigo-600">블라인드</p> -->
-                 <div class="pl-2 pr-1 gap-2 text-10 py-[2.5px] text-p-lv4 rounded-full flex items-center justify-center bg-[#CDE8FD]" @click="getOutItemSet">
+                 <div class="pl-2 pr-1 gap-2 text-xs py-[2.5px] text-p-lv4 rounded-full flex items-center justify-center bg-[#CDE8FD]" @click="getOutItemSet">
                     <p class="pb-px">제품 추가</p>
                     <IconAddCircle class="size-[18px]"/>
                 </div>
@@ -26,7 +26,7 @@
 </main>
 
 <Dialog v-model:visible="popup['pop']['outFactoryItemSet']" header="외주공장 제품관리" 
-    :modal=true position="center" :dismissableMask="true" class="custom-dialog-bottom backPopup"
+    :modal=true position="center" :dismissableMask="true" class="custom-dialog-full"
     @update:visible="getPopupClose(true, 'outFactoryItemSet')">
     <template #header>
         <div class="modal-fullheader">

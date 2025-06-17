@@ -1,5 +1,5 @@
 <template>
-    <div class="p-5 !pb-20">
+    <div class="p-4 !pb-20">
         <div class="form-gap-box">
             <IftaLabel>
                 <IconField>

@@ -59,7 +59,7 @@
 
 <template>
     <BackHeader title="견적서" />
-    <main class="w-full pb-40 overflow-y-scroll md:pb-16" ref="mainRef">
+    <main class="w-full overflow-y-scroll pb-52 md:pb-16" ref="mainRef">
         <div class="md:grid md:grid-cols-3 md:gap-6 md:w-[100%] md:pb-52">
            
             <div class="md:col-span-1">

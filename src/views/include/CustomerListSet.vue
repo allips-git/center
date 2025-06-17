@@ -1,5 +1,5 @@
 <template>
-    <div class="bottom-modal-contents-box">
+    <div class="p-4 bottom-modal-contents-box">
         <IftaLabel class="label-input-box">
             <DatePicker showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd" v-model="client['info']['estiDt']" showTime hourFormat="24"/>
             <label>일자</label>

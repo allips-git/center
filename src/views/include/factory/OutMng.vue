@@ -7,7 +7,7 @@
         </div>
         <div class="relative flex items-center justify-center">
             <p class="w-[100px] flex-none text-13 text-t-lv3">제품 이름</p>
-            <div class="w-full">
+            <div class="w-full mng-input">
                 <InputText id="itemNm" v-model="factory['out']['itemInfo']['itemNm']" class="w-full row_input" autocomplete="off"/>
                 <small class="text-red-500">{{ factory['out']['itemMsg']['itemNm'] }}</small>
             </div>
@@ -17,7 +17,7 @@
         
         <div class="relative flex items-start justify-center">
             <p class="w-[100px] flex-none pt-2 text-13 text-t-lv3">색상 이름</p>
-            <div class="flex flex-col w-full gap-2">
+            <div class="flex flex-col w-full gap-2 mng-input">
                 <div v-for="(item, index) in factory['out']['itemInfo']['colors']" :key="index" class="">
                 <template v-if="item['delYn'] === 'N'">
                     <div class="flex gap-2">
@@ -37,10 +37,10 @@
 
         <h1 class="mt-4 font-bold">옵션 설정<span class="ml-0.5 text-red-500">*</span></h1>
 
-        <div class="relative flex items-center justify-center w-full text-t-lv3">
+        <div class="relative flex items-center justify-center w-full text-t-lv3 mng-input">
             <p class="w-[100px] flex-none">기본 단위</p>
-            <div class="w-full">
-                <div class="flex w-full gap-2">
+            <div class="w-full mng-input">
+                <div class="flex w-full gap-2 mng-input">
                     <InputNumber inputId="size"  v-model="factory['out']['itemInfo']['size']" class="w-full *:w-full *:!text-center font-bold row_input" autocomplete="off"/>
                     <div class="h-10 custom-select-arrow">
                         <Select class="w-full" 

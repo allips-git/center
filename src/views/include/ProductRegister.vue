@@ -1,5 +1,5 @@
 <template>
-<main>
+<main class="p-4">
     <div class="bottom-modal-contents-box !px-0 !pb-20 z-10">
         <!-- <div class="absolute !z-[100] flex justify-end top-[8px] right-[8px]">
             <Button label="제품 변경" size="small" outlined @click="getItemChange" class="!z-[100]"/>
@@ -10,7 +10,7 @@
         </div>
         <div class="gray-bar !my-0"></div>
         <!-- 입력 계산기 컴포넌트 -->
-        <div class="px-4 md:px-6">
+        <div class="">
             <!-- 회베 -->
             <CalcHebeSet v-if="esti['common']['unit'] === '001'"/>
             <!-- 폭 , 야드 -->
@@ -20,7 +20,7 @@
         </div>
 
         <!-- 옵션 더보기 -->
-        <section class="px-4 md:px-6">
+        <section class="md:px-6">
             <div class="w-full custom_accordion">
                 <Accordion value="null">
                     <AccordionPanel class="*:pb-0 " value="0" >
@@ -52,7 +52,7 @@
             </div>
         </section>
         <div class="gray-bar"></div>
-        <div class="px-4">
+        <div class="">
             <CalculateCard title="총 단위" :showtitle="true" 
                 :unit="esti['total']['totalUnitSize']+esti['common']['unitNm']"
                 :calcs="esti['totalAmtInfo']" totalTitle="총 금액" :totalAmt="esti['total']['totalSaleAmt'] + esti['total']['totalSaleTax']" :showUnit="true"/>

@@ -1,5 +1,5 @@
 <template>
-    <main class="!pb-32">
+    <main class="!pb-32 p-4">
         <div class="input-layout-box ">
             <div class="flex items-center justify-between w-full mb-2">
                 <h1 class="text-sm font-bold">제품명<span class="ml-1 text-sm text-red-500">*</span></h1>
@@ -34,10 +34,18 @@
                 <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
             </div>
 
+            <!-- <div class="relative flex items-center justify-center">
+                <p class="w-[100px] flex-none text-xs">판매 가격</p>
+                <InputNumber v-model="factory['sys']['itemInfo']['saleAmt']" class="w-full !min-w-0 !max-w-full box-border !text-right !pr-8"/>
+                <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
+            </div> -->
+
             <div class="relative flex items-center justify-center">
                 <p class="w-[100px] flex-none text-xs">판매 가격</p>
-                <InputText v-model="factory['sys']['itemInfo']['saleAmt']" class="w-full !min-w-0 !max-w-full box-border !text-right !pr-8"/>
-                <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
+                <div class="w-full">
+                    <InputNumber v-model="factory['sys']['itemInfo']['saleAmt']" class="w-full *:w-full row_input inputNumber-color"/>
+                </div>
+                <span class="absolute text-sm text-blue-500 right-4 top-2.5">원</span>
             </div>
 
             <div class="bottom-fixed-btn-box">
