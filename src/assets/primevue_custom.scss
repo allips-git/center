@@ -456,7 +456,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         border: none;
          padding: 10px;
         .p-button-label {
-            font-size: 13px;
+            font-size: 0.8175rem;
         }
     }
 }
@@ -468,10 +468,10 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 
 .order-button {
     width: 100%;
-    .p-button-success{
-        padding-block: 13.5px;
+    .p-button{
+        padding-block: 13.5px !important;
         .p-button-label {
-            font-size: 0.8175rem;
+            font-size: 0.8175rem !important;
         }
     }
 }
@@ -503,7 +503,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 
 .list-button {
     .p-button-label{
-        font-size: 13px !important;
+        font-size: 0.8175rem !important;
     }
 }
 
@@ -721,6 +721,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     .p-placeholder{
     font-size: 0.625rem !important;
     color: #7D7C78 !important;
+    font-weight: 400;
     }
     .p-select-label{
         padding-right: 5px;
@@ -735,6 +736,8 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .mini_input{
     border: 0;
     background-color: #F6F6F6 !important;
+    display: flex;
+    align-items: center;
     ::placeholder{
     color: #7D7C78 !important;
     font-size: 0.625rem !important;
@@ -744,11 +747,17 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         // padding-bottom: 10px;
         background-color: #F6F6F6;
         padding-block: 0;
+        ::placeholder{
+            color: #7D7C78 !important;
+        }
     }
 }
 
-.p-iconfield .p-inputtext:not(:first-child) {
-    padding-top: 4px;
+.p-iconfield .p-inputtext:not(:first-child){
+    color: #7D7C78 !important; 
+    ::placeholder{
+        color: #7D7C78 !important;
+    }
 }
 .p-iconfield .mini_input.p-inputtext:not(:first-child){
     // padding-inline-start: 35px !important;

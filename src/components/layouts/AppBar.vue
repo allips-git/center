@@ -16,7 +16,7 @@
   </div>
   
     
-    <Drawer v-model:visible="moSideHeader" header="" class="custom-drawer" position="right">
+    <Drawer v-model:visible="moSideHeader" header="" class="custom-drawer" position="right" closeIcon="false" showCloseIcon="false">
       <template #header>
         <!-- <div class="flex items-center w-full gap-2"></div> -->
       </template>

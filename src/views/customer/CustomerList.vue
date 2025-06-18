@@ -13,7 +13,7 @@
                             <InputIcon class="flex items-center justify-center !translate-y-1/4">
                                 <i class="pi pi-search !text-11 text-gray-600 !font-black" />
                             </InputIcon>
-                            <InputText v-model="client['search']" placeholder="이름,주소,전화번호로 검색" class="w-full !pl-[35px]" @keyup.enter="getList"/>
+                            <InputText v-model="client['search']" placeholder="이름,주소,전화번호로 검색" class="w-full !pl-[35px] !*:text-[#7D7C78]" @keyup.enter="getList"/>
                         </IconField>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
             <ul class="flex flex-col">
                 <li v-for="(item, index) in client['list']" :key="index" class="flex items-center gap-[14px] flex-none w-full px-4 py-[10px] md:px-6" @click="getInfo(item.clientCd)">
                     <!-- 상태 -->
-                    <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none font-bold text-white rounded-md text-11 md:text-sm w-[38px] h-[38px]  sm:size-10">
+                    <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none font-bold text-white rounded-md text-11 md:text-sm w-[11.4%] aspect-square">
                         {{ getStatusName(item.step) }}
                     </div>
                     <div class="flex justify-between w-full gap-2">

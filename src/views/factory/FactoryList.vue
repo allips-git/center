@@ -17,7 +17,7 @@
                        
                         <ul class="w-full">
                             <li class="flex gap-4 py-4 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
-                                    <img :src="getImage(item.imgUrl)" class="w-full max-w-[78px] h-[87px] rounded-lg object-cover" alt="">
+                                    <img :src="getImage(item.imgUrl)" class="w-[21.67%] aspect-[78/87] rounded-lg object-cover" alt="">
                                 
                                 <div class="w-[calc(100%-78px)]">
                                     <div class="flex justify-between">

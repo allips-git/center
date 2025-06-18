@@ -79,7 +79,7 @@
     @apply text-lg font-bold mb-3
   }
   .main-card-container-box{
-    @apply bg-white rounded-lg border border-gray-100 w-full shadow-custom sm:p-6 p-4
+    @apply bg-white rounded-lg border border-gray-100 w-full shadow-custom sm:p-6 py-3 px-[14px]
   }
   /* .main-card-container-box-padding{
     @apply 
