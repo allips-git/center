@@ -93,10 +93,10 @@
                                    </ul>
                                 </div>
                                 </div>
-                            </DialogPanel>
+                                </DialogPanel>
                             </TransitionChild>
                         </div>
-                      </div>
+                     
                     </div>
                     <div class="border-b border-gray-200"></div>
                     <div class="h-full bg-bg-lv2">
@@ -114,13 +114,9 @@
                         </li>
                       </ul>
                     </div>
-                  </div>
-                </DialogPanel>
-              </TransitionChild>
-          
-          </div>
-        </div>
-      </Dialog>
+                </div>
+               
+        </Dialog>
     </TransitionRoot>
   </header>
   <div class="">
