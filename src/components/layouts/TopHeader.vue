@@ -38,71 +38,68 @@
     <h1 class="text-sm font-bold">{{ login['name'] }}</h1>
     <div class="relative">
       <IconBell class="cursor-pointer fill-t-lv2" @click="open = true" />
-        <!-- <span v-if="main['alarmList'] && main['alarmList'].length > 0" class="absolute -top-1 -right-1 flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full">
+        <!-- <span v-if="main['alarmList'] && main['alarmList'].length > 0" class="absolute flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full -top-1 -right-1">
             {{ main['alarmList'].length }}
         </span> -->
     </div>
     <TransitionRoot as="template" :show="open">
-      <Dialog class="relative z-10" @close="open = false">
-        <div class="fixed inset-0" />
-        <div class="fixed inset-0 overflow-hidden">
-          <div class="absolute inset-0 overflow-hidden">
-            <div class="fixed inset-y-0 right-0 flex max-w-full pl-10 pointer-events-none sm:pl-16">
-              <TransitionChild
+        <Dialog class="relative z-10" @close="open = false">
+            <TransitionChild
                 as="template"
-                enter="transform transition ease-in-out duration-500 sm:duration-700"
-                enter-from="translate-x-full"
-                enter-to="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-700"
-                leave-from="translate-x-0"
-                leave-to="translate-x-full"
-              >
-                <DialogPanel class="w-screen max-w-md pointer-events-auto">
-                  <div class="flex flex-col h-full overflow-y-auto bg-white shadow-xl">
-                    <div class="p-4">
-                      <div class="flex items-start justify-between">
-                        <DialogTitle
-                          class="flex items-center text-base font-semibold text-gray-900"
-                        >
-                          <p>알림</p>
-                          <IconBell class="fill-t-lv2" />
-                        </DialogTitle>
-                        <div class="flex items-center ml-3 h-7">
-                          <button
-                            type="button"
-                            class="relative text-gray-400 bg-white rounded-md hover:text-gray-500 focus-visible:ring-2 focus-visible:ring-indigo-500"
-                            @click="open = false"
-                          >
-                            <span class="absolute -inset-2.5" />
-                            <span class="sr-only">Close panel</span>
-                            <XMarkIcon class="size-6" aria-hidden="true" />
-                          </button>
+                enter="ease-out duration-300"
+                enter-from="opacity-0"
+                enter-to="opacity-100"
+                leave="ease-in duration-200"
+                leave-from="opacity-100"
+                leave-to="opacity-0"
+            >
+                <div class="fixed inset-0 transition-opacity bg-black/50 backdrop-blur-sm" />
+            </TransitionChild>
+            <div class="fixed inset-0" />
+                <div class="fixed inset-0 overflow-hidden">
+                    <div class="absolute inset-0 overflow-hidden">
+                        <div class="fixed inset-y-0 right-0 flex max-w-full pl-10 pointer-events-none sm:pl-16">
+                            <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700" enter-from="translate-x-full" enter-to="translate-x-0" leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0" leave-to="translate-x-full">
+                                <DialogPanel class="w-screen max-w-md pointer-events-auto ">
+                                <div class="flex flex-col h-full overflow-y-auto bg-white shadow-xl">
+                                    <div class="p-4 top-header">
+                                        <div class="flex items-start justify-between">
+                                    <DialogTitle class="flex items-center text-base font-semibold text-gray-900">
+                                        <p>알림</p>
+                                        <IconBell class="fill-t-lv2" />
+                                    </DialogTitle>
+                                    <div class="flex items-center ml-3 h-7">
+                                        <button type="button" class="relative text-gray-400 bg-white rounded-md hover:text-gray-500 focus-visible:ring-2 focus-visible:ring-indigo-500" @click="open = false">
+                                            <span class="absolute -inset-2.5" />
+                                            <span class="sr-only">Close panel</span>
+                                            <XMarkIcon class="size-6" aria-hidden="true" />
+                                        </button>
+                                    </div>
+                                        </div>
+                                    </div>
+                                <div class="border-b border-gray-200">
+                                  
+                                </div>
+                                <div class="h-full bg-bg-lv2">
+                                   <ul>
+                                        <li v-for="(item, index) in main['alarmList']" :key="index" class="border-b border-[#EAEDF2] p-4">
+                                            <div class="flex justify-between">
+                                                <h3 class="mb-2 text-base">{{ item['faNm'] }}의 {{ item['title'] }}</h3>
+                                                <p class="text-xs">{{ item['regDt'] }}</p>
+                                            </div>
+                                            <h5 class="text-sm text-t-lv2">반려사유 : {{ item['memo'] }}</h5>
+                                        </li>
+                                   </ul>
+                                </div>
+                                </div>
+                                </DialogPanel>
+                            </TransitionChild>
                         </div>
-                      </div>
+                     
                     </div>
-                    <div class="border-b border-gray-200"></div>
-                    <div class="h-full bg-bg-lv2">
-                      <ul>
-                        <li
-                          v-for="(item, index) in main['alarmList']"
-                          :key="index"
-                          class="border-b border-[#EAEDF2] p-4"
-                        >
-                          <div class="flex justify-between">
-                            <h3 class="mb-2 text-base">{{ item['faNm'] }}의 {{ item['title'] }}</h3>
-                            <p class="text-xs">{{ item['regDt'] }}</p>
-                          </div>
-                          <h5 class="text-sm text-t-lv2">반려사유 : {{ item['memo'] }}</h5>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </DialogPanel>
-              </TransitionChild>
-            </div>
-          </div>
-        </div>
-      </Dialog>
+                </div>
+               
+        </Dialog>
     </TransitionRoot>
   </header>
   <div class="">
