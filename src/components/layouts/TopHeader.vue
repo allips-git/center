@@ -88,7 +88,6 @@
                                                 <p class="text-xs">2025.06.07</p>
                                             </div>
                                             <h5 class="text-sm text-t-lv2">반려사유</h5>
-                                            <h5 class="text-sm text-t-lv2">반려사유</h5>
                                         </li>
                                    </ul>
                                 </div>
