@@ -22,7 +22,7 @@
             <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
             }" class="!flex-col bottom-fixed-btn-box !pt-[18px] !gap-4" 
             >
-            <div class="flex justify-between w-full mb-1 text-base font-bold">
+            <div class="flex justify-between w-full text-base font-bold">
                     <p >총 제품</p>
                     <p class="text-p-lv4">{{ factory['out']['detail']['itemCnt'] }}개</p>
                 </div>

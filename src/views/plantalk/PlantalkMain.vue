@@ -12,7 +12,7 @@
                         </div>
                     </div>
                     <p class="mt-px text-11 !text-t-lv3">알림 <span class="font-bold text-p-lv4">{{ kakao['cnt'] }}</span>종을 사용중입니다.</p>
-                    <ul class="grid grid-cols-2 gap-[10px] text-sm mt-4 *:p-4 *:rounded-lg">
+                    <ul class="grid grid-cols-2 gap-[10px] text-sm mt-4 *:p-3 *:rounded-lg">
                         <li class="flex flex-col justify-between col-span-2 gap-1 bg-yellow-50">
                             <p class="text-11 !font-medium !text-t-lv0">플랜톡 잔여 포인트 {{ kakao['point'] }}P</p>
                             <p class="cursor-pointer text-11 !text-p-lv4">충전하기</p>
@@ -21,7 +21,7 @@
                         <li class="col-span-1 bg-gray-50" @click="goToPage('/plantalk/res', 'Y')">
                             <div class="flex items-center justify-between">
                                 <div class="flex flex-col gap-1 text-11">
-                                    <h5 class="!font-medium !text-t-lv1">예약된 알림</h5>
+                                    <h5 class="!font-bold !text-t-lv1">예약된 알림</h5>
                                     <p class="!text-t-lv3">상세보기</p>
                                 </div>
                                 <IconPlay class="size-[18px] fill-gray-400"/>
@@ -30,7 +30,7 @@
                         <li class="col-span-1 bg-gray-50" @click="goToPage('/plantalk/res', 'N')">
                             <div class="flex items-center justify-between">
                                 <div class="flex flex-col gap-1 text-11">
-                                    <h5 class="!font-medium !text-t-lv1">발송 메시지보기</h5>
+                                    <h5 class="!font-bold !text-t-lv1">발송 메시지보기</h5>
                                     <p class="!text-t-lv3">오늘<span class="ml-1 !text-p-lv4">{{ kakao['sendCnt'] }}건</span></p>
                                 </div>
                                 <IconPlay class="size-[18px] fill-gray-400"/>
@@ -61,10 +61,10 @@
             </div>                       
         </main>
         <Dialog v-model:visible="popup['pop']['kakaoDetail']" header="플랜톡 설정" 
-            :modal=true position="center" class="custom-dialog-bottom" 
+            :modal=true position="center" class="custom-dialog-full" 
             @update:visible="getPopupClose('kakaoDetail', true)">
             <template #header>
-                <div class="modal-backheader">
+                <div class="modal-fullheader">
                     <Button @click="getPopupClose(true, 'kakaoDetail')" severity="contrast" text icon="pi pi-times"/>
                     <h2 class="modal-backheader-title">플랜톡 설정</h2>
                 </div>

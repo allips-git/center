@@ -33,7 +33,7 @@
                 </li>
             </ul>
             <!-- 카운트 -->
-            <ul class="grid grid-cols-4 py-5 mx-4 border border-gray-200 rounded-[4px]">
+            <ul class="grid grid-cols-4 py-5 mx-4 border border-gray-200 rounded-[4px] mt-[10px]">
                 <li class="flex flex-col items-center justify-center border-r last:border-r-0">
                     <p class="text-lg font-bold text-blue-600">0</p>
                     <p class="text-xs text-gray-500">주문</p>
