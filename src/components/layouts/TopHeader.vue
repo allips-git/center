@@ -82,12 +82,12 @@
                                 </div>
                                 <div class="h-full bg-bg-lv2">
                                    <ul>
-                                        <li class="border-b border-[#EAEDF2] p-4">
+                                        <li v-for="(item, index) in main['alarmList']" :key="index" class="border-b border-[#EAEDF2] p-4">
                                             <div class="flex justify-between">
-                                                <h3 class="mb-2 text-base">발주가 반려되었습니다.</h3>
-                                                <p class="text-xs">2025.06.07</p>
+                                                <h3 class="mb-2 text-base">{{ item['faNm'] }}의 {{ item['title'] }}</h3>
+                                                <p class="text-xs">{{ item['regDt'] }}</p>
                                             </div>
-                                            <h5 class="text-sm text-t-lv2">반려사유</h5>
+                                            <h5 class="text-sm text-t-lv2">반려사유 : {{ item['memo'] }}</h5>
                                         </li>
                                    </ul>
                                 </div>
@@ -96,22 +96,6 @@
                             </TransitionChild>
                         </div>
                      
-                    </div>
-                    <div class="border-b border-gray-200"></div>
-                    <div class="h-full bg-bg-lv2">
-                      <ul>
-                        <li
-                          v-for="(item, index) in main['alarmList']"
-                          :key="index"
-                          class="border-b border-[#EAEDF2] p-4"
-                        >
-                          <div class="flex justify-between">
-                            <h3 class="mb-2 text-base">{{ item['faNm'] }}의 {{ item['title'] }}</h3>
-                            <p class="text-xs">{{ item['regDt'] }}</p>
-                          </div>
-                          <h5 class="text-sm text-t-lv2">반려사유 : {{ item['memo'] }}</h5>
-                        </li>
-                      </ul>
                     </div>
                 </div>
                
