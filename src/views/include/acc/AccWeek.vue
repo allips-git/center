@@ -6,7 +6,7 @@
                     <h1 class="font-bold text-18">{{ acc.year }}년 {{ acc.month }}월</h1>
                   
                 </section>
-                <AccInfo :saleAmt="getAmt(acc.weekSaleAmt)" :purcAmt="getAmt(acc.weekPurcAmt)" :margin="acc.monthMargin"/>
+                <AccInfo :saleAmt="getAmt(acc.weekSaleAmt)" :purcAmt="getAmt(acc.weekPurcAmt)" :margin="acc.weekMargin"/>
             </div>
         </section>
         
