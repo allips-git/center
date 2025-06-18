@@ -20,6 +20,7 @@ interface AlarmList {
     ikey    : number;
     faNm    : string;
     title   : string;
+    regDt   : string;
     memo    : string;
 }
 
@@ -90,6 +91,7 @@ export const useMainStore = defineStore('main', {
                         ikey    : item.ikey,
                         faNm    : item.faNm,
                         title   : title,
+                        regDt   : item.regDt,
                         memo    : item.memo
                     }
                 })
