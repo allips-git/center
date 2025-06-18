@@ -1,6 +1,6 @@
 <template>
     <main>
-        <section class="p-4 md:p-6">
+        <section class="p-4 pb-5 md:p-6">
             <div class="relative flex flex-col w-full gap-4">
                 <section class="flex items-center justify-between acc-datepicker">
                     <h1 class="font-bold text-18">{{ acc.year }}년</h1>
@@ -11,10 +11,10 @@
                 <AccInfo :saleAmt="getAmt(acc.monthSaleAmt)" :purcAmt="getAmt(acc.monthPurcAmt)" :margin="acc.monthMargin"/>
             </div>
         </section>
-           <div class="gray-bar"></div> 
+           <div class="gray-bar my-[10px]"></div> 
         <section>
-            <ul class="p-4 md:p-6">
-                <li class="pb-4 font-bold text-gray-500 border-b border-gray-200 text-lx ">
+            <ul class="px-4 md:p-6">
+                <li class="py-[10px] font-bold text-gray-500 border-b border-gray-200 text-lx ">
                     <p>{{ acc.year }}년</p>
                 </li>
                 <template v-for="(item, index) in acc['monthList']" :key="index">

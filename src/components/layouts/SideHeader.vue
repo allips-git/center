@@ -1,9 +1,9 @@
 <template>
-    <aside class="max-h-screen h-full bg-white md:border-r border-gray-200 w-[200px] flex-none sticky"
+    <aside class="max-h-screen h-full bg-white md:border-r border-gray-200 w-[200px] flex-none sticky top-header" 
     :class="drawerClass ? '!flex !w-[200px] !justify-start'  : 'hidden md:!flex ' ,
     setWideSide ? 'w-[180px] overflow-y-auto flex-none' : 'w-auto justify-center'"
     >
-        <ul class="flex flex-col w-full gap-4 px-3 "
+        <ul class="flex flex-col w-full gap-4 px-3 text-base"
         >
             <li class="">
                 <router-link class="flex justify-start gap-3 px-1 py-3" to="/">

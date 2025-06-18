@@ -2,9 +2,9 @@
 <main class="h-full overflow-y-scroll pb-14">
         <BackHeader title="회계" />
         <main class="w-full">
-            <section class="p-4 md:p-6">
+            <section class="p-4 pb-5 md:p-6">
             <div class="relative w-full bg-white ">
-                <ul>
+                <ul class="space-y-[14px]">
                     <li class="flex items-center gap-4">
                         <p class="text-13 !text-t-lv3">매출</p>
                         <p class="font-bold text-18 text-t-lv1">{{ getAmt(acc['mainHeader']['saleAmt']) }}원</p>
@@ -24,7 +24,7 @@
             </div>
         </section>
 
-        <div class="gray-bar"></div>
+        <div class="my-[10px] gray-bar"></div>
   
  
    
@@ -32,7 +32,7 @@
 
         <section class="w-full custom-right-tab">
             <Tabs value="0" class="w-full">
-                <TabList class="justify-end pt-2">
+                <TabList class="justify-end">
                     <Tab value="0" class="tab-header" @click="getTab('003')">계약</Tab>
                     <Tab value="1" class="tab-header" @click="getTab('012')">결제</Tab>
                 </TabList>
@@ -41,8 +41,8 @@
                         <div class="">
                             <div>
                                 <template v-for="(date, dIndex) in acc.dateList" :key="dIndex">
-                                    <div class="flex items-center gap-2">
-                                        <p class="flex-none text-desc">{{ date['stDt'] }}</p>
+                                    <div class="flex items-center h-6 gap-2">
+                                        <p class="flex-none text-xs">{{ date['stDt'] }}</p>
                                         <div class="w-full h-px bg-gray-200"></div>
                                     </div>
                                     <template v-for="(item, index) in acc.list" :key="index">

@@ -1,24 +1,25 @@
 <template>
-    <div class="flex flex-col gap-4 p-4 md:gap-6">
-        <div class="flex flex-col gap-5">
-            <div class="flex gap-2">
-                <Select v-model="product['fcCd']" placeholder="브랜드 선택" :options="product['option']" optionLabel="label" optionValue="value" @change="getList" class="*:!text-xs md:*:!text-sm"/> 
-                <IconField class="w-full table-search-input">
+    <div class="flex flex-col px-4 md:gap-6">
+        <div class="flex flex-col gap-5 py-[10px]">
+            <div class="flex gap-2 mini_select">
+                <Select v-model="product['fcCd']" placeholder="브랜드 선택" :options="product['option']" optionLabel="label" optionValue="value" @change="getList" class="md:*:!text-sm"/> 
+                <IconField class="w-full h-8 table-search-input mini_input">
                     <InputIcon class="z-10">
                         <i class="z-10 pi pi-search" />
                     </InputIcon>
                     <InputText v-model="product['search']" placeholder="제품명 검색" class="w-full" @keyup.enter="getList"/>
                 </IconField>
             </div>
+           
         </div>
-        <div class="flex w-full gap-[10px] product-button">
+        <div class="flex w-full gap-[10px] product-button py-2">
             <Button label="실측 불러보기" size="small"/>
             <Button label="커튼 실측" size="small" @click="getExItem('EX000001')"/>
             <Button label="블라인드 실측" size="small" @click="getExItem('EX000002')"/>
         </div>
         <ul class="flex flex-col">
             <li v-for="(item, index) in product['list']" :key="index" class="border-b">
-                <div class="flex flex-col items-center gap-1 py-4" @click="toggleSubList(index, item['itemCd'])">
+                <div class="flex flex-col items-center gap-1 py-6" @click="toggleSubList(index, item['itemCd'])">
                     <div :for="item['itemCd']" class="items-center w-full">
                         <!-- <RadioButton :inputId="item['itemCd']" v-model="product['itemCd']" :value="item['itemCd']"/> -->
                         <label :for="item['itemCd']" class="flex items-center font-bold">

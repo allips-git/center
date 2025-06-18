@@ -4,15 +4,15 @@
             <li>
                 <h1 class="flex items-center gap-2 font-bold text-13" ><span class="size-1.5 rounded-full bg-green-500 block"></span>{{ itemNm }}</h1>
             </li>
-            <li class="text-desc">
+            <li class="text-xs text-t-lv3">
                 <p>단위</p>
                 <b class="!text-gray-900">{{ size }}{{ unitNm }}</b>
             </li>
-            <li class="text-desc">
+            <li class="text-xs text-t-lv3">
                 <p>판매</p>
                  <b class="text-red-500">{{ getAmt(saleAmt) }}<span class="text-xs font-normal ml-0.5">원</span></b> 
             </li>
-            <li class="text-desc">
+            <li class="text-xs text-t-lv3">
                 <p>매입</p>
                 <b class="text-blue-600">{{ getAmt(purcAmt) }}<span class="text-xs font-normal ml-0.5">원</span></b> 
             </li>

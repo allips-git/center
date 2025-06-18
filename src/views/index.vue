@@ -16,7 +16,7 @@
     <main class="grid w-full grid-cols-12 gap-x-[10px] gap-y-[14px] px-4 md:gap-6 md:px-0">
     
         <section class="col-span-12">
-            <div class="flex flex-col gap-4 main-card-container-box">
+            <div class="flex flex-col gap-3 main-card-container-box">
                 <div class="main-card-tilte-box">
                     <h2 class="flex items-center justify-center text-base">전체 고객</h2>
                     <div class="flex items-center gap-3.5">
