@@ -43,7 +43,7 @@ const dateClick = async (info) => {
         previousDate.value = selectedDate.value; // 이전 날짜 저장
         // 선택한 날짜 저장
         selectedDate.value = info.dateStr;
-        getPopupOpen('calendarDetail');
+        // getPopupOpen('calendarDetail');
     }
 };
 

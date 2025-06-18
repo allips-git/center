@@ -15,7 +15,7 @@
     </div>
 
     <h1 class="text-sm font-bold">{{ login['name'] }}</h1>
-    <IconBell class="cursor-pointer fill-t-lv2" @click="open  = true"/>
+    <IconBell class="cursor-pointer fill-t-lv2" @click="open=true"/>
     <TransitionRoot as="template" :show="open">
         <Dialog class="relative z-10" @close="open = false">
             <div class="fixed inset-0" />
@@ -45,13 +45,12 @@
                                 </div>
                                 <div class="h-full bg-bg-lv2">
                                    <ul>
-                                        <li class="border-b border-[#EAEDF2] p-4">
+                                        <li v-for="(item, index) in main['alarmList']" :key="index" class="border-b border-[#EAEDF2] p-4">
                                             <div class="flex justify-between">
-                                                <h3 class="mb-2 text-base">발주가 반려되었습니다.</h3>
-                                                <p class="text-xs">2025.06.07</p>
+                                                <h3 class="mb-2 text-base">{{ item['faNm'] }}의 {{ item['title'] }}</h3>
+                                                <p class="text-xs">{{ item['regDt'] }}</p>
                                             </div>
-                                            <h5 class="text-sm text-t-lv2">반려사유</h5>
-                                            <h5 class="text-sm text-t-lv2">반려사유</h5>
+                                            <h5 class="text-sm text-t-lv2">반려사유 : {{ item['memo'] }}</h5>
                                         </li>
                                    </ul>
                                 </div>
@@ -108,7 +107,7 @@ import {
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import SideHeader from '@/components/layouts/SideHeader.vue'
 import { useRouter } from 'vue-router';
-import { useLoginStore } from '@/store';
+import { useLoginStore, useMainStore } from '@/store';
 import IconBell from '../icons/IconBell.vue';
 
 const open = ref(false);
@@ -126,6 +125,7 @@ function handleClick() {
 const moSideHeader = ref(false);
 
 const login = useLoginStore();
+const main  = useMainStore();
 
 const getLogOut = () => {
     login.getLogout();

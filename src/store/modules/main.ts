@@ -16,12 +16,20 @@ interface MsgList {
     description : string;
 }
 
+interface AlarmList {
+    ikey    : number;
+    faNm    : string;
+    title   : string;
+    memo    : string;
+}
+
 interface State {
     clientCnt  : number;
     stCnt      : StCnt[];
     factoryCnt : number;
     kakaoYn    : string;
     msgList    : MsgList[];
+    alarmList  : AlarmList[];
 }
 
 const getStCnt = (): StCnt[] => {
@@ -41,7 +49,8 @@ export const useMainStore = defineStore('main', {
         stCnt      : getStCnt(),
         factoryCnt : 0,
         kakaoYn    : 'N',
-        msgList    : []
+        msgList    : [],
+        alarmList  : []
     }),
     actions: {
         async getData()
@@ -67,11 +76,33 @@ export const useMainStore = defineStore('main', {
                 this.factoryCnt = res.data['factoryCnt'];
                 this.kakaoYn    = res.data['kakaoYn'];
                 this.msgList    = res.data['msgList'];
+                this.alarmList  = res.data['alarmList'].map(item => {
+                    let title = '';
+
+                    switch(item['state'])
+                    {
+                        case 'D':
+                            title = '발주서가 반려되었습니다.';
+                        break;
+                    }
+
+                    return {
+                        ikey    : item.ikey,
+                        faNm    : item.faNm,
+                        title   : title,
+                        memo    : item.memo
+                    }
+                })
             }
             catch(e)
             {
                 console.log(e);
             }
         }
+    },
+    persist: {
+        key     : 'main',
+        storage : localStorage,
+        paths   : ['alarmList']
     }
 });
