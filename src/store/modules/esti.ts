@@ -637,10 +637,12 @@ export const useEstiStore = defineStore('esti', {
                     height : this.common['height'],
                     handle : i === 0 ? 'L' : 'R',
                     size   : getHebe({
-                        width   : specInfo[i] !== undefined ? specInfo[i]['width'] : '',
-                        height  : Number(this.common['height']),
-                        size    : Number(this.common['unitSize']),
-                        roundGb : this.common['roundGb']
+                        width       : specInfo[i] !== undefined ? specInfo[i]['width'] : '',
+                        height      : Number(this.common['height']),
+                        minWidth    : this.blind['minWidth'],
+                        minHeight   : this.blind['minHeight'],
+                        size        : Number(this.common['unitSize']),
+                        roundGb     : this.common['roundGb']
                     })
                 }
         
@@ -666,10 +668,12 @@ export const useEstiStore = defineStore('esti', {
                 {
                     this.blind['divSpec'][i]['width'] = (i === (division-1) ? lastWidth : divisionWidth);
                     this.blind['divSpec'][i]['size']  = getHebe({
-                        width   : i === (division-1) ? lastWidth : divisionWidth,
-                        height  : this.common['height'],
-                        size    : 0,
-                        roundGb : this.common['roundGb']
+                        width       : i === (division-1) ? lastWidth : divisionWidth,
+                        height      : this.common['height'],
+                        minWidth    : this.blind['minWidth'],
+                        minHeight   : this.blind['minHeight'],
+                        size        : Number(this.common['unitSize']),
+                        roundGb     : this.common['roundGb']
                     })
                 }
             }
@@ -677,10 +681,12 @@ export const useEstiStore = defineStore('esti', {
         getDivBlindWidth(index: number)
         {
             this.blind['divSpec'][index]['size']  = getHebe({
-                width   : this.blind['divSpec'][index]['width'],
-                height  : Number(this.common['height']),
-                size    : 0,
-                roundGb : this.common['roundGb']
+                width       : this.blind['divSpec'][index]['width'],
+                height      : Number(this.common['height']),
+                minWidth    : this.blind['minWidth'],
+                minHeight   : this.blind['minHeight'],
+                size        : Number(this.common['unitSize']),
+                roundGb     : this.common['roundGb']
             });
 
             const total = this.blind['divSpec'].reduce((acc, val) => acc + Number(val['width']), 0);

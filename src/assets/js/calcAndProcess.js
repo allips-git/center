@@ -15,10 +15,12 @@ export function getHebeCalc(common, blind)
     if(division === 1)
     {
         const data = {
-            width   : Number(common['width']),
-            height  : Number(common['height']),
-            size    : Number(common['unitSize']),
-            roundGb : common['roundGb']
+            width       : Number(common['width']),
+            height      : Number(common['height']),
+            minWidth    : Number(blind['minWidth']),
+            minHeight   : Number(blind['minHeight']),
+            size        : Number(common['unitSize']),
+            roundGb     : common['roundGb']
         };
 
         hebe.push(getHebe(data));
