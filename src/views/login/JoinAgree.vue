@@ -18,7 +18,6 @@
                             <Checkbox class="custom-circle-check" v-model="join['agree']['age']['yn']" inputId="age" :binary="true"></Checkbox>
                             <label for="age" class="text-11 text-t-lv2">[필수] 만 14세 이상입니다.</label>
                         </div>
-                        <!-- <IconPlay class="fill-gray-500"/> -->
                     </li>
 
                     <li class="text-11 text-t-lv2">
@@ -47,7 +46,11 @@
                     <small class="text-red-500">{{ msg }}</small>
                 </ul>
                 <div class="mobile-fiex-bottom">
-                    <Button label="동의하고 계속하기" class="w-full *:!text-13 !bg-[#ebebeb] *:text-t-lv1" @click="getNext"/>
+                    <Button
+                        label="동의하고 계속하기"
+                        class="w-full *:!text-13 *:text-t-lv1"
+                        :class="getAgreeCheck() ? '!bg-p-lv4 *:text-white' : '!bg-[#ebebeb]'"
+                        @click="getNext" />
                 </div>
             </div>
         </template>
@@ -76,6 +79,7 @@ const getAllCheck = (value: boolean) => {
 const getAgreeCheck = () => {
     return (join['agree']['age']['yn'] && join['agree']['use']['yn'] && join['agree']['info']['yn']);
 };
+
 
 const getNext = () => {
     if(getAgreeCheck())

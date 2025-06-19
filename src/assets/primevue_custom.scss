@@ -633,6 +633,15 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
+.next-button{
+    .p-button{
+        padding-block: 12px;
+    }
+    .p-button-label{
+        font-size: 0.875rem !important;
+    }
+}
+
 .bottom-modal-absol-box {
     .p-button{
         padding: 14px 0px;

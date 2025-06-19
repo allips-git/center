@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col px-4 ">
+    <div class="flex flex-col px-4 py-1">
         <div class="flex flex-col gap-5 py-[10px] md:pt-4">
             <div class="flex gap-2 mini_select">
                 <Select v-model="product['fcCd']" placeholder="브랜드 선택" :options="product['option']" optionLabel="label" optionValue="value" @change="getList" class="md:*:!text-sm !h-10 choice-select"/> 

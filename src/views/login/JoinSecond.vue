@@ -25,8 +25,8 @@
                         </IftaLabel>
 
                         <div class="flex flex-col gap-2">
-                            <label>사업자 구분</label>
-                            <SelectButton v-model="join['center']['gb']" :options="data['einGb']" optionLabel="name" optionValue="value" />
+                            <label class="text-base">사업자 구분</label>
+                            <SelectButton v-model="join['center']['gb']" :options="data['einGb']" optionLabel="name" optionValue="value" size="small" />
                         </div>
 
                         <IftaLabel class="w-full">
@@ -235,12 +235,12 @@ const getResult = async () => {
     }
 }
 
-onMounted(()=>{
-    if(!join.certified)
-    {
-        router.go(-1);
-    }
-})
+// onMounted(()=>{
+//     if(!join.certified)
+//     {
+//         router.go(-1);
+//     }
+// })
 </script>
 
 <style lang="scss" scoped>

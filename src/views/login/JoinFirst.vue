@@ -46,8 +46,9 @@
                         </IftaLabel>
                         <small v-if="join['msg']['einFile'] !== ''" class="vali_text">{{ join['msg']['einFile'] }}</small>
                         <small v-if="join['msg']['einFile'] !== ''" class="vali_text-tran">none</small>
-
-                        <Button label="다음" class="w-full" @click="getNext"/>
+                        <div class="next-button">
+                            <Button label="다음" class="w-full" @click="getNext"/>
+                        </div>
                     </div>
                     <!-- <div class="mobile-fiex-bottom">
                         <Button label="다음" class="w-full" @click="getNext"/>
@@ -146,12 +147,12 @@ const getNext = async () => {
     }
 }
 
-onMounted(()=>{
-    if(!join.certified)
-    {
-        router.go(-1);
-    }
-})
+// onMounted(()=>{
+//     if(!join.certified)
+//     {
+//         router.go(-1);
+//     }
+// })
 </script>
 
 <style lang="scss" scoped>
