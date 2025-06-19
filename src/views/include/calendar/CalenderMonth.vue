@@ -1,6 +1,10 @@
 <template>
-    <main class="relative h-[100%-48px] month-custom">
-        <div class="flex justify-center pb-3.5 acc-datepicker">
+    <!-- <main class="relative h-[100%-48px] month-custom"> -->
+    <main class="flex flex-col h-screen month-custom">
+
+        <!-- <div class="flex justify-center pb-3.5 acc-datepicker"> -->
+        <div class="flex justify-center pb-3.5 acc-datepicker shrink-0">
+
             <DatePicker v-model="calendar['searchDt']" view="month" dateFormat="yy.mm'월'" class="custom-datapicker *:!text-12 !max-w-[120px] *:!pl-1 *:!pr-1.5" 
                 :locale="locale" showIcon fluid iconDisplay="input" @update:modelValue="getUpdate">
                 <template #inputicon="slotProps" class="!pl-1">
@@ -8,7 +12,10 @@
                 </template>
             </DatePicker>
         </div>
-        <div class="h-[calc(100vh-147px)] w-full md:h-[calc(100vh-171px)]">
+        <!-- <div class="h-[calc(100vh-147px)] w-full md:h-[calc(100vh-171px)]">
+            <FullCalendar :options="{ ... calendarOptions, events : calendar['monthEvents']}" ref="fullCalendar"/>
+        </div> -->
+        <div class="flex-1 overflow-hidden">
             <FullCalendar :options="{ ... calendarOptions, events : calendar['monthEvents']}" ref="fullCalendar"/>
         </div>
     </main>
@@ -64,8 +71,10 @@ const calendarOptions = {
     plugins             : [dayGridPlugin, interactionPlugin],
     initialView         : 'dayGridMonth',
     locale              : koLocale,
-    height              : '100%',
+    height              : 'parent',
     droppable           : true,
+    contentHeight : 'auto',
+    expandRows : 'true',
     editable            : true,
     selectable          : true,
     dayMaxEvents        : true,
