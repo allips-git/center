@@ -80,16 +80,28 @@ export function getEa(data)
  * @description 가로,세로 길이에 따른 회배 계산
  * @author 김원명, @version 1.0, @last date 2023/10/06
  * @data = {
- *      width  	: '가로',
- *      height 	: '세로',
- *      size   	: '규격',
- * 		roundGb	: '반올림 구분'
+ *      width  	    : '가로',
+ *      height 	    : '세로',
+ *      minWidth    : '최소 금액 가로',
+ *      minHeight   : '최소 금액 세로',
+ *      size   	    : '규격',
+ * 		roundGb	    : '반올림 구분'
  * }
  * @return 계산된 회배 값
  * */
 export function getHebe(data) 
 {
-	let hebe = (data['width'] * 0.01) * (data['height'] * 0.01);
+    const widthValue    = Number(data['width']);
+    const heightValue   = Number(data['height']);
+    const minWidth      = Number(data['minWidth']);
+    const minHeight     = Number(data['minHeight']);
+
+    const width     = minWidth > widthValue ? minWidth : widthValue;
+    const height    = minHeight > heightValue ? minHeight : heightValue;
+
+    let hebe = 0;
+
+	hebe = (width * 0.01) * (height * 0.01);
 
 	if(hebe > Number(data['size']))
     {
