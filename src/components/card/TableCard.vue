@@ -82,7 +82,7 @@
 <script setup lang="ts">
 import Tag from 'primevue/tag';
 import { useConfirm } from "primevue/useconfirm";
-import { defineProps } from 'vue'
+import { ref, defineProps } from 'vue'
 import { useRouter } from 'vue-router';
 import { useClientStore, useEstiStore, useOrderStore } from '@/store';
 import { getCommas } from "@/assets/js/function";
@@ -95,6 +95,7 @@ const router    = useRouter();
 const client    = useClientStore();
 const esti      = useEstiStore();
 const order     = useOrderStore();
+const status    = ref(false);
 
 const { getPopupOpen } = usePopup();
 
@@ -124,32 +125,39 @@ const getDelete = (edCd: string) => {
                 edCd     : edCd
             }
 
-            try
-            {
-                const instance  = await getAxiosData();
-                const res       = await instance.post(`https://data.planorder.kr/estiV1/getDelete`, params);
+            status.value = true;
 
-                if(res.data['cnt'] === 0)
-                {
-                    router.go(-1);
-                }
-                else
-                {
-                    esti.getList();
-                }
-            }
-            catch(e)
+            if(status.value)
             {
-                console.log(e);
-                if(e.response.status === 401)
+                try
                 {
-                    getTokenOut();
+                    const instance  = await getAxiosData();
+                    const res       = await instance.post(`https://data.planorder.kr/estiV1/getDelete`, params);
+
+                    if(res.data['cnt'] === 0)
+                    {
+                        router.go(-1);
+                    }
+                    else
+                    {
+                        esti.getList();
+                    }
                 }
-                else
+                catch(e)
                 {
-                    alert('제품 삭제 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                    console.log(e);
+                    if(e.response.status === 401)
+                    {
+                        getTokenOut();
+                    }
+                    else
+                    {
+                        alert('제품 삭제 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                    }
                 }
             }
+
+            status.value = false;
         }
     });
 }
@@ -198,33 +206,40 @@ const getBtnProcess = async (type: string, edCd: string) => {
                         edCd : order['edCd']
                     }
 
-                    try
+                    status.value = true;
+
+                    if(status.value)
                     {
-                        const instance  = await getAxiosData();
-                        await instance.post(`https://data.planorder.kr/orderV1/getSysOrderCancel`, params);
-                        await order.getList({ emCd : esti['emCd'] });
-                    }
-                    catch(e)
-                    {
-                        console.log(e);
-                        if(e.response.status === 401)
+                        try
                         {
-                            getTokenOut();
+                            const instance  = await getAxiosData();
+                            await instance.post(`https://data.planorder.kr/orderV1/getSysOrderCancel`, params);
+                            await order.getList({ emCd : esti['emCd'] });
                         }
-                        else
+                        catch(e)
                         {
-                            switch(e.response.data['code'])
+                            console.log(e);
+                            if(e.response.status === 401)
                             {
-                                case 4000:
-                                    alert('발주 취소 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
-                                break;
-                                case 4100:
-                                    alert('이미 승인 처리된 발주서입니다. 발주 취소 요청 메뉴를 이용해주세요.');
-                                    order.getList({ emCd : esti['emCd'] });
-                                break;
+                                getTokenOut();
+                            }
+                            else
+                            {
+                                switch(e.response.data['code'])
+                                {
+                                    case 4000:
+                                        alert('발주 취소 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                                    break;
+                                    case 4100:
+                                        alert('이미 승인 처리된 발주서입니다. 발주 취소 요청 메뉴를 이용해주세요.');
+                                        order.getList({ emCd : esti['emCd'] });
+                                    break;
+                                }
                             }
                         }
                     }
+
+                    status.value = false;
                 }
             });
         break;

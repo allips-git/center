@@ -47,7 +47,7 @@
         </div>
     </div>
     <div class="bottom-fixed-btn-box">
-        <Button label="계약서 이동" size="large" @click="getConMove"></Button>
+        <Button label="계약서 이동" size="large" :disabled="status" @click="getConMove"></Button>
     </div>
 </template>
 
@@ -56,7 +56,7 @@ import InputNumber from 'primevue/inputnumber';
 import DatePicker from 'primevue/datepicker';
 import Textarea from 'primevue/textarea';
 import { useConfirm } from "primevue/useconfirm";
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { useDataStore, useClientStore, useEstiStore, useContractStore } from '@/store';
 import { getAxiosData, getTokenOut, getConvertDate } from '@/assets/js/function';
@@ -69,6 +69,7 @@ const data      = useDataStore();
 const client    = useClientStore();
 const esti      = useEstiStore();
 const con       = useContractStore();
+const status    = ref(false);
 
 const { getPopupClose } = usePopup();
 
@@ -115,6 +116,8 @@ const getConMove = () => {
 
             console.log(params);
 
+            status.value = true;
+
             try
             {
                 const instance  = await getAxiosData();
@@ -141,6 +144,8 @@ const getConMove = () => {
                     }
                 }
             }
+
+            status.value = false;
         }
     });
 }

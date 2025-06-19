@@ -52,7 +52,7 @@
             </div>
         </section>
         <div class="mt-2 btn-2-layout-box bottom-fixed-btn-box">
-            <Button label="결제 완료" @click="getPay"/>
+            <Button label="결제 완료" :disabled="status" @click="getPay"/>
         </div>
     </div>
     
@@ -79,6 +79,7 @@ import InputNumber  from 'primevue/inputnumber';
 import Textarea from 'primevue/textarea';
 import SaleAmountPop from '@/components/modal/SaleAmountPop.vue'
 import AddAmountPop from '@/components/modal/addAmountPop.vue'
+import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 import { useDataStore, usePopupStore, useEstiStore, usePayStore } from '@/store';
 import { getAmt } from '@/assets/js/function';
@@ -90,6 +91,7 @@ const data      = useDataStore();
 const popup     = usePopupStore();
 const esti      = useEstiStore();
 const pay       = usePayStore();
+const status    = ref(false);
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
@@ -169,6 +171,8 @@ const getPay = () => {
 
             console.log(params);
 
+            status.value = true;
+
             try
             {
                 const instance  = await getAxiosData();
@@ -185,9 +189,11 @@ const getPay = () => {
                 }
                 else
                 {
-                    alert('결제제 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                    alert('결제 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
                 }
             }
+
+            status.value = false;
         }
     });
 }
