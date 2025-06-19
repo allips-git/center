@@ -2,16 +2,22 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 
 interface State {
-    token   : null | string;
-    name    : string;
-    rank    : C | M | B | C;
+    token       : null | string;
+    ceNm        : string;
+    name        : string;
+    addr        : string;
+    addrDetail  : string;
+    rank        : C | M | B | C;
 }
 
 export const useLoginStore = defineStore('login', {
     state: (): State => ({
-        token   : null,
-        name    : '',
-        rank    : ''
+        token       : null,
+        ceNm        : '',
+        name        : '',
+        addr        : '',
+        addrDetail  : '',
+        rank        : ''
     }),
     actions: {
         async getLogin(params) {
@@ -23,12 +29,26 @@ export const useLoginStore = defineStore('login', {
                 this.name  = res.data['name'];
                 this.rank  = res.data['rank'];
 
-                return true;
+                return 200;
             }
             catch(e)
             {
                 console.log(e);
-                return false;
+                if(e.response.data.code === 4100)
+                {
+                    this.token      = null;
+                    this.ceNm       = e.response.data.data['ceNm'];
+                    this.name       = e.response.data.data['userNm'];
+                    this.addr       = e.response.data.data['addr'];
+                    this.addrDetail = e.response.data.data['addrDetail'];
+                    this.rank       = '';
+
+                    return 4100;
+                }
+                else
+                {
+                    return 4000;
+                }
             }
         },
         async getLogout()
