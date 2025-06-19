@@ -1,6 +1,6 @@
 <template>
     <main class="h-full overflow-y-scroll md:pb-[0] pb-[56px]">
-        <BackHeader title="일정"/>
+        <BackHeader title="일정" class=""/>
         <div class="md:grid items-start justify-start md:grid-cols-[1fr_400px] md:h-[calc(100vh-108px)]">
             <CalenderMonth class="flex-grow md:w-full md:block"/>
             <CalenderDay class="flex-grow hidden border-l border-gray-200 md:w-full md:block md:max-w-[400px] md:h-full" />
