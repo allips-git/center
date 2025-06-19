@@ -16,15 +16,7 @@
   </div>
   
     
-    <Drawer v-model:visible="moSideHeader" header="" class="custom-drawer" position="right" closeIcon="false" showCloseIcon="false">
-      <template #header>
-        <!-- <div class="flex items-center w-full gap-2"></div> -->
-      </template>
-      <SideHeader 
-        :drawerClass="true" 
-        @closeDrawer="moSideHeader = false"
-      />
-    </Drawer> 
+   
    
   </template>
   
@@ -38,6 +30,7 @@
   import IconBarGraph from '@/components/icons/IconBarGraph.vue'
   import IconArrowGraph from '@/components/icons/IconArrowGraph.vue'
   import IconMore from '@/components/icons/IconMore.vue'
+import IconSetting from '../icons/IconSetting.vue';
   
   const moSideHeader = ref(false); // 기본값을 false로 설정
   
@@ -60,18 +53,14 @@
   { id: 2, label: '캘린더', link: '/calendar', icon: markRaw(IconCalendar) }, 
   { id: 3, label: '회계', link: '/acc', icon: markRaw(IconBarGraph) },
   { id: 4, label: '통계', link: '/average', icon: markRaw(IconArrowGraph) },
-  { id: 5, label: '더보기', icon: markRaw(IconMore) },
+  { id: 5, label: '설정', link:'/setting', icon: markRaw(IconSetting) },
 ]);
   
   // 클릭 핸들러
   const handleClick = (item: { id: number; link: string; label: string }) => {
-    if (item.id === 5) {
-      // id가 5인 항목('더보기') 클릭 시
-      moSideHeader.value = true; // Drawer 열기
-    } else {
-      // 나머지 항목은 링크 이동
+   
       navigateTo(item.link);
-    }
+    
   };
   
   // 링크로 이동

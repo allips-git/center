@@ -3,7 +3,7 @@
         <BackHeader title="명세서" />
         <Button label="제품 추가 등록" size="small" class="esti-button" @click="getEstiAdd"/>
     </div>
-    <main class="main-bottom-fixed-pd pb-[121px]" ref="mainRef">
+    <main class="pb-52 main-bottom-fixed-pd" ref="mainRef">
         <section class="p-4">
             <div class="flex flex-col gap-5">
                 <TableCard v-for="(table, index) in esti['list']" :key="index" :title="table.title" :cards="table.cardLists"

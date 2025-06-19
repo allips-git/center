@@ -16,12 +16,12 @@
                         </div>
                        
                         <ul class="w-full">
-                            <li class="flex gap-4 py-4 border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
-                                    <img :src="getImage(item.imgUrl)" class="w-[21.67%] aspect-[78/87] rounded-lg object-cover" alt="">
+                            <li class="flex gap-4 py-[18px] border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
+                                    <img :src="getImage(item.imgUrl)" class="w-[21.67%] aspect-[78/87] sm:w-[78px] rounded-lg object-cover" alt="">
                                 
                                 <div class="w-[calc(100%-78px)]">
                                     <div class="flex justify-between">
-                                        <p class="mb-1 font-bold text-con">{{ item.faNm }}</p>
+                                        <p class="mb-1 text-sm font-bold">{{ item.faNm }}</p>
                                         <div class="text-desc text-right *:px-3 *:py-1 *:rounded-full font-bold">
                                             <p v-if="item['appGb'] === 'E'" class="text-p-lv3 ">승인 대기</p>
                                             <p v-if="item['appGb'] === 'N'" class="text-orange-500">반려</p>
@@ -39,14 +39,14 @@
                     </div>
                 </TabPanel>
                 <TabPanel value="1">
-                    <div class="pt-3 pb-20">
+                    <div class="pb-20">
 
-                        <div class="fixed bottom-11 right-4 md:bottom-4 facadd-button">
+                        <div class="fixed bottom-11 right-4 facadd-button">
                             <Button label="외주공장 추가" icon="pi pi-plus" size="large" @click="getPopOpen('outFactorySet')" />
                         </div>
                         
                     <ul>
-                        <li class="flex flex-col py-4 border-b" v-for="(item, index) in factory['out']['list']" :key="index" @click="getOutDetail(item.fcCd)">
+                        <li class="flex flex-col py-[18px] border-b" v-for="(item, index) in factory['out']['list']" :key="index" @click="getOutDetail(item.fcCd)">
                             <p class="mb-1 text-sm font-bold">{{ item.faNm }}</p>
                             <p class="text-10 !text-t-lv1">{{ item.tel }}</p>
                             <p class="!text-t-lv2 text-10">{{ item.addr + ' ' + item.addrDetail }}</p>

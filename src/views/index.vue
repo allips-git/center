@@ -1,5 +1,5 @@
 <template>
-<div class="flex flex-col w-full h-full gap-[14px] bg-gray-100 md:p-6 md:gap-6 pb-[56px] overflow-y-scroll md:pb-0">
+<div class="flex flex-col w-full h-full gap-[14px] bg-gray-100 md:p-4 md:gap-4 overflow-y-scroll">
     <section class="w-full col-span-12">
         <div class="relative w-full px-5 overflow-hidden bg-blue-100 rounded-md h-[9.1875rem] flex justify-between items-center">
             <div class="flex flex-col">
@@ -13,7 +13,7 @@
             </div>
         </div>
     </section>
-    <main class="grid w-full grid-cols-12 gap-x-[10px] gap-y-[14px] px-4 md:gap-6 md:px-0">
+    <main class="grid w-full grid-cols-12 gap-x-[10px] gap-y-[14px] px-4 md:px-0">
     
         <section class="col-span-12">
             <div class="flex flex-col gap-3 main-card-container-box">

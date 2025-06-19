@@ -70,7 +70,9 @@
     
             <section class="px-4">
                 <p class="my-5 text-sm text-center text-[#DBDBDB]">version 1.1.0.8c</p>
-                <Button label="로그아웃" severity="secondary" class="w-full h-[46px]" @click="getLogOut"/>
+                <Button severity="secondary" class="w-full h-[46px] !font-light" @click="getLogOut">
+                    <span class="text-xs">로그아웃</span>
+                </Button>
             </section>
     
             <section class="px-5 py-6 my-[52px] border-gray-200 border-y !text-[#505050]">

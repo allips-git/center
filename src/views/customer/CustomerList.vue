@@ -1,12 +1,12 @@
 <template>
-    <main>
+    <main class="pb-24">
         <BackHeader title="고객" />
         <section class="">
             <div class="flex items-center justify-between px-4 py-[10px] md:px-6 no-print ">
                 <div class="flex self-center justify-between w-full ">
                     <div class="flex w-full gap-2">
                         <div class="flex relative w-full gap-2 max-w-[90px] bg-gray-100 *:!border-0  mini_select">
-                            <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="relative z-10 w-full" @change="getList"/>
+                            <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="relative z-10 w-full md:*:text-xs" @change="getList"/>
                         </div>
                         
                         <IconField class="table-search-input w-full  sm:max-w-full !bg-gray-100 *:!border-0 mini_input h-8">
@@ -22,7 +22,7 @@
             <ul class="flex flex-col">
                 <li v-for="(item, index) in client['list']" :key="index" class="flex items-center gap-[14px] flex-none w-full px-4 py-[10px] md:px-6" @click="getInfo(item.clientCd)">
                     <!-- 상태 -->
-                    <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none font-bold text-white rounded-md text-11 md:text-sm w-[11.4%] aspect-square">
+                    <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none font-bold text-white rounded-md text-11 md:text-sm w-[11.4%] aspect-square sm:size-10">
                         {{ getStatusName(item.step) }}
                     </div>
                     <div class="flex justify-between w-full gap-2">

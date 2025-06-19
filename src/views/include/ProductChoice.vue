@@ -1,13 +1,13 @@
 <template>
-    <div class="flex flex-col px-4 md:gap-6">
-        <div class="flex flex-col gap-5 py-[10px]">
+    <div class="flex flex-col px-4 ">
+        <div class="flex flex-col gap-5 py-[10px] md:pt-4">
             <div class="flex gap-2 mini_select">
-                <Select v-model="product['fcCd']" placeholder="브랜드 선택" :options="product['option']" optionLabel="label" optionValue="value" @change="getList" class="md:*:!text-sm"/> 
-                <IconField class="w-full h-8 table-search-input mini_input">
+                <Select v-model="product['fcCd']" placeholder="브랜드 선택" :options="product['option']" optionLabel="label" optionValue="value" @change="getList" class="md:*:!text-sm !h-10 choice-select"/> 
+                <IconField class="w-full table-search-input mini_input">
                     <InputIcon class="z-10">
                         <i class="z-10 pi pi-search" />
                     </InputIcon>
-                    <InputText v-model="product['search']" placeholder="제품명 검색" class="w-full" @keyup.enter="getList"/>
+                    <InputText v-model="product['search']" placeholder="제품명 검색" class="w-full !h-10 choice-input" @keyup.enter="getList"/>
                 </IconField>
             </div>
            
@@ -22,7 +22,7 @@
                 <div class="flex flex-col items-center gap-1 py-6" @click="toggleSubList(index, item['itemCd'])">
                     <div :for="item['itemCd']" class="items-center w-full">
                         <!-- <RadioButton :inputId="item['itemCd']" v-model="product['itemCd']" :value="item['itemCd']"/> -->
-                        <label :for="item['itemCd']" class="flex items-center font-bold">
+                        <label :for="item['itemCd']" class="flex items-center text-base font-bold">
                             {{ item.itemNm }} 
                             <span v-if="item['noUsed']" class="ml-2 text-red-500">(주문불가)</span>
                         </label>

@@ -58,15 +58,15 @@
             <div class="fixed inset-0" />
                 <div class="fixed inset-0 overflow-hidden">
                     <div class="absolute inset-0 overflow-hidden">
-                        <div class="fixed inset-y-0 right-0 flex max-w-full pl-10 pointer-events-none sm:pl-16">
+                        <div class="fixed inset-y-0 right-0 flex max-w-full pointer-events-none">
                             <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700" enter-from="translate-x-full" enter-to="translate-x-0" leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0" leave-to="translate-x-full">
-                                <DialogPanel class="w-screen max-w-md pointer-events-auto ">
-                                <div class="flex flex-col h-full overflow-y-auto bg-white shadow-xl">
-                                    <div class="p-4 top-header">
+                                <DialogPanel class="w-screen pointer-events-auto lg:max-w-md ">
+                                <div class="flex flex-col h-full overflow-y-auto bg-white shadow-xl top-header">
+                                    <div class="p-4">
                                         <div class="flex items-start justify-between">
                                     <DialogTitle class="flex items-center text-base font-semibold text-gray-900">
                                         <p>알림</p>
-                                        <IconBell class="fill-t-lv2" />
+                                        <IconBell class=" fill-t-lv2" />
                                     </DialogTitle>
                                     <div class="flex items-center ml-3 h-7">
                                         <button type="button" class="relative text-gray-400 bg-white rounded-md hover:text-gray-500 focus-visible:ring-2 focus-visible:ring-indigo-500" @click="open = false">

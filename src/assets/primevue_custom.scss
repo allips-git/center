@@ -84,7 +84,6 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 
 .custom-dialog-full{
     max-height: 100% !important;
-    border-radius: 0 !important;
 }
 
 .custom-dialog-full.p-dialog{
@@ -101,23 +100,23 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     .p-dialog-content{
         padding: 0px;
         @include respond-to(md) {
-            padding: 24px;
         }
     }
 }
 
-.custom-dialog-bottom.p-dialog{
+.custom-dialog-full.p-dialog
+,.custom-dialog-bottom.p-dialog{
     // min-height: 100vh;
     margin: 0 !important;
     position: relative;
     border-radius:  0.5rem 0.5rem 0px 0;
     border: none !important;
     overflow: hidden;
-    margin-top: 1rem !important;
     width: 100%;
-    max-width: calc(100% - 1rem) !important;
-    max-height: calc(100% - 1rem) !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
     height: 100% !important;
+    border-radius: 0;
     @include respond-to(md) {
         // width: calc(100% - 3rem) !important;
         max-width: 660px !important;
@@ -323,7 +322,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 }
 
 .p-select-label.p-placeholder {
-    font-size: 14px;
+    font-size: 0.75rem;
     font-weight: 300;
 }
 
@@ -532,6 +531,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .product-button {
     .p-button.p-button-sm {
         padding: 6px 8px !important;
+        border: none;
     }
 }
 
@@ -546,6 +546,9 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .facadd-button {
     .p-button{
         border-radius: 4px !important;
+        .p-button-label{
+            font-size: 0.8175rem;
+        }
     }
 }
 
@@ -726,7 +729,33 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     .p-select-label{
         padding-right: 5px;
     }
+    .choice-select{
+        .p-select-label{
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+    }
+}
 
+.product_select{
+    .p-select{
+        background-color: #F6F6F6;
+    }
+    input{
+        border: none !important;
+    }
+    svg{
+        // opacity: 0;
+    }
+    .p-placeholder{
+    font-size: 0.625rem !important;
+    color: #7D7C78 !important;
+    font-weight: 400;
+    }
+    .p-select-label{
+        padding-right: 5px;
+    }
 }
 
 .p-iconfield .p-inputtext:not(:first-child) {
@@ -750,7 +779,17 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         ::placeholder{
             color: #7D7C78 !important;
         }
+        
     }
+}
+
+.choice-input{
+    display: flex;
+    align-items: center;
+}
+
+.choice-input::placeholder {
+    font-size: 0.75rem !important;
 }
 
 .p-iconfield .p-inputtext:not(:first-child){
@@ -761,7 +800,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 }
 .p-iconfield .mini_input.p-inputtext:not(:first-child){
     // padding-inline-start: 35px !important;
-    font-size: 14px;
+    font-size: 0.75rem;
 }
 
 .custom-datapicker{

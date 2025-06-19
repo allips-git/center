@@ -49,8 +49,14 @@
     
   
     <Dialog v-model:visible="popup['pop']['paymentSet']"  header="최종 결제 입력" 
-        :modal=true position="bottom" class="custom-dialog-bottom"
+        :modal=true position="center" class="custom-dialog-full"
         @update:visible="getPopupClose('paymentSet', true)">
+        <template #header>
+            <div class="modal-backheader">
+                    <Button @click="getPopClose(true, 'paymentSet')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">최종 결제 입력</h2>
+                </div>
+        </template>
         <PaymentModal/>
     </Dialog>
 </template>

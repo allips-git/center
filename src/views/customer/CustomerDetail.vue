@@ -1,5 +1,5 @@
 <template>
-    <main class="pb-14">
+    <main class="pb-24">
         <BackHeader title="고객상세" />
         <section class="p-4 md:p-6">
             <div class="flex items-center justify-between">

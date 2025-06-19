@@ -2,14 +2,14 @@
     <main class="pb-[130px] md:pb-32" ref="mainRef">
         <BackHeader title="발주서" />
         <main class="main-bottom-fixed-pd">
-            <section class="p-4 md:p-6">
+            <section class="px-4">
                 <div class="flex flex-col gap-5">
                     <TableCard v-for="(table, index) in ord['list']" :key="index" :title="table.title" :cards="table.cardLists"
                         :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag" :showButton="table.showButton"/>
                 </div>
             </section>
-            <div class="gray-bar"></div>
-            <section class="p-4 md:p-6">
+            <div class="gray-bar my-[14px]"></div>
+            <section class="px-4">
                 <CalculateCard title="제품 결제 내역" :calcs="ord['payList']" totalTitle="총 결제 금액" :totalAmt="ord.totalAmt" :showtoggle="true" />
             </section>
         </main>
