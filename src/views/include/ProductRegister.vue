@@ -232,6 +232,8 @@ const getEstiSave = () => {
 
             console.log(JSON.stringify(params, null, 2));
 
+            status.value = true;
+
             try
             {
                 const instance  = await getAxiosData();
@@ -257,6 +259,8 @@ const getEstiSave = () => {
             {
                 console.log(e);
             }
+
+            status.value = false;
         }
     });
 }

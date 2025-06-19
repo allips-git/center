@@ -93,6 +93,7 @@ const confirm   = useConfirm();
 const client    = useClientStore();
 const esti      = useEstiStore();
 const router    = useRouter();
+const status    = ref(false);
 const props     = defineProps({
     info : Object
 });
@@ -213,24 +214,31 @@ const getSecondBtnClick = () => {
                     label: '확인'
                 },
                 accept : async () => {
-                    try
+                    status.value = true;
+
+                    if(status.value)
                     {
-                        const instance  = await getAxiosData();
-                        await instance.post(`https://data.planorder.kr/estiV1/getDeilResult`, { emCd : props['info']['emCd'] });
-                        client.getDetail();
-                    }
-                    catch(e)
-                    {
-                        console.log(e);
-                        if(e.response.status === 401)
+                        try
                         {
-                            getTokenOut();
+                            const instance  = await getAxiosData();
+                            await instance.post(`https://data.planorder.kr/estiV1/getDeilResult`, { emCd : props['info']['emCd'] });
+                            client.getDetail();
                         }
-                        else
+                        catch(e)
                         {
-                            alert('시공 완료 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                            console.log(e);
+                            if(e.response.status === 401)
+                            {
+                                getTokenOut();
+                            }
+                            else
+                            {
+                                alert('시공 완료 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                            }
                         }
                     }
+
+                    status.value = false;
                 }
             });
         break;
@@ -253,24 +261,31 @@ const getEstiRestore = () => {
             label: '확인'
         },
         accept : async () => {
-            try
+            status.value = true;
+
+            if(status.value)
             {
-                const instance  = await getAxiosData();
-                await instance.post(`https://data.planorder.kr/estiV1/getRestore`, { emCd : props['info']['emCd'] });
-                client.getDetail();
-            }
-            catch(e)
-            {
-                console.log(e);
-                if(e.response.status === 401)
+                try
                 {
-                    getTokenOut();
+                    const instance  = await getAxiosData();
+                    await instance.post(`https://data.planorder.kr/estiV1/getRestore`, { emCd : props['info']['emCd'] });
+                    client.getDetail();
                 }
-                else
+                catch(e)
                 {
-                    alert('견적 복원 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                    console.log(e);
+                    if(e.response.status === 401)
+                    {
+                        getTokenOut();
+                    }
+                    else
+                    {
+                        alert('견적 복원 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                    }
                 }
             }
+
+            status.value = false;
         }
     });
 }
@@ -318,32 +333,39 @@ const getProcess = (value: string) => {
                     label: '확인'
                 },
                 accept : async () => {
-                    try
+                    status.value = true;
+
+                    if(status.value)
                     {
-                        const instance  = await getAxiosData();
-                        await instance.post(`https://data.planorder.kr/estiV1/getCancel`, { emCd : props['info']['emCd'] });
-                        client.getDetail();
-                    }
-                    catch(e)
-                    {
-                        console.log(e);
-                        if(e.response.status === 401)
+                        try
                         {
-                            getTokenOut();
+                            const instance  = await getAxiosData();
+                            await instance.post(`https://data.planorder.kr/estiV1/getCancel`, { emCd : props['info']['emCd'] });
+                            client.getDetail();
                         }
-                        else
+                        catch(e)
                         {
-                            switch(e.response.data['code'])
+                            console.log(e);
+                            if(e.response.status === 401)
                             {
-                                case 4000:
-                                    alert('견적 취소 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
-                                break;
-                                case 4100:
-                                    alert('해당 견적에는 발주처리 또는 진행 중인 제품이 존재하여, 취소가 불가능합니다.');
-                                break;
+                                getTokenOut();
+                            }
+                            else
+                            {
+                                switch(e.response.data['code'])
+                                {
+                                    case 4000:
+                                        alert('견적 취소 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                                    break;
+                                    case 4100:
+                                        alert('해당 견적에는 발주처리 또는 진행 중인 제품이 존재하여, 취소가 불가능합니다.');
+                                    break;
+                                }
                             }
                         }
                     }
+
+                    status.value = false;
                 }
             });
         break;
