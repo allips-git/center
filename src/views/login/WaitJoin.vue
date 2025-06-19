@@ -8,28 +8,22 @@
                 <div class="absolute w-[300px] h-[300px] rounded-full bg-gradient-to-br from-indigo-500 to-cyan-300 top-0 left-0 z-30">
                     <div class="relative left-20 top-28">
                         <IconLogo class="w-[3.25rem] fill-white"/>
-                        <h3 class="mt-2 font-bold text-white text-18">홍길동님 <br/> 환영합니다.</h3>
+                        <h3 class="mt-2 font-bold text-white text-18">{{ login.name }}님 <br/> 환영합니다.</h3>
                     </div>
                 </div>
             </div>
 
             <div class="flex flex-col items-center mx-auto gap-[14px] mt-16">
-                <h3 class="font-bold text-18">디자인윈도우</h3>
-                <h4 class="text-10">대한민국 부산광역시 금정구 청룡동 87</h4>
+                <h3 class="font-bold text-18">{{ login.ceNm }}</h3>
+                <h4 class="text-10">{{ login.addr }} {{ login.addrDetail }}</h4>
                 <IconAvatar class="w-24 fill-[#78BBFF]"/>
             </div>
             
             
-            <Dialog
-                v-model:visible="messageVisible"
-                modal
-                :closable="false"
-                :draggable="false"
-                pt:root:class="!border-0 md:w-[370px] h-auto !max-h-screen justify-center overflow-hidden"
-                pt:mask:class="bg-black/40"
-            >
+            <Dialog v-model:visible="messageVisible" modal :closable="false" :draggable="false" 
+                pt:root:class="!border-0 md:w-[370px] h-auto !max-h-screen justify-center overflow-hidden" pt:mask:class="bg-black/40">
                 <div class="z-40 flex flex-col items-center px-6 mx-auto">
-                    <p class="text-base font-semibold text-gray-700">디자인윈도우 업체 심사중.</p>
+                    <p class="text-base font-semibold text-gray-700">{{ login.ceNm }} 업체 심사중.</p>
                     <div class="flex flex-col items-center mt-4 text-sm text-center text-gray-700">
                         <p>업체 심사 중입니다.</p>
                         <p>
@@ -38,7 +32,7 @@
                         <p>문의사항은 고객센터 010-3445-2105로</p>
                         <p>문의 부탁드립니다.</p>
                     </div>
-                    <Button label="종료" size="small" class="w-32 my-6"/>
+                    <Button label="종료" size="small" class="w-32 my-6" @click="messageVisible=false"/>
                 </div>
             </Dialog>
            
@@ -51,7 +45,9 @@ import IconAvatar from '@/components/icons/IconAvatar.vue';
 import IconLogo from '@/components/icons/IconLogo.vue'
 import Dialog from 'primevue/dialog';
 import { ref } from 'vue';
+import { useLoginStore } from '@/store';
 
-const visible   = ref(true);
-const messageVisible = ref(true);
+const login             = useLoginStore();
+const visible           = ref(true);
+const messageVisible    = ref(true);
 </script>

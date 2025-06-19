@@ -97,7 +97,7 @@ const getLogin = async () => {
     
     const result = await login.getLogin(params);
 
-    if(result)
+    if(result === 200)
     {
         router.push({ path : `/` });
         if (typeof window.ReactNativeWebView !== 'undefined') 
@@ -107,7 +107,14 @@ const getLogin = async () => {
     }
     else
     {
-        alert('로그인 정보가 잘못되었습니다. 입력한 데이터를 확인해주세요.');
+        if(result === 4100)
+        {
+            router.push({ path : `/join/wait_join` });
+        }
+        else
+        {
+            alert('로그인 정보가 잘못되었습니다. 입력한 데이터를 확인해주세요.');
+        }
     }
 }
 </script>
