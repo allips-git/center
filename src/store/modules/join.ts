@@ -35,7 +35,7 @@ interface CenterInfo {
     ceNm        : string;
     area        : string;
     gb          : string;
-    einNum      : null | number;
+    einNum      : string;
     ceoNm       : string;
     zip         : number;
     addr        : string;
@@ -94,7 +94,7 @@ const getCenterInfo = (): CenterInfo => {
         ceNm        : '',
         area        : 'SE',
         gb          : 'P',
-        einNum      : null,
+        einNum      : '',
         ceoNm       : '',
         zip         : '',
         addr        : '',
