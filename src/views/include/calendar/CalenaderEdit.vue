@@ -1,9 +1,9 @@
 <template>
-<section class="p-6">
-    <div class="flex items-center gap-4 mb-5">
+<section class="px-3 py-[18px]">
+    <div class="flex items-center gap-4 pb-5 border-b border-[#FAFAFA]">
         <IconAvatar class="size-12 fill-sky-400"/>
-        <div class="w-full">
-            <p class="text-xs text-sky-500">일정</p>
+        <div class="w-full ">
+            <p class="text-8 text-sky-500">일정</p>
             <p class="flex items-center text-base font-bold">{{ calendar['edit']['clientNm'] }} 
                 <span class="flex items-center justify-center ml-2 text-sm text-gray-400 size-4" @click="getDetail">
                     <IconPlay class="size-4 fill-gray-400"/>
@@ -14,14 +14,14 @@
             {{ calendar['edit']['stCd'] === 'Y' ? '견적' : '시공' }}
         </p>
     </div>
-    <div class="py-3">
-        <Select v-model="calendar['edit']['stCd']" :options="getStCd()" optionLabel="label" optionValue="value" class="w-40 !rounded-full" size="small" 
+    <div class="py-[10px] edit-select">
+        <Select v-model="calendar['edit']['stCd']" :options="getStCd()" optionLabel="label" optionValue="value" class="!rounded-full *:!text-10 *:!rounded-full " size="small" 
             @update:modelValue="(value) => getStCdChange(value)"/>
     </div>
-    <div class="flex flex-col items-start gap-4 text-xs text-gray-500">
+    <div class="flex flex-col items-start gap-1 text-gray-500 text-10">
         <p>{{ getDate() }}</p>
-        <p class="px-2 py-[3px] text-xs text-white rounded-full bg-sky-500">{{ calendar['edit']['tel'] }}</p>
-        <p class="px-2 py-[3px] text-xs text-white rounded-full bg-sky-500">{{ calendar['edit']['addr'] }}</p>
+        <p class="px-2 py-[3px] text-10 text-white rounded-full bg-sky-500">{{ calendar['edit']['tel'] }}</p>
+        <p class="px-2 py-[3px] text-10 text-white rounded-full bg-sky-500">{{ calendar['edit']['addr'] }}</p>
         <p>상세주소 : {{ calendar['edit']['addrDetail'] }}</p>
         <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 예상시간 : {{ calendar['edit']['insTime'] }}</p>
         <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 수량 : {{ calendar['edit']['insCnt'] }}</p>
@@ -30,8 +30,8 @@
         <p class="text-gray-400">{{ calendar['edit']['memo'] }}</p>
     </div>
 
-    <div class="flex justify-end">
-        <Iconpencil class="fill-gray-500 size-4"/>
+    <div class="flex justify-end border-t border-[#fafafa] pt-[10px]">
+        <Iconpencil class="fill-gray-500 size-4" />
     </div>
 </section>
 </template>
@@ -158,5 +158,3 @@ onMounted(() => {
     calendar.getEditInfo();
 })
 </script>
-
-<style lang="scss"></style>

@@ -8,6 +8,17 @@
     padding-top: env(safe-area-inset-top);
   }
 
+  html.ios .cal-header {
+    height: 4rem;
+  }
+  html.ios .ios-icon {
+    margin-top: 32px;
+  }
+
+  html.ios .ios-title {
+    padding-top: 32px;
+  }
+
   html.ios .app-bar {
     bottom: env(safe-area-inset-bottom);
   }

@@ -1,11 +1,11 @@
 <template>
-    <main class="h-full overflow-y-scroll md:pb-[0] pb-[56px]">
-        <BackHeader title="일정" class=""/>
-        <div class="md:grid items-start justify-start md:grid-cols-[1fr_400px] md:h-[calc(100vh-108px)]">
+    <main class="h-full md:pb-[0] pb-5 pt-[3.5rem] md:pt-0">
+        <BackHeader title="일정" :fixed="true" :centerTitle="true"/>
+        <div class="md:grid items-start justify-start md:grid-cols-[1fr_400px] md:h-[calc(100vh)]">
             <CalenderMonth class="flex-grow md:w-full md:block"/>
             <CalenderDay class="flex-grow hidden border-l border-gray-200 md:w-full md:block md:max-w-[400px] md:h-full" />
         </div>
-        <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-4 left-1/2 md:hidden">
+        <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-24 left-1/2 md:hidden">
             <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm" @click="getDayView">일별</div>
         </div>
 
@@ -44,17 +44,13 @@
         </Dialog>
 
         <Dialog v-model:visible="popup['pop']['calendarEdit']" 
-        header="일정"
         :modal=true
-        position="center"
-        class="custom-dialog-bottom backPopup"
+        position="right"
+        class="editPopup"
         :dismissableMask="true"
         @update:visible="getPopupClose(true, 'calendarEdit')">
         <template #header>
-            <div class="modal-backheader">
-                <Button @click="getPopupClose(true, 'calendarEdit')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
-                <h2 class="modal-backheader-title">일정 편집</h2>
-            </div>
+           
         </template>
         <CalenaderEdit/>
 

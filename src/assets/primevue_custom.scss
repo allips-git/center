@@ -104,6 +104,29 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
+.editPopup{
+    width: 246px;
+    overflow: hidden;
+    border-radius: 20px !important;
+    .p-dialog-header{
+        padding: 0;
+    }
+    .p-dialog-content{
+        padding: 0;
+    }
+    .p-dialog-close-button{
+        display: none;
+    }
+
+}
+
+.edit-select {
+    .p-select{
+        border-radius: 9999px !important;
+    }
+    
+}
+
 .custom-dialog-full.p-dialog
 ,.custom-dialog-bottom.p-dialog{
     // min-height: 100vh;
@@ -117,6 +140,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     max-height: 100% !important;
     height: 100% !important;
     border-radius: 0;
+
     @include respond-to(md) {
         // width: calc(100% - 3rem) !important;
         max-width: 660px !important;
@@ -805,23 +829,23 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 
 .custom-datapicker{
     // 테이블 데이트 피크
-
+    
     &.p-datepicker{
         &.bg-gray{
             .p-datepicker-input{
-                background-color: var(--p-gray-100) !important;
                 border-radius: 2px !important; 
-                font-size: 0.75rem;   
+                font-size: 0.6175rem;   
             }
         }
         .p-datepicker-input{
+            background-color: white !important;
             border-radius: 99999px !important;
-            font-size: 0.75rem !important;
+            font-size: 0.6175rem !important;
             padding-top: 0.325rem;
             padding-bottom:  0.325rem;
             padding-left: 0.75rem !important;
             padding-right: 0px;
-            border: 0px !important;
+            border: solid 1px #e4e5e9 !important;
         }
         .p-datepicker-input-icon-container{
             height: 16px;
@@ -839,7 +863,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     .p-datepicker {
         width: 6rem;
         .p-datepicker-input {
-            font-size: 0.75rem !important;
+            // font-size: 0.75rem !important;
             background-color: var(--p-gray-100);
             border: none;
         }

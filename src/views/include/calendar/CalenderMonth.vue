@@ -1,25 +1,24 @@
 <template>
-    <!-- <main class="relative h-[100%-48px] month-custom"> -->
-    <main class="flex flex-col h-screen month-custom">
+    <main class="flex flex-col h-[calc(100vh-48px-56px)] md:h-[calc(100vh-108px)] month-custom">
 
-        <!-- <div class="flex justify-center pb-3.5 acc-datepicker"> -->
-        <div class="flex justify-center pb-3.5 acc-datepicker shrink-0">
-
+        <div class="shrink-0 pb-3.5 acc-datepicker flex justify-center">
+            <div class="flex justify-center py-2">
             <DatePicker v-model="calendar['searchDt']" view="month" dateFormat="yy.mm'월'" class="custom-datapicker *:!text-12 !max-w-[120px] *:!pl-1 *:!pr-1.5" 
-                :locale="locale" showIcon fluid iconDisplay="input" @update:modelValue="getUpdate">
+                :locale="locale" showIcon fluid iconDisplay="input" @update:modelValue="getUpdate"  appendTo="self">
                 <template #inputicon="slotProps" class="!pl-1">
                     <IconPlay class="rotate-90 !fill-gray-500"/>
                 </template>
             </DatePicker>
+            </div>
         </div>
-        <!-- <div class="h-[calc(100vh-147px)] w-full md:h-[calc(100vh-171px)]">
-            <FullCalendar :options="{ ... calendarOptions, events : calendar['monthEvents']}" ref="fullCalendar"/>
-        </div> -->
+
         <div class="flex-1 overflow-hidden">
-            <FullCalendar :options="{ ... calendarOptions, events : calendar['monthEvents']}" ref="fullCalendar"/>
+            <FullCalendar :options="{ ... calendarOptions, events : calendar['monthEvents']}" ref="fullCalendar" />
         </div>
     </main>
 </template>
+
+
   
 <script setup lang="ts">
 import FullCalendar from '@fullcalendar/vue3';
@@ -195,6 +194,25 @@ watch(() => calendar.searchDt, async (newDate) => {
         flex-basis: auto !important; 
         flex: 0 0 auto !important;
         height: 100%;
+    }
+}
+
+.custom-datapicker{
+
+    .p-datepicker-panel {
+        top: 40px !important;
+        left: 50% !important;
+        transform: translateX(-50%);
+        padding-top: 0;
+    }
+    .p-datepicker-month{
+        font-size: 16px;
+    }
+    .p-datepicker-select-year{
+        font-size: 16px;
+    }
+    .p-datepicker-header{
+        padding: 0;
     }
 }
 </style>

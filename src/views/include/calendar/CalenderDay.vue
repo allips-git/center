@@ -17,24 +17,31 @@
             </swiper-slide>
         </swiper>
         <div class="relative z-10 w-full h-[calc(100vh-118px)] md:h-[calc(100vh-178px)]">
-            <div class="absolute z-50 flex justify-center -translate-x-1/2 top-4 left-1/2">
-                <span class="absolute z-40 -translate-y-1/2 right-4 top-1/2 pi pi-angle-down !text-sm text-gray-400"></span>
-                <DatePicker v-model="calendar['searchDt']" dateFormat="yy.mm.d" class="custom-daySelect" showIcon fluid iconDisplay="input"
-                    @update:modelValue="(value) => getDatePicker(value)"/>
+            <div class="absolute z-50 flex justify-center -translate-x-1/2 top-1 left-1/2">
+                <!-- <span class="absolute z-40 -translate-y-1/2 right-4 top-1/2 pi pi-angle-down !text-sm text-gray-400"></span> -->
+                <div class="flex justify-center py-2">
+                    <DatePicker v-model="calendar['searchDt']" dateFormat="yy.mm.d" class="custom-daySelect" showIcon fluid iconDisplay="input" 
+                        @update:modelValue="(value) => getDatePicker(value)" appendTo="self">
+                        <template #inputicon="slotProps" class="!pl-1">
+                            <IconPlay class="rotate-90 !fill-gray-500"/>
+                        </template>
+                    </DatePicker>
+                </div>
             </div>
             <FullCalendar :options="{ ... calendarOptions, events : calendar['dayEvents'] }" ref="fullCalendar" />
-            <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-4 left-1/2">
-                <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm" @click="calendar.getSearchDt(new Date())">당일</div>
-            </div>
+
         </div>
+        
     </main>
 </template>
-  
+
+
 <script setup lang="ts">
 import FullCalendar from '@fullcalendar/vue3';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import koLocale from '@fullcalendar/core/locales/ko';
+import IconPlay from '@/components/icons/IconPlay.vue'
 import DatePicker from 'primevue/datepicker';
 import 'swiper/swiper-bundle.css';
 import { useConfirm } from "primevue/useconfirm";
@@ -192,22 +199,31 @@ onMounted(async () => {
     width: 100% !important;
 }
 
+
 .custom-daySelect{    
     justify-content: center !important;
     align-items: center !important;
-    height: 28px;
+    // height: 28px;
+
     .p-datepicker-input{
         max-width: 110px;
-        font-size: 0.825rem !important;
+        font-size: 0.6175rem !important;
         border-radius: 9999px !important;
         width: 100% !important;
         flex-basis: auto !important; 
         flex: 0 0 auto !important;
         height: 100%;
         padding-right: 0.75rem !important;
+        padding-block: 7px !important;
     }
-    .p-datepicker-input-icon-container{
-        display: none;
+    // .p-datepicker-input-icon-container{
+    //     display: none;
+    // }
+
+    .p-datepicker-panel {
+        top: 40px !important;
+        left: 50% !important;
+        transform: translateX(-50%);
     }
 }
 

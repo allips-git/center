@@ -3,9 +3,9 @@
     <section class="p-6">
         <div class="flex items-center justify-between">
             <div class="flex items-center w-full gap-2">
-                <IconAvatar class="text-indigo-300 !size-16"/>
+                <IconAvatar class="text-indigo-300 !size-9"/>
                 <div>
-                    <p class="text-sm text-indigo-600">고객</p>
+                    <p class="text-indigo-600 text-8">일정</p>
                     <h2 class="text-base font-bold">{{ calendar['info']['clientNm'] }}</h2>
                 </div>
             </div>
@@ -43,10 +43,10 @@
     </section>
     <div class="gray-bar"></div>
     <section class="p-4">
-        <h2 class="text-sm font-bold text-t-lv4">수정기록</h2>
+        <h2 class="text-sm font-bold text-t-lv4 py-[6px]">수정기록</h2>
         <ul class="flex flex-col">
-            <li v-for="(item, index) in calendar['info']['history']" :key="index" class="flex items-center gap-4 py-2 first:mt-4">
-            <IconAvatar class="text-indigo-300 !size-10"/>
+            <li v-for="(item, index) in calendar['info']['history']" :key="index" class="flex items-center py-[6px] gap-[10px]">
+            <IconAvatar class="text-indigo-300 !size-8"/>
             <div class="text-11 !text-t-lv1">
                 <div class="flex items-center gap-1">
                 <b>{{ item.name }}</b>

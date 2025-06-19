@@ -31,6 +31,7 @@ html.ios body {
 
 
 body {
+  font-size: 18px;
   font-family: 'Noto Sans KR', sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -52,12 +53,16 @@ body {
 }
 
 @media screen and (min-width: 431px) and (max-width: 480px) {
-  html { font-size: 1.2rem; } /* 일반 Galaxy */
+  html { font-size: 18px; } /* 일반 Galaxy */
 }
 
 @media screen and (min-width: 481px) {
-  html { font-size: 18px; } 
+  html {
+    font-size: 18px;
+  }
 }
+
+
 
 html.ios body {
   font-size: 1rem;

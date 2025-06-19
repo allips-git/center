@@ -4,7 +4,7 @@
         <div class="h-[calc(100vh-110px)] md:h-[calc(100vh-48px)]">
             <CalenderDay class=""/>
         </div>
-        <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-4 left-1/2 md:hidden">
+        <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-24 left-1/2 md:hidden">
             <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm" @click="getMonthView">월별</div>
         </div>
 
