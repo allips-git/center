@@ -57,14 +57,14 @@ interface JoinSecondParams {
  * @description 회원가입 시 유효성 검사 1
  */
 export const joinSecondMsg = (params: JoinSecondParams): { msg: string; id: string, state: boolean } => {
-    if(params['faNm'] === '')
+    if(params['ceNm'] === '')
     {
-        return { msg : '센터 시설명을 입력해주세요', id : 'faNm', state : false };
+        return { msg : '센터 시설명을 입력해주세요', id : 'ceNm', state : false };
     }
 
-    if(params['einNum'] === '')
+    if(params['einNum'] === '' )
     {
-        return { msg : '사업지 등록번호를 입력해주세요.', id : 'einNum', state : false };
+        return { msg : '사업자 등록번호를 입력해주세요.', id : 'einNum', state : false };
     }
 
     if(params['ceoNm'] === '')

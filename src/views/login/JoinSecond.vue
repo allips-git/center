@@ -135,7 +135,7 @@ const getCloseDaumPost = () => {
 
 const getResultCheck = () => {
     const checkParams = {
-        faNm    : join['center']['faNm'],
+        ceNm    : join['center']['ceNm'],
         einNum  : join['center']['einNum'],
         ceoNm   : join['center']['ceoNm'],
         addr    : join['center']['addr'],
