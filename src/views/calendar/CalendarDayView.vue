@@ -5,7 +5,7 @@
             <CalenderDay class=""/>
         </div>
         <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-4 left-1/2 md:hidden">
-            <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm" @click="calendar.getSearchDt(new Date())">월별</div>
+            <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm" @click="getMonthView">월별</div>
         </div>
 
         <Dialog v-model:visible="popup['pop']['calendarSet']" 
@@ -49,11 +49,21 @@ import BackHeader from '@/components/layouts/BackHeader.vue'
 import CalenderDay from '@/views/include/calendar/CalenderDay.vue'
 import CalenderSet from '@/views/include/calendar/CalenderSet.vue';
 import CalenaderEdit from '@/views/include/calendar/CalenaderEdit.vue'
-import { usePopupStore } from '@/store';
+import { usePopupStore, useCalendarStore } from '@/store';
+import { useRouter } from 'vue-router';
 import { usePopup } from '@/assets/js/popup';
 
-const popup = usePopupStore();
+const calendar  = useCalendarStore();
+const popup     = usePopupStore();
+const router    = useRouter();
+
 const { getPopupClose } = usePopup();
+
+const getMonthView = async () => {
+    await calendar.getSearchDt(new Date());
+
+    router.push('/calendar');
+}
 </script>
 
 <style lang="scss">

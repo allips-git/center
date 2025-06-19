@@ -6,7 +6,7 @@
             <CalenderDay class="flex-grow hidden border-l border-gray-200 md:w-full md:block md:max-w-[400px] md:h-full" />
         </div>
         <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-4 left-1/2 md:hidden">
-            <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm" @click="calendar.getSearchDt(new Date())">일별</div>
+            <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm" @click="getDayView">일별</div>
         </div>
 
         <Dialog v-model:visible="popup['pop']['calendarSet']" 
@@ -67,14 +67,23 @@
 import CalenderMonth from '@/views/include/calendar/CalenderMonth.vue'
 import CalenderDay from '@/views/include/calendar/CalenderDay.vue'
 import CalenderSet from '@/views/include/calendar/CalenderSet.vue';
-import CalenderDetail from '@/views/include/calendar/CalenderDetail.vue';
 import CalenaderEdit from '@/views/include/calendar/CalenaderEdit.vue'
 import BackHeader from '@/components/layouts/BackHeader.vue';
-import { usePopupStore } from '@/store';
+import { usePopupStore, useCalendarStore } from '@/store';
+import { useRouter } from 'vue-router';
 import { usePopup } from '@/assets/js/popup';
 
-const popup = usePopupStore();
+const calendar  = useCalendarStore();
+const popup     = usePopupStore();
+const router    = useRouter();
+
 const { getPopupClose } = usePopup();
+
+const getDayView = async () => {
+    await calendar.getSearchDt(new Date());
+    
+    router.push('/calendar/day');
+}
 </script>
 
 <style lang="scss">
