@@ -47,7 +47,7 @@
                     <small class="text-red-500">{{ msg }}</small>
                 </ul>
                 <div class="mobile-fiex-bottom">
-                    <Button label="동의하고 계속하기" class="w-full *:!text-13" @click="getNext"/>
+                    <Button label="동의하고 계속하기" class="w-full *:!text-13 !bg-[#ebebeb] *:text-t-lv1" @click="getNext"/>
                 </div>
             </div>
         </template>

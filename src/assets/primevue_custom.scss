@@ -643,6 +643,13 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
+.mobile-fiex-bottom {
+    .p-button{
+        padding-block: 13.5px;
+        border: none;
+    }
+}
+
 .p-button{
     border-radius: 2px !important;
 
