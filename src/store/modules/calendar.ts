@@ -60,6 +60,7 @@ interface History {
 }
 
 interface Edit {
+    clientCd    : string;
     clientNm    : string;
     stCd        : string;
     stDt        : string;
@@ -96,6 +97,7 @@ interface State {
 
 const getEdit = (): Edit => {
     return {
+        clientCd    : '',
         clientNm    : '',
         stCd        : '',
         stDt        : '',
@@ -159,6 +161,7 @@ export const useCalendarStore = defineStore('calendar', {
                 const [hours, minutes] = res.data['info']['insTime'].split(':').map(Number);
 
                 const edit = {
+                    clientCd    : res.data['info']['clientCd'],
                     clientNm    : res.data['info']['clientNm'],
                     stCd        : res.data['info']['stCd'] === '001' || res.data['info']['stCd'] === '002' ? 'Y' : res.data['info']['stCd'],
                     stDt        : res.data['info']['stDt'],
