@@ -26,17 +26,12 @@
         </Dialog>
 
         <Dialog v-model:visible="popup['pop']['calendarEdit']" 
-        header="일정"
         :modal=true
-        position="center"
-        class="custom-dialog-bottom backPopup"
+        class="editPopup"
         :dismissableMask="true"
         @update:visible="getPopupClose(true, 'calendarEdit')">
         <template #header>
-            <div class="modal-backheader">
-                <Button @click="getPopupClose(true, 'calendarEdit')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
-                <h2 class="modal-backheader-title">일정 편집</h2>
-            </div>
+            
         </template>
         <CalenaderEdit/>
 

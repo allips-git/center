@@ -7,16 +7,16 @@
             </div>
         </div>
         <div class="p-3 overflow-auto bg-gray-50 max-h-96">
-            <ul class="flex flex-col gap-4 text-desc">
+            <ul class="flex flex-col gap-4 text-10">
                 <li v-for="(item, index) in calendar['monthDetail']['list']" :key="index" 
                     :class="`flex items-center justify-between w-full p-3 bg-${getStCdColor(item['stCd'])}-100 rounded-lg`"
                     @click="getMonthDataInfo(item['ikey'], item['emCd'])">
                     <div class="flex gap-1">
-                        <b>{{ item['clientNm'] }}</b>
+                        <b class="text-10">{{ item['clientNm'] }}</b>
                         <span>・</span>
-                        <p class="">{{ item['stNm'] }}</p>
+                        <p class="text-10">{{ item['stNm'] }}</p>
                     </div>
-                    <p class="text-sm">
+                    <p class="text-10">
                         {{ item['stCd'] === '001' ? item['startTime'] : item['startTime'] + '~' + item['endTime'] }}
                     </p>
                 </li>

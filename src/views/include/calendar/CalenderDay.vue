@@ -77,10 +77,10 @@ const calendarOptions = {
     eventContent        : function(arg) {
         return {
             html: ` <div class="text-gray-900 border-0 ${arg.event.classNames.join(' ')}">
-                        <strong>${arg.event.title}</strong> <span calss="mx-2">・</span> <span>${arg.event._def.extendedProps['stNm']}</span> <br />
-                        <span>${arg.event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}</span>
-                        <span class="mx-1">${arg.event.end ? '~' : ''}</span>
-                        <span calss="w-full">${arg.event.end ? arg.event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}</span>
+                        <strong class="text-xs">${arg.event.title}</strong> <span calss="py-2">・</span> <span class="text-xs">${arg.event._def.extendedProps['stNm']}</span> <br />
+                        <span class="text-xs">${arg.event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}</span>
+                        <span class="mx-1 text-xs">${arg.event.end ? '~' : ''}</span>
+                        <span calss="w-full text-xs">${arg.event.end ? arg.event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}</span>
                     </div>`
         };
     },
