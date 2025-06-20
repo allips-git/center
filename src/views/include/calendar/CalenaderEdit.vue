@@ -58,7 +58,7 @@ const { getPopupOpen, getPopupClose } = usePopup();
 
 const getDetail = async () => {
     await calendar.getDetailInfo();
-    getPopupClose('calendarEdit', true);
+    // getPopupClose('calendarEdit', true);
     getPopupOpen('calendarSet');
 }
 
@@ -160,7 +160,7 @@ const getStCdChange = (stCd: string) => {
 const getClientDetail = async () => {
     await getPopupClose('calendarEdit', true);
     await client.getDataSet(calendar['edit']['clientCd']);
-    
+
     router.push({ path: '/customer/detail' });
 }
 
