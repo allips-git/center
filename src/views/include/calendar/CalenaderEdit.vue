@@ -5,7 +5,7 @@
         <div class="w-full ">
             <p class="text-8 text-sky-500">일정</p>
             <p class="flex items-center text-base font-bold">{{ calendar['edit']['clientNm'] }} 
-                <span class="flex items-center justify-center ml-2 text-sm text-gray-400 size-4" >
+                <span class="flex items-center justify-center ml-2 text-sm text-gray-400 size-4" @click="getClientDetail">
                     <IconPlay class="size-4 fill-gray-400"/>
                 </span>
             </p>
@@ -42,14 +42,17 @@ import IconPlay from '@/components/icons/IconPlay.vue';
 import Iconpencil from '@/components/icons/Iconpencil.vue';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue';
-import { useDataStore, useCalendarStore } from '@/store';
+import { useRouter } from 'vue-router';
+import { useDataStore, useClientStore, useCalendarStore } from '@/store';
 import { getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { getAxiosData, getTokenOut } from '@/assets/js/function';
 
-const confirm  = useConfirm();
-const data     = useDataStore();
-const calendar = useCalendarStore();
+const confirm   = useConfirm();
+const data      = useDataStore();
+const calendar  = useCalendarStore();
+const client    = useClientStore();
+const router    = useRouter();
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
@@ -152,6 +155,13 @@ const getStCdChange = (stCd: string) => {
             }
         });
     }
+}
+
+const getClientDetail = async () => {
+    await getPopupClose('calendarEdit', true);
+    await client.getDataSet(calendar['edit']['clientCd']);
+    
+    router.push({ path: '/customer/detail' });
 }
 
 onMounted(() => {
