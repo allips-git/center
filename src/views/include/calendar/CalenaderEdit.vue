@@ -26,8 +26,9 @@
         <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 예상시간 : {{ calendar['edit']['insTime'] }}</p>
         <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 수량 : {{ calendar['edit']['insCnt'] }}</p>
     </div>
-    <div class="w-full px-3 mt-4 mb-5 ml-4 border-l-2 border-gray-300 min-h-12">
+    <div class="w-full px-3 mt-4 mb-5 ml-3 border-l-2 border-gray-300 min-h-12 custom-textarea">
         <p class="text-gray-400">{{ calendar['edit']['memo'] }}</p>
+        <Textarea v-model="value" rows="5" cols="30" />
     </div>
 
     <div class="flex justify-end border-t border-[#fafafa] pt-[10px]">
@@ -40,6 +41,7 @@
 import IconAvatar from '@/components/icons/IconAvatar.vue';
 import IconPlay from '@/components/icons/IconPlay.vue';
 import Iconpencil from '@/components/icons/Iconpencil.vue';
+import Textarea from 'primevue/textarea';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
@@ -168,3 +170,16 @@ onMounted(() => {
     calendar.getEditInfo();
 })
 </script>
+
+<style lang="scss"> 
+.custom-textarea{
+    .p-textarea{
+        width: 180px;
+        border: none;
+        height: 48px;
+        font-size: 0.6175rem;
+        padding: 0;
+        color: #ACB3BB;
+    }
+}
+</style>
