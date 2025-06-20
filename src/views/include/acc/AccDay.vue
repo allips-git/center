@@ -1,11 +1,11 @@
 <template>
     <main>
-        <section class="p-4 md:p-6">
+        <section class="p-4">
             <AccInfo :saleAmt="getAmt(acc.daySaleAmt)" :purcAmt="getAmt(acc.dayPurcAmt)" :margin="acc.dayMargin"/>
         </section>
         <div class="gray-bar"></div>
-        <section class="px-4 md:px-6">
-            <div class="flex items-center py-4 md:py-6">
+        <section class="px-4">
+            <div class="flex items-center py-4">
                 <p class="mr-2 text-sm text-gray-600 whitespace-nowrap">{{ getDate(acc.searchDt) }}</p>
                 <div class="w-full h-px bg-gray-300"></div>
             </div>

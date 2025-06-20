@@ -1,7 +1,7 @@
 <template>
-    <div class="h-full overflow-y-auto">
+    <div class="h-full overflow-y-auto" ref="mainRef">
         <BackHeader title="사업자 인증"/>
-        <main class="relative overflow-y-auto pb-[141px] md:pb-[100px]">
+        <main class="relative overflow-y-auto pb-[141px] md:pb-[100px]" >
         <section class="flex flex-col gap-1 p-4 md:px-6">
                 <p class="text-sm font-bold">사업자 인증</p>    
                 <p class="text-11 text-t-lv3">사업자등록증 정보를 인증해 보세요.<br/>인증 시 "사업자 인증 마크와" <br> 매입 공장들과 자동으로 사업자등록증이 공유됩니다.</p>
@@ -66,7 +66,10 @@
                         <label for="emali">세금계산서 이메일</label>
                     </IftaLabel>
                 </section>
-                <div class="bottom-fixed-btn-box">
+    
+                <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
+                    }" class="bottom-fixed-btn-box" 
+                    >
                     <Button label="저장" size="large"/>
                 </div>
         </main>
@@ -75,12 +78,30 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { ref } from 'vue';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import IftaLabel from 'primevue/iftalabel';
 import RadioButton from 'primevue/radiobutton';
 import IconPlus from '@/components/icons/IconPlus.vue';
 
+const mainRef = ref(null);
+const mainWidth = ref(0);
+const mainLeft = ref(0)
+
+onMounted(() => {
+    const updateMainSize = () => {
+        if (mainRef.value) {
+            mainWidth.value = mainRef.value.offsetWidth
+            mainLeft.value = mainRef.value.offsetLeft
+        }
+    }
+
+    updateMainSize()
+
+    const observer = new ResizeObserver(() => updateMainSize())
+    observer.observe(mainRef.value)
+});
 
 </script>
 

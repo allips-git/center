@@ -204,6 +204,7 @@ onMounted(() => {
         font-size: 0.6175rem;
         padding: 0;
         color: #ACB3BB;
+        box-shadow: none;
     }
 }
 </style>

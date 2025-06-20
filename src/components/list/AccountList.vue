@@ -1,6 +1,6 @@
 <template>
 <div class="">
-    <div class="flex items-start justify-between py-[18px]">
+    <div class="flex items-start justify-between pb-[18px]">
         <div class="">
             <div class="flex items-center gap-4">
                 <h2 class="font-bold text-13">{{ clientNm }}</h2>

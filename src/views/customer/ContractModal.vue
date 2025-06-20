@@ -17,15 +17,13 @@
 
             <div class="relative flex items-center justify-center w-full">
                 <p class="w-[100px]  flex-none">설치시간</p>
-                <div class="flex w-full gap-2 *:w-full">
-                    <Select v-model="con['conInfo']['insHour']" :options="data['hours']" optionLabel="name" optionValue="value" placeholder="시"/>
-                    <Select v-model="con['conInfo']['insMinute']" :options="data['minute']" optionLabel="name" optionValue="value" placeholder="분"/>
-                </div>
-                <small class="text-red-500">{{ con['msg']['insTime'] }}</small>
-                <!-- <div class="flex flex-col w-full gap-1">
-                    <DatePicker id="insTime" v-model="con['conInfo']['insTime']" showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd" showTime timeOnly hourFormat="24"/>
+                <div class="w-full">
+                    <div class="flex w-full gap-2 *:w-full">
+                        <Select v-model="con['conInfo']['insHour']" :options="data['hours']" optionLabel="name" optionValue="value" placeholder="시"/>
+                        <Select v-model="con['conInfo']['insMinute']" :options="data['minute']" optionLabel="name" optionValue="value" placeholder="분"/>
+                    </div>
                     <small class="text-red-500">{{ con['msg']['insTime'] }}</small>
-                </div> -->
+                </div>
             </div>
 
             <div class="relative flex items-center justify-center w-full">

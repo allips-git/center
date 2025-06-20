@@ -1,7 +1,7 @@
 <template>
     <div>
         <BackHeader title="쿠폰 메뉴"/>
-        <main class="p-4 overflow-x-auto md:p-6 pb-[131px] md:pb-[75px]">
+        <main class="px-4 overflow-x-auto pb-[131px] md:pb-[75px]" ref="mainRef">
             <section class="form-gap-box">
                 <ul class="flex flex-col">
                     <!-- v-for -->
@@ -17,9 +17,13 @@
                 </ul>
             </section>
         </main>
-        <div class="bottom-fixed-btn-box md:!absolute !bottom-0">
+
+        <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
+            }" class="bottom-fixed-btn-box" 
+            >
             <Button label="쿠폰 추가" size="large" class="w-full" @click="getPopup"/>
         </div>
+
     </div>
 
     <Dialog v-model:visible="popup['pop']['couponDetail']" header="쿠폰 저장" 
@@ -40,6 +44,7 @@
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import IconPlay from '@/components/icons/IconPlay.vue'
 import CouponDetail from "@/views/include/setting/CouponDetail.vue";
+import { ref } from 'vue';
 import { onMounted } from 'vue'
 import { usePopupStore, useCouponStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
@@ -48,6 +53,23 @@ import { usePopup } from '@/assets/js/popup';
 const popup     = usePopupStore();
 const coupon    = useCouponStore();
 
+const mainRef = ref(null);
+const mainWidth = ref(0);
+const mainLeft = ref(0)
+
+onMounted(() => {
+    const updateMainSize = () => {
+        if (mainRef.value) {
+            mainWidth.value = mainRef.value.offsetWidth
+            mainLeft.value = mainRef.value.offsetLeft
+        }
+    }
+
+    updateMainSize()
+
+    const observer = new ResizeObserver(() => updateMainSize())
+    observer.observe(mainRef.value)
+});
 const { getPopupOpen, getPopupClose } = usePopup();
 
 const getPopup = async() => {

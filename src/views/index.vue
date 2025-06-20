@@ -94,7 +94,7 @@
                             <!-- <span v-if="main['kakaoYn'] === 'N'" class="px-1.5 text-xs text-white bg-red-500 rounded-full">OFF</span>
                             <span v-else class="px-1.5 text-xs text-white rounded-full bg-sky-400">ON</span> -->
                         </div>
-                        <div v-if="main['kakaoYn'] === 'Y'" class="flex gap-2 text-caption !font-normal">
+                        <div v-if="main['kakaoYn'] === 'Y'" class="flex gap-2 text-10 !font-normal text-t-lv4">
                             <span>0개 사용중</span>
                             <span>|</span>
                             <span>잔여 포인트 <span class="">50P</span></span>
@@ -106,7 +106,7 @@
             <div class="main-card-container-box-padding">
                 <div v-if="main['kakaoYn'] === 'N'">
                     <p class="bg-yellow-100 rounded py-2 px-2.5 text-10 w-full ">일일이 세팅하지 말고, 꼭 필요한 예약 메시지를 자동으로 고객에게 전달해 보세요!</p>
-                    <Button label="플랜톡 사용하기" class="w-full mt-5" @click="getPlanTalk"></Button>
+                    <Button label="플랜톡 사용하기" class="w-full mt-[14px] *:!text-13 !border-none !py-[10.5px]" @click="getPlanTalk"></Button>
                 </div>        
                 <ul v-else class="grid grid-cols-2 gap-2 *:bg-gray-50 *:p-3 *:rounded-lg *:flex *:flex-col *:gap-px text-xs mt-[0.875rem]">
                     <li>

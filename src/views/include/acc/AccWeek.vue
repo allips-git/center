@@ -1,6 +1,6 @@
 <template>
     <main>
-        <section class="p-4 md:p-6">
+        <section class="p-4">
             <div class="relative flex flex-col w-full gap-4">
                 <section class="flex items-center justify-between">
                     <h1 class="font-bold text-18">{{ acc.year }}년 {{ acc.month }}월</h1>
@@ -13,7 +13,7 @@
         <div class="gray-bar"></div>
         <section>
             <template v-for="(item, index) in acc['weekData']" :key="index">
-                <ul class="p-4 md:p-6">
+                <ul class="p-4">
                     <li class="pb-4 text-sm font-bold border-b border-gray-200 text-sky-400">
                         <p>{{ acc['month'] }}월 {{ item['week'] }}주차</p>
                     </li>

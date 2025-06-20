@@ -6,10 +6,10 @@
             <IconSetting class="size-[17px] fill-l-lv0" />
         </div>
     </div>
-    <main class="px-4 pt-4 pb-32 md:px-6 md:pt-6">
-        <ul class="flex flex-col gap-4">
+    <main class="px-4 pb-32" ref="mainRef">
+        <ul class="flex flex-col">
             <!-- v-for -->
-            <li v-for="item, index in member['list']" :key="index" class="flex items-center justify-between" @click="getDetail(item['state'], item['userCd'])">
+            <li v-for="item, index in member['list']" :key="index" class="flex items-center justify-between py-[14px]" @click="getDetail(item['state'], item['userCd'])">
                 <div class="flex items-center gap-[10px]">
                     <IconAvatar class="fill-sky-400 size-9"/>
                     <div  class="flex flex-col">
@@ -24,18 +24,15 @@
             </li>
         </ul>
     </main>
-    <div class="bottom-fixed-btn-box">
-        <Button label="멤버 추가" size="large" @click="getPopup"/>
-    </div>
-    <!-- <Dialog v-model:visible="popup['pop']['memberSet']" header="멤버 저장" 
-        :modal=true position="bottom" :dismissableMask="true" class="custom-dialog-bottom"
-        @update:visible="getPopupClose('memberSet', true)">
-        <MemberEdit/>
-    </Dialog> -->
 
+    <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
+            }" class="bottom-fixed-btn-box" 
+            >
+            <Button label="멤버 추가" size="large" @click="getPopup"/>
+    </div>
 
     <Dialog v-model:visible="popup['pop']['memberSet']" header="멤버 저장" 
-            :modal=true position="center" class="custom-dialog-bottom" 
+            :modal=true position="center" class="custom-dialog-full" 
             @update:visible="getPopupClose('memberSet', true)">
             <template #header>
                 <div class="modal-backheader">
@@ -52,6 +49,7 @@ import IconAvatar from '@/components/icons/IconAvatar.vue';
 import IconSetting from '@/components/icons/IconSetting.vue';
 import BackHeader from '@/components/layouts/BackHeader.vue';
 import MemberEdit from "@/views/include/setting/MemberEdit.vue";
+import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
@@ -64,6 +62,24 @@ const popup     = usePopupStore();
 const login     = useLoginStore();
 const member    = useMemberStore();
 const router    = useRouter();
+
+const mainRef = ref(null);
+const mainWidth = ref(0);
+const mainLeft = ref(0)
+
+onMounted(() => {
+    const updateMainSize = () => {
+        if (mainRef.value) {
+            mainWidth.value = mainRef.value.offsetWidth
+            mainLeft.value = mainRef.value.offsetLeft
+        }
+    }
+
+    updateMainSize()
+
+    const observer = new ResizeObserver(() => updateMainSize())
+    observer.observe(mainRef.value)
+});
 
 const { getPopupOpen, getPopupClose } = usePopup();
 

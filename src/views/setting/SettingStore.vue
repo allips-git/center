@@ -1,7 +1,7 @@
 <template>
     <div class="h-full overflow-y-auto">
         <BackHeader title="매장 설정"/>
-        <main class="pt-3 pb-[140px] md:pb-[160px]">
+        <main class="pt-3 pb-[140px] md:pb-[160px]" ref="mainRef">
             <section class="px-4 md:px-6">
                 <div class="flex flex-col gap-1">
                     <p class="text-10 text-t-lv3">프로필 사진</p>
@@ -116,7 +116,10 @@
                     <Textarea v-model="setting['info']['memo']" autoResize rows="3" cols="30" class="w-full" />
                 </IftaLabel>
             </section>
-            <div class="bottom-fixed-btn-box">
+
+            <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
+            }" class="bottom-fixed-btn-box" 
+            >
                 <Button label="저장" size="large" @click="getSave"/>
             </div>
         </main>
@@ -136,11 +139,30 @@ import IconPlus from '@/components/icons/IconPlus.vue';
 import IconSpot from '@/components/icons/IconSpot.vue';
 import IconPlay from '@/components/icons/IconPlay.vue';
 import DatePicker from 'primevue/datepicker';
+import { ref } from 'vue';
 import ToggleSwitch from 'primevue/toggleswitch';
 import { onMounted } from 'vue';
 import { useSettingStore } from '@/store';
 import { getAxiosData, getConvertDate, getDaumPopupPosition } from '@/assets/js/function';
 import { settingMsg } from '@/assets/js/msg';
+
+const mainRef = ref(null);
+const mainWidth = ref(0);
+const mainLeft = ref(0)
+
+onMounted(() => {
+    const updateMainSize = () => {
+        if (mainRef.value) {
+            mainWidth.value = mainRef.value.offsetWidth
+            mainLeft.value = mainRef.value.offsetLeft
+        }
+    }
+
+    updateMainSize()
+
+    const observer = new ResizeObserver(() => updateMainSize())
+    observer.observe(mainRef.value)
+});
 
 const setting = useSettingStore();
 

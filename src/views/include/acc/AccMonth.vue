@@ -14,7 +14,7 @@
            <div class="gray-bar my-[10px]"></div> 
         <section>
             <ul class="px-4">
-                <li class="py-[10px] font-bold text-gray-500 border-b border-gray-200 text-lx ">
+                <li class="py-[10px] font-bold text-gray-500 border-b border-gray-200 text-sm">
                     <p>{{ acc.year }}년</p>
                 </li>
                 <template v-for="(item, index) in acc['monthList']" :key="index">

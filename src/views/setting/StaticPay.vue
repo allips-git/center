@@ -39,7 +39,7 @@
     </Dialog> -->
 
     <Dialog v-model:visible="popup['pop']['staticPaySet']" header="고정비용 저장" 
-            :modal=true position="center" class="custom-dialog-bottom" 
+            :modal=true position="center" class="custom-dialog-full" 
             @update:visible="getPopupClose('staticPaySet', true)">
             <template #header>
                 <div class="modal-backheader">

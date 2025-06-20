@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div ref="mainRef">
         <BackHeader title="시공시간 설정"/>
         <main class="pb-20 pc-contents-h-box">
             <section class="pt-5 pb-5 mx-5 border-b ">
@@ -23,7 +23,10 @@
             <div class="flex flex-col items-center justify-center pt-5 card">
                 <Message v-if="msg" severity="info">시공시간이 저장되었습니다.</Message>
             </div>
-            <div class="bottom-fixed-btn-box md:!bottom-0">
+
+            <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
+            }" class="bottom-fixed-btn-box" 
+            >
                 <Button :disabled="status" label="저장" size="large" @click="getTimeSave"/>
             </div>
         </main>
@@ -43,6 +46,24 @@ const confirm   = useConfirm();
 const time      = useTimeStore();
 const msg       = ref(false);
 const status    = ref(false);
+
+const mainRef = ref(null);
+const mainWidth = ref(0);
+const mainLeft = ref(0)
+
+onMounted(() => {
+    const updateMainSize = () => {
+        if (mainRef.value) {
+            mainWidth.value = mainRef.value.offsetWidth
+            mainLeft.value = mainRef.value.offsetLeft
+        }
+    }
+
+    updateMainSize()
+
+    const observer = new ResizeObserver(() => updateMainSize())
+    observer.observe(mainRef.value)
+});
 
 const getTimeSave = () => {
     confirm.require({
