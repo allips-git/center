@@ -27,8 +27,7 @@
         <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 수량 : {{ calendar['edit']['insCnt'] }}</p>
     </div>
     <div class="w-full px-3 mt-4 mb-5 ml-3 border-l-2 border-gray-300 min-h-12 custom-textarea">
-        <p class="text-gray-400">{{ calendar['edit']['memo'] }}</p>
-        <Textarea v-model="value" rows="5" cols="30" />
+        <Textarea v-model="calendar['edit']['memo']" rows="5" cols="30" @blur="getMemoUpdate"/>
     </div>
 
     <div class="flex justify-end border-t border-[#fafafa] pt-[10px]">
@@ -164,6 +163,31 @@ const getClientDetail = async () => {
     await client.getDataSet(calendar['edit']['clientCd']);
 
     router.push({ path: '/customer/detail' });
+}
+
+const getMemoUpdate = async () => {
+    const params = {
+        ikey : calendar['edit']['ikey'],
+        memo : calendar['edit']['memo']
+    };
+
+    try
+    {
+        const instance  = await getAxiosData();
+        await instance.post(`https://data.planorder.kr/calendarV1/getMemoUpdate`, params);
+    }
+    catch(e)
+    {
+        console.log(e);
+        if(e.response.status === 401)
+        {
+            getTokenOut();
+        }
+        else
+        {
+            alert('일정 메모 기재에 실패하였습니다. 지속될 경우 관리자에게 문의하세요.');
+        }
+    }
 }
 
 onMounted(() => {
