@@ -235,12 +235,12 @@ const getResult = async () => {
     }
 }
 
-// onMounted(()=>{
-//     if(!join.certified)
-//     {
-//         router.go(-1);
-//     }
-// })
+onMounted(()=>{
+    if(!join.certified)
+    {
+        router.go(-1);
+    }
+})
 </script>
 
 <style lang="scss" scoped>

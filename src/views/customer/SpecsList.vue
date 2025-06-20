@@ -95,12 +95,12 @@
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['conInfoSet']" header="계약 정보" 
-            :modal=true position="center" class="custom-dialog-bottom" 
+            :modal=true position="center" class="custom-dialog-full" 
             @update:visible="getPopupClose('conInfoSet', true)">
             <template #header>
-                <div class="modal-backheader">
-                    <Button @click="getPopupClose(true, 'kakaoDetail')" severity="contrast" text icon="pi pi-times"/>
+                <div class="modal-fullheader">
                     <h2 class="modal-backheader-title">계약 정보</h2>
+                    <Button @click="getPopupClose(true, 'kakaoDetail')" severity="contrast" text icon="pi pi-arrow-left"/>
                 </div>
             </template>
             <ContractModal/>

@@ -46,39 +46,73 @@
   <div class="top-header">
     <header
       :class="[
-        'w-full z-50 flex items-center justify-between bg-white h-[3.125rem] p-4',
+        'w-full z-50 flex items-center justify-between bg-white h-[3.125rem] p-4 md:justify-start',
         props.fixed
           ? 'fixed top-0 left-0 right-0 pt-[env(safe-area-inset-top)] md:sticky md:pt-2 md:shadow-none md:border-gray-100 md:p-4 md:h-[3.125rem] cal-header'
           : 'sticky top-0 md:shadow-none md:border-gray-100'
       ]"
     >
-      <!-- 좌측 아이콘 -->
       <IconArrowForward
         :class="['fill-l-lv0 size-6', props.fixed ? 'mt-4 ios-icon' : 'mt-0.5']"
         @click="goBack"
       />
 
-      <!-- 가운데 제목: 일정 페이지 전용 -->
       <template v-if="props.centerTitle">
-        <h1 class="flex-1 pt-4 text-sm font-bold text-center text-t-lv1 ios-title">
+        <h1 class="flex-1 pt-4 text-sm font-bold text-center md:text-left md:ml-2 text-t-lv1 ios-title">
           {{ props.title }}
         </h1>
-        <div class="w-6"></div> <!-- 오른쪽 공간 맞추기 -->
+        <div class="w-6"></div> 
       </template>
 
-      <!-- 기본 제목 (absolute 위치 조정 방식) -->
       <template v-else>
         <h1
           class="absolute text-sm font-bold -translate-x-1/2 -translate-y-1/2 text-t-lv1 left-1/2 top-1/2 md:relative md:-translate-y-0 md:-translate-x-0 md:top-0 md:left-2"
         >
           {{ props.title }}
         </h1>
-        <div class="w-6"></div> <!-- 오른쪽 공간 맞추기 -->
+        <div class="w-6"></div>
+         
+
 
       </template>
     </header>
   </div>
 </template>
+
+<!-- <template>
+  <div class="top-header">
+    <header
+      :class="[
+        'w-full z-50 flex items-center bg-white h-[3.125rem] p-4 justify-between md:justify-start',
+        props.fixed
+          ? 'fixed top-0 left-0 right-0 pt-[env(safe-area-inset-top)] md:pt-2 md:shadow-none md:border-gray-100 md:p-4 md:h-[3.125rem] cal-header'
+          : 'sticky top-0 md:shadow-none md:border-gray-100'
+      ]"
+    >
+      <IconArrowForward
+        :class="['fill-l-lv0 size-6', props.fixed ? 'mt-4 ios-icon' : 'mt-0.5']"
+        @click="goBack"
+      />
+
+      <template v-if="props.centerTitle">
+        <h1
+          class="flex-1 text-sm font-bold text-center text-t-lv1 md:text-left md:ml-2 md:flex-none md:w-auto"
+        >
+          {{ props.title }}
+        </h1>
+        <div class="hidden w-6 md:block"></div>
+      </template>
+
+      <template v-else>
+        <h1 class="ml-2 text-sm font-bold text-t-lv1">
+          {{ props.title }}
+        </h1>
+        <div class="w-6"></div>
+      </template>
+    </header>
+  </div>
+</template> -->
+
 
 <script setup lang="ts">
 import { defineProps } from 'vue';

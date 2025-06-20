@@ -45,7 +45,6 @@
 
         <Dialog v-model:visible="popup['pop']['calendarEdit']" 
         :modal=true
-        position="right"
         class="editPopup"
         :dismissableMask="true"
         @update:visible="getPopupClose(true, 'calendarEdit')">

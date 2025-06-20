@@ -1,5 +1,5 @@
 <template>
-    <div class="p-5">
+    <div class="p-4 pt-[15px]">
         <div class="text-sm form-gap-box">
 
             <div class="relative flex items-center justify-center w-full ">

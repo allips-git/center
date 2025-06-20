@@ -1,11 +1,11 @@
 <template>
     <main>
-        <section class="p-4 pb-5 md:p-6">
+        <section class="p-4 pb-5">
             <div class="relative flex flex-col w-full gap-4">
                 <section class="flex items-center justify-between acc-datepicker">
                     <h1 class="font-bold text-18">{{ acc.year }}년</h1>
                     <DatePicker v-model="acc.searchDt" view="year" dateFormat="yy년" 
-                        class="" :locale="'ko'" showIcon fluid iconDisplay="input"
+                        class="*:!text-xs" :locale="'ko'" showIcon fluid iconDisplay="input"
                         @update:modelValue="acc.getMonData()" />
                 </section>
                 <AccInfo :saleAmt="getAmt(acc.monthSaleAmt)" :purcAmt="getAmt(acc.monthPurcAmt)" :margin="acc.monthMargin"/>
@@ -13,7 +13,7 @@
         </section>
            <div class="gray-bar my-[10px]"></div> 
         <section>
-            <ul class="px-4 md:p-6">
+            <ul class="px-4">
                 <li class="py-[10px] font-bold text-gray-500 border-b border-gray-200 text-lx ">
                     <p>{{ acc.year }}년</p>
                 </li>

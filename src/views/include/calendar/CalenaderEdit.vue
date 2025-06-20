@@ -5,7 +5,7 @@
         <div class="w-full ">
             <p class="text-8 text-sky-500">일정</p>
             <p class="flex items-center text-base font-bold">{{ calendar['edit']['clientNm'] }} 
-                <span class="flex items-center justify-center ml-2 text-sm text-gray-400 size-4" @click="getDetail">
+                <span class="flex items-center justify-center ml-2 text-sm text-gray-400 size-4" >
                     <IconPlay class="size-4 fill-gray-400"/>
                 </span>
             </p>
@@ -31,7 +31,7 @@
     </div>
 
     <div class="flex justify-end border-t border-[#fafafa] pt-[10px]">
-        <Iconpencil class="fill-gray-500 size-4" />
+        <Iconpencil class="fill-gray-500 size-4" @click="getDetail"/>
     </div>
 </section>
 </template>
