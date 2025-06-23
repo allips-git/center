@@ -2,7 +2,7 @@
 <main>
     <main class="pt-5 pb-10">
         <section class="px-4">
-            <h1 class="font-bold">{{ kakao['info']['kdNm'] }}</h1>
+            <h1 class="text-base font-bold">{{ kakao['info']['kdNm'] }}</h1>
             <p class="mt-2 text-gray-400 text-11">{{ kakao['info']['descrip'] }}</p>
         </section>
         

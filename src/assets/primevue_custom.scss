@@ -508,6 +508,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         border-radius: 4px !important;
         .p-button-label{
             font-weight: 800 !important;
+            font-size: 0.8175rem;
         }
     }
 }
@@ -577,6 +578,8 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
             font-size: 0.8175rem;
         }
     }
+    pointer-events: auto;
+    z-index: 50;
 }
 
 .p-button-outlined.p-button-danger {

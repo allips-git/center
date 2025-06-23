@@ -39,7 +39,7 @@
             </ul>
         </section>
 
-        <div class="fixed bottom-14 right-4 md:right-4 md:absolute register-button"  @click="getPopOpen">
+        <div class="fixed bottom-14 right-4 xl:right-[calc((100vw-1280px)/2+8rem)] xl:bottom-14 register-button"  @click="getPopOpen">
             <Button label="고객 신규 등록" icon="pi pi-plus" size="large"  @click="getPopOpen"/>
         </div>
 

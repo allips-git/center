@@ -12,7 +12,7 @@
             />
         <div class="z-0 w-full h-[100%] overflow-y-auto">
             <div class="flex items-center justify-center w-full" :class="{ 'pb-[56px] md:pb-0' :  showAppFooter }" ref="listRef">
-                <div class="xl:max-w-[980px] w-full">
+                <div class="xl:max-w-[980px] w-full xl:shadow-[0_4px_4px_rgba(0,0,0,0.25)] rounded-md">
                     <RouterView class="w-full"/>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <template>
-    <main class="pb-20 overflow-y-scroll h-[90vh]">
+    <main class="pb-20 overflow-y-scroll xl:h-[90vh]">
         <main class="">
             <BackHeader title="플랜톡"/>
             <div class="">

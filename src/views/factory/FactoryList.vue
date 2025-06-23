@@ -1,5 +1,5 @@
 <template>
-<main>
+<main class="xl:h-[90vh]">
     <BackHeader title="공장" />
   
     <div class="relative px-4 md:px-6 custom-left-tab">
@@ -11,9 +11,9 @@
             <TabPanels>
                 <TabPanel value="0">
                     <div class="pt-3 pb-20">
-                        <div class="fixed bottom-11 right-4 md:bottom-4 facadd-button" @click="getPopOpen('sysFactorySearch')">
+                        <button class="fixed z-50 pointer-events-auto bottom-11 right-4 md:bottom-4 facadd-button xl:right-[calc((100vw-1280px)/2+1rem)]" >
                             <Button label="공장코드 추가" icon="pi pi-plus" size="large" @click="getPopOpen('sysFactorySearch')"/>
-                        </div>
+                        </button>
                        
                         <ul class="w-full">
                             <li class="flex gap-4 py-[18px] border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
@@ -27,12 +27,9 @@
                                             <p v-if="item['appGb'] === 'N'" class="text-orange-500">반려</p>
                                         </div>
                                     </div>
-                                    <p class="!text-t-lv1 text-desc">{{ item.tel }}</p>
-                                    <p class="!text-t-lv2 text-desc">{{ item.addr + ' ' + item.addrDetail }}</p>
-                                    <!-- <div class="flex flex-wrap gap-1 mt-2">
-                                        <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
-                                        <Tag value="블라인드" severity="info" class="*:!text-xs"></Tag>
-                                    </div> -->
+                                    <p class="!text-t-lv1 text-xs">{{ item.tel }}</p>
+                                    <p class="!text-t-lv2 text-xs">{{ item.addr + ' ' + item.addrDetail }}</p>
+                                   
                                 </div>
                             </li>
                         </ul>
@@ -41,7 +38,7 @@
                 <TabPanel value="1">
                     <div class="pb-20">
 
-                        <div class="fixed bottom-11 right-4 facadd-button">
+                        <div class="fixed bottom-11 right-4 facadd-button xl:right-[calc((100vw-1280px)/2+1rem)]">
                             <Button label="외주공장 추가" icon="pi pi-plus" size="large" @click="getPopOpen('outFactorySet')" />
                         </div>
                         
