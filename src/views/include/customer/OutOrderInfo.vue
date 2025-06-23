@@ -55,20 +55,19 @@ import InputText from 'primevue/inputtext';
 import DatePicker from 'primevue/datepicker';
 import Textarea from 'primevue/textarea';
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 import { useConfirm } from "primevue/useconfirm";
-import { useDataStore, useOrderStore } from '@/store';
+import { useDataStore, useEstiStore, useOrderStore } from '@/store';
 import { getAxiosData, getTokenOut, getDaumPopupPosition } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
 const confirm       = useConfirm();
-const router        = useRouter();
 const data          = useDataStore();
+const esti          = useEstiStore();
 const order         = useOrderStore();
 const addrMsg       = ref('');
 const addrDetailMsg = ref('');
 
-const { getPopupClose } = usePopup();
+const { getPopupOpen, getPopupClose } = usePopup();
 
 const getShippingGb = () => {
     if(order['outInfo']['shippingGb'] === '001')
@@ -165,8 +164,9 @@ const getOrder = () => {
             {
                 const instance  = await getAxiosData();
                 await instance.post(`https://data.planorder.kr/orderV1/getOutOrderResult`, params);
+                await order.getList({ emCd : esti['emCd'] });
                 getPopupClose('outOrderSet', true);
-                router.push({ path : '/customer/outOrderMate' });
+                getPopupOpen('outOrderMate');
             }
             catch(e)
             {

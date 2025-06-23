@@ -7,9 +7,13 @@ import { defineStore } from 'pinia';
 interface Pop {
     confirm             : boolean;
     clientSet           : boolean;
+    clientDetail        : boolean;
     itemList            : boolean;
     itemSet             : boolean;
     estiList            : boolean;
+    estiMate            : boolean;
+    conMate             : boolean;
+    orderList           : boolean;
     ordList             : boolean;
     disAmtSet           : boolean;
     addAmtSet           : boolean;
@@ -22,9 +26,11 @@ interface Pop {
     outFactoryItemSet   : boolean;
     sysOrderSet         : boolean;
     outOrderSet         : boolean;
+    outOrderMate        : boolean;
     accMonth            : boolean;
     accWeek             : boolean;
     accDay              : boolean;
+    payList             : boolean;
     paymentSet          : boolean;
     calendarSet         : boolean;
     calendarDetail      : boolean;
@@ -44,9 +50,13 @@ const getPopInfo = (): Pop => {
     return {
         confirm             : false,
         clientSet           : false,
+        clientDetail        : false,
         itemList            : false,
         itemSet             : false,
         estiList            : false,
+        estiMate            : false,
+        conMate             : false,
+        orderList           : false,
         ordList             : false,
         disAmtSet           : false,
         addAmtSet           : false,
@@ -59,9 +69,11 @@ const getPopInfo = (): Pop => {
         outFactoryItemSet   : false,
         sysOrderSet         : false,
         outOrderSet         : false,
+        outOrderMate        : false,
         accMonth            : false,
         accWeek             : false,
         accDay              : false,
+        payList             : false, 
         paymentSet          : false,
         calendarSet         : false,
         calendarDetail      : false,

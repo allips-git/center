@@ -120,8 +120,9 @@ const getConMove = () => {
             {
                 const instance  = await getAxiosData();
                 await instance.post(`https://data.planorder.kr/estiV1/getContract`, params);
+                await client.getDetail();
                 getPopupClose(true, 'conInfoSet');
-                router.go(-1);
+                getPopupClose(true, 'estiList');
             }
             catch(e)
             {

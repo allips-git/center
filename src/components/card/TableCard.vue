@@ -97,7 +97,7 @@ const esti      = useEstiStore();
 const order     = useOrderStore();
 const status    = ref(false);
 
-const { getPopupOpen } = usePopup();
+const { getPopupOpen, getPopupClose } = usePopup();
 
 defineProps({
     title   : String,
@@ -136,12 +136,11 @@ const getDelete = (edCd: string) => {
 
                     if(res.data['cnt'] === 0)
                     {
-                        router.go(-1);
+                        await client.getDetail();
+                        getPopupClose(true, 'estiList');
                     }
-                    else
-                    {
-                        esti.getList();
-                    }
+
+                    esti.getList();
                 }
                 catch(e)
                 {
@@ -184,7 +183,8 @@ const getBtnProcess = async (type: string, edCd: string) => {
         case 'secondary':
             /** 외주 공장 발주완료 */
             await order.getEdCd(edCd);
-            router.push({ path : '/customer/outOrderMate' });
+            console.log('test');
+            getPopupOpen('outOrderMate');
         break;
         case 'help':
             /** 시스템 공장 발주취소 */

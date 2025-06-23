@@ -239,19 +239,9 @@ const getEstiSave = () => {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/estiV1/getResult`, params);
                 
-                esti.getEmCd(res.data['emCd']);
-                esti.getList();
-                
-                switch(esti['type'])
-                {
-                    case 'I': case 'N':
-                        router.push({ path : '/customer/estiList' });
-                    break;
-                    case 'M':
-                        esti.getList();
-                    break;   
-                }
-                
+                await esti.getEmCd(res.data['emCd']);
+                await esti.getList();
+                await client.getDetail();
                 getPopupClose(true, 'itemList');
                 getPopupClose(true, 'itemSet');
             }
