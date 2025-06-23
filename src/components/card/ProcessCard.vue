@@ -82,7 +82,6 @@ import Popover from 'primevue/popover';
 import Listbox from 'primevue/listbox';
 import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
-import { useRouter } from 'vue-router';
 import { useClientStore, useEstiStore } from '@/store';
 import { getAxiosData, getTokenOut, getCommas, getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
@@ -92,7 +91,6 @@ const { getPopupOpen } = usePopup();
 const confirm   = useConfirm();
 const client    = useClientStore();
 const esti      = useEstiStore();
-const router    = useRouter();
 const status    = ref(false);
 const props     = defineProps({
     info : Object
@@ -123,9 +121,9 @@ const getDateAndTime = (date) => {
     return getConvertDate(new Date(date), 'mm%dd%w% hh:ii');
 }
 
-const getPayInfo = () => {
-    esti.getEmCd(props['info']['emCd']);
-    router.push({ path: '/customer/payList' })
+const getPayInfo = async () => {
+    await esti.getEmCd(props['info']['emCd']);
+    getPopupOpen('payList');
 }
 
 const getFirstBtnText = () => {
@@ -176,16 +174,16 @@ const getFirstBtnClick = () => {
     switch(props.info['stCd'])
     {
         case '002':
-            router.push({ path : '/customer/estiMate' });
+            getPopupOpen('estiMate');
         break;
         case '003':
-            router.push({ path : '/customer/conMate' });
+            getPopupOpen('conMate');
         break;
         case '006': 
-            router.push({ path: '/customer/payList' });
+            getPopupOpen('payList');
         break;
         case '012': case '011':
-            router.push({ path: '/customer/payList' });
+            getPopupOpen('payList');
         break;
     }
 }
@@ -196,10 +194,10 @@ const getSecondBtnClick = () => {
     switch(props.info['stCd'])
     {
         case '002':
-            router.push({ path: '/customer/estiList' });
+            getPopupOpen('estiList');
         break;
         case '003':
-            router.push({ path: '/customer/orderList' });
+            getPopupOpen('orderList');
         break;
         case '006':
             confirm.require({
@@ -223,6 +221,7 @@ const getSecondBtnClick = () => {
                             const instance  = await getAxiosData();
                             await instance.post(`https://data.planorder.kr/estiV1/getDeilResult`, { emCd : props['info']['emCd'] });
                             client.getDetail();
+                            client.getList();
                         }
                         catch(e)
                         {
@@ -243,7 +242,7 @@ const getSecondBtnClick = () => {
             });
         break;
         case '011': case '012':
-            router.push({ path: '/customer/payList' });
+            getPopupOpen('payList');
         break;
     }
 }
@@ -270,6 +269,7 @@ const getEstiRestore = () => {
                     const instance  = await getAxiosData();
                     await instance.post(`https://data.planorder.kr/estiV1/getRestore`, { emCd : props['info']['emCd'] });
                     client.getDetail();
+                    client.getList();
                 }
                 catch(e)
                 {
@@ -296,12 +296,12 @@ const getProcess = (value: string) => {
     switch(value)
     {
         case 'E':
-            router.push({ path : '/customer/estiMate' });
+            getPopupOpen('estiMate');
         break;
         case 'C':
             if(props.info['stCd'] !== '002')
             {
-                router.push({ path : '/customer/conMate' });
+                getPopupOpen('conMate');
             }
             else
             {
@@ -311,7 +311,7 @@ const getProcess = (value: string) => {
         case 'O':
             if(props.info['stCd'] !== '002')
             {
-                router.push({ path : '/customer/orderList' });
+                getPopupOpen('orderList');
             }
             else
             {
@@ -342,6 +342,7 @@ const getProcess = (value: string) => {
                             const instance  = await getAxiosData();
                             await instance.post(`https://data.planorder.kr/estiV1/getCancel`, { emCd : props['info']['emCd'] });
                             client.getDetail();
+                            client.getList();
                         }
                         catch(e)
                         {

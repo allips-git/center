@@ -81,7 +81,7 @@ import SaleAmountPop from '@/components/modal/SaleAmountPop.vue'
 import AddAmountPop from '@/components/modal/addAmountPop.vue'
 import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
-import { useDataStore, usePopupStore, useEstiStore, usePayStore } from '@/store';
+import { useDataStore, usePopupStore, useClientStore, useEstiStore, usePayStore } from '@/store';
 import { getAmt } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { getAxiosData, getTokenOut } from '@/assets/js/function';
@@ -89,6 +89,7 @@ import { getAxiosData, getTokenOut } from '@/assets/js/function';
 const confirm   = useConfirm();
 const data      = useDataStore();
 const popup     = usePopupStore();
+const client    = useClientStore();
 const esti      = useEstiStore();
 const pay       = usePayStore();
 const status    = ref(false);
@@ -178,6 +179,7 @@ const getPay = () => {
                 const instance  = await getAxiosData();
                 await instance.post(`https://data.planorder.kr/payV1/getPayResult`, params);
                 await pay.getList({ emCd : esti['emCd'] });
+                await client.getDetail();
                 getPopupClose('paymentSet', true);
             }
             catch(e)
