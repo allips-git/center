@@ -499,6 +499,8 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
+
+
 .register-button {
     .p-button {
 
@@ -521,6 +523,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     .p-button.p-button-sm {
         padding: 6px !important;
         border-radius: 2px;
+        border: none;
     }
 }
 

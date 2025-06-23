@@ -91,7 +91,7 @@
             :modal=true position="center" class="custom-dialog-full"
             @update:visible="getPopClose(true, 'itemList')">
             <template #header>
-                <div class="modal-backheader">
+                <div class="modal-fullheader">
                     <Button @click="getPopClose(true, 'itemList')" severity="contrast" text icon="pi pi-times"/>
                     <h2 class="modal-backheader-title">제품선택</h2>
                 </div>

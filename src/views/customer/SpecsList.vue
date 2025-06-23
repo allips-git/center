@@ -86,13 +86,15 @@
         :modal=true position="center" class="custom-dialog-bottom backPopup"
         @update:visible="getPopupClose('itemSet', true)">
         <template #header>
-            <div class="modal-fullheader">
+            <div class="modal-fullheader change-button">
                 <Button @click="getPopupClose('itemSet', true)" severity="contrast" text icon="pi pi-arrow-left"/>
                 <h2 class="modal-backheader-title">제품등록</h2>
+                <Button label="제품 변경" size="small" @click="getItemChange" class="!z-[100] !bg-p-lv4 !text-white"/>
             </div>
         </template>
         <ProductRegister/>
     </Dialog>
+
 
     <Dialog v-model:visible="popup['pop']['conInfoSet']" header="계약 정보" 
             :modal=true position="center" class="custom-dialog-full" 
@@ -152,6 +154,12 @@ onMounted(() => {
 });
 
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getItemChange = () => {
+    getPopupClose(true, 'itemSet');
+    getPopupOpen('itemList');
+}
+
 
 const getDisAmtPopup = async () => {
     await data.getCoupon();

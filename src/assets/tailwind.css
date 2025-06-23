@@ -241,5 +241,5 @@
   }
 
   .tab-header{
-    @apply text-sm lg:text-base
+    @apply text-sm
   }

@@ -1,5 +1,5 @@
 <template>
-    <main class="pb-24">
+    <main class="relative pb-24  h-[90vh]">
         <BackHeader title="고객" />
         <section class="">
             <div class="flex items-center justify-between px-4 py-[10px] md:px-6 no-print ">
@@ -20,7 +20,7 @@
             </div>
                     
             <ul class="flex flex-col">
-                <li v-for="(item, index) in client['list']" :key="index" class="flex items-center gap-[14px] flex-none w-full px-4 py-[10px] md:px-6" @click="getInfo(item.clientCd)">
+                <li v-for="(item, index) in client['list']" :key="index" class="flex items-center gap-[14px] flex-none w-full px-4 py-[10px] md:px-6 cursor-pointer " @click="getInfo(item.clientCd)">
                     <!-- 상태 -->
                     <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none font-bold text-white rounded-md text-11 md:text-sm w-[11.4%] aspect-square sm:size-10">
                         {{ getStatusName(item.step) }}
@@ -39,9 +39,10 @@
             </ul>
         </section>
 
-        <div class="fixed bottom-14 right-4 md:bottom-4 register-button">
-            <Button label="고객 신규 등록" icon="pi pi-plus" size="large" @click="getPopOpen"/>
+        <div class="fixed bottom-14 right-4 md:right-4 md:absolute register-button"  @click="getPopOpen">
+            <Button label="고객 신규 등록" icon="pi pi-plus" size="large"  @click="getPopOpen"/>
         </div>
+
         <Dialog v-model:visible="popup['pop']['clientSet']" 
         header="고객 등록"
         :modal=true

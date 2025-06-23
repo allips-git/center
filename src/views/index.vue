@@ -27,11 +27,11 @@
 
                         </div>
                         <div class="block w-px h-5 bg-gray-200"></div>
-                            <IconAddCircle @click="getStCd('')"/>
+                            <IconAddCircle @click="getStCd('')" class="cursor-pointer"/>
                         </div>
                 </div>
                 <ul class="grid grid-cols-5 pt-3 main-card-container-box-padding">
-                    <li v-for="(item, index) in main['stCnt']" :key="index" class="flex flex-col items-center justify-center border-r h-[2.4375rem] gap-[0.3125rem] last:border-r-0" @click="getStCd(item['stCd'])">
+                    <li v-for="(item, index) in main['stCnt']" :key="index" class="flex flex-col items-center cursor-pointer justify-center border-r h-[2.4375rem] gap-[0.3125rem] last:border-r-0" @click="getStCd(item['stCd'])">
                         <p class="text-data text-sky-500 h-[1.4375rem] flex items-center">{{ item.count }}</p>
                         <p class="text-caption">{{ item.label }}</p>
                     </li>
@@ -101,7 +101,7 @@
                         </div>
                     </div>
                 </div>
-                <Button label="설정" severity="secondary" size="small" class=""></Button>
+                <Button v-if="main['kakaoYn'] === 'Y'" label="설정" severity="secondary" size="small" class="" @click="router.push({ path : '/plantalk' });"></Button>
             </div>
             <div class="main-card-container-box-padding">
                 <div v-if="main['kakaoYn'] === 'N'">
@@ -186,27 +186,7 @@
                 </div>
             </div>
         </section>
-        <!-- <section class="">
-            <div class="main-card-container-box pt-[1.375rem] px-4 !pb-[1.875rem]">
-                <div class="main-card-tilte-box">
-                    <h2 class="flex items-center justify-center gap-2 text-18">
-                        매장전용 메세지</h2>
-                    <Button label="메세지 추가" size="small"></Button>
-                </div>
-                <ul class="main-card-container-box-padding max-h-[500px] overflow-y-auto !py-1 scroll-bar-thin flex flex-col gap-6 mt-7">
-                    <li v-for="(item, index) in main['msgList']" :key="index" class="flex items-center justify-between flex-none w-full last:border-b-0 scroll-">
-                        <p class="flex-none w-6 mr-2 font-bold text-t-lv2">{{ index + 1 }}</p>
-                        <div class="flex flex-col w-[calc(100%-60px)] gap-1">
-                            <p class="text-xs font-bold">{{ item.title }}</p>
-                            <p class="mt-0.5 text-10 text-t-lv4 truncate w-full">{{ item.description }}</p>
-                        </div>
-                        <button class="flex items-center justify-center flex-none size-7">
-                            <IconLeftArrow class="w-3 fill-l-lv3"/>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-        </section> -->
+      
     </aside>
 </div>  
 </template>
