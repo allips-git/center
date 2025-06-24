@@ -2,7 +2,6 @@
 <main class="fixed inset-0 w-screen h-screen">
     <div class="flex flex-col h-full">
         <TopHeader v-if="showTopHeader" @toggleHeader="toggleHeader"/>
-        
         <div class="flex flex-1 h-[calc(100%-var(--header-height))]">
             <SideHeader 
                 :setWideSide="setWideSide"
@@ -19,8 +18,8 @@
                 </div>
             </div>
         </div>
+        <ConfirmDialog></ConfirmDialog>
     </div>
-    
     <AppBar v-if="showAppFooter"/>
 </main>
   </template>
