@@ -5,8 +5,8 @@
             <CalenderMonth class="flex-grow md:w-full md:block"/>
             <CalenderDay class="flex-grow hidden border-l border-gray-200 md:w-full md:block md:max-w-[400px] md:h-full" />
         </div>
-        <div class="absolute z-50 flex justify-center text-sm -translate-x-1/2 bottom-24 left-1/2 md:hidden">
-            <div class="px-5 py-2 bg-white border border-gray-200 rounded-full shadow-sm" @click="getDayView">일별</div>
+        <div class="flex absolute bottom-24 left-1/2 z-50 justify-center text-sm -translate-x-1/2 md:hidden">
+            <div class="px-5 py-2 bg-white rounded-full border border-gray-200 shadow-sm" @click="getDayView">일별</div>
         </div>
 
         <Dialog v-model:visible="popup['pop']['calendarSet']" 

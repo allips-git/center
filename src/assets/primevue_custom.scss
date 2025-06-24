@@ -57,6 +57,14 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         }
     }
 }
+.ourorder-radio{
+    .p-radiobutton:not(.p-disabled):has(.p-radiobutton-input:focus) .p-radiobutton-box{
+        border: 5px solid #22c55e !important;
+    }
+    .p-radiobutton:not(.p-disabled):has(.p-radiobutton-input:hover) .p-radiobutton-box{
+        border: 5px solid #22c55e !important;
+    }
+}
 
 .p-radiobutton:not(.p-disabled):has(.p-radiobutton-input:hover) .p-radiobutton-box{
     border: 5px solid #00AEF2 !important;
@@ -65,6 +73,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .p-radiobutton:not(.p-disabled):has(.p-radiobutton-input:focus) .p-radiobutton-box{
     border: 5px solid #00AEF2 !important;
 }
+
 
 .custom-drawer{
     width: auto !important;

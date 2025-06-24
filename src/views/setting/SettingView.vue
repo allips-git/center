@@ -1,13 +1,13 @@
 <template>
-    <div class="xl:h-[90vh] overflow-scroll">
+    <div class="xl:h-[90vh] overflow-y-auto">
         <BackHeader title="설정" />
-        <main class="pb-5 ">
+        <main class="pb-5">
             <section class="p-4 md:p-6">
-                <div class="flex gap-2 px-4 py-3.5 border border-gray-200 rounded-sm">
+                <div class="flex gap-2 px-4 py-3.5 rounded-sm border border-gray-200">
                     <div class="!size-[33px] flex items-center justify-center">
                         <IconAvatar class="fill-[#78BBFF]  size-full"/>
                     </div>
-                    <div class="flex items-center gap-0.5">
+                    <div class="flex gap-0.5 items-center">
                         <h1 class="text-base font-bold text-t-lv1">{{ login['name'] }}</h1>
                         <span class="text-sm text-sky-500">님</span>
                     </div>
@@ -38,9 +38,9 @@
             <section class="p-4 pb-0 md:p-6 md:pb-0">
                 <h2 class="text-sm setting-list-header text-t-lv1">정보설정</h2>
                 <ul>
-                    <li v-for="(item, index) in storeSettings" :key="index" class="flex items-center justify-between p-4 text-sm border-b hover:bg-gray-50 text-t-lv1" @click="navigateTo(item)">
+                    <li v-for="(item, index) in storeSettings" :key="index" class="flex justify-between items-center p-4 text-sm border-b hover:bg-gray-50 text-t-lv1" @click="navigateTo(item)">
                         <p>{{ item.name }}</p>
-                        <div class="flex items-center justify-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
+                        <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
                     </li>
                 </ul>
     
@@ -51,19 +51,19 @@
                 <ul class="*:text-sm text-t-lv1">
                     <li class="flex justify-between p-4 border-b hover:bg-gray-50">
                         <p>사용약관</p>
-                        <div class="flex items-center justify-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
+                        <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
                     </li>
                     <li class="flex justify-between p-4 border-b hover:bg-gray-50" @click="router.push({ path : '/setting/privacy' })">
                         <p>개인정보 처리방침</p>
-                        <div class="flex items-center justify-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
+                        <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
                     </li>
                     <li class="flex justify-between p-4 border-b hover:bg-gray-50">
                         <p>개인정보 수집 이용 동의서</p>
-                        <div class="flex items-center justify-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
+                        <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
                     </li>
                     <li class="flex justify-between p-4 border-b hover:bg-gray-50" @click="getJoinOut">
                         <p>회원탈퇴</p>
-                        <div class="flex items-center justify-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
+                        <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
                     </li>
                 </ul>
             </section>

@@ -1,5 +1,5 @@
 <template>
-    <Dialog v-model:visible="visible" pt:root:class="!border-0 !bg-transparent w-full md:w-[500px] md:h-auto h-full !max-h-screen" pt:mask:class="bg-white backdrop-blur-sm">
+    <Dialog v-model:visible="visible" pt:root:class="!border-0 !bg-transparent w-full md:w-[400px] md:h-auto h-full min-h-[600px] !max-h-screen" pt:mask:class="bg-white backdrop-blur-sm">
         <template #container>
             <BackHeader title="약관동의"/>
             <div class="agree_padding-x">

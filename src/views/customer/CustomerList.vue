@@ -3,8 +3,8 @@
         <BackHeader title="고객" />
         <section class="">
             <div class="flex items-center justify-between px-4 py-[10px] md:px-6 no-print ">
-                <div class="flex self-center justify-between w-full ">
-                    <div class="flex w-full gap-2">
+                <div class="flex justify-between self-center w-full">
+                    <div class="flex gap-2 w-full">
                         <div class="flex relative w-full gap-2 max-w-[90px] bg-gray-100 *:!border-0  mini_select">
                             <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="relative z-10 w-full md:*:text-xs" @change="getList"/>
                         </div>
@@ -25,7 +25,7 @@
                     <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none font-bold text-white rounded-md text-11 md:text-sm w-[11.4%] aspect-square sm:size-10">
                         {{ getStatusName(item.step) }}
                     </div>
-                    <div class="flex justify-between w-full gap-2">
+                    <div class="flex gap-2 justify-between w-full">
                         <div class="flex flex-col flex-grow min-w-0">
                             <p class="font-bold text-13">{{ item.clientNm }}</p>
                             <span class="flex-1 text-10 truncate text-t-lv4 whitespace-nowrap max-w-[200px] sm:max-w-[100%]">{{ item.addr }} {{ item.addrDetail }}</span>
@@ -39,7 +39,7 @@
             </ul>
         </section>
 
-        <div class="fixed bottom-14 right-4 xl:right-[calc((100vw-1280px)/2+8rem)] xl:bottom-14 register-button"  @click="getPopOpen">
+        <div class="fixed bottom-14 right-4 xl:right-[calc((100vw-1280px)/2+6rem)] xl:bottom-14 2xl:right-[calc((100vw-1440px)/2+6rem)] register-button"  @click="getPopOpen">
             <Button label="고객 신규 등록" icon="pi pi-plus" size="large"  @click="getPopOpen"/>
         </div>
 
@@ -124,7 +124,7 @@
             <template #header>
                 <div class="modal-backheader">
                     <Button @click="getPopupClose(true, 'payList')" severity="contrast" text icon="pi pi-times" />
-                    <h2 class="modal-backheader-title">결제내역</h2>
+                    <h2 class="modal-backheader-title">계약서</h2>
                 </div>
             </template>
             <CustomerPayList/>

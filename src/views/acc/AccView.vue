@@ -1,19 +1,19 @@
 <template>
-<main class="h-full overflow-y-scroll pb-14">
-        <BackHeader title="회계" />
-        <main class="w-full">
-            <section class="p-4 pb-5 md:p-6">
-            <div class="relative w-full bg-white ">
+<div class="flex flex-col h-full">
+    <BackHeader title="회계" />
+    <div class="overflow-y-auto flex-1">
+        <section class="p-4 pb-5 md:p-6">
+            <div class="relative w-full bg-white">
                 <ul class="space-y-[14px]">
-                    <li class="flex items-center gap-4">
+                    <li class="flex gap-4 items-center">
                         <p class="text-13 !text-t-lv3">매출</p>
                         <p class="font-bold text-18 text-t-lv1">{{ getAmt(acc['mainHeader']['saleAmt']) }}원</p>
                     </li>
-                    <li class="flex items-center gap-4">
+                    <li class="flex gap-4 items-center">
                         <p class="text-13 !text-t-lv3">매입</p>
                         <p class="font-bold text-18 text-t-lv1">{{ getAmt(acc['mainHeader']['purcAmt']) }}원</p>
                     </li>
-                    <li class="flex items-center gap-4">
+                    <li class="flex gap-4 items-center">
                         <p class="text-13 !text-t-lv3">마진</p>
                         <p class="font-bold text-green-500 text-18">{{ acc['mainHeader']['margin'] }}%</p>
                     </li>
@@ -26,70 +26,61 @@
 
         <div class="my-[10px] gray-bar"></div>
   
- 
-   
-    <div class="px-4 md:px-6">
-
-        <section class="w-full custom-right-tab">
-            <Tabs value="0" class="w-full">
-                <TabList class="justify-end">
-                    <Tab value="0" class="tab-header" @click="getTab('003')">계약</Tab>
-                    <Tab value="1" class="tab-header" @click="getTab('012')">결제</Tab>
-                </TabList>
-                <TabPanels>
-                    <TabPanel value="0">
-                        <div class="">
-                            <div>
-                                <template v-for="(date, dIndex) in acc.dateList" :key="dIndex">
-                                    <div class="flex items-center h-6 gap-2">
-                                        <p class="flex-none text-xs">{{ date['stDt'] }}</p>
-                                        <div class="w-full h-px bg-gray-200"></div>
-                                    </div>
-                                    <template v-for="(item, index) in acc.list" :key="index">
-                                        <AccountList v-if="date['stDt'] === item.stDt" 
-                                            :clientNm="item.clientNm" 
-                                            :stNm="'계약'" 
-                                            :addr="item.addr + ' ' + item.addrDetail"
-                                            :saleAmt="getAmt(item.totalSaleAmt)" 
-                                            :purcAmt="getAmt(item.totalPurcAmt)" 
-                                            :rev="getAmt(item.rev)" />
+        <div class="px-4 pb-14 md:px-6">
+            <section class="w-full custom-right-tab">
+                <Tabs value="0" class="w-full">
+                    <TabList class="justify-end">
+                        <Tab value="0" class="tab-header" @click="getTab('003')">계약</Tab>
+                        <Tab value="1" class="tab-header" @click="getTab('012')">결제</Tab>
+                    </TabList>
+                    <TabPanels>
+                        <TabPanel value="0">
+                            <div class="">
+                                <div>
+                                    <template v-for="(date, dIndex) in acc.dateList" :key="dIndex">
+                                        <div class="flex gap-2 items-center h-6">
+                                            <p class="flex-none text-xs">{{ date['stDt'] }}</p>
+                                            <div class="w-full h-px bg-gray-200"></div>
+                                        </div>
+                                        <template v-for="(item, index) in acc.list" :key="index">
+                                            <AccountList v-if="date['stDt'] === item.stDt" 
+                                                :clientNm="item.clientNm" 
+                                                :stNm="'계약'" 
+                                                :addr="item.addr + ' ' + item.addrDetail"
+                                                :saleAmt="getAmt(item.totalSaleAmt)" 
+                                                :purcAmt="getAmt(item.totalPurcAmt)" 
+                                                :rev="getAmt(item.rev)" />
+                                        </template>
                                     </template>
-                                </template>
+                                </div>
                             </div>
-                        </div>
-                    </TabPanel>
-                    <TabPanel value="1">
-                        <div class="">
-                            <div>
-                                <template v-for="(date, dIndex) in acc.dateList" :key="dIndex">
-                                    <div class="flex items-center gap-2 px-4 py-2">
-                                        <p class="flex-none text-gray-400">{{ date['stDt'] }}</p>
-                                        <div class="w-full h-px bg-gray-200"></div>
-                                    </div>
-                                    <template v-for="(item, index) in acc.list" :key="index">
-                                        <AccountList v-if="date['stDt'] === item.stDt" 
-                                            :clientNm="item.clientNm" 
-                                            :stNm="'결제'" 
-                                            :addr="item.addr + ' ' + item.addrDetail"
-                                            :saleAmt="getAmt(item.totalSaleAmt)" 
-                                            :purcAmt="getAmt(item.totalPurcAmt)" 
-                                            :rev="getAmt(item.rev)" />
+                        </TabPanel>
+                        <TabPanel value="1">
+                            <div class="">
+                                <div>
+                                    <template v-for="(date, dIndex) in acc.dateList" :key="dIndex">
+                                        <div class="flex gap-2 items-center px-4 py-2">
+                                            <p class="flex-none text-gray-400">{{ date['stDt'] }}</p>
+                                            <div class="w-full h-px bg-gray-200"></div>
+                                        </div>
+                                        <template v-for="(item, index) in acc.list" :key="index">
+                                            <AccountList v-if="date['stDt'] === item.stDt" 
+                                                :clientNm="item.clientNm" 
+                                                :stNm="'결제'" 
+                                                :addr="item.addr + ' ' + item.addrDetail"
+                                                :saleAmt="getAmt(item.totalSaleAmt)" 
+                                                :purcAmt="getAmt(item.totalPurcAmt)" 
+                                                :rev="getAmt(item.rev)" />
+                                        </template>
                                     </template>
-                                </template>
+                                </div>
                             </div>
-                        </div>
-                    </TabPanel>
-                </TabPanels>
-            </Tabs>
-        </section>
+                        </TabPanel>
+                    </TabPanels>
+                </Tabs>
+            </section>
+        </div>
     </div>
-    </main>
-
-    <!-- <Dialog v-model:visible="popup['pop']['accMonth']" header="월간 분석" 
-        :modal=true position="center" class="custom-dialog-bottom"
-        @update:visible="getPopupClose('accMonth', true)">
-        <AccMonth/>
-    </Dialog> -->
 
     <Dialog v-model:visible="popup['pop']['accMonth']" 
         header="월간 분석"
@@ -105,7 +96,7 @@
         </template>
             <AccMonth/>
         </Dialog>
-</main>
+</div>
 </template>
 
 <script setup lang="ts">

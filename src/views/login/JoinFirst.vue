@@ -1,6 +1,6 @@
 <template>
     <Dialog v-model:visible="visible"
-        pt:root:class="!border-0 !bg-transparent w-full md:w-[500px] md:h-auto h-full !max-h-screen" 
+        pt:root:class="!border-0 !bg-transparent w-full md:w-[400px] min-h-[600px] md:h-auto h-full !max-h-screen" 
         pt:mask:class="bg-white backdrop-blur-sm">
             <template #container>
                 <BackHeader title="매장 회원가입 1/2"/>
@@ -46,7 +46,7 @@
                         </IftaLabel>
                         <small v-if="join['msg']['einFile'] !== ''" class="vali_text">{{ join['msg']['einFile'] }}</small>
                         <small v-if="join['msg']['einFile'] !== ''" class="vali_text-tran">none</small>
-                        <div class="next-button">
+                        <div class="mobile-fiex-bottom next-button md:*:mt-12 md:!border-t-0">
                             <Button label="다음" class="w-full" @click="getNext"/>
                         </div>
                     </div>
@@ -147,12 +147,12 @@ const getNext = async () => {
     }
 }
 
-onMounted(()=>{
-    if(!join.certified)
-    {
-        router.go(-1);
-    }
-})
+// onMounted(()=>{
+//     if(!join.certified)
+//     {
+//         router.go(-1);
+//     }
+// })
 </script>
 
 <style lang="scss" scoped>

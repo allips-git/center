@@ -1,27 +1,26 @@
 <template>
 <main class="fixed inset-0 w-screen h-screen">
-    <div class="flex flex-col items-start justify-start w-full h-full">
-            <TopHeader v-if="showTopHeader" @toggleHeader="toggleHeader"
-            :class="showTopHeader"
-            />
-            
-        <div class="flex items-start justify-start w-full h-full">
+    <div class="flex flex-col h-full">
+        <TopHeader v-if="showTopHeader" @toggleHeader="toggleHeader"/>
+        
+        <div class="flex flex-1 h-[calc(100%-var(--header-height))]">
             <SideHeader 
-            :setWideSide="setWideSide"
-            :drawerClass="false"
+                :setWideSide="setWideSide"
+                :drawerClass="false"
             />
-        <div class="z-0 w-full h-[100%] overflow-y-auto">
-            <div class="flex items-center justify-center w-full" :class="{ 'pb-[56px] md:pb-0' :  showAppFooter }" ref="listRef">
-                <div class="xl:max-w-[980px] w-full xl:shadow-[0_4px_4px_rgba(0,0,0,0.25)] rounded-md">
-                    <RouterView class="w-full"/>
+            <div class="overflow-hidden flex-1 w-full">
+                <div class="overflow-y-auto h-full">
+                    <div class="flex justify-center w-full min-h-full" 
+                         :class="{ 'pb-[56px] md:pb-0' : showAppFooter }">
+                        <div class="w-full xl:max-w-[980px] xl:my-4 2xl:max-w-[1140px]" :class="{ 'xl:shadow-[0_4px_4px_rgba(0,0,0,0.25)] rounded-md': showShadow }">
+                            <RouterView />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-      
-        <ConfirmDialog></ConfirmDialog>
-        <!-- <Toast></Toast> -->
     </div>
-    </div>
+    
     <AppBar v-if="showAppFooter"/>
 </main>
   </template>
@@ -88,11 +87,15 @@ const showAppFooter = computed(() => {
     return isPC || route.meta.showAppFooter; // PC일 경우 항상 true
 });
 
+// 섀도우 표시 여부를 결정하는 computed 속성
+const showShadow = computed(() => {
+    return route.meta.showShadow !== false; // 기본값은 true
+});
 
 </script>
 
 <style lang="scss">
-
-
-
+:root {
+    --header-height: 56px;
+}
 </style>

@@ -1,13 +1,13 @@
 <template>
     <!-- <BackHeader :title="mate['ceNm']+' 발주서'" /> -->
-    <p class="pt-6 text-xl font-bold text-center">{{ mate['ceNm']+' 발주서' }}</p>
+    <p class="pt-6 font-bold text-center text-18">{{ mate['ceNm']+' 발주서' }}</p>
     <main class="!pb-36">
-        <div class="relative">
-            <section class="relative overflow-hidden bg-white rounded-t-xl">
+        <div class="relative p-4">
+            <section class="overflow-hidden relative bg-white rounded-t-xl">
                 <InfoCard :title="'수신 : '+mate['faNm']" :info="mate['headers']" />
-                <div class="gray-bar"></div>
+                <div class="my-4 gray-bar"></div>
 
-                <section class="px-5">
+                <section class="">
                     <div class="flex flex-col gap-5">
                         <TableCard v-for="(table, index) in mate['list']" :key="index" :title="table.title" :cards="table.cardLists"
                             :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag"

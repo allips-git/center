@@ -1,11 +1,11 @@
 <template>
     <Dialog v-model:visible="visible"
-        pt:root:class="!border-0 !bg-transparent w-full md:w-[500px] md:h-auto h-full !max-h-screen" 
+        pt:root:class="!border-0 !bg-transparent w-full md:w-[400px] min-h-[600px] md:h-auto h-full !max-h-screen" 
         pt:mask:class="bg-white backdrop-blur-sm">
             <template #container>
                 <BackHeader title="매장 회원가입 2/2"/>
-                <div class="!pb-20 overflow-y-auto modal-page-padding">
-                    <div class="p-4 mb-8 rounded-lg bg-gray-50">
+                <div class="overflow-y-auto modal-page-padding">
+                    <div class="p-4 mb-8 bg-gray-50 rounded-lg">
                         <p class="text-sm">
                             플랜오더에 등록하실 운영 중인 매장시설 정보와 플랜 및 문자메시지 등 플랜오더 이용을 위한 결제수단을 입력해주세요.<br>
                             <b>* 안심하세요! 결제수단을 등록해도, 2주 무료체험 기간 동안 절대 결제가 일어나지 않고 언제든 해지 가능해요.</b>
@@ -16,7 +16,7 @@
                         <IftaLabel class="w-full">
                             <label>매장이름</label>
                             <InputText id="ceNm" v-model="join['center']['ceNm']" placeholder="매장이름을 입력해주세요." class="w-full"/>    
-                            <small v-if="join['msg']['ceNm'] !== ''" class="text-red-500">{{ join['msg']['ceNm'] }}</small>
+                            <small v-if="join['msg']['ceNm'] !== ''" class="text-xs text-red-500">{{ join['msg']['ceNm'] }}</small>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
@@ -32,13 +32,13 @@
                         <IftaLabel class="w-full">
                             <label>사업자 등록 번호</label>
                             <InputText id="einNum" v-model="join['center']['einNum']" placeholder="- 없이 입력해주세요." class="w-full"/>
-                            <small v-if="join['msg']['einNum'] !== ''" class="text-red-500">{{ join['msg']['einNum'] }}</small>
+                            <small v-if="join['msg']['einNum'] !== ''" class="text-xs text-red-500">{{ join['msg']['einNum'] }}</small>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
                             <label>사업자등록증상 대표자 이름</label>
-                            <InputText id="ceoNm" v-model="join['center']['ceoNm']" placeholder="대표자 이름을 입력해주세요." class="w-full"/>    
-                            <small v-if="join['msg']['ceoNm'] !== ''" class="text-red-500">{{ join['msg']['ceoNm'] }}</small>
+                            <InputText id="ceoNm" v-model="join['center']['ceoNm']" placeholder="대표자 이름을 입력해주세요." class="w-full"/>   
+                            <small v-if="join['msg']['ceoNm'] !== ''" class="text-xs text-red-500">{{ join['msg']['ceoNm'] }}</small>
                         </IftaLabel>
 
                         <IftaLabel>
@@ -47,7 +47,7 @@
                                 <InputIcon class="pi pi-search" />
                             </IconField>
                             <label>주소</label>
-                            <small v-if="join['msg']['addr'] !== ''" class="text-red-500">{{ join['msg']['addr'] }}</small>
+                            <small v-if="join['msg']['addr'] !== ''" class="text-xs text-red-500">{{ join['msg']['addr'] }}</small>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
@@ -58,7 +58,7 @@
                         <IftaLabel class="w-full">
                             <label>매장 대표 연락처</label>
                             <InputText id="ceoTel" v-model="join['center']['ceoTel']" placeholder="- 없이 입력해주세요." class="w-full"/>  
-                            <small v-if="join['msg']['ceoTel'] !== ''" class="text-red-500">{{ join['msg']['ceoTel'] }}</small>  
+                            <small v-if="join['msg']['ceoTel'] !== ''" class="text-xs text-red-500">{{ join['msg']['ceoTel'] }}</small>  
                         </IftaLabel>
                         
                     </div>
@@ -235,12 +235,12 @@ const getResult = async () => {
     }
 }
 
-onMounted(()=>{
-    if(!join.certified)
-    {
-        router.go(-1);
-    }
-})
+// onMounted(()=>{
+//     if(!join.certified)
+//     {
+//         router.go(-1);
+//     }
+// })
 </script>
 
 <style lang="scss" scoped>

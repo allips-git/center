@@ -10,7 +10,7 @@ export async function getCertified()
         IMP.certification({
             merchant_uid    : 'merchant_' + getRandomStr(15),
             popup           : false
-        }, async rsp => {
+         }, async rsp => {
             if (rsp.success) 
             {
                 // 인증 성공

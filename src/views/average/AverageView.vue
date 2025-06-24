@@ -1,5 +1,5 @@
 <template>
-    <main class="xl:h-[90vh] w-full overflow-y-scroll pb-20">
+    <main class="xl:h-[90vh] w-full overflow-y-auto pb-20">
         <BackHeader title="통계"/>
         <div class="flex justify-between p-4 md:p-6">
             <div>
@@ -24,39 +24,39 @@
             <div class="w-full h-[22px] overflow-hidden bg-gray-200 rounded-full ">
                 <div class="flex items-center h-full *:h-full">
                     <div :class="`bg-blue-400`" :style="{ width: `${aver.saleAmtPercent}`}" >
-                        <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.saleAmtPercent }}</p>
+                        <p class="flex justify-end items-center pr-3 h-full text-xs text-right text-white">{{ aver.saleAmtPercent }}</p>
                     </div>
     
                     <div :class="`bg-yellow-400`" :style="{ width: `${aver.purcAmtPercent}` }" >
-                        <p class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.purcAmtPercent }}</p>
+                        <p class="flex justify-end items-center pr-3 h-full text-xs text-right text-white">{{ aver.purcAmtPercent }}</p>
                     </div>
     
                     <div :class="`bg-red-400`" :style="{ width: `${aver.fixedAmtPercent}` }">
                         <!-- 0%센트 일때 안보이게 처리 (글자 겹칩 현상 발생함) -->
-                        <p v-if="aver.fixedAmtPercent == '0%'"   class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.fixedAmtPercent }}</p>
+                        <p v-if="aver.fixedAmtPercent == '0%'"   class="flex justify-end items-center pr-3 h-full text-xs text-right text-white">{{ aver.fixedAmtPercent }}</p>
                     </div>
                 </div>
             </div>
             <!--  border border-gray-200 rounded-md -->
             <ul class="flex flex-col gap-[14px]  mt-[1.625rem] text-xs !text-t-lv1">
-                <li class="flex justify-between gap-5">
-                    <div class="flex items-center gap-3.5">
+                <li class="flex gap-5 justify-between">
+                    <div class="flex gap-3.5 items-center">
                         <span class="block bg-blue-400 rounded-full size-[11px]"></span>
                         <p>매출</p>
                     </div>
                     <p class="text-sm font-bold text-t-lv2">{{ getAmt(aver['saleAmt']) }}원</p>
                 </li>
 
-                <li class="flex justify-between gap-5">
-                    <div class="flex items-center gap-3.5">
+                <li class="flex gap-5 justify-between">
+                    <div class="flex gap-3.5 items-center">
                         <span class="block bg-yellow-400 rounded-full size-[11px]"></span>
                         <p>매입</p>
                     </div>
                     <p class="text-sm font-bold text-t-lv2">{{ getAmt(aver['purcAmt']) }}원</p>
                 </li>
 
-                <li class="flex justify-between gap-5">
-                    <div class="flex items-center gap-3.5">
+                <li class="flex gap-5 justify-between">
+                    <div class="flex gap-3.5 items-center">
                         <span class="block bg-red-400 rounded-full size-[11px]"></span>
                         <p>비용</p>
                     </div>
@@ -74,8 +74,8 @@
                     <span class="text-xs text-gray-400">최고 10명</span>
                 </div>
                 <ul class="mt-4">
-                    <li v-for="(item, index) in aver['clientRank']" :key="index" class="flex items-center justify-between py-3">
-                            <div class="flex items-center gap-2 text-xs">
+                    <li v-for="(item, index) in aver['clientRank']" :key="index" class="flex justify-between items-center py-3">
+                            <div class="flex gap-2 items-center text-xs">
                                 <p class="w-2 font-bold">{{ index + 1 }}</p>
                                 <IconAvatar class="w-[26px] text-sky-400"/>
                                 <p class="">{{ item['clientNm'] }}</p>
@@ -91,26 +91,26 @@
         <section class="p-4 md:p-6">
             <h2 class="mb-6 text-base font-bold">결제 수단</h2>
             <div class="">
-                <div class="w-full h-5 overflow-hidden bg-gray-200 rounded-full ">
+                <div class="overflow-hidden w-full h-5 bg-gray-200 rounded-full">
                     <div class="flex items-center h-full *:h-full">
                         <div :class="`bg-blue-400`" :style="{ width: `${aver.accountPercent}`}" >
-                            <p v-if="aver.accountPercent !== '0%'"  class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.accountPercent }}</p>
+                            <p v-if="aver.accountPercent !== '0%'"  class="flex justify-end items-center pr-3 h-full text-xs text-right text-white">{{ aver.accountPercent }}</p>
                         </div>
         
                         <div :class="`bg-yellow-400`" :style="{ width: `${aver.cashPercent}` }" >
-                            <p v-if="aver.cashPercent !== '0%'" class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.cashPercent }}</p>
+                            <p v-if="aver.cashPercent !== '0%'" class="flex justify-end items-center pr-3 h-full text-xs text-right text-white">{{ aver.cashPercent }}</p>
                         </div>
         
                         <div :class="`bg-green-400`" :style="{ width: `${aver.cardPercent}` }">
                             <!-- 0%센트 일때 안보이게 처리 (글자 겹칩 현상 발생함) -->
-                            <p v-if="aver.cardPercent !== '0%'"  class="flex items-center justify-end h-full pr-3 text-xs text-right text-white">{{ aver.cardPercent }}</p>
+                            <p v-if="aver.cardPercent !== '0%'"  class="flex justify-end items-center pr-3 h-full text-xs text-right text-white">{{ aver.cardPercent }}</p>
                         </div>
                     </div>
                 </div>
             </div>
             
             <ul class="flex flex-col gap-2.5 pt-6">
-                <li v-for="(item, index) in aver['payList']" :key="index" class="flex justify-between gap-5">
+                <li v-for="(item, index) in aver['payList']" :key="index" class="flex gap-5 justify-between">
                     <div class="flex items-center gap-3.5 text-xs !text-t-lv1">
                         <span v-if="item['codeSub'] === '001'" class="block bg-blue-300 rounded-full size-3"></span>
                         <span v-if="item['codeSub'] === '002'" class="block bg-yellow-400 rounded-full size-3"></span>
@@ -130,8 +130,8 @@
                 <canvas id="myDoughnutChart"></canvas>
             </div>
             <ul class="flex flex-col gap-2 p-4 pb-0 mx-4">
-                <li v-for="(item, index) in aver['keywordList']" :key="index" class="flex justify-between gap-5">
-                    <div class="flex items-center gap-2">
+                <li v-for="(item, index) in aver['keywordList']" :key="index" class="flex gap-5 justify-between">
+                    <div class="flex gap-2 items-center">
                         
                         배경색상 양식 : bg-[color]-[num] / 텍스트색상 양식: text-[color]-[num]
                         폭 > -red-400
@@ -139,7 +139,7 @@
                         회베 > -green-400
                         야드 > -sky-500 
                         <span v-if="item['codeSub'] === '001' || item['codeSub'] === '002'" class="block bg-green-400 rounded-full size-3"></span>
-                        <span v-if="item['codeSub'] === '003' || item['codeSub'] === '004'" class="block rounded-full bg-sky-400 size-3"></span>
+                        <span v-if="item['codeSub'] === '003' || item['codeSub'] === '004'" class="block bg-sky-400 rounded-full size-3"></span>
                         <p>{{ item['codeNm'] }} ({{ item['cnt'] }}개)</p>
                     </div>
                     <p v-if="item['codeSub'] === '001' || item['codeSub'] === '002'" class="text-lg font-bold text-red-400">{{ getAmt(item['amt']) }}원</p>

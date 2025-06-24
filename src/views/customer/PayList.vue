@@ -1,36 +1,35 @@
 <template>
-    <BackHeader title="계약서" />
     <main class="pb-32 main-bottom-fixed-pd" ref="mainRef">
-        <div class="flex flex-col gap-5 p-4 md:p-6">
+        <div class="flex flex-col gap-5 p-4">
             <TableCard v-for="(table, index) in pay['list']" :key="index" :title="table.title" :cards="table.cardLists"
                 :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag" :showButton="table.showButton"/>
         </div>
         <div class="gray-bar"></div>
-        <section class="p-4 md:p-6">
+        <section class="p-4">
             <CalculateCard title="제품 결제 내역" :calcs="pay['payList']" totalTitle="총 결제 금액" :totalAmt="getAmt(pay['payList'], 'total')" :showtoggle="true" />
         </section>
         <div class="gray-bar"></div>
-        <section class="p-4 md:p-6">
-            <div class="p-4 text-sm border border-gray-200 rounded ">
+        <section class="p-4">
+            <div class="p-4 text-sm rounded border border-gray-200">
             <div class="flex flex-col gap-2">
-                <h1 class="title-md" >세부정보</h1>
-                <dl class="flex items-center justify-between text-13"> 
+                <h1 class="text-sm font-medium" >세부정보</h1>
+                <dl class="flex justify-between items-center text-13"> 
                     <dt class="text-gray-500">견적일</dt>
                     <dd class="">{{ pay['info']['estiDt'] }}</dd>
                 </dl>
-                <dl class="flex items-center justify-between text-13">
+                <dl class="flex justify-between items-center text-13">
                     <dt class="text-gray-500">계약일</dt>
                     <dd class="">{{ pay['info']['conDt'] }}</dd>
                 </dl>
-                <dl class="flex items-center justify-between text-13">
+                <dl class="flex justify-between items-center text-13">
                     <dt class="text-gray-500">시공일</dt>
                     <dd class="">{{ pay['info']['deliDt'] }}</dd>
                 </dl>
-                <dl class="flex items-center justify-between text-13">
+                <dl class="flex justify-between items-center text-13">
                     <dt class="text-gray-500">설치 예상시간</dt>
                     <dd class="">{{ pay['info']['insTime'] }}</dd>
                 </dl>
-                <dl class="flex items-center justify-between text-13">
+                <dl class="flex justify-between items-center text-13">
                     <dt class="text-gray-500">시공 담당자</dt>
                     <dd class="">{{ pay['info']['insUser'] }}</dd>
                 </dl>

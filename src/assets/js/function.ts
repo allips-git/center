@@ -205,23 +205,44 @@ export const getAddDate = (days: number) => {
 /**
  * @description 다음 주소 API 팝업 위치 설정
  */
-export function getDaumPopupPosition(layer)
-{
+export function getDaumPopupPosition(layer) {
     layer.style.display = 'block';
 
-    // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
-    const width 		= 300; //우편번호서비스가 들어갈 element의 width
-    const height 		= 400; //우편번호서비스가 들어갈 element의 height
-    const borderWidth   = 5; //샘플에서 사용하는 border의 두께
+    // iframe을 넣은 element의 위치를 설정한다.
+    const width = 300; //우편번호서비스가 들어갈 element의 width
+    const height = 400; //우편번호서비스가 들어갈 element의 height
+    const borderWidth = 5; //샘플에서 사용하는 border의 두께
 
     // 위에서 선언한 값들을 실제 element에 넣는다.
-    layer.style.width 	= width + 'px';
-    layer.style.height 	= height + 'px';
-    layer.style.border 	= borderWidth + 'px solid';
+    layer.style.width = width + 'px';
+    layer.style.height = height + 'px';
+    layer.style.border = borderWidth + 'px solid';
 
-    // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
-    layer.style.left 	= (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
-    layer.style.top 	= (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
+    // 모달 요소 찾기 (주소 검색이 열린 모달)
+    const modal = layer.closest('.p-dialog-content') || layer.closest('.modal-content');
+    
+    // 모바일 여부 체크 (화면 너비가 480px 이하면 모바일로 간주)
+    const isMobile = window.innerWidth <= 480;
+
+    if (modal && (isMobile || window.innerWidth <= 768)) { // 모바일이거나 태블릿(768px 이하)일 때
+        // 모달 기준으로 중앙 정렬
+        const modalRect = modal.getBoundingClientRect();
+        layer.style.position = 'absolute';
+        layer.style.left = '50%';
+        layer.style.top = '50%';
+        layer.style.transform = 'translate(-50%, -50%)';
+        // 모달 내부 기준으로 위치 조정
+        layer.style.margin = '0';
+        // z-index 조정으로 모달 위에 표시
+        layer.style.zIndex = '9999';
+    } else {
+        // 데스크톱에서는 화면 중앙
+        layer.style.position = 'fixed';
+        layer.style.left = '50%';
+        layer.style.top = '50%';
+        layer.style.transform = 'translate(-50%, -50%)';
+        layer.style.margin = '0';
+    }
 }
 
 /**

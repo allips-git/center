@@ -1,17 +1,17 @@
 <template>
-    <div class="w-full overflow-hidden border border-gray-200 rounded"> 
+    <div class="overflow-hidden w-full rounded border border-gray-200"> 
         <h1 class="px-4 py-[10px] text-sm text-left bg-gray-50">{{ title }}</h1>
         <!-- 개별 카드 v-for  -->
-        <div class="flex flex-col items-start justify-start p-4 border-t first:border-t-0" v-for="(card, index) in cards" :key="index" @click="emit('get-modify', card['edCd'])">
+        <div class="flex flex-col justify-start items-start p-4 border-t first:border-t-0" v-for="(card, index) in cards" :key="index" @click="emit('get-modify', card['edCd'])">
             <!-- 카드 상단 -->
-             <div class="flex items-center justify-between w-full">
-                <h2 class="text-gray-400 text-desc">{{ card.productTitle }}</h2>
+             <div class="flex justify-between items-center w-full">
+                <h2 class="text-xs text-gray-400">{{ card.productTitle }}</h2>
                 <div v-if="card.showDelete" class="flex justify-end danger-button">
                     <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-16 !border-gray-200" />
                 </div>            
              </div>
             <section class="w-full">
-                <div class="flex items-end justify-between w-full mb-4 text-13">
+                <div class="flex justify-between items-end mb-4 w-full text-13">
                     <div class="">
                         <!-- <h2 class="mb-1 text-sm text-gray-400">{{ card.productTitle }}</h2> -->
                         <h3 :class="`font-bold text-${card.isRed ? 'red' : 'blue'}-600`">{{ card.colorTitle }}</h3>
@@ -21,7 +21,7 @@
                 </div>
             </section>
             <!-- 테이블 -->
-            <table class="w-full overflow-hidden text-center rounded-sm table-fixed">
+            <table class="overflow-hidden w-full text-center rounded-sm table-fixed">
                 <thead class="">
                     <tr class="*:py-2 text-caption !text-t-lv3 border-0">
                         <template v-for="col in card.columns" :key="col.key">
@@ -64,14 +64,14 @@
             </section>
 
             <!-- 지시사항  -->
-            <section v-if="card['spanText'] !== ''" class="flex items-center justify-start w-auto px-3 py-1 my-2 mt-3 text-orange-400 rounded-full text-10 bg-orange-50">
+            <section v-if="card['spanText'] !== ''" class="flex justify-start items-center px-3 py-1 my-2 mt-3 w-auto text-orange-400 bg-orange-50 rounded-full text-10">
                 <p class="font-bold">지시사항: <span class="">{{ card['spanText'] }}</span></p>
             </section>
             <!-- 버튼 -->
             <!-- 버튼타입 // severity="" // primary(시스템),success(외주),secondary(시스템/외주 발주완료),warn(발주취소),danger(발주 취소 요청) -->
                 <div class="order-button">
                     <Button v-if="card['showButton'] && index === cards.length -1" 
-                        :label="card['buttonText']" :severity="card['buttonType']"  @click="getBtnProcess(card['buttonType'], card['edCd'])" class="w-full mt-4"/>
+                        :label="card['buttonText']" :severity="card['buttonType']"  @click="getBtnProcess(card['buttonType'], card['edCd'])" class="mt-4 w-full"/>
 
                 </div>
             

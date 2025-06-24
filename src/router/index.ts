@@ -73,46 +73,46 @@ const routes = [
         path: "/login",
         name: "LoginPage",
         component: Login,
-        meta : { gubun: 'Y' }
+        meta : { gubun: 'Y', showShadow: false }
     },
     {
         path: "/join/agree",
         name: "AgreePage",
         component: Agree,
-        meta : { gubun: 'Y' }
+        meta : { gubun: 'Y', showShadow: false }
     },
     {
         path: "/join/joinFirst",
         name: "JoinFirstPage",
         component: JoinFirst,
-        meta : { gubun: 'Y' }
+        meta : { gubun: 'Y' , showShadow: false}
     },
     {
         path: "/join/joinSecond",
         name: "JoinSecondPage",
         component: JoinSecond,
-        meta : { gubun: 'Y' }
+        meta : { gubun: 'Y', showShadow: false }
     },
 
     {
         path: "/join/find_password",
         name: "FindPassword",
         component: FindPassword,
-        meta : { gubun: 'Y' }
+        meta : { gubun: 'Y' , showShadow: false}
     },
 
     {
         path: "/join/change_password",
         name: "ChangePassword",
         component: ChangePassword,
-        meta : { gubun: 'Y' }
+        meta : { gubun: 'Y' , showShadow: false}
     },
 
     {
         path: "/join/wait_join",
         name: "WaitJoin",
         component: WaitJoin,
-        meta : { gubun: 'Y' }
+        meta : { gubun: 'Y', showShadow: false }
     },
 
     

@@ -109,7 +109,7 @@
     @apply flex gap-2 items-center 
   }
   .modal-page-padding{
-    @apply p-5 md:p-8
+    @apply p-4
   }
   .bottom-modal-contents-box{
     @apply flex flex-col gap-5

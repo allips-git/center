@@ -1,8 +1,8 @@
 <template>
     <main class="pb-24">
         <BackHeader title="고객상세" />
-        <section class="p-4 md:p-6">
-            <div class="flex items-center justify-between">
+        <section class="p-4">
+            <div class="flex justify-between items-center">
                 <h2 class="text-base font-bold">{{ client['detail']['clientNm'] }}</h2>
                 <Button label="정보수정" outlined severity="secondary" size="small" @click="getClientModify" class="outlined-button"/>
             </div>
@@ -36,9 +36,9 @@
         <div class="gray-bar !mb-1"></div>
         <Tabs value="0" class="w-full">
             <TabList class="">
-                <Tab value="0" class="flex items-center justify-center w-1/3 gap-2 tab-header">판매중 <span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['ing'] }}</span></Tab>
-                <Tab value="1" class="flex items-center justify-center w-1/3 gap-2 tab-header">판매완료 <span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['comp'] }}</span></Tab>
-                <Tab value="2" class="flex items-center justify-center w-1/3 gap-2 tab-header">판매취소<span class="flex items-center justify-center text-xs rounded-full size-4 bg-indigo-50 ">{{ client['detail']['cnt']['cancel'] }}</span></Tab>
+                <Tab value="0" class="flex gap-2 justify-center items-center w-1/3 tab-header">판매중 <span class="flex justify-center items-center text-xs bg-indigo-50 rounded-full size-4">{{ client['detail']['cnt']['ing'] }}</span></Tab>
+                <Tab value="1" class="flex gap-2 justify-center items-center w-1/3 tab-header">판매완료 <span class="flex justify-center items-center text-xs bg-indigo-50 rounded-full size-4">{{ client['detail']['cnt']['comp'] }}</span></Tab>
+                <Tab value="2" class="flex gap-2 justify-center items-center w-1/3 tab-header">판매취소<span class="flex justify-center items-center text-xs bg-indigo-50 rounded-full size-4">{{ client['detail']['cnt']['cancel'] }}</span></Tab>
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
@@ -47,8 +47,8 @@
                             <ProcessCard :info="item"/>
                         </section>
 
-                        <div class="flex flex-col items-center justify-center gap-2 py-10 text-center" v-if="getList(1).length === 0">
-                            <div class="flex items-center justify-center rounded-full bg-red-50 size-16 "> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
+                        <div class="flex flex-col gap-2 justify-center items-center py-10 text-center" v-if="getList(1).length === 0">
+                            <div class="flex justify-center items-center bg-red-50 rounded-full size-16"> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
                             <p class="text-center">판매중인 항목이 없습니다.</p>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                             <ProcessCard :info="item"/>
                         </section>
                         <div class="flex flex-col items-center justify-center gap-2 py-10 text-center h-[312px]" v-if="getList(2).length === 0">
-                            <div class="flex items-center justify-center rounded-full bg-red-50 size-16 "> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
+                            <div class="flex justify-center items-center bg-red-50 rounded-full size-16"> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
                             <p class="text-center">판매완료된 항목이 없습니다.</p>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                         </section>
 
                         <div class="flex flex-col items-center justify-center gap-2 py-10 text-center h-[312px]" v-if="getList(3).length === 0">
-                            <div class="flex items-center justify-center rounded-full bg-red-50 size-16 "> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
+                            <div class="flex justify-center items-center bg-red-50 rounded-full size-16"> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
                             <p class="text-center">판매취소된 항목이 없습니다.</p>
                         </div>
                         
@@ -83,7 +83,7 @@
             <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getNewEsti" />
         </div> -->
 
-        <div class="fixed bottom-14 right-4 md:bottom-14 register-button">
+        <div class="fixed right-4 bottom-14 md:bottom-14 register-button">
             <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getNewEsti"/>
         </div>
 

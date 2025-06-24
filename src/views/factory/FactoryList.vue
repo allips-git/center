@@ -11,7 +11,7 @@
             <TabPanels>
                 <TabPanel value="0">
                     <div class="pt-3 pb-20">
-                        <button class="fixed z-50 pointer-events-auto bottom-11 right-4 md:bottom-4 facadd-button xl:right-[calc((100vw-1280px)/2+1rem)]" >
+                        <button class="fixed z-50 pointer-events-auto bottom-14 right-4 xl:right-[calc((100vw-1280px)/2+6rem)] xl:bottom-14 2xl:right-[calc((100vw-1440px)/2+6rem)] facadd-button" >
                             <Button label="공장코드 추가" icon="pi pi-plus" size="large" @click="getPopOpen('sysFactorySearch')"/>
                         </button>
                        
@@ -23,7 +23,7 @@
                                     <div class="flex justify-between">
                                         <p class="mb-1 text-sm font-bold">{{ item.faNm }}</p>
                                         <div class="text-desc text-right *:px-3 *:py-1 *:rounded-full font-bold">
-                                            <p v-if="item['appGb'] === 'E'" class="text-p-lv3 ">승인 대기</p>
+                                            <p v-if="item['appGb'] === 'E'" class="text-p-lv3">승인 대기</p>
                                             <p v-if="item['appGb'] === 'N'" class="text-orange-500">반려</p>
                                         </div>
                                     </div>
@@ -38,7 +38,7 @@
                 <TabPanel value="1">
                     <div class="pb-20">
 
-                        <div class="fixed bottom-11 right-4 facadd-button xl:right-[calc((100vw-1280px)/2+1rem)]">
+                        <div class="fixed bottom-14 right-4 xl:right-[calc((100vw-1280px)/2+6rem)] xl:bottom-14 2xl:right-[calc((100vw-1440px)/2+6rem)] facadd-button">
                             <Button label="외주공장 추가" icon="pi pi-plus" size="large" @click="getPopOpen('outFactorySet')" />
                         </div>
                         
