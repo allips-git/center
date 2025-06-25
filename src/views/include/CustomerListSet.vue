@@ -70,17 +70,15 @@ import DatePicker from 'primevue/datepicker';
 import Select from 'primevue/select';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { useClientStore } from '@/store';
 import { getAxiosData, getConvertDate, getDaumPopupPosition } from '@/assets/js/function';
 import { clientMsg } from '@/assets/js/msg';
 import { usePopup } from '@/assets/js/popup';
 
 const client    = useClientStore();
-const router    = useRouter();
 const confirm   = useConfirm();
 
-const { getPopupClose } = usePopup();
+const { getPopupOpen, getPopupClose } = usePopup();
 
 const getAddr = () => {
     const layer = document.getElementById('layer');
@@ -177,17 +175,17 @@ const getSaveNext = () => {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/clientV1/getResult`, params);
 
+                getPopupClose(true, 'clientSet');
+                
                 if(client['type'] === 'I')
                 {
-                    client.getDataSet(res.data['clientCd']);
-                    router.push({ path : '/customer/detail' });
+                    await client.getDataSet(res.data['clientCd']);
+                    getPopupOpen('clientDetail');
+                    await client.getDetail();
                 }
-                else
-                {
-                    client.getDetail();
-                }
+
+                await client.getList();
                 
-                getPopupClose(true, 'clientSet');
             }
             catch(e)
             {

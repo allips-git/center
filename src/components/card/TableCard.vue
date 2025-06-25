@@ -183,7 +183,6 @@ const getBtnProcess = async (type: string, edCd: string) => {
         case 'secondary':
             /** 외주 공장 발주완료 */
             await order.getEdCd(edCd);
-            console.log('test');
             getPopupOpen('outOrderMate');
         break;
         case 'help':
