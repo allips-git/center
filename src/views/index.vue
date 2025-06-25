@@ -2,7 +2,7 @@
 <div class="flex flex-col h-full">
     <div class="flex-1 min-h-0">
         <div class="overflow-y-auto h-full">
-            <div class="flex flex-col gap-[14px] bg-gray-100 md:p-4 md:gap-4">
+            <div class="flex flex-col gap-[14px] bg-gray-100 md:p-4 md:gap-4 h-full">
                 <!-- 배너 섹션 -->
                 <section class="w-full">
                     <div class="relative w-full px-5 overflow-hidden bg-blue-100 rounded-md h-[9.1875rem] flex justify-between items-center">

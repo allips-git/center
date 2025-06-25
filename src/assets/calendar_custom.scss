@@ -43,6 +43,13 @@
         color: #7D7C78;
       }
 
+      .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events{        
+        overflow-x: hidden;
+        overflow-y: auto;
+        scrollbar-width: none;
+        height: 3em;
+        margin-bottom: 0.25rem;
+      }
       .fc-col-header {
         border-bottom-width:0px !important;
         border-top-width: 0px !important;
@@ -176,6 +183,8 @@
     
     .fc-timegrid-slots table tbody tr 
     {
+      height: 3rem !important;
+      overflow: scroll;
       td:nth-child(2){
         border-left: 0px;
       }

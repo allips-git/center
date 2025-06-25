@@ -39,7 +39,7 @@
             </ul>
         </section>
 
-        <div class="fixed bottom-14 right-4 xl:right-[calc((100vw-1280px)/2+6rem)] xl:bottom-14 2xl:right-[calc((100vw-1440px)/2+6rem)] register-button"  @click="getPopOpen">
+        <div class="fixed bottom-14 right-4 xl:right-[calc((100vw-1280px)/2+8rem)] xl:bottom-14 2xl:right-[calc((100vw-1440px)/2+8rem)] register-button"  @click="getPopOpen">
             <Button label="고객 신규 등록" icon="pi pi-plus" size="large"  @click="getPopOpen"/>
         </div>
 
