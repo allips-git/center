@@ -423,6 +423,15 @@ router.beforeEach( async (to, from, next) => {
 
     if(to.meta.gubun === 'Y')
     {
+        if(to.name === 'LoginPage')
+        {
+            if(login['token'] !== null)
+            {
+                next({ name : 'MainPage' });
+                return;
+            }
+        }
+        
         next();
     }
     else
