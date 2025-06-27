@@ -68,7 +68,7 @@ import InfoCard from "@/components/card/InfoCard.vue";
 import OutProduct from "@/views/include/factory/OutProduct.vue";
 import OutFactorySet from '@/views/include/factory/OutFactorySet.vue'
 import { ref } from 'vue';
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { usePopupStore, useFactoryStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
@@ -103,6 +103,10 @@ const getPopOpen = (popNm: string) => {
 
 onMounted(async () => {
     await factory.getOutFactoryDetail();
+});
+
+onUnmounted(async () => {
+    await factory.getList();
 });
 </script>
 
