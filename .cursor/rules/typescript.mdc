@@ -1,0 +1,61 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# TypeScript Rules
+
+## Interface Definitions
+- Follow these patterns for interface definitions:
+  ```typescript
+  interface ComponentProps {
+    // Use clear, descriptive names
+    propertyName: string;
+    // Use union types for limited options
+    status: 'active' | 'inactive';
+    // Use proper nullable types
+    optional?: string;
+    nullableNumber: number | null;
+  }
+  ```
+
+## Type Safety
+- Ensure type safety by:
+  1. Using proper type annotations
+  2. Avoiding `any` type
+  3. Using type guards when necessary
+  4. Properly handling null/undefined cases
+
+## Store Module Types
+- Store modules should follow this pattern:
+  ```typescript
+  interface State {
+    info: {
+      propertyName: string;
+      nullableValue: number | null;
+    };
+    msg: {
+      [key: string]: string;
+    };
+  }
+  ```
+
+## Component Props
+- Define component props with proper types:
+  ```typescript
+  interface Props {
+    required: string;
+    optional?: number;
+    withDefault: boolean;
+  }
+  ```
+
+## API Response Types
+- Define clear interfaces for API responses:
+  ```typescript
+  interface ApiResponse<T> {
+    data: T;
+    status: number;
+    message: string;
+  }
+  ```

@@ -1,0 +1,62 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Vue Component Rules
+
+## Component Structure
+- Components should follow this structure:
+  ```vue
+  <template>
+    <!-- Template content -->
+  </template>
+  
+  <script setup lang="ts">
+    // Imports
+    // Props/Emits
+    // State
+    // Computed
+    // Methods
+    // Lifecycle hooks
+  </script>
+  
+  <style>
+    /* Component styles */
+  </style>
+  ```
+
+## Component Registration
+- Components must be properly registered:
+  1. Global components in [main.ts](mdc:src/main.ts)
+  2. Local components via imports
+  3. PrimeVue components must be registered globally
+
+## Props and Events
+- Follow these patterns:
+  ```typescript
+  // Props
+  interface Props {
+    modelValue: string;
+    label?: string;
+  }
+  
+  // Emits
+  const emit = defineEmits<{
+    (e: 'update:modelValue', value: string): void;
+    (e: 'change', value: any): void;
+  }>();
+  ```
+
+## State Management
+- Use appropriate state management:
+  1. Component state with `ref` or `reactive`
+  2. Store modules for shared state
+  3. Props for parent-child communication
+
+## Error Handling
+- Implement proper error handling:
+  1. Validate props
+  2. Handle API errors
+  3. Show user-friendly error messages
+  4. Use try-catch blocks

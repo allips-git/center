@@ -1,0 +1,97 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Systematic Problem-Solving Approach
+
+## 1. Initial Assessment - Basic Component Verification
+WHEN starting problem investigation:
+- MUST check these fundamental elements FIRST:
+  1. Required component imports
+  2. Component registration in main.ts/app.vue
+  3. Basic dependencies in package.json
+  4. Component existence in node_modules
+  5. Correct component usage in template
+- DO NOT proceed to complex solutions until ALL basic checks are completed
+- MUST document which basic elements have been verified
+
+## 2. Comprehensive File Search
+BEFORE focusing on the reported file:
+- MUST perform project-wide search for:
+  1. Component usage in other files
+  2. Similar implementations that are working correctly
+  3. Related configuration files
+  4. Dependencies and their initialization
+- USE multiple search approaches:
+  * Semantic search for similar functionality
+  * Grep search for exact component/function names
+  * File search for related configurations
+- COMPARE working implementations with problematic ones
+- DO NOT limit investigation to just the reported file
+
+## 3. Environment and Console Check
+BEFORE diving into code:
+- MUST check browser console for errors
+- MUST verify in different environments:
+  * Development vs Production
+  * Local vs Deployed
+  * Different browsers
+- MUST compare working vs non-working scenarios
+- MUST check network requests and responses
+
+## 4. User Feedback Analysis
+WHEN receiving user feedback:
+- MUST carefully analyze all details provided
+- MUST pay special attention to:
+  * Specific error messages
+  * Different behavior in different environments
+  * Recent code changes mentioned by user
+- DO NOT ignore or overlook user's context and history
+- MUST ask about similar functionality in other parts of the application
+
+## 5. Progressive Investigation
+IF basic checks don't resolve the issue:
+- START with minimal, non-invasive solutions
+- PROCEED in order:
+  1. Component/dependency verification
+  2. Basic configuration checks
+  3. Type/interface validation
+  4. Runtime behavior analysis
+  5. Complex system interactions
+- STOP and reassess if no progress after 3 attempts
+- MUST check related files and dependencies
+
+## 6. Cross-Reference Analysis
+WHEN investigating specific functionality:
+- MUST search for similar patterns across the project
+- CHECK for:
+  * Similar component usage
+  * Related utility functions
+  * Shared configurations
+  * Common parent components
+- COMPARE implementation differences
+- IDENTIFY working examples to use as reference
+
+## 7. Solution Implementation
+WHEN implementing a solution:
+- MUST explain the reasoning behind the chosen approach
+- MUST verify that the solution doesn't introduce new problems
+- SHOULD document any assumptions made
+- SHOULD validate the solution in the user's context
+- MUST test impact on related components
+
+## 8. Documentation and Learning
+AFTER resolving the issue:
+- MUST document the root cause
+- MUST explain why simpler solutions were overlooked (if applicable)
+- SHOULD create or update relevant rules/guidelines
+- SHOULD establish patterns for similar future issues
+- MUST document the relationship with other components
+
+## 9. Communication Guidelines
+THROUGHOUT the process:
+- USE clear, concise language
+- ACKNOWLEDGE user's expertise and context
+- EXPLAIN reasoning for each step
+- ADMIT mistakes and adjust approach when necessary

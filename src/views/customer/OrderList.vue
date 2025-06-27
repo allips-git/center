@@ -1,8 +1,7 @@
 <template>
     <main class="pb-[130px] md:pb-32" ref="mainRef">
-        <BackHeader title="발주서" />
         <main class="main-bottom-fixed-pd">
-            <section class="px-4">
+            <section class="p-4">
                 <div class="flex flex-col gap-5">
                     <TableCard v-for="(table, index) in ord['list']" :key="index" :title="table.title" :cards="table.cardLists"
                         :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag" :showButton="table.showButton"/>
@@ -25,8 +24,14 @@
         </div>
     
         <Dialog v-model:visible="popup['pop']['sysOrderSet']"  header="시스템 발주 정보" 
-            :modal=true position="bottom" class="custom-dialog-bottom"
+            :modal=true position="center" class="custom-dialog-bottom backPopup"
             @update:visible="getPopupClose('sysOrderSet', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'sysOrderSet')" severity="contrast" text icon="pi pi-times" />
+                    <h2 class="modal-backheader-title">시스템 발주 정보</h2>
+                </div>
+            </template>
             <SysOrderInfo/>
         </Dialog>
     

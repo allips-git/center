@@ -2,11 +2,11 @@
     <BackHeader title="견적서" />
     <main class="!pb-52 overflow-y-scroll">
         <div class="relative">
-            <section class="relative overflow-hidden aspect-video -z-10">
+            <section class="overflow-hidden relative aspect-video -z-10">
                 <img src="@/assets/img/test.png" class="object-cover w-full aspect-video" alt="">
             </section>
         
-            <section class="relative p-4 pb-0 overflow-hidden bg-white md:p-6 -top-4 rounded-t-xl">
+            <section class="overflow-hidden relative -top-4 p-4 pb-0 bg-white rounded-t-xl md:p-6">
                 <InfoCard :title="mate['ceNm']" :info="mate['headers']" />
                 <div class="my-5 gray-bar"></div>
 
@@ -58,32 +58,31 @@
 </template> -->
 
 <template>
-    <BackHeader title="견적서" />
-    <main class="w-full overflow-y-scroll  pb-52 md:pb-24" ref="mainRef">
-        <div class="md:grid md:grid-cols-3 md:gap-6 md:w-[100%] md:pb-52">
+    <main class="overflow-y-auto pb-52 w-full" ref="mainRef">
+        <div class="">
            
-            <div class="md:col-span-1">
-                <div class="md:px-6 md:pl-6 md:pr-0">
-                    <h2 class="hidden py-4 font-bold title-lg md:block">고객정보</h2>
-                    <section class="aspect-[4/3] -z-10 md:aspect-auto w-full">
-                        <img src="@/assets/img/test.png" class="object-cover w-full aspect-[4/3] md:rounded-md " alt="">
+            <div class="">
+                <div class="">
+                    <h2 class="hidden py-4 font-bold title-lg">고객정보</h2>
+                    <section class="aspect-[4/3] -z-10 w-full">
+                        <img src="@/assets/img/test.png" class="object-cover w-full aspect-[4/3] " alt="">
                     </section>
                 
                     
-                    <section class="relative px-4 pt-4 pb-2 overflow-hidden bg-white -top-4 rounded-t-xl md:px-0 md:top-0">
+                    <section class="overflow-hidden relative -top-4 px-4 pt-4 pb-2 bg-white rounded-t-xl">
                         <InfoCard :title="mate['ceNm']" :info="mate['headers']" />   
                     </section>
                 </div>
     
-                <div class="gray-bar md:hidden"></div>
+                <div class="gray-bar"></div>
             </div>
-            <div class="overflow-y-scroll md:flex-col md:flex md:col-span-2 md:w-[100%] md:relative">
+            <div class="overflow-y-auto">
 
-                <section class="p-4 pb-0 md:pl-0 md:pr-6 md:pt-0 md:pb-6">
+                <section class="p-4 pb-0">
         
                     <section class="">
                         <div class="flex flex-col">
-                            <h2 class="hidden py-4 font-bold title-lg md:block">주문정보</h2>
+                            <h2 class="hidden py-4 font-bold tit">주문정보</h2>
 
                             <TableCard v-for="(table, index) in mate['list']" :key="index" :title="table.title" :cards="table.cardLists"
                            :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag"
@@ -91,8 +90,8 @@
                         </div>
                     </section>
                 </section>
-                <section class="p-4 md:p-0 md:pr-6">
-                    <h2 class="hidden py-4 font-bold title-lg md:block">결제정보</h2>
+                <section class="p-4">
+                    <h2 class="hidden py-4 font-bold title-lg">결제정보</h2>
 
                     <CalculateCard  :showtitle="true" :calcs="mate['payList']" title="합계 금액" totalTitle="총 합계 금액" :totalAmt="getAmt(mate['payList'], 'total')"/>
                 </section>
@@ -104,7 +103,7 @@
 
   
 
-    <section :style="{width: mainWidth + 'px', left: mainLeft + 'px',}" class="fixed bottom-0 w-full px-4 pt-4 overflow-hidden bg-white border-t border-gray-200 rounded-t-2xl md:pb-0">
+    <section :style="{width: mainWidth + 'px', left: mainLeft + 'px',}" class="overflow-hidden fixed bottom-0 px-4 pt-4 w-full bg-white rounded-t-2xl border-t border-gray-200 md:pb-0">
         <div class="flex justify-between *:flex *:gap-2 *:items-center text-sm w-full mb-4">
             <div>
                 <div class="label-checkbox-box">
