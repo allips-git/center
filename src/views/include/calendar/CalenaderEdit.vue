@@ -20,8 +20,8 @@
     </div>
     <div class="flex flex-col items-start gap-1 text-gray-500 text-10">
         <p>{{ getDate() }}</p>
-        <p class="px-2 py-[3px] text-10 text-white rounded-full bg-sky-500">{{ calendar['edit']['tel'] }}</p>
-        <p class="px-2 py-[3px] text-10 text-white rounded-full bg-sky-500">{{ calendar['edit']['addr'] }}</p>
+        <p class="px-2 py-[3px] text-10 text-white rounded-full bg-sky-500" @click="getNavi('tel', calendar['edit']['tel'])">{{ calendar['edit']['tel'] }}</p>
+        <p class="px-2 py-[3px] text-10 text-white rounded-full bg-sky-500" @click="getNavi('addr', calendar['edit']['addr'])">{{ calendar['edit']['addr'] }}</p>
         <p>상세주소 : {{ calendar['edit']['addrDetail'] }}</p>
         <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 예상시간 : {{ calendar['edit']['insTime'] }}</p>
         <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 수량 : {{ calendar['edit']['insCnt'] }}</p>
@@ -65,6 +65,20 @@ const getDetail = async () => {
 
 const getDate = () => {
     return getConvertDate(new Date(calendar['edit']['stDt']), 'mm%dd%w% hh:ii');
+}
+
+const getNavi = (name: string, val: string) => {
+    if(name === 'addr')
+    {
+        window.ReactNativeWebView.postMessage(JSON.stringify({ type : 'address' , value : val}));
+    }
+    else if(name === 'tel')
+    {
+        const phoneNumber   = val;
+        const telHref       = 'tel:' + phoneNumber;
+
+        window.location.href = telHref;
+    }
 }
 
 const getStCd = () => {

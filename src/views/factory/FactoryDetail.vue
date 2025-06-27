@@ -108,7 +108,7 @@ import BackHeader from '@/components/layouts/BackHeader.vue'
 import ProductInfo from "@/views/include/factory/ProductInfo.vue";
 import ProductMng from "@/views/include/factory/ProductMng.vue";
 import { ref } from 'vue';
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { usePopupStore, useFactoryStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
@@ -142,6 +142,9 @@ onMounted(async () => {
     await factory.getSysFactoryDetail();
 });
 
+onUnmounted(async () => {
+    await factory.getList();
+});
 </script>
 
 <style lang="scss">
