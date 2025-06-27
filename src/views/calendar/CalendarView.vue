@@ -55,6 +55,18 @@
 
         </Dialog>
 
+        <Dialog v-model:visible="popup['pop']['clientDetail']" header="고객 상세" 
+            :modal=true position="center" class="custom-dialog-full" 
+            @update:visible="getPopClose('clientDetail', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'clientDetail')" severity="contrast" text icon="pi pi-times" />
+                    <h2 class="modal-backheader-title">고객 상세</h2>
+                </div>
+            </template>
+            <CustomerDetail/>
+        </Dialog>
+
     </main>
 </template>
 
@@ -63,6 +75,7 @@ import CalenderMonth from '@/views/include/calendar/CalenderMonth.vue'
 import CalenderDay from '@/views/include/calendar/CalenderDay.vue'
 import CalenderSet from '@/views/include/calendar/CalenderSet.vue';
 import CalenaderEdit from '@/views/include/calendar/CalenaderEdit.vue'
+import CustomerDetail from '@/views/include/customer/CustomerDetail.vue'
 import BackHeader from '@/components/layouts/BackHeader.vue';
 import { usePopupStore, useCalendarStore } from '@/store';
 import { useRouter } from 'vue-router';
