@@ -11,7 +11,7 @@
             <ul class="flex flex-col gap-[10px] p-5 pt-0 text-sm rounded-md">
                 <li class="flex text-xs">
                     <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">혜택</p>
-                    <p class="font-medium"><div class="flex items-center justify-center font-bold text-white bg-orange-500 rounded-full size-5">P</div>{{ factory['sys']['info']['boon'] }}</p>
+                    <p class="font-medium"><span class="flex items-center justify-center font-bold text-white bg-orange-500 rounded-full size-5">P</span>{{ factory['sys']['info']['boon'] }}</p>
                 </li>
                 <li class="flex">
                     <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">전화번호</p>
