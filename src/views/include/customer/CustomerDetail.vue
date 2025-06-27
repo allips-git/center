@@ -130,6 +130,78 @@
             <CustomerListSet/>
 
         </Dialog>
+
+        <Dialog v-model:visible="popup['pop']['estiList']" header="명세서" 
+            :modal=true position="center" class="custom-dialog-full" 
+            @update:visible="getPopClose('estiList', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'estiList')" severity="contrast" text icon="pi pi-times" />
+                    <h2 class="modal-backheader-title">명세서</h2>
+                </div>
+            </template>
+            <EstiList/>
+        </Dialog>
+
+        <Dialog v-model:visible="popup['pop']['orderList']" header="발주서" 
+            :modal=true position="center" class="custom-dialog-full" 
+            @update:visible="getPopClose('orderList', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'orderList')" severity="contrast" text icon="pi pi-times" />
+                    <h2 class="modal-backheader-title">발주서</h2>
+                </div>
+            </template>
+            <OrderList/>
+        </Dialog>
+
+        <Dialog v-model:visible="popup['pop']['estiMate']" header="견적서" 
+            :modal=true position="center" class="custom-dialog-full" 
+            @update:visible="getPopClose('estiMate', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'estiMate')" severity="contrast" text icon="pi pi-times" />
+                    <h2 class="modal-backheader-title">견적서</h2>
+                </div>
+            </template>
+            <EstimateModal/>
+        </Dialog>
+
+        <Dialog v-model:visible="popup['pop']['conMate']" header="계약서" 
+            :modal=true position="center" class="custom-dialog-full" 
+            @update:visible="getPopClose('conMate', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'conMate')" severity="contrast" text icon="pi pi-times" />
+                    <h2 class="modal-backheader-title">계약서</h2>
+                </div>
+            </template>
+            <ConmateModal/>
+        </Dialog>
+
+        <Dialog v-model:visible="popup['pop']['payList']" header="결제내역" 
+            :modal=true position="center" class="custom-dialog-full" 
+            @update:visible="getPopClose('payList', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'payList')" severity="contrast" text icon="pi pi-times" />
+                    <h2 class="modal-backheader-title">계약서</h2>
+                </div>
+            </template>
+            <CustomerPayList/>
+        </Dialog>
+
+        <Dialog v-model:visible="popup['pop']['outOrderMate']" header="외주 발주서" 
+            :modal=true position="center" class="custom-dialog-full" 
+            @update:visible="getPopClose('outOrderMate', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'outOrderMate')" severity="contrast" text icon="pi pi-times" />
+                    <h2 class="modal-backheader-title">외주 발주서</h2>
+                </div>
+            </template>
+            <OutOrderMateModal/>
+        </Dialog>
     </main>
 </template>
     
@@ -138,6 +210,12 @@ import ProcessCard from "@/components/card/ProcessCard.vue";
 import ProductChoice from "@/views/include/ProductChoice.vue";
 import ProductRegister from "@/views/include/ProductRegister.vue";
 import CustomerListSet from '@/views/include/CustomerListSet.vue';
+import EstimateModal from "@/views/customer/EstimateModal.vue";
+import ConmateModal from "@/views/customer/ConmateModal.vue";
+import EstiList from '@/views/include/customer/EstiList.vue';
+import OrderList from "@/views/customer/OrderList.vue";
+import CustomerPayList from "@/views/customer/PayList.vue";
+import OutOrderMateModal from "@/views/customer/OutOrderMateModal.vue";
 import Tabs from 'primevue/tabs';
 import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';

@@ -1,39 +1,39 @@
 <template>
-<section class="px-3 py-[18px]">
-    <div class="flex items-center gap-4 pb-5 border-b border-[#FAFAFA]">
-        <IconAvatar class="size-12 fill-sky-400"/>
-        <div class="w-full ">
-            <p class="text-8 text-sky-500">일정</p>
-            <p class="flex items-center text-base font-bold">{{ calendar['edit']['clientNm'] }} 
-                <span class="flex items-center justify-center ml-2 text-sm text-gray-400 size-4" @click="getClientDetail">
-                    <IconPlay class="size-4 fill-gray-400"/>
-                </span>
+    <section class="px-3 py-[18px]">
+        <div class="flex items-center gap-4 pb-5 border-b border-[#FAFAFA]">
+            <IconAvatar class="size-12 fill-sky-400"/>
+            <div class="w-full ">
+                <p class="text-8 text-sky-500">일정</p>
+                <p class="flex items-center text-base font-bold">{{ calendar['edit']['clientNm'] }} 
+                    <span class="flex items-center justify-center ml-2 text-sm text-gray-400 size-4" @click="getClientDetail">
+                        <IconPlay class="size-4 fill-gray-400"/>
+                    </span>
+                </p>
+            </div>
+            <p class="flex-none text-base font-bold text-sky-500">
+                {{ calendar['edit']['stCd'] === 'Y' ? '견적' : '시공' }}
             </p>
         </div>
-        <p class="flex-none text-base font-bold text-sky-500">
-            {{ calendar['edit']['stCd'] === 'Y' ? '견적' : '시공' }}
-        </p>
-    </div>
-    <div class="py-[10px] edit-select">
-        <Select v-model="calendar['edit']['stCd']" :options="getStCd()" optionLabel="label" optionValue="value" class="!rounded-full *:!text-10 *:!rounded-full " size="small" 
-            @update:modelValue="(value) => getStCdChange(value)"/>
-    </div>
-    <div class="flex flex-col items-start gap-1 text-gray-500 text-10">
-        <p>{{ getDate() }}</p>
-        <p class="px-2 py-[3px] text-10 text-white rounded-full bg-sky-500" @click="getNavi('tel', calendar['edit']['tel'])">{{ calendar['edit']['tel'] }}</p>
-        <p class="px-2 py-[3px] text-10 text-white rounded-full bg-sky-500" @click="getNavi('addr', calendar['edit']['addr'])">{{ calendar['edit']['addr'] }}</p>
-        <p>상세주소 : {{ calendar['edit']['addrDetail'] }}</p>
-        <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 예상시간 : {{ calendar['edit']['insTime'] }}</p>
-        <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 수량 : {{ calendar['edit']['insCnt'] }}</p>
-    </div>
-    <div class="w-full px-3 mt-4 mb-5 ml-3 border-l-2 border-gray-300 min-h-12 custom-textarea">
-        <Textarea v-model="calendar['edit']['memo']" rows="5" cols="30" @blur="getMemoUpdate"/>
-    </div>
+        <div class="py-[10px] edit-select">
+            <Select v-model="calendar['edit']['stCd']" :options="getStCd()" optionLabel="label" optionValue="value" class="!rounded-full *:!text-10 *:!rounded-full " size="small" 
+                @update:modelValue="(value) => getStCdChange(value)"/>
+        </div>
+        <div class="flex flex-col items-start gap-1 text-gray-500 text-10">
+            <p>{{ getDate() }}</p>
+            <p class="px-2 py-[3px] text-10 text-white rounded-full bg-sky-500" @click="getNavi('tel', calendar['edit']['tel'])">{{ calendar['edit']['tel'] }}</p>
+            <p class="px-2 py-[3px] text-10 text-white rounded-full bg-sky-500" @click="getNavi('addr', calendar['edit']['addr'])">{{ calendar['edit']['addr'] }}</p>
+            <p>상세주소 : {{ calendar['edit']['addrDetail'] }}</p>
+            <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 예상시간 : {{ calendar['edit']['insTime'] }}</p>
+            <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 수량 : {{ calendar['edit']['insCnt'] }}</p>
+        </div>
+        <div class="w-full px-3 mt-4 mb-5 ml-3 border-l-2 border-gray-300 min-h-12 custom-textarea">
+            <Textarea v-model="calendar['edit']['memo']" rows="5" cols="30" @blur="getMemoUpdate"/>
+        </div>
 
-    <div class="flex justify-end border-t border-[#fafafa] pt-[10px]">
-        <Iconpencil class="fill-gray-500 size-4" @click="getDetail"/>
-    </div>
-</section>
+        <div class="flex justify-end border-t border-[#fafafa] pt-[10px]">
+            <Iconpencil class="fill-gray-500 size-4" @click="getDetail"/>
+        </div>
+    </section>
 </template>
 
 <script setup lang="ts">
@@ -43,7 +43,6 @@ import Iconpencil from '@/components/icons/Iconpencil.vue';
 import Textarea from 'primevue/textarea';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { useDataStore, useClientStore, useCalendarStore } from '@/store';
 import { getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
@@ -53,7 +52,6 @@ const confirm   = useConfirm();
 const data      = useDataStore();
 const calendar  = useCalendarStore();
 const client    = useClientStore();
-const router    = useRouter();
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
@@ -173,10 +171,8 @@ const getStCdChange = (stCd: string) => {
 }
 
 const getClientDetail = async () => {
-    await getPopupClose('calendarEdit', true);
     await client.getDataSet(calendar['edit']['clientCd']);
-
-    router.push({ path: '/customer/detail' });
+    getPopupOpen('clientDetail');
 }
 
 const getMemoUpdate = async () => {
