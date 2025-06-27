@@ -21,9 +21,11 @@ interface Pop {
     sysFactorySearch    : boolean;
     sysFactoryItemList  : boolean;
     sysFactoryItemSet   : boolean;
+    sysFactoryDetail    : boolean;
     outFactorySet       : boolean;
     outFactoryItemList  : boolean;
     outFactoryItemSet   : boolean;
+    outFactoryDetail    : boolean;
     sysOrderSet         : boolean;
     outOrderSet         : boolean;
     outOrderMate        : boolean;
@@ -64,9 +66,11 @@ const getPopInfo = (): Pop => {
         sysFactorySearch    : false,
         sysFactoryItemList  : false,
         sysFactoryItemSet   : false,
+        sysFactoryDetail    : false,
         outFactorySet       : false,
         outFactoryItemList  : false,
         outFactoryItemSet   : false,
+        outFactoryDetail    : false,
         sysOrderSet         : false,
         outOrderSet         : false,
         outOrderMate        : false,

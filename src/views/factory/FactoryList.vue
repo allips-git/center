@@ -67,7 +67,7 @@
         @update:visible="getPopClose(true, 'sysFactorySearch')">
         <template #header>
             <div class="modal-backheader">
-                <Button @click="getPopClose(true, 'clientSet')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
+                <Button @click="getPopClose(true, 'sysFactorySearch')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
                 <h2 class="modal-backheader-title">공장 코드 추가</h2>
             </div>
         </template>
@@ -96,6 +96,36 @@
             <OutFactorySet/>
     </Dialog>
 
+    <Dialog v-model:visible="popup['pop']['sysFactoryDetail']" 
+        header="공장 상세"
+        :modal=true
+        position="center"
+        class="custom-dialog-full"
+        @update:visible="getPopClose(true, 'sysFactoryDetail')">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopClose(true, 'sysFactoryDetail')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
+                <h2 class="modal-backheader-title">공장 상세</h2>
+            </div>
+        </template>
+            <SysFactoryDetail/>
+    </Dialog>
+
+    <Dialog v-model:visible="popup['pop']['outFactoryDetail']" 
+        header="공장 상세"
+        :modal=true
+        position="center"
+        class="custom-dialog-full"
+        @update:visible="getPopClose(true, 'outFactoryDetail')">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopClose(true, 'outFactoryDetail')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
+                <h2 class="modal-backheader-title">공장 상세</h2>
+            </div>
+        </template>
+            <OutFactoryDetail/>
+    </Dialog>
+
 </main>
 </template>
 
@@ -109,12 +139,12 @@ import TabPanel from 'primevue/tabpanel';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import FactorySearch from '@/views/include/factory/FactorySearch.vue'
 import OutFactorySet from '@/views/include/factory/OutFactorySet.vue'
+import SysFactoryDetail from "@/views/factory/FactoryDetail.vue";
+import OutFactoryDetail from "@/views/factory/OutDetail.vue";
 import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { usePopupStore, useFactoryStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
-const router    = useRouter();
 const popup     = usePopupStore();
 const factory   = useFactoryStore();
 
@@ -141,28 +171,22 @@ const getImage = (imgUrl: string) => {
     return 'https://elasticbeanstalk-ap-northeast-2-627549176645.s3.ap-northeast-2.amazonaws.com/' + imgUrl;
 }
 
-const getSysDetail = (faCd: string, appGb: string) => {
-    // if(appGb === 'Y')
+const getSysDetail = async (faCd: string, appGb: string) => {
+    if(appGb === 'Y')
     {
-        factory.getSysFaCd(faCd);
-        router.push({ name: 'FactoryDetail' });
+        await factory.getSysFaCd(faCd);
+        getPopupOpen('sysFactoryDetail');
     }
 }
 
-const getOutDetail = (fcCd: string) => {
-    factory.getOutFcCd(fcCd);
-    router.push({ name: 'OutDetail' });
+const getOutDetail = async (fcCd: string) => {
+    await factory.getOutFcCd(fcCd);
+    getPopupOpen('outFactoryDetail');
 }
 
 onMounted(() => {
     factory.getList();
 })
-
-const tabs = [
-  { name: '플랜오더 공장', href: '#', current: true },
-  { name: '외주공장', href: '#', current: false },
-  
-]
 </script>
 
 <style lang="scss">
