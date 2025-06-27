@@ -18,7 +18,7 @@
                         <label for="username" class="">이메일</label>
                         <IconField>
                             <InputText id="id" v-model="idData" placeholder="이메일을 입력해주세요." @keyup.enter="getEnter" class="w-full"/>
-                            <InputIcon><IconInputX/></InputIcon>
+                            <InputIcon @click="getIdDelete"><IconInputX/></InputIcon>
                         </IconField>
                     </IftaLabel>
 
@@ -26,7 +26,7 @@
                         <label for="pw" class="">비밀번호</label>
                         <IconField>
                             <InputText id="pw" v-model="pwData" placeholder="비밀번호를 입력해주세요." type="password" @keyup.enter="getEnter" class="w-full"/>
-                            <InputIcon><IconEye/></InputIcon>
+                            <InputIcon @click="getPwView"><IconEye/></InputIcon>
                         </IconField>
                     </IftaLabel>
                 </div>
@@ -73,6 +73,25 @@ const router    = useRouter();
 const idData    = ref('');
 const pwData    = ref('');
 const visible   = ref(true);
+
+const getIdDelete = () => {
+    idData.value = '';
+    const id = document.getElementById("id");
+    id.focus();
+}
+
+const getPwView = () => {
+    const pw = document.getElementById("pw");
+
+    if(pw.type === 'password')
+    {
+        pw.type = 'text';
+    }
+    else
+    {
+        pw.type = 'password';
+    }
+}
 
 const getEnter = () => {
     const id  = event.target.id;
