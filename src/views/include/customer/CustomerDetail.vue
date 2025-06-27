@@ -143,7 +143,7 @@ import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { usePopupStore, useClientStore, useEstiStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
@@ -202,6 +202,10 @@ const getClientModify = async () => {
 
 onMounted(async () => {
     await client.getDetail();
+})
+
+onUnmounted(async () => {
+    await client.getList();
 })
 
 </script>
