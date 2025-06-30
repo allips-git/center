@@ -41,6 +41,11 @@ interface Pop {
     couponDetail        : boolean;
     memberSet           : boolean;
     kakaoDetail         : boolean;
+    settingStore        : boolean;
+    memberList          : boolean;
+    couponMenu          : boolean;
+    timeSetting         : boolean;
+    privacyView         : boolean;
 }
 
 interface State {
@@ -86,6 +91,11 @@ const getPopInfo = (): Pop => {
         couponDetail        : false,
         memberSet           : false,
         kakaoDetail         : false,
+        settingStore        : false,
+        memberList          : false,
+        couponMenu          : false,
+        timeSetting         : false,
+        privacyView         : false
     }
 }
 
