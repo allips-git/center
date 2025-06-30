@@ -53,7 +53,7 @@
                         <p>사용약관</p>
                         <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
                     </li>
-                    <li class="flex justify-between p-4 border-b hover:bg-gray-50" @click="router.push({ path : '/setting/privacy' })">
+                    <li class="flex justify-between p-4 border-b hover:bg-gray-50" @click="getPopupOpen('privacyView')">
                         <p>개인정보 처리방침</p>
                         <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
                     </li>
@@ -83,6 +83,72 @@
                     <li>사용문의</li>
                 </ul>
             </section>
+            <Dialog v-model:visible="popup['pop']['settingStore']" header="매장 설정" 
+                :modal=true position="center" class="custom-dialog-full" 
+                @update:visible="getPopClose('settingStore', true)">
+                <template #header>
+                    <div class="modal-backheader">
+                        <Button @click="getPopupClose(true, 'settingStore')" severity="contrast" text icon="pi pi-times" />
+                        <h2 class="modal-backheader-title">매장 설정</h2>
+                    </div>
+                </template>
+                <SettingStore/>
+            </Dialog>
+            <Dialog v-model:visible="popup['pop']['memberList']" header="멤버 관리" 
+                :modal=true position="center" class="custom-dialog-full" 
+                @update:visible="getPopClose('memberList', true)">
+                <template #header>
+                    <div class="modal-backheader">
+                        <Button @click="getPopupClose(true, 'memberList')" severity="contrast" text icon="pi pi-times" />
+                        <h2 class="modal-backheader-title">매장 설정</h2>
+                    </div>
+                </template>
+                <MemberMng/>
+            </Dialog>
+            <Dialog v-model:visible="popup['pop']['couponMenu']" header="할인 설정" 
+                :modal=true position="center" class="custom-dialog-full" 
+                @update:visible="getPopClose('couponMenu', true)">
+                <template #header>
+                    <div class="modal-backheader">
+                        <Button @click="getPopupClose(true, 'couponMenu')" severity="contrast" text icon="pi pi-times" />
+                        <h2 class="modal-backheader-title">할인 설정</h2>
+                    </div>
+                </template>
+                <CouponMenu/>
+            </Dialog>
+            <Dialog v-model:visible="popup['pop']['timeSetting']" header="시공시간 설정" 
+                :modal=true position="center" class="custom-dialog-full" 
+                @update:visible="getPopClose('timeSetting', true)">
+                <template #header>
+                    <div class="modal-backheader">
+                        <Button @click="getPopupClose(true, 'timeSetting')" severity="contrast" text icon="pi pi-times" />
+                        <h2 class="modal-backheader-title">시공시간 설정</h2>
+                    </div>
+                </template>
+                <TimeSetting/>
+            </Dialog>
+            <Dialog v-model:visible="popup['pop']['staticPayView']" header="고정비용 설정" 
+                :modal=true position="center" class="custom-dialog-full" 
+                @update:visible="getPopClose('staticPayView', true)">
+                <template #header>
+                    <div class="modal-backheader">
+                        <Button @click="getPopupClose(true, 'staticPayView')" severity="contrast" text icon="pi pi-times" />
+                        <h2 class="modal-backheader-title">고정비용 설정</h2>
+                    </div>
+                </template>
+                <StaticPayView/>
+            </Dialog>
+            <Dialog v-model:visible="popup['pop']['privacyView']" header="개인정보 처리방침" 
+                :modal=true position="center" class="custom-dialog-full" 
+                @update:visible="getPopClose('privacyView', true)">
+                <template #header>
+                    <div class="modal-backheader">
+                        <Button @click="getPopupClose(true, 'privacyView')" severity="contrast" text icon="pi pi-times" />
+                        <h2 class="modal-backheader-title">개인정보 처리방침</h2>
+                    </div>
+                </template>
+                <Privacy/>
+            </Dialog>
         </main>
     </div>
 </template>
@@ -91,25 +157,35 @@
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import IconAvatar from '@/components/icons/IconAvatar.vue';
 import IconPlay from '@/components/icons/IconPlay.vue';
-import Badge from 'primevue/badge';
+import Dialog from 'primevue/dialog';
+import SettingStore from "@/views/setting/SettingStore.vue";
+import MemberMng from "@/views/setting/MemberMng.vue";
+import CouponMenu from "@/views/setting/CouponMenu.vue";
+import TimeSetting from "@/views/setting/TimeSetting.vue";
+import StaticPayView from "@/views/setting/StaticPay.vue";
+import Privacy from "@/views/setting/Privacy.vue";
 
 import { useConfirm } from "primevue/useconfirm";
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { getAxiosData, getTokenOut } from '@/assets/js/function';
-import { useLoginStore } from '@/store';
+import { useLoginStore, usePopupStore } from '@/store';
+import { usePopup } from '@/assets/js/popup';
 
 const confirm = useConfirm();
 const router  = useRouter();
 const login   = useLoginStore();
+const popup   = usePopupStore();
+
+const { getPopupOpen, getPopupClose } = usePopup();
 
 const storeSettings = ref([
-    { name: '매장설정', path: 'setting/setting_store' },
+    { name: '매장설정', path: 'settingStore' },
     { name: '플랜톡', path: '/plantalk' },
-    { name: '멤버관리', path: '/setting/member_list' },
-    { name: '할인 설정', path: '/setting/coupon_menu' },
-    { name: '시공시간 설정', path: '/setting/time_setting' },
-    { name: '고정비용 등록', path: '/setting/static_pay' },
+    { name: '멤버관리', path: 'memberList' },
+    { name: '할인 설정', path: 'couponMenu' },
+    { name: '시공시간 설정', path: 'timeSetting' },
+    { name: '고정비용 등록', path: 'staticPayView' },
     { name: '푸쉬 알림', path: '/setting' },
     { name: '회원정보 변경', path: '/setting' },
     { name: '사업자 인증', path: '/setting/setting_auth' },
@@ -117,7 +193,7 @@ const storeSettings = ref([
 ]);
 
 const navigateTo = (item) => {
-    router.push(item.path); // 해당 경로로 이동
+    getPopupOpen(item.path);
 };
 
 const getJoinOut = () => {
