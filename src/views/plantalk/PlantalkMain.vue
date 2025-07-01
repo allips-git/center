@@ -18,7 +18,7 @@
                             <p class="cursor-pointer text-11 !text-p-lv4">충전하기</p>
                             <!-- <Button label="충전하기" size="small" /> -->
                         </li>
-                        <li class="col-span-1 bg-gray-50" @click="goToPage('/plantalk/res', 'Y')">
+                        <li class="col-span-1 bg-gray-50" @click="goToPage('Y')">
                             <div class="flex justify-between items-center">
                                 <div class="flex flex-col gap-1 text-11">
                                     <h5 class="!font-bold !text-t-lv1">예약된 알림</h5>
@@ -27,7 +27,7 @@
                                 <IconPlay class="size-[18px] fill-gray-400"/>
                             </div>
                         </li>
-                        <li class="col-span-1 bg-gray-50" @click="goToPage('/plantalk/res', 'N')">
+                        <li class="col-span-1 bg-gray-50" @click="goToPage('N')">
                             <div class="flex justify-between items-center">
                                 <div class="flex flex-col gap-1 text-11">
                                     <h5 class="!font-bold !text-t-lv1">발송 메시지보기</h5>
@@ -71,29 +71,37 @@
             </template>
             <ScheduleAlert/>
         </Dialog>
-
-      
+        <Dialog v-model:visible="popup['pop']['kakaoHistory']" header="발송 내역" 
+            :modal=true position="center" class="custom-dialog-full" 
+            @update:visible="getPopupClose('kakaoHistory', true)">
+            <template #header>
+                <div class="modal-fullheader">
+                    <Button @click="getPopupClose(true, 'kakaoHistory')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">발송 내역</h2>
+                </div>
+            </template>
+            <PlantalkRes/>
+        </Dialog>
     </main>
 </template>
 
 <script setup lang="ts">
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import ScheduleAlert from "@/views/include/plantalk/ScheduleAlert.vue";
+import PlantalkRes from "@/views/plantalk/PlantalkAlert.vue"
 import IconPlay from '@/components/icons/IconPlay.vue';
 import { onMounted } from 'vue'
-import { useRouter } from 'vue-router';
 import { usePopupStore, useKakaoStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
 const popup = usePopupStore();
 const kakao = useKakaoStore();
-const router = useRouter();
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
-const goToPage = async (path: string, resGb: string) => {
+const goToPage = async (resGb: string) => {
     await kakao.getResGb(resGb);
-    router.push(path);
+    getPopupOpen('kakaoHistory');
 };
 
 const goToDetail = async (kdCd: string) => {
