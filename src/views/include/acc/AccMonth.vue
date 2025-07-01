@@ -1,11 +1,11 @@
 <template>
-    <main>
+    <main class="acc-month-wrapper">
         <section class="p-4 pb-5">
-            <div class="relative flex flex-col w-full gap-4">
-                <section class="flex items-center justify-between acc-datepicker">
+            <div class="flex relative flex-col gap-4 w-full">
+                <section class="flex justify-between items-center acc-datepicker">
                     <h1 class="font-bold text-18">{{ acc.year }}년</h1>
-                    <DatePicker v-model="acc.searchDt" view="year" dateFormat="yy년" 
-                        class="*:!text-xs" :locale="'ko'" showIcon fluid iconDisplay="input"
+                    <DatePicker v-model="acc.searchDt" view="year" dateFormat="yy'년'" yearFormat="yy'년'" yearNavigator
+                        class="acc-custom-picker *:!text-xs" :locale="locale" showIcon fluid iconDisplay="input"  appendTo="self"
                         @update:modelValue="acc.getMonData()" />
                 </section>
                 <AccInfo :saleAmt="getAmt(acc.monthSaleAmt)" :purcAmt="getAmt(acc.monthPurcAmt)" :margin="acc.monthMargin"/>
@@ -23,11 +23,6 @@
                 </template>
             </ul>
         </section>
-        <!-- <Dialog v-model:visible="popup['pop']['accWeek']" header="주간 분석" 
-            :modal=true position="bottom" class="custom-dialog-bottom"
-            @update:visible="getPopupClose('accWeek', true)">
-            <AccWeek/>
-        </Dialog> -->
 
         <Dialog v-model:visible="popup['pop']['accWeek']" 
         header="주간 분석"
@@ -58,6 +53,7 @@ import { usePopupStore, useAccStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 import { getCommas } from '@/assets/js/function';
 
+const locale = 'ko';
 const popup = usePopupStore();
 const acc   = useAccStore();
 
@@ -78,7 +74,18 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-.p-datepicker-panel{
-    min-width: 200px;
+.acc-month-wrapper {
+    .acc-custom-picker {
+        .p-datepicker-panel {
+            // margin-top: 0 !important;
+        }
+        .p-datepicker-calendar-container {
+            display: none !important;
+        }
+
+       .p-datepicker-year-view{
+        margin-top: 0 !important;
+       }
+    }
 }
 </style>

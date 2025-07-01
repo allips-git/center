@@ -11,7 +11,7 @@
                 <div class="overflow-y-auto h-full">
                     <div class="flex justify-center w-full min-h-full" 
                          :class="{ 'pb-[56px] md:pb-0' : showAppFooter }">
-                        <div class="w-full xl:max-w-[980px] xl:my-4 2xl:max-w-[1140px]" :class="{ 'xl:shadow-[0_4px_4px_rgba(0,0,0,0.25)] rounded-md': showShadow }">
+                        <div class="w-full xl:max-w-[980px] xl:my-4 2xl:max-w-[1140px]" :class="{ 'xl:shadow-[0_4px_4px_rgba(0,0,0,0.25)] rounded-2xl overflow-hidden': showShadow }">
                             <RouterView />
                         </div>
                     </div>

@@ -1,9 +1,8 @@
 <template>
     <main class="pb-[174px] md:pb-[124px]" ref="mainRef">
-        <BackHeader :title="factory['out']['detail']['header'][0]['value']+' 상세 정보'" />
         <main class="" >
             <div class="relative">
-                <section class="relative p-4 overflow-hidden bg-white rounded-t-xl md:p-6">
+                <section class="overflow-hidden relative p-4 bg-white rounded-t-xl">
                     <InfoCard :title="factory['out']['detail']['header'][0]['value']" 
                         :info="factory['out']['detail']['header']" :btnLabel="'수정하기'"
                         @get-btn="getPopOpen('outFactorySet')"/>
@@ -11,7 +10,7 @@
 
                 <div class="gray-bar"></div>
     
-                <section class="p-4 md:p-6">
+                <section class="p-4">
                     <CalculateCard :showtitle="true" :calcs="factory['out']['detail']['info']" title="매입 거래원장" 
                         totalTitle="총 결제 금액" :totalAmt="factory['out']['detail']['totalAmt']"/>
                 </section>

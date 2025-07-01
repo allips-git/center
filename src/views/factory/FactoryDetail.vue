@@ -1,8 +1,7 @@
 <template>
 <main ref="mainRef">
-    <BackHeader :title="factory['sys']['info']['faNm']" />
     <div class="!pb-36">
-        <section class="overflow-hidden aspect-video rounded-b-md">
+        <section class="overflow-hidden rounded-b-md aspect-video">
             <img :src="getImage(factory['sys']['info']['filePath'])" class="object-cover w-full aspect-video" alt="">
         </section>
     
@@ -11,7 +10,7 @@
             <ul class="flex flex-col gap-[10px] p-5 pt-0 text-sm rounded-md">
                 <li class="flex text-xs">
                     <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">혜택</p>
-                    <p class="font-medium"><span class="flex items-center justify-center font-bold text-white bg-orange-500 rounded-full size-5">P</span>{{ factory['sys']['info']['boon'] }}</p>
+                    <p class="font-medium"><span class="flex justify-center items-center font-bold text-white bg-orange-500 rounded-full size-5">P</span>{{ factory['sys']['info']['boon'] }}</p>
                 </li>
                 <li class="flex">
                     <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">전화번호</p>
@@ -34,25 +33,25 @@
             </ul>
             <!-- 카운트 -->
             <ul class="grid grid-cols-4 py-5 mx-4 border border-gray-200 rounded-[4px] mt-[10px]">
-                <li class="flex flex-col items-center justify-center border-r last:border-r-0">
+                <li class="flex flex-col justify-center items-center border-r last:border-r-0">
                     <p class="text-lg font-bold text-blue-600">0</p>
                     <p class="text-xs text-gray-500">주문</p>
                 </li>
-                <li class="flex flex-col items-center justify-center border-r last:border-r-0">
+                <li class="flex flex-col justify-center items-center border-r last:border-r-0">
                     <p class="text-lg font-bold text-blue-600">0</p>
                     <p class="text-xs text-gray-500">생산</p>
                 </li>
-                <li class="flex flex-col items-center justify-center border-r last:border-r-0">
+                <li class="flex flex-col justify-center items-center border-r last:border-r-0">
                     <p class="text-lg font-bold text-blue-600">0</p>
                     <p class="text-xs text-gray-500">생산완료</p>
                 </li>
-                <li class="flex flex-col items-center justify-center border-r last:border-r-0">
+                <li class="flex flex-col justify-center items-center border-r last:border-r-0">
                     <p class="text-lg font-bold text-blue-600">0</p>
                     <p class="text-xs text-gray-500">출고</p>
                 </li>
             </ul>
         </section>
-        <div class="w-full h-3 my-8 bg-gray-100"></div>
+        <div class="my-8 w-full h-3 bg-gray-100"></div>
         <section class="px-5">
             <!-- <CalculateCard  :showtitle="true"  title="거래원장" totalTitle="총 결제 금액"/> -->
         </section>

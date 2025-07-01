@@ -59,39 +59,40 @@
 
 <template>
     <main class="overflow-y-auto pb-52 w-full" ref="mainRef">
-        <div class="">
+        <div class="md:p-4">
            
             <div class="">
                 <div class="">
-                    <h2 class="hidden py-4 font-bold title-lg">고객정보</h2>
+                    <h2 class="hidden pb-4 text-base font-bold md:block">고객정보</h2>
                     <section class="aspect-[4/3] -z-10 w-full">
-                        <img src="@/assets/img/test.png" class="object-cover w-full aspect-[4/3] " alt="">
+                        <img src="@/assets/img/test.png" class="object-cover w-full aspect-[4/3] md:rounded-md " alt="">
                     </section>
                 
                     
-                    <section class="overflow-hidden relative -top-4 px-4 pt-4 pb-2 bg-white rounded-t-xl">
+                    <section class="overflow-hidden relative -top-4 px-4 pt-6 pb-2 bg-white rounded-t-xl md:px-0 md:top-0">
                         <InfoCard :title="mate['ceNm']" :info="mate['headers']" />   
                     </section>
                 </div>
     
-                <div class="gray-bar"></div>
+                <div class="gray-bar md:hidden"></div>
             </div>
-            <div class="overflow-y-auto">
+            <div class="overflow-y-auto  md:flex-col md:flex md:col-span-2 md:w-[100%] md:relative">
 
-                <section class="p-4 pb-0">
+                <section class="p-4 md:p-0 md:pt-0">
         
-                    <section class="">
-                        <div class="flex flex-col">
-                            <h2 class="hidden py-4 font-bold tit">주문정보</h2>
+                            <h2 class="hidden py-4 text-base font-bold md:block">주문정보</h2>
 
-                            <TableCard v-for="(table, index) in mate['list']" :key="index" :title="table.title" :cards="table.cardLists"
-                           :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag"
-                           :showButton="table.showButton" :sizeYn="mate['sizeYn']"/>
-                        </div>
-                    </section>
+                            <div class="flex flex-col gap-5">
+                                <TableCard v-for="(table, index) in mate['list']" :key="index" :title="table.title" :cards="table.cardLists"
+                               :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag"
+                               :showButton="table.showButton" :sizeYn="mate['sizeYn']"/>
+                            </div>
+
                 </section>
-                <section class="p-4">
-                    <h2 class="hidden py-4 font-bold title-lg">결제정보</h2>
+
+                <div class="gray-bar md:hidden"></div>
+                <section class="p-4 md:p-0">
+                    <h2 class="hidden py-4 text-base font-bold md:block">결제정보</h2>
 
                     <CalculateCard  :showtitle="true" :calcs="mate['payList']" title="합계 금액" totalTitle="총 합계 금액" :totalAmt="getAmt(mate['payList'], 'total')"/>
                 </section>
@@ -108,14 +109,14 @@
             <div>
                 <div class="label-checkbox-box">
                     <RadioButton />
-                    <label for="general" class="text-desc">일반양식</label>
+                    <label for="general" class="text-sm">일반양식</label>
                 </div>
                 <div class="label-checkbox-box">
                     <RadioButton />
-                    <label for="excel" class="text-desc">엑셀양식</label>
+                    <label for="excel" class="text-sm">엑셀양식</label>
                 </div>
             </div>
-            <div class="flex justify-between text-desc">
+            <div class="flex justify-between text-sm">
                 <p>사이즈 숨김</p>
                 <ToggleSwitch v-model="mate['sizeYn']" />
             </div>
@@ -123,7 +124,11 @@
 
 
         <IftaLabel class="w-[100%]">
-            <InputText  :value="''+domain+'/customer/estiDoc?cd='+emCd+''" readonly @click="getEstiDoc" class="w-[100%]"/>
+            <IconField class="w-full">
+                <InputText  :value="''+domain+'/customer/estiDoc?cd='+emCd+''" readonly @click="getEstiDoc" class="w-[100%] cursor-pointer"/>
+                <InputIcon class="cursor-pointer pi pi-eye" @click="getEstiDoc"/>
+            </IconField>
+
             <label>발주서 링크</label>
         </IftaLabel>
 
@@ -140,6 +145,8 @@ import CalculateCard from "@/components/card/CalculateCard.vue";
 import InfoCard from "@/components/card/InfoCard.vue";
 import TableCard from "@/components/card/TableCard.vue";
 import RadioButton from 'primevue/radiobutton';
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
 import IftaLabel from 'primevue/iftalabel';
 import ToggleSwitch from 'primevue/toggleswitch';
 import { ref } from 'vue';
@@ -176,9 +183,8 @@ onMounted(() => {
 });
 
 const getEstiDoc = () => {
-    const value = event.target.value;
-
-    window.open(value, '_blank');
+    const url = domain+'/customer/estiDoc?cd='+emCd;
+    window.open(url, '_blank');
 }
 
 const getNavi = () => {

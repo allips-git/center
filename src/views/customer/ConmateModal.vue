@@ -60,7 +60,12 @@
     
     
             <IftaLabel class="w-[100%]">
-                <InputText  :value="''+domain+'/customer/estiDoc?cd='+emCd+''" readonly @click="getEstiDoc" class="w-[100%]"/>
+            <IconField class="w-full">
+
+                <InputText  :value="''+domain+'/customer/conDoc?cd='+emCd+''" readonly @click="getConDoc" class="w-[100%]"/>
+                <InputIcon class="cursor-pointer pi pi-eye" @click="getConDoc"/>
+            </IconField>
+
                 <label>발주서 링크</label>
             </IftaLabel>
     
@@ -120,9 +125,8 @@ onMounted(() => {
 });
 
 const getConDoc = () => {
-    const value = event.target.value;
-
-    window.open(value, '_blank');
+    const url = domain+'/customer/conDoc?cd='+emCd;
+    window.open(url, '_blank');
 }
 
 const getNavi = () => {

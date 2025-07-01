@@ -56,7 +56,7 @@
             <IftaLabel class="w-[100%]">
                 <IconField class="w-full">
                     <InputText :value="''+domain+'/customer/outOrderDoc?cd='+edCd+''" readonly  class="w-full" style="border-color: #22c55e" @click="getOutOrderDoc" />
-                    <InputIcon class="pi pi-eye" />
+                    <InputIcon class="cursor-pointer pi pi-eye" @click="getOutOrderDoc"/>
                 </IconField>
                 <label>발주서 링크</label>
             </IftaLabel>
@@ -107,9 +107,8 @@ onMounted(() => {
   }
 });
 const getOutOrderDoc = () => {
-    const value = event.target.value;
-
-    window.open(value, '_blank');
+    const url = domain+'/customer/outOrderDoc?cd='+edCd;
+    window.open(url, '_blank');
 }
 
 const getNavi = () => {

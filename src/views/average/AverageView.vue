@@ -8,7 +8,7 @@
             </div>
             <div class="">
                 <DatePicker v-model="aver['searchDt']" view="month" dateFormat="yy년 mm'월'" 
-                    class="custom-datapicker *:!text-sm !max-w-[150px] !w-[120px] h-[33px] *:!pl-1 *:!pr-1.5 bg-gray" :locale="'ko'" showIcon fluid iconDisplay="input"
+                    class="custom-datapicker *:!text-sm !max-w-[150px] !w-[120px] h-[33px] *:!pl-1 *:!pr-1.5 bg-gray" :locale="'ko'" showIcon fluid iconDisplay="input" appendTo="self"
                     @update:modelValue="aver.getData()">
                     <template #inputicon="slotProps" class="!pl-1">
                     <IconPlay class="rotate-90 !fill-gray-500"/>

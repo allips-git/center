@@ -1,12 +1,11 @@
 <template>
-    <BackHeader title="견적서 공유화면" />
-    <main class="!pb-5">
-        <div class="relative">
-            <section class="relative rounded-t-xl overflow-hidden bg-white">
+    <main class="!pb-36">
+        <div class="relative p-4">
+            <section class="overflow-hidden relative bg-white rounded-t-xl">
                 <InfoCard :title="mate['ceNm']" :info="mate['headers']" />
-                <div class="gray-bar"></div>
+                <div class="my-4 gray-bar"></div>
 
-                <section class="px-5">
+                <section class="">
                     <div class="flex flex-col gap-5">
                         <TableCard v-for="(table, index) in mate['list']" :key="index" :title="table.title" :cards="table.cardLists"
                        :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag"
@@ -14,7 +13,7 @@
                     </div>
                 </section>
             </section>
-            <section class="px-5">
+            <section class="py-4">
                 <CalculateCard  :showtitle="true" :calcs="mate['payList']" title="합계 금액" totalTitle="총 합계 금액" :totalAmt="getAmt(mate['payList'], 'total')"/>
             </section>
         </div>
