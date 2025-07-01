@@ -40,7 +40,9 @@ interface Pop {
     staticSet           : boolean;
     couponDetail        : boolean;
     memberSet           : boolean;
+    kakaoList           : boolean;
     kakaoDetail         : boolean;
+    kakaoHistory        : boolean;
     settingStore        : boolean;
     memberList          : boolean;
     couponMenu          : boolean;
@@ -90,7 +92,9 @@ const getPopInfo = (): Pop => {
         staticSet           : false,
         couponDetail        : false,
         memberSet           : false,
+        kakaoList           : false,
         kakaoDetail         : false,
+        kakaoHistory        : false,
         settingStore        : false,
         memberList          : false,
         couponMenu          : false,

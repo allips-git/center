@@ -94,13 +94,24 @@
                 </template>
                 <SettingStore/>
             </Dialog>
+            <Dialog v-model:visible="popup['pop']['kakaoList']" header="플랜톡" 
+                :modal=true position="center" class="custom-dialog-full" 
+                @update:visible="getPopClose('kakaoList', true)">
+                <template #header>
+                    <div class="modal-backheader">
+                        <Button @click="getPopupClose(true, 'kakaoList')" severity="contrast" text icon="pi pi-times" />
+                        <h2 class="modal-backheader-title">플랜톡</h2>
+                    </div>
+                </template>
+                <PlantalkMain/>
+            </Dialog>
             <Dialog v-model:visible="popup['pop']['memberList']" header="멤버 관리" 
                 :modal=true position="center" class="custom-dialog-full" 
                 @update:visible="getPopClose('memberList', true)">
                 <template #header>
                     <div class="modal-backheader">
                         <Button @click="getPopupClose(true, 'memberList')" severity="contrast" text icon="pi pi-times" />
-                        <h2 class="modal-backheader-title">매장 설정</h2>
+                        <h2 class="modal-backheader-title">멤버 관리</h2>
                     </div>
                 </template>
                 <MemberMng/>
@@ -159,6 +170,7 @@ import IconAvatar from '@/components/icons/IconAvatar.vue';
 import IconPlay from '@/components/icons/IconPlay.vue';
 import Dialog from 'primevue/dialog';
 import SettingStore from "@/views/setting/SettingStore.vue";
+import PlantalkMain from "@/views/plantalk/PlantalkMain.vue";
 import MemberMng from "@/views/setting/MemberMng.vue";
 import CouponMenu from "@/views/setting/CouponMenu.vue";
 import TimeSetting from "@/views/setting/TimeSetting.vue";
@@ -181,7 +193,7 @@ const { getPopupOpen, getPopupClose } = usePopup();
 
 const storeSettings = ref([
     { name: '매장설정', path: 'settingStore' },
-    { name: '플랜톡', path: '/plantalk' },
+    { name: '플랜톡', path: 'kakaoList' },
     { name: '멤버관리', path: 'memberList' },
     { name: '할인 설정', path: 'couponMenu' },
     { name: '시공시간 설정', path: 'timeSetting' },
