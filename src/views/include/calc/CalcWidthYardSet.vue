@@ -8,6 +8,10 @@
             </IftaLabel>
     
             <IftaLabel class="w-full">
+                <Select v-model="esti['curtain']['bproc']" :options="data['bproc']" optionLabel="name" optionValue="value" class="w-full" />
+                <label>하단 가공법</label>
+            </IftaLabel>
+            <IftaLabel class="w-full">
                 <Select v-model="esti['curtain']['proc']" :options="data['proc']" optionLabel="name" optionValue="value" class="w-full" />
                 <label>가공방법</label>
             </IftaLabel>
