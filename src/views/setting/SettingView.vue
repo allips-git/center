@@ -94,24 +94,13 @@
                 </template>
                 <SettingStore/>
             </Dialog>
-            <Dialog v-model:visible="popup['pop']['kakaoList']"
-                :modal=true position="center" class="custom-dialog-full" 
-                @update:visible="getPopClose('kakaoList', true)">
-                <template #header>
-                    <!-- <div class="modal-backheader">
-                        <Button @click="getPopupClose(true, 'kakaoList')" severity="contrast" text icon="pi pi-times" />
-                        <h2 class="modal-backheader-title">플랜톡</h2>
-                    </div> -->
-                </template>
-                <PlantalkMain/>
-            </Dialog>
             <Dialog v-model:visible="popup['pop']['memberList']" 
                 :modal=true position="center" class="custom-dialog-full" 
                 @update:visible="getPopClose('memberList', true)">
                 <template #header>
                     <!-- <div class="modal-backheader">
                         <Button @click="getPopupClose(true, 'memberList')" severity="contrast" text icon="pi pi-times" />
-                        <h2 class="modal-backheader-title">멤버 관리</h2>
+                        <h2 class="modal-backheader-title">매장 설정</h2>
                     </div> -->
                 </template>
                 <MemberMng/>
@@ -121,7 +110,7 @@
                 @update:visible="getPopClose('couponMenu', true)">
                 <template #header>
                     <!-- <div class="modal-backheader">
-                            <Button @click="getPopupClose(true, 'couponMenu')" severity="contrast" text icon="pi pi-times" />
+                        <Button @click="getPopupClose(true, 'couponMenu')" severity="contrast" text icon="pi pi-times" />
                         <h2 class="modal-backheader-title">할인 설정</h2>
                     </div> -->
                 </template>

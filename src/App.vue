@@ -97,18 +97,7 @@ const pageBackgroundClass = computed(() => {
     if (route.meta.backgroundColor) {
         return route.meta.backgroundColor;
     }
-    
-    // 특정 페이지 이름에 따라 배경색 적용 (예시)
-    switch (route.name) {
-        case 'LoginPage':
-            return 'bg-blue-50';
-        case 'CalendarView':
-            return 'bg-gray-50';
-        case 'SettingView':
-            return 'bg-slate-50';
-        default:
-            return ''; // 기본 배경색 없음
-    }
+    return '';
 });
 
 </script>
