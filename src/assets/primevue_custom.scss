@@ -303,6 +303,31 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         color: var(--p-tabs-tab-color);
     }
 }
+.custom-customer-tab{
+    .p-tab-active{
+        &.p-tab{
+            // transition: 0.5s;
+            color: #404040;
+            border-bottom-width: 0px;
+            border-color: transparent;
+            font-weight: 700;
+        }
+    }
+    .p-tablist-tab-list {
+        border: none;
+    }
+    .p-tab{
+        color: #7D7C78 ;
+        font-weight: 400;
+        border-bottom-width: 0px;
+        // padding: 0.5rem 0rem;
+        border-color: transparent;
+        // color: var(--p-tabs-tab-color);
+    }
+   .p-tablist-active-bar{
+    display: none !important;
+   }
+}
 .custom-left-tab{
     .p-tablist-tab-list{
         justify-content: start;
@@ -377,14 +402,17 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .product-select {
     .p-iftalabel{
         .p-select-label{
-            padding-block: 0.7rem !important;
-            padding-inline: 0.7rem !important;
-            font-size: 0.75rem;
+            // padding-block: 0.7rem !important;
+            padding-inline: 0.4rem !important;
+            font-size: 0.8175rem;
+            font-weight: 600;
+            color: #999999;
         }
     }
     .p-select-dropdown{
         width: 1rem;
         justify-content: start;
+        margin-right: 0.5rem !important;
         .p-icon{
             width: 0.8rem;
         }
@@ -393,7 +421,25 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         padding-block: 0.7rem !important;
         padding-inline: 0.7rem !important;
     }
+
+   
 }
+
+.custom-toggle{
+    .p-toggleswitch-handle{
+        top: 53% !important;
+    }
+}
+
+.fabric-select .p-iftalabel:nth-child(3) {
+    // Select 컴포넌트 스타일
+    .p-select-label {
+    //   padding-block: 0.7rem !important;
+      padding-inline: 0.4rem !important;
+    }
+    
+  }
+
 .p-select-list-container{
     font-size: 13px !important;
 }
@@ -512,9 +558,10 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 
 .register-button {
     .p-button {
-
+        background-color: #409AFF !important;
         padding: 16px 18px !important;
         border-radius: 4px !important;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
         .p-button-label{
             font-weight: 800 !important;
             font-size: 0.8175rem;
@@ -695,12 +742,13 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
        
     }
     &.p-button-secondary{
-        background-color: #f9fafb;
+        background-color: #ebebeb;
         color: #7D7C78;
         border: none;
         padding-block: 14px;
         .p-button-label{
-            color: #7D7C78;
+            color: #000000;
+            font-weight: 700 !important;
             font-size: 0.8125rem;
         }
      

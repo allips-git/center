@@ -2,16 +2,16 @@
     <!-- style="background-image: radial-gradient(circle at left top, var(--p-surface-0), var(--p-primary-50))" -->
     <!-- pt:mask:class="bg-white backdrop-blur-sm" -->
 <Dialog v-model:visible="visible"
-    pt:root:class="!border-0 !bg-transparent w-full md:w-[400px] md:h-auto !min-h-[600px] h-full !max-h-screen justify-start">
+    pt:root:class="!border-0 !bg-white w-full md:w-[400px] md:h-auto !min-h-[600px] h-full !max-h-screen justify-start">
         <template #container>
             <BackHeader title="로그인"  class="md:hidden" />
             <div class="flex flex-col px-4 pb-8 mt-5 rounded-2xl sm:mt-10">
-                <div class="flex flex-col items-center justify-center">
+                <div class="flex flex-col justify-center items-center">
                     <IconLogo class="w-[3.25rem] fill-[#00AEF2]"/>
                     <p class="w-full mt-[1.5625rem] mb-10 text-lg font-bold text-center noto"><span class="text-[#00AEF2] rext">PLAN ORDER</span></p>
                 </div>
                 <div class="hidden mt-10 mb-10 md:block">
-                    <p class="flex flex-col items-center justify-center text-2xl font-bold">로그인</p>
+                    <p class="flex flex-col justify-center items-center text-2xl font-bold">로그인</p>
                 </div>
                 <div class="flex flex-col gap-6">
                     <IftaLabel class="w-full">
@@ -30,12 +30,12 @@
                         </IconField>
                     </IftaLabel>
                 </div>
-                <div class="flex items-center justify-end mt-4">
+                <div class="flex justify-end items-center mt-4">
                         <!-- <div class="label-checkbox-box">
                             <RadioButton />
                             <label for="">자동 로그인</label>
                         </div> -->
-                        <div class="flex items-center self-center flex-none gap-3 text-t-lv2">
+                        <div class="flex flex-none gap-3 items-center self-center text-t-lv2">
                             <router-link to="" class="text-xs">아이디 찾기</router-link>
                             <span class="text-xs">|</span>
                             <router-link to="join/find_password" class="text-xs">비밀번호 찾기</router-link>

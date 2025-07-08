@@ -1,5 +1,5 @@
 <template>
-    <div class="flex gap-4">
+    <div class="flex gap-4 product-select">
         <IftaLabel class="w-full">
             <label>설치위치 <span class="ml-1 text-red-600">*</span></label>
             <InputText v-model="esti['common']['location']" placeholder="기타" class="w-full"/>

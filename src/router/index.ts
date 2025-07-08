@@ -120,7 +120,7 @@ const routes = [
         path: "/",
         name: "MainPage",
         component: Index,
-        meta : { showTopHeader: true, showAppFooter: true }
+        meta : { showTopHeader: true, showAppFooter: true, backgroundColor: 'bg-gray-100' }
     },
     {
         path: "/customer/list",
@@ -300,7 +300,7 @@ const routes = [
         path: "/setting",
         name: "SettingView",
         component: SettingView,
-        meta: { title: "설정" }
+        meta: { title: "설정", backgroundColor: 'bg-white' }
     },
     {
         path: "/setting/static_pay",
@@ -324,7 +324,7 @@ const routes = [
         path: "/calendar",
         name: "CalendarView",
         component: CalendarView,
-        meta : { showTopHeader: false, showAppFooter: true }
+        meta : { showTopHeader: false, showAppFooter: true, backgroundColor: 'bg-white' }
     },
 
     {

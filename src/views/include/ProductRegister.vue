@@ -5,8 +5,11 @@
             <Button label="제품 변경" size="small" @click="getItemChange" class="!z-[100] !text-xs"/>
         </div>     -->
         <div class="flex justify-between py-[5px] text-sm">
-            <h2 class="px-2 py-1 font-bold rounded-full text-10 bg-cyan-100 text-s-lv1">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
-            <p class="font-medium">({{ esti['common']['unitSize'] }}{{ esti['common']['unitNm'] }}) {{ getAmt(esti['common']['saleUnit']) }}원</p>
+            <h2 class="px-2 py-1 font-bold bg-cyan-100 rounded-full text-10 text-s-lv1">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
+                        <div class="flex gap-1 items-center font-medium">
+                <span>({{ esti['common']['unitSize'] }}{{ esti['common']['unitNm'] }}) {{ getAmt(esti['common']['saleUnit'] || 0) }}원</span>
+                <IconPencil class="w-3 h-3 text-gray-400 cursor-pointer" @click="openPriceEditDialog" />
+            </div>
         </div>
         <div class="gray-bar my-[14px]"></div>
         <!-- 입력 계산기 컴포넌트 -->
@@ -20,7 +23,7 @@
         </div>
 
         <!-- 옵션 더보기 -->
-        <section class="md:px-6">
+        <section class="">
             <div class="w-full custom_accordion">
                 <Accordion value="null" class="pt-4">
                     <AccordionPanel class="*:pb-0 " value="0" >
@@ -29,7 +32,7 @@
                             </AccordionHeader>
                         <AccordionContent class="w-full">
                             <div class="flex flex-col gap-5">
-                                <div class="flex w-full gap-4 mt-3">
+                                <div class="flex gap-4 mt-3 w-full">
                                     <IftaLabel class="w-full">
                                         <Select placeholder="선택" class="w-full" />
                                         <label for="emali">옵션명</label>
@@ -84,6 +87,7 @@ import { usePopup } from '@/assets/js/popup';
 import { estiBlindMsg, estiCurtainMsg, estiEaMsg } from '@/assets/js/msg';
 import { getBlindParams, getCurtainParams, getEaParams } from '@/assets/js/calcAndProcess';
 import { getAxiosData } from '@/assets/js/function';
+import IconPencil from '@/components/icons/Iconpencil.vue';
 
 const router    = useRouter();
 const confirm   = useConfirm();

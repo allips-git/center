@@ -17,6 +17,7 @@ export default {
       xs: ['0.75rem',],    // fontSize: 12px, lineHeight: 14px
       13:['0.8125rem',],  // fontSize: 13px
       sm: ['0.875rem'],    // fontSize: 14px, lineHeight: 16px
+      15: ['0.9375rem',],
       base: ['1rem',],   // fontSize: 16px, lineHeight: 18px
       18: ['1.125rem',],   // fontSize: 18px, lineHeight: 18px
       lg: ['1.25rem',],  // fontSize: 20px, lineHeight: 22px
@@ -65,6 +66,8 @@ export default {
         sky: {
           500: '#00AEF2', // 기본 sky.500 색상 변경
         },
+
+       
       },
       boxShadow: {
         'custom': '0 2px 2px 0 rgba(0, 0, 0, 0.06)',

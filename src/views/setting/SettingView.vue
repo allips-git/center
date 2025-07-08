@@ -83,80 +83,80 @@
                     <li>사용문의</li>
                 </ul>
             </section>
-            <Dialog v-model:visible="popup['pop']['settingStore']" header="매장 설정" 
+            <Dialog v-model:visible="popup['pop']['settingStore']" 
                 :modal=true position="center" class="custom-dialog-full" 
                 @update:visible="getPopClose('settingStore', true)">
                 <template #header>
-                    <div class="modal-backheader">
+                    <!-- <div class="modal-backheader">
                         <Button @click="getPopupClose(true, 'settingStore')" severity="contrast" text icon="pi pi-times" />
                         <h2 class="modal-backheader-title">매장 설정</h2>
-                    </div>
+                    </div> -->
                 </template>
                 <SettingStore/>
             </Dialog>
-            <Dialog v-model:visible="popup['pop']['kakaoList']" header="플랜톡" 
+            <Dialog v-model:visible="popup['pop']['kakaoList']"
                 :modal=true position="center" class="custom-dialog-full" 
                 @update:visible="getPopClose('kakaoList', true)">
                 <template #header>
-                    <div class="modal-backheader">
+                    <!-- <div class="modal-backheader">
                         <Button @click="getPopupClose(true, 'kakaoList')" severity="contrast" text icon="pi pi-times" />
                         <h2 class="modal-backheader-title">플랜톡</h2>
-                    </div>
+                    </div> -->
                 </template>
                 <PlantalkMain/>
             </Dialog>
-            <Dialog v-model:visible="popup['pop']['memberList']" header="멤버 관리" 
+            <Dialog v-model:visible="popup['pop']['memberList']" 
                 :modal=true position="center" class="custom-dialog-full" 
                 @update:visible="getPopClose('memberList', true)">
                 <template #header>
-                    <div class="modal-backheader">
+                    <!-- <div class="modal-backheader">
                         <Button @click="getPopupClose(true, 'memberList')" severity="contrast" text icon="pi pi-times" />
                         <h2 class="modal-backheader-title">멤버 관리</h2>
-                    </div>
+                    </div> -->
                 </template>
                 <MemberMng/>
             </Dialog>
-            <Dialog v-model:visible="popup['pop']['couponMenu']" header="할인 설정" 
+            <Dialog v-model:visible="popup['pop']['couponMenu']" 
                 :modal=true position="center" class="custom-dialog-full" 
                 @update:visible="getPopClose('couponMenu', true)">
                 <template #header>
-                    <div class="modal-backheader">
-                        <Button @click="getPopupClose(true, 'couponMenu')" severity="contrast" text icon="pi pi-times" />
+                    <!-- <div class="modal-backheader">
+                            <Button @click="getPopupClose(true, 'couponMenu')" severity="contrast" text icon="pi pi-times" />
                         <h2 class="modal-backheader-title">할인 설정</h2>
-                    </div>
+                    </div> -->
                 </template>
                 <CouponMenu/>
             </Dialog>
-            <Dialog v-model:visible="popup['pop']['timeSetting']" header="시공시간 설정" 
+            <Dialog v-model:visible="popup['pop']['timeSetting']" 
                 :modal=true position="center" class="custom-dialog-full" 
                 @update:visible="getPopClose('timeSetting', true)">
                 <template #header>
-                    <div class="modal-backheader">
+                    <!-- <div class="modal-backheader">
                         <Button @click="getPopupClose(true, 'timeSetting')" severity="contrast" text icon="pi pi-times" />
                         <h2 class="modal-backheader-title">시공시간 설정</h2>
-                    </div>
+                    </div> -->
                 </template>
                 <TimeSetting/>
             </Dialog>
-            <Dialog v-model:visible="popup['pop']['staticPayView']" header="고정비용 설정" 
+            <Dialog v-model:visible="popup['pop']['staticPayView']" 
                 :modal=true position="center" class="custom-dialog-full" 
                 @update:visible="getPopClose('staticPayView', true)">
                 <template #header>
-                    <div class="modal-backheader">
+                    <!-- <div class="modal-backheader">
                         <Button @click="getPopupClose(true, 'staticPayView')" severity="contrast" text icon="pi pi-times" />
                         <h2 class="modal-backheader-title">고정비용 설정</h2>
-                    </div>
+                    </div> -->
                 </template>
                 <StaticPayView/>
             </Dialog>
-            <Dialog v-model:visible="popup['pop']['privacyView']" header="개인정보 처리방침" 
+            <Dialog v-model:visible="popup['pop']['privacyView']" 
                 :modal=true position="center" class="custom-dialog-full" 
                 @update:visible="getPopClose('privacyView', true)">
                 <template #header>
-                    <div class="modal-backheader">
+                    <!-- <div class="modal-backheader">
                         <Button @click="getPopupClose(true, 'privacyView')" severity="contrast" text icon="pi pi-times" />
                         <h2 class="modal-backheader-title">개인정보 처리방침</h2>
-                    </div>
+                    </div> -->
                 </template>
                 <Privacy/>
             </Dialog>

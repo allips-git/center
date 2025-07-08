@@ -16,7 +16,7 @@
         <IftaLabel class="w-full">
             <Textarea v-model="info['dcInfo']['memo']" autoResize cols="30" rows="1" class="w-full" placeholder="메모" />
         </IftaLabel>
-        <div class="grid justify-between grid-cols-2 gap-2 mt-2 btn-2-layout-box">
+        <div class="grid grid-cols-2 gap-2 justify-between mt-2 btn-2-layout-box">
             <Button severity="secondary" label="취소" @click="emit('getClose')"/>
             <Button label="확인" @click="emit('getApply')"/>
         </div>

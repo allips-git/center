@@ -8,7 +8,7 @@
                 :drawerClass="false"
             />
             <div class="overflow-hidden flex-1 w-full">
-                <div class="overflow-y-auto h-full">
+                <div class="overflow-y-auto h-full" :class="pageBackgroundClass">
                     <div class="flex justify-center w-full min-h-full" 
                          :class="{ 'pb-[56px] md:pb-0' : showAppFooter }">
                         <div class="w-full xl:max-w-[980px] xl:my-4 2xl:max-w-[1140px]" :class="{ 'xl:shadow-[0_4px_4px_rgba(0,0,0,0.25)] rounded-2xl overflow-hidden': showShadow }">
@@ -89,6 +89,26 @@ const showAppFooter = computed(() => {
 // 섀도우 표시 여부를 결정하는 computed 속성
 const showShadow = computed(() => {
     return route.meta.showShadow !== false; // 기본값은 true
+});
+
+// 페이지별 배경색을 결정하는 computed 속성
+const pageBackgroundClass = computed(() => {
+    // route.meta.backgroundColor가 있으면 해당 클래스 적용
+    if (route.meta.backgroundColor) {
+        return route.meta.backgroundColor;
+    }
+    
+    // 특정 페이지 이름에 따라 배경색 적용 (예시)
+    switch (route.name) {
+        case 'LoginPage':
+            return 'bg-blue-50';
+        case 'CalendarView':
+            return 'bg-gray-50';
+        case 'SettingView':
+            return 'bg-slate-50';
+        default:
+            return ''; // 기본 배경색 없음
+    }
 });
 
 </script>

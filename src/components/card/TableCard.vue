@@ -4,17 +4,17 @@
         <!-- 개별 카드 v-for  -->
         <div class="flex flex-col justify-start items-start p-4 border-t first:border-t-0" v-for="(card, index) in cards" :key="index" @click="emit('get-modify', card['edCd'])">
             <!-- 카드 상단 -->
-             <div class="flex justify-between items-center w-full">
+             <div class="flex justify-between items-center w-full mb-[11px]">
                 <h2 class="text-xs text-gray-400">{{ card.productTitle }}</h2>
                 <div v-if="card.showDelete" class="flex justify-end danger-button">
                     <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-16 !border-gray-200" />
                 </div>            
              </div>
             <section class="w-full">
-                <div class="flex justify-between items-end mb-4 w-full text-13">
+                <div class="flex justify-between items-end mb-[20px] w-full text-13">
                     <div class="">
                         <!-- <h2 class="mb-1 text-sm text-gray-400">{{ card.productTitle }}</h2> -->
-                        <h3 :class="`font-bold text-${card.isRed ? 'red' : 'blue'}-600`">{{ card.colorTitle }}</h3>
+                        <h3 :class="`font-black text-${card.isRed ? 'red-500' : 'p-lv3'}`">{{ card.colorTitle }}</h3>
                         <!-- <h3 class="font-bold text-red-600">{{ card.colorTitle }}</h3> -->
                     </div>
                     <p class="font-bold">{{ card.amt ? getAmt(card.amt)+'원' : '' }}</p>
@@ -23,7 +23,7 @@
             <!-- 테이블 -->
             <table class="overflow-hidden w-full text-center rounded-sm table-fixed">
                 <thead class="">
-                    <tr class="*:py-2 text-caption !text-t-lv3 border-0">
+                    <tr class="text-11 !text-t-lv3 border-0">
                         <template v-for="col in card.columns" :key="col.key">
                             <template v-if="sizeYn">
                                 <th v-if="col.header !== '가로' && col.header !== '세로'">
@@ -40,7 +40,7 @@
                 </thead>
                 <tbody class="">
                     <!-- v-for -->
-                    <tr class="*:py-2  border-b last:border-b-0 font-bold text-desc !text-t-lv1" v-for="(row, index) in card.rows" :key="index">
+                    <tr class=" *:py-[6px] font-bold text-11 !text-t-lv1" v-for="(row, index) in card.rows" :key="index">
                         <template v-if="sizeYn">
                             <template v-for="col in card.columns" :key="col.key">
                                 <td v-if="col.key !== 'width' && col.key !== 'height'">

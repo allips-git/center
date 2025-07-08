@@ -3,10 +3,10 @@
         <!-- <BackHeader title="고객상세" /> -->
         <section class="p-4">
             <div class="flex justify-between items-center">
-                <h2 class="text-base font-bold">{{ client['detail']['clientNm'] }}</h2>
+                <h2 class="text-base font-black">{{ client['detail']['clientNm'] }}</h2>
                 <Button label="정보수정" outlined severity="secondary" size="small" @click="getClientModify" class="outlined-button"/>
             </div>
-            <ul class="flex flex-col gap-3 mt-3 rounded-md text-xs !text-t-lv2">
+            <ul class="flex flex-col gap-[12px] mt-3 rounded-md text-xs !text-t-lv2">
                 <li class="flex items-center">
                     <p class="w-24 whitespace-nowrap">전화번호</p>
                     <p class="capsuel_sky" @click="getNavi('tel', client['detail']['tel'])">{{ client['detail']['tel'] }}</p>
@@ -33,52 +33,54 @@
                 </li> 
             </ul>
         </section>
-        <div class="gray-bar !mb-1"></div>
-        <Tabs value="0" class="w-full">
-            <TabList class="">
-                <Tab value="0" class="flex gap-2 justify-center items-center w-1/3 tab-header">판매중 <span class="flex justify-center items-center text-xs bg-indigo-50 rounded-full size-4">{{ client['detail']['cnt']['ing'] }}</span></Tab>
-                <Tab value="1" class="flex gap-2 justify-center items-center w-1/3 tab-header">판매완료 <span class="flex justify-center items-center text-xs bg-indigo-50 rounded-full size-4">{{ client['detail']['cnt']['comp'] }}</span></Tab>
-                <Tab value="2" class="flex gap-2 justify-center items-center w-1/3 tab-header">판매취소<span class="flex justify-center items-center text-xs bg-indigo-50 rounded-full size-4">{{ client['detail']['cnt']['cancel'] }}</span></Tab>
-            </TabList>
-            <TabPanels>
-                <TabPanel value="0">
-                    <div class="flex flex-col gap-5 p-4 md:p-6">
-                        <section v-for="(item, index) in getList(1)" :key="index">
-                            <ProcessCard :info="item"/>
-                        </section>
-
-                        <div class="flex flex-col gap-2 justify-center items-center py-10 text-center" v-if="getList(1).length === 0">
-                            <div class="flex justify-center items-center bg-red-50 rounded-full size-16"> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
-                            <p class="text-center">판매중인 항목이 없습니다.</p>
+        <div class="gray-bar !mb-[10px]"></div>
+        <div class="custom-customer-tab">
+            <Tabs value="0" class="overflow-hidden px-4 py-[10px] w-full">
+                <TabList class="w-full border border-[#E4E5E9] rounded overflow-hidden">
+                    <Tab value="0" class="flex flex-col gap-1 justify-center items-center w-1/3 !text-13 tab-header"><span class="text-lg font-bold text-p-lv2">{{ client['detail']['cnt']['ing'] }}</span>판매중 </Tab>
+                    <Tab value="1" class="flex flex-col gap-1 justify-center items-center w-1/3 !text-13 tab-header"><span class="text-lg font-bold text-p-lv2">{{ client['detail']['cnt']['comp'] }}</span>판매완료 </Tab>
+                    <Tab value="2" class="flex flex-col gap-1 justify-center items-center w-1/3 !text-13 tab-header"><span class="text-lg font-bold text-p-lv2">{{ client['detail']['cnt']['cancel'] }}</span>판매취소</Tab>
+                </TabList>
+                <TabPanels>
+                    <TabPanel value="0">
+                        <div class="flex flex-col gap-5 py-4">
+                            <section v-for="(item, index) in getList(1)" :key="index">
+                                <ProcessCard :info="item"/> 
+                            </section>
+    
+                            <div class="flex flex-col gap-2 justify-center items-center py-10 text-center" v-if="getList(1).length === 0">
+                                <div class="flex justify-center items-center bg-red-50 rounded-full size-16"> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
+                                <p class="text-center">판매중인 항목이 없습니다.</p>
+                            </div>
                         </div>
-                    </div>
-                </TabPanel>
-                <TabPanel value="1">
-                    <div class="flex flex-col gap-5 p-4 md:p-6">
-                        <section v-for="(item, index) in getList(2)" :key="index">
-                            <ProcessCard :info="item"/>
-                        </section>
-                        <div class="flex flex-col items-center justify-center gap-2 py-10 text-center h-[312px]" v-if="getList(2).length === 0">
-                            <div class="flex justify-center items-center bg-red-50 rounded-full size-16"> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
-                            <p class="text-center">판매완료된 항목이 없습니다.</p>
+                    </TabPanel>
+                    <TabPanel value="1">
+                        <div class="flex flex-col gap-5 p-4">
+                            <section v-for="(item, index) in getList(2)" :key="index">
+                                <ProcessCard :info="item"/>
+                            </section>
+                            <div class="flex flex-col items-center justify-center gap-2 py-10 text-center h-[312px]" v-if="getList(2).length === 0">
+                                <div class="flex justify-center items-center bg-red-50 rounded-full size-16"> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
+                                <p class="text-center">판매완료된 항목이 없습니다.</p>
+                            </div>
                         </div>
-                    </div>
-                </TabPanel>
-                <TabPanel value="2">
-                    <div class="flex flex-col gap-5 p-5 md:p-6">
-                        <section v-for="(item, index) in getList(3)" :key="index">
-                            <ProcessCard :info="item"/>
-                        </section>
-
-                        <div class="flex flex-col items-center justify-center gap-2 py-10 text-center h-[312px]" v-if="getList(3).length === 0">
-                            <div class="flex justify-center items-center bg-red-50 rounded-full size-16"> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
-                            <p class="text-center">판매취소된 항목이 없습니다.</p>
+                    </TabPanel>
+                    <TabPanel value="2">
+                        <div class="flex flex-col gap-5 p-5">
+                            <section v-for="(item, index) in getList(3)" :key="index">
+                                <ProcessCard :info="item"/>
+                            </section>
+    
+                            <div class="flex flex-col items-center justify-center gap-2 py-10 text-center h-[312px]" v-if="getList(3).length === 0">
+                                <div class="flex justify-center items-center bg-red-50 rounded-full size-16"> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
+                                <p class="text-center">판매취소된 항목이 없습니다.</p>
+                            </div>
+                            
                         </div>
-                        
-                    </div>
-                </TabPanel>
-            </TabPanels>
-        </Tabs>
+                    </TabPanel>
+                </TabPanels>
+            </Tabs>
+        </div>
         <!-- <div class="flex justify-center pb-5">
             <Button label="신규 명세표" icon="pi pi-plus" size="large" @click="getNewEsti" />
         </div> -->
@@ -131,13 +133,14 @@
 
         </Dialog>
 
-        <Dialog v-model:visible="popup['pop']['estiList']" header="명세서" 
+        <Dialog v-model:visible="popup['pop']['estiList']" header="명세서"
             :modal=true position="center" class="custom-dialog-full" 
             @update:visible="getPopClose('estiList', true)">
             <template #header>
-                <div class="modal-backheader">
-                    <Button @click="getPopupClose(true, 'estiList')" severity="contrast" text icon="pi pi-times" />
+                <div class="modal-fullheader change-button">
+                    <Button @click="getPopupClose(true, 'estiList')" severity="contrast" text icon="pi pi-arrow-left" class="flex justify-start"/>
                     <h2 class="modal-backheader-title">명세서</h2>
+                    <Button label="제품 추가 등록" size="small" outlined @click="getEstiAdd" class="!z-[100] !bg-p-lv4 !text-white esti-button"/>
                 </div>
             </template>
             <EstiList/>
@@ -265,6 +268,12 @@ const getList = (tab: number) => {
 const getNewEsti = () => {
     esti.getReset();
     esti.getType('N');
+    getPopupOpen('itemList');
+}
+
+const getEstiAdd = () => {
+    esti.getType('I');
+    esti.getReset();
     getPopupOpen('itemList');
 }
 
