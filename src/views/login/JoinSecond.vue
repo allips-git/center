@@ -4,7 +4,7 @@
         pt:mask:class="bg-white backdrop-blur-sm">
             <template #container>
                 <BackHeader title="매장 회원가입 2/2"/>
-                <div class="overflow-y-auto modal-page-padding">
+                <div class="overflow-y-auto mb-20 modal-page-padding">
                     <div class="p-4 mb-8 bg-gray-50 rounded-lg">
                         <p class="text-sm">
                             플랜오더에 등록하실 운영 중인 매장시설 정보와 플랜 및 문자메시지 등 플랜오더 이용을 위한 결제수단을 입력해주세요.<br>
