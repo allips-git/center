@@ -100,6 +100,8 @@ const getFile = (event: Event) => {
 };
 
 const getNext = async () => {
+    await join.getMsgReset();
+
     const checkParams = {
         id      : join['login']['id'],
         pw      : join['login']['pw'],
@@ -147,12 +149,12 @@ const getNext = async () => {
     }
 }
 
-// onMounted(()=>{
-//     if(!join.certified)
-//     {
-//         router.go(-1);
-//     }
-// })
+onMounted(()=>{
+    if(!join.certified)
+    {
+        router.go(-1);
+    }
+})
 </script>
 
 <style lang="scss" scoped>

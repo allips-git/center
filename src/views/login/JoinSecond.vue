@@ -81,7 +81,7 @@ import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import { useConfirm } from "primevue/useconfirm";
-import { useDataStore, useJoinStore } from '@/store';
+import { useDataStore, useJoinStore, useLoginStore } from '@/store';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { getDaumPopupPosition } from '@/assets/js/function';
@@ -91,6 +91,7 @@ import axios from 'axios';
 const confirm   = useConfirm();
 const data      = useDataStore();
 const join      = useJoinStore();
+const login     = useLoginStore();
 const router    = useRouter();
 const visible   = ref(true);
 
@@ -133,7 +134,9 @@ const getCloseDaumPost = () => {
     document.getElementById('layer').style.display = 'none';
 }
 
-const getResultCheck = () => {
+const getResultCheck = async () => {
+    await join.getMsgReset();
+
     const checkParams = {
         ceNm    : join['center']['ceNm'],
         einNum  : join['center']['einNum'],
@@ -212,8 +215,8 @@ const getResult = async () => {
             }
         });
 
-        join.getReset();
-        router.push({path : `/login`});
+        await login.getTemLogin(join['center']['ceNm'], join['auth']['name'], join['center']['addr'], join['center']['addrDetail']);
+        router.push({path : `/join/wait_join`});
     }
     catch(e)
     {
@@ -235,12 +238,12 @@ const getResult = async () => {
     }
 }
 
-// onMounted(()=>{
-//     if(!join.certified)
-//     {
-//         router.go(-1);
-//     }
-// })
+onMounted(()=>{
+    if(!join.certified)
+    {
+        router.go(-1);
+    }
+})
 </script>
 
 <style lang="scss" scoped>

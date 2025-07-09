@@ -51,6 +51,13 @@ export const useLoginStore = defineStore('login', {
                 }
             }
         },
+        async getTemLogin(ceNm: string, name: string, addr: string, addrDetail: string)
+        {
+            this.ceNm       = ceNm;
+            this.name       = name;
+            this.addr       = addr;
+            this.addrDetail = addrDetail;
+        },
         async getLogout()
         {
             this.token = null;

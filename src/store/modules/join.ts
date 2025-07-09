@@ -145,6 +145,10 @@ export const useJoinStore = defineStore('join', {
             this.login['einFile']['file'] = file;
             this.login['einFile']['name'] = fileName;
         },
+        getMsgReset()
+        {
+            this.msg = getMsg();
+        },
         getReset()
         {
             this.certified  = false;

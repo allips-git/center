@@ -32,7 +32,7 @@
                         <p>문의사항은 고객센터 010-3445-2105로</p>
                         <p>문의 부탁드립니다.</p>
                     </div>
-                    <Button label="종료" size="small" class="w-32 my-6" @click="messageVisible=false"/>
+                    <Button label="종료" size="small" class="w-32 my-6" @click="getLogin"/>
                 </div>
             </Dialog>
            
@@ -45,9 +45,17 @@ import IconAvatar from '@/components/icons/IconAvatar.vue';
 import IconLogo from '@/components/icons/IconLogo.vue'
 import Dialog from 'primevue/dialog';
 import { ref } from 'vue';
-import { useLoginStore } from '@/store';
+import { useJoinStore, useLoginStore } from '@/store';
+import { useRouter } from 'vue-router';
 
+const join              = useJoinStore();
 const login             = useLoginStore();
+const router            = useRouter();
 const visible           = ref(true);
 const messageVisible    = ref(true);
+
+const getLogin = async () => {
+    await join.getReset();
+    router.push('/login');
+}
 </script>
