@@ -97,7 +97,9 @@ const pageBackgroundClass = computed(() => {
     if (route.meta.backgroundColor) {
         return route.meta.backgroundColor;
     }
-    return '';
+    
+    // 특정 페이지 이름에 따라 배경색 적용 (예시)
+  
 });
 
 </script>
