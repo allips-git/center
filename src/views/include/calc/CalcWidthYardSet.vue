@@ -65,7 +65,7 @@
                 <div class="relative flex-1 min-w-0">
                 <IftaLabel class="flex-1 min-w-0">
                     <label class="!font-bold">최종계산</label>
-                    <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full !pr-8 text-left !text-sky-500 !font-bold" @input="getSize" />
+                    <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full text-left !text-sky-500 !font-bold" @input="getSize" />
                 </IftaLabel>
                 <span class="absolute right-4 bottom-1/2 text-sm translate-y-1/2">{{ esti['common']['unitNm'] }}</span>
                 <small class="text-red-500">{{ esti['msg']['curtain'][`cSize`] }}</small>
