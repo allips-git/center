@@ -127,6 +127,7 @@ export function getCurtainParams(common, curtain)
     params['height']    = common['height'];
     params['size']      = curtain['size'];
     params['proc']      = curtain['proc'];
+    params['bproc']     = curtain['bproc'];
     params['los']       = curtain['los'];
     params['addColor']  = curtain['addColor'];
     params['shape']     = curtain['shape'];

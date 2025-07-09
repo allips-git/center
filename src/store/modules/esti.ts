@@ -70,6 +70,7 @@ interface CurtainInfo {
     shapeSaleAmt    : number;
     shapePurcAmt    : number;
     proc            : string;
+    bproc           : string;
     addColor        : AddColorType;
     shape           : YnType;
     split           : string;
@@ -243,6 +244,7 @@ const getCurtainInfo = (): CurtainInfo => {
         shapeSaleAmt    : 0,
         shapePurcAmt    : 0,
         proc            : '001', /** 가공방법(나비주름 / 평주름) */
+        bproc           : '001', /** 하단 가공법 (기본 / 리드밴드) */
         addColor        : 'O',   /** 색상 구분(원톤 / 투톤) */
         shape           : 'N',   /** 형상 선택(있음 / 없음) */
         split           : '001', /** 분할 구분(양개 / 편개) */
