@@ -171,7 +171,7 @@ export function getCommonParams(common)
         itemNm      : common['itemNm'],
         icCd        : common['icCd'],
         icNm        : common['icNm'],
-        setLocate   : common['location'],
+        setLocate   : common['location'] === '' ? '기타' : common['location'],
         unit        : common['unit'],
         unitSize    : common['unitSize'],
         saleUnit    : common['saleUnit'],

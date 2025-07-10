@@ -79,7 +79,6 @@ import CalcEASet from '@/views/include/calc/CalcEASet.vue'
 import CalcHebeSet from '@/views/include/calc/CalcHebeSet.vue'
 import CalcWidthYardSet from '@/views/include/calc/CalcWidthYardSet.vue'
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 import { useConfirm } from "primevue/useconfirm";
 import { useClientStore, useEstiStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
@@ -89,17 +88,11 @@ import { getBlindParams, getCurtainParams, getEaParams } from '@/assets/js/calcA
 import { getAxiosData } from '@/assets/js/function';
 import IconPencil from '@/components/icons/Iconpencil.vue';
 
-const router    = useRouter();
 const confirm   = useConfirm();
 const client    = useClientStore();
 const esti      = useEstiStore();
 const status    = ref(false);
 const { getPopupOpen, getPopupClose } = usePopup();
-
-const getItemChange = () => {
-    getPopupClose(true, 'itemSet');
-    getPopupOpen('itemList');
-}
 
 const getAmt = (amt: number) => {
     return getCommas(Number(amt));
