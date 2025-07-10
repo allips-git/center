@@ -48,10 +48,10 @@
         :modal=true
         position="center"
         class="custom-dialog-full"
-        @update:visible="getPopClose(true, 'clientSet')">
+        @update:visible="getPopupClose('clientSet', true)">
         <template #header>
             <div class="modal-backheader">
-                <Button @click="getPopClose(true, 'clientSet')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
+                <Button @click="getPopupClose('clientSet', true)" severity="contrast" text icon="pi pi-times" iconPos="right"/>
                 <h2 class="modal-backheader-title">고객등록</h2>
             </div>
         </template>
@@ -60,10 +60,10 @@
 
         <Dialog v-model:visible="popup['pop']['clientDetail']" header="고객 상세" 
             :modal=true position="center" class="custom-dialog-full" 
-            @update:visible="getPopClose('clientDetail', true)">
+            @update:visible="getPopupClose('clientDetail', true)">
             <template #header>
                 <div class="modal-backheader">
-                    <Button @click="getPopupClose(true, 'clientDetail')" severity="contrast" text icon="pi pi-times" />
+                    <Button @click="getPopupClose('clientDetail', true)" severity="contrast" text icon="pi pi-times" />
                     <h2 class="modal-backheader-title">고객 상세</h2>
                 </div>
             </template>
@@ -96,10 +96,6 @@ const { getPopupOpen, getPopupClose } = usePopup();
 const getPopOpen = () => {
     getPopupOpen('clientSet');
     client.getReset();
-}
-
-const getPopClose = (gb: boolean, popNm: string) => {
-    getPopupClose(popNm, gb);
 }
 
 const getAmt = (amt: number) => {

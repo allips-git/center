@@ -8,7 +8,7 @@
             <h2 class="px-2 py-1 font-bold bg-cyan-100 rounded-full text-10 text-s-lv1">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
                         <div class="flex gap-1 items-center font-medium">
                 <span>({{ esti['common']['unitSize'] }}{{ esti['common']['unitNm'] }}) {{ getAmt(esti['common']['saleUnit'] || 0) }}원</span>
-                <IconPencil class="w-3 h-3 text-gray-400 cursor-pointer" @click="openPriceEditDialog" />
+                <IconPencil class="w-3 h-3 text-gray-400 cursor-pointer" @click="getPopupOpen('priceChange')" />
             </div>
         </div>
         <div class="gray-bar my-[14px]"></div>
@@ -63,11 +63,25 @@
     </div>
     <div class="bottom-modal-absol-box">
         <Button type="button" label="저장" @click="getEstiSave" :disabled="status" size="large" class="w-full"></Button>
-    </div>    
+    </div>
+    <Dialog v-model:visible="popup['pop']['priceChange']" header="단가 변경" 
+            :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissable-mask="true"
+            @update:visible="getPopupClose('addAmtSet', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose('priceChange', true)" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">단가 변경</h2>
+                </div>
+            </template>
+            <div class="pt-3">
+            <EditPricePop/>
+        </div>
+    </Dialog>
 </main>
 </template>
 
 <script setup lang="ts">
+import Dialog from 'primevue/dialog';
 import Textarea from 'primevue/textarea';
 import IftaLabel from 'primevue/iftalabel';
 import Accordion from 'primevue/accordion';
@@ -78,9 +92,10 @@ import CalculateCard from '@/components/card/CalculateCard.vue'
 import CalcEASet from '@/views/include/calc/CalcEASet.vue'
 import CalcHebeSet from '@/views/include/calc/CalcHebeSet.vue'
 import CalcWidthYardSet from '@/views/include/calc/CalcWidthYardSet.vue'
+import EditPricePop from '@/components/modal/EditPricePop.vue'
 import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
-import { useClientStore, useEstiStore } from '@/store';
+import { usePopupStore, useClientStore, useEstiStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { estiBlindMsg, estiCurtainMsg, estiEaMsg } from '@/assets/js/msg';
@@ -89,6 +104,7 @@ import { getAxiosData } from '@/assets/js/function';
 import IconPencil from '@/components/icons/Iconpencil.vue';
 
 const confirm   = useConfirm();
+const popup     = usePopupStore();
 const client    = useClientStore();
 const esti      = useEstiStore();
 const status    = ref(false);
@@ -240,8 +256,8 @@ const getEstiSave = () => {
                 await esti.getList();
                 await client.getDetail();
 
-                getPopupClose(true, 'itemList');
-                getPopupClose(true, 'itemSet');
+                getPopupClose('itemList', false);
+                getPopupClose('itemSet', false);
 
                 if(esti.type === 'N')
                 {
