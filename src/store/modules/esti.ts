@@ -194,7 +194,7 @@ const getCommonInfo = (): CommonInfo => {
         unit     : '',      /** 제품 단위 코드 */
         unitNm   : '',      /** 제품 단위 명칭 */
         unitSize : '',      /** 제품 최소 사이즈 */
-        location : '기타',  /** 위치 */
+        location : '',      /** 위치 */
         width    : null,    /** 가로 */
         height   : null,    /** 세로 */
         saleUnit : null,    /** 판매 단가 */
