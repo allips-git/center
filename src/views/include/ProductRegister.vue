@@ -246,8 +246,14 @@ const getEstiSave = () => {
                 await esti.getEmCd(res.data['emCd']);
                 await esti.getList();
                 await client.getDetail();
+
                 getPopupClose(true, 'itemList');
                 getPopupClose(true, 'itemSet');
+
+                if(esti.type === 'N')
+                {
+                    getPopupOpen('estiList');
+                }
             }
             catch(e)
             {
