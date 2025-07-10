@@ -12,11 +12,13 @@ export const usePopup = () => {
 
         if (popup['pop'][popNm]) 
         {
-            await popup.getClose(lastPopNm);
+            console.log('pop')
+            await popup.getClose(popNm);
         }
 
         if (gb) 
         {
+            console.log('gb')
             await popup.getClose(lastPopNm);
         }
     };

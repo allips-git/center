@@ -823,6 +823,10 @@ export const useEstiStore = defineStore('esti', {
             this.type = 'M';
             this.edCd = edCd;
         },
+        getUnitSet(price: number)
+        {
+            this.common.saleUnit = price;
+        },
         getPayAmt(name: string, amt: number, memo: string = '')
         {
             const item = this.payList.find(item => item.name === name);
