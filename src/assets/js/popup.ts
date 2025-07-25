@@ -12,7 +12,6 @@ export const usePopup = () => {
 
         if (popup['pop'][popNm]) 
         {
-            console.log('pop')
             await popup.getClose(popNm);
         }
 

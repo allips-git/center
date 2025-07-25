@@ -13,6 +13,8 @@ interface List {
 
 interface Info {
     id          : string;
+    pw          : string;
+    pwChk       : string;
     name        : string;
     tel         : string;
     zip         : null | string;
@@ -54,13 +56,15 @@ interface State {
 
 const getInfo = (): Info => {
     return {
-        id          : '',
-        name        : '',
-        tel         : '',
-        zip         : null,
-        addr        : '',
-        addrDetail  : '',
-        rank        : 'L'
+        id              : '',
+        pw              : '',
+        pwChk           : '',
+        name            : '',
+        tel             : '',
+        zip             : null,
+        addr            : '',
+        addrDetail      : '',
+        rank            : 'L'
     }
 }
 
@@ -127,7 +131,17 @@ export const useMemberStore = defineStore('member', {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/memberV1/getInfo`, params);
 
-                this.info = res.data['info'];
+                this.info = {
+                    id          : res.data['info'].id,
+                    pw          : '',
+                    pwChk       : '',
+                    name        : res.data['info'].name,
+                    tel         : res.data['info'].tel,
+                    zip         : res.data['info'].zip,
+                    addr        : res.data['info'].addr,
+                    addrDetail  : res.data['info'].addrDetail,
+                    rank        : res.data['info'].rank
+                };
             }
             catch(e)
             {

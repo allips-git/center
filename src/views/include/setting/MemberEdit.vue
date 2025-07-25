@@ -10,6 +10,18 @@
                 </IftaLabel>
 
                 <IftaLabel class="w-full">
+                    <InputText v-if="member['type'] === 'I'" :type="'password'" id="pw" v-model="member['info']['pw']" class="w-full" :disabled="member['type'] === 'U' ? true : false"/>
+                    <label>비밀번호 <span class="ml-0.5 text-red-500">*</span></label>
+                    <small class="text-red-500">{{ member['msg']['pw'] }}</small>
+                </IftaLabel>
+
+                <IftaLabel class="w-full">
+                    <InputText v-if="member['type'] === 'I'" :type="'password'" id="pwChk" v-model="member['info']['pwChk']" class="w-full" :disabled="member['type'] === 'U' ? true : false"/>
+                    <label>비밀번호 확인 <span class="ml-0.5 text-red-500">*</span></label>
+                    <small class="text-red-500">{{ member['msg']['pwChk'] }}</small>
+                </IftaLabel>
+
+                <IftaLabel class="w-full">
                     <InputText id="name" v-model="member['info']['name']" class="w-full"/>
                     <label>이름 <span class="ml-0.5 text-red-500">*</span></label>
                     <small class="text-red-500">{{ member['msg']['name'] }}</small>
@@ -58,7 +70,6 @@
 
 <script setup lang="ts">
 import IconSpot from '@/components/icons/IconSpot.vue';
-import BackHeader from '@/components/layouts/BackHeader.vue'
 import IftaLabel from 'primevue/iftalabel';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
@@ -117,11 +128,16 @@ const getCloseDaumPost = () => {
 
 const getSave = () => {
     const checkParams = {
+        type    : member['type'],
         id      : member['info']['id'],
+        pw      : member['info']['pw'],
+        pwChk   : member['info']['pwChk'],
         name    : member['info']['name'],
         tel     : member['info']['tel'],
         addr    : member['info']['addr']
     };
+
+    console.log(checkParams);
 
     const result = memberMsg(checkParams);
 
@@ -147,6 +163,7 @@ const getSave = () => {
             const params = {
                 type        : member['type'],
                 id          : member['info']['id'],
+                pw          : member['info']['pw'],
                 name        : member['info']['name'],
                 tel         : member['info']['tel'],
                 zip         : member['info']['zip'],
