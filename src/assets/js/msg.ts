@@ -486,7 +486,10 @@ export const settingMsg = (params: SettingMsg): { msg: string; id: string, state
 }
 
 interface MemberMsg {
+    type    : 'I' | 'U';
     id      : string;
+    pw      : string;
+    pwChk   : string;
     name    : string;
     tel     : string;
     addr    : string;
@@ -507,6 +510,29 @@ export const memberMsg = (params: MemberMsg): { msg: string; id: string, state: 
     if(!stat)
     {
         return { msg : '잘못된 이메일 형식입니다.', id : 'id', state : false };
+    }
+
+    if(params['type'] === 'I')
+    {
+        if(params['pw'] === '')
+        {
+            return { msg : '비밀번호를 입력해주세요.', id : 'pw', state : false };
+        }
+
+        if(params['pwChk'] === '')
+        {
+            return { msg : '비밀번호 확인란을 입력해주세요.', id : 'pwChk', state : false };
+        }
+
+        if(params['pw'] !== params['pwChk'])
+        {
+            return { msg : '비밀번호가 일치하지 않습니다.', id : 'pwChk', state : false };
+        }
+
+        if(params['pw'].length < 8)
+        {
+            return { msg : '비밀번호는 8자리 이상 입력해주세요.', id : 'pw', state : false };
+        }
     }
 
     if(params['name'] === '')
