@@ -457,9 +457,9 @@ export const useEstiStore = defineStore('esti', {
                                             rows.push(...esti.detail.map(dItem => ({
                                                 width   : dItem.width,
                                                 height  : dItem.height,
-                                                leftQty : dItem.handle === 'L' ? 1 : 0,
-                                                rightQty: dItem.handle === 'R' ? 1 : 0,
-                                                size    : dItem.size + esti.unitNm
+                                                leftQty : dItem.handle === 'L' ? dItem.cnt : 0,
+                                                rightQty: dItem.handle === 'R' ? dItem.cnt : 0,
+                                                size    : (Number(dItem.size) * Number(dItem.cnt)) + esti.unitNm
                                             })));
                                         }
                                         else

@@ -54,7 +54,10 @@ export function getRoundCalc (value, roundGb='001')
 			}
 		}
 		break;
-        case '004':
+        case '004': /** 0.01단위 (소수점 셋째 자리에서 반올림) */
+            calcValue = Math.round(value * 100) / 100;
+        break;
+        case '005':
             calcValue = value.toFixed(2);
 		break;
 	}
