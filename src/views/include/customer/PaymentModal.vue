@@ -3,27 +3,27 @@
 
     <div class="">
         <section class="px-5 form-gap-box">
-            <div class="relative flex items-center justify-center">
+            <div class="flex relative justify-between items-center">
                 <p class="w-[100px] flex-none text-13">할인 금액</p>
-                <InputNumber  class="*:!text-red-500 inputNumber-color *:w-full" :modelValue="getAmtInfo('lastDcAmt')" placeholder="할인 금액을 입력하세요" 
+                <InputNumber  class="*:!text-red-500 inputNumber-color !w-[70%]" :modelValue="getAmtInfo('lastDcAmt')" placeholder="할인 금액을 입력하세요" 
                 readonly @click="getDisAmtPopup"
                 />
-                <span class="absolute text-sm text-red-500 right-4 bottom-2.5">원</span>
+                <span class="absolute bottom-2.5 right-4 text-sm text-red-500">원</span>
             </div>
 
-            <div class="relative flex items-center justify-center">
+            <div class="flex relative justify-between items-center">
                 <p class="w-[100px] flex-none text-13">추가 금액</p>
-                <InputNumber class="*:!text-blue-500 inputNumber-color *:w-full" 
+                <InputNumber class="*:!text-blue-500 inputNumber-color !w-[70%]" 
                 :modelValue="getAmtInfo('lastAddAmt')" placeholder="추가 금액을 입력하세요"
                 readonly @click="getPopupOpen('addAmtSet')"
                 />
-                <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
+                <span class="absolute right-4 bottom-1/2 text-sm text-blue-500 translate-y-1/2">원</span>
             </div>
 
-            <div class="relative flex items-center justify-center">
+            <div class="flex relative justify-between items-center">
                 <p class="w-[100px] flex-none text-13">최종 결제금액</p>
-                <InputNumber class="*:!text-blue-500 inputNumber-color *:w-full text-base" :modelValue="getTotalAmt()" placeholder="최종 결제 금액을 입력하세요"/>
-                <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
+                <InputNumber class="*:!text-blue-500 inputNumber-color !w-[70%] text-base" :modelValue="getTotalAmt()" placeholder="최종 결제 금액을 입력하세요"/>
+                <span class="absolute right-4 bottom-1/2 text-sm text-blue-500 translate-y-1/2">원</span>
             </div>
         </section>
 
@@ -31,22 +31,22 @@
             <div class="py-6">
                 <h1 class="mb-2 text-base font-bold">입금 정보</h1>
                 <div class="form-gap-box">
-                    <div class="relative flex items-center justify-start w-full">
+                    <div class="flex relative justify-between items-center w-full">
                         <p class="w-[100px] flex-none text-13">잔금</p>
-                        <div class="flex w-[calc(100%-100px)]">
+                        <div class="flex w-[70%] justify-end">
                             <Select class="*:text-sm" v-model="pay['pay']['payGb']" :options="data['payGb']" optionLabel="label" optionValue="value" />
-                            <div class="relative w-full ml-2">
-                                <InputNumber class="*:!text-blue-500 inputNumber-color *:w-full" 
+                            <div class="relative ml-2 w-full">
+                                <InputNumber class="*:!text-blue-500 inputNumber-color" 
                                 :modelValue="getTotalAmt()" placeholder="잔금을 입력하세요" readonly
                                 />
-                                <span class="absolute text-sm text-blue-500 translate-y-1/2 right-4 bottom-1/2">원</span>
+                                <span class="absolute right-4 bottom-1/2 text-sm text-blue-500 translate-y-1/2">원</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="relative flex items-start justify-center">
+                    <div class="flex relative justify-between items-start">
                         <p class="w-[100px] flex-none text-13">메모</p>
-                        <Textarea v-model="pay['pay']['memo']" rows="3" cols="30" style="resize: none" class="w-full"/>
+                        <Textarea v-model="pay['pay']['memo']" rows="3" cols="30" style="resize: none" class="w-[70%]"/>
                     </div>
                 </div>
             </div>
@@ -57,16 +57,28 @@
     </div>
     
     <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 
-        :modal=true position="bottom" class="min-w-96 custom-dialog-center" :dismissableMask="true"
+        :modal=true position="center" class="min-w-96 custom-dialog-center" :dismissableMask="true"
         @update:visible="getPopupClose('disAmtSet', true)">
+        <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'disAmtSet')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">할인가격입력</h2>
+                </div>
+            </template>
         <div class="pt-3">
             <SaleAmountPop :gubun="'P'" @getApply="getDisApply" @getClose="getPopupClose('disAmtSet', true)"/>
         </div>
     </Dialog>
 
     <Dialog v-model:visible="popup['pop']['addAmtSet']" header="추가 가격 입력" 
-        :modal=true position="bottom" class="min-w-96 custom-dialog-center" :dismissableMask="true"
+        :modal=true position="center" class="min-w-96 custom-dialog-center" :dismissableMask="true"
         @update:visible="getPopupClose('addAmtSet', true)">
+        <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'disAmtSet')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">추가 가격입력</h2>
+                </div>
+            </template>
         <div class="pt-3">
             <AddAmountPop :gubun="'P'" @getApply="getAddApply" @getClose="getPopupClose('addAmtSet', true)"/>
         </div>

@@ -48,7 +48,7 @@
                                     <p class="font-bold text-13 !text-t-lv2">{{ item.kdNm }}</p>
                                     <img src="@/assets/img/icon-kakaologo.png" alt="kakao" title="kakao" class="size-[18px]"/>
                                 </div>
-                                <p class="mt-2 text-xs text-t-lv4">{{ item.descrip }}</p>
+                                <p class="mt-2 text-xs text-t-lv4 max-w-[250px]">{{ item.descrip }}</p>
                             </div>
                             <div class="flex gap-2 items-center font-bold">
                                 <span v-if="item.useYn" class="text-xs text-white px-1.5 py-0.5 bg-[#2FD159] rounded-full">ON</span>

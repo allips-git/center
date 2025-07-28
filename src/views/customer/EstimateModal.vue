@@ -116,7 +116,7 @@
                     <label for="excel" class="text-sm">엑셀양식</label>
                 </div>
             </div>
-            <div class="flex justify-between text-sm">
+            <div class="flex justify-between text-sm custom-toggle">
                 <p>사이즈 숨김</p>
                 <ToggleSwitch v-model="mate['sizeYn']" />
             </div>
@@ -125,7 +125,7 @@
 
         <IftaLabel class="w-[100%]">
             <IconField class="w-full">
-                <InputText  :value="''+domain+'/customer/estiDoc?cd='+emCd+''" readonly @click="getEstiDoc" class="w-[100%] cursor-pointer"/>
+                <InputText  :value="''+domain+'/customer/estiDoc?cd='+emCd+''" readonly @click="getEstiDoc" class="w-[100%] cursor-pointer truncate pr-12"/>
                 <InputIcon class="cursor-pointer pi pi-eye" @click="getEstiDoc"/>
             </IconField>
 

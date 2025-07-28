@@ -6,26 +6,26 @@
             <p class="mt-2 text-gray-400 text-11">{{ kakao['info']['descrip'] }}</p>
         </section>
         
-        <section class="flex items-center justify-between px-4 py-4 my-5 bg-gray-50 flax">
+        <section class="flex justify-between items-center px-4 py-4 my-5 bg-gray-50 custom-toggle">
             <p class="text-sm">자동 알림 보내기</p>
             <ToggleSwitch v-model="kakao['info']['useYn']" @change="getToggle('useYn')"/>
         </section>
     
         <section class="px-4">
-            <div class="flex items-center justify-between alert-button">
+            <div class="flex justify-between items-center alert-button">
                 <p class="text-sm">알림내용 미리보기</p>
                 <Button label="테스트 발송" size="small" class=""/>
             </div>
-            <div class="flex flex-col items-center justify-center w-full px-4 py-6 mt-5 bg-kakaoBg rounded-2xl">
+            <div class="flex flex-col justify-center items-center px-4 py-6 mt-5 w-full rounded-2xl bg-kakaoBg">
                 <p class="w-auto text-11">아래 on/off 버튼을 클릭해 플랜톡 내용을 편집해보세요.</p>
-                <div class="w-full mt-5 overflow-hidden rounded-xl max-w-96">
+                <div class="overflow-hidden mt-5 w-full rounded-xl max-w-96">
                     <div class="py-2 text-center bg-yellow-300 text-13"> 알림톡 도착</div>
                     <div class="p-4 bg-white">
                         <ul class="flex flex-col gap-4 text-xs">
                             <li class="">{{ getFirstMsg() }} 알림</li>
                             <li>
-                                <div class="flex items-center gap-1">
-                                    <p v-if="kakao['info']['client']" class="px-2 bg-gray-100 border rounded-sm ">고객이름</p>
+                                <div class="flex gap-1 items-center">
+                                    <p v-if="kakao['info']['client']" class="px-2 bg-gray-100 rounded-sm border">고객이름</p>
                                     <span class="">고객님</span>
                                 </div>
                                 <span class="">{{ getMsg() }}</span>
@@ -54,19 +54,19 @@
                     <p>계좌 정보 표기 여부</p>
                     <ToggleSwitch v-model="kakao['info']['account']" @change="getToggle('account')"/>
                 </li>
-                <li>
+                <li class="custom-toggle">
                     <p>고객 이름 표시 여부</p>
                     <ToggleSwitch v-model="kakao['info']['client']" @change="getToggle('client')"/>
                 </li>
-                <li>
+                <li class="custom-toggle">
                     <p>담당 맴버 표시 여부</p>
                     <ToggleSwitch v-model="kakao['info']['person']" @change="getToggle('person')"/>
                 </li>
-                <li>
+                <li class="custom-toggle">
                     <p>샵 주소</p>
                     <ToggleSwitch v-model="kakao['info']['shopAddr']" @change="getToggle('shopAddr')"/>
                 </li>
-                <li>
+                <li class="custom-toggle">
                     <p>홈페이지 링크 표시 여부</p>
                     <ToggleSwitch v-model="kakao['info']['url']" @change="getToggle('url')"/>
                 </li>
@@ -81,7 +81,7 @@
             <h2 class="text-sm">카카오톡 발신 계정 연결</h2>
             <p class="mt-1 text-gray-400 text-10">연동 설정 전에는 플랜오더 대표 계정으로 발송이 되며, <br>
                 카카오톡 계정 연결 시, 샵 해당 계정으로 고객에게 자동 고객 알림이 발송됩니다.</p>
-                <Button class="w-full mt-5" size="large" severity="secondary" label="카카오 비즈니스 계정 등록"/>
+                <Button class="mt-5 w-full" size="large" severity="secondary" label="카카오 비즈니스 계정 등록"/>
         </section>
     </main>
 </main>
