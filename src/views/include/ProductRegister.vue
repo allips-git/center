@@ -138,7 +138,7 @@ const getEstiSave = () => {
 
             if(!result['state'])
             {
-                esti.getMsgSet(result['msg'], result['id']);
+                esti.getMsgSet(result['msg'], result['index'] === null ? result['id'] : 'divWidth');
                 getFocus(result['id']);
                 return false;
             }

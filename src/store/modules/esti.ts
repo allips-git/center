@@ -158,6 +158,7 @@ interface MsgInfo {
         leftQty     : string;
         rightQty    : string;
         bQty        : string;
+        divWidth    : string;
     },
     curtain : {
         cWidth  : string;
@@ -358,7 +359,8 @@ const getMsgInfo = (): MsgInfo  => {
             bHeight     : '',
             leftQty     : '',
             rightQty    : '',
-            bQty        : ''
+            bQty        : '',
+            divWidth    : ''
         },
         curtain : {
             cWidth  : '',
