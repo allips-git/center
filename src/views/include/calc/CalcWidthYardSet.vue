@@ -36,7 +36,7 @@
 
                 <IftaLabel class="flex-1 min-w-0">
                 <label>수량</label>
-                <InputNumber inputId="cQty" v-model="esti['curtain']['cQty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">
+                <InputNumber inputId="cQty" v-model="esti['curtain']['cQty']" showButtons buttonLayout="horizontal" :step="1" fluid class="custom-input-number" @update:modelValue="esti.getUnitCalc()">
                     <template #incrementbuttonicon><span class="pi pi-plus" /></template>
                     <template #decrementbuttonicon><span class="pi pi-minus" /></template>
                 </InputNumber>
@@ -65,9 +65,9 @@
                 <div class="relative flex-1 min-w-0">
                 <IftaLabel class="flex-1 min-w-0">
                     <label class="!font-bold">최종계산</label>
-                    <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full text-left !text-sky-500 !font-bold" @input="getSize" />
+                    <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full text-left !text-sky-500 !font-bold custom-input-text" @input="getSize" />
                 </IftaLabel>
-                <span class="absolute right-4 bottom-1/2 text-sm translate-y-1/2">{{ esti['common']['unitNm'] }}</span>
+                <span class="absolute right-2 bottom-1/2 text-sm translate-y-1/2">{{ esti['common']['unitNm'] }}</span>
                 <small class="text-red-500">{{ esti['msg']['curtain'][`cSize`] }}</small>
                 </div>
             </div>
@@ -123,3 +123,24 @@ const getSize = () => {
     esti['curtain']['size'] = value;
 }
 </script>
+
+<style scoped>
+.custom-input-number {
+    font-size: 0.75rem; /* text-xs */
+}
+
+.custom-input-number :deep(.p-inputnumber-input) {
+    padding: 0 !important;
+    font-size: 0.75rem;
+    text-align: center !important;
+}
+
+.custom-input-number :deep(.p-inputnumber-button) {
+    padding: 0.25rem !important;
+}
+
+.custom-input-text {
+    padding: 0.625rem !important;
+    font-size: 0.875rem;
+}
+</style>
