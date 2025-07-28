@@ -40,7 +40,7 @@
                 </thead>
                 <tbody class="">
                     <!-- v-for -->
-                    <tr class=" *:py-[6px] font-bold text-11 !text-t-lv1" v-for="(row, index) in card.rows" :key="index">
+                    <tr class="*:py-[3px] font-bold text-sm !text-t-lv1" v-for="(row, index) in card.rows" :key="index">
                         <template v-if="sizeYn">
                             <template v-for="col in card.columns" :key="col.key">
                                 <td v-if="col.key !== 'width' && col.key !== 'height'">
