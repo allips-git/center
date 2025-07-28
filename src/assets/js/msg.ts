@@ -150,25 +150,40 @@ interface EstiBlindMsg {
 /**
  * @description 견적 저장 시 값 체크 (단위 : 회배)
  */
-export const estiBlindMsg = (params: EstiBlindMsg): { msg: string; id: string, state: boolean } => {
+export const estiBlindMsg = (params: EstiBlindMsg): { msg: string; id: string, index: null | number, state: boolean } => {
     if(!Number(params['width']) || Number(params['width']) === 0)
     {
-        return { msg : '가로를 입력해주세요.', id : 'bWidth', state : false };
+        return { msg : '가로를 입력해주세요.', id : 'bWidth', index: null, state : false };
     }
 
     if(!Number(params['height']) || Number(params['height']) === 0)
     {
-        return { msg : '세로를 입력해주세요.', id : 'bHeight', state : false };
+        return { msg : '세로를 입력해주세요.', id : 'bHeight', index: null, state : false };
     }
 
     if(params['ordGb'] === 'S')
     {
         /** 시스템 공장 제품 */
-        if(params['minWidth'] && params['maxWidth'])
+        if(Number(params['division'] === 1))
         {
-            if((Number(params['width']) > Number(params['maxWidth'])))
+            if(params['minWidth'] && params['maxWidth'])
             {
-                return { msg : `해당 제품 최대 가로 ${params['maxWidth']}cm 입니다.`, id : 'bWidth', state : false };
+                if((Number(params['width']) > Number(params['maxWidth'])))
+                {
+                    return { msg : `해당 제품 최대 가로 ${params['maxWidth']}cm 입니다.`, id : 'bWidth', index: null, state : false };
+                }
+            }
+        }
+        else
+        {
+            for(let index = 0; index < params['divSpec'].length; index++)
+            {
+                const item = params['divSpec'][index];
+
+                if((Number(item['width']) > Number(params['maxWidth'])))
+                {
+                    return { msg : `해당 제품 최대 가로 ${params['maxWidth']}cm 입니다.`, id : `bWidth${index}`, index: index, state : false };
+                }
             }
         }
     
@@ -176,7 +191,7 @@ export const estiBlindMsg = (params: EstiBlindMsg): { msg: string; id: string, s
         {
             if((Number(params['height']) > Number(params['maxHeight'])))
             {
-                return { msg : `해당 제품 최대 세로 ${params['maxHeight']}cm 입니다.`, id : 'bHeight', state : false };
+                return { msg : `해당 제품 최대 세로 ${params['maxHeight']}cm 입니다.`, id : 'bHeight', index: null, state : false };
             }
         }
     }
@@ -185,7 +200,7 @@ export const estiBlindMsg = (params: EstiBlindMsg): { msg: string; id: string, s
         /** 센터 외주 제품 */
         if((Number(params['height']) < Number(params['minHeight'])))
         {
-            return { msg : `해당 제품 기본 세로 ${params['minHeight']}cm 입니다.`, id : 'bHeight', state : false };
+            return { msg : `해당 제품 기본 세로 ${params['minHeight']}cm 입니다.`, id : 'bHeight', index: null, state : false };
         }
     }
 
@@ -193,14 +208,14 @@ export const estiBlindMsg = (params: EstiBlindMsg): { msg: string; id: string, s
     {
         if((!Number(params['leftQty']) || Number(params['leftQty']) === 0) && (!Number(params['rightQty']) || Number(params['rightQty']) === 0))
         {
-            return { msg : '좌, 우 중 수량을 입력해주세요.', id : 'leftQty', state : false };
+            return { msg : '좌, 우 중 수량을 입력해주세요.', id : 'leftQty', index: null, state : false };
         }
     }
     else
     {
         if(!Number(params['qty']) || Number(params['qty']) === 0)
         {
-            return { msg : '수량을 입력해주세요.', id : 'bQty', state : false };
+            return { msg : '수량을 입력해주세요.', id : 'bQty', index: null, state : false };
         }
 
         for(let index = 0; index < params['divSpec'].length; index++)
@@ -209,7 +224,7 @@ export const estiBlindMsg = (params: EstiBlindMsg): { msg: string; id: string, s
     
             if(!Number(item['width']) || Number(item['width']) === 0)
             {
-                return { msg : '분할 가로 길이를 입력해주세요.', id : `bWidth${index}`, state : false };
+                return { msg : '분할 가로 길이를 입력해주세요.', id : `bWidth${index}`, index: index, state : false };
             }
         }
 
@@ -217,7 +232,7 @@ export const estiBlindMsg = (params: EstiBlindMsg): { msg: string; id: string, s
 
         if(Number(params['width']) !== Number(sumWidth))
         {
-            return { msg : '분할 가로 길이 합계가 맞지않습니다.', id : 'bWidth', state : false };
+            return { msg : '분할 가로 길이 합계가 맞지않습니다.', id : 'bWidth', index: null, state : false };
         }
     }
 

@@ -95,7 +95,7 @@
                             <InputText v-model="item['size']" class="w-full" disabled/>
                         </IftaLabel>
                     </div>
-                    <small class="text-red-500">{{ esti['msg']['blind'][`bWidth${index}`] }}</small>
+                    <small class="text-red-500">{{ esti['msg']['blind']['divWidth'] }}</small>
                 </div>
             </div>
         </template>
