@@ -22,7 +22,7 @@ interface AuthInfo {
 }
 
 interface LoginInfo {
-    id      : string;
+    email   : string;
     pw      : string;
     pwChk   : string
     einFile : {
@@ -44,7 +44,7 @@ interface CenterInfo {
 }
 
 interface Msg {
-    id      : string;
+    email   : string;
     pw      : string;
     pwChk   : string;
     einFile : string;
@@ -79,7 +79,7 @@ const getAuthInfo = (): AuthInfo => {
 
 const getLoginInfo = (): LoginInfo => {
     return {
-        id      : '',
+        email   : '',
         pw      : '',
         pwChk   : '',
         einFile : {
@@ -105,7 +105,7 @@ const getCenterInfo = (): CenterInfo => {
 
 const getMsg = (): Msg => {
     return {
-        id      : '',
+        email   : '',
         pw      : '',
         pwChk   : '',
         einFile : ''

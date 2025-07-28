@@ -7,13 +7,13 @@
                 <div class="px-4 pt-10">
                     <div class="form-gap-box">
                         <IftaLabel class="relative w-full">
-                            <label for="id">이메일</label>
+                            <label for="email">이메일</label>
                             <IconField>
-                                <InputText id="id" v-model="join['login']['id']" placeholder="이메일을 입력해주세요." class="w-full"/>
+                                <InputText id="email" v-model="join['login']['email']" placeholder="이메일을 입력해주세요." class="w-full"/>
                                 <InputIcon><IconInputX/></InputIcon>
                             </IconField>
-                            <small v-if="join['msg']['id'] !== ''" class="vali_text">{{ join['msg']['id'] }}</small>
-                            <small v-if="join['msg']['id'] !== ''" class="vali_text-tran">none</small>
+                            <small v-if="join['msg']['email'] !== ''" class="vali_text">{{ join['msg']['email'] }}</small>
+                            <small v-if="join['msg']['email'] !== ''" class="vali_text-tran">none</small>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
@@ -103,7 +103,7 @@ const getNext = async () => {
     await join.getMsgReset();
 
     const checkParams = {
-        id      : join['login']['id'],
+        email   : join['login']['email'],
         pw      : join['login']['pw'],
         pwChk   : join['login']['pwChk'],
         einFile : join['login']['einFile']['name']
@@ -125,7 +125,7 @@ const getNext = async () => {
 
     try
     {
-        const res = await axios.post('https://data.planorder.kr/joinV1/getIdCheck', { id : join['login']['id'] });
+        const res = await axios.post('https://data.planorder.kr/joinV1/getIdCheck', { id : join['login']['email'] });
 
         console.log(res);
         router.push({ path : `/join/joinSecond` });
@@ -135,8 +135,8 @@ const getNext = async () => {
         console.log(e);
         if(e.response.data['code'] === 4100)
         {
-            join.getMsgSet('이미 사용 중인 계정입니다.', 'id');
-            const inputElement = document.getElementById('id');
+            join.getMsgSet('이미 사용 중인 계정입니다.', 'email');
+            const inputElement = document.getElementById('email');
             if (inputElement) 
             {
                 inputElement.focus();
@@ -152,7 +152,7 @@ const getNext = async () => {
 onMounted(()=>{
     if(!join.certified)
     {
-        router.go(-1);
+        // router.go(-1);
     }
 })
 </script>
