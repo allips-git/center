@@ -53,10 +53,10 @@
         </section>
         <div class="my-8 w-full h-3 bg-gray-100"></div>
         <section class="px-5">
-            <!-- <CalculateCard  :showtitle="true"  title="거래원장" totalTitle="총 결제 금액"/> -->
+            <CalculateCard  :showtitle="true"  title="거래원장" totalTitle="총 결제 금액"/>
         </section>
         <section class="px-5">
-            <!-- <NoticeCard/> -->
+            <NoticeCard/>
         </section>
     </div>
 
@@ -110,6 +110,8 @@ import { ref } from 'vue';
 import { onMounted, onUnmounted } from 'vue';
 import { usePopupStore, useFactoryStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
+import CalculateCard from '@/components/card/CalculateCard.vue';
+import NoticeCard from '@/components/card/NoticeCard.vue';
 
 const mainRef = ref(null);
 const mainWidth = ref(0);
