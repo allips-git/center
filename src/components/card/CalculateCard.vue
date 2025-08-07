@@ -5,7 +5,7 @@
                 <h4 class="text-base text-t-lv1">{{ title }}</h4>
                 <!-- 단위 -->
                 <p class="text-p-lv4"><span class="ml-0.5">{{ unit }}</span></p>
-                <Button label="거래원장 출력" class="print-btn"/>
+                <!-- <Button label="거래원장 출력" class="print-btn"/> -->
             </div>
             <div v-if="showtoggle" class="custom_accordion">
                 <Accordion value="0">

@@ -660,19 +660,51 @@ export const useEstiStore = defineStore('esti', {
             const width    = Number(this.common['width']);
             const division = Number(this.blind['division']);
         
-            let divisionWidth, nam, lastWidth;
-        
             if(width > 0)
             {
-                divisionWidth   = Number(Math.floor((width / division) * 10) / 10); /** 분할길이 */
-                nam             = (divisionWidth * (division - 1)).toFixed(1);      /** 나머지 값 */
-                lastWidth       = Number((width - nam).toFixed(1));                 /** 나머지 길이 */
+                // 분할이 1개인 경우 (단창)
+                if(division === 1) {
+                    this.blind['divSpec'][0]['width'] = width;
+                    this.blind['divSpec'][0]['size']  = getHebe({
+                        width       : width,
+                        height      : this.common['height'],
+                        minWidth    : this.blind['minWidth'],
+                        minHeight   : this.blind['minHeight'],
+                        size        : Number(this.common['unitSize']),
+                        roundGb     : this.common['roundGb']
+                    });
+                    return;
+                }
+
+                // 기본 분할 길이 계산
+                const baseDivisionWidth = width / division;
+                
+                // 첫 번째 width를 0.5 단위로 반올림
+                const firstWidth = Math.round(baseDivisionWidth * 2) / 2;
+                
+                // 나머지 길이 계산
+                const remainingWidth = width - firstWidth;
+                const remainingDivisionWidth = Number((remainingWidth / (division - 1)).toFixed(1));
         
                 for(let i=0; i<division; i++)
                 {
-                    this.blind['divSpec'][i]['width'] = (i === (division-1) ? lastWidth : divisionWidth);
+                    let currentWidth: number;
+                    
+                    if(i === 0) {
+                        // 첫 번째는 0.5 단위로 조정된 width
+                        currentWidth = firstWidth;
+                    } else if(i === division - 1) {
+                        // 마지막은 남은 길이로 정확히 맞춤
+                        const usedWidth = firstWidth + (remainingDivisionWidth * (division - 2));
+                        currentWidth = Number((width - usedWidth).toFixed(1));
+                    } else {
+                        // 중간들은 균등 분할
+                        currentWidth = remainingDivisionWidth;
+                    }
+                    
+                    this.blind['divSpec'][i]['width'] = currentWidth;
                     this.blind['divSpec'][i]['size']  = getHebe({
-                        width       : i === (division-1) ? lastWidth : divisionWidth,
+                        width       : currentWidth,
                         height      : this.common['height'],
                         minWidth    : this.blind['minWidth'],
                         minHeight   : this.blind['minHeight'],

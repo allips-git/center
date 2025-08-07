@@ -14,8 +14,8 @@ export function getRoundCalc (value, roundGb='001')
 
 	switch(roundGb)
 	{
-		case '001':	/** 1단위 */
-			calcValue = Math.round(value);
+		case '001':	/** 1단위 무조건 올림 처리 => 사장님 요청 사항 2025-07-31 */
+			calcValue = Math.ceil(value);
 		break;
 		case '002':	/** 0.5단위 */
 			if(decimalPart < 0.25)
