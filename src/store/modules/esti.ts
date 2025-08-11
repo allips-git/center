@@ -2,8 +2,8 @@
  * @description 견적 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
-import { getHebe, getPok, getYard, eaCalculation } from '@/assets/js/order';
-import { getHebeCalc, getPokCalc, getYardCalc } from '@/assets/js/calcAndProcess';
+import { getHebe, getPok, getYard, getCm, eaCalculation } from 'planorder-calculator';
+import { getHebeCalc, getPokCalc, getYardCalc, getCmCalc } from '@/assets/js/calcAndProcess';
 import { getAxiosData, getCardColumns } from '@/assets/js/function';
 
 type Nullable<T>    = T | null;
@@ -475,7 +475,8 @@ export const useEstiStore = defineStore('esti', {
                                             });
                                         }
                                     break;
-                                    case '002': case '003':
+                                    case '002': case '003': case '005': case '006':
+                                        console.log('cm');
                                         rows.push({
                                             width   : esti.width,
                                             height  : esti.height,
@@ -586,7 +587,7 @@ export const useEstiStore = defineStore('esti', {
                     case '001':
                         this.getBlindSet(itemInfo);
                     break;
-                    case '002': case '003':
+                    case '002': case '003': case '005': case '006':
                         this.getCurtainSet(itemInfo);
                     break;
                     case '004':
@@ -760,6 +761,7 @@ export const useEstiStore = defineStore('esti', {
                         usage   : Number(this.curtain['use']),
                         size    : Number(this.common['unitSize']),
                         los     : this.curtain['los'],
+                        proc    : this.curtain['proc'],
                         roundGb : this.common['roundGb']
                     });
         
@@ -779,8 +781,9 @@ export const useEstiStore = defineStore('esti', {
                         width   : Number(this.common['width']),
                         usage   : Number(this.curtain['use']),
                         size    : Number(this.common['unitSize']),
-                        pokSpec : this.curtain['pokSpec'],
                         los     : this.curtain['los'],
+                        proc    : this.curtain['proc'],
+                        pokSpec : this.curtain['pokSpec'],
                         roundGb : this.common['roundGb']
                     });
                     
@@ -813,6 +816,20 @@ export const useEstiStore = defineStore('esti', {
             
                     this.total['totalQty']      = Number(this.ea['qty']);
                     this.total['totalUnitSize'] = info['ea'];
+                break;
+                case '006': /** CM */
+                    this.curtain['size'] = getCm({
+                        width   : Number(this.common['width']),
+                        size    : Number(this.common['unitSize']),
+                        roundGb : this.common['roundGb']
+                    });
+                    
+                    info = getCmCalc(this.common, this.curtain);
+
+                    console.log(info);
+
+                    this.total['totalQty']      = Number(this.curtain['cQty']);
+                    this.total['totalUnitSize'] = Number(this.curtain['size']) * Number(this.curtain['cQty']);
                 break;
             }
 

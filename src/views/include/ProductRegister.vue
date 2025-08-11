@@ -17,7 +17,7 @@
             <!-- 회베 -->
             <CalcHebeSet v-if="esti['common']['unit'] === '001'"/>
             <!-- 폭 , 야드 -->
-            <CalcWidthYardSet v-if="esti['common']['unit'] === '002' || esti['common']['unit'] === '003'"/>
+            <CalcWidthYardSet v-if="esti['common']['unit'] === '002' || esti['common']['unit'] === '003' || esti['common']['unit'] === '005' || esti['common']['unit'] === '006' "/>
             <!-- EA -->
             <CalcEASet v-if="esti['common']['unit'] === '004'"/>
         </div>
@@ -144,7 +144,7 @@ const getEstiSave = () => {
             }
         }            
         break;
-        case '002': case '003':
+        case '002': case '003': case '005': case '006':
         {
             checkParams['maxWidth']     = esti['curtain']['maxWidth'];
             checkParams['maxHeight']    = esti['curtain']['maxHeight'];
@@ -206,7 +206,7 @@ const getEstiSave = () => {
                     params['eachItemPurcAmt']   = esti['total']['eachItemPurcAmt'];
                     params['eachItemPurcTax']   = esti['total']['eachItemPurcTax'];
                 break;
-                case '002': case '003':
+                case '002': case '003': case '005': case '006':
                     params = getCurtainParams(esti['common'], esti['curtain']);
 
                     params['totalHeightSaleAmt']   = esti['total']['totalHeightSaleAmt'];

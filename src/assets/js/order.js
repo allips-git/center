@@ -44,7 +44,7 @@ export function getRoundCalc (value, roundGb='001')
 			let secondDecimalPlace = Math.round((decimalPart * 100) % 10);
 			if (secondDecimalPlace >= 5) 
 			{
-				/** 소수점 두 번째 자리가 5 이상이면 반올림 */
+				/** 소수점 두 번째 자리가 5 이상이면 올림 */
 				calcValue = Math.floor(value * 10 + 0.5) / 10;
 			}
 			else 
@@ -53,7 +53,7 @@ export function getRoundCalc (value, roundGb='001')
 				calcValue = Math.floor(value * 10) / 10;
 			}
 		}
-		break;
+        break;
         case '004': /** 0.01단위 (소수점 셋째 자리에서 반올림) */
             calcValue = Math.round(value * 100) / 100;
         break;
@@ -124,6 +124,7 @@ export function getHebe(data)
  *      usage   : '원단 사용량',
  *      size    : '최소 야드 단위',
  *      los     : '완제품가공 로스',
+ *      proc    : '가공방법 ( 나비주름 / 평주름 )' 
  * 		roundGb	: '반올림 구분'
  * }
  * @return 계산된 야드 값
@@ -131,21 +132,24 @@ export function getHebe(data)
 export function getYard(data) 
 {
 	if(Number(data['width']) > 0)
-	{
-		let yard = (Number(data['width']) * Number(data['usage']) + Number(data['los'])) / 90;
+    {
+        /** 나비주름일 때 가공로스 x2 */
+        const los = data['proc'] === '001' ? (Number(data['los']) * 2) : Number(data['los']);
+
+		let yard = (Number(data['width']) * Number(data['usage']) + los) / 90;
 		let size = Number(data['size']);
 
 		if(yard > size)
-		{
+        {
 			return getRoundCalc(yard, data['roundGb']);
 		}
-		else
-		{
+        else
+        {
 			return size;
 		}
 	}
-	else
-	{
+    else
+    {
 		return 0;
 	}
 }
@@ -157,7 +161,8 @@ export function getYard(data)
  *      width   : '가로',
  *      usage   : '원단사용량',
  *      size    : '최소 폭 단위',
- *      los     : '폭당 가공로스',
+ *      los     : '폭당 가공로스'
+ *      proc    : '가공방법 ( 나비주름 / 평주름 )' 
  *      pokSpec : '원단폭 규격',
  * 		roundGb	: '반올림 구분'
  * }
@@ -166,21 +171,25 @@ export function getYard(data)
 export function getPok(data) 
 {
 	if(Number(data['width']) > 0)
-	{
-		let pok  = (Number(data['width']) * Number(data['usage']) + Number(data['los'])) / Number(data['pokSpec']);
-		let size = Number(data['size']);
+    {
+        /** 나비주름일 때 가공로스 x2 */
+        const los = data['proc'] === '001' ? (Number(data['los']) * 2) : Number(data['los']);
+
+        /** (가로 x 가공로스) / 원단폭 규격 => 대폭 */
+		let pok     = (Number(data['width']) * Number(data['usage']) + los) / Number(data['pokSpec']);
+		let size    = Number(data['size']);
 
 		if(pok > size)
-		{
+        {
 			return getRoundCalc(pok, data['roundGb']);
 		}
-		else
-		{
+        else
+        {
 			return size;
 		}
 	}
-	else
-	{
+    else
+    {
 		return 0;
 	}
 }

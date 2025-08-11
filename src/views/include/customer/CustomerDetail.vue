@@ -265,16 +265,16 @@ const getList = (tab: number) => {
     }
 }
 
-const getNewEsti = () => {
-    esti.getReset();
-    esti.getType('N');
-    getPopupOpen('itemList');
+const getNewEsti = async () => {
+    await esti.getReset();
+    await esti.getType('N');
+    await getPopupOpen('itemList');
 }
 
-const getEstiAdd = () => {
-    esti.getType('I');
-    esti.getReset();
-    getPopupOpen('itemList');
+const getEstiAdd = async () => {
+    await esti.getType('I');
+    await esti.getReset();
+    await getPopupOpen('itemList');
 }
 
 const getClientModify = async () => {

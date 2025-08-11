@@ -1,4 +1,4 @@
-import { getHebe, hebeCalculation, pokCalculation, yardCalculation } from '@/assets/js/order'
+import { getHebe, hebeCalculation, pokCalculation, yardCalculation, cmCalculation } from 'planorder-calculator';
 
 /**
  * @description 회배 계산 처리
@@ -96,6 +96,26 @@ export function getPokCalc(common, curtain)
     };
 
     return pokCalculation(params);
+}
+
+/** 
+ * @description CM 계산 처리
+ */
+export function getCmCalc(common, curtain)
+{
+    const params = {
+        purcAmt : Number(common['purcUnit']),
+        saleAmt : Number(common['saleUnit']),
+        cm      : Number(curtain['size']),
+        cnt     : curtain['cQty'],
+        option  : [],
+        dcUnit  : common['dcUnit'],
+        dcAmt   : Number(common['dcAmt']),
+        vat     : common['vat'],
+        vmRate  : common['vmRate']
+    }
+
+    return cmCalculation(params);
 }
 
 /**
