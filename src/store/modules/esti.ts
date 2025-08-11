@@ -2,7 +2,7 @@
  * @description 견적 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
-import { getHebe, getPok, getYard, getCm, eaCalculation } from 'planorder-calculator';
+import { getHebe, getPok, getYard, getCm, eaCalculation } from '@/assets/js/order';
 import { getHebeCalc, getPokCalc, getYardCalc, getCmCalc } from '@/assets/js/calcAndProcess';
 import { getAxiosData, getCardColumns } from '@/assets/js/function';
 

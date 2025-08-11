@@ -195,6 +195,37 @@ export function getPok(data)
 }
 
 /**
+ * @description 가로길이에 따른 cm 계산
+ * @author 김원명, @version 1.0, @last date 2025/08/01
+ * @data = {
+ *      width   : '가로',
+ *      size    : '최소 cm 단위',
+ * 		roundGb	: '반올림 구분'
+ */
+export function getCm(data)
+{
+	if(Number(data['width']) > 0)
+    {
+        /** (가로 x 가공로스) / 원단폭 규격 => 대폭 */
+		let cm      = Number(data['width']);
+		let size    = Number(data['size']);
+
+		if(cm > size)
+        {
+			return getRoundCalc(cm, data['roundGb']);
+		}
+        else
+        {
+			return size;
+		}
+	}
+    else
+    {
+		return 0;
+	}
+}
+
+/**
  * @description EA 계산
  * @author 김원명, @version 1.0, @last date 2023/10/10
  * @data = array(
@@ -852,6 +883,152 @@ export function pokCalculation(data)
 	result['totalPurcTax'] = purcTax;
 	result['totalSaleAmt'] = saleAmt + dcAmt;
 	result['totalSaleTax'] = saleTax + dcTax;
+
+	return result;
+}
+
+export function cmCalculation(data)
+{
+	let result = {};
+	let cm;
+
+	//폭 계산
+	cm = Number(data['cm']) * Number(data['cnt']);
+
+	let itemPurcAmt = Math.round(cm * Number(data['purcAmt']));
+	let itemPurcTax = data['vat'] === 'Y' ? getVatRateAmt(data['vmRate'], Math.round(cm * Number(data['purcAmt']))) : 0;
+	let itemSaleAmt = Math.round(cm * Number(data['saleAmt']));
+	let itemSaleTax = getVatAmt('Y' , itemSaleAmt);
+
+	let shapeSaleAmt = 0;
+	let shapeSaleTax = 0;
+	let shapePurcAmt = 0;
+	let shapePurcTax = 0;
+
+    let procSaleAmt = 0;
+    let procSaleTax = 0;
+    let procPurcAmt = 0;
+    let procPurcTax = 0;
+    
+    let bprocSaleAmt = 0;
+    let bprocSaleTax = 0;
+    let bprocPurcAmt = 0;
+    let bprocPurcTax = 0;
+
+	//옵션
+	let optionPurcAmt   = 0;		//총합계에 사용할 매입 금액
+	let optionSaleAmt   = 0;	    //총합계에 사용할 매출 금액
+	let optionPurcTax   = 0;		//총합계에 사용할 매입 세액
+	let optionSaleTax   = 0;	    //총합계에 사용할 매출 세액
+
+	let ibo_amt         = [];       //옵션별 개별 합계 금액
+	let iso_amt         = [];       //옵션별 개별 합계 금액
+
+    const optionList    = [];       /** 옵션 데이터 */
+
+	//옵션 계산
+	let optionObject;
+
+	for(let i = 0; i < data['option'].length; i++)
+    {
+		if(ibo_amt[i] === undefined) ibo_amt[i] = 0;
+		if(iso_amt[i] === undefined) iso_amt[i] = 0;
+
+		let optionData = data['option'][i];
+
+		let n       = 0;
+        const cnt   = data['cnt'];
+
+        switch(data['option'][i]['selSpec'])
+        {
+            case 'U':
+                n = data['cm'] * cnt;
+            break;
+            case 'C':
+                n = cnt;
+            break;
+        }
+
+		optionObject = optionCalculation(optionData, n, cnt, data['vat'], data['vmRate']);
+		//옵션 매입금액
+		optionPurcAmt += optionObject['delYn'] === 'Y' || optionObject['gb'] !== 'N' ? 0 : optionObject['purcAmt'];
+		//옵션 매출금액
+		optionSaleAmt += optionObject['delYn'] === 'Y' || optionObject['gb'] !== 'N' ? 0 : optionObject['saleAmt'];
+		//옵션 매입세액
+		optionPurcTax += optionObject['delYn'] === 'Y' || optionObject['gb'] !== 'N' ? 0 : optionObject['purcTax'];
+		//옵션 매출세액
+		optionSaleTax += optionObject['delYn'] === 'Y' || optionObject['gb'] !== 'N' ? 0 : optionObject['saleTax'];
+		//옵션별 개별 합계 매입 금액
+		ibo_amt[i] += optionObject['delYn'] === 'Y' || optionObject['gb'] !== 'N' ? 0 : optionObject['purcAmt'];
+		//옵션별 개별 합계 매출 금액
+		iso_amt[i] += optionObject['delYn'] === 'Y' || optionObject['gb'] !== 'N' ? 0 : optionObject['saleAmt'];
+
+        optionList.push(optionObject);
+	}
+
+    shapeSaleAmt = optionList.reduce((amt, item) => amt + ( item.gb === 'S' && item.delYn === 'N' ?  Number(item.saleAmt) : 0), 0);
+    shapeSaleTax = optionList.reduce((amt, item) => amt + ( item.gb === 'S' && item.delYn === 'N' ?  Number(item.saleTax) : 0), 0);
+    shapePurcAmt = optionList.reduce((amt, item) => amt + ( item.gb === 'S' && item.delYn === 'N' ?  Number(item.purcAmt) : 0), 0);
+    shapePurcTax = optionList.reduce((amt, item) => amt + ( item.gb === 'S' && item.delYn === 'N' ?  Number(item.purcTax) : 0), 0);
+
+    procSaleAmt = optionList.reduce((amt, item) => amt + ( item.gb === 'P' && item.delYn === 'N' ?  Number(item.saleAmt) : 0), 0);
+    procSaleTax = optionList.reduce((amt, item) => amt + ( item.gb === 'P' && item.delYn === 'N' ?  Number(item.saleTax) : 0), 0);
+    procPurcAmt = optionList.reduce((amt, item) => amt + ( item.gb === 'P' && item.delYn === 'N' ?  Number(item.purcAmt) : 0), 0);
+    procPurcTax = optionList.reduce((amt, item) => amt + ( item.gb === 'P' && item.delYn === 'N' ?  Number(item.purcTax) : 0), 0);
+
+    bprocSaleAmt = optionList.reduce((amt, item) => amt + ( item.gb === 'B' && item.delYn === 'N' ?  Number(item.saleAmt) : 0), 0);
+    bprocSaleTax = optionList.reduce((amt, item) => amt + ( item.gb === 'B' && item.delYn === 'N' ?  Number(item.saleTax) : 0), 0);
+    bprocPurcAmt = optionList.reduce((amt, item) => amt + ( item.gb === 'B' && item.delYn === 'N' ?  Number(item.purcAmt) : 0), 0);
+    bprocPurcTax = optionList.reduce((amt, item) => amt + ( item.gb === 'B' && item.delYn === 'N' ?  Number(item.purcTax) : 0), 0);
+
+	//매입
+	let saleAmt = itemSaleAmt + shapeSaleAmt + procSaleAmt + bprocSaleAmt + optionSaleAmt;
+	let saleTax = itemSaleTax + shapeSaleTax + procSaleTax + bprocSaleTax + optionSaleTax;
+	let purcAmt = itemPurcAmt + shapePurcAmt + procPurcAmt + bprocPurcAmt + optionPurcAmt;
+	let purcTax = itemPurcTax + shapePurcTax + procPurcTax + bprocPurcTax + optionPurcTax;
+
+	let dcAmt   = dcCalculation(saleAmt, data['dcUnit'], data['dcAmt']);
+	let dcTax   = data['dcUnit'] === 'PC' ? dcCalculation(saleTax, data['dcUnit'], data['dcAmt']) : 0;
+
+	result['itemPurcAmt'] = itemPurcAmt;
+	result['itemPurcTax'] = itemPurcTax;
+	result['itemSaleAmt'] = itemSaleAmt;
+	result['itemSaleTax'] = itemSaleTax;
+
+    /** 형상 옵션 금액 처리 */
+	result['shapeSaleAmt'] = shapeSaleAmt;
+	result['shapeSaleTax'] = shapeSaleTax;
+	result['shapePurcAmt'] = shapePurcAmt;
+	result['shapePurcTax'] = shapePurcTax;
+
+    /** 상단 가공 금액 처리 */
+	result['procSaleAmt'] = procSaleAmt;
+	result['procSaleTax'] = procSaleTax;
+	result['procPurcAmt'] = procPurcAmt;
+	result['procPurcTax'] = procPurcTax;
+
+    /** 하단 가공 금액 처리 */
+	result['bprocSaleAmt'] = bprocSaleAmt;
+	result['bprocSaleTax'] = bprocSaleTax;
+	result['bprocPurcAmt'] = bprocPurcAmt;
+	result['bprocPurcTax'] = bprocPurcTax;
+
+    /** 일반 옵션 금액 처리 */
+    result['optionSaleTax'] = optionList.reduce((amt, item) => amt + ( item.gb === 'N' && item.delYn === 'N' ?  Number(item.saleTax) : 0), 0);
+	result['optionSaleAmt'] = optionList.reduce((amt, item) => amt + ( item.gb === 'N' && item.delYn === 'N' ?  Number(item.saleAmt) : 0), 0);
+	result['optionPurcAmt'] = optionList.reduce((amt, item) => amt + ( item.gb === 'N' && item.delYn === 'N' ?  Number(item.purcAmt) : 0), 0);
+	result['optionPurcTax'] = optionList.reduce((amt, item) => amt + ( item.gb === 'N' && item.delYn === 'N' ?  Number(item.purcTax) : 0), 0);
+
+	//금액조정 금액
+	result['dcAmt'] = dcAmt + dcTax;
+
+	//회배
+	result['cm'] = cm;
+	result['totalPurcAmt'] = purcAmt;
+	result['totalPurcTax'] = purcTax;
+	result['totalSaleAmt'] = saleAmt + dcAmt;
+	result['totalSaleTax'] = saleTax + dcTax;
+    result['optionList']   = optionList;
 
 	return result;
 }
