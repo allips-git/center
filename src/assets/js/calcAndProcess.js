@@ -1,4 +1,4 @@
-import { getHebe, hebeCalculation, pokCalculation, yardCalculation, cmCalculation } from 'planorder-calculator';
+import { getHebe, hebeCalculation, pokCalculation, yardCalculation, cmCalculation } from '@/assets/js/order';
 
 /**
  * @description 회배 계산 처리
@@ -187,7 +187,6 @@ export function getCommonParams(common)
         fcCd        : common['fcCd'],
         ordGb       : common['ordGb'],
         vat         : common['vat'],
-        vmRate      : common['vmRate'],
         itemCd      : common['itemCd'],
         itemNm      : common['itemNm'],
         icCd        : common['icCd'],
