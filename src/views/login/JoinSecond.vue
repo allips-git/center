@@ -181,8 +181,8 @@ const getResultCheck = async () => {
 const getResult = async () => {
     const formData = new FormData();
     const params   = {
-        id          : join['login']['id'],
-        pw          : join['login']['pw'],
+        id          : join['login']['email'],
+        pw          : join['login']['pwd'],
         tel         : join['auth']['tel'],
         name        : join['auth']['name'],
         ceNm        : join['center']['ceNm'],
@@ -223,8 +223,8 @@ const getResult = async () => {
         console.log(e);
         if(e.response.data === 'duplicate')
         {
-            join.getMsgSet('이미 사용 중인 계정입니다.', 'id');
-            const inputElement = document.getElementById('id');
+            join.getMsgSet('이미 사용 중인 계정입니다.', 'email');
+            const inputElement = document.getElementById('email');
             if (inputElement) 
             {
                 inputElement.focus();

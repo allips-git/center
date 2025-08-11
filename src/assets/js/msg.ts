@@ -1,6 +1,6 @@
 interface JoinFirstParams {
     email   : string;
-    pw      : string;
+    pwd     : string;
     pwChk   : string;
     einFile : string;
 }
@@ -22,9 +22,9 @@ export const joinFirstMsg = (params: JoinFirstParams): { msg: string; id: string
         return { msg : '잘못된 이메일 형식입니다.', id : 'email', state : false };
     }
 
-    if(params['pw'] === '')
+    if(params['pwd'] === '')
     {
-        return { msg : '비밀번호를 입력해주세요.', id : 'pw', state : false };
+        return { msg : '비밀번호를 입력해주세요.', id : 'pwd', state : false };
     }
 
     if(params['pwChk'] === '')
@@ -32,14 +32,14 @@ export const joinFirstMsg = (params: JoinFirstParams): { msg: string; id: string
         return { msg : '비밀번호 확인란을 입력해주세요.', id : 'pwChk', state : false };
     }
 
-    if(params['pw'] !== params['pwChk'])
+    if(params['pwd'] !== params['pwChk'])
     {
         return { msg : '비밀번호가 일치하지 않습니다.', id : 'pwChk', state : false };
     }
 
-    if(params['pw'].length < 8)
+    if(params['pwd'].length < 8)
     {
-        return { msg : '비밀번호는 8자리 이상 입력해주세요.', id : 'pw', state : false };
+        return { msg : '비밀번호는 8자리 이상 입력해주세요.', id : 'pwd', state : false };
     }
 
     return { msg : '', id : '', state : true };
