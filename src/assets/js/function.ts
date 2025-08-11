@@ -117,7 +117,7 @@ export const getCardColumns = (unit: string) => {
 				{ key: 'size', header: '규격' }
 			)
 		break;
-		case '002': case '003': /** 커튼 */
+		case '002': case '003': case '005': case '006': /** 커튼 */
 			data.push(
 				{ key: 'width', header: '가로' },
 				{ key: 'height', header: '세로' },

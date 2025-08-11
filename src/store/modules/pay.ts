@@ -159,7 +159,7 @@ export const usePayStore = defineStore('pay', {
                                             });
                                         }
                                     break;
-                                    case '002': case '003':
+                                    case '002': case '003': case '005': case '006':
                                         rows.push({
                                             width   : order.width,
                                             height  : order.height,

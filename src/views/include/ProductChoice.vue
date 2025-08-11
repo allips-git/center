@@ -93,7 +93,7 @@ const getItemChoice = async (icCd: string) => {
             case '001':
                 esti.getBlindSet(result['calc']);
             break;
-            case '002': case '003':
+            case '002': case '003': case '005': case '006':
                 esti.getCurtainSet(result['calc']);
             break;
         }

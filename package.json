@@ -23,6 +23,7 @@
     "chart.js": "^4.4.7",
     "pinia": "^2.2.6",
     "pinia-plugin-persistedstate": "^3.2.3",
+    "planorder-calculator": "github:allips-git/planOrder-calculator",
     "primeicons": "^7.0.0",
     "primevue": "^4.2.3",
     "swiper": "^11.1.15",

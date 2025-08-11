@@ -185,10 +185,10 @@ const getList = (tab: number) => {
     }
 }
 
-const getNewEsti = () => {
-    esti.getReset();
-    esti.getType('N');
-    getPopupOpen('itemList');
+const getNewEsti = async () => {
+    await esti.getReset();
+    await esti.getType('N');
+    await getPopupOpen('itemList');
 }
 
 const getPopClose = (gb: boolean, popNm: string) => {
