@@ -19,11 +19,11 @@
                         <IftaLabel class="w-full">
                             <label for="pw">비밀번호</label>
                             <IconField>
-                                <InputText type="password" id="pw" v-model="join['login']['pw']" placeholder="비밀번호를 입력해주세요" class="w-full"/>
+                                <InputText type="password" id="pwd" v-model="join['login']['pwd']" placeholder="비밀번호를 입력해주세요" class="w-full"/>
                                 <InputIcon><IconEye/></InputIcon>
                             </IconField>
-                            <small v-if="join['msg']['pw'] !== ''" class="vali_text">{{ join['msg']['pw'] }}</small>
-                            <small v-if="join['msg']['pw'] !== ''" class="vali_text-tran">none</small>
+                            <small v-if="join['msg']['pwd'] !== ''" class="vali_text">{{ join['msg']['pwd'] }}</small>
+                            <small v-if="join['msg']['pwd'] !== ''" class="vali_text-tran">none</small>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
@@ -104,7 +104,7 @@ const getNext = async () => {
 
     const checkParams = {
         email   : join['login']['email'],
-        pw      : join['login']['pw'],
+        pwd     : join['login']['pwd'],
         pwChk   : join['login']['pwChk'],
         einFile : join['login']['einFile']['name']
     };
@@ -152,7 +152,7 @@ const getNext = async () => {
 onMounted(()=>{
     if(!join.certified)
     {
-        // router.go(-1);
+        router.go(-1);
     }
 })
 </script>
