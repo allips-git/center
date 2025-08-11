@@ -187,6 +187,7 @@ export function getCommonParams(common)
         fcCd        : common['fcCd'],
         ordGb       : common['ordGb'],
         vat         : common['vat'],
+        vmRate      : common['vmRate'],
         itemCd      : common['itemCd'],
         itemNm      : common['itemNm'],
         icCd        : common['icCd'],
