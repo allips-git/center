@@ -315,6 +315,9 @@ const getProcess = (value: string) => {
     
     switch(value)
     {
+        case 'R':
+            getPopupOpen('chatRoom');
+        break;
         case 'E':
             getPopupOpen('estiMate');
         break;
@@ -394,6 +397,7 @@ const getProcess = (value: string) => {
 }
 
 const moreBtnList = ref([
+    { name: '고객관리 채팅방', value : 'R' },
     { name: '견적서 발송', value : 'E' },
     { name: '계약서 발송', value : 'C' },
     { name: '발주서 보기', value : 'O' },
