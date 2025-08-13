@@ -52,7 +52,7 @@ const SideHeaderItems = ref([
   { id: 5, label: '통계', link: '/average', iconClass: 'pi-chart-line' },
   { id: 6, label: '플랜톡', link: '/plantalk', iconClass: 'pi-comment' },
 //   { id: 7, label: '단체 메시지', link: '/groupmsg', iconClass: 'pi-envelope' },
-  { id: 8, label: '샵 설정', link: '/setting', iconClass: 'pi-cog' },
+  { id: 8, label: '샵 설정', link: '/setting', iconClass: 'pi-cog' }
 ]);
 
 // 링크로 이동

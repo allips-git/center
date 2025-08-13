@@ -94,7 +94,7 @@ const getItemInfo = (): ItemInfo => {
         unitSize    : 0,
         saleUnit    : 0,
         purcUnit    : 0,
-        roundGb     : '001',
+        roundGb     : '005',
         ogCd        : '',
         vat         : 'Y',
         vmRate      : 0
