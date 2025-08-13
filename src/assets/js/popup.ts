@@ -17,7 +17,6 @@ export const usePopup = () => {
 
         if (gb) 
         {
-            console.log('gb')
             await popup.getClose(lastPopNm);
         }
     };
