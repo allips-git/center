@@ -70,10 +70,7 @@ const addrDetailMsg = ref('');
 const { getPopupOpen, getPopupClose } = usePopup();
 
 const getShippingGb = () => {
-    if(order['outInfo']['shippingGb'] === '001')
-    {
-        order.getOutInfoAddrReset();
-    }
+    order.getOutInfoAddrSet();
 }
 
 const getAddr = () => {

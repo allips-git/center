@@ -70,14 +70,7 @@ const addrDetailMsg = ref('');
 const { getPopupClose } = usePopup();
 
 const getShippingGb = () => {
-    if(order['sysInfo']['shippingGb'] === '001')
-    {
-        order.getData();
-    }
-    else
-    {
-        order.getSysInfoAddrReset();
-    }
+    order.getSysInfoAddrSet();
 }
 
 const getAddr = () => {

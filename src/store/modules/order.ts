@@ -24,6 +24,13 @@ interface Order {
     memo        : string;
 }
 
+interface ShippingList {
+    shippingGb  : string;
+    zip         : string;
+    addr        : string;
+    addrDetail  : string;
+}
+
 /**
  * @description 명세서 제품 결제 내역
  */
@@ -52,6 +59,7 @@ interface State {
     edCd        : string;
     list        : [];
     payList     : PayList[];
+    shippingList: ShippingList[];
     sysInfo     : Order;
     outInfo     : Order;
 }
@@ -61,6 +69,7 @@ export const useOrderStore = defineStore('order', {
         edCd        : '',
         list        : [],
         payList     : getPayList(),
+        shippingList: [],
         sysInfo     : getOrder(),
         outInfo     : getOrder()
     }),
@@ -79,9 +88,17 @@ export const useOrderStore = defineStore('order', {
     
                 console.log(res);
 
-                this.sysInfo.zip        = res.data['info']['zip'];
-                this.sysInfo.addr       = res.data['info']['addr'];
-                this.sysInfo.addrDetail = res.data['info']['addrDetail'];
+                const data = res.data.list.find(item => item.repYn === 'Y');
+
+                if(data)
+                {
+                    this.sysInfo.shippingGb = data['shippingGb'];
+                    this.sysInfo.zip        = data['zip'];
+                    this.sysInfo.addr       = data['addr'];
+                    this.sysInfo.addrDetail = data['addrDetail'];
+                }
+
+                this.shippingList = res.data.list;
             }
             catch(e)
             {
@@ -249,19 +266,39 @@ export const useOrderStore = defineStore('order', {
         {
             this.edCd = edCd;
         },
-        getSysInfoAddrReset()
+        getSysInfoAddrSet()
         {
-            this.sysInfo.zip    = null;
-            this.sysInfo.addr   = '';
+            this.sysInfo.zip        = null;
+            this.sysInfo.addr       = '';
+            this.sysInfo.addrDetail = '';
+
+            const data = this.shippingList.find(item => item.shippingGb === this.sysInfo.shippingGb);
+
+            if(data)
+            {
+                this.sysInfo.zip        = data.zip;
+                this.sysInfo.addr       = data.addr;
+                this.sysInfo.addrDetail = data.addrDetail;
+            }
         },
         getSysInfoReset()
         {
             this.sysInfo = getOrder();
         },
-        getOutInfoAddrReset()
+        getOutInfoAddrSet()
         {
-            this.outInfo.zip    = null;
-            this.outInfo.addr   = '';
+            this.outInfo.zip        = null;
+            this.outInfo.addr       = '';
+            this.outInfo.addrDetail = '';
+
+            const data = this.shippingList.find(item => item.shippingGb === this.sysInfo.shippingGb);
+
+            if(data)
+            {
+                this.outInfo.zip        = data.zip;
+                this.outInfo.addr       = data.addr;
+                this.outInfo.addrDetail = data.addrDetail;
+            }
         },
         getOutInfoReset()
         {
