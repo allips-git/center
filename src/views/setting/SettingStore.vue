@@ -49,8 +49,8 @@
                 </IftaLabel>
 
                 <IftaLabel class="label-input-box">
-                    <InputText v-model="setting['info']['einShipping']"/>
-                    <label>대표 화물 지점</label>
+                    <InputText v-model="setting['info']['einShippingNm']" placeholder="대표 배송지를 선택해주세요." readonly @click="getPopupOpen('shippingGbList')"/>
+                    <label>대표 배송지 설정</label>
                 </IftaLabel>
 
                 <IftaLabel class="label-input-box">
@@ -127,6 +127,17 @@
     <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:9999;-webkit-overflow-scrolling:touch;">
         <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" @click="getCloseDaumPost()" alt="닫기 버튼">
     </div>
+    <Dialog v-model:visible="popup['pop']['shippingGbList']" header="대표 배송지 설정" 
+        :modal=true position="center" class="custom-dialog-full" 
+        @update:visible="getPopupClose('shippingGbList', true)">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopupClose('shippingGbList', true)" severity="contrast" text icon="pi pi-times" />
+                <h2 class="modal-backheader-title">대표 배송지 설정</h2>
+            </div>
+        </template>
+        <ShippingGbList/>
+    </Dialog>
 </template>
 
 <script setup lang="ts">
@@ -138,32 +149,24 @@ import Textarea from 'primevue/textarea';
 import IconPlus from '@/components/icons/IconPlus.vue';
 import IconSpot from '@/components/icons/IconSpot.vue';
 import IconPlay from '@/components/icons/IconPlay.vue';
+import Dialog from 'primevue/dialog';
 import DatePicker from 'primevue/datepicker';
+import ShippingGbList from '@/views/include/setting/ShippingGbList.vue'
 import { ref } from 'vue';
 import ToggleSwitch from 'primevue/toggleswitch';
 import { onMounted } from 'vue';
-import { useSettingStore } from '@/store';
+import { usePopupStore, useSettingStore } from '@/store';
 import { getAxiosData, getConvertDate, getDaumPopupPosition } from '@/assets/js/function';
 import { settingMsg } from '@/assets/js/msg';
+import { usePopup } from '@/assets/js/popup';
 
 const mainRef = ref(null);
 const mainWidth = ref(0);
 const mainLeft = ref(0)
 
-onMounted(() => {
-    const updateMainSize = () => {
-        if (mainRef.value) {
-            mainWidth.value = mainRef.value.offsetWidth
-            mainLeft.value = mainRef.value.offsetLeft
-        }
-    }
+const { getPopupOpen, getPopupClose } = usePopup();
 
-    updateMainSize()
-
-    const observer = new ResizeObserver(() => updateMainSize())
-    observer.observe(mainRef.value)
-});
-
+const popup   = usePopupStore();
 const setting = useSettingStore();
 
 const getFile = (event: Event) => {
@@ -289,6 +292,20 @@ const getFocus = (id: string) => {
         inputElement.focus();
     }
 }
+
+onMounted(() => {
+    const updateMainSize = () => {
+        if (mainRef.value) {
+            mainWidth.value = mainRef.value.offsetWidth
+            mainLeft.value = mainRef.value.offsetLeft
+        }
+    }
+
+    updateMainSize()
+
+    const observer = new ResizeObserver(() => updateMainSize())
+    observer.observe(mainRef.value)
+});
 
 onMounted(() => {
     setting.getInfo();
