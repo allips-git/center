@@ -10,6 +10,23 @@ interface Days {
     checked : boolean;
 }
 
+interface ShippingGbList {
+    shCd            : string;
+    shippingGb      : string;
+    shippingGbNm    : string;
+    zip             : string;
+    addr            : string;
+    addrDetail      : string;
+    repYn           : Y | N;
+}
+
+interface ShippingGbInfo {
+    shippingGb  : string;
+    zip         : string;
+    addr        : string;
+    addrDetail  : string;
+}
+
 interface Info {
     ceNm            : string;
     zip             : null | number;
@@ -17,6 +34,7 @@ interface Info {
     addrDetail      : string;
     tel             : string;
     einShipping     : string;
+    einShippingNm   : string;
     homepage        : string;
     days            : Days[];
     dayStart        : Date;
@@ -37,8 +55,10 @@ interface Msg {
 }
 
 interface State {
-    info    : Info;
-    msg     : Msg;
+    info            : Info;
+    shippingGbList  : ShippingGbList[];
+    shippingGbInfo  : ShippingGbInfo;
+    msg             : Msg;
 }
 
 const getDays = (): Days[] => {
@@ -51,6 +71,15 @@ const getDays = (): Days[] => {
         {  text: '토', value: 'sat', checked: false },
         {  text: '일', value: 'sun', checked: false }
     ]
+}
+
+const getShippingGbInfo = (): ShippingGbInfo => {
+    return {
+        shippingGb  : '001',
+        zip         : '',
+        addr        : '',
+        addrDetail  : ''
+    }
 }
 
 const getInfo = (): Info => {
@@ -67,6 +96,7 @@ const getInfo = (): Info => {
         addrDetail      : '',
         tel             : '',
         einShipping     : '',
+        einShippingNm   : '',
         homepage        : '',
         days            : getDays(),
         dayStart        : start,
@@ -92,8 +122,10 @@ const filePath = 'https://data.planorder.kr/';
 
 export const useSettingStore = defineStore('setting', {
     state: (): State => ({
-        info    : getInfo(),
-        msg     : getMsg()
+        info            : getInfo(),
+        shippingGbList  : [],
+        shippingGbInfo  : getShippingGbInfo(),
+        msg             : getMsg()
     }),
     actions : {
         async getInfo()
@@ -139,6 +171,7 @@ export const useSettingStore = defineStore('setting', {
                     addrDetail      : res.data['info'].addrDetail,
                     tel             : res.data['info'].tel,
                     einShipping     : res.data['info'].einShipping,
+                    einShippingNm   : res.data['info'].einShippingNm,
                     homepage        : res.data['info'].homepage,
                     days            : days,
                     dayStart        : res.data['info'].dayStart ? new Date(date + ' ' + res.data['info'].dayStart) : start,
@@ -160,6 +193,22 @@ export const useSettingStore = defineStore('setting', {
                 console.log(e);
             }
         },
+        async getShippingGbList()
+        {
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/settingV1/getShippingGbList`);
+
+                console.log(res);
+
+                this.shippingGbList = res.data.list;
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        },
         getDayCheck(value: string)
         {
             this.info.days.forEach((item) => {
@@ -174,10 +223,19 @@ export const useSettingStore = defineStore('setting', {
             this.info.file  = file;
             this.info.image = image;
         },
+        getShippingGb(shippingGb: string, shippingGbNm: string)
+        {
+            this.info.einShipping    = shippingGb
+            this.info.einShippingNm  = shippingGbNm;
+        },
         getMsgSet(msg: string, name: string)
         {
             this.msg        = getMsg();
             this.msg[name]  = msg;
+        },
+        getShippingReset()
+        {
+            this.shippingGbInfo = getShippingGbInfo();
         }
     }
 });

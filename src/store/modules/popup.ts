@@ -49,6 +49,8 @@ interface Pop {
     couponMenu          : boolean;
     timeSetting         : boolean;
     privacyView         : boolean;
+    shippingGbList      : boolean;
+    shippingGbSet       : boolean;
 }
 
 interface State {
@@ -101,7 +103,9 @@ const getPopInfo = (): Pop => {
         memberList          : false,
         couponMenu          : false,
         timeSetting         : false,
-        privacyView         : false
+        privacyView         : false,
+        shippingGbList      : false,
+        shippingGbSet       : false
     }
 }
 
