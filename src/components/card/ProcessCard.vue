@@ -88,7 +88,7 @@ import Popover from 'primevue/popover';
 import Listbox from 'primevue/listbox';
 import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
-import { useClientStore, useEstiStore } from '@/store';
+import { useClientStore, useEstiStore, useChatStore } from '@/store';
 import { getAxiosData, getTokenOut, getCommas, getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
@@ -97,6 +97,7 @@ const { getPopupOpen } = usePopup();
 const confirm   = useConfirm();
 const client    = useClientStore();
 const esti      = useEstiStore();
+const chat      = useChatStore();
 const status    = ref(false);
 const props     = defineProps({
     info : Object
@@ -310,13 +311,39 @@ const getEstiRestore = () => {
     });
 }
 
-const getProcess = (value: string) => {
+const getProcess = async (value: string) => {
     esti.getEmCd(props['info']['emCd']);
     
     switch(value)
     {
         case 'R':
-            getPopupOpen('chatRoom');
+            try
+            {
+                const instance = await getAxiosData();
+                const res      = await instance.post(`https://data.planorder.kr/chatV1/getChat`, { emCd : props['info']['emCd'] });
+
+                console.log(res.data.crCd);
+
+                await chat.getCrCd(res.data.crCd);
+                await getPopupOpen('chatRoom');
+            }
+            catch(e)
+            {
+                console.log(e);
+                if(e.response.status === 401)
+                {
+                    getTokenOut();
+                }
+                else
+                {
+                    switch(e.response.data['code'])
+                    {
+                        case 4000:
+                            alert('채팅방 생성 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                        break;
+                    }
+                }
+            }
         break;
         case 'E':
             getPopupOpen('estiMate');
