@@ -5,11 +5,21 @@
                 <DatePicker v-model="order['outInfo']['ordDt']" showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd"/>
                 <label>주문일</label>
             </IftaLabel>
+
+            <div class="label-input-box">
+                <div class="flex gap-2">
+                    <IftaLabel class="label-input-box">
+                        <DatePicker v-model="order['outInfo']['outDt']" showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd"/>
+                        <label>출고일</label>
+                    </IftaLabel>
     
-            <IftaLabel class="label-input-box">
-                <DatePicker v-model="order['outInfo']['outDt']" showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd"/>
-                <label>출고일</label>
-            </IftaLabel>
+                    <IftaLabel class="label-input-box max-w-48">
+                        <label>긴급여부</label>
+                        <Select v-model="order['outInfo']['emer']" :options="data['emer']" optionLabel="name" optionValue="value"
+                            @change="getShippingGb"/>
+                    </IftaLabel>
+                </div>
+            </div>
     
             <div class="label-input-box">
                 <div class="flex gap-2">
@@ -148,6 +158,7 @@ const getOrder = () => {
                 edCd        : order['edCd'],
                 ordDt       : order['outInfo']['ordDt'],
                 outDt       : order['outInfo']['outDt'],
+                emer        : order['outInfo']['emer'],
                 shippingGb  : order['outInfo']['shippingGb'],
                 zip         : order['outInfo']['zip'] ? order['outInfo']['zip'] : '',
                 addr        : order['outInfo']['addr'],

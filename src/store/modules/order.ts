@@ -17,6 +17,7 @@ interface PayList {
 interface Order {
     ordDt       : string;
     outDt       : string;
+    emer        : Y | N;
     shippingGb  : string;
     zip         : null | number;
     addr        : string;
@@ -47,6 +48,7 @@ const getOrder = (): Order => {
     return {
         ordDt       : getConvertDate(new Date(), 'yyyy-MM-dd'),
         outDt       : getConvertDate(getAddDate(3), 'yyyy-MM-dd'),
+        emer        : 'N',
         shippingGb  : '001',
         zip         : null,
         addr        : '',

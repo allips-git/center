@@ -4,6 +4,10 @@ import { getAxiosData } from '@/assets/js/function';
 export const useDataStore = defineStore('data', {
     state: () => {
         return {
+            emer: [
+                { name: '긴급', value: 'Y' },
+                { name: '일반', value: 'N' }
+            ],
             area: [
                 { name: '서울', value: 'SE' },
                 { name: '부산', value: 'BS' },
