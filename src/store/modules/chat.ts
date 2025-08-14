@@ -53,7 +53,7 @@ interface State {
 
 export const useChatStore = defineStore('chat', {
     state: (): State => ({
-        crCd            : null,
+        crCd            : '',
         currentUserId   : '',
         rooms           : [],
         messages        : [],
@@ -129,7 +129,6 @@ export const useChatStore = defineStore('chat', {
         },
         getCrCd(crCd: string)
         {
-            this.crCd = null;
             this.crCd = crCd;
         },
         getReset()

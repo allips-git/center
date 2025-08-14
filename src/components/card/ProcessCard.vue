@@ -86,7 +86,7 @@
 <script setup lang="ts">
 import Popover from 'primevue/popover';
 import Listbox from 'primevue/listbox';
-import { ref } from 'vue';
+import { ref, nextTick } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 import { useClientStore, useEstiStore, useChatStore } from '@/store';
 import { getAxiosData, getTokenOut, getCommas, getConvertDate } from '@/assets/js/function';
@@ -322,9 +322,15 @@ const getProcess = async (value: string) => {
                 const instance = await getAxiosData();
                 const res      = await instance.post(`https://data.planorder.kr/chatV1/getChat`, { emCd : props['info']['emCd'] });
 
-                console.log(res.data.crCd);
+                await chat.getCrCd(String(res.data.crCd));
 
-                await chat.getCrCd(res.data.crCd);
+                if(res.data.create === 'Y')
+                {
+                    await chat.getReset();
+                    await chat.getData();
+                }
+
+                await nextTick();
                 await getPopupOpen('chatRoom');
             }
             catch(e)
