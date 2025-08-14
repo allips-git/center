@@ -1,6 +1,6 @@
 <template>
-  <main class="overflow-y-auto pb-52 w-full" ref="mainRef">
-    <div class="md:p-4">
+  <main class="overflow-y-auto w-full" ref="mainRef">
+    <div class="md:p-0">
       <vue-advanced-chat
         :current-user-id="chat.currentUserId"
         :rooms="JSON.stringify(chat.rooms)"
@@ -15,13 +15,13 @@
         :show-search="false"
         @room-selected="onRoomSelected"
         @send-message="getSendMessage"
-        height="500px"
+        :height="chatHeight"
       />
     </div>
   </main>
 </template>
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useChatStore } from '@/store'
 import { getAxiosData, getTokenOut } from '@/assets/js/function'
 const chat = useChatStore()
@@ -142,9 +142,27 @@ const getSendMessage = async (msg) => {
   }
 }
 
+// 반응형 height
+const chatHeight = ref(getChatHeight())
+
+function getChatHeight() {
+  return window.innerWidth < 768
+    ? 'calc(100dvh - 50px)' // 모바일 높이 
+    : 'calc(90vh - 50px)'  // PC 높이 
+}
+
+function handleResize() {
+  chatHeight.value = getChatHeight()
+}
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
+})
+
 onMounted(async () => {
   await chat.getReset()
   await chat.getData()
+  window.addEventListener('resize', handleResize)
 })
 </script>
 
