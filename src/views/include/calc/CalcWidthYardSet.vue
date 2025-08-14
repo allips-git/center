@@ -59,7 +59,7 @@
 
                 <IftaLabel class="flex-1 min-w-0">
                 <Select v-model="esti['curtain']['use']" :options="data['usage']" optionLabel="name" optionValue="value" class="w-full !font-bold " @update:modelValue="esti.getUnitCalc()" />
-                <label>원단 사용량</label>
+                <label>원단 사용량({{ getUsageVal() }})</label>
                 </IftaLabel>
 
                 <div class="relative flex-1 min-w-0">
@@ -116,6 +116,35 @@ import { useDataStore, useEstiStore } from '@/store';
 
 const data      = useDataStore();
 const esti      = useEstiStore();
+
+const getUsageVal = () => {
+    let size = 0;
+    if(esti['common']['unit'] === '003')
+    {
+        const width         = Number(esti['common']['width']);
+        const uselMaterial  = Number(esti['curtain']['use']);
+        const los           = esti['curtain']['proc'] === '001' ? (Number(esti['curtain']['los']) * 2) : Number(esti['curtain']['los']);
+        const pokSpec       = Number(esti['curtain']['pokSpec']);
+
+        const value = width === 0 ? 0 : ((width * uselMaterial + los) / pokSpec);
+
+        size = value.toFixed(2);
+    }
+    else
+    {
+        const width         = Number(esti['common']['width']);
+        const uselMaterial  = Number(esti['curtain']['use']);
+        const los           = esti['curtain']['proc'] === '001' ? (Number(esti['curtain']['los']) * 2) : Number(esti['curtain']['los']);
+
+        const value = width === 0 ? 0 : (width * uselMaterial + los) / 90;
+
+        size = value.toFixed(2);
+    }
+
+    const val  = (Number(size) * Number(esti['curtain']['pokSpec'])) / Number(esti['common']['width']);
+
+    return Math.round(val * 10) / 10;
+}
 
 const getSize = () => {
     const value = event.target.value;

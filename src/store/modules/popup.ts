@@ -10,6 +10,7 @@ interface Pop {
     clientDetail        : boolean;
     itemList            : boolean;
     itemSet             : boolean;
+    optionList          : boolean;
     estiList            : boolean;
     estiMate            : boolean;
     priceChange         : boolean;
@@ -66,6 +67,7 @@ const getPopInfo = (): Pop => {
         clientDetail        : false,
         itemList            : false,
         itemSet             : false,
+        optionList          : false,
         estiList            : false,
         estiMate            : false,
         priceChange         : false,

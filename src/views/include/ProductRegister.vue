@@ -34,12 +34,12 @@
                             <div class="flex flex-col gap-5">
                                 <div class="flex gap-4 mt-3 w-full">
                                     <IftaLabel class="w-full">
-                                        <Select placeholder="선택" class="w-full" />
+                                        <InputText placeholder="옵션을 선택해주세요." class="w-full" readonly @click="getPopupOpen('optionList')"/>
                                         <label for="emali">옵션명</label>
                                     </IftaLabel>
 
                                     <IftaLabel class="w-full">
-                                        <Select placeholder="선택" class="w-full" />
+                                        <InputText placeholder="옵션 세부명" class="w-full" disabled/>
                                         <label for="emali">옵션 세부명</label>
                                     </IftaLabel>
                                 </div>
@@ -77,6 +77,17 @@
             <EditPricePop/>
         </div>
     </Dialog>
+    <Dialog v-model:visible="popup['pop']['optionList']" header="제품선택" 
+        :modal=true position="center" class="custom-dialog-full"
+        @update:visible="getPopClose(true, 'optionList')">
+        <template #header>
+            <div class="modal-fullheader">
+                <Button @click="getPopClose(true, 'optionList')" severity="contrast" text icon="pi pi-times"/>
+                <h2 class="modal-backheader-title">옵션추가</h2>
+            </div>
+        </template>
+        <OptionChoice/>
+    </Dialog>
 </main>
 </template>
 
@@ -93,6 +104,7 @@ import CalcEASet from '@/views/include/calc/CalcEASet.vue'
 import CalcHebeSet from '@/views/include/calc/CalcHebeSet.vue'
 import CalcWidthYardSet from '@/views/include/calc/CalcWidthYardSet.vue'
 import EditPricePop from '@/components/modal/EditPricePop.vue'
+import OptionChoice from "@/views/include/OptionChoice.vue";
 import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 import { usePopupStore, useClientStore, useEstiStore } from '@/store';
