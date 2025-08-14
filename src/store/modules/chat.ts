@@ -10,13 +10,8 @@ interface Rooms {
     avatar      : string;
     users       : [
         {
-            _id         : '1',
-            username    : '나',
-            avatar      : ''
-        },
-        {
-            _id         : '2',
-            username    : '상대방', 
+            _id         : '',
+            username    : '',
             avatar      : ''
         }
     ],
@@ -43,9 +38,22 @@ interface State {
     messagesLoaded  : boolean;
 }
 
+// const getRooms = () => {
+//     return {
+//         roomId      : '',
+//         roomName    : '',
+//         avatar      : '',
+//         users       : [],
+//         lastMessage : {
+//             content   : '',
+//             timestamp : ''
+//         }
+//     }
+// }
+
 export const useChatStore = defineStore('chat', {
     state: (): State => ({
-        crCd            : '',
+        crCd            : null,
         currentUserId   : '',
         rooms           : [],
         messages        : [],
@@ -66,15 +74,11 @@ export const useChatStore = defineStore('chat', {
                 this.rooms = res.data.rooms.map(item => {
                     return {
                         roomId      : item.roomId,
-                        rooName     : item.roomName,
+                        roomName    : item.roomName,
                         avatar      : '',
-                        users       : item.users.map(user => {
-                            return {
-                                _id         : user.userCd,
-                                username    : user.username,
-                                avatar      : ''
-                            }
-                        }),
+                        users       : Array.isArray(item.users) ? item.users.map(u => ({
+                            _id: u.userCd, username: u.username, avatar: ''
+                        })) : [],
                         lastMessage : {
                             content     : item.chGb === 'N' ? item.message : '사진을 보냈습니다.',
                             timestamp   : item.regDt
@@ -102,8 +106,8 @@ export const useChatStore = defineStore('chat', {
                                 name     : `file_${fIndex}`,
                                 type     : 'image/gif, image/jpeg, image/jpg, image/png',
                                 saved    : true,
-                                url      : 'http://data.planorder.kr'+file.filePath+file.fileNm,
-                                preview  : 'http://data.planorder.kr'+file.filePath+file.fileNm
+                                url      : 'https://data.planorder.kr'+file.filePath+file.fileNm,
+                                preview  : 'https://data.planorder.kr'+file.filePath+file.fileNm
                             }
                         });
                     }
@@ -125,6 +129,7 @@ export const useChatStore = defineStore('chat', {
         },
         getCrCd(crCd: string)
         {
+            this.crCd = null;
             this.crCd = crCd;
         },
         getReset()
