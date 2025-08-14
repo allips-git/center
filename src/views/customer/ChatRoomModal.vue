@@ -1,45 +1,48 @@
 <template>
   <main class="overflow-y-auto pb-52 w-full" ref="mainRef">
     <div class="md:p-4">
-        <vue-advanced-chat
-            :current-user-id="chat.currentUserId"
-            :rooms="JSON.stringify(chat.rooms)"
-            :messages="JSON.stringify(chat.messages)"
-            :messages-loaded="chat.messagesLoaded"
-            :load-first-room="true"
-            :room-id="chat.crCd"
-            :single-room="true"
-            :show-files="true"
-            accepted-files="image/gif, image/jpeg, image/jpg, image/png"
-            :show-audio="false"
-            show-emojis="true"
-            :show-add-room="false"
-            :show-search="false"
-            @room-selected="onRoomSelected"
-            @send-message="getSendMessage" 
-            height="500px"
-        />
+      <vue-advanced-chat
+        :current-user-id="chat.currentUserId"
+        :rooms="JSON.stringify(chat.rooms)"
+        :messages="JSON.stringify(chat.messages)"
+        :messages-loaded="chat.messagesLoaded"
+        :room-id="chat.crCd"
+        :show-files="true"
+        accepted-files="image/gif, image/jpeg, image/jpg, image/png"
+        :show-audio="false"
+        :show-emojis="true"
+        :show-add-room="false"
+        :show-search="false"
+        @room-selected="onRoomSelected"
+        @send-message="getSendMessage"
+        height="500px"
+      />
     </div>
   </main>
 </template>
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { useChatStore } from '@/store';
-import { getAxiosData, getTokenOut } from '@/assets/js/function';
-const chat = useChatStore();
+import { onMounted } from 'vue'
+import { useChatStore } from '@/store'
+import { getAxiosData, getTokenOut } from '@/assets/js/function'
+const chat = useChatStore()
 
 const onRoomSelected = (room) => {
-    console.log(room);
+  console.log(room)
 }
 
-async function fileMetaToFile(meta: any): Promise<File> {
+async function fileMetaToFile(meta): Promise<File> {
   const response = await fetch(meta.localUrl)
   const blob = await response.blob()
   return new File([blob], meta.name + '.' + meta.extension, { type: meta.type })
 }
 
 // 이미지 최적화 함수 (File 기반)
-async function optimizeImage(file: File, maxWidth = 800, maxHeight = 800, quality = 0.7): Promise<File> {
+async function optimizeImage(
+  file: File,
+  maxWidth = 800,
+  maxHeight = 800,
+  quality = 0.7
+): Promise<File> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.readAsDataURL(file)
@@ -88,69 +91,61 @@ async function optimizeImage(file: File, maxWidth = 800, maxHeight = 800, qualit
 }
 
 const getSendMessage = async (msg) => {
-    const filesAsFileObjects = await Promise.all(
-        msg.detail[0].files ? msg.detail[0].files.map((meta) => fileMetaToFile(meta)) : []
-    )
+  const filesAsFileObjects = await Promise.all(
+    msg.detail[0].files ? msg.detail[0].files.map((meta) => fileMetaToFile(meta)) : []
+  )
 
-    /** 이미지 최적화 */
-    const processedFiles = await Promise.all(
-        filesAsFileObjects.map(async (file) => {
-            if (file.type.startsWith('image/')) 
-            {
-                return await optimizeImage(file, 800, 800, 0.7)
-            }
-            
-            return file
-        })
-    )
+  /** 이미지 최적화 */
+  const processedFiles = await Promise.all(
+    filesAsFileObjects.map(async (file) => {
+      if (file.type.startsWith('image/')) {
+        return await optimizeImage(file, 800, 800, 0.7)
+      }
 
-    console.log('최적화된 파일 배열:', processedFiles)
-    
-    const formData = new FormData();
-    const params = {
-        crCd    : msg.detail[0].roomId,
-        message : msg.detail[0].content
+      return file
+    })
+  )
+
+  console.log('최적화된 파일 배열:', processedFiles)
+
+  const formData = new FormData()
+  const params = {
+    crCd: msg.detail[0].roomId,
+    message: msg.detail[0].content
+  }
+
+  formData.append('params', JSON.stringify(params))
+
+  if (processedFiles.length !== 0) {
+    processedFiles.forEach((file) => {
+      formData.append('files[]', file) // 'files[]'로 각각 추가
+    })
+  }
+
+  try {
+    const instance = await getAxiosData()
+    const res = await instance.post(`https://data.planorder.kr/chatV1/getSendMessage`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+
+    console.log(res)
+    await chat.getData()
+  } catch (e) {
+    console.log(e)
+    if (e.response.status === 401) {
+      getTokenOut()
+    } else {
+      alert('메세지 전송 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.')
     }
-
-    formData.append('params', JSON.stringify(params));
-
-    if (processedFiles.length !== 0) {
-        processedFiles.forEach((file) => {
-            formData.append('files[]', file); // 'files[]'로 각각 추가
-        });
-    }
-
-    try
-    {
-        const instance  = await getAxiosData();
-        const res       = await instance.post(`https://data.planorder.kr/chatV1/getSendMessage`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
-
-        console.log(res);
-        await chat.getData();
-    }
-    catch(e)
-    {
-        console.log(e);
-        if(e.response.status === 401)
-        {
-            getTokenOut();
-        }
-        else
-        {
-            alert('메세지 전송 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
-        }
-    }
+  }
 }
 
 onMounted(async () => {
-    await chat.getReset();
-    await chat.getData();
+  await chat.getReset()
+  await chat.getData()
 })
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
