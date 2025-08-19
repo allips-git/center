@@ -1056,19 +1056,23 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         text-align: center;
     }
     .p-toggleswitch {
+        display: block;
+        position: relative;
         width: 40px;
         height: 20px;
         .p-toggleswitch-slider {
+            display: block;
             box-shadow: none;
             transition: none;
+            height: 20px;
         }
         .p-toggleswitch-handle {
             width: 14px;
             height: 14px;
-            transform: translateY(-50%);
-            margin-top: 0;
             margin-block-start: 0;
-
+            transform: translateY(-50%);
+            left: 3px;
+            inset-inline-start: 3px;
         }
         &.p-toggleswitch-checked {
             .p-toggleswitch-handle {
@@ -1084,8 +1088,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
             .p-toggleswitch-handle {
                 border: 1px solid #605E5C !important;
                 background-color: transparent !important;
-                left: 3px;
-                inset-inline-start: 3px;
+
             }
         }
     }
