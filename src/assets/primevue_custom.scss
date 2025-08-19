@@ -1065,21 +1065,21 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         .p-toggleswitch-handle {
             width: 14px;
             height: 14px;
-            margin-top: -7px;
-            margin-block-start: -7px;
+            transform: translateY(-50%);
+            margin-top: 0;
+            margin-block-start: 0;
 
         }
         &.p-toggleswitch-checked {
             .p-toggleswitch-handle {
                 left: 23px;
-                //inset-inline-start: 23px;
+                inset-inline-start: 23px;
             }
         }
         &:not(.p-toggleswitch-checked) {
             .p-toggleswitch-slider {
                 border: 1px solid #605E5C !important;
                 background-color: #F3F2F1 !important;
-
             }
             .p-toggleswitch-handle {
                 border: 1px solid #605E5C !important;
