@@ -1,17 +1,17 @@
 <template>
-    <div class="flex flex-col gap-6 *:flex">
-        <div class="flex gap-[10px] product-select">
-            <IftaLabel class="w-1/2">
+    <div class="flex flex-col gap-8 pt-4">
+        <div class="grid grid-cols-4 gap-3 product-select">
+            <IftaLabel class="col-span-2">
                 <label>설치위치 <span class="ml-1 text-red-600">*</span></label>
                 <InputText v-model="esti['common']['location']" placeholder="기타" class="w-full"/> 
             </IftaLabel>
 
-            <IftaLabel class="flex-1 min-w-0">
+            <IftaLabel class="">
                 <Select v-model="esti['curtain']['split']" :options="data['split']" optionLabel="name" optionValue="value" class="w-full" />
                 <label>분할</label>
             </IftaLabel>
 
-            <IftaLabel class="flex-1 min-w-0">
+            <IftaLabel class="">
                 <label>수량</label>
                 <InputNumber inputId="cQty" v-model="esti['curtain']['cQty']" showButtons buttonLayout="horizontal" :step="1" fluid class="custom-input-number" @update:modelValue="esti.getUnitCalc()">
                     <template #incrementbuttonicon><span class="pi pi-plus" /></template>
@@ -21,33 +21,31 @@
             </IftaLabel>
         </div>
 
-        <div class="flex flex-col gap-8">
-            <div class="flex gap-[10px] product-select fabric-select">
-                <IftaLabel class="flex-1 min-w-0">
+        <div class="grid grid-cols-4 gap-3 fabric-select">
+            <IftaLabel class="">
                 <label>가로(CM)<span class="ml-1 text-red-600">*</span></label>
                 <InputText v-keyfilter.int id="cWidth" v-model="esti['common']['width']" class="w-full !font-bold" @update:modelValue="esti.getUnitCalc()" />
                 <small class="text-red-500">{{ esti['msg']['curtain'][`cWidth`] }}</small>
-                </IftaLabel>
+            </IftaLabel>
 
-                <IftaLabel class="flex-1 min-w-0">
+            <IftaLabel class="">
                 <label>세로(CM)</label>
                 <InputText v-keyfilter.int id="cHeight" v-model="esti['common']['height']" class="w-full !font-bold" @update:modelValue="esti.getUnitCalc()" />
                 <small class="text-red-500">{{ esti['msg']['curtain'][`cHeight`] }}</small>
-                </IftaLabel>
+            </IftaLabel>
 
-                <IftaLabel class="flex-1 min-w-0">
+            <IftaLabel class="">
                 <Select v-model="esti['curtain']['use']" :options="data['usage']" optionLabel="name" optionValue="value" class="w-full !font-bold " @update:modelValue="esti.getUnitCalc()" />
                 <label>원단 사용량({{ getUsageVal() }})</label>
-                </IftaLabel>
+            </IftaLabel>
 
-                <div class="relative flex-1 min-w-0">
+            <div class="relative">
                 <IftaLabel class="flex-1 min-w-0">
                     <label class="!font-bold">최종계산</label>
                     <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full text-left !text-sky-500 !font-bold custom-input-text" @input="getSize" />
                 </IftaLabel>
                 <span class="absolute right-2 bottom-1/2 text-sm translate-y-1/2">{{ esti['common']['unitNm'] }}</span>
                 <small class="text-red-500">{{ esti['msg']['curtain'][`cSize`] }}</small>
-                </div>
             </div>
         </div>
 
@@ -75,9 +73,9 @@
         </div>
         <!-- //Toggle Group -->
 
-        <div v-if="esti['curtain']['addColor'] === 'T'" class="flex-col gap-4 py-5 border-dashed border-y">
+        <div v-if="esti['curtain']['addColor'] === 'T'" class="flex flex-col gap-3 py-5 border-dashed border-y">
             <h2 class="mb-2 text-sm text-sky-500">안쪽 컬러를 선택해주세요.</h2>
-            <div class="grid grid-cols-4 gap-2">
+            <div class="grid grid-cols-4 gap-3">
                 <IftaLabel class="col-span-3 w-full">
                     <label>안쪽컬러</label>
                     <Select v-model="esti['curtain']['inColor']" :options="esti.inColorList" optionLabel="icNm" optionValue="icCd" placeholder="안쪽 컬러를 선택해주세요." class="w-full" />
@@ -91,9 +89,7 @@
                     <small v-if="esti['msg']['curtain'][`inSize`] !== ''" class="text-red-500">{{ esti['msg']['curtain'][`inSize`] }}</small>
                 </div>
             </div>
-            
-        
-            <div class="grid grid-cols-4 gap-2">
+            <div class="grid grid-cols-4 gap-3">
                 <IftaLabel class="col-span-3 w-full">
                     <label>기둥 컬러</label>
                     <InputText :value="`${esti['common']['itemNm']} / ${esti['common']['icNm']}`" class="w-full" disabled/>

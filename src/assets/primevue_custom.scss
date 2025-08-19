@@ -1052,28 +1052,50 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     justify-content: flex-end;
     label {
         padding: 0 4px;
-        //font-size: 10px;
         line-height: 100%;
         text-align: center;
     }
     .p-toggleswitch {
         width: 40px;
         height: 20px;
+        .p-toggleswitch-slider {
+            box-shadow: none;
+            transition: none;
+        }
         .p-toggleswitch-handle {
             width: 14px;
             height: 14px;
             margin-block-start: -7px;
+
+        }
+        &.p-toggleswitch-checked {
+            .p-toggleswitch-handle {
+                inset-inline-start: 23px;
+            }
+        }
+        &:not(.p-disabled) {
+            &:has(.p-toggleswitch-input:hover) {
+                .p-toggleswitch-slider {
+                }
+            }
         }
         &:not(.p-toggleswitch-checked) {
             .p-toggleswitch-slider {
-                border: 1px solid #605E5C;
-                background-color: #F3F2F1;
+                border: 1px solid #605E5C !important;
+                background-color: #F3F2F1 !important;
+
             }
             .p-toggleswitch-handle {
-                border: 1px solid #605E5C;
-                background-color: transparent;
+                border: 1px solid #605E5C !important;
+                background-color: transparent !important;
                 inset-inline-start: 3px;
             }
         }
+    }
+}
+.p-select {
+    box-shadow: none !important;
+    .p-select-label {
+        margin-top: -2px;
     }
 }
