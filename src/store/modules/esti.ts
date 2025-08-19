@@ -2,7 +2,7 @@
  * @description 견적 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
-import { getHebe, getPok, getYard, getCm, eaCalculation } from '@/assets/js/order';
+import { getHebe, getPok, getYard, getCm, eaCalculation } from 'planorder-calculator';
 import { getHebeCalc, getPokCalc, getYardCalc, getCmCalc } from '@/assets/js/calcAndProcess';
 import { getAxiosData, getCardColumns } from '@/assets/js/function';
 
@@ -803,6 +803,8 @@ export const useEstiStore = defineStore('esti', {
                     });
                     
                     info = getPokCalc(this.common, this.curtain);
+
+                    console.log(info);
         
                     this.total['totalQty']             = Number(this.curtain['cQty']);
                     this.total['totalUnitSize']        = Number(this.curtain['size']) * Number(this.curtain['cQty']);
@@ -819,14 +821,16 @@ export const useEstiStore = defineStore('esti', {
                 break;
                 case '004': /** EA */
                     info = eaCalculation({
-                        purcAmt : Number(this.common['purcUnit']),
-                        saleAmt : Number(this.common['saleUnit']),
-                        qty     : Number(this.ea['qty']),
-                        option  : [],
-                        dcUnit  : this.common['dcUnit'],
-                        dcAmt   : this.common['dcAmt'],
-                        vat     : this.common['vat'],
-                        vmRate  : this.common['vmRate']
+                        purcAmt     : Number(this.common['purcUnit']),
+                        saleAmt     : Number(this.common['saleUnit']),
+                        qty         : Number(this.ea['qty']),
+                        option      : [],
+                        dcUnit      : this.common['dcUnit'],
+                        dcAmt       : this.common['dcAmt'],
+                        saleVat     : import.meta.env.VITE_VAT,
+                        saleVmRate  : import.meta.env.VITE_VMRATE,
+                        purcVat     : this.common['vat'],
+                        purcVmRate  : this.common['vmRate']
                     });
             
                     this.total['totalQty']      = Number(this.ea['qty']);

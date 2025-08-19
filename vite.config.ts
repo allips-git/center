@@ -8,6 +8,9 @@ import autoprefixer from 'autoprefixer'
 
 // vueDevTools(),
 export default defineConfig({
+  optimizeDeps: {
+      exclude: ['planorder-calculator']
+  },
   plugins: [
     vue({
       template: {
