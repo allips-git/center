@@ -6,12 +6,12 @@
                     <InputIcon class="z-10">
                         <i class="z-10 pi pi-search" />
                     </InputIcon>
-                    <InputText v-model="product['search']" placeholder="옵션명 검색" class="w-full !h-10 choice-input" @keyup.enter="getList"/>
+                    <InputText v-model="option['search']" placeholder="옵션명 검색" class="w-full !h-10 choice-input" @keyup.enter="getList"/>
                 </IconField>
             </div>
         </div>
         <ul class="flex flex-col">
-            <li v-for="(item, index) in product['list']" :key="index" class="border-b">
+            <li v-for="(item, index) in option['list']" :key="index" class="border-b">
                 <div class="flex flex-col items-center gap-1 py-6" @click="toggleSubList(index, item['itemCd'])">
                     <div :for="item['itemCd']" class="items-center w-full">
                         <label :for="item['itemCd']" class="flex items-center text-base font-bold">
