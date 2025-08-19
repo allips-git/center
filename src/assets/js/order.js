@@ -252,21 +252,17 @@ export function eaCalculation(data)
 	let itemSaleAmt = Math.round(ea * Number(data['saleAmt']));
 
 	//옵션
-	let optionPurcAmt = 0;		//총합계에 사용할 매입 금액
-	let optionSaleAmt = 0;	    //총합계에 사용할 매출 금액
-	let ibo_amt = [];			//옵션별 개별 합계 금액
-	let iso_amt = [];			//옵션별 개별 합계 금액
+	let optionPurcAmt   = 0;		//총합계에 사용할 매입 금액
+	let optionSaleAmt   = 0;	    //총합계에 사용할 매출 금액
+	let optionPurcTax   = 0;		//총합계에 사용할 매입 세액
+	let optionSaleTax   = 0;	    //총합계에 사용할 매출 세액
 
 	//옵션 계산
 	let optionObject;
 
 	for(let i = 0; i < data['option'].length; i++)
     {
-		if(ibo_amt[i] === undefined) ibo_amt[i] = 0;
-		if(iso_amt[i] === undefined) iso_amt[i] = 0;
-
 		let optionData = data['option'][i];
-
 		let n = ea;
 
 		optionObject = optionCalculation(optionData , n , data['vat']);
@@ -274,10 +270,6 @@ export function eaCalculation(data)
 		optionPurcAmt += optionObject['purcAmt'] * n;
 		//옵션 매출금액
 		optionSaleAmt += optionObject['saleAmt'] * n;
-		//옵션별 개별 합계 매입 금액
-		ibo_amt[i] += optionObject['purcAmt'] * n;
-		//옵션별 개별 합계 매출 금액
-		iso_amt[i] += optionObject['saleAmt'] * n;
 	}
 
 	//매입
@@ -307,12 +299,6 @@ export function eaCalculation(data)
 
 	let ibo_tax = [];
 	let iso_tax = [];
-
-	for(let i = 0; i < data['option'].length; i++)
-    {
-		ibo_tax[i] = getVatAmt('Y' , ibo_amt[i]);
-		iso_tax[i] = getVatAmt('Y' , iso_amt[i]);
-	}
 
 	result['optionPurcTax'] = ibo_tax;
 	result['optionSaleTax'] = iso_tax;
@@ -1037,20 +1023,38 @@ export function cmCalculation(data)
  * @description 옵션 계산(미구현)
  * @author 김원명, @version 1.0, @last date 2023/10/06
  * @data = {
+ *      gb          : '옵션구분', (P:상단가공 / B:하단가공 / S:형상 / N:일반)
+ *      itemCd      : '옵션코드',
+ *      itemNm      : '옵션명칭',
+ *      icCd        : '하위코드',
+ *      icNm        : '하위명칭',
+ *      selSpec     : '금액조정단위',
+ *      cnt         : '수량',
  *    	unit        : '옵션단위',
- *    	purcAmt     : '매입금액',
- *    	salAmt      : '매출금액',
+ *    	purcUnit    : '매입금액',
+ *    	saleUnit    : '매출금액',
+ *      delYn       : '삭제여부'
  * }
  * @return 계산된 옵션값
  * */
-export function optionCalculation(data, n, vat) 
+export function optionCalculation(data, n, cnt, vat, vmRate) 
 {
 	let result = {};
 
-	result['purcAmt']  = Number(data['purcAmt']) * n;
-	result['purcTax']  = getVatAmt(vat, result['purcAmt']);
-	result['saleAmt']  = Number(data['saleAmt']) * n;
-	result['saleTax']  = getVatAmt(vat, result['saleAmt']);
+    result['gb']        = data['gb'];
+    result['itemCd']    = data['itemCd'];
+    result['itemNm']    = data['itemNm'];
+    result['icCd']      = data['icCd'];
+    result['icNm']      = data['icNm'];
+    result['selSpec']   = data['selSpec'];
+    result['cnt']       = cnt;
+    result['saleUnit']  = data['saleUnit'];
+    result['purcUnit']  = data['purcUnit'];
+	result['purcAmt']   = Number(data['purcUnit']) * n | 0;
+	result['purcTax']   = vat === 'Y' ? getVatRateAmt(Number(vmRate), (Number(data['purcUnit']) * n | 0)) : 0;
+	result['saleAmt']   = Number(data['saleUnit']) * n | 0;
+	result['saleTax']   = vat === 'Y' ? getVatRateAmt(Number(vmRate), (Number(data['saleUnit']) * n | 0)) : 0;
+    result['delYn']     = data['delYn'];
 
 	return result;
 }

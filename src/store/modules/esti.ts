@@ -2,7 +2,7 @@
  * @description 견적 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
-import { getHebe, getPok, getYard, getCm, eaCalculation } from '@/assets/js/order';
+import { getHebe, getPok, getYard, getCm, eaCalculation } from 'planorder-calculator';
 import { getHebeCalc, getPokCalc, getYardCalc, getCmCalc } from '@/assets/js/calcAndProcess';
 import { getAxiosData, getCardColumns } from '@/assets/js/function';
 
@@ -12,6 +12,15 @@ type YnType         = 'Y' | 'N';
 type OrdGbType      = 'S' | 'O';
 type AddColorType   = 'O' | 'T';
 type AmtUnitType    = 'F' | 'P'; /** F : 금액(원) / P : %(퍼센트) */
+
+interface Options {
+    itemCd      : string;
+    itemNm      : string;
+    icCd        : string;
+    icNm        : string;
+    saleUnit    : number;
+    purcUnit    : number;
+}
 
 interface CommonInfo {
     fcCd     : Nullable<string>;
@@ -33,6 +42,7 @@ interface CommonInfo {
     roundGb  : string;
     vat      : YnType;
     vmRate   : number;
+    options  : Options;
     memo     : string;
 }
 
@@ -205,6 +215,7 @@ const getCommonInfo = (): CommonInfo => {
         vat      : 'N',     /** 부가세 여부 (Y : 포함 / N : 미포함), 매입금액 계산용 */
         vmRate   : 0,       /** 부가세율, 매입금액 계산용 */
         roundGb  : '001',   /** 반올림 구분 */
+        options  : [],      /** 추가 옵션 리스트 */
         memo     : ''       /** 지시사항 */
     }
 }
@@ -608,6 +619,10 @@ export const useEstiStore = defineStore('esti', {
                 this.common[data] = info[data];
             }
         },
+        async getOptionSet()
+        {
+
+        },
         async getBlindSet(info: object)
         {
             for(const data in info){
@@ -788,6 +803,8 @@ export const useEstiStore = defineStore('esti', {
                     });
                     
                     info = getPokCalc(this.common, this.curtain);
+
+                    console.log(info);
         
                     this.total['totalQty']             = Number(this.curtain['cQty']);
                     this.total['totalUnitSize']        = Number(this.curtain['size']) * Number(this.curtain['cQty']);
@@ -804,14 +821,16 @@ export const useEstiStore = defineStore('esti', {
                 break;
                 case '004': /** EA */
                     info = eaCalculation({
-                        purcAmt : Number(this.common['purcUnit']),
-                        saleAmt : Number(this.common['saleUnit']),
-                        qty     : Number(this.ea['qty']),
-                        option  : [],
-                        dcUnit  : this.common['dcUnit'],
-                        dcAmt   : this.common['dcAmt'],
-                        vat     : this.common['vat'],
-                        vmRate  : this.common['vmRate']
+                        purcAmt     : Number(this.common['purcUnit']),
+                        saleAmt     : Number(this.common['saleUnit']),
+                        qty         : Number(this.ea['qty']),
+                        option      : [],
+                        dcUnit      : this.common['dcUnit'],
+                        dcAmt       : this.common['dcAmt'],
+                        saleVat     : import.meta.env.VITE_VAT,
+                        saleVmRate  : import.meta.env.VITE_VMRATE,
+                        purcVat     : this.common['vat'],
+                        purcVmRate  : this.common['vmRate']
                     });
             
                     this.total['totalQty']      = Number(this.ea['qty']);
@@ -833,11 +852,19 @@ export const useEstiStore = defineStore('esti', {
                 break;
             }
 
+            /** 제품 금액 */
             this.total['totalItemSaleAmt']   = info['itemSaleAmt'];
             this.total['totalItemSaleTax']   = info['itemSaleTax'];
             this.total['totalItemPurcAmt']   = info['itemPurcAmt'];
             this.total['totalItemPurcTax']   = info['itemPurcTax'];
-            /** 옵션 추가 필요 */
+
+            /** 옵션 금액 */
+            this.total['totalOptionSaleAmt']   = info['optionSaleAmt'];
+            this.total['totalOptionSaleTax']   = info['optionSaleTax'];
+            this.total['totalOptionPurcAmt']   = info['optionPurcAmt'];
+            this.total['totalOptionPurcTax']   = info['optionPurcTax'];
+
+            /** 총 매출/매입 금액 */
             this.total['totalSaleAmt']       = info['totalSaleAmt'];
             this.total['totalSaleTax']       = info['totalSaleTax'];
             this.total['totalPurcAmt']       = info['totalPurcAmt'];

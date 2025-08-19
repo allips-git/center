@@ -1,4 +1,4 @@
-import { getHebe, hebeCalculation, pokCalculation, yardCalculation, cmCalculation } from '@/assets/js/order';
+import { getHebe, hebeCalculation2, pokCalculation, yardCalculation, cmCalculation } from 'planorder-calculator';
 
 /**
  * @description 회배 계산 처리
@@ -33,19 +33,21 @@ export function getHebeCalc(common, blind)
     }
 
     const params = {
-        purcAmt  : Number(common['purcUnit']),
-        saleAmt  : Number(common['saleUnit']),
-        hebe     : hebe,
-        division : division,
-        qty      : division === 1 ? (leftQty + rightQty) : qty,
-        option   : [], /** 옵션 추후 추가 필요 */
-        dcUnit   : common['dcUnit'],
-        dcAmt    : Number(common['dcAmt']),
-        vat      : common['vat'],
-        vmRate   : common['vmRate']
+        purcAmt     : Number(common['purcUnit']),
+        saleAmt     : Number(common['saleUnit']),
+        hebe        : hebe,
+        division    : division,
+        qty         : division === 1 ? (leftQty + rightQty) : qty,
+        option      : [], /** 옵션 추후 추가 필요 */
+        dcUnit      : common['dcUnit'],
+        dcAmt       : Number(common['dcAmt']),
+        saleVat     : import.meta.env.VITE_VAT,
+        saleVmRate  : import.meta.env.VITE_VMRATE,
+        purcVat     : common['vat'],
+        purcVmRate  : common['vmRate']
     };
 
-    return hebeCalculation(params);
+    return hebeCalculation2(params);
 }
 
 /**
@@ -65,8 +67,10 @@ export function getYardCalc(common, curtain)
         option          : [], /** 옵션 추후 추가 필요 */
         dcUnit          : common['dcUnit'],
         dcAmt           : Number(common['dcAmt']),
-        vat             : common['vat'],
-        vmRate          : common['vmRate']
+        saleVat         : import.meta.env.VITE_VAT,
+        saleVmRate      : import.meta.env.VITE_VMRATE,
+        purcVat         : common['vat'],
+        purcVmRate      : common['vmRate']
     };
 
     return yardCalculation(params);
@@ -91,9 +95,13 @@ export function getPokCalc(common, curtain)
         option          : [], /** 옵션 추후 추가 필요 */
         dcUnit          : common['dcUnit'],
         dcAmt           : Number(common['dcAmt']),
-        vat             : common['vat'],
-        vmRate          : common['vmRate']
+        saleVat         : import.meta.env.VITE_VAT,
+        saleVmRate      : import.meta.env.VITE_VMRATE,
+        purcVat         : common['vat'],
+        purcVmRate      : common['vmRate']
     };
+
+    console.log(params);
 
     return pokCalculation(params);
 }
@@ -104,15 +112,17 @@ export function getPokCalc(common, curtain)
 export function getCmCalc(common, curtain)
 {
     const params = {
-        purcAmt : Number(common['purcUnit']),
-        saleAmt : Number(common['saleUnit']),
-        cm      : Number(curtain['size']),
-        cnt     : curtain['cQty'],
-        option  : [],
-        dcUnit  : common['dcUnit'],
-        dcAmt   : Number(common['dcAmt']),
-        vat     : common['vat'],
-        vmRate  : common['vmRate']
+        purcAmt     : Number(common['purcUnit']),
+        saleAmt     : Number(common['saleUnit']),
+        cm          : Number(curtain['size']),
+        cnt         : curtain['cQty'],
+        option      : [],
+        dcUnit      : common['dcUnit'],
+        dcAmt       : Number(common['dcAmt']),
+        saleVat     : import.meta.env.VITE_VAT,
+        saleVmRate  : import.meta.env.VITE_VMRATE,
+        purcVat     : common['vat'],
+        purcVmRate  : common['vmRate']
     }
 
     return cmCalculation(params);
@@ -160,7 +170,9 @@ export function getCurtainParams(common, curtain)
 
     if(params['unit'] === '003')
     {
-        params['pokSpec'] = curtain['pokSpec'];
+        params['pokSpec']   = curtain['pokSpec'];
+        params['heightLen'] = curtain['heightLen'];
+        params['addPrice']  = curtain['addPrice'];
     }
 
     return params;
@@ -187,6 +199,7 @@ export function getCommonParams(common)
         fcCd        : common['fcCd'],
         ordGb       : common['ordGb'],
         vat         : common['vat'],
+        vmRate      : common['vmRate'],
         itemCd      : common['itemCd'],
         itemNm      : common['itemNm'],
         icCd        : common['icCd'],

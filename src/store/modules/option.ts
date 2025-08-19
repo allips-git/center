@@ -18,7 +18,7 @@ export const useOptionStore = defineStore('option', {
         ogCd        : '',
         itemCd      : '',
         icCd        : '',
-        list        : [],
+        list        : []
     }),
     actions: {
         /**
@@ -29,6 +29,7 @@ export const useOptionStore = defineStore('option', {
             try
             {
                 const params = {
+                    search  : this.search,
                     ogCd    : this.ogCd,
                 };
 
