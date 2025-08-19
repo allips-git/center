@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col gap-6 *:flex">
-
         <div class="space-x-[12px] product-select">
             <IftaLabel class="w-full">
                 <label>설치위치 <span class="ml-1 text-red-600">*</span></label>
@@ -16,7 +15,6 @@
                 <label>가공법</label>
             </IftaLabel>
         </div>
-    
         <div class="flex flex-col gap-8">
             <div class="flex gap-[10px] product-select">
                 <IftaLabel class="flex-1 min-w-0">
@@ -73,7 +71,38 @@
             </div>
         </div>
 
-    
+        <!-- Toggle Group -->
+        <div class="flex-1 pt-0.5 pb-1 sm:px-4 toggle-group-box">
+            <h3 class="title text-10 text-t-lv3">가공 옵션</h3>
+            <div class="flex flex-wrap w-full">
+                <div class="basis-1/4 toggle-set">
+                    <label for="switch1" class="text-10 text-t-lv2">나비주름</label>
+                    <ToggleSwitch inputId="switch1" v-model="checked" />
+                </div>
+                <div class="basis-1/4 toggle-set">
+                    <label for="switch2" class="text-10 text-t-lv2">형상</label>
+                    <ToggleSwitch inputId="switch2" />
+                </div>
+                <div class="basis-1/4 toggle-set">
+                    <label for="switch3" class="text-10 text-t-lv2">투톤 색상</label>
+                    <ToggleSwitch inputId="switch3" />
+                </div>
+                <div class="basis-1/4 toggle-set">
+                    <label for="switch4" class="text-10 text-t-lv2">리드밴드</label>
+                    <ToggleSwitch inputId="switch4" />
+                </div>
+                <div class="basis-1/4 toggle-set">
+                    <label for="switch5" class="text-10 text-t-lv2">라벨명이 아주아주 길어질 때</label>
+                    <ToggleSwitch inputId="switch5" />
+                </div>
+                <div class="basis-1/4 toggle-set">
+                    <label for="switch6" class="text-10 text-t-lv2">라벨명이 아주아주 길어질 때</label>
+                    <ToggleSwitch inputId="switch6" />
+                </div>
+            </div>
+        </div>
+        <!-- //Toggle Group -->
+
         <div v-if="esti['curtain']['addColor'] === 'T'" class="flex-col gap-4 py-5 border-dashed border-y">
             <h2 class="mb-2 text-sm text-sky-500">안쪽 컬러를 선택해주세요.</h2>
             <div class="grid grid-cols-4 gap-2">
@@ -109,13 +138,16 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import InputText from 'primevue/inputtext'; 
 import InputNumber from 'primevue/inputnumber';
 import IftaLabel from 'primevue/iftalabel';
+import ToggleSwitch from 'primevue/toggleswitch';
 import { useDataStore, useEstiStore } from '@/store';
 
 const data      = useDataStore();
 const esti      = useEstiStore();
+const checked = ref(true);
 
 const getUsageVal = () => {
     let size = 0;
@@ -151,6 +183,7 @@ const getSize = () => {
 
     esti['curtain']['size'] = value;
 }
+
 </script>
 
 <style scoped>
