@@ -5,6 +5,7 @@ import { getHebe, hebeCalculation2, pokCalculation, yardCalculation, cmCalculati
  */
 export function getHebeCalc(common, blind)
 {
+    console.log(common);
     const hebe = [];
 
     const division = Number(blind['division']);
@@ -38,7 +39,7 @@ export function getHebeCalc(common, blind)
         hebe        : hebe,
         division    : division,
         qty         : division === 1 ? (leftQty + rightQty) : qty,
-        option      : common['options'],
+        option      : common['options'].filter(item => item.itemCd !== ''),
         dcUnit      : common['dcUnit'],
         dcAmt       : Number(common['dcAmt']),
         saleVat     : import.meta.env.VITE_VAT,
@@ -64,7 +65,7 @@ export function getYardCalc(common, curtain)
         qty             : curtain['cQty'],
         yard            : Number(curtain['size']),
         height          : Number(common['height']),
-        option          : common['options'],
+        option          : common['options'].filter(item => item.itemCd !== ''),
         dcUnit          : common['dcUnit'],
         dcAmt           : Number(common['dcAmt']),
         saleVat         : import.meta.env.VITE_VAT,
@@ -92,7 +93,7 @@ export function getPokCalc(common, curtain)
         height          : Number(common['height']),
         heightLen       : Number(curtain['heightLen']),
         addPrice        : Number(curtain['addPrice']),
-        option          : common['options'],
+        option          : common['options'].filter(item => item.itemCd !== ''),
         dcUnit          : common['dcUnit'],
         dcAmt           : Number(common['dcAmt']),
         saleVat         : import.meta.env.VITE_VAT,
@@ -114,7 +115,7 @@ export function getCmCalc(common, curtain)
         saleAmt     : Number(common['saleUnit']),
         cm          : Number(curtain['size']),
         cnt         : curtain['cQty'],
-        option      : common['options'],
+        option      : common['options'].filter(item => item.itemCd !== ''),
         dcUnit      : common['dcUnit'],
         dcAmt       : Number(common['dcAmt']),
         saleVat     : import.meta.env.VITE_VAT,
