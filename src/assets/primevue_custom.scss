@@ -1065,18 +1065,14 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         .p-toggleswitch-handle {
             width: 14px;
             height: 14px;
+            margin-top: -7px;
             margin-block-start: -7px;
 
         }
         &.p-toggleswitch-checked {
             .p-toggleswitch-handle {
-                inset-inline-start: 23px;
-            }
-        }
-        &:not(.p-disabled) {
-            &:has(.p-toggleswitch-input:hover) {
-                .p-toggleswitch-slider {
-                }
+                left: 23px;
+                //inset-inline-start: 23px;
             }
         }
         &:not(.p-toggleswitch-checked) {
@@ -1088,6 +1084,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
             .p-toggleswitch-handle {
                 border: 1px solid #605E5C !important;
                 background-color: transparent !important;
+                left: 3px;
                 inset-inline-start: 3px;
             }
         }
