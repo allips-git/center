@@ -101,8 +101,6 @@ export function getPokCalc(common, curtain)
         purcVmRate      : common['vmRate']
     };
 
-    console.log(params);
-
     return pokCalculation(params);
 }
 

@@ -487,7 +487,6 @@ export const useEstiStore = defineStore('esti', {
                                         }
                                     break;
                                     case '002': case '003': case '005': case '006':
-                                        console.log('cm');
                                         rows.push({
                                             width   : esti.width,
                                             height  : esti.height,
@@ -526,8 +525,6 @@ export const useEstiStore = defineStore('esti', {
                         }).filter(Boolean)
                     })
                 });
-
-                console.log(list);
 
                 this.list = list;
 
@@ -803,8 +800,6 @@ export const useEstiStore = defineStore('esti', {
                     });
                     
                     info = getPokCalc(this.common, this.curtain);
-
-                    console.log(info);
         
                     this.total['totalQty']             = Number(this.curtain['cQty']);
                     this.total['totalUnitSize']        = Number(this.curtain['size']) * Number(this.curtain['cQty']);
@@ -844,8 +839,6 @@ export const useEstiStore = defineStore('esti', {
                     });
                     
                     info = getCmCalc(this.common, this.curtain);
-
-                    console.log(info);
 
                     this.total['totalQty']      = Number(this.curtain['cQty']);
                     this.total['totalUnitSize'] = Number(this.curtain['size']) * Number(this.curtain['cQty']);

@@ -6,7 +6,7 @@
                     <InputIcon class="z-10">
                         <i class="z-10 pi pi-search" />
                     </InputIcon>
-                    <InputText v-model="option['search']" placeholder="옵션명 검색" class="w-full !h-10 choice-input" @keyup.enter="getList"/>
+                    <InputText v-model="option['search']" placeholder="옵션명 검색" class="w-full !h-10 choice-input"/>
                 </IconField>
             </div>
         </div>
@@ -42,10 +42,11 @@ import IconField from 'primevue/iconfield';
 import InputText from 'primevue/inputtext'; 
 import InputIcon from 'primevue/inputicon'; 
 import { ref, onMounted } from 'vue';
-import { useOptionStore, useEstiStore } from '@/store';
+import { useProductStore, useOptionStore, useEstiStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
+const product = useProductStore();
 const option  = useOptionStore();
 const esti    = useEstiStore();
 const { getPopupOpen } = usePopup();
@@ -78,7 +79,7 @@ const getAmt = (amt: number) => {
 
 onMounted(async () => {
     await option.getReset();
-    await option.getList();
+    await option.getList(product.info.ogCd);
 })
 
 </script>

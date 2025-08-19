@@ -79,10 +79,10 @@
     </Dialog>
     <Dialog v-model:visible="popup['pop']['optionList']" header="제품선택" 
         :modal=true position="center" class="custom-dialog-full"
-        @update:visible="getPopClose(true, 'optionList')">
+        @update:visible="getPopupClose('optionList', true)">
         <template #header>
             <div class="modal-fullheader">
-                <Button @click="getPopClose(true, 'optionList')" severity="contrast" text icon="pi pi-times"/>
+                <Button @click="getPopupClose('optionList', true)" severity="contrast" text icon="pi pi-times"/>
                 <h2 class="modal-backheader-title">옵션추가</h2>
             </div>
         </template>
