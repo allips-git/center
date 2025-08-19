@@ -32,7 +32,7 @@
                             </AccordionHeader>
                         <AccordionContent class="w-full">
                             <div class="flex flex-col gap-5">
-                                <div v-for="(item, index) in esti.common.options" :key="index"  class="flex gap-4 mt-3 w-full">
+                                <div v-for="(item, index) in getOptionList()" :key="index"  class="flex gap-4 mt-3 w-full">
                                     <IftaLabel class="w-full">
                                         <InputText :value="item.itemNm" placeholder="옵션을 선택해주세요." class="w-full" readonly @click="getOption(index)"/>
                                         <label for="emali">옵션명</label>
@@ -124,6 +124,10 @@ const client    = useClientStore();
 const esti      = useEstiStore();
 const status    = ref(false);
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getOptionList = () => {
+    return esti.common.options.filter(i => i.gb === 'N');
+}
 
 const getOption = (optionSeq: number) => {
     esti.getOptionSeq(optionSeq);
