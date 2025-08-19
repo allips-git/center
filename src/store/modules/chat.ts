@@ -4,21 +4,29 @@
 import { defineStore } from 'pinia'
 import { getAxiosData } from '@/assets/js/function'
 
+interface RoomUser {
+  _id: string
+  username: string
+  avatar: string
+}
+
 interface Rooms {
   roomId: string
   roomName: string
   avatar: string
-  users: [
-    {
-      _id: ''
-      username: ''
-      avatar: ''
-    }
-  ]
+  users: RoomUser[]
   lastMessage: {
     content: string
     timestamp: string
   }
+}
+
+interface ChatFile {
+  name: string
+  type: string
+  saved: boolean
+  url: string
+  preview: string
 }
 
 interface Messages {
@@ -27,15 +35,44 @@ interface Messages {
   senderId: string
   username: string
   timestamp: string
-  files: []
+  files: ChatFile[]
 }
 
 interface State {
-  chCd: string
+  crCd: string | null
   currentUserId: string
   rooms: Rooms[]
   messages: Messages[]
   messagesLoaded: boolean
+}
+
+// Types that mirror the backend response shape (only the fields we use)
+interface ApiRoomUser {
+  userCd: string
+  username: string
+}
+
+interface ApiRoom {
+  roomId: string
+  roomName: string
+  users: ApiRoomUser[]
+  chGb: 'N' | 'Y'
+  message: string
+  regDt: string
+}
+
+interface ApiMsgFile {
+  filePath: string
+  fileNm: string
+}
+
+interface ApiMsg {
+  chCd: string
+  message: string
+  regCd: string
+  username: string
+  regDt: string
+  files: ApiMsgFile[]
 }
 
 // const getRooms = () => {
@@ -53,7 +90,7 @@ interface State {
 
 export const useChatStore = defineStore('chat', {
   state: (): State => ({
-    crCd: '',
+    crCd: null,
     currentUserId: '',
     rooms: [],
     messages: [],
@@ -61,6 +98,7 @@ export const useChatStore = defineStore('chat', {
   }),
   actions: {
     async getData() {
+      console.log('crCd:' + this.crCd)
       try {
         const instance = await getAxiosData()
         const res = await instance.post(`https://data.planorder.kr/chatV1/getData`, {
@@ -71,7 +109,7 @@ export const useChatStore = defineStore('chat', {
 
         this.currentUserId = res.data.id
 
-        this.rooms = res.data.rooms.map((item) => {
+        this.rooms = (res.data.rooms as ApiRoom[]).map((item) => {
           return {
             roomId: item.roomId,
             roomName: item.roomName,
@@ -92,19 +130,20 @@ export const useChatStore = defineStore('chat', {
 
         console.log(this.rooms)
 
-        this.messages = res.data.msg.map((item) => {
-          let files = []
+        this.messages = (res.data.msg as ApiMsg[]).map((item) => {
+          let files: ChatFile[] = []
 
-          const data = {
+          const data: Messages = {
             _id: item.chCd,
             content: item.message,
             senderId: item.regCd,
             username: item.username,
-            timestamp: item.regDt
+            timestamp: item.regDt,
+            files: []
           }
 
           if (item['files'].length > 0) {
-            files = item['files'].map((file, fIndex) => {
+            files = item['files'].map((file, fIndex: number) => {
               return {
                 name: `file_${fIndex}`,
                 type: 'image/gif, image/jpeg, image/jpg, image/png',
@@ -115,7 +154,7 @@ export const useChatStore = defineStore('chat', {
             })
           }
 
-          data['files'] = files
+          data.files = files
 
           return data
         })
@@ -126,6 +165,7 @@ export const useChatStore = defineStore('chat', {
       }
     },
     getCrCd(crCd: string) {
+      this.crCd = null
       this.crCd = crCd
     },
     getReset() {

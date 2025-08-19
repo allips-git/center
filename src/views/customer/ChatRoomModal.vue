@@ -7,14 +7,15 @@
         :messages="JSON.stringify(chat.messages)"
         :messages-loaded="chat.messagesLoaded"
         :room-id="chat.crCd"
-        :show-files="true"
-        accepted-files="image/gif, image/jpeg, image/jpg, image/png"
         :show-audio="false"
         :show-emojis="true"
         :show-add-room="false"
         :show-search="false"
         @room-selected="onRoomSelected"
         @send-message="getSendMessage"
+        :show-files="true"
+        accepted-files="image/jpeg, image/jpg, image/png, image/gif"
+        capture-files=""
         :height="chatHeight"
       />
     </div>
