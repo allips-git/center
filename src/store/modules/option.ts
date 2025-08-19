@@ -6,7 +6,6 @@ import { getAxiosData } from '@/assets/js/function';
 
 interface State {
     search      : string;
-    ogCd        : string;
     itemCd      : string;
     icCd        : string;
     list        : [];
@@ -15,7 +14,6 @@ interface State {
 export const useOptionStore = defineStore('option', {
     state: (): State => ({
         search      : '',
-        ogCd        : '',
         itemCd      : '',
         icCd        : '',
         list        : []
@@ -24,19 +22,46 @@ export const useOptionStore = defineStore('option', {
         /**
          * @description 옵션 리스트
          */
-        async getList()
+        async getList(ogCd: string)
         {
             try
             {
                 const params = {
                     search  : this.search,
-                    ogCd    : this.ogCd,
+                    ogCd    : ogCd,
                 };
 
-                const instance  = await getAxiosData();
-                const res       = await instance.post(`https://data.planorder.kr/estiV1/getOptionList`, params);
+                console.log(params);
+
+                const instance      = await getAxiosData();
+                const res           = await instance.post(`https://data.planorder.kr/estiV1/getOptionList`, params);
+                const optionList    = [];
 
                 console.log(res);
+
+                res.data['list'].map(item => {
+                    const colorLists = [];
+
+                    item.icList.map(ic => {
+                        colorLists.push({
+                            icCd     : ic.icCd,
+                            icNm     : ic.icNm,
+                            name     : 'icCd'+item.itemCd,
+                            disabled : ic.useYn === 'Y' ? false : true
+                        })
+                    })
+
+                    optionList.push({
+                        itemCd      : item.itemCd,
+                        itemNm      : item.itemNm,
+                        unit        : item.unitNm,
+                        amt         : Number(item.saleAmt),
+                        colorLists  : colorLists,
+                        noUsed      : item.useYn === 'N' ? true : false
+                    })
+                });
+
+                this.list = optionList;
             }
             catch(e)
             {

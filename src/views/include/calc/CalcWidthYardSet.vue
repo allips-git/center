@@ -1,47 +1,27 @@
 <template>
     <div class="flex flex-col gap-6 *:flex">
-        <div class="space-x-[12px] product-select">
-            <IftaLabel class="w-full">
+        <div class="flex gap-[10px] product-select">
+            <IftaLabel class="w-1/2">
                 <label>설치위치 <span class="ml-1 text-red-600">*</span></label>
                 <InputText v-model="esti['common']['location']" placeholder="기타" class="w-full"/> 
             </IftaLabel>
-    
-            <IftaLabel class="w-full">
-                <Select v-model="esti['curtain']['bproc']" :options="data['bproc']" optionLabel="name" optionValue="value" class="w-full" />
-                <label>하단 가공법</label>
-            </IftaLabel>
-            <IftaLabel class="w-full">
-                <Select v-model="esti['curtain']['proc']" :options="data['proc']" optionLabel="name" optionValue="value" class="w-full" />
-                <label>가공법</label>
-            </IftaLabel>
-        </div>
-        <div class="flex flex-col gap-8">
-            <div class="flex gap-[10px] product-select">
-                <IftaLabel class="flex-1 min-w-0">
-                <Select v-model="esti['curtain']['addColor']" :options="data['addColor']" optionLabel="name" optionValue="value" class="w-full product-select" />
-                <label>색상추가</label>
-                </IftaLabel>
 
-                <IftaLabel class="flex-1 min-w-0">
-                <Select v-model="esti['curtain']['shape']" :options="data['shape']" optionLabel="name" optionValue="value" class="w-full" />
-                <label>형상선택</label>
-                </IftaLabel>
-
-                <IftaLabel class="flex-1 min-w-0">
+            <IftaLabel class="flex-1 min-w-0">
                 <Select v-model="esti['curtain']['split']" :options="data['split']" optionLabel="name" optionValue="value" class="w-full" />
                 <label>분할</label>
-                </IftaLabel>
+            </IftaLabel>
 
-                <IftaLabel class="flex-1 min-w-0">
+            <IftaLabel class="flex-1 min-w-0">
                 <label>수량</label>
                 <InputNumber inputId="cQty" v-model="esti['curtain']['cQty']" showButtons buttonLayout="horizontal" :step="1" fluid class="custom-input-number" @update:modelValue="esti.getUnitCalc()">
                     <template #incrementbuttonicon><span class="pi pi-plus" /></template>
                     <template #decrementbuttonicon><span class="pi pi-minus" /></template>
                 </InputNumber>
                 <small class="text-red-500">{{ esti['msg']['curtain'][`cQty`] }}</small>
-                </IftaLabel>
-            </div>
+            </IftaLabel>
+        </div>
 
+        <div class="flex flex-col gap-8">
             <div class="flex gap-[10px] product-select fabric-select">
                 <IftaLabel class="flex-1 min-w-0">
                 <label>가로(CM)<span class="ml-1 text-red-600">*</span></label>
@@ -77,27 +57,19 @@
             <div class="flex flex-wrap w-full">
                 <div class="basis-1/4 toggle-set">
                     <label for="switch1" class="text-10 text-t-lv2">나비주름</label>
-                    <ToggleSwitch inputId="switch1" v-model="checked" />
+                    <ToggleSwitch v-model="esti['curtain']['proc']" :trueValue="'001'" :falseValue="'002'" />
                 </div>
                 <div class="basis-1/4 toggle-set">
                     <label for="switch2" class="text-10 text-t-lv2">형상</label>
-                    <ToggleSwitch inputId="switch2" />
+                    <ToggleSwitch v-model="esti['curtain']['shape']" :trueValue="'Y'" :falseValue="'N'"/>
                 </div>
                 <div class="basis-1/4 toggle-set">
                     <label for="switch3" class="text-10 text-t-lv2">투톤 색상</label>
-                    <ToggleSwitch inputId="switch3" />
+                    <ToggleSwitch v-model="esti['curtain']['addColor']" :trueValue="'T'" :falseValue="'O'"/>
                 </div>
                 <div class="basis-1/4 toggle-set">
                     <label for="switch4" class="text-10 text-t-lv2">리드밴드</label>
-                    <ToggleSwitch inputId="switch4" />
-                </div>
-                <div class="basis-1/4 toggle-set">
-                    <label for="switch5" class="text-10 text-t-lv2">라벨명이 아주아주 길어질 때</label>
-                    <ToggleSwitch inputId="switch5" />
-                </div>
-                <div class="basis-1/4 toggle-set">
-                    <label for="switch6" class="text-10 text-t-lv2">라벨명이 아주아주 길어질 때</label>
-                    <ToggleSwitch inputId="switch6" />
+                    <ToggleSwitch v-model="esti['curtain']['bproc']" :trueValue="'002'" :falseValue="'001'"/>
                 </div>
             </div>
         </div>
@@ -138,7 +110,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import InputText from 'primevue/inputtext'; 
 import InputNumber from 'primevue/inputnumber';
 import IftaLabel from 'primevue/iftalabel';
@@ -147,7 +118,6 @@ import { useDataStore, useEstiStore } from '@/store';
 
 const data      = useDataStore();
 const esti      = useEstiStore();
-const checked = ref(true);
 
 const getUsageVal = () => {
     let size = 0;
