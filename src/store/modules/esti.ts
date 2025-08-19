@@ -9,17 +9,26 @@ import { getAxiosData, getCardColumns } from '@/assets/js/function';
 type Nullable<T>    = T | null;
 type Type           = 'I' | 'M' | 'N'; /** I : 명세표 추가 데이터 / M : 수정 데이터 / N : 신규 명세표 */
 type YnType         = 'Y' | 'N';
+type OptionGb       = 'P' |'B' | 'S' | 'N';
 type OrdGbType      = 'S' | 'O';
 type AddColorType   = 'O' | 'T';
 type AmtUnitType    = 'F' | 'P'; /** F : 금액(원) / P : %(퍼센트) */
 
 interface Options {
+    poCd        : Nullable<string>;
+    gb          : OptionGb;
     itemCd      : string;
     itemNm      : string;
     icCd        : string;
     icNm        : string;
-    saleUnit    : number;
-    purcUnit    : number;
+    selSpec     : string;
+    saleUnit    : Nullable<number>;
+    purcUnit    : Nullable<number>;
+    saleAmt     : Nullable<number>;
+    saleTax     : Nullable<number>;
+    purcAmt     : Nullable<number>;
+    purcTax     : Nullable<number>;
+    delYn       : YnType;
 }
 
 interface CommonInfo {
@@ -191,32 +200,51 @@ interface ItemInfo {
     purcUnit    : number;
 }
 
+const getOption = (): Options => {
+    return {
+        poCd      : null,
+        gb        : 'N', // 옵션 구분 (P: 제품 / B: 블라인드 / S: 커튼 / N: 없음)
+        itemCd    : '',
+        itemNm    : '',
+        icCd      : '',
+        icNm      : '',
+        selSpec   : '',
+        saleUnit  : null,
+        purcUnit  : null,
+        saleAmt   : null,
+        saleTax   : null,
+        purcAmt   : null,
+        purcTax   : null,
+        delYn     : 'N'
+    }
+}
+
 /**
  * @description 견적 시 공통 정보
  */
 const getCommonInfo = (): CommonInfo => {
     return {
-        fcCd     : null,    /** 공장코드 */
-        ordGb    : 'S',     /** 주문구분 (S:시스템 공장 / O:외주공장) */
-        itemCd   : '',      /** 제품코드 */
-        itemNm   : '',      /** 제품명 */
-        icCd     : '',      /** 제품 색상코드 */
-        icNm     : '',      /** 제품 색상명칭 */
-        unit     : '',      /** 제품 단위 코드 */
-        unitNm   : '',      /** 제품 단위 명칭 */
-        unitSize : '',      /** 제품 최소 사이즈 */
-        location : '',      /** 위치 */
-        width    : null,    /** 가로 */
-        height   : null,    /** 세로 */
-        saleUnit : null,    /** 판매 단가 */
-        purcUnit : null,    /** 매입 단가 */
-        dcUnit   : '',      /** 할인 구분 */
-        dcAmt    : null,    /** 할인 금액 */
-        vat      : 'N',     /** 부가세 여부 (Y : 포함 / N : 미포함), 매입금액 계산용 */
-        vmRate   : 0,       /** 부가세율, 매입금액 계산용 */
-        roundGb  : '001',   /** 반올림 구분 */
-        options  : [],      /** 추가 옵션 리스트 */
-        memo     : ''       /** 지시사항 */
+        fcCd     : null,            /** 공장코드 */
+        ordGb    : 'S',             /** 주문구분 (S:시스템 공장 / O:외주공장) */
+        itemCd   : '',              /** 제품코드 */
+        itemNm   : '',              /** 제품명 */
+        icCd     : '',              /** 제품 색상코드 */
+        icNm     : '',              /** 제품 색상명칭 */
+        unit     : '',              /** 제품 단위 코드 */
+        unitNm   : '',              /** 제품 단위 명칭 */
+        unitSize : '',              /** 제품 최소 사이즈 */
+        location : '',              /** 위치 */
+        width    : null,            /** 가로 */
+        height   : null,            /** 세로 */
+        saleUnit : null,            /** 판매 단가 */
+        purcUnit : null,            /** 매입 단가 */
+        dcUnit   : '',              /** 할인 구분 */
+        dcAmt    : null,            /** 할인 금액 */
+        vat      : 'N',             /** 부가세 여부 (Y : 포함 / N : 미포함), 매입금액 계산용 */
+        vmRate   : 0,               /** 부가세율, 매입금액 계산용 */
+        roundGb  : '001',           /** 반올림 구분 */
+        options  : [getOption()],   /** 추가 옵션 리스트 */
+        memo     : ''               /** 지시사항 */
     }
 }
 
@@ -387,6 +415,7 @@ interface State {
     type        : Type;
     emCd        : string;
     edCd        : string;
+    optionSeq   : number;
     common      : CommonInfo;
     ea          : EaInfo;
     blind       : BlindInfo;
@@ -406,6 +435,7 @@ export const useEstiStore = defineStore('esti', {
         type        : 'N',
         emCd        : '',
         edCd        : '',
+        optionSeq   : 0,
         common      : getCommonInfo(),
         ea          : getEaInfo(),
         blind       : getBlindInfo(),
@@ -616,9 +646,32 @@ export const useEstiStore = defineStore('esti', {
                 this.common[data] = info[data];
             }
         },
-        async getOptionSet()
+        getOptionSeq(optionSeq: number)
         {
-
+            this.optionSeq = optionSeq;
+        },
+        getOptionAdd()
+        {
+            this.common.options.push(getOption());
+        },
+        getOptionSet(info: object)
+        {
+            this.common.options[this.optionSeq] = Object.assign({}, getOption(), {
+                poCd      : null,
+                gb        : info.gb ? info.gb : 'N', // 옵션 구분 (P: 제품 / B: 블라인드 / S: 커튼 / N: 없음)
+                itemCd    : info.itemCd ? info.itemCd : '',
+                itemNm    : info.itemNm ? info.itemNm : '',
+                icCd      : info.icCd ? info.icCd : '',
+                icNm      : info.icNm ? info.icNm : '',
+                selSpec   : info.selSpec ? info.selSpec : '',
+                saleUnit  : info.saleUnit ? Number(info.saleUnit) : null,
+                purcUnit  : info.purcUnit ? Number(info.purcUnit) : null,
+                saleAmt   : null,
+                saleTax   : null,
+                purcAmt   : null,
+                purcTax   : null,
+                delYn     : 'N'
+            })
         },
         async getBlindSet(info: object)
         {
@@ -751,6 +804,8 @@ export const useEstiStore = defineStore('esti', {
                 case '001':
                     /** 회배 */
                     info = getHebeCalc(this.common, this.blind);
+
+                    console.log(info);
 
                     this.total['totalQty']      = Number(this.blind['division']) === 1 ? (Number(this.blind['leftQty']) + Number(this.blind['rightQty'])) : Number(this.blind['bQty']);
                     this.total['totalUnitSize'] = info['hebe'];

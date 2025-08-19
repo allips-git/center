@@ -68,6 +68,31 @@ export const useOptionStore = defineStore('option', {
                 console.error(e);
             }
         },
+        async getInfo(fcCd: string)
+        {
+            try
+            {
+                const params = {
+                    fcCd    : fcCd,
+                    itemCd  : this.itemCd,
+                    icCd    : this.icCd
+                };
+
+                console.log(params);
+
+                const instance      = await getAxiosData();
+                const res           = await instance.post(`https://data.planorder.kr/estiV1/getOptionInfo`, params);
+
+                console.log(res);
+
+                return { result : true, info : res.data['info'] };
+            }
+            catch(e)
+            {
+                console.error(e);
+                return { result : false, info : null };
+            }
+        },
         getReset()
         {
             this.search = '';

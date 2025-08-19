@@ -38,7 +38,7 @@ export function getHebeCalc(common, blind)
         hebe        : hebe,
         division    : division,
         qty         : division === 1 ? (leftQty + rightQty) : qty,
-        option      : [], /** 옵션 추후 추가 필요 */
+        option      : common['options'],
         dcUnit      : common['dcUnit'],
         dcAmt       : Number(common['dcAmt']),
         saleVat     : import.meta.env.VITE_VAT,
@@ -64,7 +64,7 @@ export function getYardCalc(common, curtain)
         qty             : curtain['cQty'],
         yard            : Number(curtain['size']),
         height          : Number(common['height']),
-        option          : [], /** 옵션 추후 추가 필요 */
+        option          : common['options'],
         dcUnit          : common['dcUnit'],
         dcAmt           : Number(common['dcAmt']),
         saleVat         : import.meta.env.VITE_VAT,
@@ -92,7 +92,7 @@ export function getPokCalc(common, curtain)
         height          : Number(common['height']),
         heightLen       : Number(curtain['heightLen']),
         addPrice        : Number(curtain['addPrice']),
-        option          : [], /** 옵션 추후 추가 필요 */
+        option          : common['options'],
         dcUnit          : common['dcUnit'],
         dcAmt           : Number(common['dcAmt']),
         saleVat         : import.meta.env.VITE_VAT,
@@ -114,7 +114,7 @@ export function getCmCalc(common, curtain)
         saleAmt     : Number(common['saleUnit']),
         cm          : Number(curtain['size']),
         cnt         : curtain['cQty'],
-        option      : [],
+        option      : common['options'],
         dcUnit      : common['dcUnit'],
         dcAmt       : Number(common['dcAmt']),
         saleVat     : import.meta.env.VITE_VAT,
@@ -208,6 +208,7 @@ export function getCommonParams(common)
         saleUnit    : common['saleUnit'],
         purcUnit    : common['purcUnit'],
         roundGb     : common['roundGb'],
+        options     : common['options'],
         memo        : common['memo']
     }
 

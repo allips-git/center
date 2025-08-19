@@ -49,7 +49,7 @@ import { usePopup } from '@/assets/js/popup';
 const product = useProductStore();
 const option  = useOptionStore();
 const esti    = useEstiStore();
-const { getPopupOpen } = usePopup();
+const { getPopupOpen, getPopupClose } = usePopup();
 
 // 현재 열려 있는 하위 목록의 인덱스
 const activeIndex = ref<number | null>(null);
@@ -66,11 +66,16 @@ const isActive = (index: number) => {
 };
 
 const getItemChoice = async (icCd: string) => {
+    await getPopupClose('optionList', true);
     option['icCd'] = icCd;
-    getPopupOpen('itemSet');
     
-    await option.getInfo();
-    await esti.getUnitCalc();
+    const result = await option.getInfo(product.info.fcCd);
+
+    if(result.info)
+    {
+        await esti.getOptionSet(result.info);
+        await esti.getUnitCalc();
+    }
 }
 
 const getAmt = (amt: number) => {

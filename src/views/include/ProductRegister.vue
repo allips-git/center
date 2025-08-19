@@ -32,16 +32,19 @@
                             </AccordionHeader>
                         <AccordionContent class="w-full">
                             <div class="flex flex-col gap-5">
-                                <div class="flex gap-4 mt-3 w-full">
+                                <div v-for="(item, index) in esti.common.options" :key="index"  class="flex gap-4 mt-3 w-full">
                                     <IftaLabel class="w-full">
-                                        <InputText placeholder="옵션을 선택해주세요." class="w-full" readonly @click="getPopupOpen('optionList')"/>
+                                        <InputText :value="item.itemNm" placeholder="옵션을 선택해주세요." class="w-full" readonly @click="getOption(index)"/>
                                         <label for="emali">옵션명</label>
                                     </IftaLabel>
 
                                     <IftaLabel class="w-full">
-                                        <InputText placeholder="옵션 세부명" class="w-full" disabled/>
+                                        <InputText :value="item.icNm" placeholder="옵션 세부명" class="w-full" disabled/>
                                         <label for="emali">옵션 세부명</label>
                                     </IftaLabel>
+                                </div>
+                                <div class="flex items-center justify-center w-full">
+                                    <Button :label="'옵션 추가'" size="medium" @click="esti.getOptionAdd()"/>
                                 </div>
 
                                 <IftaLabel class="w-full">
@@ -77,13 +80,13 @@
             <EditPricePop/>
         </div>
     </Dialog>
-    <Dialog v-model:visible="popup['pop']['optionList']" header="제품선택" 
+    <Dialog v-model:visible="popup['pop']['optionList']" header="옵션선택" 
         :modal=true position="center" class="custom-dialog-full"
         @update:visible="getPopupClose('optionList', true)">
         <template #header>
             <div class="modal-fullheader">
                 <Button @click="getPopupClose('optionList', true)" severity="contrast" text icon="pi pi-times"/>
-                <h2 class="modal-backheader-title">옵션추가</h2>
+                <h2 class="modal-backheader-title">옵션 리스트</h2>
             </div>
         </template>
         <OptionChoice/>
@@ -121,6 +124,11 @@ const client    = useClientStore();
 const esti      = useEstiStore();
 const status    = ref(false);
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getOption = (optionSeq: number) => {
+    esti.getOptionSeq(optionSeq);
+    getPopupOpen('optionList');
+}
 
 const getAmt = (amt: number) => {
     return getCommas(Number(amt));
