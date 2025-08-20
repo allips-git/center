@@ -5,15 +5,16 @@
             <div class="flex items-center justify-between px-4 py-[10px] md:px-6 no-print ">
                 <div class="flex justify-between self-center w-full">
                     <div class="flex gap-2 w-full">
-                        <div class="flex relative w-full gap-2 max-w-[90px] bg-gray-100 *:!border-0  mini_select">
-                            <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="relative z-10 w-full md:*:text-xs" @change="getList"/>
-                        </div>
-                        
-                        <IconField class="table-search-input w-full  sm:max-w-full !bg-gray-100 *:!border-0 mini_input h-8">
-                            <InputIcon class="flex items-center justify-center !translate-y-1/4">
-                                <i class="pi pi-search !text-11 text-gray-600 !font-black" />
+                        <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="bg w-[36%]" @change="getList">
+                            <template #dropdownicon>
+                                <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
+                            </template>
+                        </Select>
+                        <IconField class="w-full bg">
+                            <InputIcon class="z-10">
+                                <IconSearch class="w-4 h-4 text-t-lv2" />
                             </InputIcon>
-                            <InputText v-model="client['search']" placeholder="이름,주소,전화번호로 검색" class="w-full !pl-[35px] !*:text-[#7D7C78]" @keyup.enter="getList"/>
+                            <InputText v-model="client['search']" placeholder="이름,주소,전화번호로 검색" class="w-full" @keyup.enter="getList"/>
                         </IconField>
                     </div>
                 </div>
@@ -86,6 +87,8 @@ import { onMounted } from 'vue';
 import { useDataStore, usePopupStore, useClientStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 import { getCommas } from '@/assets/js/function';
+import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
+import IconSearch from '@/components/icons/IconSearch.vue'
 
 const data      = useDataStore();
 const popup     = usePopupStore();

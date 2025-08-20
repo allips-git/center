@@ -1,66 +1,48 @@
 <template>
-<div class="grid grid-cols-4 gap-x-4 gap-y-5 mt-[14px] product-select">
-    
-        <IftaLabel class="col-span-2 w-full">
-            <label>설치위치<span class="ml-1 text-red-600">*</span></label>
-            <InputText v-model="esti['common']['location']" placeholder="기타" class="w-full"/>
-        </IftaLabel>
-
-        <IftaLabel class="col-span-2 w-full">
-            <Select v-model="esti['blind']['division']" :options="data['division']" 
-                optionLabel="name" optionValue="value" class="w-full" @change="esti.getDivisionSet()"/>
-            <label>분할</label>
-        </IftaLabel>
-    
-
-    
-        <IftaLabel class="col-span-2 w-full">
-            <label>가로 (CM)<span class="ml-1 text-red-600">*</span></label>
-            <InputText v-keyfilter.int id="bWidth" v-model="esti['common']['width']" class="w-full" @update:modelValue="esti.getUnitCalc()"/>
-            <small class="text-red-500">{{ esti['msg']['blind']['bWidth'] }}</small>
-        </IftaLabel>
-
-        <IftaLabel class="col-span-2 w-full">
-            <label>세로 (CM)<span class="ml-1 text-red-600">*</span></label>
-            <InputText v-keyfilter.int id="bHeight" v-model="esti['common']['height']" class="w-full" @update:modelValue="esti.getUnitCalc()"/>
-            <small class="text-red-500">{{ esti['msg']['blind']['bHeight'] }}</small>
-        </IftaLabel>
-    
-
-
-    <template class="flex overflow-visible col-span-4">
-        <!-- 분할없음 -->
-        <div class="flex gap-4 w-full" v-if="esti['blind']['division'] === 1">
-            <IftaLabel class="w-full">
-                <label>수량 (좌)</label>
-                <InputNumber inputId="leftQty" v-model="esti['blind']['leftQty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">
-                <template #incrementbuttonicon>
-                    <span class="pi pi-plus" />
-                </template>
-                <template #decrementbuttonicon>
-                    <span class="pi pi-minus" />
-                </template>
-            </InputNumber>
-            <small class="text-red-500">{{ esti['msg']['blind']['leftQty'] }}</small>
+    <div class="flex flex-col gap-8 py-4">
+        <div class="grid grid-cols-4 gap-3">
+            <IftaLabel class="col-span-2">
+                <label>설치위치<span class="ml-0.5 text-red-500">*</span></label>
+                <InputText v-model="esti['common']['location']" placeholder="기타" class="w-full"/>
             </IftaLabel>
-
-            <IftaLabel class="w-full">
-                <label>수량 (우)</label>
-                <InputNumber inputId="rightQty" v-model="esti['blind']['rightQty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">
-                <template #incrementbuttonicon>
-                    <span class="pi pi-plus" />
-                </template>
-                <template #decrementbuttonicon>
-                    <span class="pi pi-minus" />
-                </template>
-            </InputNumber>
+            <IftaLabel class="col-span-2">
+                <Select v-model="esti['blind']['division']" :options="data['division']" 
+                    optionLabel="name" optionValue="value" class="w-full" @change="esti.getDivisionSet()">
+                    <template #dropdownicon>
+                        <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
+                    </template>
+                </Select>
+                <label>분할</label>
             </IftaLabel>
         </div>
-        <!-- 분할 있음 -->
-        <div class="flex gap-3 w-full" v-if="esti['blind']['division'] > 1">
-            <IftaLabel class="w-full">
-                <label>수량</label>
-                <InputNumber inputId="bQty" v-model="esti['blind']['bQty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">
+        <div class="grid grid-cols-4 gap-3">
+            <IftaLabel>
+                <label>가로 (CM)<span class="ml-0.5 text-red-500">*</span></label>
+                <InputText v-keyfilter.int id="bWidth" v-model="esti['common']['width']" class="w-full text-lg" @update:modelValue="esti.getUnitCalc()"/>
+                <small class="whitespace-nowrap text-msg">{{ esti['msg']['blind']['bWidth'] }}</small>
+            </IftaLabel> 
+            <IftaLabel>
+                <label>세로 (CM)<span class="ml-0.5 text-red-500">*</span></label>
+                <InputText v-keyfilter.int id="bHeight" v-model="esti['common']['height']" class="w-full text-lg" @update:modelValue="esti.getUnitCalc()"/>
+                <small class="whitespace-nowrap text-msg">{{ esti['msg']['blind']['bHeight'] }}</small>
+            </IftaLabel>
+            <!-- 분할없음 -->
+            <div class="grid grid-cols-2 col-span-2 gap-3" v-if="esti['blind']['division'] === 1">
+                <IftaLabel>
+                    <label>수량 (좌)</label>
+                    <InputNumber inputId="leftQty" v-model="esti['blind']['leftQty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">
+                        <template #incrementbuttonicon>
+                            <span class="pi pi-plus" />
+                        </template>
+                        <template #decrementbuttonicon>
+                            <span class="pi pi-minus" />
+                        </template>
+                    </InputNumber>
+                    <small class="whitespace-nowrap text-msg">{{ esti['msg']['blind']['leftQty'] }}</small>
+                </IftaLabel>
+                <IftaLabel>
+                    <label>수량 (우)</label>
+                    <InputNumber inputId="rightQty" v-model="esti['blind']['rightQty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">
                     <template #incrementbuttonicon>
                         <span class="pi pi-plus" />
                     </template>
@@ -68,39 +50,93 @@
                         <span class="pi pi-minus" />
                     </template>
                 </InputNumber>
-                <small class="text-red-500">{{ esti['msg']['blind']['bQty'] }}</small>
-            </IftaLabel>
-            <Button label="균등분할" class="w-full" @click="getEqual"/>
+                </IftaLabel>
+            </div>
+            <!-- 분할 있음 -->
+            <div class="grid grid-cols-2 col-span-2 gap-3" v-if="esti['blind']['division'] > 1">
+                <IftaLabel>
+                    <label>수량</label>
+                    <InputNumber inputId="bQty" v-model="esti['blind']['bQty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">
+                        <template #incrementbuttonicon>
+                            <span class="pi pi-plus" />
+                        </template>
+                        <template #decrementbuttonicon>
+                            <span class="pi pi-minus" />
+                        </template>
+                    </InputNumber>
+                    <small class="whitespace-nowrap text-msg">{{ esti['msg']['blind']['bQty'] }}</small>
+                </IftaLabel>
+                <Button label="균등분할" class="w-full btn-md h-[2.5rem]" @click="getEqual"/>
+            </div>
         </div>
-    </template>
+        <!-- 회베 (공사건 계산기) -->
+        <div class="flex flex-col gap-3 w-full case-calculator">
+            <!-- v-for -->
+            <div class="grid grid-cols-4 gap-3">
+                <IftaLabel>
+                    <label>가로 (CM)<span class="ml-0.5 text-red-500">*</span></label>
+                    <InputText v-keyfilter.int id="bWidth" v-model="esti['common']['width']" class="w-full text-lg" @update:modelValue="esti.getUnitCalc()"/>
+                    <small class="whitespace-nowrap text-msg">{{ esti['msg']['blind']['bWidth'] }}</small>
+                </IftaLabel>
+                <IftaLabel>
+                    <label>세로 (CM)<span class="ml-0.5 text-red-500">*</span></label>
+                    <InputText v-keyfilter.int id="bHeight" v-model="esti['common']['height']" class="w-full text-lg" @update:modelValue="esti.getUnitCalc()"/>
+                    <small class="whitespace-nowrap text-msg">{{ esti['msg']['blind']['bHeight'] }}</small>
+                </IftaLabel>
+                <IftaLabel>
+                    <Select v-model="esti['blind']['division']" :options="data['division']" 
+                        optionLabel="name" optionValue="value" class="w-full" @change="esti.getDivisionSet()">
+                        <template #dropdownicon>
+                            <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
+                        </template>
+                    </Select>
+                </IftaLabel>
+                <IftaLabel>
+                    <label>수량<span class="ml-0.5 text-red-500">*</span></label>
+                    <InputNumber inputId="leftQty" v-model="esti['blind']['leftQty']" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="esti.getUnitCalc()">
+                        <template #incrementbuttonicon>
+                            <span class="pi pi-plus" />
+                        </template>
+                        <template #decrementbuttonicon>
+                            <IconDelete class="text-[#000]" />
+                        </template>
+                    </InputNumber>
+                    <small class="whitespace-nowrap text-msg">{{ esti['msg']['blind']['leftQty'] }}</small>
+                </IftaLabel>
+            </div>
+            <!-- //v-for -->
+        </div>
+    </div>
+
     <!-- 회베 분할 -->
-    <template class="col-span-1" v-if="esti['blind']['division'] > 1">
+    <template v-if="esti['blind']['division'] > 1">
         <!-- v-for -->
-        <template class="flex col-span-4">
-            <div class="w-full">
-                <p class="mb-2.5 text-sm text-brand">분할 {{ esti['blind']['division'] }} 창 (아래값만 입력해주세요.)</p>
-                <div class="flex flex-col gap-4 w-full">
-                    <div v-for="(item, index) in esti['blind']['divSpec']" :key="index" class="flex gap-3 w-full">
-                        <IftaLabel class="w-full">
-                            <InputText v-keyfilter.int :id="'bWidth'+index" v-model="item['width']" class="w-full" @input="getDivBlindWidth(index)"/>
-                        </IftaLabel>
-                        <IftaLabel class="w-full">
-                            <InputText v-keyfilter.int v-model="esti['common']['height']" class="w-full" @input="getEqual"/>
-                        </IftaLabel>
-                        <IftaLabel class="w-full">
-                            <Select v-model="item['handle']" :options="data['handle']" optionLabel="name" optionValue="value" class="w-full" />
-                        </IftaLabel>
-                        <IftaLabel class="w-full">
-                            <label for=""></label>
-                            <InputText v-model="item['size']" class="w-full" disabled/>
-                        </IftaLabel>
-                    </div>
-                    <small class="text-red-500">{{ esti['msg']['blind']['divWidth'] }}</small>
+        <template class="block">
+            <p class="mb-2.5 font-medium text-sky-500 text-11">분할<strong class="px-[1px]">{{ esti['blind']['division'] }}</strong>창 (아래값만 입력해주세요.)</p>
+            <div class="flex flex-col gap-3 w-full">
+                <div v-for="(item, index) in esti['blind']['divSpec']" :key="index" class="grid grid-cols-4 gap-3 fgrid">
+                    <IftaLabel class="w-full">
+                        <InputText v-keyfilter.int :id="'bWidth'+index" v-model="item['width']" class="w-full text-lg" @input="getDivBlindWidth(index)"/>
+                    </IftaLabel>
+                    <IftaLabel class="w-full">
+                        <InputText v-keyfilter.int v-model="esti['common']['height']" class="w-full text-lg" @input="getEqual"/>
+                    </IftaLabel>
+                    <IftaLabel class="w-full">
+                        <Select v-model="item['handle']" :options="data['handle']" optionLabel="name" optionValue="value" class="w-full">
+                            <template #dropdownicon>
+                                <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
+                            </template>
+                        </Select>
+                    </IftaLabel>
+                    <IftaLabel class="w-full">
+                        <label for=""></label>
+                        <InputText v-model="item['size']" class="w-full text-lg" disabled/>
+                    </IftaLabel>
                 </div>
+                <small class="text-msg">{{ esti['msg']['blind']['divWidth'] }}</small>
             </div>
         </template>
     </template>
-</div>
 </template>
 
 <script setup lang="ts">
@@ -108,6 +144,8 @@ import InputText from 'primevue/inputtext';
 import InputNumber from 'primevue/inputnumber';
 import IftaLabel from 'primevue/iftalabel';
 import { useDataStore, useEstiStore } from '@/store';
+import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
+import IconDelete from '@/components/icons/IconDelete.vue'
 
 const data = useDataStore();
 const esti = useEstiStore();
@@ -123,3 +161,9 @@ const getDivBlindWidth = async (index: number) => {
 }
 
 </script>
+
+<style scoped>
+.case-calculator > .grid:not(:first-child) .p-iftalabel label {
+    display: none;
+}
+</style>

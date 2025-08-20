@@ -1,7 +1,7 @@
 <template>
-    <div class="p-4 bg-white rounded border border-gray-200">
+    <div class="p-4 bg-white rounded border border-l-lv4">
         <div class="">
-            <div v-if="showtitle" class="flex justify-between items-center pb-3 text-base font-bold border-b border-gray-100">
+            <div v-if="showtitle" class="flex justify-between items-center pb-3 text-base font-bold border-b border-dashed border-[#F0F0F6]">
                 <h4 class="text-base text-t-lv1">{{ title }}</h4>
                 <!-- 단위 -->
                 <p class="text-p-lv4"><span class="ml-0.5">{{ unit }}</span></p>
@@ -21,7 +21,7 @@
                 </Accordion>
             </div>
 
-            <div class="flex flex-col gap-2 py-3 border-dashed border-y">
+            <div class="flex flex-col gap-2 py-3">
              <template v-for="(calc, index) in calcs" :key="index">
                 <dl v-if="Number(calc.amt) !== 0 || calc.title === '제품 금액' || calc.title === '이달 매입금'" class="flex justify-between items-center">
                     <dt class="text-15 text-t-lv2">
@@ -49,7 +49,7 @@
                     </dd>
                 </dl> -->
 
-                <dl class="flex justify-between items-center pt-3 font-bold border-t border-dotted">
+                <dl class="flex justify-between items-center pt-3 font-bold border-t border-dashed border-[#F0F0F6]">
                     <dt class="text-18">{{ totalTitle }}</dt>
                     <dd class="flex items-end text-p-lv4">
                         <p class="text-18">{{ getAmt(totalAmt) }}<span class="ml-0.5 text-xs font-normal">원</span></p> 

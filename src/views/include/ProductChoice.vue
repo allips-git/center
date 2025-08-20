@@ -1,25 +1,28 @@
 <template>
     <div class="flex flex-col px-4 py-1">
         <div class="flex flex-col gap-5 py-[10px] md:pt-4">
-            <div class="flex gap-2 mini_select">
-                <Select v-model="product['fcCd']" placeholder="브랜드 선택" :options="product['option']" optionLabel="label" optionValue="value" @change="getList" class="md:*:!text-sm !h-10 choice-select"/> 
-                <IconField class="w-full table-search-input mini_input">
+            <div class="flex gap-2">
+                <Select v-model="product['fcCd']" placeholder="브랜드 선택" :options="product['option']" optionLabel="label" optionValue="value" @change="getList" class="bg">
+                    <template #dropdownicon>
+                        <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
+                    </template>
+                </Select>
+                <IconField class="w-full bg">
                     <InputIcon class="z-10">
-                        <i class="z-10 pi pi-search" />
+                        <IconSearch class="w-4 h-4 text-t-lv2" />
                     </InputIcon>
-                    <InputText v-model="product['search']" placeholder="제품명 검색" class="w-full !h-10 choice-input" @keyup.enter="getList"/>
+                    <InputText v-model="product['search']" placeholder="제품명 검색" class="w-full" @keyup.enter="getList"/>
                 </IconField>
             </div>
-           
         </div>
-        <div class="flex w-full gap-[10px] product-button py-2">
+        <div class="flex w-full gap-[0.625rem] py-2">
             <Button label="실측 불러보기" size="small"/>
             <Button label="커튼 실측" size="small" @click="getExItem('EX000001')"/>
             <Button label="블라인드 실측" size="small" @click="getExItem('EX000002')"/>
         </div>
         <ul class="flex flex-col">
             <li v-for="(item, index) in product['list']" :key="index" class="border-b">
-                <div class="flex flex-col items-center gap-1 py-6" @click="toggleSubList(index, item['itemCd'])">
+                <div class="flex flex-col gap-1 items-center py-6" @click="toggleSubList(index, item['itemCd'])">
                     <div :for="item['itemCd']" class="items-center w-full">
                         <!-- <RadioButton :inputId="item['itemCd']" v-model="product['itemCd']" :value="item['itemCd']"/> -->
                         <label :for="item['itemCd']" class="flex items-center text-base font-bold">
@@ -34,7 +37,7 @@
                     <li v-for="(color, colorIndex) in item.colorLists" :key="colorIndex" :class="color" class="px-5 py-4 text-center border-b border-gray-200 last:border-b-0">
                         <div class="" @click="getItemChoice(color['icCd'])">
                             <!-- <RadioButton /> -->
-                            <label class="flex items-center justify-center w-full text-sm text-center" :class="{ 'text-red-500': color['useYn'] === 'N' }">
+                            <label class="flex justify-center items-center w-full text-sm text-center" :class="{ 'text-red-500': color['useYn'] === 'N' }">
                                 {{ color['icNm'] }}
                                 <span v-if="color['useYn'] === 'N'">(주문불가)</span>
                                 <!-- <Badge  value="주문불가" severity="danger" class="ml-2"></Badge> -->
@@ -57,6 +60,8 @@ import { ref, onMounted } from 'vue';
 import { useProductStore, useEstiStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
+import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
+import IconSearch from '@/components/icons/IconSearch.vue'
 
 const product = useProductStore();
 const esti    = useEstiStore();
@@ -127,12 +132,5 @@ onMounted(async () => {
 .p-inputnumber-button{
     width: 56px !important;
     overflow: visible !important;
-}
-.p-iftalabel {
-    label{
-        z-index: 10 !important;
-        // background-color: white !important;
-        // padding: 1px 0 1px 0;
-    }
 }
 </style>

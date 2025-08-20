@@ -25,14 +25,20 @@
         <!-- 옵션 더보기 -->
         <section class="">
             <div class="w-full custom_accordion">
-                <Accordion value="null" class="pt-0">
+                <Accordion
+                    value="null"
+                    class="pt-0 pb-1"
+                    >
                     <AccordionPanel class="*:pb-0 " value="0" >
                         <AccordionHeader class="!gap-2 !justify-end py-1">
-                            <p class="pb-0 text-xs font-bold">옵션 더보기</p>
-                            </AccordionHeader>
+                            <p class="pb-0 text-xs font-medium text-t-lv3">옵션 더보기</p>
+                            <template #toggleicon>
+                                <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
+                            </template>
+                        </AccordionHeader>
                         <AccordionContent class="w-full">
-                            <div class="flex flex-col gap-5">
-                                <div v-for="(item, index) in getOptionList()" :key="index"  class="flex gap-4 mt-3 w-full">
+                            <div class="flex flex-col gap-3 pt-1">
+                                <div v-for="(item, index) in getOptionList()" :key="index"  class="flex gap-3 mt-3 w-full">
                                     <IftaLabel class="w-full">
                                         <InputText :value="item.itemNm" placeholder="옵션을 선택해주세요." class="w-full" readonly @click="getOption(index)"/>
                                         <label for="emali">옵션명</label>
@@ -43,8 +49,8 @@
                                         <label for="emali">옵션 세부명</label>
                                     </IftaLabel>
                                 </div>
-                                <div class="flex justify-center items-center w-full">
-                                    <Button :label="'옵션 추가'" size="medium" @click="esti.getOptionAdd()"/>
+                                <div class="flex justify-center items-center my-1 w-full">
+                                    <Button :label="'옵션 추가'" class="btn-md" @click="esti.getOptionAdd()"/>
                                 </div>
 
                                 <IftaLabel class="w-full">
@@ -117,6 +123,7 @@ import { estiBlindMsg, estiCurtainMsg, estiEaMsg } from '@/assets/js/msg';
 import { getBlindParams, getCurtainParams, getEaParams } from '@/assets/js/calcAndProcess';
 import { getAxiosData } from '@/assets/js/function';
 import IconPencil from '@/components/icons/Iconpencil.vue';
+import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
 
 const confirm   = useConfirm();
 const popup     = usePopupStore();
@@ -324,12 +331,5 @@ const getFocus = (id: string) => {
 .p-inputnumber-button{
     width: 20px !important;
     overflow: visible !important;
-}
-.p-iftalabel {
-    label{
-        z-index: 10 !important;
-        // background-color: white !important;
-        // padding: 1px 0 1px 0;
-    }
 }
 </style>
