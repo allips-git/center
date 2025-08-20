@@ -53,14 +53,6 @@
         <div class="flex-1 pt-0.5 pb-1 sm:px-4 toggle-group-box">
             <h3 class="title text-10 text-t-lv3">가공 옵션</h3>
             <div class="flex flex-wrap w-full">
-                <div v-if="getOptionCheck('P')" class="basis-1/4 toggle-set">
-                    <label for="switch1" class="text-10 text-t-lv2">나비주름</label>
-                    <ToggleSwitch v-model="esti['curtain']['proc']" :trueValue="'001'" :falseValue="'002'" @change="getProc"/>
-                </div>
-                <div v-if="getOptionCheck('S')" class="basis-1/4 toggle-set">
-                    <label for="switch2" class="text-10 text-t-lv2">형상</label>
-                    <ToggleSwitch v-model="esti['curtain']['shape']" :trueValue="'Y'" :falseValue="'N'" @change="getShape"/>
-                </div>
                 <div class="basis-1/4 toggle-set">
                     <label for="switch3" class="text-10 text-t-lv2">투톤 색상</label>
                     <ToggleSwitch v-model="esti['curtain']['addColor']" :trueValue="'T'" :falseValue="'O'"/>
@@ -68,6 +60,14 @@
                 <div v-if="getOptionCheck('B')" class="basis-1/4 toggle-set">
                     <label for="switch4" class="text-10 text-t-lv2">리드밴드</label>
                     <ToggleSwitch v-model="esti['curtain']['bproc']" :trueValue="'002'" :falseValue="'001'" @change="getBproc"/>
+                </div>
+                <div v-if="getOptionCheck('P')" class="basis-1/4 toggle-set">
+                    <label for="switch1" class="text-10 text-t-lv2">나비주름</label>
+                    <ToggleSwitch v-model="esti['curtain']['proc']" :trueValue="'001'" :falseValue="'002'" @change="getProc"/>
+                </div>
+                <div v-if="getOptionCheck('S')" class="basis-1/4 toggle-set">
+                    <label for="switch2" class="text-10 text-t-lv2">형상</label>
+                    <ToggleSwitch v-model="esti['curtain']['shape']" :trueValue="'Y'" :falseValue="'N'" @change="getShape"/>
                 </div>
             </div>
         </div>
