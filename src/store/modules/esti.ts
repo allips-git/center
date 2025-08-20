@@ -117,6 +117,14 @@ interface TotalInfo {
     eachItemSaleTax     : number;
     eachItemPurcAmt     : number;
     eachItemPurcTax     : number;
+    totalProcSaleAmt    : number;
+    totalProcSaleTax    : number;
+    totalProcPurcAmt    : number;
+    totalProcPurcTax    : number;
+    totalBprocSaleAmt   : number;
+    totalBprocSaleTax   : number;
+    totalBprocPurcAmt   : number;
+    totalBprocPurcTax   : number;
     totalOptionSaleAmt  : number;
     totalOptionSaleTax  : number;
     totalOptionPurcAmt  : number;
@@ -321,6 +329,16 @@ const getTotalInfo = (): TotalInfo => {
         eachItemPurcAmt     : 0,    /** 각 제품별 매입 금액 */
         eachItemPurcTax     : 0,    /** 각 제품별 매입 세액 */
 
+        totalProcSaleAmt  : 0,    /** 계산된 총 하단가공 옵션 매출 금액 */
+        totalProcSaleTax  : 0,    /** 계산된 총 하단가공 옵션 매출 세액 */
+        totalProcPurcAmt  : 0,    /** 계산된 총 하단가공 옵션 매입 금액 */
+        totalProcPurcTax  : 0,    /** 계산된 총 하단가공 옵션 매입 세액 */
+
+        totalBprocSaleAmt  : 0,    /** 계산된 총 상단가공 옵션 매출 금액 */
+        totalBprocSaleTax  : 0,    /** 계산된 총 상단가공 옵션 매출 세액 */
+        totalBprocPurcAmt  : 0,    /** 계산된 총 상단가공 옵션 매입 금액 */
+        totalBprocPurcTax  : 0,    /** 계산된 총 상단가공 옵션 매입 세액 */
+
         totalOptionSaleAmt  : 0,    /** 계산된 총 옵션 매출 금액 */
         totalOptionSaleTax  : 0,    /** 계산된 총 옵션 매출 세액 */
         totalOptionPurcAmt  : 0,    /** 계산된 총 옵션 매입 금액 */
@@ -351,6 +369,7 @@ const getPayList = (): PayList => {
     return [
         {name : 'itemAmt',      title: '상품 금액',         amt: 0, red: false, blue: false, memo : ''},
         {name : 'itemTax',      title: '부가세',            amt: 0, red: false, blue: false, memo : ''},
+        {name : 'optionAmt',    title: '옵션 금액',         amt: 0, red: false, blue: false, memo : ''},
         {name : 'shapeAmt',     title: '형상 금액',         amt: 0, red: false, blue: false, memo : ''},
         {name : 'heightAmt',    title: '세로길이 추가금액', amt: 0, red: false, blue: false, memo : ''},
         {name : 'addAmt',       title: '추가',              amt: 0, red: true, blue: false, memo : ''},
@@ -458,8 +477,10 @@ export const useEstiStore = defineStore('esti', {
                 { title : '제품 금액', amt : state.total['totalItemSaleAmt'] },
                 { title : '부가세', amt : state.total['totalItemSaleTax'] },
                 { title : '옵션 금액', amt : state.total['totalOptionSaleAmt'] + state.total['totalOptionSaleTax'] },
-                { title : '형상 금액', amt : state.total['totalShapeSaleAmt'] + state.total['totalShapeSaleTax'] },
-                { title : '세로길이 추가 금액', amt : state.total['totalHeightSaleAmt'] + state.total['totalHeightSaleTax'] }
+                { title : '나비주름 추가금액', amt : state.total['totalProcSaleAmt'] + state.total['totalProcSaleTax'] },
+                { title : '리드밴드 추가금액', amt : state.total['totalBprocSaleAmt'] + state.total['totalBprocSaleTax'] },
+                { title : '형상 추가금액', amt : state.total['totalShapeSaleAmt'] + state.total['totalShapeSaleTax'] },
+                { title : '세로길이 추가금액', amt : state.total['totalHeightSaleAmt'] + state.total['totalHeightSaleTax'] }
             ];
 
             return info;
@@ -560,6 +581,7 @@ export const useEstiStore = defineStore('esti', {
 
                 this.getPayAmt('itemAmt', Number(res.data['itemAmt']));
                 this.getPayAmt('itemTax', Number(res.data['itemTax']));
+                this.getPayAmt('optionAmt', Number(res.data['optionAmt']));
                 this.getPayAmt('shapeAmt', Number(res.data['shapeAmt']));
                 this.getPayAmt('heightAmt', Number(res.data['heightAmt']));
 
@@ -656,22 +678,28 @@ export const useEstiStore = defineStore('esti', {
         },
         getOptionSet(info: object)
         {
-            this.common.options[this.optionSeq] = Object.assign({}, getOption(), {
-                poCd      : null,
-                gb        : info.gb ? info.gb : 'N', // 옵션 구분 (P: 제품 / B: 블라인드 / S: 커튼 / N: 없음)
-                itemCd    : info.itemCd ? info.itemCd : '',
-                itemNm    : info.itemNm ? info.itemNm : '',
-                icCd      : info.icCd ? info.icCd : '',
-                icNm      : info.icNm ? info.icNm : '',
-                selSpec   : info.selSpec ? info.selSpec : '',
-                saleUnit  : info.saleUnit ? Number(info.saleUnit) : null,
-                purcUnit  : info.purcUnit ? Number(info.purcUnit) : null,
-                saleAmt   : null,
-                saleTax   : null,
-                purcAmt   : null,
-                purcTax   : null,
-                delYn     : 'N'
-            })
+            const option = this.common.options.filter(item => item.gb === 'N');
+            const target = option[this.optionSeq];
+
+            if(target)
+            {
+                Object.assign(target, {
+                    poCd      : null,
+                    gb        : info.gb ? info.gb : 'N', // 옵션 구분 (P: 제품 / B: 블라인드 / S: 커튼 / N: 없음)
+                    itemCd    : info.itemCd ? info.itemCd : '',
+                    itemNm    : info.itemNm ? info.itemNm : '',
+                    icCd      : info.icCd ? info.icCd : '',
+                    icNm      : info.icNm ? info.icNm : '',
+                    selSpec   : info.selSpec ? info.selSpec : '',
+                    saleUnit  : info.saleUnit ? Number(info.saleUnit) : null,
+                    purcUnit  : info.purcUnit ? Number(info.purcUnit) : null,
+                    saleAmt   : null,
+                    saleTax   : null,
+                    purcAmt   : null,
+                    purcTax   : null,
+                    delYn     : 'N'
+                });
+            };
         },
         async getBlindSet(info: object)
         {
@@ -805,8 +833,6 @@ export const useEstiStore = defineStore('esti', {
                     /** 회배 */
                     info = getHebeCalc(this.common, this.blind);
 
-                    console.log(info);
-
                     this.total['totalQty']      = Number(this.blind['division']) === 1 ? (Number(this.blind['leftQty']) + Number(this.blind['rightQty'])) : Number(this.blind['bQty']);
                     this.total['totalUnitSize'] = info['hebe'];
         
@@ -900,6 +926,24 @@ export const useEstiStore = defineStore('esti', {
                 break;
             }
 
+            console.log(info);
+
+            /** 옵션 데이터 처리 */
+            if(this.common['unit'] === '001')
+            {
+                if(info.optionData.length > 0)
+                {
+                    this.common.options = info.optionData[0];
+                }
+            }
+            else
+            {
+                if(info.optionList.length > 0)
+                {
+                    this.common.options = info.optionList[0];
+                }
+            }
+
             /** 제품 금액 */
             this.total['totalItemSaleAmt']   = info['itemSaleAmt'];
             this.total['totalItemSaleTax']   = info['itemSaleTax'];
@@ -911,6 +955,22 @@ export const useEstiStore = defineStore('esti', {
             this.total['totalOptionSaleTax']   = info['optionSaleTax'];
             this.total['totalOptionPurcAmt']   = info['optionPurcAmt'];
             this.total['totalOptionPurcTax']   = info['optionPurcTax'];
+
+            /** 나비주름 / 리드밴드 추가 금액 처리 ( 커튼 단위만 ) */
+            switch(this.common['unit'])
+            {
+                case '002': case '003': case '005': case '006':
+                    this.total['totalProcSaleAmt']   = info['procSaleAmt'];
+                    this.total['totalProcSaleTax']   = info['procSaleTax'];
+                    this.total['totalProcPurcAmt']   = info['procPurcAmt'];
+                    this.total['totalProcPurcTax']   = info['procPurcTax'];
+
+                    this.total['totalBprocSaleAmt']  = info['bprocSaleAmt'];
+                    this.total['totalBprocSaleTax']  = info['bprocSaleTax'];
+                    this.total['totalBprocPurcAmt']  = info['bprocPurcAmt'];
+                    this.total['totalBprocPurcTax']  = info['bprocPurcTax'];
+                break;
+            }
 
             /** 총 매출/매입 금액 */
             this.total['totalSaleAmt']       = info['totalSaleAmt'];
