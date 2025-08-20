@@ -65,15 +65,15 @@
                     <ToggleSwitch v-model="esti['curtain']['addColor']" :trueValue="'T'" :falseValue="'O'"/>
                 </div>
                 <div v-if="getOptionCheck('B')" class="basis-1/4 toggle-set">
-                    <label for="switch4" class="text-10 text-t-lv2">리드밴드</label>
+                    <label for="switch4" class="font-medium text-11 text-t-lv2">리드밴드</label>
                     <ToggleSwitch v-model="esti['curtain']['bproc']" :trueValue="'002'" :falseValue="'001'" @change="getBproc"/>
                 </div>
                 <div v-if="getOptionCheck('P')" class="basis-1/4 toggle-set">
-                    <label for="switch1" class="text-10 text-t-lv2">나비주름</label>
+                    <label for="switch1" class="font-medium text-11 text-t-lv2">나비주름</label>
                     <ToggleSwitch v-model="esti['curtain']['proc']" :trueValue="'001'" :falseValue="'002'" @change="getProc"/>
                 </div>
                 <div v-if="getOptionCheck('S')" class="basis-1/4 toggle-set">
-                    <label for="switch2" class="text-10 text-t-lv2">형상</label>
+                    <label for="switch2" class="font-medium text-11 text-t-lv2">형상</label>
                     <ToggleSwitch v-model="esti['curtain']['shape']" :trueValue="'Y'" :falseValue="'N'" @change="getShape"/>
                 </div>
             </div>
