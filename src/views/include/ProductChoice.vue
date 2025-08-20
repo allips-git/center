@@ -54,8 +54,6 @@
 import IconField from 'primevue/iconfield'; 
 import InputText from 'primevue/inputtext'; 
 import InputIcon from 'primevue/inputicon'; 
-import Badge from 'primevue/badge';
-import RadioButton from 'primevue/radiobutton';
 import { ref, onMounted } from 'vue';
 import { useProductStore, useEstiStore } from '@/store';
 import { getCommas } from '@/assets/js/function';

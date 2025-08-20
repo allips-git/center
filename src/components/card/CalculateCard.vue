@@ -23,7 +23,7 @@
 
             <div class="flex flex-col gap-2 py-3">
              <template v-for="(calc, index) in calcs" :key="index">
-                <dl v-if="Number(calc.amt) !== 0 || calc.title === '제품 금액' || calc.title === '이달 매입금'" class="flex justify-between items-center">
+                <dl v-if="Number(calc.amt) !== 0 || calc.name === 'itemAmt' || calc.title === '이달 매입금'" class="flex justify-between items-center">
                     <dt class="text-15 text-t-lv2">
                         {{ calc.title }}
                         <span v-if="calc.memo !== ''" :class="{

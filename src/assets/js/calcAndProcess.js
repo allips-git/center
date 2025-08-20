@@ -5,7 +5,6 @@ import { getHebe, hebeCalculation2, pokCalculation, yardCalculation, cmCalculati
  */
 export function getHebeCalc(common, blind)
 {
-    console.log(common);
     const hebe = [];
 
     const division = Number(blind['division']);
@@ -65,7 +64,7 @@ export function getYardCalc(common, curtain)
         qty             : curtain['cQty'],
         yard            : Number(curtain['size']),
         height          : Number(common['height']),
-        option          : common['options'].filter(item => item.itemCd !== ''),
+        option          : common['options'].filter(item => item.itemCd !== '' && item.useYn === 'Y' && item.delYn === 'N'),
         dcUnit          : common['dcUnit'],
         dcAmt           : Number(common['dcAmt']),
         saleVat         : import.meta.env.VITE_VAT,
@@ -93,7 +92,7 @@ export function getPokCalc(common, curtain)
         height          : Number(common['height']),
         heightLen       : Number(curtain['heightLen']),
         addPrice        : Number(curtain['addPrice']),
-        option          : common['options'].filter(item => item.itemCd !== ''),
+        option          : common['options'].filter(item => item.itemCd !== '' && item.useYn === 'Y' && item.delYn === 'N'),
         dcUnit          : common['dcUnit'],
         dcAmt           : Number(common['dcAmt']),
         saleVat         : import.meta.env.VITE_VAT,
@@ -115,7 +114,7 @@ export function getCmCalc(common, curtain)
         saleAmt     : Number(common['saleUnit']),
         cm          : Number(curtain['size']),
         cnt         : curtain['cQty'],
-        option      : common['options'].filter(item => item.itemCd !== ''),
+        option      : common['options'].filter(item => item.itemCd !== '' && item.useYn === 'Y' && item.delYn === 'N'),
         dcUnit      : common['dcUnit'],
         dcAmt       : Number(common['dcAmt']),
         saleVat     : import.meta.env.VITE_VAT,
@@ -123,6 +122,8 @@ export function getCmCalc(common, curtain)
         purcVat     : common['vat'],
         purcVmRate  : common['vmRate']
     }
+
+    console.log(params);
 
     return cmCalculation(params);
 }
@@ -209,7 +210,7 @@ export function getCommonParams(common)
         saleUnit    : common['saleUnit'],
         purcUnit    : common['purcUnit'],
         roundGb     : common['roundGb'],
-        options     : common['options'],
+        options     : common['options'].filter(item => item.itemCd !== ''),
         memo        : common['memo']
     }
 
