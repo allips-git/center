@@ -21,7 +21,6 @@
 </template>
     
 <script setup lang="ts">
-import BackHeader from '@/components/layouts/BackHeader.vue'
 import CalculateCard from "@/components/card/CalculateCard.vue";
 import InfoCard from "@/components/card/InfoCard.vue";
 import TableCard from "@/components/card/TableCard.vue";

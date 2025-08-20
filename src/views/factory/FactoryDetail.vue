@@ -8,9 +8,16 @@
         <section class="">
             <h1 class="px-5 pt-5 pb-2 mb-1 text-sm font-bold">공장 정보</h1>
             <ul class="flex flex-col gap-[10px] p-5 pt-0 text-sm rounded-md">
-                <li class="flex text-xs">
-                    <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">혜택</p>
-                    <p class="font-medium"><span class="flex justify-center items-center font-bold text-white bg-orange-500 rounded-full size-5">P</span>{{ factory['sys']['info']['boon'] }}</p>
+                <li class="flex">
+                    <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">공장명</p>
+                    <p class="text-xs font-bold">{{ factory.sys.info.faNm }}</p>
+                </li>
+                <li class="flex">
+                    <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">별칭명</p>
+                    <p class="text-xs">{{ factory.sys.info.alNm }}</p>
+                    <div class="pl-2 pr-1 gap-2 text-xs py-[2.5px] text-p-lv4 rounded-2xl flex items-center justify-center bg-[#CDE8FD]">
+                        <p class="pb-px" @click="getPopupOpen('sysFactoryNameSet')">별칭 수정</p>
+                    </div>
                 </li>
                 <li class="flex">
                     <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">전화번호</p>
@@ -29,6 +36,10 @@
                 <li class="flex">
                     <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">계좌</p>
                     <p class="text-xs">{{ factory['sys']['info']['bankNm']+' '+factory['sys']['info']['accNum'] }}</p>
+                </li>
+                <li class="flex text-xs">
+                    <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">혜택</p>
+                    <p class="font-medium"><span class="flex justify-center items-center font-bold text-white bg-orange-500 rounded-full size-5">P</span>{{ factory['sys']['info']['boon'] }}</p>
                 </li>
             </ul>
             <!-- 카운트 -->
@@ -78,6 +89,20 @@
     </div>
     
 </main>
+<Dialog v-model:visible="popup['pop']['sysFactoryNameSet']" 
+    header="별칭 설정"
+    :modal=true
+    position="bottom"
+    :style="{ height: '50vh' }"
+    @update:visible="getPopClose(true, 'sysFactoryNameSet')">
+    <template #header>
+        <div class="modal-backheader">
+            <Button @click="getPopClose(true, 'sysFactoryNameSet')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
+            <h2 class="modal-backheader-title">별칭 설정</h2>
+        </div>
+    </template>
+        <FactoryNameSet/>
+</Dialog>
 <Dialog v-model:visible="popup['pop']['sysFactoryItemList']" header="시스템 공장 제품 리스트" 
     :modal=true position="center" class="custom-dialog-full"
     @update:visible="getPopupClose('sysFactoryItemList', true)">
@@ -103,9 +128,9 @@
 </template>
 
 <script setup lang="ts">
-import BackHeader from '@/components/layouts/BackHeader.vue'
 import ProductInfo from "@/views/include/factory/ProductInfo.vue";
 import ProductMng from "@/views/include/factory/ProductMng.vue";
+import FactoryNameSet from '@/views/include/factory/FactoryNameSet.vue'
 import { ref } from 'vue';
 import { onMounted, onUnmounted } from 'vue';
 import { usePopupStore, useFactoryStore } from '@/store';

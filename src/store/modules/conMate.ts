@@ -159,14 +159,6 @@ export const useConMateStore = defineStore('conMate', {
 
                 this.list = list;
 
-                this.getItemAmt('itemAmt', Number(res.data['itemAmt']));
-                this.getItemAmt('itemTax', Number(res.data['itemTax']));
-                this.getItemAmt('optionAmt', Number(res.data['optionAmt']));
-                this.getItemAmt('procAmt', Number(res.data['procAmt']));
-                this.getItemAmt('bprocAmt', Number(res.data['bprocAmt']));
-                this.getItemAmt('shapeAmt', Number(res.data['shapeAmt']));
-                this.getItemAmt('heightAmt', Number(res.data['heightAmt']));
-
                 if(res.data['amtList'].length === 0)
                 {
                     this.payList = getPayList();
@@ -178,6 +170,13 @@ export const useConMateStore = defineStore('conMate', {
                     });
                 }
 
+                this.getItemAmt('itemAmt', Number(res.data['itemAmt']));
+                this.getItemAmt('itemTax', Number(res.data['itemTax']));
+                this.getItemAmt('optionAmt', Number(res.data['optionAmt']));
+                this.getItemAmt('procAmt', Number(res.data['procAmt']));
+                this.getItemAmt('bprocAmt', Number(res.data['bprocAmt']));
+                this.getItemAmt('shapeAmt', Number(res.data['shapeAmt']));
+                this.getItemAmt('heightAmt', Number(res.data['heightAmt']));
             }
             catch(e)
             {
