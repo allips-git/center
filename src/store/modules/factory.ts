@@ -29,6 +29,7 @@ interface SysList {
 
 interface SysInfo {
     faNm        : string;
+    alNm        : string;
     filePath    : string;
     tel         : string;
     boon        : string;
@@ -149,6 +150,7 @@ const getSysSearchInfo = (): SysSearchInfo => {
 const getSysInfo = (): SysInfo => {
     return {
         faNm        : '',
+        alNm        : '',
         filePath    : '',
         tel         : '',
         boon        : '',
@@ -365,6 +367,7 @@ export const useFactoryStore = defineStore('factory', {
 
                 const info = {
                     faNm        : res.data['info']['faNm'],
+                    alNm        : res.data['info']['alNm'],
                     filePath    : res.data['info']['imgUrl'],
                     tel         : res.data['info']['tel'],
                     boon        : '',
