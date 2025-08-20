@@ -9,6 +9,17 @@ interface Select {
     value   : string;
 }
 
+interface BaseOption {
+    gb          : string;
+    itemCd      : string;
+    itemNm      : string;
+    icCd        : string;
+    icNm        : string;
+    saleUnit    : number;
+    purcUnit    : number;
+    selSpec     : string;
+}
+
 interface ItemInfo {
     fcCd        : string;
     ordGb       : string;
@@ -24,6 +35,7 @@ interface ItemInfo {
     ogCd        : string;
     vat         : Y | N;
     vmRate      : number;
+    baseOption  : BaseOption[];
 }
 
 interface ExInfo {
@@ -38,6 +50,9 @@ interface ExInfo {
     unitSize    : number;
     saleUnit    : number;
     purcUnit    : number;
+    ogCd        : string;
+    vat         : 'Y' | 'N';
+    vmRate      : number;
 }
 
 /**
@@ -55,7 +70,10 @@ const getExCurtainInfo = (): ExInfo => {
         unitNm      : '폭',
         unitSize    : 1,
         saleUnit    : 0,
-        purcUnit    : 0
+        purcUnit    : 0,
+        ogCd        : '',
+        vat         : 'N',
+        vmRate      : 0
     }
 }
 
@@ -74,7 +92,10 @@ const getExBlindInfo = (): ExInfo => {
         unitNm      : '회베',
         unitSize    : 1,
         saleUnit    : 0,
-        purcUnit    : 0
+        purcUnit    : 0,
+        ogCd        : '',
+        vat         : 'N',
+        vmRate      : 0
     }
 }
 

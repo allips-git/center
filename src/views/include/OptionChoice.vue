@@ -92,7 +92,7 @@ const getAmt = (amt: number) => {
 
 onMounted(async () => {
     await option.getReset();
-    await option.getList(product.info.ogCd);
+    await option.getList(esti.common.ogCd);
 })
 
 </script>

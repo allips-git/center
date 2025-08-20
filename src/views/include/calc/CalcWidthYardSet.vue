@@ -53,21 +53,21 @@
         <div class="flex-1 pt-0.5 pb-1 sm:px-4 toggle-group-box">
             <h3 class="title text-10 text-t-lv3">가공 옵션</h3>
             <div class="flex flex-wrap w-full">
-                <div class="basis-1/4 toggle-set">
+                <div v-if="getOptionCheck('P')" class="basis-1/4 toggle-set">
                     <label for="switch1" class="text-10 text-t-lv2">나비주름</label>
-                    <ToggleSwitch v-model="esti['curtain']['proc']" :trueValue="'001'" :falseValue="'002'" />
+                    <ToggleSwitch v-model="esti['curtain']['proc']" :trueValue="'001'" :falseValue="'002'" @change="getProc"/>
                 </div>
-                <div class="basis-1/4 toggle-set">
+                <div v-if="getOptionCheck('S')" class="basis-1/4 toggle-set">
                     <label for="switch2" class="text-10 text-t-lv2">형상</label>
-                    <ToggleSwitch v-model="esti['curtain']['shape']" :trueValue="'Y'" :falseValue="'N'"/>
+                    <ToggleSwitch v-model="esti['curtain']['shape']" :trueValue="'Y'" :falseValue="'N'" @change="getShape"/>
                 </div>
                 <div class="basis-1/4 toggle-set">
                     <label for="switch3" class="text-10 text-t-lv2">투톤 색상</label>
                     <ToggleSwitch v-model="esti['curtain']['addColor']" :trueValue="'T'" :falseValue="'O'"/>
                 </div>
-                <div class="basis-1/4 toggle-set">
+                <div v-if="getOptionCheck('B')" class="basis-1/4 toggle-set">
                     <label for="switch4" class="text-10 text-t-lv2">리드밴드</label>
-                    <ToggleSwitch v-model="esti['curtain']['bproc']" :trueValue="'002'" :falseValue="'001'"/>
+                    <ToggleSwitch v-model="esti['curtain']['bproc']" :trueValue="'002'" :falseValue="'001'" @change="getBproc"/>
                 </div>
             </div>
         </div>
@@ -114,6 +114,81 @@ import { useDataStore, useEstiStore } from '@/store';
 
 const data      = useDataStore();
 const esti      = useEstiStore();
+
+const getOptionCheck = (gb: string) => {
+    const option = esti['common']['options'].find(item => item.gb === gb);
+
+    return option ? (option.useYn === 'Y' ? true : false) : false;
+}
+
+const getProc = () => {
+    if(esti['curtain']['proc'] === '001')
+    {
+        esti.common.options.forEach(item => {
+            if(item.gb === 'P')
+            {
+                item.delYn = 'N';
+            }
+        });
+    }
+    else
+    {
+        esti.common.options.forEach(item => {
+            if(item.gb === 'P')
+            {
+                item.delYn = 'Y';
+            }
+        });
+    }
+
+    esti.getUnitCalc();
+}
+
+const getBproc = () => {
+    if(esti['curtain']['bproc'] === '002')
+    {
+        esti.common.options.forEach(item => {
+            if(item.gb === 'B')
+            {
+                item.delYn = 'N';
+            }
+        });
+    }
+    else
+    {
+        esti.common.options.forEach(item => {
+            if(item.gb === 'B')
+            {
+                item.delYn = 'Y';
+            }
+        });
+    }
+
+    esti.getUnitCalc();
+}
+
+const getShape = () => {
+    if(esti['curtain']['bproc'] === '002')
+    {
+        esti.common.options.forEach(item => {
+            if(item.gb === 'S')
+            {
+                item.delYn = 'N';
+            }
+        });
+    }
+    else
+    {
+        esti.common.options.forEach(item => {
+            if(item.gb === 'S')
+            {
+                item.delYn = 'Y';
+            }
+        });
+    }
+
+    esti.getUnitCalc();
+}
 
 const getUsageVal = () => {
     let size = 0;

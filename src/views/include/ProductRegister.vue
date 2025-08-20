@@ -229,6 +229,7 @@ const getEstiSave = () => {
                     params['eachItemSaleTax']   = esti['total']['eachItemSaleTax'];
                     params['eachItemPurcAmt']   = esti['total']['eachItemPurcAmt'];
                     params['eachItemPurcTax']   = esti['total']['eachItemPurcTax'];
+                    params['eachOptionList']    = esti['total']['eachOptionList'];
                 break;
                 case '002': case '003': case '005': case '006':
                     params = getCurtainParams(esti['common'], esti['curtain']);
