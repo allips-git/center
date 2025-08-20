@@ -149,7 +149,7 @@
     @apply fixed md:relative bottom-0 left-0 w-full *:w-full px-4 border-t md:p-0 mt-10 pt-2 z-[100] bg-white pb-3.5
   }
   .gray-bar{
-    @apply bg-[#F7F7F7] w-full h-2
+    @apply bg-[#F5F5F5] w-full h-2 border-t border-[#DBDBDB]
   }
   .input-layout-box{
     @apply flex flex-col gap-2.5

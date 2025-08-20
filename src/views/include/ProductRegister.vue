@@ -5,13 +5,13 @@
             <Button label="제품 변경" size="small" @click="getItemChange" class="!z-[100] !text-xs"/>
         </div>     -->
         <div class="flex justify-between py-[5px] text-sm">
-            <h2 class="px-2 py-1 font-bold bg-cyan-100 rounded-full text-10 text-s-lv1">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
-                        <div class="flex gap-1 items-center font-medium">
+            <h2 class="p-1.5 leading-[1.167] font-bold rounded-[0.125rem] bg-s-lv2 text-xs text-s-lv1">{{ esti['common']['itemNm'] }} {{ `${esti['common']['icNm'] === '' ? '' : '/'+esti['common']['icNm']}` }}</h2>
+            <div class="flex gap-1 items-center font-medium">
                 <span>({{ esti['common']['unitSize'] }}{{ esti['common']['unitNm'] }}) {{ getAmt(esti['common']['saleUnit'] || 0) }}원</span>
                 <IconPencil class="w-3 h-3 text-gray-400 cursor-pointer" @click="getPopupOpen('priceChange')" />
             </div>
         </div>
-        <div class="gray-bar my-[14px]"></div>
+        <div class="gray-bar my-[0.875rem]"></div>
         <!-- 입력 계산기 컴포넌트 -->
         <div class="">
             <!-- 회베 -->
@@ -25,7 +25,7 @@
         <!-- 옵션 더보기 -->
         <section class="">
             <div class="w-full custom_accordion">
-                <Accordion value="null" class="pt-4">
+                <Accordion value="null" class="pt-0">
                     <AccordionPanel class="*:pb-0 " value="0" >
                         <AccordionHeader class="!gap-2 !justify-end py-1">
                             <p class="pb-0 text-xs font-bold">옵션 더보기</p>
@@ -43,7 +43,7 @@
                                         <label for="emali">옵션 세부명</label>
                                     </IftaLabel>
                                 </div>
-                                <div class="flex items-center justify-center w-full">
+                                <div class="flex justify-center items-center w-full">
                                     <Button :label="'옵션 추가'" size="medium" @click="esti.getOptionAdd()"/>
                                 </div>
 
@@ -57,7 +57,7 @@
                 </Accordion>
             </div>
         </section>
-        <div class="gray-bar my-[14px]"></div>
+        <div class="gray-bar my-[0.875rem]"></div>
         <div class="mt-[10px]">
             <CalculateCard title="총 단위" :showtitle="true" 
                 :unit="esti['total']['totalUnitSize']+esti['common']['unitNm']"

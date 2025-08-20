@@ -1,13 +1,17 @@
 <template>
-    <div class="flex flex-col gap-8 pt-4">
+    <div class="flex flex-col gap-8 py-4 clac-screen">
         <div class="grid grid-cols-4 gap-3 product-select">
             <IftaLabel class="col-span-2">
-                <label>설치위치 <span class="ml-1 text-red-600">*</span></label>
+                <label>설치위치<span class="ml-0.5 text-red-500">*</span></label>
                 <InputText v-model="esti['common']['location']" placeholder="기타" class="w-full"/> 
             </IftaLabel>
 
             <IftaLabel class="">
-                <Select v-model="esti['curtain']['split']" :options="data['split']" optionLabel="name" optionValue="value" class="w-full" />
+                <Select v-model="esti['curtain']['split']" :options="data['split']" optionLabel="name" optionValue="value" class="w-full">
+                    <template #dropdownicon>
+                        <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
+                    </template>
+                </Select>
                 <label>분할</label>
             </IftaLabel>
 
@@ -23,26 +27,30 @@
 
         <div class="grid grid-cols-4 gap-3 fabric-select">
             <IftaLabel class="">
-                <label>가로(CM)<span class="ml-1 text-red-600">*</span></label>
-                <InputText v-keyfilter.int id="cWidth" v-model="esti['common']['width']" class="w-full !font-bold" @update:modelValue="esti.getUnitCalc()" />
+                <label>가로(CM)<span class="ml-0.5 text-red-500">*</span></label>
+                <InputText v-keyfilter.int id="cWidth" v-model="esti['common']['width']" class="w-full !font-bold text-lg" @update:modelValue="esti.getUnitCalc()" />
                 <small class="text-red-500">{{ esti['msg']['curtain'][`cWidth`] }}</small>
             </IftaLabel>
 
             <IftaLabel class="">
                 <label>세로(CM)</label>
-                <InputText v-keyfilter.int id="cHeight" v-model="esti['common']['height']" class="w-full !font-bold" @update:modelValue="esti.getUnitCalc()" />
+                <InputText v-keyfilter.int id="cHeight" v-model="esti['common']['height']" class="w-full !font-bold text-lg" @update:modelValue="esti.getUnitCalc()" />
                 <small class="text-red-500">{{ esti['msg']['curtain'][`cHeight`] }}</small>
             </IftaLabel>
 
             <IftaLabel class="">
-                <Select v-model="esti['curtain']['use']" :options="data['usage']" optionLabel="name" optionValue="value" class="w-full !font-bold " @update:modelValue="esti.getUnitCalc()" />
-                <label>원단 사용량({{ getUsageVal() }})</label>
+                <Select v-model="esti['curtain']['use']" :options="data['usage']" optionLabel="name" optionValue="value" class="w-full text-lg" @update:modelValue="esti.getUnitCalc()">
+                    <template #dropdownicon>
+                        <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
+                    </template>
+                </Select>
+                <label class="whitespace-nowrap">사용량({{ getUsageVal() }})</label>
             </IftaLabel>
 
             <div class="relative">
                 <IftaLabel class="flex-1 min-w-0">
-                    <label class="!font-bold">최종계산</label>
-                    <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full text-left !text-sky-500 !font-bold custom-input-text" @input="getSize" />
+                    <label class="accent">최종({{ esti['common']['unitNm'] }})</label>
+                    <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full text-left !text-sky-500 !font-bold text-lg custom-input-text" @input="getSize" />
                 </IftaLabel>
                 <span class="absolute right-2 bottom-1/2 text-sm translate-y-1/2">{{ esti['common']['unitNm'] }}</span>
                 <small class="text-red-500">{{ esti['msg']['curtain'][`cSize`] }}</small>
@@ -111,6 +119,7 @@ import InputNumber from 'primevue/inputnumber';
 import IftaLabel from 'primevue/iftalabel';
 import ToggleSwitch from 'primevue/toggleswitch';
 import { useDataStore, useEstiStore } from '@/store';
+import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
 
 const data      = useDataStore();
 const esti      = useEstiStore();
