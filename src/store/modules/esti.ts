@@ -4,7 +4,7 @@
 import { defineStore } from 'pinia';
 import { getHebe, getPok, getYard, getCm, eaCalculation } from 'planorder-calculator';
 import { getHebeCalc, getPokCalc, getYardCalc, getCmCalc } from '@/assets/js/calcAndProcess';
-import { getAxiosData, getCardColumns } from '@/assets/js/function';
+import { getAxiosData, getCardColumns, getCommas } from '@/assets/js/function';
 
 type Nullable<T>    = T | null;
 type Type           = 'I' | 'M' | 'N'; /** I : 명세표 추가 데이터 / M : 수정 데이터 / N : 신규 명세표 */
@@ -117,6 +117,7 @@ interface TotalInfo {
     eachItemSaleTax     : number;
     eachItemPurcAmt     : number;
     eachItemPurcTax     : number;
+    eachOptionList      : string[];
     totalProcSaleAmt    : number;
     totalProcSaleTax    : number;
     totalProcPurcAmt    : number;
@@ -223,6 +224,7 @@ const getOption = (): Options => {
         saleTax   : null,
         purcAmt   : null,
         purcTax   : null,
+        useYn     : 'Y',
         delYn     : 'N'
     }
 }
@@ -367,14 +369,16 @@ const getTotalInfo = (): TotalInfo => {
  */
 const getPayList = (): PayList => {
     return [
-        {name : 'itemAmt',      title: '상품 금액',         amt: 0, red: false, blue: false, memo : ''},
-        {name : 'itemTax',      title: '부가세',            amt: 0, red: false, blue: false, memo : ''},
-        {name : 'optionAmt',    title: '옵션 금액',         amt: 0, red: false, blue: false, memo : ''},
-        {name : 'shapeAmt',     title: '형상 금액',         amt: 0, red: false, blue: false, memo : ''},
+        {name : 'itemAmt',      title: '상품 금액',        amt: 0, red: false, blue: false, memo : ''},
+        {name : 'itemTax',      title: '부가세',           amt: 0, red: false, blue: false, memo : ''},
+        {name : 'optionAmt',    title: '옵션 금액',        amt: 0, red: false, blue: false, memo : ''},
+        {name : 'procAmt',      title: '나비주름',         amt: 0, red: false, blue: false, memo : ''},
+        {name : 'bprocAmt',     title: '리드밴드',         amt: 0, red: false, blue: false, memo : ''},
+        {name : 'shapeAmt',     title: '형상',             amt: 0, red: false, blue: false, memo : ''},
         {name : 'heightAmt',    title: '세로길이 추가금액', amt: 0, red: false, blue: false, memo : ''},
-        {name : 'addAmt',       title: '추가',              amt: 0, red: true, blue: false, memo : ''},
-        {name : 'dcAmt',        title: '할인',              amt: 0, red: true, blue: false, memo : ''},
-        {name : 'cutAmt',       title: '절삭 할인',         amt: 0, red: true, blue: false, memo : ''}
+        {name : 'addAmt',       title: '추가',             amt: 0, red: true, blue: false, memo : ''},
+        {name : 'dcAmt',        title: '할인',             amt: 0, red: true, blue: false, memo : ''},
+        {name : 'cutAmt',       title: '절삭 할인',        amt: 0, red: true, blue: false, memo : ''}
         // {name : 'conAmt', title: '계약 선금', amt: 0, blue: true},
         // {name : 'lastAddAmt', title: '최종 추가', amt: 0, red: true},
         // {name : 'lastDcAmt', title: '최종 할인', amt: 0, red: true},
@@ -473,14 +477,18 @@ export const useEstiStore = defineStore('esti', {
     }),
     getters: {
         totalAmtInfo : (state) => {
+            const proc = state.common.options.find(i => i.gb === 'P');
+            const bproc = state.common.options.find(i => i.gb === 'B');
+            const shape = state.common.options.find(i => i.gb === 'S');
+
             const info = [
-                { title : '제품 금액', amt : state.total['totalItemSaleAmt'] },
-                { title : '부가세', amt : state.total['totalItemSaleTax'] },
-                { title : '옵션 금액', amt : state.total['totalOptionSaleAmt'] + state.total['totalOptionSaleTax'] },
-                { title : '나비주름 추가금액', amt : state.total['totalProcSaleAmt'] + state.total['totalProcSaleTax'] },
-                { title : '리드밴드 추가금액', amt : state.total['totalBprocSaleAmt'] + state.total['totalBprocSaleTax'] },
-                { title : '형상 추가금액', amt : state.total['totalShapeSaleAmt'] + state.total['totalShapeSaleTax'] },
-                { title : '세로길이 추가금액', amt : state.total['totalHeightSaleAmt'] + state.total['totalHeightSaleTax'] }
+                { gb: 'item', title : `${state.common.itemNm + ' / ' + state.common.icNm} (${getCommas(Number(state.common.saleUnit))}원)`, amt : state.total['totalItemSaleAmt'] },
+                { gb: 'vat', title : '부가세', amt : state.total['totalItemSaleTax'] },
+                { gb: 'option', title : '옵션 금액', amt : state.total['totalOptionSaleAmt'] + state.total['totalOptionSaleTax'] },
+                { gb: 'proc',title : `나비주름 ${proc ? '('+Number(proc.saleUnit)+'원)' : ''}`, amt : state.total['totalProcSaleAmt'] + state.total['totalProcSaleTax'] },
+                { gb: 'bproc',title : `리드밴드 ${bproc ? '('+Number(bproc.saleUnit)+'원)' : ''}`, amt : state.total['totalBprocSaleAmt'] + state.total['totalBprocSaleTax'] },
+                { gb: 'shape',title : `형상 ${shape ? '('+Number(shape.saleUnit)+'원)' : ''}`, amt : state.total['totalShapeSaleAmt'] + state.total['totalShapeSaleTax'] },
+                { gb: 'height',title : '세로길이 추가금액', amt : state.total['totalHeightSaleAmt'] + state.total['totalHeightSaleTax'] }
             ];
 
             return info;
@@ -582,6 +590,8 @@ export const useEstiStore = defineStore('esti', {
                 this.getPayAmt('itemAmt', Number(res.data['itemAmt']));
                 this.getPayAmt('itemTax', Number(res.data['itemTax']));
                 this.getPayAmt('optionAmt', Number(res.data['optionAmt']));
+                this.getPayAmt('procAmt', Number(res.data['procAmt']));
+                this.getPayAmt('bprocAmt', Number(res.data['bprocAmt']));
                 this.getPayAmt('shapeAmt', Number(res.data['shapeAmt']));
                 this.getPayAmt('heightAmt', Number(res.data['heightAmt']));
 
@@ -665,7 +675,95 @@ export const useEstiStore = defineStore('esti', {
         async getCommonSet(info: ItemInfo)
         {
             for (const data in info) {
-                this.common[data] = info[data];
+                if(data === 'baseOption')
+                {
+
+                    info[data].map(item => {
+                        const optionData = {
+                            poCd      : null,
+                            gb        : item.gb ? item.gb : 'N',
+                            itemCd    : item.itemCd ? item.itemCd : '',
+                            itemNm    : item.itemNm ? item.itemNm : '',
+                            icCd      : item.icCd ? item.icCd : '',
+                            icNm      : item.icNm ? item.icNm : '',
+                            selSpec   : item.selSpec ? item.selSpec : '',
+                            saleUnit  : item.saleUnit ? Number(item.saleUnit) : null,
+                            purcUnit  : item.purcUnit ? Number(item.purcUnit) : null,
+                            saleAmt   : null,
+                            saleTax   : null,
+                            purcAmt   : null,
+                            purcTax   : null,
+                            useYn     : item.useYn ? item.useYn : 'Y',
+                        };
+                        
+                        switch(item.gb)
+                        {
+                            case 'P':
+                                if(this.curtain.proc === '001')
+                                {
+                                    optionData.delYn = 'N';
+                                }
+                                else
+                                {
+                                    optionData.delYn = 'Y';
+                                }
+                            break;
+                            case 'B':
+                                if(this.curtain.bproc === '002')
+                                {
+                                    optionData.delYn = 'N'
+                                }
+                                else
+                                {
+                                    optionData.delYn = 'Y'
+                                }
+                            break;
+                            case 'S':
+                                if(this.curtain.shape === 'Y')
+                                {
+                                    optionData.delYn = 'N';
+                                }
+                                else
+                                {
+                                    optionData.delYn = 'Y';
+                                }
+                            break;
+                        }
+
+                        this.common.options.unshift(optionData);
+                    });
+                }
+                else if(data === 'options')
+                {
+                    if(info[data].length === 0)
+                    {
+                        this.common.options = [getOption()];
+                    }
+                    else
+                    {
+                        this.common.options = info[data].map(item => ({
+                            poCd      : null,
+                            gb        : item.gb ? item.gb : 'N', // 옵션 구분 (P: 제품 / B: 블라인드 / S: 커튼 / N: 없음)
+                            itemCd    : item.itemCd ? item.itemCd : '',
+                            itemNm    : item.itemNm ? item.itemNm : '',
+                            icCd      : item.icCd ? item.icCd : '',
+                            icNm      : item.icNm ? item.icNm : '',
+                            selSpec   : item.selSpec ? item.selSpec : '',
+                            saleUnit  : item.saleUnit ? Number(item.saleUnit) : null,
+                            purcUnit  : item.purcUnit ? Number(item.purcUnit) : null,
+                            saleAmt   : null,
+                            saleTax   : null,
+                            purcAmt   : null,
+                            purcTax   : null,
+                            useYn     : item.useYn ? item.useYn : 'Y',
+                            delYn     : item.delYn ? item.delYn : 'N'
+                        }));
+                    }
+                }
+                else
+                {
+                    this.common[data] = info[data];
+                }
             }
         },
         getOptionSeq(optionSeq: number)
@@ -697,7 +795,8 @@ export const useEstiStore = defineStore('esti', {
                     saleTax   : null,
                     purcAmt   : null,
                     purcTax   : null,
-                    delYn     : 'N'
+                    useYn     : info.useYn ? info.useYn : 'Y',
+                    delYn     : info.delYn ? item.delYn : 'N'
                 });
             };
         },
@@ -842,6 +941,11 @@ export const useEstiStore = defineStore('esti', {
                         this.total['eachItemSaleTax'] = info['eachItemSaleTax'];
                         this.total['eachItemPurcAmt'] = info['eachItemPurcAmt'];
                         this.total['eachItemPurcTax'] = info['eachItemPurcTax'];
+
+                        if(info.optionData.length > 0)
+                        {
+                            this.total['eachOptionList'] = info.optionData;
+                        }
                     }
         
                     this.total['totalShapeSaleAmt']   = 0;
@@ -862,11 +966,6 @@ export const useEstiStore = defineStore('esti', {
         
                     this.total['totalQty']          = Number(this.curtain['cQty']);
                     this.total['totalUnitSize']     = Number(this.curtain['size']) * Number(this.curtain['cQty']);
-                    
-                    this.total['totalShapeSaleAmt']    = Number(info['shapeSaleAmt']);
-                    this.total['totalShapeSaleTax']    = Number(info['shapeSaleTax']);
-                    this.total['totalShapePurcAmt']    = Number(info['shapePurcAmt']);
-                    this.total['totalShapePurcTax']    = Number(info['shapePurcTax']);
                 break;
                 case '003':
                     /** 폭 */
@@ -889,11 +988,6 @@ export const useEstiStore = defineStore('esti', {
                     this.total['totalHeightSaleTax']   = Number(info['heightSaleTax']);
                     this.total['totalHeightPurcAmt']   = Number(info['heightPurcAmt']);
                     this.total['totalHeightPurcTax']   = Number(info['heightPurcTax']);
-        
-                    this.total['totalShapeSaleAmt']    = Number(info['shapeSaleAmt']);
-                    this.total['totalShapeSaleTax']    = Number(info['shapeSaleTax']);
-                    this.total['totalShapePurcAmt']    = Number(info['shapePurcAmt']);
-                    this.total['totalShapePurcTax']    = Number(info['shapePurcTax']);
                 break;
                 case '004': /** EA */
                     info = eaCalculation({
@@ -926,23 +1020,43 @@ export const useEstiStore = defineStore('esti', {
                 break;
             }
 
-            console.log(info);
-
             /** 옵션 데이터 처리 */
             if(this.common['unit'] === '001')
             {
                 if(info.optionData.length > 0)
                 {
-                    this.common.options = info.optionData[0];
+                    this.common.options.map(item => {
+                        const option = info.optionData[0].find(o => o.gb === item.gb && o.icCd === item.icCd && o.itemCd === item.itemCd);
+
+                        if(option)
+                        {
+                            item.saleAmt = option.saleAmt;
+                            item.saleTax = option.saleTax;
+                            item.purcAmt = option.purcAmt;
+                            item.purcTax = option.purcTax;
+                        }
+                    })
                 }
             }
             else
             {
                 if(info.optionList.length > 0)
                 {
-                    this.common.options = info.optionList[0];
+                    this.common.options.map(item => {
+                        const option = info.optionList.find(o => o.gb === item.gb && o.icCd === item.icCd && o.itemCd === item.itemCd);
+
+                        if(option)
+                        {
+                            item.saleAmt = option.saleAmt;
+                            item.saleTax = option.saleTax;
+                            item.purcAmt = option.purcAmt;
+                            item.purcTax = option.purcTax;
+                        }
+                    })
                 }
             }
+
+            console.log(info);
 
             /** 제품 금액 */
             this.total['totalItemSaleAmt']   = info['itemSaleAmt'];
@@ -960,15 +1074,20 @@ export const useEstiStore = defineStore('esti', {
             switch(this.common['unit'])
             {
                 case '002': case '003': case '005': case '006':
-                    this.total['totalProcSaleAmt']   = info['procSaleAmt'];
-                    this.total['totalProcSaleTax']   = info['procSaleTax'];
-                    this.total['totalProcPurcAmt']   = info['procPurcAmt'];
-                    this.total['totalProcPurcTax']   = info['procPurcTax'];
+                    this.total['totalProcSaleAmt']  = info['procSaleAmt'];
+                    this.total['totalProcSaleTax']  = info['procSaleTax'];
+                    this.total['totalProcPurcAmt']  = info['procPurcAmt'];
+                    this.total['totalProcPurcTax']  = info['procPurcTax'];
 
-                    this.total['totalBprocSaleAmt']  = info['bprocSaleAmt'];
-                    this.total['totalBprocSaleTax']  = info['bprocSaleTax'];
-                    this.total['totalBprocPurcAmt']  = info['bprocPurcAmt'];
-                    this.total['totalBprocPurcTax']  = info['bprocPurcTax'];
+                    this.total['totalBprocSaleAmt'] = info['bprocSaleAmt'];
+                    this.total['totalBprocSaleTax'] = info['bprocSaleTax'];
+                    this.total['totalBprocPurcAmt'] = info['bprocPurcAmt'];
+                    this.total['totalBprocPurcTax'] = info['bprocPurcTax'];
+
+                    this.total['totalShapeSaleAmt'] = Number(info['shapeSaleAmt']);
+                    this.total['totalShapeSaleTax'] = Number(info['shapeSaleTax']);
+                    this.total['totalShapePurcAmt'] = Number(info['shapePurcAmt']);
+                    this.total['totalShapePurcTax'] = Number(info['shapePurcTax']);
                 break;
             }
 

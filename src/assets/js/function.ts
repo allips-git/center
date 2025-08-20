@@ -140,7 +140,7 @@ export const getCardColumns = (unit: string) => {
  * @description 상황별 할인 및 결제 처리할 금액 추출
  */
 export const getAmt = (data: Array, type: string) => {
-	const arr = ['itemAmt', 'itemTax', 'shapeAmt', 'heightAmt', 'addAmt'];
+	const arr = ['itemAmt', 'itemTax', 'optionAmt', 'procAmt', 'bprocAmt', 'shapeAmt', 'heightAmt', 'addAmt'];
 	let amt   = 0;
 
 	switch(type)

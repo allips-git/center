@@ -22,7 +22,10 @@ const getPayList = (): PayList => {
     return [
         {name : 'itemAmt',      amtGb : '', title: '상품 금액',         amt: 0, red: false, blue: false, memo : ''},
         {name : 'itemTax',      amtGb : '', title: '부가세',            amt: 0, red: false, blue: false, memo : ''},
-        {name : 'shapeAmt',     amtGb : '', title: '형상 금액',         amt: 0, red: false, blue: false, memo : ''},
+        {name : 'optionAmt',      amtGb : '', title: '옵션',            amt: 0, red: false, blue: false, memo : ''},
+        {name : 'procAmt',      amtGb : '', title: '나비주름',            amt: 0, red: false, blue: false, memo : ''},
+        {name : 'bprocAmt',      amtGb : '', title: '리드밴드',            amt: 0, red: false, blue: false, memo : ''},
+        {name : 'shapeAmt',     amtGb : '', title: '형상',         amt: 0, red: false, blue: false, memo : ''},
         {name : 'heightAmt',    amtGb : '', title: '세로길이 추가금액', amt: 0, red: false, blue: false, memo : ''},
         {name : 'addAmt',       amtGb : '001', title: '추가',              amt: 0, red: true, blue: false, memo : ''},
         {name : 'dcAmt',        amtGb : '002', title: '할인',              amt: 0, red: true, blue: false, memo : ''},
@@ -158,6 +161,9 @@ export const useConMateStore = defineStore('conMate', {
 
                 this.getItemAmt('itemAmt', Number(res.data['itemAmt']));
                 this.getItemAmt('itemTax', Number(res.data['itemTax']));
+                this.getItemAmt('optionAmt', Number(res.data['optionAmt']));
+                this.getItemAmt('procAmt', Number(res.data['procAmt']));
+                this.getItemAmt('bprocAmt', Number(res.data['bprocAmt']));
                 this.getItemAmt('shapeAmt', Number(res.data['shapeAmt']));
                 this.getItemAmt('heightAmt', Number(res.data['heightAmt']));
 

@@ -24,6 +24,7 @@ export const useOptionStore = defineStore('option', {
          */
         async getList(ogCd: string)
         {
+            console.log("ogCd:"+ ogCd);
             try
             {
                 const params = {
