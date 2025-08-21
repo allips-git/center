@@ -25,9 +25,12 @@
                 <div class="flex flex-col gap-1 items-center py-6" @click="toggleSubList(index, item['itemCd'])">
                     <div :for="item['itemCd']" class="items-center w-full">
                         <!-- <RadioButton :inputId="item['itemCd']" v-model="product['itemCd']" :value="item['itemCd']"/> -->
-                        <label :for="item['itemCd']" class="flex items-center text-base font-bold">
-                            {{ item.itemNm }} 
-                            <span v-if="item['noUsed']" class="ml-2 text-red-500">(주문불가)</span>
+                        <label :for="item['itemCd']" class="flex items-center justify-between w-full text-base font-bold">
+                            <span class="flex items-center">
+                                {{ item.itemNm }} 
+                                <span v-if="item['noUsed']" class="ml-2 text-red-500">(주문불가)</span>
+                            </span>
+                            <span class="text-sm font-normal text-gray-500">{{ item['alNm'] }}</span>
                         </label>
                     </div>
                     <p class="w-full text-sm text-gray-400">{{ item['unit'] }}</p>
@@ -46,6 +49,7 @@
                     </li>
                 </ul>
             </li>
+            <div ref="loadMoreTrigger" class="h-1"></div>
         </ul>        
     </div>
 </template>
@@ -54,7 +58,7 @@
 import IconField from 'primevue/iconfield'; 
 import InputText from 'primevue/inputtext'; 
 import InputIcon from 'primevue/inputicon'; 
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useProductStore, useEstiStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
@@ -66,7 +70,9 @@ const esti    = useEstiStore();
 const { getPopupOpen } = usePopup();
 
 // 현재 열려 있는 하위 목록의 인덱스
-const activeIndex = ref<number | null>(null);
+const activeIndex       = ref<number | null>(null);
+const loadMoreTrigger   = ref(null);
+const observer          = ref(null);
 
 // 하위 목록 토글 함수
 const toggleSubList = (index: number, itemCd: string) => {
@@ -112,13 +118,33 @@ const getAmt = (amt: number) => {
     return getCommas(amt);
 }
 
-const getList = () => {
-    product.getList();
+const getList = async () => {
+    await product.getListReset();
+    await product.getList();
 }
 
 onMounted(async () => {
     await product.getReset();
     await product.getFactory();
+
+    observer.value = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && product.loading &&product.list.length !== 0) 
+        {
+            product.getList();
+        }
+    })
+    
+    if (loadMoreTrigger.value) 
+    {
+        observer.value.observe(loadMoreTrigger.value)
+    }
+})
+
+onUnmounted(() => {
+    if (observer.value) 
+    {
+        observer.value.disconnect()
+    }
 })
 
 </script>

@@ -150,6 +150,7 @@ export const useProductStore = defineStore('product', {
             blind   : getExBlindInfo(),
             curtain : getExCurtainInfo()
         },
+        loading     : true,
         start       : 0
     }),
     getters: {
@@ -190,7 +191,8 @@ export const useProductStore = defineStore('product', {
         {
             if(this.fcCd === '')
             {
-                this.list = [];
+                this.list       = [];
+                this.loading    = true;
                 return;
             }
 
@@ -201,6 +203,8 @@ export const useProductStore = defineStore('product', {
                     itemNm  : this.search,
                     start   : this.start
                 };
+
+                console.log(params);
 
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/estiV1/getItemList`, params);
@@ -226,11 +230,18 @@ export const useProductStore = defineStore('product', {
                         unit        : item.unitNm,
                         amt         : Number(item.saleAmt),
                         colorLists  : colorLists,
+                        alNm        : item.alNm,
                         noUsed      : item.useYn === 'N' ? true : false
                     })
                 });
 
-                this.list = itemList;
+                this.list       = this.list.concat(itemList);
+                this.start      += 20;
+
+                if(res.data['list'].length < 20)
+                {
+                    this.loading = false;
+                }
             }
             catch(e)
             {
@@ -267,6 +278,12 @@ export const useProductStore = defineStore('product', {
         getEx(itemCd: string)
         {
             this.info = itemCd === 'EX000001' ? this.exItem['curtain'] : this.exItem['blind'];
+        },
+        getListReset()
+        {
+            this.start      = 0;
+            this.list       = [];
+            this.loading    = true;
         },
         getReset()
         {
