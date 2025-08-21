@@ -14,9 +14,9 @@
                 </li>
                 <li class="flex">
                     <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">별칭명</p>
-                    <p class="text-xs">{{ factory.sys.info.alNm }}</p>
-                    <div class="pl-2 pr-1 gap-2 text-xs py-[2.5px] text-p-lv4 rounded-2xl flex items-center justify-center bg-[#CDE8FD]">
-                        <p class="pb-px" @click="getPopupOpen('sysFactoryNameSet')">별칭 수정</p>
+                    <div class="flex gap-2 justify-start items-center">
+                        <p v-if="factory.sys.info.alNm" class="text-xs">{{ factory.sys.info.alNm }}</p>
+                        <Button label="별칭 수정" class="!bg-[#CDE8FD] !text-p-lv4 !border-0 btn-xs" size="small" @click="getPopupOpen('sysFactoryNameSet')" />
                     </div>
                 </li>
                 <li class="flex">

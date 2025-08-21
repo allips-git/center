@@ -4,7 +4,7 @@
         <div class="p-5">
             <div class="flex gap-2">
                 <Select placeholder="선택" /> 
-                <IconField class="table-search-input w-full">
+                <IconField class="w-full table-search-input">
                     <InputText placeholder="제품명 검색" class="w-full" />
                 </IconField>
             </div>

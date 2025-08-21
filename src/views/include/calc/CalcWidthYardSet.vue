@@ -242,24 +242,3 @@ const getSize = () => {
 }
 
 </script>
-
-<style scoped>
-.custom-input-number {
-    font-size: 0.75rem; /* text-xs */
-}
-
-.custom-input-number :deep(.p-inputnumber-input) {
-    padding: 0 !important;
-    font-size: 0.75rem;
-    text-align: center !important;
-}
-
-.custom-input-number :deep(.p-inputnumber-button) {
-    padding: 0.25rem !important;
-}
-
-.custom-input-text {
-    padding: 0.625rem !important;
-    font-size: 0.875rem;
-}
-</style>

@@ -1,99 +1,122 @@
 <template>
-<main class="p-4 !pb-32">
-    <div class="text-sm input-layout-box">
-        <div class="flex items-center justify-between w-full mb-2">
-            <h1 class="font-bold">제품명<span class="ml-0.5 text-red-500">*</span></h1>
-            <Button v-if="factory['out']['itemType'] === 'U'" label="삭제" size="small" severity="danger" class="!border-l-lv4" outlined @click="getOutItemDelete"/>
-        </div>
-        <div class="relative flex items-center justify-center">
-            <p class="w-[100px] flex-none text-13 text-t-lv3">제품 이름</p>
-            <div class="w-full mng-input">
-                <InputText id="itemNm" v-model="factory['out']['itemInfo']['itemNm']" class="w-full row_input" autocomplete="off"/>
-                <small class="text-red-500">{{ factory['out']['itemMsg']['itemNm'] }}</small>
-            </div>
-        </div>
-
-        <h1 class="mt-4 font-bold">색상 추가<span class="ml-0.5 text-red-500">*</span></h1>
-        
-        <div class="relative flex items-start justify-center">
-            <p class="w-[100px] flex-none pt-2 text-13 text-t-lv3">색상 이름</p>
-            <div class="flex flex-col w-full gap-2 mng-input">
-                <div v-for="(item, index) in factory['out']['itemInfo']['colors']" :key="index" class="">
-                <template v-if="item['delYn'] === 'N'">
-                    <div class="flex gap-2">
-                        <InputText :id="`icNm${index}`" v-model="item['icNm']" class="w-full row_input" autocomplete="off"/>
-                        <div class="flex-none w-[3.125rem] h-10">
-                            <Button v-if="index === 0" label="컬러 추가" class="flex-none w-full *:!text-10 !px-0 *:!pb-0.5  h-full" @click="getAddColor"/>
-                            <Button v-if="index !== 0" label="삭제" class="flex-none w-full *:!text-10 !px-0 *:!pb-0.5  h-full" severity="secondary" @click="factory.getOutDelColor(index)"/>
-                        </div>
-                    </div>
-                    <small class="text-red-500">{{ factory['out']['itemMsg']['colors'] }}</small>
-                </template>
-            </div>
-            </div>
-        </div>
-
-
-
-        <h1 class="mt-4 font-bold">옵션 설정<span class="ml-0.5 text-red-500">*</span></h1>
-
-        <div class="relative flex items-center justify-center w-full text-t-lv3 mng-input">
-            <p class="w-[100px] flex-none">기본 단위</p>
-            <div class="w-full mng-input">
-                <div class="flex w-full gap-2 mng-input">
-                    <InputNumber inputId="size"  v-model="factory['out']['itemInfo']['size']" class="w-full *:w-full *:!text-center font-bold row_input" autocomplete="off"/>
-                    <div class="h-10 custom-select-arrow">
-                        <Select class="w-full" 
-                        v-model="factory['out']['itemInfo']['unit']" :options="data['unit']" optionLabel="name" optionValue="value" />
-                        <IconPlay class="absolute rotate-90 top-3 right-2 *:fill-gray-400 -z-10"/>
+    <main class="!pb-[20rem] p-4 sm:px-6"><!-- @TODO [임시] 키패드 높이 하단 패딩 처리 (pb-32) -->
+        <div class="flex flex-col gap-8">
+            <!-- 제품명 -->
+            <section class="flex flex-col flex-1 gap-2.5">
+                <header class="flex justify-between items-center">
+                    <h2 class="mb-1 text-sm font-bold text-t-lv0">제품명<span class="ml-1 text-sm text-red-500">*</span></h2>
+                    <Button v-if="factory['out']['itemType'] === 'U'" label="삭제" size="small" severity="danger" class="!border-l-lv4" outlined @click="getOutItemDelete"/>
+                </header>
+                <div class="flex flex-1 justify-between items-start">
+                    <label class="w-[28%] mt-2.5 max-w-[120px] min-w-[80px] flex-none text-13 text-t-lv2">
+                        제품이름
+                    </label>
+                    <div class="w-full">
+                        <InputText id="itemNm" v-model="factory['out']['itemInfo']['itemNm']" class="w-full" autocomplete="off"/>
+                        <small class="text-msg">{{ factory['out']['itemMsg']['itemNm'] }}</small>
                     </div>
                 </div>
-                <small class="text-red-500">{{ factory['out']['itemMsg']['size'] }}</small>
-            </div>    
-        </div>
+            </section>
 
-        <div class="relative flex items-center justify-center w-full" v-if="factory['out']['itemInfo']['unit'] !== '004'">
-            <p class="w-[100px] flex-none text-t-lv3">기본 높이</p>
-            <div class="relative w-full">
-                <InputNumber v-model="factory['out']['itemInfo']['minHeight']" class="w-full *:w-full *:!pr-10 row_input inputNumber-color"/>
-                <small class="text-red-500">{{ factory['out']['itemMsg']['minHeight'] }}</small>
-                <span class="absolute text-sm text-t-lv1 right-4 top-2.5">cm</span>
+            <!-- 색상 추가 -->
+            <section class="flex flex-col flex-1 gap-2.5">
+                <h2 class="mb-1 text-sm font-bold text-t-lv0">색상 추가<span class="ml-1 text-sm text-red-500">*</span></h2>
+                <div class="flex flex-1 justify-between items-start">
+                    <label class="w-[28%] mt-2.5 max-w-[120px] min-w-[80px] flex-none text-13 text-t-lv2">
+                        색상 이름
+                    </label>
+                    <div class="flex flex-col flex-1 gap-2.5">
+                        <div v-for="(item, index) in factory['out']['itemInfo']['colors']" :key="index" class="">
+                            <template v-if="item['delYn'] === 'N'">
+                                <div class="flex gap-2">
+                                    <InputText :id="`icNm${index}`" v-model="item['icNm']" class="w-full row_input" autocomplete="off"/>
+                                    <div class="flex-none w-[3.125rem] h-10">
+                                        <Button v-if="index === 0" label="컬러 추가" class="flex-none w-full *:!text-10 !px-0 *:!pb-0.5  h-full" @click="getAddColor"/>
+                                        <Button v-if="index !== 0" label="삭제" class="flex-none w-full *:!text-10 !px-0 *:!pb-0.5  h-full" severity="secondary" @click="factory.getOutDelColor(index)"/>
+                                    </div>
+                                </div>
+                                <small class="text-msg">{{ factory['out']['itemMsg']['colors'] }}</small>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 옵션 설정 -->
+            <section class="flex flex-col flex-1 gap-2.5">
+                <h2 class="mb-1 text-sm font-bold text-t-lv0">옵션 설정<span class="ml-1 text-sm text-red-500">*</span></h2>
+                <div class="flex flex-1 justify-between items-start">
+                    <label class="w-[28%] mt-2.5 max-w-[120px] min-w-[80px] flex-none text-13 text-t-lv2">
+                        기본 단위
+                    </label>
+                    <div class="w-full">
+                        <div class="flex gap-2 w-full">
+                            <InputNumber inputId="size"  v-model="factory['out']['itemInfo']['size']" class="w-full" autocomplete="off"/>
+                            <Select class="w-full" 
+                            v-model="factory['out']['itemInfo']['unit']" :options="data['unit']" optionLabel="name" optionValue="value">
+                                <template #dropdownicon>
+                                    <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
+                                </template>
+                            </Select>
+                        </div>
+                        <small class="text-msg">{{ factory['out']['itemMsg']['size'] }}</small>
+                    </div>
+                </div>
+                <div class="flex flex-1 justify-between items-start" v-if="factory['out']['itemInfo']['unit'] !== '004'">
+                    <label class="w-[28%] max-w-[120px] mt-2.5 min-w-[80px] flex-none text-13 text-t-lv2">
+                        기본 높이
+                    </label>
+                    <div class="flex-1">
+                        <div class="w-full input-set has-unit custom-input-style">
+                            <InputNumber v-model="factory['out']['itemInfo']['minHeight']" class="w-full" />
+                            <span class="text-t-lv1 unit">cm</span>
+                        </div>
+                        <small class="text-msg">{{ factory['out']['itemMsg']['minHeight'] }}</small>
+                    </div>
+                </div>
+                <div class="flex flex-1 justify-between items-start" v-if="factory['out']['itemInfo']['unit'] === '003'">
+                    <label class="w-[28%] mt-2.5 max-w-[120px] min-w-[80px] flex-none text-13 text-t-lv2">
+                        원단 폭
+                    </label>
+                    <div class="flex-1">
+                        <div class="w-full input-set has-unit custom-input-style">
+                            <InputNumber inputId="pokSpec" v-model="factory['out']['itemInfo']['pokSpec']" class="w-full" autocomplete="off"/>
+                            <span class="text-t-lv1 unit">cm</span>
+                        </div>
+                        <small class="text-msg">{{ factory['out']['itemMsg']['pokSpec'] }}</small>
+                    </div>
+                </div>
+                <div class="flex flex-1 justify-between items-start">
+                    <label class="w-[28%] max-w-[120px] mt-2.5 min-w-[80px] flex-none text-13 text-t-lv2">
+                        매입 가격
+                    </label>
+                    <div class="flex-1">
+                        <div class="w-full input-set has-unit">
+                            <InputNumber inputId="purcAmt" v-model="factory['out']['itemInfo']['purcAmt']" class="w-full" autocomplete="off"/>
+                            <span class="text-t-lv1 unit">원</span>
+                        </div>
+                        <small class="text-msg">{{ factory['out']['itemMsg']['purcAmt'] }}</small>
+                    </div>
+                </div>
+                <div class="flex flex-1 justify-between items-start">
+                    <label class="w-[28%] max-w-[120px] mt-2.5 min-w-[80px] flex-none text-13 text-t-lv2">
+                        판매 가격
+                    </label>
+                    <div class="flex-1">
+                        <div class="w-full input-set has-unit">
+                            <InputNumber inputId="saleAmt" v-model="factory['out']['itemInfo']['saleAmt']" class="w-full" autocomplete="off"/>
+                            <span class="text-t-lv1 unit">원</span>
+                        </div>
+                        <small class="text-msg">{{ factory['out']['itemMsg']['saleAmt'] }}</small>
+                    </div>
+                </div>
+            </section>
+
+            <div class="w-full bottom-modal-absol-box outmng-button">
+                <Button label="저장" class="w-full" @click="getOutItemSave"/>
             </div>
         </div>
-
-        <div class="relative flex items-center justify-center w-full" v-if="factory['out']['itemInfo']['unit'] === '003'">
-            <p class="w-[100px] flex-none text-t-lv3">원단 폭</p>
-            <div class="w-full">
-                <InputNumber inputId="pokSpec" v-model="factory['out']['itemInfo']['pokSpec']" class="w-full *:w-full row_input inputNumber-color" autocomplete="off"/>
-                <small class="text-red-500">{{ factory['out']['itemMsg']['pokSpec'] }}</small>
-            </div>
-            <span class="absolute text-13 text-t-lv1 right-4 top-2.5">cm</span>
-        </div>
-
-        <div class="relative flex items-center justify-center w-full">
-            <p class="w-[100px] flex-none text-t-lv3">매입 가격</p>
-            <div class="w-full">
-                <InputNumber inputId="purcAmt" v-model="factory['out']['itemInfo']['purcAmt']" class="w-full row_input *:w-full inputNumber-color" autocomplete="off"/>
-                <small class="text-red-500">{{ factory['out']['itemMsg']['purcAmt'] }}</small>
-            </div>
-            <span class="absolute text-13 text-t-lv1 right-4 top-2.5">원</span>
-        </div>
-
-        <div class="relative flex items-center justify-center w-full">
-            <p class="w-[100px] flex-none text-t-lv3">판매가격</p>
-            <div class="w-full">
-                <InputNumber inputId="saleAmt" v-model="factory['out']['itemInfo']['saleAmt']" class="w-full *:w-full row_input inputNumber-color" autocomplete="off"/>
-                <small class="text-red-500">{{ factory['out']['itemMsg']['saleAmt'] }}</small>
-            </div>
-            <span class="absolute text-13 text-t-lv1 right-4 top-2.5">원</span>
-        </div>
-
-
-        <div class="w-full bottom-modal-absol-box outmng-button">
-            <Button label="저장" class="w-full" @click="getOutItemSave"/>
-        </div>
-    </div>
-</main>
+    </main>
 </template>
 
 <script setup lang="ts">
@@ -268,13 +291,11 @@ const getFocus = (id: string) => {
 </script>
 
 <style lang="scss">
-.custom_select{
-    .p-select-label{
-        display: flex;
-        align-items: center;
-        justify-content: center;
+.custom-input-style {
+    &.input-set {
+        .p-inputtext {
+            padding-right: 1.75rem !important;
+        }
     }
 }
-
-
 </style>
