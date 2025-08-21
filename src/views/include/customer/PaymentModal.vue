@@ -1,59 +1,72 @@
 <template>
 <main class="pt-5 !pb-32">
-
-    <div class="">
-        <section class="px-5 form-gap-box">
-            <div class="flex relative justify-between items-center">
-                <p class="w-[100px] flex-none text-13">할인 금액</p>
-                <InputNumber  class="*:!text-red-500 inputNumber-color !w-[70%]" :modelValue="getAmtInfo('lastDcAmt')" placeholder="할인 금액을 입력하세요" 
-                readonly @click="getDisAmtPopup"
-                />
-                <span class="absolute bottom-2.5 right-4 text-sm text-red-500">원</span>
+    <div class="flex flex-col gap-6">
+        <section class="flex flex-col flex-1 gap-3 px-5">
+            <div class="flex flex-1 justify-between items-center">
+                <label class="w-[28%] max-w-[180px] min-w-[80px] flex-none text-13 text-t-lv2">
+                    할인 금액
+                </label>
+                <div class="relative flex-1">
+                    <InputNumber class="text-lg text-red-500 inputNumber-color" :modelValue="getAmtInfo('lastDcAmt')" placeholder="할인 금액을 입력하세요" 
+                    readonly @click="getDisAmtPopup"
+                    />
+                    <span class="absolute bottom-[0.625rem] right-3 text-xs text-red-500">원</span>
+                </div>
             </div>
-
-            <div class="flex relative justify-between items-center">
-                <p class="w-[100px] flex-none text-13">추가 금액</p>
-                <InputNumber class="*:!text-blue-500 inputNumber-color !w-[70%]" 
-                :modelValue="getAmtInfo('lastAddAmt')" placeholder="추가 금액을 입력하세요"
-                readonly @click="getPopupOpen('addAmtSet')"
-                />
-                <span class="absolute right-4 bottom-1/2 text-sm text-blue-500 translate-y-1/2">원</span>
+            <div class="flex flex-1 justify-between items-center">
+                <label class="w-[28%] max-w-[180px] min-w-[80px] flex-none text-13 text-t-lv2">
+                    추가 금액
+                </label>
+                <div class="relative flex-1">
+                    <InputNumber class="text-lg text-blue-500 inputNumber-color" 
+                    :modelValue="getAmtInfo('lastAddAmt')" placeholder="추가 금액을 입력하세요"
+                    readonly @click="getPopupOpen('addAmtSet')"
+                    />
+                    <span class="absolute right-3 bottom-[0.625rem] text-xs text-blue-500">원</span>
+                </div>
             </div>
-
-            <div class="flex relative justify-between items-center">
-                <p class="w-[100px] flex-none text-13">최종 결제금액</p>
-                <InputNumber class="*:!text-blue-500 inputNumber-color !w-[70%] text-base" :modelValue="getTotalAmt()" placeholder="최종 결제 금액을 입력하세요"/>
-                <span class="absolute right-4 bottom-1/2 text-sm text-blue-500 translate-y-1/2">원</span>
-            </div>
-        </section>
-
-        <section class="px-5">
-            <div class="py-6">
-                <h1 class="mb-2 text-base font-bold">입금 정보</h1>
-                <div class="form-gap-box">
-                    <div class="flex relative justify-between items-center w-full">
-                        <p class="w-[100px] flex-none text-13">잔금</p>
-                        <div class="flex w-[70%] justify-end">
-                            <Select class="*:text-sm" v-model="pay['pay']['payGb']" :options="data['payGb']" optionLabel="label" optionValue="value" />
-                            <div class="relative ml-2 w-full">
-                                <InputNumber class="*:!text-blue-500 inputNumber-color" 
-                                :modelValue="getTotalAmt()" placeholder="잔금을 입력하세요" readonly
-                                />
-                                <span class="absolute right-4 bottom-1/2 text-sm text-blue-500 translate-y-1/2">원</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex relative justify-between items-start">
-                        <p class="w-[100px] flex-none text-13">메모</p>
-                        <Textarea v-model="pay['pay']['memo']" rows="3" cols="30" style="resize: none" class="w-[70%]"/>
-                    </div>
+            <div class="flex flex-1 justify-between items-center">
+                <label class="w-[28%] max-w-[180px] min-w-[80px] flex-none text-13 text-t-lv2">
+                    최종 결제금액
+                </label>
+                <div class="relative flex-1">
+                    <InputNumber class="text-lg text-blue-500 inputNumber-color" :modelValue="getTotalAmt()" placeholder="최종 결제 금액을 입력하세요"/>
+                    <span class="absolute right-3 bottom-[0.625rem] text-xs text-blue-500">원</span>
                 </div>
             </div>
         </section>
-        <div class="mt-2 btn-2-layout-box bottom-fixed-btn-box">
-            <Button label="결제 완료" :disabled="status" @click="getPay"/>
-        </div>
+        <section class="flex flex-col flex-1 gap-3 px-5">
+            <h2>입금 정보</h2>
+            <div class="flex flex-1 justify-between items-center">
+                <label class="w-[28%] max-w-[180px] min-w-[80px] flex-none text-13 text-t-lv2">
+                    잔금
+                </label>
+                <div class="flex flex-1 gap-2.5 justify-between items-center">
+                    <Select class="*:text-sm" v-model="pay['pay']['payGb']" :options="data['payGb']" optionLabel="label" optionValue="value">
+                        <template #dropdownicon>
+                            <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
+                        </template>
+                    </Select>
+                    <div class="relative flex-1">
+                        <InputNumber class="text-lg text-blue-500 inputNumber-color width-full" 
+                        :modelValue="getTotalAmt()" placeholder="잔금을 입력하세요" readonly
+                        />
+                        <span class="absolute right-3 bottom-[0.625rem] text-xs text-blue-500">원</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-1 justify-between items-start">
+                <label class="w-[28%] max-w-[180px] min-w-[80px] mt-1 flex-none text-13 text-t-lv2">
+                    메모
+                </label>
+                <div class="flex-1">
+                    <Textarea v-model="pay['pay']['memo']" rows="3" cols="30" style="resize: none" class="w-full"/>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="mt-2 btn-2-layout-box bottom-fixed-btn-box">
+        <Button label="결제 완료" :disabled="status" @click="getPay"/>
     </div>
     
     <Dialog v-model:visible="popup['pop']['disAmtSet']" header="할인 가격 입력" 
@@ -97,6 +110,7 @@ import { useDataStore, usePopupStore, useClientStore, useEstiStore, usePayStore 
 import { getAmt } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { getAxiosData, getTokenOut } from '@/assets/js/function';
+import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
 
 const confirm   = useConfirm();
 const data      = useDataStore();

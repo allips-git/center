@@ -32,6 +32,7 @@ export default {
       colors: {
         'kakaoBg': '#B2C7DA',
         'red-500':"#FF453A",
+        'blue-500': "#409AFF",
         't-lv0' :'#000000',
         't-lv1' :'#404040',
         't-lv2' :'#7D7C78',

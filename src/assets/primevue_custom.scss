@@ -517,8 +517,37 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     .p-inputnumber-input {
         border-radius: 0 !important;
         text-align: center;
-        padding-inline: 0 !important;
+ 
         font-weight: 700;
+        &:not(:only-child) {
+            padding-inline: 0 !important;
+        }
+    }
+    &.inputNumber-color {
+        .p-inputnumber-input {
+            padding-right: 1.5rem !important;
+        }
+        &.text-lg {
+            .p-inputtext {
+                font-weight: 700 !important;
+                font-size: 1rem !important;
+            }
+            &.text-red-500 {
+                .p-inputtext {
+                    color: #FF453A !important;
+                }
+            }
+            &.text-blue-500 {
+                .p-inputtext {
+                    color: #409AFF !important;
+                }
+            }
+        }
+        &.width-full {
+            .p-inputtext {
+                width: 100%;
+            }
+        }
     }
 }
 .p-textarea.p-placeholder{

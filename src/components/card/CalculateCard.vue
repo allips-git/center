@@ -22,23 +22,24 @@
             </div>
 
             <div class="flex flex-col gap-2 py-3">
-             <template v-for="(calc, index) in calcs" :key="index">
-                <dl v-if="Number(calc.amt) !== 0 || calc.name === 'itemAmt' || calc.title === '이달 매입금'" class="flex justify-between items-center">
-                    <dt class="text-15 text-t-lv2">
-                        {{ calc.title }}
-                        <span v-if="calc.memo !== ''" :class="{
-                        'text-red-500' : calc.red,
-                        'text-blue-500': calc.blue,
-                        'text-neutral-700': !calc.red && !calc.blue
-                    }">{{ calc.memo ? `(${calc.memo})` : '' }}</span>
-                    </dt>
-                    <dd class="font-bold text-right text-15" :class="{
-                        'text-red-500' : calc.red,
-                        'text-blue-500': calc.blue,
-                        'text-neutral-700': !calc.red && !calc.blue
-                    }">{{ getAmt(calc.amt) }}<span class="text-sm font-normal">원</span>
-                    </dd>
-                </dl>
+                <template v-for="(calc, index) in calcs" :key="index">
+                    <dl v-if="Number(calc.amt) !== 0 || calc.name === 'itemAmt' || calc.title === '이달 매입금'" class="flex justify-between items-center">
+                        <dt class="text-15 text-t-lv2">
+                            {{ calc.title }}
+                        </dt>
+                        <dd class="font-bold text-right text-15" :class="{
+                            'text-red-500' : calc.red,
+                            'text-blue-500': calc.blue,
+                            'text-neutral-700': !calc.red && !calc.blue
+                        }">{{ getAmt(calc.amt) }}<span class="text-sm font-normal">원</span>
+                        </dd>
+                    </dl>
+                    <div v-if="calc.memo !== ''" :class="{
+                            'text-red-500' : calc.red,
+                            'text-blue-500': calc.blue,
+                            'text-neutral-700': !calc.red && !calc.blue
+                        }" class="text-sm">{{ calc.memo ? `(${calc.memo})` : '' }}
+                    </div>
                 </template>
             </div>
                 <!-- <dl class="flex justify-between items-center py-3 border-b border-gray-100">

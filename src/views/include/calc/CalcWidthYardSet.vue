@@ -25,13 +25,13 @@
         <div class="grid grid-cols-4 gap-3">
             <IftaLabel>
                 <label>가로(CM)<span class="ml-0.5 text-red-500">*</span></label>
-                <InputText v-keyfilter.int id="cWidth" v-model="esti['common']['width']" class="w-full text-lg" @update:modelValue="esti.getUnitCalc()" />
+                <InputText v-keyfilter.int id="cWidth" v-model="esti['common']['width']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()" />
                 <small class="whitespace-nowrap text-msg">{{ esti['msg']['curtain'][`cWidth`] }}</small>
             </IftaLabel>
 
             <IftaLabel>
                 <label>세로(CM)</label>
-                <InputText v-keyfilter.int id="cHeight" v-model="esti['common']['height']" class="w-full text-lg" @update:modelValue="esti.getUnitCalc()" />
+                <InputText v-keyfilter.int id="cHeight" v-model="esti['common']['height']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()" />
                 <small class="whitespace-nowrap text-msg">{{ esti['msg']['curtain'][`cHeight`] }}</small>
             </IftaLabel>
 
@@ -48,9 +48,9 @@
                 <div class="relative">
                     <IftaLabel class="flex-1 min-w-0">
                     <label class="accent">최종({{ esti['common']['unitNm'] }})</label>
-                    <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full text-lg text-left text-sky-500" @input="getSize" />
+                    <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full text-lg text-center text-sky-500" @input="getSize" />
                 </IftaLabel>
-                <span class="absolute right-2.5 bottom-[0.625rem] text-xs text-t-lv1">{{ esti['common']['unitNm'] }}</span>
+                <!-- <span class="absolute right-2.5 bottom-[0.625rem] text-xs text-t-lv1">{{ esti['common']['unitNm'] }}</span> -->
                 </div>
                 <small class="text-msg">{{ esti['msg']['curtain'][`cSize`] }}</small>
             </div>
