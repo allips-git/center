@@ -36,7 +36,7 @@
             </div>
         </section>
         <section class="flex flex-col flex-1 gap-3 px-5">
-            <h2>입금 정보</h2>
+            <h2 class="mb-1 text-base font-bold text-t-lv1">입금 정보</h2>
             <div class="flex flex-1 justify-between items-center">
                 <label class="w-[28%] max-w-[180px] min-w-[80px] flex-none text-13 text-t-lv2">
                     잔금
