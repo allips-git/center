@@ -84,23 +84,20 @@ const getItemChoice = async (icCd: string) => {
     getPopupOpen('itemSet');
     
     const result = await product.getInfo();
-
-    await esti.getCommonSet(product['info']);
-    await esti.getUnitCalc();
-    
     if(result['calc'])
     {
-        /** 연동된 공장의 특수계산기 정보를 적용 */
         switch(product['info']['unit'])
         {
             case '001':
-                esti.getBlindSet(result['calc']);
+                await esti.getBlindSet(result['calc']);
             break;
             case '002': case '003': case '005': case '006':
-                esti.getCurtainSet(result['calc']);
+                await esti.getCurtainSet(result['calc']);
             break;
         }
     }
+    await esti.getCommonSet(product['info']);
+    await esti.getUnitCalc();
 }
 
 const getExItem = async (itemCd: string) => {
