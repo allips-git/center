@@ -18,12 +18,12 @@
         <div class="grid grid-cols-4 gap-3">
             <IftaLabel>
                 <label>가로 (CM)<span class="ml-0.5 text-red-500">*</span></label>
-                <InputText v-keyfilter.int id="bWidth" v-model="esti['common']['width']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()"/>
+                <InputText v-keyfilter.money inputmode="numeric" id="bWidth" v-model="esti['common']['width']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()"/>
                 <small class="whitespace-nowrap text-msg">{{ esti['msg']['blind']['bWidth'] }}</small>
             </IftaLabel> 
             <IftaLabel>
                 <label>세로 (CM)<span class="ml-0.5 text-red-500">*</span></label>
-                <InputText v-keyfilter.int id="bHeight" v-model="esti['common']['height']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()"/>
+                <InputText v-keyfilter.money inputmode="numeric" id="bHeight" v-model="esti['common']['height']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()"/>
                 <small class="whitespace-nowrap text-msg">{{ esti['msg']['blind']['bHeight'] }}</small>
             </IftaLabel>
             <!-- 분할없음 -->
@@ -70,12 +70,11 @@
             </div>
         </div>
         <!-- 회베 (공사건 계산기) -->
-        <div class="flex flex-col gap-3 w-full case-calculator">
-            <!-- v-for -->
+        <!-- <div class="flex flex-col gap-3 w-full case-calculator">
             <div class="grid grid-cols-4 gap-3">
                 <IftaLabel>
                     <label>가로 (CM)<span class="ml-0.5 text-red-500">*</span></label>
-                    <InputText v-keyfilter.int id="bWidth" v-model="esti['common']['width']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()"/>
+                    <InputText id="bWidth" v-model="esti['common']['width']" class="w-full text-lg" @update:modelValue="esti.getUnitCalc()"/>
                     <small class="whitespace-nowrap text-msg">{{ esti['msg']['blind']['bWidth'] }}</small>
                 </IftaLabel>
                 <IftaLabel>
@@ -104,8 +103,7 @@
                     <small class="whitespace-nowrap text-msg">{{ esti['msg']['blind']['leftQty'] }}</small>
                 </IftaLabel>
             </div>
-            <!-- //v-for -->
-        </div>
+        </div> -->
     </div>
 
     <!-- 회베 분할 -->

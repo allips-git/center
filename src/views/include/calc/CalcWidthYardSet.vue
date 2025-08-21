@@ -25,13 +25,13 @@
         <div class="grid grid-cols-4 gap-3">
             <IftaLabel>
                 <label>가로(CM)<span class="ml-0.5 text-red-500">*</span></label>
-                <InputText v-keyfilter.int id="cWidth" v-model="esti['common']['width']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()" />
+                <InputText v-keyfilter.money inputmode="numeric" id="cWidth" v-model="esti['common']['width']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()" />
                 <small class="whitespace-nowrap text-msg">{{ esti['msg']['curtain'][`cWidth`] }}</small>
             </IftaLabel>
 
             <IftaLabel>
                 <label>세로(CM)</label>
-                <InputText v-keyfilter.int id="cHeight" v-model="esti['common']['height']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()" />
+                <InputText v-keyfilter.money inputmode="numeric" id="cHeight" v-model="esti['common']['height']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()" />
                 <small class="whitespace-nowrap text-msg">{{ esti['msg']['curtain'][`cHeight`] }}</small>
             </IftaLabel>
 
@@ -134,7 +134,7 @@ const esti      = useEstiStore();
 const getOptionCheck = (gb: string) => {
     const option = esti['common']['options'].find(item => item.gb === gb);
 
-    return option ? (option.useYn === 'Y' ? true : false) : false;
+    return option ? (option.useYn === 'N' ? false : true) : true;
 }
 
 const getProc = () => {

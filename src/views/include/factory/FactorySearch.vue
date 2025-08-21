@@ -55,7 +55,7 @@ const getSearch = async () => {
         switch(result['code'])
         {
             case 4000:
-                factory.getSysMsgSet('존재하지 않는 공장코드입니다.');
+                factory.getSysMsgSet('존재하지 않는 공장코드입니다.', 'sysFaCd');
                 getFocus('sysFaCd');
             break;
         }
@@ -65,7 +65,7 @@ const getSearch = async () => {
 const getSysFactoryApply = () => {
     if(factory['sys']['searchInfo']['faCd'] === '')
     {
-        factory.getSysMsgSet('공장 코드를 검색해주세요.');
+        factory.getSysMsgSet('공장 코드를 검색해주세요.', 'sysFaCd');
         getFocus('sysFaCd');
         return false;
     }
@@ -108,7 +108,7 @@ const getSysFactoryApply = () => {
                             alert('시스템 공장 거래 신청 도중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
                         break;
                         case 4100:
-                            factory.getSysMsgSet('이미 신청한 공장입니다.');
+                            factory.getSysMsgSet('이미 신청한 공장입니다.', 'sysFaCd');
                             getFocus('sysFaCd');
                         break;
                     }

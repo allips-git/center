@@ -3,14 +3,14 @@
         <div class="form-gap-box">
             <IftaLabel>
                 <IconField>
-                    <InputText id="sysFaCd" v-model="factory['sys']['searchFaCd']" class="w-full"/>
+                    <InputText id="alNm" v-model="alNm" class="w-full"/>
                 </IconField>
-                <small class="text-red-500 text-10">{{ factory['sys']['msg']['sysFaCd'] }}</small>
+                <small class="text-red-500 text-10">{{ factory['sys']['msg']['alNm'] }}</small>
                 <label for="faCd">별칭명</label>
             </IftaLabel>
         </div>
         <div class="bottom-modal-absol-box">
-            <Button type="button" label="저장" @click="getSysFactoryApply" class="w-full"></Button>
+            <Button type="button" label="저장" @click="getSysFactoryNameSet" class="w-full"></Button>
         </div>
     </div>
 </template>
@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import IftaLabel from 'primevue/iftalabel';
 import IconField from 'primevue/iconfield';
+import { ref, onMounted } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 import { useFactoryStore } from '@/store';
 import { getAxiosData, getTokenOut } from '@/assets/js/function';
@@ -25,39 +26,43 @@ import { usePopup } from '@/assets/js/popup';
 
 const factory   = useFactoryStore();
 const confirm   = useConfirm();
+const alNm      = ref('');
 
 const { getPopupClose } = usePopup();
 
-const getSysFactoryApply = () => {
-    if(factory['sys']['searchInfo']['faCd'] === '')
+const getSysFactoryNameSet = () => {
+    if(alNm.value === '')
     {
-        factory.getSysMsgSet('공장 코드를 검색해주세요.');
-        getFocus('sysFaCd');
+        factory.getSysMsgSet('별칭명을 입력해주세요.', 'alNm');
+        getFocus('alNm');
         return false;
     }
 
     confirm.require({
-        message     : '해당 공장에 거래신청을 하시겠습니까?',
-        header      : '거래신청',
+        message     : '별칭을 설정하시겠습니까?',
+        header      : '별칭설정',
         rejectProps : {
             label       : '취소',
             severity    : 'secondary',
             outlined    : true
         },
         acceptProps : {
-            label: '신청'
+            label: '저장'
         },
         accept : async () => {
             const params = {
-                faCd : factory['sys']['searchInfo']['faCd']
+                faCd : factory['sys']['faCd'],
+                alNm : alNm.value
             };
+
+            console.log(params);
 
             try
             {
                 const instance  = await getAxiosData();
-                await instance.post(`https://data.planorder.kr/factoryV1/getSysFactoryRequest`, params);
-                await factory.getList();
-                getPopupClose('sysFactorySearch', true);
+                await instance.post(`https://data.planorder.kr/factoryV1/getSysFactoryNameSet`, params);
+                await factory.getSysFactoryDetail();
+                getPopupClose('sysFactoryNameSet', true);
             }
             catch(e)
             {
@@ -65,19 +70,6 @@ const getSysFactoryApply = () => {
                 if(e.response.status === 401)
                 {
                     getTokenOut();
-                }
-                else
-                {
-                    switch(e.response.data['code'])
-                    {
-                        case 4000:
-                            alert('시스템 공장 거래 신청 도중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
-                        break;
-                        case 4100:
-                            factory.getSysMsgSet('이미 신청한 공장입니다.');
-                            getFocus('sysFaCd');
-                        break;
-                    }
                 }
             }
         }
@@ -91,6 +83,12 @@ const getFocus = (id: string) => {
         inputElement.focus();
     }
 }
+
+onMounted(() => {
+    alNm.value = factory['sys']['info']['alNm'];
+
+    console.log(factory['sys']['info']['alNm']);
+});
 
 </script>
 

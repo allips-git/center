@@ -672,98 +672,87 @@ export const useEstiStore = defineStore('esti', {
                 console.error(e);
             }
         },
-        async getCommonSet(info: ItemInfo)
+        async getCommonSet(info: ItemInfo) 
         {
-            for (const data in info) {
-                if(data === 'baseOption')
-                {
+            let baseOptionData = null;
 
-                    info[data].map(item => {
-                        const optionData = {
-                            poCd      : null,
-                            gb        : item.gb ? item.gb : 'N',
-                            itemCd    : item.itemCd ? item.itemCd : '',
-                            itemNm    : item.itemNm ? item.itemNm : '',
-                            icCd      : item.icCd ? item.icCd : '',
-                            icNm      : item.icNm ? item.icNm : '',
-                            selSpec   : item.selSpec ? item.selSpec : '',
-                            saleUnit  : item.saleUnit ? Number(item.saleUnit) : null,
-                            purcUnit  : item.purcUnit ? Number(item.purcUnit) : null,
-                            saleAmt   : null,
-                            saleTax   : null,
-                            purcAmt   : null,
-                            purcTax   : null,
-                            useYn     : item.useYn ? item.useYn : 'Y',
-                        };
-                        
-                        switch(item.gb)
-                        {
-                            case 'P':
-                                if(this.curtain.proc === '001')
-                                {
-                                    optionData.delYn = 'N';
-                                }
-                                else
-                                {
-                                    optionData.delYn = 'Y';
-                                }
-                            break;
-                            case 'B':
-                                if(this.curtain.bproc === '002')
-                                {
-                                    optionData.delYn = 'N'
-                                }
-                                else
-                                {
-                                    optionData.delYn = 'Y'
-                                }
-                            break;
-                            case 'S':
-                                if(this.curtain.shape === 'Y')
-                                {
-                                    optionData.delYn = 'N';
-                                }
-                                else
-                                {
-                                    optionData.delYn = 'Y';
-                                }
-                            break;
-                        }
-
-                        this.common.options.unshift(optionData);
-                    });
-                }
-                else if(data === 'options')
+            for (const data in info) 
+            {
+                if (data === "baseOption") 
                 {
-                    if(info[data].length === 0)
-                    {
-                        this.common.options = [getOption()];
-                    }
-                    else
+                    baseOptionData = info[data];
+                } 
+                else if (data === "options") 
+                {
+                    this.common.options = [getOption()];
+
+                    if (info[data].length !== 0) 
                     {
                         this.common.options = info[data].map(item => ({
-                            poCd      : null,
-                            gb        : item.gb ? item.gb : 'N', // 옵션 구분 (P: 제품 / B: 블라인드 / S: 커튼 / N: 없음)
-                            itemCd    : item.itemCd ? item.itemCd : '',
-                            itemNm    : item.itemNm ? item.itemNm : '',
-                            icCd      : item.icCd ? item.icCd : '',
-                            icNm      : item.icNm ? item.icNm : '',
-                            selSpec   : item.selSpec ? item.selSpec : '',
-                            saleUnit  : item.saleUnit ? Number(item.saleUnit) : null,
-                            purcUnit  : item.purcUnit ? Number(item.purcUnit) : null,
-                            saleAmt   : null,
-                            saleTax   : null,
-                            purcAmt   : null,
-                            purcTax   : null,
-                            useYn     : item.useYn ? item.useYn : 'Y',
-                            delYn     : item.delYn ? item.delYn : 'N'
+                            poCd     : null,
+                            gb       : item.gb ?? "N",
+                            itemCd   : item.itemCd ?? "",
+                            itemNm   : item.itemNm ?? "",
+                            icCd     : item.icCd ?? "",
+                            icNm     : item.icNm ?? "",
+                            selSpec  : item.selSpec ?? "",
+                            saleUnit : item.saleUnit ? Number(item.saleUnit) : null,
+                            purcUnit : item.purcUnit ? Number(item.purcUnit) : null,
+                            saleAmt  : null,
+                            saleTax  : null,
+                            purcAmt  : null,
+                            purcTax  : null,
+                            useYn    : item.useYn ?? "Y",
+                            delYn    : item.delYn ?? "N"
                         }));
                     }
-                }
-                else
+                } 
+                else 
                 {
                     this.common[data] = info[data];
                 }
+            }
+
+            if (baseOptionData) 
+            {
+                this.common.options = [getOption()];
+
+                baseOptionData.forEach(item => {
+                    const optionData = {
+                        poCd     : null,
+                        gb       : item.gb ?? "N",
+                        itemCd   : item.itemCd ?? "",
+                        itemNm   : item.itemNm ?? "",
+                        icCd     : item.icCd ?? "",
+                        icNm     : item.icNm ?? "",
+                        selSpec  : item.selSpec ?? "",
+                        saleUnit : item.saleUnit ? Number(item.saleUnit) : null,
+                        purcUnit : item.purcUnit ? Number(item.purcUnit) : null,
+                        saleAmt  : null,
+                        saleTax  : null,
+                        purcAmt  : null,
+                        purcTax  : null,
+                        useYn    : item.useYn ?? "Y"
+                    };
+
+                    switch (item.gb) 
+                    {
+                        case "P":
+                            optionData.delYn = this.curtain.proc  === "001" ? "N" : "Y";
+                            break;
+                        case "B":
+                            optionData.delYn = this.curtain.bproc === "002" ? "N" : "Y";
+                            break;
+                        case "S":
+                            optionData.delYn = this.curtain.shape === "Y"   ? "N" : "Y";
+                            break;
+                        default:
+                            optionData.delYn = "Y";
+                            break;
+                    }
+
+                    this.common.options.unshift(optionData);
+                });
             }
         },
         getOptionSeq(optionSeq: number)
@@ -1055,8 +1044,6 @@ export const useEstiStore = defineStore('esti', {
                     })
                 }
             }
-
-            console.log(info);
 
             /** 제품 금액 */
             this.total['totalItemSaleAmt']   = info['itemSaleAmt'];

@@ -130,6 +130,7 @@ interface OutItemMsg {
 
 interface SysMsg {
     sysFaCd : string;
+    alNm    : string;
 }
 
 interface OutMsg {
@@ -177,7 +178,8 @@ const getSysItemInfo = (): SysItemInfo => {
 
 const getSysMsg = (): SysMsg => {
     return {
-        sysFaCd : ''
+        sysFaCd : '',
+        alNm    : ''
     }
 }
 
@@ -561,9 +563,9 @@ export const useFactoryStore = defineStore('factory', {
         {
             this.out.itemCd = itemCd;
         },
-        getSysMsgSet(msg: string)
+        getSysMsgSet(msg: string, name: string)
         {
-            this.sys.msg.sysFaCd = msg;
+            this.sys.msg[name] = msg;
         },
         getSysMsgReset()
         {
