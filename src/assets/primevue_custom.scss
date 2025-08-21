@@ -496,6 +496,9 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
             }
         }
     }
+    .p-inputnumber-input:only-child {
+        width: 100%;
+    }
     &.inputNumber-color {
         .p-inputnumber-input {
             padding-right: 1.5rem !important;
@@ -744,13 +747,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
-.bottom-fixed-btn-box{
-    .p-button{
-        .p-button-label{
-            font-size: 13px;
-        }
-    }
-}
+
 
 .facadd-button {
     .p-button{
@@ -786,16 +783,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
-.bottom-fixed-btn-box {
 
-    .p-button{
-        border: none;
-        .p-button-label{
-            font-size: 0.8125rem;
-        }
-
-    }
-}
 
 .success-button{
     .p-button.p-button-success{
@@ -831,11 +819,27 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 
 .bottom-modal-absol-box {
     .p-button{
-        padding: 14px 0px;
+        padding: 0.9375rem 0;
         border: none;
         .p-button-label{
-            font-size: 0.875rem;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            line-height: 1rem;
+            letter-spacing: 0.02em;
         }
+    }
+}
+.bottom-fixed-btn-box {
+    .p-button{
+        padding: 0.9375rem 0;
+        border: none;
+        .p-button-label{
+            font-size: 0.9375rem;
+            font-weight: 700;
+            line-height: 1rem;
+            letter-spacing: 0.02em;
+        }
+
     }
 }
 
@@ -1175,3 +1179,44 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         }
     }
 }
+
+// Dialog
+.p-dialog {
+    &.p-confirmdialog {
+        width: calc(100% - 2rem);
+        border-radius: 0.5rem;
+        .p-dialog-header {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            .p-dialog-title {
+                font-size: 1rem;
+                font-weight: 600;
+            }
+            .p-dialog-header-actions {
+                margin: -0.25rem -0.75rem 0 0;
+            }
+        }
+        .p-dialog-content {
+            .p-confirmdialog-message {
+                font-size: 0.875rem;
+            }
+        }
+        .p-dialog-footer {
+            .p-button {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+                .p-button-label {
+                    color: #404040;
+                    font-size: 0.875rem;
+                    font-weight: 500 !important;
+                }
+                &.p-confirmdialog-accept-button {
+                    .p-button-label {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}
+

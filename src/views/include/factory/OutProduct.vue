@@ -1,27 +1,25 @@
 <template>
-    <main>
-        <div class="p-4">
-            <IconField class="w-full bg">
-                <InputIcon class="z-10">
-                    <IconSearch class="w-4 h-4 text-t-lv2" />
-                </InputIcon>
-                <InputText v-model="factory['out']['itemSearch']" placeholder="제품명 검색" class="w-full" @keyup.enter="factory.getOutFactoryItemList()"/>
-            </IconField>
+    <main class="px-4 pb-4">
+        <IconField class="w-full bg">
+            <InputIcon class="z-10">
+                <IconSearch class="w-4 h-4 text-t-lv2" />
+            </InputIcon>
+            <InputText v-model="factory['out']['itemSearch']" placeholder="제품명 검색" class="w-full" @keyup.enter="factory.getOutFactoryItemList()"/>
+        </IconField>
 
-            <section class="mt-4">
-                <div class="flex justify-end items-center">
-                    <!-- <p class="text-lg font-bold text-indigo-600">블라인드</p> -->
-                    <Button class="flex items-center !bg-[#CDE8FD] !p-[0.25rem] !pl-[0.625rem] !text-p-lv4 rounded-full !border-0 btn-xs" size="small" @click="getOutItemSet">
-                        <div class="p-button-label">제품 추가</div>
-                        <IconAddCircle class="size-[1.125rem]"/>
-                    </Button>
-                </div>
-                <div class="flex flex-col">
-                    <MoreCard v-for="(item, index) in factory['out']['itemList']" :key="index" :itemNm="item['itemNm']" :size="item['size']" :unitNm="item['unitNm']" 
-                        :saleAmt="item['saleAmt']" :purcAmt="item['purcAmt']" @click="getItemDetail(item['itemCd'])"/>
-                </div>
-            </section>
-        </div>    
+        <section class="mt-2">
+            <div class="flex justify-end items-center">
+                <!-- <p class="text-lg font-bold text-indigo-600">블라인드</p> -->
+                <Button class="flex items-center !bg-[#CDE8FD] !p-[0.25rem] !pl-[0.625rem] !text-p-lv4 rounded-full !border-0 btn-xs" size="small" @click="getOutItemSet">
+                    <div class="p-button-label">제품 추가</div>
+                    <IconAddCircle class="size-[1.125rem]"/>
+                </Button>
+            </div>
+            <div class="flex flex-col">
+                <MoreCard v-for="(item, index) in factory['out']['itemList']" :key="index" :itemNm="item['itemNm']" :size="item['size']" :unitNm="item['unitNm']" 
+                    :saleAmt="item['saleAmt']" :purcAmt="item['purcAmt']" @click="getItemDetail(item['itemCd'])"/>
+            </div>
+        </section>
     </main>
 
 <Dialog v-model:visible="popup['pop']['outFactoryItemSet']" header="외주공장 제품관리" 

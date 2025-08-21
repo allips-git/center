@@ -37,7 +37,7 @@
                     </label>
                     <div class="flex gap-2 w-full">
                         <InputText :value="factory['sys']['itemInfo']['size']" class="w-3/5" disabled/>
-                        <InputText :value="factory['sys']['itemInfo']['unitNm']" class="!w-2/5" disabled/>
+                        <InputText :value="factory['sys']['itemInfo']['unitNm']" class="w-2/5" disabled/>
                     </div>
                 </div>
                 <div class="flex flex-1 justify-between items-center">

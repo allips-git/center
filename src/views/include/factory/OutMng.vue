@@ -50,9 +50,9 @@
                         기본 단위
                     </label>
                     <div class="w-full">
-                        <div class="flex gap-2 w-full">
+                        <div class="grid grid-cols-2 gap-2">
                             <InputNumber inputId="size"  v-model="factory['out']['itemInfo']['size']" class="w-full" autocomplete="off"/>
-                            <Select class="w-full" 
+                            <Select class="" 
                             v-model="factory['out']['itemInfo']['unit']" :options="data['unit']" optionLabel="name" optionValue="value">
                                 <template #dropdownicon>
                                     <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
@@ -121,7 +121,8 @@
 
 <script setup lang="ts">
 import InputNumber from 'primevue/inputnumber';
-import IconPlay from '@/components/icons/IconPlay.vue';
+import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
+
 
 import { useConfirm } from "primevue/useconfirm";
 import { useDataStore, useFactoryStore } from '@/store';

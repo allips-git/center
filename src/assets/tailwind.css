@@ -68,7 +68,7 @@
   html.ios .bottom-fixed-btn-box,
   html.ios .btn-2-layout-box
    {
-    padding-bottom: env(safe-area-inset-bottom);
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
     box-sizing: border-box;
   }
 
@@ -133,7 +133,7 @@
   }
 
   .bottom-modal-absol-box{
-    @apply w-full absolute bottom-0 left-0 pb-3.5 px-4 pt-2 bg-white border border-t border-gray-100
+    @apply w-full absolute bottom-0 left-0 pb-4 px-4 pt-2 bg-white border border-t border-gray-100
   }
   .bottom-fixed-btn-box{
     @apply w-full fixed bottom-0 left-0 pt-2 px-4 pb-[14px]  bg-white flex gap-2 *:w-full border-t border-gray-200 z-[100] md:bottom-[0] 

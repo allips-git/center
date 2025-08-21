@@ -1,17 +1,15 @@
 <template>
-    <main>
-        <div class="p-4">
-            <IconField class="w-full bg">
-                <InputIcon class="z-10">
-                    <IconSearch class="w-4 h-4 text-t-lv2" />
-                </InputIcon>
-                <InputText v-model="factory['sys']['itemSearch']" placeholder="제품명 검색" class="w-full" @keyup.enter="factory.getSysItemList()"/>
-            </IconField>
-            <div class="flex flex-col mt-3">
-                <MoreCard v-for="(item, index) in factory['sys']['itemList']" :key="index"
-                    :itemNm="item['itemNm']" :size="item['size']" :unitNm="item['unitNm']" :saleAmt="item['saleAmt']" :purcAmt="item['purcAmt']"
-                    @click="getItemDetail(item['itemCd'])"/>
-            </div>
+    <main class="px-4 pb-4">
+        <IconField class="w-full bg">
+            <InputIcon class="z-10">
+                <IconSearch class="w-4 h-4 text-t-lv2" />
+            </InputIcon>
+            <InputText v-model="factory['sys']['itemSearch']" placeholder="제품명 검색" class="w-full" @keyup.enter="factory.getSysItemList()"/>
+        </IconField>
+        <div class="flex flex-col mt-2">
+            <MoreCard v-for="(item, index) in factory['sys']['itemList']" :key="index"
+                :itemNm="item['itemNm']" :size="item['size']" :unitNm="item['unitNm']" :saleAmt="item['saleAmt']" :purcAmt="item['purcAmt']"
+                @click="getItemDetail(item['itemCd'])"/>
         </div>
     </main>
 </template>

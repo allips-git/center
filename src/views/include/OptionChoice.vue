@@ -12,7 +12,7 @@
         </div>
         <ul class="flex flex-col">
             <li v-for="(item, index) in option['list']" :key="index" class="border-b">
-                <div class="flex flex-col items-center gap-1 py-6" @click="toggleSubList(index, item['itemCd'])">
+                <div class="flex flex-col gap-1 items-center py-6" @click="toggleSubList(index, item['itemCd'])">
                     <div :for="item['itemCd']" class="items-center w-full">
                         <label :for="item['itemCd']" class="flex items-center text-base font-bold">
                             {{ item.itemNm }} 
@@ -25,7 +25,7 @@
                     <li v-for="(color, colorIndex) in item.colorLists" :key="colorIndex" :class="color" class="px-5 py-4 text-center border-b border-gray-200 last:border-b-0">
                         <div class="" @click="getItemChoice(color['icCd'])">
                             <!-- <RadioButton /> -->
-                            <label class="flex items-center justify-center w-full text-sm text-center" :class="{ 'text-red-500': color['useYn'] === 'N' }">
+                            <label class="flex justify-center items-center w-full text-sm text-center" :class="{ 'text-red-500': color['useYn'] === 'N' }">
                                 {{ color['icNm'] }}
                                 <span v-if="color['useYn'] === 'N'">(주문불가)</span>
                             </label>
