@@ -93,7 +93,7 @@
     header="별칭 설정"
     :modal=true
     position="bottom"
-    :style="{ height: '50vh' }"
+    class="custom-dialog-full"
     @update:visible="getPopClose(true, 'sysFactoryNameSet')">
     <template #header>
         <div class="modal-backheader">
