@@ -20,6 +20,7 @@ export default {
       15: ['0.9375rem',],
       base: ['1rem',],   // fontSize: 16px, lineHeight: 18px
       18: ['1.125rem',],   // fontSize: 18px, lineHeight: 18px
+      19: ['1.1875rem',],   // fontSize: 19px, lineHeight: 19px
       lg: ['1.25rem',],  // fontSize: 20px, lineHeight: 22px
       22: ['1.375rem',],  // fontSize: 22px, lineHeight: 22px
       xl: ['1.5rem',],   // fontSize: 24px, lineHeight: 26px

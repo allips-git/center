@@ -120,7 +120,7 @@ const routes = [
         path: "/",
         name: "MainPage",
         component: Index,
-        meta : { showTopHeader: true, showAppFooter: true, backgroundColor: 'bg-gray-100' }
+        meta : { showTopHeader: true, showAppFooter: true, showShadow: false, backgroundColor: 'bg-gray-100' }
     },
     {
         path: "/customer/list",
