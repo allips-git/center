@@ -90,7 +90,7 @@
     @apply text-lg font-bold mb-3
   }
   .main-card-container-box{
-    @apply bg-white rounded-lg border border-gray-100 w-full shadow-custom sm:p-6 py-3 px-[14px]
+    @apply bg-white rounded-lg border border-gray-100 w-full shadow-custom sm:p-5 py-3 px-[14px]
   }
   /* .main-card-container-box-padding{
     @apply 
@@ -225,7 +225,7 @@
   }
 
   .text-data{
-    @apply font-bold text-lg
+    @apply font-bold text-22
   }
 
   .text-con{
@@ -237,7 +237,7 @@
   }
 
   .text-caption{
-    @apply text-10 md:text-xs text-t-lv2 font-normal
+    @apply text-xs md:text-sm text-t-lv2 font-medium
   }
 
   .tab-header{
