@@ -5,7 +5,8 @@ import { getHebe, hebeCalculation2, pokCalculation, yardCalculation, cmCalculati
  */
 export function getHebeCalc(common, blind)
 {
-    const hebe = [];
+    const hebe      = [];
+    const divCnt    = [];
 
     const division = Number(blind['division']);
     const leftQty  = Number(blind['leftQty']);
@@ -28,15 +29,20 @@ export function getHebeCalc(common, blind)
     else
     {
         blind['divSpec'].forEach(item => {
-            hebe.push(Number(item.size));
+            hebe.push(Number(item.size) * qty);
         });
+
+        blind['divSpec'].forEach(item => {
+            divCnt.push(Number(item.qty))
+        })
     }
 
     const params = {
         purcAmt     : Number(common['purcUnit']),
         saleAmt     : Number(common['saleUnit']),
         hebe        : hebe,
-        division    : division,
+        division    : blind['divSpec'].length,
+        divCnt      : divCnt,
         qty         : division === 1 ? (leftQty + rightQty) : qty,
         option      : common['options'].filter(item => item.itemCd !== ''),
         dcUnit      : common['dcUnit'],
@@ -165,6 +171,7 @@ export function getCurtainParams(common, curtain)
     params['use']       = curtain['use'];
     params['cnt']       = curtain['cQty'];
     params['inColor']   = curtain['inColor'];
+    params['inColorNm'] = curtain['inColorNm'];
     params['inSize']    = curtain['inSize'];
     params['outSize']   = curtain['size'] - curtain['inSize'];
 

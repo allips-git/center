@@ -1,7 +1,7 @@
 <template>
     <main class="relative pb-24  h-[90vh]">
         <BackHeader title="고객" />
-        <section class="">
+        <section class="h-full overflow-y-auto">
             <div class="flex items-center justify-between px-4 py-[10px] md:px-6 no-print ">
                 <div class="flex justify-between self-center w-full">
                     <div class="flex gap-2 w-full">

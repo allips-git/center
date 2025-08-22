@@ -85,7 +85,7 @@
             <div class="grid grid-cols-4 gap-3">
                 <IftaLabel class="col-span-3 w-full">
                     <label>안쪽컬러</label>
-                    <Select v-model="esti['curtain']['inColor']" :options="esti.inColorList" optionLabel="icNm" optionValue="icCd" placeholder="안쪽 컬러를 선택해주세요." class="w-full">
+                    <Select v-model="esti['curtain']['inColor']" :options="esti.inColorList" optionLabel="icNm" optionValue="icCd" placeholder="안쪽 컬러를 선택해주세요." class="w-full" >
                         <template #dropdownicon>
                             <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
                         </template>
@@ -234,6 +234,11 @@ const getUsageVal = () => {
 
     return Math.round(val * 10) / 10;
 }
+
+// const getInColor = () => {
+//     const selectedOption    = esti.inColorList.find(item => item.icCd === esti.curtain.inColor);
+//     esti.curtain.inColorNm  = selectedOption.icNm;
+// }
 
 const getSize = () => {
     const value = event.target.value;
