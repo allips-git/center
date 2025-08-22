@@ -83,18 +83,17 @@
 import Tag from 'primevue/tag';
 import { useConfirm } from "primevue/useconfirm";
 import { ref, defineProps } from 'vue'
-import { useRouter } from 'vue-router';
-import { useClientStore, useEstiStore, useOrderStore } from '@/store';
+import { useClientStore, useEstiStore, useOrderStore, usePayStore } from '@/store';
 import { getCommas } from "@/assets/js/function";
 import { getAxiosData, getTokenOut } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
 const emit      = defineEmits(['get-modify']);
 const confirm   = useConfirm();
-const router    = useRouter();
 const client    = useClientStore();
 const esti      = useEstiStore();
 const order     = useOrderStore();
+const pay       = usePayStore();
 const status    = ref(false);
 
 const { getPopupOpen, getPopupClose } = usePopup();
@@ -244,45 +243,44 @@ const getBtnProcess = async (type: string, edCd: string) => {
         break;
         case 'warn':
             /** 시스템 공장 발주 취소 요청 */
-            alert('준비 중인 기능입니다.');
-            // await order.getEdCd(edCd);
+            await order.getEdCd(edCd);
 
-            // confirm.require({
-            //     message     : '발주 취소 요청하시겠습니까?',
-            //     header      : '발주 취소 요청',
-            //     rejectProps : {
-            //         label       : '취소',
-            //         severity    : 'secondary',
-            //         outlined    : true
-            //     },
-            //     acceptProps : {
-            //         label: '확인'
-            //     },
-            //     accept : async () => {
-            //         const params = {
-            //             edCd : order['edCd']
-            //         }
+            confirm.require({
+                message     : '발주 취소 요청하시겠습니까?',
+                header      : '발주 취소 요청',
+                rejectProps : {
+                    label       : '취소',
+                    severity    : 'secondary',
+                    outlined    : true
+                },
+                acceptProps : {
+                    label: '확인'
+                },
+                accept : async () => {
+                    const params = {
+                        edCd : order['edCd']
+                    }
 
-            //         try
-            //         {
-            //             const instance  = await getAxiosData();
-            //             await instance.post(`https://data.planorder.kr/orderV1/getSysOrderCancelRequest`, params);
-            //             await order.getList({ emCd : esti['emCd'] });
-            //         }
-            //         catch(e)
-            //         {
-            //             console.log(e);
-            //             if(e.response.status === 401)
-            //             {
-            //                 getTokenOut();
-            //             }
-            //             else
-            //             {
-            //                 alert('발주 취소 요청 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
-            //             }
-            //         }
-            //     }
-            // });
+                    try
+                    {
+                        const instance  = await getAxiosData();
+                        await instance.post(`https://data.planorder.kr/orderV1/getSysOrderCancelRequest`, params);
+                        await pay.getList({ emCd : esti['emCd'] });
+                    }
+                    catch(e)
+                    {
+                        console.log(e);
+                        if(e.response.status === 401)
+                        {
+                            getTokenOut();
+                        }
+                        else
+                        {
+                            alert('발주 취소 요청 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                        }
+                    }
+                }
+            });
         break;
     }
 }
