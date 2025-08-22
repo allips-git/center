@@ -60,7 +60,7 @@
             </table>
             <!-- 태그  -->
             <section v-if="card.showTag" class="flex flex-wrap gap-2 my-3">
-                <Tag v-for="(tag, index) in card.tag2" :key="index" severity="secondary" :value="tag.spanText"></Tag>
+                <Tag v-for="(tag, index) in card.tags" :key="index" severity="info" :value="tag.spanText" class="!inline-flex !items-center !px-2 !py-1 !text-xs !font-medium !rounded-md"></Tag>
             </section>
 
             <!-- 지시사항  -->
@@ -72,7 +72,6 @@
                 <div class="order-button">
                     <Button v-if="card['showButton'] && index === cards.length -1" 
                         :label="card['buttonText']" :severity="card['buttonType']"  @click="getBtnProcess(card['buttonType'], card['edCd'])" class="mt-4 w-full"/>
-
                 </div>
             
         </div>

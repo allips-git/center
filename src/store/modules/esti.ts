@@ -102,6 +102,7 @@ interface CurtainInfo {
     addPrice        : number;
     inColorList     : InColorList[];
     inColor         : string;
+    inColorNm       : string;
     inSize          : number;
     outSize         : Nullable<number>;
 }
@@ -307,6 +308,7 @@ const getCurtainInfo = (): CurtainInfo => {
         addPrice        : 0,     /** 추가 비율 */
         inColorList     : [],    /** 투톤일 시 안쪽 색상 리스트 */
         inColor         : '',    /** 투톤일 시 안쪽 색상코드 */
+        inColorNm       : '',    /** 투톤일 시 안쪽 색상명칭 */
         inSize          : 0,     /** 투톤일 시 안쪽 사이즈 */
         outSize         : null   /** 투톤일 시 바깥쪽 사이즈 */
     }
@@ -531,7 +533,7 @@ export const useEstiStore = defineStore('esti', {
                                                 height  : dItem.height,
                                                 leftQty : dItem.handle === 'L' ? dItem.cnt : 0,
                                                 rightQty: dItem.handle === 'R' ? dItem.cnt : 0,
-                                                size    : (Number(dItem.size) * Number(dItem.cnt)) + esti.unitNm
+                                                size    : Number(dItem.size) + esti.unitNm
                                             })));
                                         }
                                         else
@@ -549,8 +551,8 @@ export const useEstiStore = defineStore('esti', {
                                         rows.push({
                                             width   : esti.width,
                                             height  : esti.height,
-                                            proc    : esti.proc === '001' ? '나비주름' : '평주름',
-                                            split   : esti.split === '001' ? '양개' : '편개',
+                                            // proc    : esti.proc === '001' ? '나비주름' : '평주름',
+                                            // split   : esti.split === '001' ? '양개' : '편개',
                                             qty     : esti.cnt,
                                             size    : esti.totalUnit + esti.unitNm
                                         });
@@ -565,6 +567,21 @@ export const useEstiStore = defineStore('esti', {
                                 if(esti.shape === 'Y')
                                 {
                                     tags.push({ spanText: "형상옵션" });
+                                }
+
+                                if(esti.proc === '001')
+                                {
+                                    tags.push({ spanText: "나비주름" });
+                                }
+
+                                if(esti.bproc === '002')
+                                {
+                                    tags.push({ spanText: "리드밴드" });
+                                }
+
+                                if(esti.addColor === 'T')
+                                {
+                                    tags.push({ spanText: `투톤: 기둥 ${esti.outColorNm} ${esti.outSize}${esti.unitNm} / 안쪽 ${esti.inColorNm} ${esti.inSize}${esti.unitNm}` });
                                 }
 
                                 return {
@@ -829,7 +846,8 @@ export const useEstiStore = defineStore('esti', {
                         minHeight   : this.blind['minHeight'],
                         size        : Number(this.common['unitSize']),
                         roundGb     : this.common['roundGb']
-                    })
+                    }) * (specInfo[i] !== undefined ? specInfo[i]['qty'] : 1),
+                    qty    : specInfo[i] !== undefined ? specInfo[i]['qty'] : 1
                 }
         
                 specArr.push(spec);
@@ -837,10 +855,27 @@ export const useEstiStore = defineStore('esti', {
         
             this.blind['divSpec'] = specArr;
         },
+        getDivisionAdd()
+        {
+            this.blind['divSpec'].push({
+                width  : '',
+                height : this.common['height'],
+                handle : 'R',
+                size   : getHebe({
+                    width       : '',
+                    height      : Number(this.common['height']),
+                    minWidth    : this.blind['minWidth'],
+                    minHeight   : this.blind['minHeight'],
+                    size        : Number(this.common['unitSize']),
+                    roundGb     : this.common['roundGb']
+                }),
+                qty    : 1
+            });
+        },
         getEqual()
         {
             const width    = Number(this.common['width']);
-            const division = Number(this.blind['division']);
+            const division = Number(this.blind['divSpec'].length);
         
             if(width > 0)
             {
@@ -892,7 +927,7 @@ export const useEstiStore = defineStore('esti', {
                         minHeight   : this.blind['minHeight'],
                         size        : Number(this.common['unitSize']),
                         roundGb     : this.common['roundGb']
-                    })
+                    }) * Number(this.blind['divSpec'][i]['qty']);
                 }
             }
         },
@@ -905,7 +940,7 @@ export const useEstiStore = defineStore('esti', {
                 minHeight   : this.blind['minHeight'],
                 size        : Number(this.common['unitSize']),
                 roundGb     : this.common['roundGb']
-            });
+            }) * Number(this.blind['divSpec'][index]['qty']);
 
             const total = this.blind['divSpec'].reduce((acc, val) => acc + Number(val['width']), 0);
 
@@ -924,7 +959,7 @@ export const useEstiStore = defineStore('esti', {
                     this.total['totalQty']      = Number(this.blind['division']) === 1 ? (Number(this.blind['leftQty']) + Number(this.blind['rightQty'])) : Number(this.blind['bQty']);
                     this.total['totalUnitSize'] = info['hebe'];
         
-                    if(Number(this.blind['division']) > 1)
+                    if(Number(this.blind['divSpec'].length) > 1)
                     {
                         this.total['eachItemSaleAmt'] = info['eachItemSaleAmt'];
                         this.total['eachItemSaleTax'] = info['eachItemSaleTax'];
