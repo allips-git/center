@@ -8,7 +8,7 @@
             <div class="flex flex-col px-4 pb-8 mt-5 rounded-2xl sm:mt-10">
                 <div class="flex flex-col justify-center items-center">
                     <IconLogo class="w-[3.25rem] fill-[#00AEF2]"/>
-                    <p class="w-full mt-[1.5625rem] mb-10 text-lg font-bold text-center noto"><span class="text-[#00AEF2] rext">PLAN ORDER</span></p>
+                    <p class="w-full mt-[0.5rem] mb-10 text-lg font-bold text-center noto"><span class="text-[#00AEF2] rext">PLAN ORDER</span></p>
                 </div>
                 <div class="hidden mt-10 mb-10 md:block">
                     <p class="flex flex-col justify-center items-center text-2xl font-bold">로그인</p>

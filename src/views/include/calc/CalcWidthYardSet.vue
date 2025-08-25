@@ -36,7 +36,7 @@
             </IftaLabel>
 
             <IftaLabel class="">
-                <Select v-model="esti['curtain']['use']" :options="data['usage']" optionLabel="name" optionValue="value" class="w-full text-lg" @update:modelValue="esti.getUnitCalc()">
+                <Select v-model="esti['curtain']['use']" :options="data['usage']" optionLabel="name" optionValue="value" class="w-full text-lg select-use-custom" @update:modelValue="esti.getUnitCalc()">
                     <template #dropdownicon>
                         <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
                     </template>
@@ -242,3 +242,13 @@ const getSize = () => {
 }
 
 </script>
+
+<style lang="scss">
+.select-use-custom {
+    .p-select-label {
+        padding-inline: 0;
+        text-align: center;
+        letter-spacing: -0.02em;
+    }
+}
+</style>

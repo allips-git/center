@@ -1,45 +1,81 @@
 <template>
     <main class="pb-24">
         <!-- <BackHeader title="고객상세" /> -->
-        <section class="p-4">
-            <div class="flex justify-between items-center">
-                <h2 class="text-base font-black">{{ client['detail']['clientNm'] }}</h2>
-                <Button label="정보수정" outlined severity="secondary" size="small" @click="getClientModify" class="outlined-button"/>
+        <section class="px-4 mb-6 sm:px-8">
+            <div class="flex justify-between items-center py-1 sm:pt-5">
+                <h2 class="font-bold text-15 sm:text-base text-t-lv1">{{ client['detail']['clientNm'] }}</h2>
+                <Button label="정보수정" outlined severity="secondary" @click="getClientModify" class="outlined-button *:!text-13"/>
             </div>
-            <ul class="flex flex-col gap-[12px] mt-3 rounded-md text-xs !text-t-lv2">
-                <li class="flex items-center">
-                    <p class="w-24 whitespace-nowrap">전화번호</p>
-                    <p class="capsuel_sky" @click="getNavi('tel', client['detail']['tel'])">{{ client['detail']['tel'] }}</p>
-                </li>
-                <li class="flex items-center">
-                    <p class="w-24 whitespace-nowrap">주소</p>
-                    <p class="capsuel_sky" :data-address="client['detail']['addr']" @click="getNavi('addr', client['detail']['addr'])">({{ client['detail']['zip'] }}) {{ client['detail']['addr'] }}</p>
-                </li>
-                <li class="flex">
-                    <p class="w-24 whitespace-nowrap">상세주소</p>
-                    <p class="font-medium text-t-lv1">{{ client['detail']['addrDetail'] }}</p>
-                </li>
-                <li class="flex">
-                    <p class="w-24 whitespace-nowrap">등록일</p>
-                    <p class="font-medium text-t-lv1">{{ client['detail']['regDt'] }}</p>
-                </li>
-                <li class="flex">
-                    <p class="w-24 whitespace-nowrap">담당자</p>
-                    <p class="font-medium text-t-lv1"> {{ client['detail']['person'] }}</p>
-                </li>
-                <li class="flex">
-                    <p class="w-24 whitespace-nowrap">그룹명</p>
-                    <p class="font-medium text-t-lv1">{{ client['detail']['groupNm'] }}</p>
-                </li> 
-            </ul>
+            <div class="mt-2 info-list">
+                <dl class="info-set">
+                    <dt class="title">
+                        전화번호
+                    </dt>
+                    <dd class="desc">
+                        <div class="capsuel_sky !inline-flex" @click="getNavi('tel', client['detail']['tel'])">
+                            {{ client['detail']['tel'] }}
+                        </div>
+                    </dd>
+                </dl>
+                <dl class="info-set">
+                    <dt class="title">
+                        주소
+                    </dt>
+                    <dd class="desc">
+                        <div class="capsuel_sky !inline-flex" :data-address="client['detail']['addr']" @click="getNavi('addr', client['detail']['addr'])">
+                            ({{ client['detail']['zip'] }}) {{ client['detail']['addr'] }}
+                        </div>
+                    </dd>
+                </dl>
+                <dl class="info-set">
+                    <dt class="title">
+                        상세주소
+                    </dt>
+                    <dd class="desc">
+                        {{ client['detail']['addrDetail'] }}
+                    </dd>
+                </dl>
+                <dl class="info-set">
+                    <dt class="title">
+                        등록일
+                    </dt>
+                    <dd class="desc">
+                        {{ client['detail']['regDt'] }}
+                    </dd>
+                </dl>
+                <dl class="info-set">
+                    <dt class="title">
+                        담당자
+                    </dt>
+                    <dd class="desc">
+                        {{ client['detail']['person'] }}
+                    </dd>
+                </dl>
+                <dl class="info-set">
+                    <dt class="title">
+                        그룹명
+                    </dt>
+                    <dd class="desc">
+                        {{ client['detail']['groupNm'] }}
+                    </dd>
+                </dl>
+            </div>
         </section>
-        <div class="gray-bar !mb-[10px]"></div>
-        <div class="custom-customer-tab">
-            <Tabs value="0" class="overflow-hidden px-4 py-[10px] w-full">
-                <TabList class="w-full border border-[#E4E5E9] rounded overflow-hidden">
-                    <Tab value="0" class="flex flex-col gap-1 justify-center items-center w-1/3 !text-13 tab-header"><span class="text-lg font-bold text-p-lv2">{{ client['detail']['cnt']['ing'] }}</span>판매중 </Tab>
-                    <Tab value="1" class="flex flex-col gap-1 justify-center items-center w-1/3 !text-13 tab-header"><span class="text-lg font-bold text-p-lv2">{{ client['detail']['cnt']['comp'] }}</span>판매완료 </Tab>
-                    <Tab value="2" class="flex flex-col gap-1 justify-center items-center w-1/3 !text-13 tab-header"><span class="text-lg font-bold text-p-lv2">{{ client['detail']['cnt']['cancel'] }}</span>판매취소</Tab>
+        <div class="gray-bar" />
+        <div class="px-4 my-6 sm:px-8 custom-customer-tab">
+            <Tabs value="0" class="overflow-hidden w-full">
+                <TabList class="overflow-hidden w-full rounded border border-l-lv4">
+                    <Tab value="0" class="text-xs sm:text-13">
+                        <strong class="text-lg count">{{ client['detail']['cnt']['ing'] }}</strong>판매중
+                    </Tab>
+                    <hr class="divider" />
+                    <Tab value="1" class="text-xs sm:text-13">
+                        <strong class="text-lg count">{{ client['detail']['cnt']['comp'] }}</strong>판매완료
+                    </Tab>
+                    <hr class="divider" />
+                    <Tab value="2" class="text-xs sm:text-13">
+                        <strong class="text-lg count">{{ client['detail']['cnt']['cancel'] }}</strong>판매취소
+                    </Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel value="0">
@@ -47,35 +83,44 @@
                             <section v-for="(item, index) in getList(1)" :key="index">
                                 <ProcessCard :info="item"/> 
                             </section>
-    
-                            <div class="flex flex-col gap-2 justify-center items-center py-10 text-center" v-if="getList(1).length === 0">
-                                <div class="flex justify-center items-center bg-red-50 rounded-full size-16"> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
-                                <p class="text-center">판매중인 항목이 없습니다.</p>
+                            <div class="flex flex-col gap-2 items-center pt-2 text-center h-[280px]" v-if="getList(1).length === 0">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-[6rem] opacity-75">
+                                        <img src="/src/assets/img/img-empty.png" class="block w-full" alt="" />
+                                    </div>
+                                    <p class="text-sm font-medium text-center text-t-lv4">판매중인 항목이 없습니다.</p>
+                                </div>
                             </div>
                         </div>
                     </TabPanel>
                     <TabPanel value="1">
-                        <div class="flex flex-col gap-5 p-4">
+                        <div class="flex flex-col gap-5 py-4">
                             <section v-for="(item, index) in getList(2)" :key="index">
                                 <ProcessCard :info="item"/>
                             </section>
-                            <div class="flex flex-col items-center justify-center gap-2 py-10 text-center h-[312px]" v-if="getList(2).length === 0">
-                                <div class="flex justify-center items-center bg-red-50 rounded-full size-16"> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
-                                <p class="text-center">판매완료된 항목이 없습니다.</p>
+                            <div class="flex flex-col gap-2 items-center pt-2 text-center h-[280px]" v-if="getList(2).length === 0">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-[6rem] opacity-75">
+                                        <img src="/src/assets/img/img-empty.png" class="block w-full" alt="" />
+                                    </div>
+                                    <p class="text-sm font-medium text-center text-t-lv4">판매완료된 항목이 없습니다.</p>
+                                </div>
                             </div>
                         </div>
                     </TabPanel>
                     <TabPanel value="2">
-                        <div class="flex flex-col gap-5 p-5">
+                        <div class="flex flex-col gap-5 py-4">
                             <section v-for="(item, index) in getList(3)" :key="index">
                                 <ProcessCard :info="item"/>
                             </section>
-    
-                            <div class="flex flex-col items-center justify-center gap-2 py-10 text-center h-[312px]" v-if="getList(3).length === 0">
-                                <div class="flex justify-center items-center bg-red-50 rounded-full size-16"> <span class="!text-2xl text-red-500  pi pi-times"></span></div>
-                                <p class="text-center">판매취소된 항목이 없습니다.</p>
+                            <div class="flex flex-col gap-2 items-center pt-2 text-center h-[280px]" v-if="getList(3).length === 0">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-[6rem] opacity-75">
+                                        <img src="/src/assets/img/img-empty.png" class="block w-full" alt="" />
+                                    </div>
+                                    <p class="text-sm font-medium text-center text-t-lv4">판매취소된 항목이 없습니다.</p>
+                                </div>
                             </div>
-                            
                         </div>
                     </TabPanel>
                 </TabPanels>

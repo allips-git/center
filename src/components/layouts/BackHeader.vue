@@ -1,5 +1,6 @@
 <template>
-  <div class="top-header">
+  <!-- @TODO Header -->
+  <div class="top-header" :class="[props.fixed ? 'has-fixed-top' : '']">
     <header
       :class="[
         'w-full z-50 flex items-center justify-between bg-white h-[3.125rem] p-4 md:justify-start',
@@ -9,12 +10,12 @@
       ]"
     >
       <IconArrowForward
-        :class="['fill-l-lv0 size-6', props.fixed ? 'mt-4 ios-icon' : 'mt-0.5']"
+        :class="['fill-l-lv0 size-6', props.fixed ? 'mt-4 ios-icon' : '']"
         @click="goBack"
       />
 
       <template v-if="props.centerTitle">
-        <h1 class="flex-1 pt-4 text-sm font-bold text-center md:text-left md:ml-2 text-t-lv1 ios-title">
+        <h1 class="flex-1 pt-4 text-base font-bold text-center md:text-left md:ml-2 text-t-lv1 ios-title">
           {{ props.title }}
         </h1>
         <div class="w-6"></div> 
@@ -22,14 +23,11 @@
 
       <template v-else>
         <h1
-          class="absolute text-sm font-bold -translate-x-1/2 -translate-y-1/2 text-t-lv1 left-1/2 top-1/2 md:relative md:-translate-y-0 md:-translate-x-0 md:top-0 md:left-2"
+          class="absolute top-1/2 left-1/2 text-base font-bold -translate-x-1/2 -translate-y-1/2 text-t-lv1 md:relative md:-translate-y-0 md:-translate-x-0 md:top-0 md:left-2"
         >
           {{ props.title }}
         </h1>
         <div class="w-6"></div>
-         
-
-
       </template>
     </header>
   </div>

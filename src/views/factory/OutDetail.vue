@@ -1,38 +1,28 @@
 <template>
     <main class="pb-[174px] md:pb-[124px]" ref="mainRef">
-        <main class="" >
-            <div class="relative">
-                <section class="overflow-hidden relative p-4 bg-white rounded-t-xl">
-                    <InfoCard :title="factory['out']['detail']['header'][0]['value']" 
-                        :info="factory['out']['detail']['header']" :btnLabel="'수정하기'"
-                        @get-btn="getPopOpen('outFactorySet')"/>
-                </section>
+        <div class="relative">
+            <section class="px-4 mb-6 sm:px-8">
+                <InfoCard :title="factory['out']['detail']['header'][0]['value']" 
+                    :info="factory['out']['detail']['header']" :btnLabel="'수정하기'"
+                    @get-btn="getPopOpen('outFactorySet')"/>
+            </section>
+            <div class="gray-bar" />
+            <section class="px-4 my-6 sm:px-8">
+                <CalculateCard :showtitle="true" :calcs="factory['out']['detail']['info']" title="매입 거래원장" 
+                    totalTitle="총 결제 금액" :totalAmt="factory['out']['detail']['totalAmt']"/>
+            </section>
+        </div>
 
-                <div class="gray-bar"></div>
-    
-                <section class="p-4">
-                    <CalculateCard :showtitle="true" :calcs="factory['out']['detail']['info']" title="매입 거래원장" 
-                        totalTitle="총 결제 금액" :totalAmt="factory['out']['detail']['totalAmt']"/>
-                </section>
+        <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
+        }" class="!flex-col bottom-fixed-btn-box !pt-[18px] !gap-4" 
+        >
+        <div class="flex justify-between w-full text-base font-bold">
+                <p >총 제품</p>
+                <p class="text-p-lv4">{{ factory['out']['detail']['itemCnt'] }}개</p>
             </div>
-            
-          
+            <Button label="제품 설정하기" size="large" @click="getPopupOpen('outFactoryItemList')"/>
+        </div>
 
-            <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
-            }" class="!flex-col bottom-fixed-btn-box !pt-[18px] !gap-4" 
-            >
-            <div class="flex justify-between w-full text-base font-bold">
-                    <p >총 제품</p>
-                    <p class="text-p-lv4">{{ factory['out']['detail']['itemCnt'] }}개</p>
-                </div>
-                <Button label="제품 설정하기" size="large" @click="getPopupOpen('outFactoryItemList')"/>
-            </div>
-
-          
-        </main>
-
-
-    
         <Dialog v-model:visible="popup['pop']['outFactoryItemList']" header="외주공장 제품정보" 
             :modal=true position="center" class="custom-dialog-full"
             @update:visible="getPopupClose('outFactoryItemList', true)">
@@ -44,7 +34,6 @@
             </template>
             <OutProduct/>
         </Dialog>
-
 
         <Dialog v-model:visible="popup['pop']['outFactorySet']" header="외주 공장 저장" 
             :modal=true position="center" class="custom-dialog-full" 

@@ -1,8 +1,8 @@
 <template>
     <main class="relative pb-24  h-[90vh]">
         <BackHeader title="고객" />
-        <section class="">
-            <div class="flex items-center justify-between px-4 py-[10px] md:px-6 no-print ">
+        <section>
+            <div class="flex justify-between items-center px-4 md:px-6 no-print">
                 <div class="flex justify-between self-center w-full">
                     <div class="flex gap-2 w-full">
                         <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="bg w-[36%]" @change="getList">
@@ -20,20 +20,20 @@
                 </div>
             </div>
                     
-            <ul class="flex flex-col">
-                <li v-for="(item, index) in client['list']" :key="index" class="flex items-center gap-[14px] flex-none w-full px-4 py-[10px] md:px-6 cursor-pointer " @click="getInfo(item.clientCd)">
+            <ul class="flex flex-col mt-[0.625rem]">
+                <li v-for="(item, index) in client['list']" :key="index" class="flex items-center gap-[14px] flex-none w-full px-4 py-[0.625rem] md:px-6 cursor-pointer " @click="getInfo(item.clientCd)">
                     <!-- 상태 -->
-                    <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none font-bold text-white rounded-md text-11 md:text-sm w-[11.4%] aspect-square sm:size-10">
+                    <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none font-bold text-white rounded-md text-xs md:text-sm w-[2.5rem] sm:w-[3rem] aspect-square">
                         {{ getStatusName(item.step) }}
                     </div>
-                    <div class="flex gap-2 justify-between w-full">
+                    <div class="flex gap-2 justify-between w-full pt-[0.125rem]">
                         <div class="flex flex-col flex-grow min-w-0">
-                            <p class="font-bold text-13">{{ item.clientNm }}</p>
-                            <span class="flex-1 text-10 truncate text-t-lv4 whitespace-nowrap max-w-[200px] sm:max-w-[100%]">{{ item.addr }} {{ item.addrDetail }}</span>
+                            <strong class="text-sm font-bold sm:text-base text-t-lv1">{{ item.clientNm }}</strong>
+                            <div class="flex-1 text-xs sm:text-13 truncate text-t-lv4 whitespace-nowrap max-w-[200px] sm:max-w-[100%]">{{ item.addr }} {{ item.addrDetail }}</div>
                         </div>
                         <div class="flex flex-col whitespace-nowrap">
-                            <span class="text-xs text-right text-t-lv4">{{ item.date }}</span>
-                            <p class="text-sm font-bold text-right">{{ getAmt(item.amt) }}원</p>
+                            <div class="text-xs text-right sm:text-13 text-t-lv4">{{ item.date }}</div>
+                            <strong class="text-sm font-medium text-right sm:text-base text-t-lv1">{{ getAmt(item.amt) }}원</strong>
                         </div>
                     </div>
                 </li>

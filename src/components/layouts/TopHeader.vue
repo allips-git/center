@@ -2,7 +2,7 @@
   <header
     class="bg-white px-4 border-b border-gray-100 flex justify-between items-center md:pl-4 md:pr-3 w-full z-50 dark:bg-zinc-800 dark:border-zinc-700 no-print top-0 md:h-[60px] md:shadow-[0px_1px_4px_1px_rgba(0,0,0,0.05)] flex-none top-header"
   >
-    <div class="flex items-center gap-2">
+    <div class="flex gap-2 items-center">
       <div class="mobile-hidden">
         <Button
           icon="pi pi-bars"
@@ -16,10 +16,10 @@
         />
       </div>
       <!-- pc button -->
-      <div class="flex items-center justify-between flex-none md:gap-1">
+      <div class="flex flex-none justify-between items-center md:gap-1">
         <router-link class="" to="/"
           ><p
-            class="hidden text-2xl text-indigo-600 md:blockfont-extrabold whitespace-nowrap dark:text-indigo-500"
+            class="hidden text-2xl text-indigo-600 whitespace-nowrap md:blockfont-extrabold dark:text-indigo-500"
           >
             PlanOrder Center
           </p></router-link
@@ -35,10 +35,10 @@
       </div>
     </div>
 
-    <h1 class="text-sm font-bold">{{ login['name'] }}</h1>
+    <h1 class="text-base font-bold">{{ login['name'] }}</h1>
     <div class="relative">
       <IconBell class="cursor-pointer fill-t-lv2" @click="open = true" />
-        <!-- <span v-if="main['alarmList'] && main['alarmList'].length > 0" class="absolute flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full -top-1 -right-1">
+        <!-- <span v-if="main['alarmList'] && main['alarmList'].length > 0" class="flex absolute -top-1 -right-1 justify-center items-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full">
             {{ main['alarmList'].length }}
         </span> -->
     </div>
@@ -53,20 +53,20 @@
                 leave-from="opacity-100"
                 leave-to="opacity-0"
             >
-                <div class="fixed inset-0 transition-opacity bg-black/50 backdrop-blur-sm" />
+                <div class="fixed inset-0 backdrop-blur-sm transition-opacity bg-black/50" />
             </TransitionChild>
             <div class="fixed inset-0" />
-                <div class="fixed inset-0 overflow-hidden">
-                    <div class="absolute inset-0 overflow-hidden">
-                        <div class="fixed inset-y-0 right-0 flex max-w-full pointer-events-none">
+                <div class="overflow-hidden fixed inset-0">
+                    <div class="overflow-hidden absolute inset-0">
+                        <div class="flex fixed inset-y-0 right-0 max-w-full pointer-events-none">
                             <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700" enter-from="translate-x-full" enter-to="translate-x-0" leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0" leave-to="translate-x-full">
-                                <DialogPanel class="w-screen pointer-events-auto lg:max-w-md ">
-                                <div class="flex flex-col h-full overflow-y-auto bg-white shadow-xl top-header">
+                                <DialogPanel class="w-screen pointer-events-auto lg:max-w-md">
+                                <div class="flex overflow-y-auto flex-col h-full bg-white shadow-xl top-header">
                                     <div class="p-4">
-                                        <div class="flex items-start justify-between">
+                                        <div class="flex justify-between items-start">
                                     <DialogTitle class="flex items-center text-base font-semibold text-gray-900">
                                         <p>알림</p>
-                                        <IconBell class=" fill-t-lv2" />
+                                        <IconBell class="fill-t-lv2" />
                                     </DialogTitle>
                                     <div class="flex items-center ml-3 h-7">
                                         <button type="button" class="relative text-gray-400 bg-white rounded-md hover:text-gray-500 focus-visible:ring-2 focus-visible:ring-indigo-500" @click="open = false">
@@ -118,7 +118,7 @@
   </div>
   <Drawer v-model:visible="moSideHeader" header="" class="custom-drawer" position="left">
     <template #header>
-      <div class="flex items-center justify-end w-full gap-2"></div>
+      <div class="flex gap-2 justify-end items-center w-full"></div>
     </template>
     <SideHeader :drawerClass="false" @closeDrawer="moSideHeader = true" />
   </Drawer>

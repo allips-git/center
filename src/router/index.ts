@@ -73,7 +73,7 @@ const routes = [
         path: "/login",
         name: "LoginPage",
         component: Login,
-        meta : { gubun: 'Y', showShadow: false }
+        meta : { gubun: 'Y', showShadow: false, backgroundColor: '!bg-white' }
     },
     {
         path: "/join/agree",

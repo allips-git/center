@@ -1,7 +1,7 @@
 <template>
 <main class="xl:h-[90vh]">
+    <!-- @TODO Header fixed -->
     <BackHeader title="공장" />
-  
     <div class="relative px-4 md:px-6 custom-left-tab">
         <Tabs value="0">
             <TabList>
@@ -10,26 +10,21 @@
             </TabList>
             <TabPanels>
                 <TabPanel value="0">
-                    <div class="pt-3 pb-20">
+                    <div class="pb-20">
                         <button class="fixed z-50 pointer-events-auto bottom-14 right-4 xl:right-[calc((100vw-1280px)/2+6rem)] xl:bottom-14 2xl:right-[calc((100vw-1440px)/2+6rem)] register-button" >
                             <Button label="공장코드 추가" icon="pi pi-plus" size="large" @click="getPopOpen('sysFactorySearch')"/>
                         </button>
-                       
                         <ul class="w-full">
-                            <li class="flex gap-4 py-[18px] border-b" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
-                                    <img :src="getImage(item.imgUrl)" class="w-[21.67%] aspect-[78/87] sm:w-[78px] rounded-lg object-cover" alt="">
-                                
-                                <div class="w-[calc(100%-78px)]">
-                                    <div class="flex justify-between">
-                                        <p class="mb-1 text-sm font-bold">{{ item.faNm }}</p>
-                                        <div class="text-desc text-right *:px-3 *:py-1 *:rounded-full font-bold">
-                                            <p v-if="item['appGb'] === 'E'" class="text-p-lv3">승인 대기</p>
-                                            <p v-if="item['appGb'] === 'N'" class="text-orange-500">반려</p>
-                                        </div>
+                            <li class="flex gap-3 py-[1rem] border-b border-l-lv4" v-for="(item, index) in factory['sys']['list']" :key="index" @click="getSysDetail(item.faCd, item.appGb)">
+                                <img :src="getImage(item.imgUrl)" class="block w-[4rem] sm:w-[5rem] aspect-[1/1] rounded-lg object-cover" alt="">
+                                <div class="relative flex-1 pt-1.5">
+                                    <strong class="pr-14 text-sm sm:text-base font-bold leading-tight mb-[0.25rem] text-t-lv1">{{ item.faNm }}</strong>
+                                    <div class="absolute top-0 right-0 text-desc text-right *:px-2 *:py-1 *:rounded-full font-bold">
+                                        <p v-if="item['appGb'] === 'E'" class="text-p-lv3">승인 대기</p>
+                                        <p v-if="item['appGb'] === 'N'" class="text-orange-500">반려</p>
                                     </div>
-                                    <p class="!text-t-lv1 text-xs">{{ item.tel }}</p>
-                                    <p class="!text-t-lv2 text-xs">{{ item.addr + ' ' + item.addrDetail }}</p>
-                                   
+                                    <div class="text-xs text-t-lv1 sm:text-13">{{ item.tel }}</div>
+                                    <div class="text-xs text-t-lv2 sm:text-13">{{ item.addr + ' ' + item.addrDetail }}</div>
                                 </div>
                             </li>
                         </ul>
@@ -37,24 +32,20 @@
                 </TabPanel>
                 <TabPanel value="1">
                     <div class="pb-20">
-
                         <div class="fixed bottom-14 right-4 xl:right-[calc((100vw-1280px)/2+6rem)] xl:bottom-14 2xl:right-[calc((100vw-1440px)/2+6rem)] register-button">
                             <Button label="외주공장 추가" icon="pi pi-plus" size="large" @click="getPopOpen('outFactorySet')" />
                         </div>
-                        
-                    <ul>
-                        <li class="flex flex-col py-[18px] border-b" v-for="(item, index) in factory['out']['list']" :key="index" @click="getOutDetail(item.fcCd)">
-                            <p class="mb-1 text-sm font-bold">{{ item.faNm }}</p>
-                            <p class="text-10 !text-t-lv1">{{ item.tel }}</p>
-                            <p class="!text-t-lv2 text-10">{{ item.addr + ' ' + item.addrDetail }}</p>
-                        </li>
-                    </ul>
+                        <ul class="w-full">
+                            <li class="flex flex-col py-[1rem] px-1 border-b border-l-lv4" v-for="(item, index) in factory['out']['list']" :key="index" @click="getOutDetail(item.fcCd)">
+                                <strong class="text-sm sm:text-base font-bold leading-tight mb-[0.25rem] text-t-lv1">{{ item.faNm }}</strong>
+                                <div class="text-xs text-t-lv1 sm:text-13">{{ item.tel }}</div>
+                                <div class="text-xs text-t-lv2 sm:text-13">{{ item.addr + ' ' + item.addrDetail }}</div>
+                            </li>
+                        </ul>
                     </div>
                 </TabPanel>
             </TabPanels>
         </Tabs>
-
-
     </div>
 
     <!-- 공장 코드 추가 다이얼로그 -->

@@ -19,6 +19,7 @@ export default {
       sm: ['0.875rem'],    // fontSize: 14px, lineHeight: 16px
       15: ['0.9375rem',],
       base: ['1rem',],   // fontSize: 16px, lineHeight: 18px
+      17: ['1.0625rem',],   // fontSize: 17px, lineHeight: 17px
       18: ['1.125rem',],   // fontSize: 18px, lineHeight: 18px
       19: ['1.1875rem',],   // fontSize: 19px, lineHeight: 19px
       lg: ['1.25rem',],  // fontSize: 20px, lineHeight: 22px
@@ -79,6 +80,30 @@ export default {
     },
   },
   plugins: [
+    // Auto-generate CSS variables from Tailwind theme colors under :root
+    plugin(function({ addBase, theme }) {
+      const sourceColors = theme('colors');
+      const cssVars = {};
+
+      const walk = (obj, keys = []) => {
+        Object.entries(obj || {}).forEach(([k, v]) => {
+          const safeKey = String(k).replace(/\s+/g, '-');
+          if (typeof v === 'string') {
+            const val = v.trim();
+            if (val && val !== '#') {
+              cssVars[`--${[...keys, safeKey].join('-')}`] = val;
+            }
+          } else if (v && typeof v === 'object') {
+            walk(v, [...keys, safeKey]);
+          }
+        });
+      };
+
+      walk(sourceColors);
+      if (Object.keys(cssVars).length > 0) {
+        addBase({ ':root': cssVars });
+      }
+    }),
     plugin(function({ addVariant }) {
       addVariant('ios', '&.ios &', { respectImportant: false });
     }),

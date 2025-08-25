@@ -1,62 +1,101 @@
 <template>
 <main ref="mainRef">
     <div class="!pb-36">
-        <section class="overflow-hidden rounded-b-md aspect-video">
+        <section class="overflow-hidden aspect-video">
             <img :src="getImage(factory['sys']['info']['filePath'])" class="object-cover w-full aspect-video" alt="">
         </section>
     
-        <section class="">
-            <h1 class="px-5 pt-5 pb-2 mb-1 text-sm font-bold">공장 정보</h1>
-            <ul class="flex flex-col gap-[10px] p-5 pt-0 text-sm rounded-md">
-                <li class="flex">
-                    <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">공장명</p>
-                    <p class="text-xs font-bold">{{ factory.sys.info.faNm }}</p>
-                </li>
-                <li class="flex">
-                    <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">별칭명</p>
-                    <div class="flex gap-2 justify-start items-center">
-                        <p v-if="factory.sys.info.alNm" class="text-xs">{{ factory.sys.info.alNm }}</p>
-                        <Button label="별칭 수정" class="!bg-[#CDE8FD] !text-p-lv4 !border-0 btn-xs" size="small" @click="getPopupOpen('sysFactoryNameSet')" />
-                    </div>
-                </li>
-                <li class="flex">
-                    <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">전화번호</p>
-                    <p class="capsuel_sky">{{ factory['sys']['info']['tel'] }}</p>
-                </li>
-                <li class="flex">
-                    <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">영업시간</p>
-                    <div class="text-xs">
-                        <p class="">09:00 - 18:00</p>
-                    </div>
-                </li>
-                <li class="flex">
-                    <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">주소</p>
-                    <p class="text-xs">({{ factory['sys']['info']['zip'] }}) {{ factory['sys']['info']['addr']+' '+factory['sys']['info']['addrDetail'] }}</p>
-                </li>
-                <li class="flex">
-                    <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">계좌</p>
-                    <p class="text-xs">{{ factory['sys']['info']['bankNm']+' '+factory['sys']['info']['accNum'] }}</p>
-                </li>
-                <li class="flex text-xs">
-                    <p class="flex items-center w-24 text-xs text-gray-600 whitespace-nowrap">혜택</p>
-                    <p class="font-medium"><span class="flex justify-center items-center font-bold text-white bg-orange-500 rounded-full size-5">P</span>{{ factory['sys']['info']['boon'] }}</p>
-                </li>
-            </ul>
+        <section class="px-5 pt-5 sm:px-8">
+            <h2 class="font-bold text-15 sm:text-base text-t-lv1">공장 정보</h2>
+            <div class="info-list">
+                <dl class="info-set">
+                    <dt class="title">
+                        공장명
+                    </dt>
+                    <dd class="desc">
+                        <strong>{{ factory.sys.info.faNm }}</strong>
+                    </dd>
+                </dl>
+                <dl class="info-set">
+                    <dt class="title">
+                        별칭명
+                    </dt>
+                    <dd class="desc">
+                        <div class="flex gap-2 justify-start items-center">
+                            <span v-if="factory.sys.info.alNm">
+                                {{ factory.sys.info.alNm }}
+                            </span>
+                            <Button 
+                                :label="factory.sys.info.alNm ? '별칭 수정' : '별칭 등록'"
+                                class="!bg-[#CDE8FD] !text-p-lv4 !border-0 btn-13 my-[-0.375rem]"
+                                size="small"
+                                @click="getPopupOpen('sysFactoryNameSet')"
+                            />
+                        </div>
+                    </dd>
+                </dl>
+                <dl class="info-set">
+                    <dt class="title">
+                        전화번호
+                    </dt>
+                    <dd class="desc">
+                        <div class="capsuel_sky !inline-flex">
+                            {{ factory['sys']['info']['tel'] }}
+                        </div>
+                    </dd>
+                </dl>
+                <dl class="info-set">
+                    <dt class="title">
+                        영업시간
+                    </dt>
+                    <dd class="desc">
+                        <span class="font-semibold">09:00 - 18:00</span>
+                    </dd>
+                </dl>
+                <dl class="info-set v-top">
+                    <dt class="title">
+                        주소
+                    </dt>
+                    <dd class="desc">
+                        <address>
+                            ({{ factory['sys']['info']['zip'] }}) {{ factory['sys']['info']['addr']+' '+factory['sys']['info']['addrDetail'] }}
+                        </address>
+                    </dd>
+                </dl>
+                <dl class="info-set">
+                    <dt class="title">
+                        계좌
+                    </dt>
+                    <dd class="desc">
+                        {{ factory['sys']['info']['bankNm']+' '+factory['sys']['info']['accNum'] }}
+                    </dd>
+                </dl>
+                <dl class="info-set">
+                    <dt class="title">
+                        혜택
+                    </dt>
+                    <dd class="desc">
+                        <span class="flex justify-center items-center font-bold text-white bg-orange-500 rounded-full size-5">P</span>
+                        {{ factory['sys']['info']['boon'] }}
+                    </dd>
+                </dl>
+            </div>
+
             <!-- 카운트 -->
-            <ul class="grid grid-cols-4 py-5 mx-4 border border-gray-200 rounded-[4px] mt-[10px]">
-                <li class="flex flex-col justify-center items-center border-r last:border-r-0">
+            <ul class="grid grid-cols-4 py-5 border border-gray-200 rounded-[4px] mt-[10px]">
+                <li class="flex flex-col justify-center items-center border-r border-l-lv4 last:border-r-0">
                     <p class="text-lg font-bold text-blue-600">0</p>
                     <p class="text-xs text-gray-500">주문</p>
                 </li>
-                <li class="flex flex-col justify-center items-center border-r last:border-r-0">
+                <li class="flex flex-col justify-center items-center border-r border-l-lv4 last:border-r-0">
                     <p class="text-lg font-bold text-blue-600">0</p>
                     <p class="text-xs text-gray-500">생산</p>
                 </li>
-                <li class="flex flex-col justify-center items-center border-r last:border-r-0">
+                <li class="flex flex-col justify-center items-center border-r border-l-lv4 last:border-r-0">
                     <p class="text-lg font-bold text-blue-600">0</p>
                     <p class="text-xs text-gray-500">생산완료</p>
                 </li>
-                <li class="flex flex-col justify-center items-center border-r last:border-r-0">
+                <li class="flex flex-col justify-center items-center border-r border-l-lv4 last:border-r-0">
                     <p class="text-lg font-bold text-blue-600">0</p>
                     <p class="text-xs text-gray-500">출고</p>
                 </li>

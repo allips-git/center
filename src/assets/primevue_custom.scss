@@ -1,3 +1,12 @@
+@use 'sass:math';
+
+$root-font-size: 16px !default;
+// px -> rem
+@function rem($value, $base: $root-font-size) {
+    $px-value: if(math.unit($value) == 'px', $value, $value * 1px);
+    $px-base: if(math.unit($base) == 'px', $base, $base * 1px);
+    @return math.div($px-value, $px-base) * 1rem;
+}
 
 // Breakpoints
 $breakpoint-xs: 0; // Extra small devices (phones)
@@ -303,30 +312,45 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         color: var(--p-tabs-tab-color);
     }
 }
-.custom-customer-tab{
-    .p-tab-active{
-        &.p-tab{
-            // transition: 0.5s;
-            color: #404040;
-            border-bottom-width: 0px;
-            border-color: transparent;
-            font-weight: 700;
+.custom-customer-tab {
+    .p-tablist {
+        padding: rem(6);
+        .p-tablist-tab-list {
+            gap: rem(6);
+            border: 0;
+            align-items: center;
+        }
+        .divider {
+            display: block;
+            width: 1px;
+            height: rem(40);
+            background-color: color-mix(in srgb, var(--l-lv4), white 50%);
+        }
+        .p-tab {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: rem(7) 0 rem(9);
+            border: 0;
+            border-radius: rem(4);
+            color: var(--t-lv2);
+            font-weight: 500;
+            .count {
+                color: var(--p-lv2);
+                font-weight: 700;
+            }
+            &.p-tab-active {
+                color: var(--p-lv2);
+                font-weight: 700;
+                background-color: color-mix(in srgb, var(--p-lv5), white 35%);
+            }
+        }
+        .p-tablist-active-bar{
+            display: none;
         }
     }
-    .p-tablist-tab-list {
-        border: none;
-    }
-    .p-tab{
-        color: #7D7C78 ;
-        font-weight: 400;
-        border-bottom-width: 0px;
-        // padding: 0.5rem 0rem;
-        border-color: transparent;
-        // color: var(--p-tabs-tab-color);
-    }
-   .p-tablist-active-bar{
-    display: none !important;
-   }
+    .p-tabpanels{}
 }
 .custom-left-tab{
     .p-tablist-tab-list{
@@ -820,7 +844,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .bottom-modal-absol-box {
     .p-button{
         padding: 0.9375rem 0;
-        border: none;
+        //border: none;
         .p-button-label{
             font-size: 0.9375rem;
             font-weight: 700;
@@ -832,14 +856,13 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .bottom-fixed-btn-box {
     .p-button{
         padding: 0.9375rem 0;
-        border: none;
+        //border: none;
         .p-button-label{
             font-size: 0.9375rem;
             font-weight: 700;
             line-height: 1rem;
             letter-spacing: 0.02em;
         }
-
     }
 }
 
@@ -850,6 +873,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
+// 버튼 정리
 .p-button {
     // /border: 0 !important;
     border-radius: 0.125rem !important;
@@ -857,7 +881,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         border-radius: 9999px !important; 
     }
     &:hover {
-        border: 0 !important;
+        //border: 0 !important;
     }
     .p-button-label{
         font-weight: 500;
@@ -929,10 +953,6 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 
 .p-button-rounded{
     border-radius: 9999px !important;
-}
-
-.p-confirmdialog{
-    min-width: 300px ;
 }
 :root{
     --p-form-field-padding-y:0.5rem !important
@@ -1184,7 +1204,11 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .p-dialog {
     &.p-confirmdialog {
         width: calc(100% - 2rem);
+        min-width: rem(300);
         border-radius: 0.5rem;
+        @media (min-width: $breakpoint-sm) {
+            width: rem(400);
+        }
         .p-dialog-header {
             padding-top: 1rem;
             padding-bottom: 1rem;
@@ -1218,5 +1242,52 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
             }
         }
     }
+ // Start of Selection
 }
 
+
+// Info List : 공장 상세, 
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: rem(10);
+    @media (min-width: $breakpoint-sm) {
+        gap: rem(12);
+    }
+    .info-set {
+        display: flex;
+        align-items: center;
+        &.v-top {
+            align-items: start;
+        }
+        .title {
+            width: rem(80);
+            flex-shrink: 0;
+            color: var(--t-lv2);
+            font-size: rem(13);
+            //font-weight: 500;
+            line-height: 1.38;
+        }
+        .desc {
+            flex: 1;
+            color: var(--t-lv1);
+            font-size: rem(13);
+            //font-weight: 500;
+            line-height: 1.38;
+            address {
+                font-style: normal;
+            }
+        }
+    }
+    @media (min-width: $breakpoint-sm) { 
+        .info-set {
+            .title {
+                width: rem(100);
+                font-size: rem(14);
+            }
+            .desc {
+                font-size: rem(14);
+            }
+        }
+    }
+}
