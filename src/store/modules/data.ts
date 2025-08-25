@@ -3,6 +3,9 @@ import { getAxiosData } from '@/assets/js/function';
 
 export const useDataStore = defineStore('data', {
     state: () => {
+        const division = Array.from({ length: 10 }, (v, i) => ({ name: i === 0 ? '단창' : (i+1)+'분할', value: i+1 }));
+        division.splice(1, 0, { name: '공사건 계산기', value: "A" });
+
         return {
             emer: [
                 { name: '긴급', value: 'Y' },
@@ -89,7 +92,7 @@ export const useDataStore = defineStore('data', {
                 { name: '폭', value : '003'},
                 { name: 'EA', value : '004'}
             ],
-            division : Array.from({ length: 10 }, (v, i) => ({ name: i === 0 ? '단창' : (i+1)+'분할', value: i+1 })),
+            division : division,
             handle : [
                 { name: '좌', value : 'L'},
                 { name: '우', value : 'R'}

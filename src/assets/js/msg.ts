@@ -226,6 +226,14 @@ export const estiBlindMsg = (params: EstiBlindMsg): { msg: string; id: string, i
             {
                 return { msg : '분할 가로 길이를 입력해주세요.', id : `bWidth${index}`, index: index, state : false };
             }
+
+            if(params['division'] === 'A')
+            {
+                if(!Number(item['height']) || Number(item['height']) === 0)
+                {
+                    return { msg : '분할 세로 길이를 입력해주세요.', id : `bHeight${index}`, index: index, state : false };
+                }
+            }
         }
 
         const sumWidth = params['divSpec'].reduce((sum, item) => sum + Number(item.width), 0);
