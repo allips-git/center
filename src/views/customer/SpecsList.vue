@@ -14,17 +14,17 @@
         <div class="gray-bar"></div>
         <section class="p-4">
             <CalculateCard title="제품 결제 내역" :calcs="esti['payList']" totalTitle="총 결제 금액" :totalAmt="getAmt(esti['payList'], 'total')" :showtoggle="true">
-                <div class="flex flex-col gap-5 py-3 ">                    
-                    <div class="relative flex items-center justify-center input-custom">
+                <div class="flex flex-col gap-5 py-3">                    
+                    <div class="flex relative justify-center items-center input-custom">
                         <p class="w-[100px] text-13 flex-none">할인 금액</p>
                         <InputText class="*:!text-blue-500 inputNumber-color *:!rounded-sm" @click="getDisAmtPopup" :value="getAmtInfo('dcAmt')" readonly/>
-                        <span class="absolute text-blue-500 translate-y-1/2 text-13 right-4 bottom-1/2">원</span>
+                        <span class="absolute right-4 bottom-1/2 text-blue-500 translate-y-1/2 text-13">원</span>
                     </div>
 
-                    <div class="relative flex items-center justify-center input-custom">
+                    <div class="flex relative justify-center items-center input-custom">
                         <p class="w-[100px] text-13 flex-none">추가 금액</p>
                         <InputText class="*:!text-red-500 inputNumber-color *:!rounded-sm" @click="getPopupOpen('addAmtSet')" :value="getAmtInfo('addAmt')" readonly/>
-                        <span class="absolute text-sm text-red-500 right-4 bottom-2.5">원</span>
+                        <span class="absolute bottom-2.5 right-4 text-sm text-red-500">원</span>
                     </div>
                 </div>
                 <div class="flex justify-between my-5">

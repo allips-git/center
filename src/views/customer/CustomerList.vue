@@ -1,8 +1,8 @@
 <template>
-    <main class="relative pb-24  h-[90vh]">
+    <main class="relative pb-24 h-full">
         <BackHeader title="고객" />
-        <section>
-            <div class="flex justify-between items-center px-4 md:px-6 no-print">
+        <section class="overflow-y-auto h-full">
+            <div class="flex items-center justify-between px-4 py-[10px] md:px-6 no-print ">
                 <div class="flex justify-between self-center w-full">
                     <div class="flex gap-2 w-full">
                         <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="bg w-[36%]" @change="getList">
@@ -38,6 +38,7 @@
                     </div>
                 </li>
             </ul>
+            
         </section>
 
         <div class="fixed bottom-14 right-4 xl:right-[calc((100vw-1280px)/2+8rem)] xl:bottom-14 2xl:right-[calc((100vw-1440px)/2+8rem) register-button"  @click="getPopOpen">

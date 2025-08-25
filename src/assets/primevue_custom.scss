@@ -418,13 +418,6 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
-.custom-toggle{
-    .p-toggleswitch-handle{
-        top: 53% !important;
-        left: 10% !important;
-    }
-}
-
 .p-select-list-container{
     font-size: 13px !important;
 }
@@ -1119,14 +1112,29 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 .p-toggleswitch{
-    // width: 40px !important;
-    // height: 22px !important;
+    display: block !important;
+    //width: rem(40) !important;
+    //height: rem(24) !important;
     .p-toggleswitch-handle{
-        width: 18px;
-        height: 18px;
-        // margin-block-start: 1px;
+        //width: rem(18);
+        //height: rem(18);
+        left: rem(3);
+        inset-inline-start: rem(3);
+    }
+    &.p-toggleswitch-checked {
+        .p-toggleswitch-handle {
+            left: rem(19) !important;
+            inset-inline-start: rem(19) !important;
+        }
     }
 }
+.custom-toggle{
+    .p-toggleswitch-handle{
+        //top: 53% !important;
+        //left: 10% !important;
+    }
+}
+
 :root{
     --p-toggleswitch-handle-size:1.125rem !important;
     --p-toggleswitch-gap:0.125rem !important;
@@ -1182,8 +1190,8 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         }
         &.p-toggleswitch-checked {
             .p-toggleswitch-handle {
-                left: 1.4375rem;
-                inset-inline-start: 1.4375rem;
+                left: 1.4375rem !important;
+                inset-inline-start: 1.4375rem !important;
             }
         }
         &:not(.p-toggleswitch-checked) {
