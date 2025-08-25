@@ -167,6 +167,8 @@ const getEstiSave = () => {
 
             const result = estiBlindMsg(checkParams);
 
+            console.log(result);
+
             if(!result['state'])
             {
                 esti.getMsgSet(result['msg'], result['index'] === null ? result['id'] : 'divWidth');
@@ -283,6 +285,8 @@ const getEstiSave = () => {
             {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/estiV1/getResult`, params);
+
+                console.log(res);
                 
                 await esti.getEmCd(res.data['emCd']);
                 await esti.getList();

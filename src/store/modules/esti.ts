@@ -526,7 +526,7 @@ export const useEstiStore = defineStore('esti', {
                                 switch(esti.unit)
                                 {
                                     case '001':
-                                        if(esti.division === 'D')
+                                        if(esti.division === 'D' || esti.division === 'A')
                                         {
                                             rows.push(...esti.detail.map(dItem => ({
                                                 width   : dItem.width,
@@ -809,7 +809,7 @@ export const useEstiStore = defineStore('esti', {
         async getBlindSet(info: object)
         {
             for(const data in info){
-                this.blind[data] = data === 'division' ? Number(info[data]) : info[data];
+                this.blind[data] = data === 'division' ? (info[data] !== 'A' ? Number(info[data]) : info[data]) : info[data];
             }
         },
         async getCurtainSet(info: object)
@@ -832,25 +832,57 @@ export const useEstiStore = defineStore('esti', {
 
             const specArr   = [];
             const specInfo  = this.blind['divSpec'];
-        
-            for(let i=0; i<division; i++)
+
+            console.log(this.blind.bQty);
+
+            this.blind.bQty = Number(this.blind.bQty) !== 0 ? Number(this.blind.bQty) : 1;
+
+            if(this.blind['division'] === 'A')
             {
-                const spec = {
-                    width  : specInfo[i] !== undefined ? specInfo[i]['width'] : '',
-                    height : this.common['height'],
-                    handle : i === 0 ? 'L' : 'R',
-                    size   : getHebe({
-                        width       : specInfo[i] !== undefined ? specInfo[i]['width'] : '',
-                        height      : Number(this.common['height']),
-                        minWidth    : this.blind['minWidth'],
-                        minHeight   : this.blind['minHeight'],
-                        size        : Number(this.common['unitSize']),
-                        roundGb     : this.common['roundGb']
-                    }) * (specInfo[i] !== undefined ? specInfo[i]['qty'] : 1),
-                    qty    : specInfo[i] !== undefined ? specInfo[i]['qty'] : 1
+                /** 공사건 계산기일 때 */
+                const divCnt = this.blind.divSpec.length === 0 ? 1 : this.blind.divSpec.length;
+
+                for(let i=0; i<divCnt; i++)
+                {
+                    const spec = {
+                        width  : specInfo[i] !== undefined ? specInfo[i]['width'] : '',
+                        height : specInfo[i] !== undefined ? specInfo[i]['height'] : '',
+                        handle : i === 0 ? 'L' : 'R',
+                        size   : getHebe({
+                            width       : specInfo[i] !== undefined ? specInfo[i]['width'] : '',
+                            height      : specInfo[i] !== undefined ? specInfo[i]['height'] : '',
+                            minWidth    : this.blind['minWidth'],
+                            minHeight   : this.blind['minHeight'],
+                            size        : Number(this.common['unitSize']),
+                            roundGb     : this.common['roundGb']
+                        }) * (specInfo[i] !== undefined ? specInfo[i]['qty'] : 1),
+                        qty    : specInfo[i] !== undefined ? specInfo[i]['qty'] : 1
+                    }
+            
+                    specArr.push(spec);
                 }
-        
-                specArr.push(spec);
+            }
+            else
+            {
+                for(let i=0; i<division; i++)
+                {
+                    const spec = {
+                        width  : specInfo[i] !== undefined ? specInfo[i]['width'] : '',
+                        height : this.common['height'],
+                        handle : i === 0 ? 'L' : 'R',
+                        size   : getHebe({
+                            width       : specInfo[i] !== undefined ? specInfo[i]['width'] : '',
+                            height      : Number(this.common['height']),
+                            minWidth    : this.blind['minWidth'],
+                            minHeight   : this.blind['minHeight'],
+                            size        : Number(this.common['unitSize']),
+                            roundGb     : this.common['roundGb']
+                        }),
+                        qty    : 1
+                    }
+            
+                    specArr.push(spec);
+                }
             }
         
             this.blind['divSpec'] = specArr;
@@ -859,11 +891,11 @@ export const useEstiStore = defineStore('esti', {
         {
             this.blind['divSpec'].push({
                 width  : '',
-                height : this.common['height'],
+                height : '',
                 handle : 'R',
                 size   : getHebe({
                     width       : '',
-                    height      : Number(this.common['height']),
+                    height      : '',
                     minWidth    : this.blind['minWidth'],
                     minHeight   : this.blind['minHeight'],
                     size        : Number(this.common['unitSize']),
@@ -935,7 +967,7 @@ export const useEstiStore = defineStore('esti', {
         {
             this.blind['divSpec'][index]['size']  = getHebe({
                 width       : this.blind['divSpec'][index]['width'],
-                height      : Number(this.common['height']),
+                height      : this.blind['division'] === 'A' ? Number(this.blind['divSpec'][index]['height']) : Number(this.common['height']),
                 minWidth    : this.blind['minWidth'],
                 minHeight   : this.blind['minHeight'],
                 size        : Number(this.common['unitSize']),
@@ -945,6 +977,21 @@ export const useEstiStore = defineStore('esti', {
             const total = this.blind['divSpec'].reduce((acc, val) => acc + Number(val['width']), 0);
 
             this.common['width'] = Math.round(Number(total) * 10) / 10;
+        },
+        getDivBlindHeight(index: number)
+        {
+            this.blind['divSpec'][index]['size']  = getHebe({
+                width       : this.blind['divSpec'][index]['width'],
+                height      : Number(this.blind['divSpec'][index]['height']),
+                minWidth    : this.blind['minWidth'],
+                minHeight   : this.blind['minHeight'],
+                size        : Number(this.common['unitSize']),
+                roundGb     : this.common['roundGb']
+            }) * Number(this.blind['divSpec'][index]['qty']);
+
+            const total = this.blind['divSpec'].reduce((acc, val) => acc + Number(val['height']), 0);
+
+            this.common['height'] = Math.round(Number(total) * 10) / 10;
         },
         getUnitCalc()
         {
