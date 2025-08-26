@@ -25,34 +25,44 @@
         </ul>
     </main>
 
-    <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
-            }" class="bottom-fixed-btn-box" 
-            >
-            <Button label="멤버 추가" size="large" @click="getPopup"/>
+    <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  }" class="bottom-fixed-btn-box" >
+        <Button label="멤버 추가" size="large" @click="getPopup"/>
     </div>
 
+    <Dialog v-model:visible="popup['pop']['memberDetail']" header="멤버상세" 
+        :modal=true position="center" class="custom-dialog-full" 
+        @update:visible="getPopupClose('memberDetail', true)">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopupClose(true, 'memberDetail')" severity="contrast" text icon="pi pi-times"/>
+                <h2 class="modal-backheader-title">멤버 상세</h2>
+            </div>
+        </template>
+        <MemberDetail/>
+    </Dialog> 
+
     <Dialog v-model:visible="popup['pop']['memberSet']" header="멤버 저장" 
-            :modal=true position="center" class="custom-dialog-full" 
-            @update:visible="getPopupClose('memberSet', true)">
-            <template #header>
-                <div class="modal-backheader">
-                    <Button @click="getPopupClose(true, 'memberSet')" severity="contrast" text icon="pi pi-times"/>
-                    <h2 class="modal-backheader-title">멤버 정보 저장</h2>
-                </div>
-            </template>
-            <MemberEdit/>
-        </Dialog> 
+        :modal=true position="center" class="custom-dialog-full" 
+        @update:visible="getPopupClose('memberSet', true)">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopupClose(true, 'memberSet')" severity="contrast" text icon="pi pi-times"/>
+                <h2 class="modal-backheader-title">멤버 정보 저장</h2>
+            </div>
+        </template>
+        <MemberEdit/>
+    </Dialog> 
 </template>
 
 <script setup lang="ts">
 import IconAvatar from '@/components/icons/IconAvatar.vue';
 import IconSetting from '@/components/icons/IconSetting.vue';
 import BackHeader from '@/components/layouts/BackHeader.vue';
+import MemberDetail from "@/views/include/setting/MemberDetail.vue";
 import MemberEdit from "@/views/include/setting/MemberEdit.vue";
 import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { usePopupStore, useLoginStore, useMemberStore } from '@/store';
 import { getAxiosData, getTokenOut } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
@@ -61,7 +71,6 @@ const confirm   = useConfirm();
 const popup     = usePopupStore();
 const login     = useLoginStore();
 const member    = useMemberStore();
-const router    = useRouter();
 
 const mainRef = ref(null);
 const mainWidth = ref(0);
@@ -87,7 +96,7 @@ const getDetail = async (state: string, userCd: string) => {
     if(state === 'Y')
     {
         await member.getUserCd(userCd);
-        router.push('/setting/member_detail');
+        getPopupOpen('memberDetail');
     }
 }
 
