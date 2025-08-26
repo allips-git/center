@@ -51,8 +51,6 @@ import MessageSend from "@/views/groupMessage/MessageSend.vue";
 import settingStore from "@/views/setting/SettingStore.vue";
 import memberMng from "@/views/setting/MemberMng.vue";
 import MemberAuthSetting from "@/views/setting/MemberAuthSetting.vue";
-
-import MemberDetail from "@/views/setting/MemberDetail.vue";
 import CouponMenu from "@/views/setting/CouponMenu.vue";
 import SettingAuth from "@/views/setting/SettingAuth.vue";
 
@@ -363,13 +361,6 @@ const routes = [
         name: "memberMng",
         component: memberMng,
         meta: { title: "맴버 목록" }    
-    },
-
-    {
-        path: "/setting/member_detail",
-        name: "MemberDetail",
-        component: MemberDetail,
-        meta: { title: "맴버 상세" }    
     },
 
     {

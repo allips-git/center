@@ -9,14 +9,14 @@
                     <small class="text-red-500">{{ member['msg']['id'] }}</small>
                 </IftaLabel>
 
-                <IftaLabel class="w-full">
-                    <InputText v-if="member['type'] === 'I'" :type="'password'" id="pw" v-model="member['info']['pw']" class="w-full" :disabled="member['type'] === 'U' ? true : false"/>
+                <IftaLabel v-if="member['type'] === 'I'" class="w-full">
+                    <InputText :type="'password'" id="pw" v-model="member['info']['pw']" class="w-full" :disabled="member['type'] === 'U' ? true : false"/>
                     <label>비밀번호 <span class="ml-0.5 text-red-500">*</span></label>
                     <small class="text-red-500">{{ member['msg']['pw'] }}</small>
                 </IftaLabel>
 
-                <IftaLabel class="w-full">
-                    <InputText v-if="member['type'] === 'I'" :type="'password'" id="pwChk" v-model="member['info']['pwChk']" class="w-full" :disabled="member['type'] === 'U' ? true : false"/>
+                <IftaLabel v-if="member['type'] === 'I'" class="w-full">
+                    <InputText :type="'password'" id="pwChk" v-model="member['info']['pwChk']" class="w-full" :disabled="member['type'] === 'U' ? true : false"/>
                     <label>비밀번호 확인 <span class="ml-0.5 text-red-500">*</span></label>
                     <small class="text-red-500">{{ member['msg']['pwChk'] }}</small>
                 </IftaLabel>

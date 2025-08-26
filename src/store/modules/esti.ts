@@ -507,6 +507,7 @@ export const useEstiStore = defineStore('esti', {
         {
             try
             {
+                console.log(this.emCd);
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/estiV1/getList`, { emCd : this.emCd });
 
@@ -992,6 +993,57 @@ export const useEstiStore = defineStore('esti', {
             const total = this.blind['divSpec'].reduce((acc, val) => acc + Number(val['height']), 0);
 
             this.common['height'] = Math.round(Number(total) * 10) / 10;
+        },
+        getDivQty(index: number)
+        {
+            this.blind['divSpec'][index]['qty']++;
+            this.blind['divSpec'][index]['size'] = getHebe({
+                width       : this.blind['divSpec'][index]['width'],
+                height      : this.blind['division'] === 'A' ? Number(this.blind['divSpec'][index]['height']) : Number(this.common['height']),
+                minWidth    : this.blind['minWidth'],
+                minHeight   : this.blind['minHeight'],
+                size        : Number(this.common['unitSize']),
+                roundGb     : this.common['roundGb']
+            }) * Number(this.blind['divSpec'][index]['qty']);
+        },
+        getDivDelete(index: number)
+        {
+            if(index === 0)
+            {
+                if(this.blind.divSpec.length === 1)
+                {
+                    this.blind.divSpec[index] = {
+                        width  : '',
+                        height : '',
+                        handle : 'L',
+                        size   : getHebe({
+                            width       : '',
+                            height      : '',
+                            minWidth    : this.blind['minWidth'],
+                            minHeight   : this.blind['minHeight'],
+                            size        : Number(this.common['unitSize']),
+                            roundGb     : this.common['roundGb']
+                        }),
+                        qty    : 1
+                    }
+                }
+                else
+                {
+                    this.blind.divSpec.splice(index, 1);
+                }
+            }
+            else
+            {
+                this.blind.divSpec.splice(index, 1);
+            }
+
+            const width = this.blind['divSpec'].reduce((acc, val) => acc + Number(val['width']), 0);
+            const height = this.blind['divSpec'].reduce((acc, val) => acc + Number(val['height']), 0);
+
+            this.common['width']    = Math.round(Number(width) * 10) / 10;
+            this.common['height']   = Math.round(Number(height) * 10) / 10;
+
+            this.getUnitCalc();
         },
         getUnitCalc()
         {

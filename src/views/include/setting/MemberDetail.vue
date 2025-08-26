@@ -68,7 +68,7 @@ import BackHeader from '@/components/layouts/BackHeader.vue'
 import IconAvatar from '@/components/icons/IconAvatar.vue';
 import IconPhone from '@/components/icons/IconPhone.vue';
 import MemberEdit from "@/views/include/setting/MemberEdit.vue";
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { usePopupStore, useMemberStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
@@ -81,6 +81,10 @@ const getPopup = async() => {
     await member.getInfo();
     getPopupOpen('memberSet');
 }
+
+onUnmounted(() => {
+    member.getList();
+})
 
 onMounted(() => {
     member.getDetail();

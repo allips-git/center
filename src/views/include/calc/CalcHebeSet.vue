@@ -138,11 +138,11 @@
                 <IftaLabel>
                     <label v-if="index === 0">수량<span class="ml-0.5 text-red-500">*</span></label>
                     <div class="input-number-custom">
-                        <Button class="decrement">
+                        <Button class="decrement" @click="esti.getDivDelete(index)">
                             <IconDelete class="text-[#000]"/>
                         </Button>
-                        <InputNumber inputId="divQty" v-model="item.qty" buttonLayout="horizontal" :step="1" fluid @update:modelValue="getDivBlindWidth(index)" :pt="getDecrementDeletePt(index)" class="flex-1 *:text-center" />
-                        <Button class="increment">
+                        <InputNumber inputId="divQty" v-model="item.qty" buttonLayout="horizontal" :step="1" fluid @update:modelValue="getDivBlindWidth(index)" class="flex-1 *:text-center" />
+                        <Button class="increment" @click="getQty(index)">
                             <span class="pi pi-plus" />
                         </Button>
                     </div>
@@ -182,8 +182,9 @@ const getDivBlindHeight = async (index: number) => {
     await esti.getUnitCalc();
 }
 
-const getDecrementDeletePt = (index: number) => {
-    console.log(index);
+const getQty = async (index: number) => {
+    await esti.getDivQty(index);
+    await esti.getUnitCalc();
 }
 
 </script>
