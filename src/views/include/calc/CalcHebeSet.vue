@@ -130,13 +130,14 @@
                 <IftaLabel class="w-full">
                     <Select v-model="item['handle']" :options="data['handle']" optionLabel="name" optionValue="value" class="w-full">
                         <template #dropdownicon>
-                            <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
+                            <IconArrowDropDown class="w-4 h-4 text-l-lv0"/>
                         </template>
                     </Select>
                 </IftaLabel>
+                <!-- @PB 수정 요청 2025-08-26 -->
                 <IftaLabel>
                     <label v-if="index === 0">수량<span class="ml-0.5 text-red-500">*</span></label>
-                    <InputNumber inputId="divQty" v-model="item.qty" showButtons buttonLayout="horizontal" :step="1" fluid @update:modelValue="getDivBlindWidth(index)">
+                    <InputNumber inputId="divQty" v-model="item.qty" buttonLayout="horizontal" :step="1" fluid @update:modelValue="getDivBlindWidth(index)" :pt="getDecrementDeletePt(index)">
                         <template #incrementbuttonicon >
                             <span class="pi pi-plus" />
                         </template>
@@ -180,7 +181,9 @@ const getDivBlindHeight = async (index: number) => {
     await esti.getUnitCalc();
 }
 
-console.log(esti.blind.division);
+const getDecrementDeletePt = (index: number) => {
+    console.log(index);
+}
 
 </script>
 

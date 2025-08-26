@@ -320,7 +320,7 @@ const getProcess = async (value: string) => {
             try
             {
                 const instance = await getAxiosData();
-                const res      = await instance.post(`https://data.planorder.kr/chatV1/getChat`, { emCd : props['info']['emCd'] });
+                const res      = await instance.post(`https://data.planorder.kr/chatV1/getChat`, { clientCd : client.clientCd });
 
                 await chat.getCrCd(String(res.data.crCd));
 
