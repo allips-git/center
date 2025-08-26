@@ -86,6 +86,7 @@ export const joinSecondMsg = (params: JoinSecondParams): { msg: string; id: stri
 }
 
 interface ClientMsg {
+    gb          : Y | N;
     clientNm    : string;
     tel         : string;
     addr        : string;
@@ -103,14 +104,17 @@ export const clientMsg = (params: ClientMsg): { msg: string; id: string, state: 
         return { msg : '고객명을 입력해주세요.', id : 'clientNm', state : false };
     }
 
-    if(!params['tel'] || params['tel'] === 0)
+    if(params['gb'] === 'Y')
     {
-        return { msg : '전화번호를 입력해주세요.', id : 'tel', state : false };
-    }
+        if(!params['tel'] || params['tel'] === 0)
+        {
+            return { msg : '전화번호를 입력해주세요.', id : 'tel', state : false };
+        }
 
-    if(params['addr'] === '')
-    {
-        return { msg : '주소를 입력해주세요.', id : 'addr', state : false };
+        if(params['addr'] === '')
+        {
+            return { msg : '주소를 입력해주세요.', id : 'addr', state : false };
+        }
     }
 
     if(params['person'] === '')
