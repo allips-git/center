@@ -137,14 +137,15 @@
                 <!-- @PB 수정 요청 2025-08-26 -->
                 <IftaLabel>
                     <label v-if="index === 0">수량<span class="ml-0.5 text-red-500">*</span></label>
-                    <InputNumber inputId="divQty" v-model="item.qty" buttonLayout="horizontal" :step="1" fluid @update:modelValue="getDivBlindWidth(index)" :pt="getDecrementDeletePt(index)">
-                        <template #incrementbuttonicon >
-                            <span class="pi pi-plus" />
-                        </template>
-                        <template #decrementbuttonicon>
+                    <div class="input-number-custom">
+                        <Button class="decrement">
                             <IconDelete class="text-[#000]"/>
-                        </template>
-                    </InputNumber>
+                        </Button>
+                        <InputNumber inputId="divQty" v-model="item.qty" buttonLayout="horizontal" :step="1" fluid @update:modelValue="getDivBlindWidth(index)" :pt="getDecrementDeletePt(index)" class="flex-1 *:text-center" />
+                        <Button class="increment">
+                            <span class="pi pi-plus" />
+                        </Button>
+                    </div>
                 </IftaLabel>
             </div>
             <small class="text-msg">{{ esti['msg']['blind']['divWidth'] }}</small>

@@ -465,6 +465,41 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         padding-inline: 0.625rem;
     }
 }
+.input-number-custom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .p-button {
+        position: relative;
+        width: 1.5rem !important;
+        height: 2.5rem;
+        flex-shrink: 0;
+        padding: 0;
+        border-radius: 0 !important;
+        background-color: #fff;
+        border-color: var(--p-inputtext-border-color);
+        .pi {
+            font-size: 12px;
+            font-weight: 900;
+            color: var(--p-gray-900);
+        }
+        &.decrement {
+            margin-right: -1px;
+        }
+        &.increment {
+            margin-left: -1px;
+        }
+        &:hover, &:focus {
+            z-index: 2;
+            background-color: var(--p-inputnumber-button-hover-background) !important;
+            border-color: var(--p-inputnumber-button-hover-border-color) !important;
+        }
+    }
+    .p-inputnumber {
+        position: relative;
+        z-index: 1;
+    }
+}
 .p-inputnumber {
     &.text-lg {
         .p-inputnumber-input {
