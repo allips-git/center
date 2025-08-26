@@ -11,25 +11,27 @@
             <small class="text-red-500">{{ client['msg']['clientNm'] }}</small>
         </IftaLabel>
 
-        <IftaLabel class="label-input-box">
-            <InputText id="tel" v-model="client['info']['tel']" placeholder="010-0000-0000"/>
-            <label>전화번호</label>
-            <small class="text-red-500">{{ client['msg']['tel'] }}</small>
-        </IftaLabel>
-        
-        <IftaLabel>
-            <IconField>
-                <InputText v-model="client['info']['addr']" class="w-full" readonly @click="getAddr"/>
-                <InputIcon class="pi pi-search" />
-            </IconField>
-            <label>주소</label>
-            <small class="text-red-500">{{ client['msg']['addr'] }}</small>
-        </IftaLabel>
+        <template v-if="client.gb === 'Y'">
+            <IftaLabel class="label-input-box">
+                <InputText id="tel" v-model="client['info']['tel']" placeholder="010-0000-0000"/>
+                <label>전화번호</label>
+                <small class="text-red-500">{{ client['msg']['tel'] }}</small>
+            </IftaLabel>
+            
+            <IftaLabel>
+                <IconField>
+                    <InputText v-model="client['info']['addr']" class="w-full" readonly @click="getAddr"/>
+                    <InputIcon class="pi pi-search" />
+                </IconField>
+                <label>주소</label>
+                <small class="text-red-500">{{ client['msg']['addr'] }}</small>
+            </IftaLabel>
 
-        <IftaLabel class="label-input-box">
-            <InputText id="addrDetail" v-model="client['info']['addrDetail']" placeholder="상세주소를 입력해주세요."/>
-            <label>상세주소</label>
-        </IftaLabel>
+            <IftaLabel class="label-input-box">
+                <InputText id="addrDetail" v-model="client['info']['addrDetail']" placeholder="상세주소를 입력해주세요."/>
+                <label>상세주소</label>
+            </IftaLabel>
+        </template>
 
         <IftaLabel class="label-input-box">
             <Select v-model="client['info']['person']" :options="client['person']" optionLabel="label" optionValue="value" placeholder="선택"/> 
@@ -121,6 +123,7 @@ const getCloseDaumPost = () => {
 
 const getSaveNext = () => {
     const checkParams = {
+        gb          : client.gb,
         clientNm    : client['info']['clientNm'],
         tel         : client['info']['tel'],
         addr        : client['info']['addr'],

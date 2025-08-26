@@ -45,6 +45,20 @@
             <Button label="고객 등록" icon="pi pi-plus" size="large"  @click="getPopOpen"/>
         </div>
 
+        <Dialog v-model:visible="popup['pop']['clientChoice']" 
+                :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissable-mask="true"
+                @update:visible="getPopupClose(true, 'clientChoice')">
+                <template #header>
+                    <div class="modal-backheader">
+                        <Button @click="getPopupClose(true, 'clientChoice')" severity="contrast" text icon="pi pi-times"/>
+                        <h2 class="modal-backheader-title">고객 구분</h2>
+                    </div>
+                </template>
+                <div class="pt-3">
+                <CustomerChoice :gubun="'E'" @getApply="getDisApply" @getClose="getPopupClose('clientChoice', true)"/>
+            </div>
+        </Dialog>
+
         <Dialog v-model:visible="popup['pop']['clientSet']" 
         header="고객 등록"
         :modal=true
@@ -82,6 +96,7 @@ import InputText from 'primevue/inputtext';
 import InputIcon from 'primevue/inputicon'; 
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import Dialog from 'primevue/dialog';
+import CustomerChoice from '@/components/modal/CustomerChoice.vue'
 import CustomerListSet from '@/views/include/CustomerListSet.vue'
 import CustomerDetail from '@/views/include/customer/CustomerDetail.vue'
 import { onMounted } from 'vue';
@@ -98,7 +113,7 @@ const client    = useClientStore();
 const { getPopupOpen, getPopupClose } = usePopup();
 
 const getPopOpen = () => {
-    getPopupOpen('clientSet');
+    getPopupOpen('clientChoice');
     client.getReset();
 }
 
