@@ -253,7 +253,7 @@ const getCommonInfo = (): CommonInfo => {
         dcAmt    : null,            /** 할인 금액 */
         vat      : 'N',             /** 부가세 여부 (Y : 포함 / N : 미포함), 매입금액 계산용 */
         vmRate   : 0,               /** 부가세율, 매입금액 계산용 */
-        roundGb  : '001',           /** 반올림 구분 */
+        roundGb  : '005',           /** 반올림 구분 */
         options  : [getOption()],   /** 추가 옵션 리스트 */
         memo     : ''               /** 지시사항 */
     }

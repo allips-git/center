@@ -47,7 +47,7 @@
             <div>
                 <div class="relative">
                     <IftaLabel class="flex-1 min-w-0">
-                    <label class="accent">최종({{ esti['common']['unitNm'] }})</label>
+                    <label class="accent">최종({{ getRealSize() + esti['common']['unitNm'] }})</label>
                     <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full text-lg text-center text-sky-500" @input="getSize" />
                 </IftaLabel>
                 <!-- <span class="absolute right-2.5 bottom-[0.625rem] text-xs text-t-lv1">{{ esti['common']['unitNm'] }}</span> -->
@@ -135,6 +135,38 @@ const getOptionCheck = (gb: string) => {
     const option = esti['common']['options'].find(item => item.gb === gb);
 
     return option ? (option.useYn === 'N' ? false : true) : true;
+}
+
+const getRealSize = () => {
+    switch(esti['common']['unit'])
+    {
+        case '003': case '005':
+            {
+                const width         = Number(esti['common']['width']);
+                const uselMaterial  = Number(esti['curtain']['use']);
+                const los           = Number(esti['curtain']['los']);
+                const pokSpec       = Number(esti['curtain']['pokSpec']);
+
+                const value = width === 0 ? 0 : ((width * uselMaterial + los) / pokSpec);
+
+                return value.toFixed(2);
+            }
+        case '002':
+            {
+                const width         = Number(esti['common']['width']);
+                const uselMaterial  = Number(esti['curtain']['use']);
+                const los           = Number(esti['curtain']['los']);
+
+                const value = width === 0 ? 0 : (width * uselMaterial + los) / 90;
+
+                return value.toFixed(2);
+            }
+        case '006':
+            {
+                return Number(esti['common']['width']);
+            }
+        
+    }
 }
 
 const getProc = () => {
