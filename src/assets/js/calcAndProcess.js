@@ -97,6 +97,7 @@ export function getPokCalc(common, curtain)
         pok             : Number(curtain['size']),
         height          : Number(common['height']),
         heightLen       : Number(curtain['heightLen']),
+        autoCalc        : Number(curtain['autoCalc']),
         addPrice        : Number(curtain['addPrice']),
         option          : common['options'].filter(item => item.itemCd !== '' && item.useYn === 'Y' && item.delYn === 'N'),
         dcUnit          : common['dcUnit'],
@@ -106,6 +107,8 @@ export function getPokCalc(common, curtain)
         purcVat         : common['vat'],
         purcVmRate      : common['vmRate']
     };
+
+    console.log(params);
 
     return pokCalculation(params);
 }
@@ -175,10 +178,11 @@ export function getCurtainParams(common, curtain)
     params['inSize']    = curtain['inSize'];
     params['outSize']   = curtain['size'] - curtain['inSize'];
 
-    if(params['unit'] === '003')
+    if(params['unit'] === '003' || params['unit'] === '005')
     {
         params['pokSpec']   = curtain['pokSpec'];
         params['heightLen'] = curtain['heightLen'];
+        params['autoCalc']  = curtain['autoCalc'];
         params['addPrice']  = curtain['addPrice'];
     }
 

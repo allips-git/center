@@ -99,6 +99,7 @@ interface CurtainInfo {
     los             : number;
     pokSpec         : number;
     heightLen       : number;
+    autoCalc        : number;
     addPrice        : number;
     inColorList     : InColorList[];
     inColor         : string;
@@ -305,6 +306,7 @@ const getCurtainInfo = (): CurtainInfo => {
         los             : 60,    /** 로스 길이 */
         pokSpec         : 150,   /** 폭 일시 스펙 */
         heightLen       : 0,     /** 세로 길이 제한(기본 세로 길이) */
+        autoCalc        : 2.5,   /** 추가 세로 길이 CM당 */
         addPrice        : 0,     /** 추가 비율 */
         inColorList     : [],    /** 투톤일 시 안쪽 색상 리스트 */
         inColor         : '',    /** 투톤일 시 안쪽 색상코드 */
@@ -507,7 +509,6 @@ export const useEstiStore = defineStore('esti', {
         {
             try
             {
-                console.log(this.emCd);
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/estiV1/getList`, { emCd : this.emCd });
 
@@ -834,8 +835,6 @@ export const useEstiStore = defineStore('esti', {
             const specArr   = [];
             const specInfo  = this.blind['divSpec'];
 
-            console.log(this.blind.bQty);
-
             this.blind.bQty = Number(this.blind.bQty) !== 0 ? Number(this.blind.bQty) : 1;
 
             if(this.blind['division'] === 'A')
@@ -1090,7 +1089,7 @@ export const useEstiStore = defineStore('esti', {
                     this.total['totalQty']          = Number(this.curtain['cQty']);
                     this.total['totalUnitSize']     = Number(this.curtain['size']) * Number(this.curtain['cQty']);
                 break;
-                case '003':
+                case '003': case '005':
                     /** 폭 */
                     this.curtain['size'] = getPok({
                         width   : Number(this.common['width']),
