@@ -2,7 +2,7 @@
  * @description 발주 처리 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
-import { getAxiosData, getCardColumns, getAddDate, getConvertDate } from '@/assets/js/function';
+import { getAxiosData, getCardColumns, getAddDate } from '@/assets/js/function';
 
 interface PayList {
     name    : string;
@@ -49,8 +49,8 @@ const getPayList = (): PayList[] => {
 
 const getOrder = (): Order => {
     return {
-        ordDt       : getConvertDate(new Date(), 'yyyy-MM-dd'),
-        outDt       : getConvertDate(getAddDate(3), 'yyyy-MM-dd'),
+        ordDt       : new Date(),
+        outDt       : getAddDate(3),
         emer        : 'N',
         shippingGb  : '001',
         zip         : null,

@@ -52,17 +52,17 @@
                             </div>
                         </router-link>
                         
-                        <!-- <div class="block flex-1 main-card-container-box" @click="getChatOpen">
+                        <div class="block flex-1 main-card-container-box" @click="getChatOpen">
                             <h2 class="flex gap-1.5 justify-start items-center text-sm font-bold sm:text-base">
                                 <img src="@/assets/img/img-chat.svg" alt="고객채팅" title="고객채팅" class="w-[1rem] sm:w-[1.375rem]"/>
                                 고객채팅
                             </h2>
                             <div class="mt-[0.125rem] text-11 sm:text-13 text-t-lv4">안읽은 채팅방</div>
                             <div class="mt-[0.125rem] flex justify-between items-center w-full">
-                                <strong class="flex h-[1.375rem] pl-[1px] items-center text-22 font-bold text-[#07DABF]">3</strong>
+                                <strong class="flex h-[1.375rem] pl-[1px] items-center text-22 font-bold text-[#07DABF]">0</strong>
                                 <IconLeftArrow class="fill-l-lv2"/>
                             </div>
-                        </div> -->
+                        </div>
                        
                         <router-link to="/factory/list" class="block flex-1 main-card-container-box">
                             <h2 class="flex gap-2 justify-start items-center text-sm font-bold sm:text-base">

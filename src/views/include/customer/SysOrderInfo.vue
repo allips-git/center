@@ -9,13 +9,13 @@
             <div class="label-input-box">
                 <div class="flex gap-2">
                     <IftaLabel class="label-input-box">
-                        <DatePicker v-model="order['outInfo']['outDt']" showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd"/>
+                        <DatePicker v-model="order['sysInfo']['outDt']" showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd"/>
                         <label>출고일</label>
                     </IftaLabel>
     
                     <IftaLabel class="label-input-box max-w-48">
                         <label>긴급여부</label>
-                        <Select v-model="order['outInfo']['emer']" :options="data['emer']" optionLabel="name" optionValue="value"
+                        <Select v-model="order['sysInfo']['emer']" :options="data['emer']" optionLabel="name" optionValue="value"
                             @change="getShippingGb"/>
                     </IftaLabel>
                 </div>
@@ -67,7 +67,7 @@ import Textarea from 'primevue/textarea';
 import { onMounted, ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 import { useDataStore, useOrderStore, useEstiStore } from '@/store';
-import { getAxiosData, getTokenOut, getDaumPopupPosition } from '@/assets/js/function';
+import { getAxiosData, getTokenOut, getDaumPopupPosition, getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 
 const confirm       = useConfirm();
@@ -156,8 +156,8 @@ const getOrder = () => {
         accept : async () => {
             const params = {
                 edCd        : order['edCd'],
-                ordDt       : order['sysInfo']['ordDt'],
-                outDt       : order['sysInfo']['outDt'],
+                ordDt       : getConvertDate(order['sysInfo']['ordDt'], 'yyyy-mm-dd'),
+                outDt       : getConvertDate(order['sysInfo']['outDt'], 'yyyy-mm-dd'),
                 emer        : order['sysInfo']['emer'],
                 shippingGb  : order['sysInfo']['shippingGb'],
                 zip         : order['sysInfo']['zip'] ? order['sysInfo']['zip'] : '',

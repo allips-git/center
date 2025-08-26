@@ -28,18 +28,24 @@ import { useChatStore } from '@/store'
 import { getAxiosData, getTokenOut } from '@/assets/js/function'
 const chat = useChatStore()
 
-const onRoomSelected = async (room) => {
-    const roomId = room.detail[0].room['roomId'];
+const skipInitialFetch = ref(true)
 
-    await chat.getCrCd(roomId);
-    await chat.getMessage();
+const onRoomSelected = async (room) => {
+  if (skipInitialFetch.value) {
+    skipInitialFetch.value = false
+    return
+  }
+  const roomId = room.detail[0].room['roomId']
+
+  await chat.getCrCd(roomId)
+  await chat.getMessage()
 }
 
 async function fileMetaToFile(meta): Promise<File> {
-    const response = await fetch(meta.localUrl)
-    const blob = await response.blob()
-    
-    return new File([blob], meta.name + '.' + meta.extension, { type: meta.type })
+  const response = await fetch(meta.localUrl)
+  const blob = await response.blob()
+
+  return new File([blob], meta.name + '.' + meta.extension, { type: meta.type })
 }
 
 // 이미지 최적화 함수 (File 기반)
@@ -152,26 +158,25 @@ const getSendMessage = async (msg) => {
 const chatHeight = ref(getChatHeight())
 
 function getChatHeight() {
-    return window.innerWidth < 768
-    ? 'calc(100dvh - 50px)' // 모바일 높이 
-    : 'calc(90vh - 50px)'  // PC 높이 
+  return window.innerWidth < 768
+    ? 'calc(100dvh - 50px)' // 모바일 높이
+    : 'calc(90vh - 50px)' // PC 높이
 }
 
 function handleResize() {
-    chatHeight.value = getChatHeight()
+  chatHeight.value = getChatHeight()
 }
 
 onBeforeUnmount(() => {
-    window.removeEventListener('resize', handleResize)
+  window.removeEventListener('resize', handleResize)
 })
 
 onMounted(async () => {
-    if(chat.crCd !== null)
-    {
-        await chat.getReset()
-        await chat.getData()
-    }
-    window.addEventListener('resize', handleResize)
+  if (chat.crCd !== null) {
+    await chat.getReset()
+    await chat.getData()
+  }
+  window.addEventListener('resize', handleResize)
 })
 </script>
 
