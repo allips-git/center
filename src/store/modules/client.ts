@@ -74,6 +74,7 @@ interface Msg {
 }
 
 interface State {
+    gb          : Y | N;
     type        : string;
     search      : string;
     stCd        : string;
@@ -131,6 +132,7 @@ const getMsg = (): Msg => {
 
 export const useClientStore = defineStore('client', {
     state: (): State => ({
+        gb          : 'Y',
         type        : 'I',
         search      : '',
         stCd        : '',
@@ -283,6 +285,10 @@ export const useClientStore = defineStore('client', {
                 console.log(e);
             }
         },
+        getGb(gb: Y | N)
+        {
+            this.gb = gb;
+        },
         getStCd(stCd: string)
         {
             this.stCd = stCd;
@@ -298,6 +304,7 @@ export const useClientStore = defineStore('client', {
         },
         async getReset()
         {
+            this.gb     = 'Y';
             this.type   = 'I';
             this.person = [];
             this.group  = [{ value : 'N', label : '신규입력' }];

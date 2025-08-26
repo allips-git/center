@@ -12,7 +12,7 @@
                         전화번호
                     </dt>
                     <dd class="desc">
-                        <div class="capsuel_sky !inline-flex" @click="getNavi('tel', client['detail']['tel'])">
+                        <div v-if="client['detail']['tel']" class="capsuel_sky !inline-flex" @click="getNavi('tel', client['detail']['tel'])">
                             {{ client['detail']['tel'] }}
                         </div>
                     </dd>
@@ -22,7 +22,7 @@
                         주소
                     </dt>
                     <dd class="desc">
-                        <div class="capsuel_sky !inline-flex" :data-address="client['detail']['addr']" @click="getNavi('addr', client['detail']['addr'])">
+                        <div v-if="client['detail']['addr']" class="capsuel_sky !inline-flex" :data-address="client['detail']['addr']" @click="getNavi('addr', client['detail']['addr'])">
                             ({{ client['detail']['zip'] }}) {{ client['detail']['addr'] }}
                         </div>
                     </dd>
