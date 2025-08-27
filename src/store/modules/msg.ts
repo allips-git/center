@@ -86,9 +86,15 @@ export const useMsgStore = defineStore('msg', {
         getReset()
         {
             this.type       = 'I';
+            this.msCd       = '';
             this.clientList = [];
             this.info       = getInfo();
             this.msg        = getMsgInfo();
         }
+    },
+    persist: {
+        key     : 'msg',
+        storage : localStorage,
+        paths   : ['type', 'msCd']
     }
 });
