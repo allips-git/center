@@ -11,7 +11,6 @@
         :show-audio="false"
         :show-emojis="true"
         :show-add-room="false"
-        :show-search="false"
         @fetch-messages="onRoomSelected"
         @send-message="getSendMessage"
         :show-files="true"

@@ -701,7 +701,7 @@ export const useEstiStore = defineStore('esti', {
                     break;
                 }
 
-                this.getUnitCalc();
+                this.getUnitCalc('Y');
             }
             catch(e)
             {
@@ -1065,7 +1065,7 @@ export const useEstiStore = defineStore('esti', {
         {
             
         },
-        getUnitCalc()
+        getUnitCalc(gb: 'Y'|'N' = 'N') /** gb => Y : '단위 직접 수정' / N : '자동계산' */
         {
             let info;
 
@@ -1096,14 +1096,17 @@ export const useEstiStore = defineStore('esti', {
                 break;
                 case '002':
                     /** 야드 */
-                    this.curtain['size'] = getYard({
-                        width   : Number(this.common['width']),
-                        usage   : Number(this.curtain['use']),
-                        size    : Number(this.common['unitSize']),
-                        los     : this.curtain['los'],
-                        proc    : this.curtain['proc'],
-                        roundGb : this.common['roundGb']
-                    });
+                    if(gb === 'N')
+                    {
+                        this.curtain['size'] = getYard({
+                            width   : Number(this.common['width']),
+                            usage   : Number(this.curtain['use']),
+                            size    : Number(this.common['unitSize']),
+                            los     : this.curtain['los'],
+                            proc    : this.curtain['proc'],
+                            roundGb : this.common['roundGb']
+                        });
+                    }
         
                     info = getYardCalc(this.common, this.curtain);
         
@@ -1112,15 +1115,18 @@ export const useEstiStore = defineStore('esti', {
                 break;
                 case '003': case '005':
                     /** 폭 */
-                    this.curtain['size'] = getPok({
-                        width   : Number(this.common['width']),
-                        usage   : Number(this.curtain['use']),
-                        size    : Number(this.common['unitSize']),
-                        los     : this.curtain['los'],
-                        proc    : this.curtain['proc'],
-                        pokSpec : this.curtain['pokSpec'],
-                        roundGb : this.common['roundGb']
-                    });
+                    if(gb === 'N')
+                    {
+                        this.curtain['size'] = getPok({
+                            width   : Number(this.common['width']),
+                            usage   : Number(this.curtain['use']),
+                            size    : Number(this.common['unitSize']),
+                            los     : this.curtain['los'],
+                            proc    : this.curtain['proc'],
+                            pokSpec : this.curtain['pokSpec'],
+                            roundGb : this.common['roundGb']
+                        });
+                    }
                     
                     info = getPokCalc(this.common, this.curtain);
         

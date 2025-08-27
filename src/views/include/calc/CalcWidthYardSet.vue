@@ -48,7 +48,7 @@
                 <div class="relative">
                     <IftaLabel class="flex-1 min-w-0">
                     <label class="accent">최종({{ getRealSize() + esti['common']['unitNm'] }})</label>
-                    <InputText v-keyfilter.int id="cSize" :value="esti['curtain']['size']" class="w-full text-lg text-center text-sky-500" @input="getSize" />
+                    <InputText v-keyfilter.int id="cSize" v-model="esti['curtain']['size']" class="w-full text-lg text-center text-sky-500" @input="esti.getUnitCalc('Y')" />
                 </IftaLabel>
                 <!-- <span class="absolute right-2.5 bottom-[0.625rem] text-xs text-t-lv1">{{ esti['common']['unitNm'] }}</span> -->
                 </div>
@@ -272,11 +272,11 @@ const getUsageVal = () => {
 //     esti.curtain.inColorNm  = selectedOption.icNm;
 // }
 
-const getSize = () => {
-    const value = event.target.value;
+// const getSize = () => {
+//     const value = event.target.value;
 
-    esti['curtain']['size'] = value;
-}
+//     esti['curtain']['size'] = value;
+// }
 
 </script>
 
