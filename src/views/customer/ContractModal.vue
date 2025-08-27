@@ -56,13 +56,15 @@ import Textarea from 'primevue/textarea';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router';
-import { useDataStore, useClientStore, useEstiStore, useContractStore } from '@/store';
+import { usePopupStore, useDataStore, useClientStore, useEstiStore, useContractStore } from '@/store';
 import { getAxiosData, getTokenOut, getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { contractMsg } from '@/assets/js/msg';
+import { useRoute } from 'vue-router';
 
 const confirm   = useConfirm();
-const router    = useRouter();
+const route     = useRoute();
+const popup     = usePopupStore();
 const data      = useDataStore();
 const client    = useClientStore();
 const esti      = useEstiStore();
@@ -120,7 +122,16 @@ const getConMove = () => {
             {
                 const instance  = await getAxiosData();
                 await instance.post(`https://data.planorder.kr/estiV1/getContract`, params);
-                await client.getDetail();
+
+                if(route.name === 'CustomerEstiDetail')
+                {
+                    await esti.getDetail(client.stCd);
+                }
+                else
+                {
+                    await client.getDetail();
+                }
+
                 getPopupClose(true, 'conInfoSet');
                 getPopupClose(true, 'estiList');
             }

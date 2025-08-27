@@ -52,17 +52,17 @@
                             </div>
                         </router-link>
                         
-                        <!-- <div class="block flex-1 main-card-container-box" @click="getChatOpen">
+                        <div class="block flex-1 main-card-container-box" @click="getChatOpen">
                             <h2 class="flex gap-1.5 justify-start items-center text-sm font-bold sm:text-base">
                                 <img src="@/assets/img/img-chat.svg" alt="고객채팅" title="고객채팅" class="w-[1rem] sm:w-[1.375rem]"/>
                                 고객채팅
                             </h2>
                             <div class="mt-[0.125rem] text-11 sm:text-13 text-t-lv4">안읽은 채팅방</div>
                             <div class="mt-[0.125rem] flex justify-between items-center w-full">
-                                <strong class="flex h-[1.375rem] pl-[1px] items-center text-22 font-bold text-[#07DABF]">3</strong>
+                                <strong class="flex h-[1.375rem] pl-[1px] items-center text-22 font-bold text-[#07DABF]">0</strong>
                                 <IconLeftArrow class="fill-l-lv2"/>
                             </div>
-                        </div> -->
+                        </div>
                        
                         <router-link to="/factory/list" class="block flex-1 main-card-container-box">
                             <h2 class="flex gap-2 justify-start items-center text-sm font-bold sm:text-base">
@@ -157,6 +157,17 @@
             </div>
         </div>
     </div>
+    <Dialog v-model:visible="popup['pop']['estiDetail']" header="견적 목록" 
+        :modal=true position="center" class="custom-dialog-full" 
+        @update:visible="getPopupClose('estiDetail', true)">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopupClose('estiDetail', true)" severity="contrast" text icon="pi pi-times" />
+                <h2 class="modal-backheader-title">견적 목록</h2>
+            </div>
+        </template>
+        <EstiDetail/>
+    </Dialog>
     <Dialog v-model:visible="popup['pop']['chatRoom']" header="채팅방 목록" 
         :modal=true position="center" class="custom-dialog-full" 
         @update:visible="getPopupClose('chatRoom', true)">
@@ -178,6 +189,7 @@ import { useMainStore, usePopupStore, useClientStore, useKakaoStore, useChatStor
 import { useRouter } from 'vue-router';
 import IconAddCircle from '@/components/icons/IconAddCircle.vue';
 import IconLeftArrow from '@/components/icons/IconLeftArrow.vue';
+import EstiDetail from "@/views/include/customer/EstiDetail.vue";
 import ChatRoomModal from "@/views/customer/ChatRoomModal.vue";
 import { usePopup } from '@/assets/js/popup';
 
@@ -195,13 +207,19 @@ const getChatOpen = async () => {
     await chat.getCrCdNull();
     await chat.getRoom();
 
-    console.log(chat.crCd);
     await getPopupOpen('chatRoom');
 }
 
 const getStCd = async (stCd: string) => {
     await client.getStCd(stCd);
-    router.push({ path : '/customer/list' });
+    if(client.stCd === '')
+    {
+        router.push({ path : '/customer/list' });
+    }
+    else
+    {
+        router.push({ path : '/customer/estiDetail' });
+    }
 }
 
 const getPlanTalk = () => {

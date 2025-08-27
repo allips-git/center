@@ -449,6 +449,7 @@ interface State {
     curtain     : CurtainInfo;
     total       : TotalInfo;
     list        : [],
+    detailList  : [],
     msg         : MsgInfo;
     payList     : PayList[];
     dcInfo      : AmtInfo;
@@ -653,6 +654,22 @@ export const useEstiStore = defineStore('esti', {
             catch(e)
             {
                 console.log(e);
+            }
+        },
+        async getDetail(stCd: string)
+        {
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/estiV1/getDetail`, { stCd : stCd });
+
+                console.log(res);
+
+                this.detail = res.data.list;
+            }
+            catch(e)
+            {
+                console.error(e);
             }
         },
         async getInfo()

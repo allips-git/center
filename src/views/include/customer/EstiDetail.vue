@@ -1,5 +1,37 @@
 <template>
     <main class="pb-24">
+        <div class="flex items-center justify-between px-4 py-[10px] md:px-6 no-print ">
+            <div class="flex justify-between self-center w-full">
+                <div class="flex gap-2 w-full">
+                    <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="bg w-[36%]" @change="esti.getDetail(client['stCd'])">
+                        <template #dropdownicon>
+                            <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
+                        </template>
+                    </Select>
+                    <IconField class="w-full bg">
+                        <InputIcon class="z-10">
+                            <IconSearch class="w-4 h-4 text-t-lv2" />
+                        </InputIcon>
+                        <InputText v-model="client['search']" placeholder="이름,주소,전화번호로 검색" class="w-full"/>
+                    </IconField>
+                </div>
+            </div>
+        </div>
+        <div class="px-4 my-6 sm:px-8 custom-customer-tab">
+            <div class="flex flex-col gap-5 py-4">
+                <section v-for="(item, index) in esti.detail" :key="index">
+                    <ProcessCard :info="item"/> 
+                </section>
+                <!-- <div class="flex flex-col gap-2 items-center pt-2 text-center h-[280px]" v-if="esti.detail.legnth === 0">
+                    <div class="flex flex-col items-center">
+                        <div class="w-[6rem] opacity-75">
+                            <img src="/src/assets/img/img-empty.png" class="block w-full" alt="" />
+                        </div>
+                        <p class="text-sm font-medium text-center text-t-lv4">판매중인 항목이 없습니다.</p>
+                    </div>
+                </div> -->
+            </div>
+        </div>
         <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
             :modal=true position="center" class="custom-dialog-full"
             @update:visible="getPopupClose('itemList', true)">
@@ -126,6 +158,13 @@
 </template>
     
 <script setup lang="ts">
+import ProcessCard from "@/components/card/ProcessCard.vue";
+import Select from 'primevue/select';
+import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
+import IconField from 'primevue/iconfield'; 
+import InputText from 'primevue/inputtext'; 
+import InputIcon from 'primevue/inputicon'; 
+import IconSearch from '@/components/icons/IconSearch.vue'
 import ProductChoice from "@/views/include/ProductChoice.vue";
 import ProductRegister from "@/views/include/ProductRegister.vue";
 import CustomerListSet from '@/views/include/CustomerListSet.vue';
@@ -136,13 +175,12 @@ import EstiList from '@/views/include/customer/EstiList.vue';
 import OrderList from "@/views/customer/OrderList.vue";
 import CustomerPayList from "@/views/customer/PayList.vue";
 import OutOrderMateModal from "@/views/customer/OutOrderMateModal.vue";
-import Tabs from 'primevue/tabs';
-import TabList from 'primevue/tablist';
-import Tab from 'primevue/tab';
-import { onMounted, onUnmounted } from 'vue';
-import { usePopupStore, useClientStore, useEstiStore } from '@/store';
+import { onMounted } from 'vue';
+import { useDataStore, usePopupStore, useClientStore, useEstiStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
+
+const data      = useDataStore();
 const popup     = usePopupStore();
 const client    = useClientStore();
 const esti      = useEstiStore();
@@ -154,12 +192,6 @@ const getItemChange = () => {
     getPopupOpen('itemList');
 }
 
-const getNewEsti = async () => {
-    await esti.getReset();
-    await esti.getType('N');
-    await getPopupOpen('itemList');
-}
-
 const getEstiAdd = async () => {
     await esti.getType('I');
     await esti.getReset();
@@ -167,11 +199,7 @@ const getEstiAdd = async () => {
 }
 
 onMounted(async () => {
-    await client.getDetail();
-})
-
-onUnmounted(async () => {
-    await client.getList();
+    await esti.getDetail(client.stCd);
 })
 
 </script>

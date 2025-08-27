@@ -124,6 +124,7 @@ import ToggleSwitch from 'primevue/toggleswitch';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue'
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 import { useDataStore, usePopupStore, useClientStore, useEstiStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 import { getAmt, getAxiosData, getTokenOut } from '@/assets/js/function';
@@ -133,6 +134,7 @@ const data      = useDataStore();
 const popup     = usePopupStore();
 const client    = useClientStore();
 const esti      = useEstiStore();
+const route     = useRoute();
 
 const mainRef = ref(null);
 const mainWidth = ref(0);
@@ -285,7 +287,16 @@ const getEstiSave = () => {
             {
                 const instance  = await getAxiosData();
                 await instance.post(`https://data.planorder.kr/estiV1/getSave`, params);
-                client.getDetail();
+
+                if(route.name === 'CustomerEstiDetail')
+                {
+                    await esti.getDetail(client.stCd);
+                }
+                else
+                {
+                    await client.getDetail();
+                }
+                
                 getPopupClose(true, 'estiList');
             }
             catch(e)
