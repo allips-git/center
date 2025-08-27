@@ -209,6 +209,8 @@ export const useChatStore = defineStore('chat', {
         },
         async getMessage()
         {
+            this.messages = [];
+            
             try 
             {
                 const instance = await getAxiosData();
