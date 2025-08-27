@@ -201,13 +201,13 @@ const kakao     = useKakaoStore();
 const chat      = useChatStore();
 const router    = useRouter();
 
-const { getPopupOpen, getPopupClose } = usePopup();
+const { getPopupClose } = usePopup();
 
 const getChatOpen = async () => {
     await chat.getCrCdNull();
     await chat.getRoom();
 
-    await getPopupOpen('chatRoom');
+    router.push({ path : '/customer/chatList' });
 }
 
 const getStCd = async (stCd: string) => {
