@@ -41,7 +41,7 @@ export function getHebeCalc(common, blind)
         purcAmt     : Number(common['purcUnit']),
         saleAmt     : Number(common['saleUnit']),
         hebe        : hebe,
-        division    : blind['divSpec'].length,
+        division    : division === 1 ? 1 : blind['divSpec'].length,
         divCnt      : divCnt,
         qty         : division === 1 ? (leftQty + rightQty) : qty,
         option      : common['options'].filter(item => item.itemCd !== ''),
