@@ -190,12 +190,27 @@ export const estiBlindMsg = (params: EstiBlindMsg): { msg: string; id: string, i
                 }
             }
         }
-    
-        if(params['minHeight'] && params['maxHeight'])
+        
+        if(params['division'] !== 'A')
         {
-            if((Number(params['height']) > Number(params['maxHeight'])))
+            if(params['minHeight'] && params['maxHeight'])
             {
-                return { msg : `해당 제품 최대 세로 ${params['maxHeight']}cm 입니다.`, id : 'bHeight', index: null, state : false };
+                if((Number(params['height']) > Number(params['maxHeight'])))
+                {
+                    return { msg : `해당 제품 최대 세로 ${params['maxHeight']}cm 입니다.`, id : 'bHeight', index: null, state : false };
+                }
+            }
+        }
+        else
+        {
+            for(let index = 0; index < params['divSpec'].length; index++)
+            {
+                const item = params['divSpec'][index];
+
+                if((Number(item['height']) > Number(params['maxHeight'])))
+                {
+                    return { msg : `해당 제품 최대 세로 ${params['maxHeight']}cm 입니다.`, id : `bHeight${index}`, index: index, state : false };
+                }
             }
         }
     }

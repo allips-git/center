@@ -82,17 +82,20 @@
 import Tag from 'primevue/tag';
 import { useConfirm } from "primevue/useconfirm";
 import { ref, defineProps } from 'vue'
-import { useClientStore, useEstiStore, useOrderStore, usePayStore } from '@/store';
+import { usePopupStore, useClientStore, useEstiStore, useOrderStore, usePayStore } from '@/store';
 import { getCommas } from "@/assets/js/function";
 import { getAxiosData, getTokenOut } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
+import { useRoute } from 'vue-router';
 
 const emit      = defineEmits(['get-modify']);
 const confirm   = useConfirm();
+const popup     = usePopupStore();
 const client    = useClientStore();
 const esti      = useEstiStore();
 const order     = useOrderStore();
 const pay       = usePayStore();
+const route     = useRoute();
 const status    = ref(false);
 
 const { getPopupOpen, getPopupClose } = usePopup();
@@ -134,7 +137,14 @@ const getDelete = (edCd: string) => {
 
                     if(res.data['cnt'] === 0)
                     {
-                        await client.getDetail();
+                        if(route.name === 'CustomerEstiDetail')
+                        {
+                            await esti.getDetail(client.stCd);
+                        }
+                        else
+                        {
+                            await client.getDetail();
+                        }
                         getPopupClose(true, 'estiList');
                     }
 

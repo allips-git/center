@@ -115,6 +115,7 @@ import AddAmountPop from '@/components/modal/addAmountPop.vue'
 import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 import { useDataStore, usePopupStore, useClientStore, useEstiStore, usePayStore } from '@/store';
+import { useRoute } from 'vue-router';
 import { getAmt } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { getAxiosData, getTokenOut } from '@/assets/js/function';
@@ -126,6 +127,7 @@ const popup     = usePopupStore();
 const client    = useClientStore();
 const esti      = useEstiStore();
 const pay       = usePayStore();
+const route     = useRoute();
 const status    = ref(false);
 
 const { getPopupOpen, getPopupClose } = usePopup();
@@ -213,7 +215,15 @@ const getPay = () => {
                 const instance  = await getAxiosData();
                 await instance.post(`https://data.planorder.kr/payV1/getPayResult`, params);
                 await pay.getList({ emCd : esti['emCd'] });
-                await client.getDetail();
+                
+                if(route.name === 'CustomerEstiDetail')
+                {
+                    await esti.getDetail(client.stCd);
+                }
+                else
+                {
+                    await client.getDetail();
+                }
                 getPopupClose('paymentSet', true);
             }
             catch(e)

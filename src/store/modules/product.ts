@@ -72,6 +72,7 @@ const getExCurtainInfo = (): ExInfo => {
         saleUnit    : 0,
         purcUnit    : 0,
         ogCd        : '',
+        roundGb     : '001',
         vat         : 'N',
         vmRate      : 0
     }
@@ -94,6 +95,7 @@ const getExBlindInfo = (): ExInfo => {
         saleUnit    : 0,
         purcUnit    : 0,
         ogCd        : '',
+        roundGb     : '005',
         vat         : 'N',
         vmRate      : 0
     }

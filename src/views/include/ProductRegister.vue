@@ -119,6 +119,7 @@ import { useConfirm } from "primevue/useconfirm";
 import { usePopupStore, useClientStore, useEstiStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
+import { useRoute } from 'vue-router';
 import { estiBlindMsg, estiCurtainMsg, estiEaMsg } from '@/assets/js/msg';
 import { getBlindParams, getCurtainParams, getEaParams } from '@/assets/js/calcAndProcess';
 import { getAxiosData } from '@/assets/js/function';
@@ -129,6 +130,7 @@ const confirm   = useConfirm();
 const popup     = usePopupStore();
 const client    = useClientStore();
 const esti      = useEstiStore();
+const route     = useRoute();
 const status    = ref(false);
 const { getPopupOpen, getPopupClose } = usePopup();
 
@@ -290,7 +292,15 @@ const getEstiSave = () => {
                 
                 await esti.getEmCd(res.data['emCd']);
                 await esti.getList();
-                await client.getDetail();
+
+                if(route.name === 'CustomerEstiDetail')
+                {
+                    await esti.getDetail(client.stCd);
+                }
+                else
+                {
+                    await client.getDetail();
+                }
 
                 getPopupClose('itemList', false);
                 getPopupClose('itemSet', false);

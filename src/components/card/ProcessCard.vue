@@ -2,7 +2,7 @@
     <!-- 프로세스 카드 -->
      <div class="w-full py-4 px-[15px] border border-[#E5E5EC] border-[1.5px] rounded">
          <div class="flex justify-between pb-4 text-sm font-bold border-b border-neutral-100">
-             <h1>{{ props.info['stNm'] }}</h1>
+             <h1><span v-if="props.info.clientNm" class="text-sky-500">[{{ props.info.clientNm }}]</span>{{ props.info['stNm'] }}</h1>
              <h2 class="">{{ getAmt(props.info['totalSaleAmt']) }}원</h2>
          </div>
 
@@ -88,16 +88,19 @@ import Popover from 'primevue/popover';
 import Listbox from 'primevue/listbox';
 import { ref, nextTick } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
-import { useClientStore, useEstiStore, useChatStore } from '@/store';
+import { usePopupStore, useClientStore, useEstiStore, useChatStore } from '@/store';
 import { getAxiosData, getTokenOut, getCommas, getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
+import { useRoute } from 'vue-router';
 
 const { getPopupOpen } = usePopup();
 
 const confirm   = useConfirm();
+const popup     = usePopupStore();
 const client    = useClientStore();
 const esti      = useEstiStore();
 const chat      = useChatStore();
+const route     = useRoute();
 const status    = ref(false);
 const props     = defineProps({
     info : Object
@@ -241,8 +244,15 @@ const getSecondBtnClick = () => {
                         {
                             const instance  = await getAxiosData();
                             await instance.post(`https://data.planorder.kr/estiV1/getDeilResult`, { emCd : props['info']['emCd'] });
-                            client.getDetail();
-                            client.getList();
+                            if(route.name === 'CustomerEstiDetail')
+                            {
+                                await esti.getDetail(client.stCd);
+                            }
+                            else
+                            {
+                                await client.getDetail();
+                                await client.getList();
+                            }
                         }
                         catch(e)
                         {

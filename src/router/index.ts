@@ -13,6 +13,7 @@ import CustomerList from "@/views/customer/CustomerList.vue";
 // import CustomerRegister from "@/views/customer/CustomerRegister.vue";
 import CustomerDetail from "@/views/customer/CustomerDetail.vue";
 // import CustomerEstiIng from "@/views/customer/ProductRegister.vue";
+import CustomerEstiDetail from "@/views/include/customer/EstiDetail.vue";
 import CustomerEstiList from "@/views/customer/SpecsList.vue";
 import EstimateModal from "@/views/customer/EstimateModal.vue";
 import EstiDoc from "@/views/customer/EstiDoc.vue";
@@ -144,6 +145,12 @@ const routes = [
     //     component: CustomerEstiIng,
     //     meta: { title: '견적 등록' }
     // },
+    {
+        path: "/customer/estiDetail",
+        name: "CustomerEstiDetail",
+        component: CustomerEstiDetail,
+        meta: { title: '견적서 목록' }
+    },
     {
         path: "/customer/estiList",
         name: "CustomerEstiList",
