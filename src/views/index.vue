@@ -132,15 +132,15 @@
                         </div>
                     </div>
                 </section>
-                <!-- <section class="">
+                <section class="">
                     <div class="main-card-container-box pt-[1.375rem] px-4 !pb-[1.875rem]">
                         <div class="main-card-tilte-box">
                             <h2 class="flex gap-2 justify-center items-center text-18">
                                 매장전용 메세지</h2>
-                            <Button label="메세지 추가" size="small"></Button>
+                            <Button label="메세지 추가" size="small" @click="getMsg('', 'I')"></Button>
                         </div>
                         <ul class="main-card-container-box-padding max-h-[500px] overflow-y-auto !py-1 scroll-bar-thin flex flex-col gap-6 mt-7">
-                            <li v-for="(item, index) in main['msgList']" :key="index" class="flex flex-none justify-between items-center w-full last:border-b-0 scroll-">
+                            <li v-for="(item, index) in main['msgList']" :key="index" class="flex flex-none justify-between items-center w-full last:border-b-0 scroll-" @click="getMsg(item.msCd, 'U')">
                                 <p class="flex-none mr-2 w-6 font-bold text-t-lv2">{{ index + 1 }}</p>
                                 <div class="flex flex-col w-[calc(100%-60px)] gap-1">
                                     <p class="text-xs font-bold">{{ item.title }}</p>
@@ -152,7 +152,7 @@
                             </li>
                         </ul>
                     </div>
-                </section> -->
+                </section>
                 </aside>
             </div>
         </div>
@@ -185,7 +185,7 @@
 <script setup lang="ts">
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue';
-import { useMainStore, usePopupStore, useClientStore, useKakaoStore, useChatStore } from '@/store';
+import { useMainStore, usePopupStore, useClientStore, useKakaoStore, useChatStore, useMsgStore } from '@/store';
 import { useRouter } from 'vue-router';
 import IconAddCircle from '@/components/icons/IconAddCircle.vue';
 import IconLeftArrow from '@/components/icons/IconLeftArrow.vue';
@@ -199,6 +199,7 @@ const popup     = usePopupStore();
 const client    = useClientStore();
 const kakao     = useKakaoStore();
 const chat      = useChatStore();
+const msg       = useMsgStore();
 const router    = useRouter();
 
 const { getPopupClose } = usePopup();
@@ -243,6 +244,18 @@ const getPlanTalk = () => {
             }
         }
     });
+}
+
+const getMsg = async (msCd: string, type: 'I'|'U') => {
+    await msg.getReset();
+    await msg.getMsCd(msCd);
+
+    if(type === 'U')
+    {
+        await msg.getInfo();
+    }
+
+    router.push({ path : '/msg' });
 }
 
 onMounted(() => {
