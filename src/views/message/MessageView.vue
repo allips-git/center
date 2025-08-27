@@ -64,7 +64,7 @@ import CustomerChoice from '@/views/include/message/CustomerChoice.vue'
 import IftaLabel from 'primevue/iftalabel';
 import Textarea from 'primevue/textarea';
 // import Tag from 'primevue/tag';
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useConfirm } from "primevue/useconfirm";
 import { useRouter } from 'vue-router';
 import { usePopupStore, useMainStore, useMsgStore } from '@/store';
@@ -243,6 +243,13 @@ const getFocus = (id: string) => {
 const getNavi = () => {
     window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'share', value: msg.info.contents }));
 }
+
+onMounted(async () => {
+    if(msg.msCd !== '')
+    {
+        await msg.getInfo();
+    }
+})
 </script>
 
 <style lang="scss">

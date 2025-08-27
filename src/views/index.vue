@@ -248,11 +248,10 @@ const getPlanTalk = () => {
 
 const getMsg = async (msCd: string, type: 'I'|'U') => {
     await msg.getReset();
-    await msg.getMsCd(msCd);
 
     if(type === 'U')
     {
-        await msg.getInfo();
+        await msg.getMsCd(msCd);
     }
 
     router.push({ path : '/msg' });
