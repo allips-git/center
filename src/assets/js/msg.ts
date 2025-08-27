@@ -594,3 +594,35 @@ export const memberMsg = (params: MemberMsg): { msg: string; id: string, state: 
 
     return { msg : '', id : '', state : true };
 }
+
+interface MessageMsg {
+    gb          : 'S' | 'M';
+    title       : string;
+    contents    : string;
+    clientList  : [];
+}
+
+/**
+ * @description 메세지 저장 시 유효성 검사
+ */
+export const messageMsg = (params: MessageMsg): { msg: string; id: string, state: boolean } => {
+    if(params['title'] === '')
+    {
+        return { msg : '문자 제목을 입력해주세요.', id : 'title', state : false };
+    }
+
+    if(params['contents'] === '')
+    {
+        return { msg : '문자 내용을 입력해주세요.', id : 'contents', state : false };
+    }
+
+    if(params['gb'] === 'M')
+    {
+        if(params['clientList'].length === 0)
+        {
+            return { msg : '전송할 고객을 선택해주세요.', id : 'clientList', state : false };
+        }
+    }
+
+    return { msg : '', id : '', state : true };
+}

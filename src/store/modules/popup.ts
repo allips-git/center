@@ -8,6 +8,7 @@ interface Pop {
     confirm             : boolean;
     clientSet           : boolean;
     clientDetail        : boolean;
+    clientChoice        : boolean;
     itemList            : boolean;
     itemSet             : boolean;
     optionList          : boolean;
@@ -68,6 +69,7 @@ const getPopInfo = (): Pop => {
         confirm             : false,
         clientSet           : false,
         clientDetail        : false,
+        clientChoice        : false,
         itemList            : false,
         itemSet             : false,
         optionList          : false,
