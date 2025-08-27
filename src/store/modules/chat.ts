@@ -3,6 +3,8 @@
  */
 import { defineStore } from 'pinia'
 import { getAxiosData } from '@/assets/js/function'
+import defaultAvatar from '@/assets/img/icon-profile.png'
+
 
 interface RoomUser {
     _id         : string;
@@ -114,12 +116,12 @@ export const useChatStore = defineStore('chat', {
                 return {
                     roomId      : item.roomId,
                     roomName    : item.roomName,
-                    avatar      : '',
+                    avatar      : defaultAvatar,
                     users       : Array.isArray(item.users)
                         ? item.users.map((u) => ({
                             _id: u.userCd,
                             username: u.username,
-                            avatar: ''
+                            avatar: defaultAvatar
                         }))
                         : [],
                     lastMessage : {
@@ -183,12 +185,12 @@ export const useChatStore = defineStore('chat', {
                     return {
                         roomId      : item.roomId,
                         roomName    : item.roomName,
-                        avatar      : '',
+                        avatar      : defaultAvatar,
                         users       : Array.isArray(item.users)
                             ? item.users.map((u) => ({
                                 _id: u.userCd,
                                 username: u.username,
-                                avatar: ''
+                                avatar: defaultAvatar
                             }))
                             : [],
                         lastMessage : {
