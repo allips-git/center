@@ -180,6 +180,21 @@ export const useOrderStore = defineStore('order', {
                                     tags.push({ spanText: "형상옵션" });
                                 }
 
+                                if(order.proc === '001')
+                                {
+                                    tags.push({ spanText: "나비주름" });
+                                }
+
+                                if(order.bproc === '002')
+                                {
+                                    tags.push({ spanText: "리드밴드" });
+                                }
+
+                                if(order.addColor === 'T')
+                                {
+                                    tags.push({ spanText: `투톤: 기둥 ${order.outColorNm} ${order.outSize}${order.unitNm} / 안쪽 ${order.inColorNm} ${order.inSize}${order.unitNm}` });
+                                }
+
                                 if(order.ordGb === 'O')
                                 {
                                     /** 외주 공장 카카오톡 발주 */
