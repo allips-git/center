@@ -162,7 +162,7 @@ export function getCurtainParams(common, curtain)
 {
     const params = getCommonParams(common);
 
-    params['width']     = common['width'];
+    params['width']     = common['width'] ? common['width'] : 0;
     params['height']    = common['height'];
     params['size']      = curtain['size'];
     params['proc']      = curtain['proc'];

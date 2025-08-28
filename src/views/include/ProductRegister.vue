@@ -183,7 +183,7 @@ const getEstiSave = () => {
         {
             checkParams['maxWidth']     = esti['curtain']['maxWidth'];
             checkParams['maxHeight']    = esti['curtain']['maxHeight'];
-            checkParams['width']        = esti['common']['width'];
+            // checkParams['width']        = esti['common']['width'];
             checkParams['height']       = esti['common']['height'];
             checkParams['qty']          = esti['curtain']['cQty'];
             checkParams['size']         = esti['curtain']['size'];
