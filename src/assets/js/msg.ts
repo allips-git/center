@@ -284,10 +284,10 @@ interface EstiCurtainMsg {
  * @description 견적 저장 시 값 체크 (단위 : 야드, 폭)
  */
 export const estiCurtainMsg = (params: EstiCurtainMsg): { msg: string; id: string, state: boolean } => {
-    if(!Number(params['width']) || Number(params['width'] === 0))
-    {
-        return { msg : '가로를 입력해주세요.', id : 'cWidth', state : false };
-    }
+    // if(!Number(params['width']) || Number(params['width'] === 0))
+    // {
+    //     return { msg : '가로를 입력해주세요.', id : 'cWidth', state : false };
+    // }
 
     if(!Number(params['height']) || params['height'] === 0)
     {
