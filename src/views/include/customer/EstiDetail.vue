@@ -1,5 +1,6 @@
 <template>
     <main class="pb-24">
+        <BackHeader title="명세표" />
         <div class="flex items-center justify-between px-4 py-[10px] md:px-6 no-print ">
             <div class="flex justify-between self-center w-full">
                 <div class="flex gap-2 w-full">
@@ -158,6 +159,7 @@
 </template>
     
 <script setup lang="ts">
+import BackHeader from '@/components/layouts/BackHeader.vue'
 import ProcessCard from "@/components/card/ProcessCard.vue";
 import Select from 'primevue/select';
 import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
