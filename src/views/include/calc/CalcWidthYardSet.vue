@@ -189,7 +189,7 @@ const getProc = () => {
         });
     }
 
-    esti.getUnitCalc();
+    esti.getUnitCalc('Y');
 }
 
 const getBproc = () => {
@@ -212,7 +212,7 @@ const getBproc = () => {
         });
     }
 
-    esti.getUnitCalc();
+    esti.getUnitCalc('Y');
 }
 
 const getShape = () => {
@@ -235,7 +235,7 @@ const getShape = () => {
         });
     }
 
-    esti.getUnitCalc();
+    esti.getUnitCalc('Y');
 }
 
 const getUsageVal = () => {
