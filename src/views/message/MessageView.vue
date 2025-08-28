@@ -43,8 +43,8 @@
             </div>
         </div> -->
         <div class="flex w-full gap-2 *:w-full">
-            <Button size="large"  label="문자 메세지 보내기" @click="getSend"/>
-            <Button size="large" icon="pi pi-arrow-up-right" class="flex-none" text severity="secondary" @click="getNavi"/>
+            <Button size="large"  label="문자 메세지 보내기" @click="getNavi"/>
+            <!-- <Button size="large" icon="pi pi-arrow-up-right" class="flex-none" text severity="secondary" @click="getNavi"/> -->
         </div>
     </div>
     <Dialog v-model:visible="popup['pop']['clientChoice']"
@@ -168,49 +168,53 @@ const getDelete = () => {
     });
 }
 
-const getSend = () => {
-    const check = getCheck('M');
+/**
+ * @description 문자메세지 앱에서 공유 기능으로만 처리 2025-08-28 김원명 ( 사장님 요청 사항 )
+ *  :: 등록된 발신번호가 공장 번호이므로
+ */
+// const getSend = () => {
+//     const check = getCheck('M');
 
-    if(check)
-    {
-        confirm.require({
-            message     : '해당 메세지를 전송하시겠습니까?',
-            header      : '메세지 전송',
-            rejectProps : {
-                label       : '취소',
-                severity    : 'secondary',
-                outlined    : true
-            },
-            acceptProps : {
-                label: '전송'
-            },
-            accept : async () => {
-                const params = {
-                    title       : msg.info.title,
-                    contents    : msg.info.contents,
-                    clientList  : msg.clientList
-                }
+//     if(check)
+//     {
+//         confirm.require({
+//             message     : '해당 메세지를 전송하시겠습니까?',
+//             header      : '메세지 전송',
+//             rejectProps : {
+//                 label       : '취소',
+//                 severity    : 'secondary',
+//                 outlined    : true
+//             },
+//             acceptProps : {
+//                 label: '전송'
+//             },
+//             accept : async () => {
+//                 const params = {
+//                     title       : msg.info.title,
+//                     contents    : msg.info.contents,
+//                     clientList  : msg.clientList
+//                 }
 
-                console.log(params);
+//                 console.log(params);
 
-                status.value = true;
+//                 status.value = true;
 
-                try
-                {
-                    const instance  = await getAxiosData();
-                    await instance.post(`https://data.planorder.kr/msgV1/getSend`, params);
-                    alert('전송되었습니다.');
-                }
-                catch(e)
-                {
-                    console.log(e);
-                }
+//                 try
+//                 {
+//                     const instance  = await getAxiosData();
+//                     await instance.post(`https://data.planorder.kr/msgV1/getSend`, params);
+//                     alert('전송되었습니다.');
+//                 }
+//                 catch(e)
+//                 {
+//                     console.log(e);
+//                 }
 
-                status.value = false;
-            }
-        });
-    }
-}
+//                 status.value = false;
+//             }
+//         });
+//     }
+// }
 
 const getCheck = (gb: 'S' | 'M') => {
     const checkParams = {
