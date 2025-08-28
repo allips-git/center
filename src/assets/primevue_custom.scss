@@ -918,6 +918,9 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     &.p-button-lg {
         padding-top: 0.875rem;
         padding-bottom: 0.875rem;
+        .p-button-label{
+            font-weight: 700;
+        }
     }
     &.p-button-sm {
         padding-block: 0.5rem;
@@ -932,7 +935,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         background-color: #ebebeb;
         color: #7D7C78;
         border: none;
-        padding-block: 14px;
+        // padding-block: 14px;
         .p-button-label{
             color: #000000;
             font-weight: 700 !important;

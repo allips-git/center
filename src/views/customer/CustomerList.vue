@@ -1,8 +1,8 @@
 <template>
-    <main class="relative pb-24 h-full">
+    <main class="relative h-full pb-[200px]">
         <BackHeader title="고객" />
         <section class="overflow-y-auto h-full">
-            <div class="flex items-center justify-between px-4 py-[10px] md:px-6 no-print ">
+            <div class="flex justify-between items-center px-4 md:px-6 no-print">
                 <div class="flex justify-between self-center w-full">
                     <div class="flex gap-2 w-full">
                         <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="bg w-[36%]" @change="getList">
@@ -21,7 +21,7 @@
             </div>
                     
             <ul class="flex flex-col mt-[0.625rem]">
-                <li v-for="(item, index) in client['list']" :key="index" class="flex items-center gap-[14px] flex-none w-full px-4 py-[0.625rem] md:px-6 cursor-pointer " @click="getInfo(item.clientCd)">
+                <li v-for="(item, index) in client['list']" :key="index" class="flex items-center gap-[14px] flex-none w-full px-4 py-[0.625rem] md:px-6 cursor-pointer" @click="getInfo(item.clientCd)">
                     <!-- 상태 -->
                     <div :class="getStatusClass(item.step)" class="flex items-center justify-center flex-none font-bold text-white rounded-md text-xs md:text-sm w-[2.5rem] sm:w-[3rem] aspect-square">
                         {{ getStatusName(item.step) }}

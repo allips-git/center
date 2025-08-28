@@ -312,7 +312,7 @@ const routes = [
         path: "/setting",
         name: "SettingView",
         component: SettingView,
-        meta: { title: "설정", backgroundColor: 'bg-white' }
+        meta: { title: "설정", backgroundColor: 'bg-white', showAppFooter: true }
     },
     {
         path: "/setting/static_pay",

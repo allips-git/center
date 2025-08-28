@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col px-4 py-1">
-        <div class="flex flex-col gap-5 py-[10px] md:pt-4">
+        <div class="flex flex-col gap-5 md:pt-4">
             <div class="flex gap-2">
                 <Select v-model="product['fcCd']" placeholder="브랜드 선택" :options="product['option']" optionLabel="label" optionValue="value" @change="getList" class="bg">
                     <template #dropdownicon>
@@ -25,7 +25,7 @@
                 <div class="flex flex-col gap-1 items-center py-6" @click="toggleSubList(index, item['itemCd'])">
                     <div :for="item['itemCd']" class="items-center w-full">
                         <!-- <RadioButton :inputId="item['itemCd']" v-model="product['itemCd']" :value="item['itemCd']"/> -->
-                        <label :for="item['itemCd']" class="flex items-center justify-between w-full text-base font-bold">
+                        <label :for="item['itemCd']" class="flex justify-between items-center w-full text-base font-bold">
                             <span class="flex items-center">
                                 {{ item.itemNm }} 
                                 <span v-if="item['noUsed']" class="ml-2 text-red-500">(주문불가)</span>

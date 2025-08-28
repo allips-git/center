@@ -2,7 +2,7 @@
 <div class="flex flex-col h-full">
     <BackHeader title="회계" />
     <div class="overflow-y-auto flex-1">
-        <section class="p-4 pb-5 md:p-6">
+        <section class="px-4 py-2 pb-5 md:p-6">
             <div class="relative w-full bg-white">
                 <ul class="space-y-[14px]">
                     <li class="flex gap-4 items-center">

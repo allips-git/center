@@ -2,7 +2,7 @@
     <div class="xl:h-[90vh] overflow-y-auto">
         <BackHeader title="설정" />
         <main class="pb-5">
-            <section class="p-4 md:p-6">
+            <section class="px-4 md:p-6">
                 <div class="flex gap-2 px-4 py-3.5 rounded-sm border border-gray-200">
                     <div class="!size-[33px] flex items-center justify-center">
                         <IconAvatar class="fill-[#78BBFF]  size-full"/>

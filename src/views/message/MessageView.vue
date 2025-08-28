@@ -1,30 +1,28 @@
 <template>
     <BackHeader title="메세지 저장" />
-    <main class="w-full pt-5 pb-32">
-        <section class="flex justify-between px-5 pb-5">
-            <div class="flex items-center gap-2">
-                <Button label="고객 선택" icon="pi pi-plus" outlined size="small" rounded @click="getPopupOpen('clientChoice')" class="!rounded-full"></Button>
-                <span class="px-3 py-1.5 text-sm text-orange-400 bg-orange-100 rounded-full" v-if="msg.clientList.length > 0">
+    <main class="pb-32 w-full">
+        <section class="flex justify-between items-start px-4 pb-5">
+            <div class="flex flex-wrap gap-1 items-center">
+                <Button label="고객 선택" icon="pi pi-plus" outlined size="small" rounded @click="getPopupOpen('clientChoice')" class="!rounded-full !gap-1 !pr-2.5"></Button>
+                <span class="px-2.5 py-1.5 text-xs font-bold rounded-full border text-t-lv2 border-l-lv4" v-if="msg.clientList.length > 0">
                     {{ msg.clientList.length === 1 ? msg.clientList[0]['clientNm'] : msg.clientList[0]['clientNm']+' 외 '+(msg.clientList.length - 1)+'명'  }}
                 </span>
             </div>
-            <div class="flex gap-2">
+            <div class="flex flex-none gap-1 items-center">
                 <Button label="메세지 저장" size="small" @click="getSave"></Button>
-                <Button v-if="msg.type === 'U'" label="메세지 삭제" size="small" severity="danger" @click="getDelete"></Button>
+                <Button v-if="msg.type === 'U'" label="삭제" size="small" severity="danger" @click="getDelete"></Button>
             </div>
         </section>
-        <section class="flex flex-col gap-5 mt-5">
-            <div class="px-5">
+        <section class="flex flex-col gap-6 mt-5">
+            <div class="px-4">
                 <IftaLabel class="w-full">
                     <InputText id="title" v-model="msg.info.title" class="w-full"/>
                     <label>문자 제목</label>
                 </IftaLabel>
                 <small class="text-msg">{{ msg['msg'][`title`] }}</small>
             </div>
-
             <div class="!my-0 gray-bar"></div>
-            
-            <div class="px-5">
+            <div class="px-4">
                 <IftaLabel class="w-full">
                     <Textarea id="contents" v-model="msg.info.contents" class="w-full" autoResize rows="10" cols="30"/>
                     <label>문자 내용</label>

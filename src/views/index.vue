@@ -2,7 +2,7 @@
 <div class="flex flex-col h-full">
     <div class="flex-1 min-h-0">
         <div class="overflow-y-auto h-full">
-            <div class="flex flex-col gap-[14px] bg-gray-100 md:p-4 md:gap-4 pb-12 h-full">
+            <div class="flex flex-col gap-[14px] bg-gray-100 md:p-4 md:gap-4 pb-20 h-full">
                 <!-- 배너 섹션 -->
                 <section class="w-full">
                     <div class="relative w-full px-5 overflow-hidden bg-blue-100 md:rounded-md h-[9.1875rem] flex justify-between items-center">
@@ -23,12 +23,13 @@
                     <div class="flex flex-col gap-2 w-full main-card-container-box">
                         <div class="pt-1 pl-2 sm:pt-0 main-card-tilte-box">
                             <h2 class="flex justify-center items-center text-base">전체 고객</h2>
-                            <div class="flex gap-2 items-center" @click="getStCd('')">
-                                <div class="flex items-center text-lg text-t-lv1 gap-[1px] mr-[1px]">
+                            <div class="flex items-center" @click="getStCd('')">
+                                <div class="flex items-center text-lg px-2 text-t-lv1 gap-[1px] mr-[1px] cursor-pointer" >
                                     <strong>{{ main['clientCnt'] }}</strong>
                                     <span class="text-19">명</span>
                                 </div>
-                                <div class="block w-px h-5 bg-gray-200" />
+                                <div class="block mr-2 w-px h-5 bg-gray-200" />
+                                <!-- <Button label="고객 등록" size="small" class="cursor-pointer" @click="getPopOpen"></Button> -->
                                 <IconAddCircle class="cursor-pointer"/>
                             </div>
                         </div>
@@ -41,7 +42,7 @@
                     </div>
                     <div class="flex w-full gap-[10px] md:gap-[14px] justify-between items-center">
                         <router-link to="/factory/list" class="block flex-1 main-card-container-box">
-                            <h2 class="flex gap-2 justify-start items-center text-sm font-bold sm:text-base">
+                            <h2 class="flex gap-2 justify-start items-center text-sm font-bold whitespace-nowrap sm:text-base">
                                 <img src="@/assets/img/img-factory.svg" alt="공장" title="공장" class="w-[1rem] sm:w-[1.375rem]"/>
                                 공장
                             </h2>
@@ -53,7 +54,7 @@
                         </router-link>
                         
                         <div class="block flex-1 main-card-container-box" @click="getChatOpen">
-                            <h2 class="flex gap-1.5 justify-start items-center text-sm font-bold sm:text-base">
+                            <h2 class="flex gap-1.5 justify-start items-center text-sm font-bold whitespace-nowrap sm:text-base">
                                 <img src="@/assets/img/img-chat.svg" alt="고객채팅" title="고객채팅" class="w-[1rem] sm:w-[1.375rem]"/>
                                 고객채팅
                             </h2>
@@ -65,7 +66,7 @@
                         </div>
                        
                         <router-link to="/factory/list" class="block flex-1 main-card-container-box">
-                            <h2 class="flex gap-2 justify-start items-center text-sm font-bold sm:text-base">
+                            <h2 class="flex gap-2 justify-start items-center text-sm font-bold whitespace-nowrap sm:text-base">
                                 <img src="@/assets/img/img-truck.svg" alt="배송대기" title="배송 대기" class="w-[1rem] sm:w-[1.375rem] m-[-1px]"/>
                                 배송대기
                             </h2>
@@ -78,16 +79,15 @@
                     </div>
                 </main>
                 <!-- aside 섹션 -->
-                <aside class="px-3 md:px-0">
-                    <section class="col-span-12 w-full">
-                    <div class="main-card-container-box">
-                        <div class="main-card-tilte-box !mb-2">
+                <aside class="flex flex-col gap-[14px] px-3 md:px-0">
+                    <!-- 플랜톡 -->
+                    <section class="main-card-container-box">
+                        <div class="main-card-tilte-box">
                             <div class="flex gap-2.5 justify-center items-center">
                                 <div class="flex justify-center items-center p-2 bg-yellow-300 rounded-full size-8">
                                     <img src="@/assets/img/icon-kakao.svg" alt="카카오톡" title="카카오톡" class="mx-auto"/>
                                 </div>
-                                
-                                <div class="">
+                                <div>
                                     <div class="flex gap-1 items-center">
                                         <h2 class="text-xs sm:text-sm">플랜톡</h2>
                                         <span v-if="main['kakaoYn'] === 'N'" class="text-xs text-t-lv3">OFF</span>
@@ -110,14 +110,14 @@
                                 <Button label="플랜톡 사용하기" class="w-full mt-[14px] *:!text-sm !border-none !py-[0.625rem] *:!font-semibold" @click="getPlanTalk"></Button>
                             </div>        
                             <ul v-else class="grid grid-cols-2 gap-2 *:bg-bg-lv1 *:p-3 *:rounded-lg *:flex *:flex-col *:gap-px text-xs mt-[0.875rem]">
-                                <li>
+                                <li class="cursor-pointer">
                                     <h5 class="font-bold">예약된 알림</h5>
                                     <div class="flex justify-between items-center">
                                         <p class="text-zinc-400">상세보기</p>
                                         <IconLeftArrow class="w-[0.4375rem] fill-l-lv2"/>
                                     </div>
                                 </li>
-                                <li>
+                                <li class="cursor-pointer">
                                     <h5 class="font-bold">보낸 알림</h5>
                                     <div class="flex justify-between items-center">
                                         <p class="text-zinc-400">
@@ -128,31 +128,42 @@
                                     </div>
                                 </li>
                             </ul>                            
-                        
                         </div>
-                    </div>
-                </section>
-                <section class="">
-                    <div class="main-card-container-box pt-[1.375rem] px-4 !pb-[1.875rem]">
+                    </section>
+                    <!-- 매장전용 메세지 -->
+                    <section class="main-card-container-box">
                         <div class="main-card-tilte-box">
-                            <h2 class="flex gap-2 justify-center items-center text-18">
-                                매장전용 메세지</h2>
+                            <h2 class="flex justify-center items-center pt-0.5 pl-1 text-base">
+                                매장전용 메세지
+                            </h2>
                             <Button label="메세지 추가" size="small" @click="getMsg('', 'I')"></Button>
                         </div>
-                        <ul class="main-card-container-box-padding max-h-[500px] overflow-y-auto !py-1 scroll-bar-thin flex flex-col gap-6 mt-7">
-                            <li v-for="(item, index) in main['msgList']" :key="index" class="flex flex-none justify-between items-center w-full last:border-b-0 scroll-" @click="getMsg(item.msCd, 'U')">
-                                <p class="flex-none mr-2 w-6 font-bold text-t-lv2">{{ index + 1 }}</p>
-                                <div class="flex flex-col w-[calc(100%-60px)] gap-1">
+                        <ul class="flex flex-col gap-5 pt-5 pb-3 w-full">
+                            <li v-for="(item, index) in main['msgList']" :key="index" class="flex justify-between items-center w-full cursor-pointer" @click="getMsg(item.msCd, 'U')">
+                                <!-- <p class="flex-none mr-2 w-6 font-bold text-t-lv2">{{ index + 1 }}</p> -->
+                                <!-- <div class="flex flex-col w-[calc(100%-60px)] gap-1">
                                     <p class="text-xs font-bold">{{ item.title }}</p>
                                     <p class="mt-0.5 w-full truncate text-10 text-t-lv4">{{ item.description }}</p>
+                                </div> -->
+                                <div class="flex flex-1 items-center min-w-0">
+                                    <span class="flex-none font-bold text-t-lv3 font-base w-[2rem] pl-2">
+                                        {{ index + 1 }}
+                                    </span>
+                                    <div class="flex flex-col flex-1 gap-0.5 min-w-0">
+                                        <strong class="text-xs font-bold leading-tight truncate sm:text-sm text-t-lv1">
+                                            {{ item.title }}
+                                        </strong>
+                                        <div class="truncate text-10 text-t-lv3 sm:text-11">
+                                            {{ item.description }}
+                                        </div>
+                                    </div>
                                 </div>
-                                <button class="flex flex-none justify-center items-center size-7">
+                                <button class="flex flex-none justify-end items-center w-[2rem] pr-1.5 size-7">
                                     <IconLeftArrow class="w-3 fill-l-lv3"/>
                                 </button>
                             </li>
                         </ul>
-                    </div>
-                </section>
+                    </section>
                 </aside>
             </div>
         </div>
@@ -179,6 +190,35 @@
         </template>
         <ChatRoomModal/>
     </Dialog>
+
+    <Dialog v-model:visible="popup['pop']['clientChoice']" 
+        :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissable-mask="true"
+        @update:visible="getPopupClose(true, 'clientChoice')">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopupClose(true, 'clientChoice')" severity="contrast" text icon="pi pi-times"/>
+                <h2 class="modal-backheader-title">고객 구분</h2>
+            </div>
+        </template>
+        <div class="pt-3">
+            <CustomerChoice :gubun="'E'" @getApply="getDisApply" @getClose="getPopupClose('clientChoice', true)"/>
+        </div>
+    </Dialog>
+
+    <Dialog v-model:visible="popup['pop']['clientSet']" 
+        header="고객 등록"
+        :modal=true
+        position="center"
+        class="custom-dialog-full"
+        @update:visible="getPopupClose('clientSet', true)">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopupClose('clientSet', true)" severity="contrast" text icon="pi pi-times" iconPos="right"/>
+                <h2 class="modal-backheader-title">고객등록</h2>
+            </div>
+        </template>
+        <CustomerListSet/>
+    </Dialog>
 </div>  
 </template>
 
@@ -191,6 +231,8 @@ import IconAddCircle from '@/components/icons/IconAddCircle.vue';
 import IconLeftArrow from '@/components/icons/IconLeftArrow.vue';
 import EstiDetail from "@/views/include/customer/EstiDetail.vue";
 import ChatRoomModal from "@/views/customer/ChatRoomModal.vue";
+import CustomerChoice from '@/components/modal/CustomerChoice.vue'
+import CustomerListSet from '@/views/include/CustomerListSet.vue'
 import { usePopup } from '@/assets/js/popup';
 
 const confirm   = useConfirm();
@@ -202,7 +244,12 @@ const chat      = useChatStore();
 const msg       = useMsgStore();
 const router    = useRouter();
 
-const { getPopupClose } = usePopup();
+const { getPopupOpen, getPopupClose } = usePopup();
+
+const getPopOpen = () => {
+    getPopupOpen('clientChoice');
+    client.getReset();
+}
 
 const getChatOpen = async () => {
     await chat.getCrCdNull();

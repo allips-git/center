@@ -1,7 +1,6 @@
 <template>
-<main class="pb-32">
-    <section class="flex gap-2 px-5 mt-4">
-        <div class="flex items-center justify-between px-4 py-[10px] md:px-6 no-print ">
+    <main class="pb-32">
+        <div class="flex justify-between items-center px-4 md:px-6 no-print">
             <div class="flex justify-between self-center w-full">
                 <div class="flex gap-2 w-full">
                     <Select v-model="client['stCd']" :options="data['clientStat']" optionLabel="name" optionValue="value" placeholder="상태" class="bg w-[36%]" @change="client.getList()">
@@ -18,37 +17,39 @@
                 </div>
             </div>
         </div>
-    </section>
-    <section>
-        <div class="flex items-center justify-between gap-2 first:mt-5">
-            <ul class="flex flex-col w-full">
-                <li v-for="(item, index) in client.list" :key="index" class="flex items-center justify-between w-full px-5 py-3" 
-                    @click="toggleCustomerSelection(item.clientCd)" :class="{ 'bg-gray-100': getClientCheck(item.clientCd) }">
+        <section>
+            <ul class="flex flex-col mt-[0.625rem] px-2 gap-1.5">
+                <li v-for="(item, index) in client.list" :key="index" 
+                    class="flex items-center gap-[14px] flex-none w-full p-2 rounded-md md:px-6 cursor-pointer border border-transparent" 
+                    @click="toggleCustomerSelection(item.clientCd)" 
+                    :class="{ 'bg-p-lv5/50 !border-p-lv4': getClientCheck(item.clientCd) }"
+                >
                     <div :class="getStatusClass(item.step)" 
-                        class="flex items-center justify-center mr-4 text-sm font-bold text-white rounded-md size-10">
+                        class="flex items-center justify-center flex-none font-bold text-white rounded-md text-xs md:text-sm w-[2.5rem] sm:w-[3rem] aspect-square">
                         {{ getStatusName(item.step) }}
                     </div>
-                    <div class="flex justify-between gap-2 w-[calc(100%-40px)]">
-                        <div class="flex flex-col">
-                        <p class="font-bold">{{ item.clientNm }}</p>
-                            <span class="text-xs text-gray-400">{{ item.addr }} {{ item.addrDetail }}</span>
+                    <div class="flex gap-2 justify-between w-full pt-[0.125rem]">
+                        <div class="flex flex-col flex-grow min-w-0">
+                            <strong class="text-sm font-bold sm:text-base text-t-lv1">{{ item.clientNm }}</strong>
+                            <div class="flex-1 text-xs sm:text-13 truncate text-t-lv3 whitespace-nowrap max-w-[200px] sm:max-w-[100%]">{{ item.addr }} {{ item.addrDetail }}</div>
                         </div>
-                        <div class="flex flex-col">
-                            <span class="text-sm text-right text-gray-400">{{ item.date }}</span>
-                            <p class="font-bold text-right">{{ item.amt }}원</p>
+                        <div class="flex flex-col whitespace-nowrap">
+                            <div class="text-xs text-right sm:text-13 text-t-lv3">{{ item.date }}</div>
+                            <strong class="text-sm font-medium text-right sm:text-base text-t-lv1">{{ item.amt }}원</strong>
                         </div>
                     </div>
                 </li>
             </ul>
-        </div>
-        <div class="z-10 flex-col bottom-fixed-btn-box">
-            <p class="mb-1 text-lg font-bold text-sky-500">{{ msg.clientList.length }}명 선택됨</p>
-            <div class="flex w-full gap-2 *:w-full">
-                <Button size="large"  label="선택완료" @click="getPopupClose('clientChoice', true)"/>
-            </div>
-        </div>
-    </section>
-</main>
+        </section>
+    </main>
+    <div class="z-10 flex-col bottom-fixed-btn-box">
+        <Button
+            size="large"
+            :label="msg.clientList.length === 0 ? '닫기' : msg.clientList.length + '명 선택하기'"
+            :severity="msg.clientList.length === 0 ? 'secondary' : undefined"
+            @click="getPopupClose('clientChoice', true)"
+        />
+    </div>
 </template>
 
 <script setup lang="ts">

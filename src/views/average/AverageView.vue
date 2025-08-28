@@ -1,7 +1,7 @@
 <template>
     <main class="xl:h-[90vh] w-full overflow-y-auto pb-20">
         <BackHeader title="통계"/>
-        <div class="flex justify-between p-4 md:p-6">
+        <div class="flex justify-between px-4 py-2 md:p-6">
             <div>
                 <p class="text-sm font-bold text-t-lv1">{{ getConvertDate(aver['searchDt'], 'aver') }} 총 손익</p>
                 <p class="font-bold text-green-500 text-28">{{ getAmt(aver['totalAmt']) }} 원</p>
