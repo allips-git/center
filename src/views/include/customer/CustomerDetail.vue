@@ -25,7 +25,7 @@
                         <div v-if="client['detail']['addr']" class="capsuel_sky !inline-flex" :data-address="client['detail']['addr']" @click="getNavi('addr', client['detail']['addr'])">
                             <!-- ({{ client['detail']['zip'] }}) -->
                             {{ client['detail']['addr'] }}
-                        </div>
+                        </div> 
                     </dd>
                 </dl>
                 <dl class="info-set">
