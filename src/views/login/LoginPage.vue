@@ -38,7 +38,7 @@
                         <div class="flex flex-none gap-3 items-center self-center text-t-lv2">
                             <router-link to="/certify" class="text-xs">아이디 찾기</router-link>
                             <span class="text-xs">|</span>
-                            <router-link to="join/find_password" class="text-xs">비밀번호 찾기</router-link>
+                            <router-link to="/find_password" class="text-xs">비밀번호 찾기</router-link>
                         </div>
                 </div>
                 <div class="login-button">

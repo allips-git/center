@@ -10,7 +10,7 @@
                             <label for="email">이메일</label>
                             <IconField>
                                 <InputText id="email" v-model="join['login']['email']" placeholder="이메일을 입력해주세요." class="w-full"/>
-                                <InputIcon><IconInputX/></InputIcon>
+                                <InputIcon @click="getIdDelete"><IconInputX/></InputIcon>
                             </IconField>
                             <small v-if="join['msg']['email'] !== ''" class="vali_text">{{ join['msg']['email'] }}</small>
                             <small v-if="join['msg']['email'] !== ''" class="vali_text-tran">none</small>
@@ -20,7 +20,7 @@
                             <label for="pw">비밀번호</label>
                             <IconField>
                                 <InputText type="password" id="pwd" v-model="join['login']['pwd']" placeholder="비밀번호를 입력해주세요" class="w-full"/>
-                                <InputIcon><IconEye/></InputIcon>
+                                <InputIcon @click="getPwView('pwd')"><IconEye/></InputIcon>
                             </IconField>
                             <small v-if="join['msg']['pwd'] !== ''" class="vali_text">{{ join['msg']['pwd'] }}</small>
                             <small v-if="join['msg']['pwd'] !== ''" class="vali_text-tran">none</small>
@@ -30,7 +30,7 @@
                             <label for="pw">비밀번호 확인</label>
                             <IconField>
                                 <InputText type="password" id="pwChk" v-model="join['login']['pwChk']" placeholder="비밀번호를 다시 한 번 입력해주세요" class="w-full"/>    
-                                <InputIcon><IconEye/></InputIcon>
+                                <InputIcon @click="getPwView('pwChk')"><IconEye/></InputIcon>
                             </IconField>
                             <small v-if="join['msg']['pwChk'] !== ''" class="vali_text">{{ join['msg']['pwChk'] }}</small>
                             <small v-if="join['msg']['pwChk'] !== ''" class="vali_text-tran">none</small>
@@ -77,6 +77,25 @@ const join      = useJoinStore();
 const router    = useRouter();
 const visible   = ref(true);
 const einFile   = ref<HTMLInputElement | null>(null);
+
+const getIdDelete = () => {
+    join['login']['email'] = '';
+    const id = document.getElementById("email");
+    id.focus();
+}
+
+const getPwView = (target: string) => {
+    const pw = document.getElementById(target);
+
+    if(pw.type === 'password')
+    {
+        pw.type = 'text';
+    }
+    else
+    {
+        pw.type = 'password';
+    }
+}
 
 const getFileBtn = () => {
     einFile.value?.click();
