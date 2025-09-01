@@ -84,7 +84,7 @@ const getAgreeCheck = () => {
 const getNext = () => {
     if(getAgreeCheck())
     {
-        getCertified().then(result => {
+        getCertified('join').then(result => {
             if(result.status)
             {
                 join.getCertified(true);

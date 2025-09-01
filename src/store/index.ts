@@ -5,6 +5,7 @@ import type { App } from 'vue';
 import { useDataStore } from './modules/data';
 import { usePopupStore } from './modules/popup';
 import { useJoinStore } from './modules/join';
+import { useFindStore } from './modules/find';
 import { useLoginStore } from './modules/login';
 import { useInviteJoinStore } from './modules/inviteJoin';
 import { useMainStore } from './modules/main';
@@ -43,6 +44,7 @@ export {
     useDataStore,
     usePopupStore,
     useJoinStore,
+    useFindStore,
     useLoginStore,
     useInviteJoinStore,
     useMainStore,

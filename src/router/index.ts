@@ -6,6 +6,8 @@ import Login from "@/views/login/LoginPage.vue";
 import Agree from "@/views/login/JoinAgree.vue";
 import JoinFirst from "@/views/login/JoinFirst.vue";
 import JoinSecond from "@/views/login/JoinSecond.vue";
+import Certify from "@/views/login/Certify.vue";
+import FindId from "@/views/login/FindId.vue";
 import FindPassword from "@/views/login/FindPassword.vue";
 import ChangePassword from "@/views/login/ChangePassword.vue";
 import WaitJoin from "@/views/login/WaitJoin.vue"
@@ -95,7 +97,22 @@ const routes = [
     },
 
     {
-        path: "/join/find_password",
+        path: '/certify',
+        name: 'CertifyVue',
+        component: Certify,
+        meta : { gubun: 'Y' , showShadow: false}
+    },
+
+    {
+        path: '/find_Id',
+        name: 'FindId',
+        component: FindId,
+        meta : { gubun: 'Y' , showShadow: false}
+    },
+
+
+    {
+        path: "/find_password",
         name: "FindPassword",
         component: FindPassword,
         meta : { gubun: 'Y' , showShadow: false}

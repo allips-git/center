@@ -36,7 +36,7 @@
                             <label for="">자동 로그인</label>
                         </div> -->
                         <div class="flex flex-none gap-3 items-center self-center text-t-lv2">
-                            <router-link to="" class="text-xs">아이디 찾기</router-link>
+                            <router-link to="/certify" class="text-xs">아이디 찾기</router-link>
                             <span class="text-xs">|</span>
                             <router-link to="join/find_password" class="text-xs">비밀번호 찾기</router-link>
                         </div>
@@ -62,14 +62,15 @@ import IftaLabel from 'primevue/iftalabel';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted, ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { useLoginStore } from '@/store';
 import IconInputX from '@/components/icons/IconInputX.vue';
 import IconEye from '@/components/icons/IconEye.vue';
 
 const login     = useLoginStore();
 const router    = useRouter();
+const route     = useRoute();
 const idData    = ref('');
 const pwData    = ref('');
 const visible   = ref(true);
@@ -136,6 +137,13 @@ const getLogin = async () => {
         }
     }
 }
+
+onMounted(() => {
+    if(route.query.id)
+    {
+        idData.value = route.query.id;
+    }
+})
 </script>
 
 <style lang="scss" scoped>
