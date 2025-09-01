@@ -216,7 +216,7 @@ const getBproc = () => {
 }
 
 const getShape = () => {
-    if(esti['curtain']['bproc'] === '002')
+    if(esti['curtain']['shape'] === 'Y')
     {
         esti.common.options.forEach(item => {
             if(item.gb === 'S')
