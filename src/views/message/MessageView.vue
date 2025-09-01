@@ -1,6 +1,6 @@
 <template>
     <BackHeader title="메세지 저장" />
-    <main class="pb-32 w-full">
+    <main class="pb-48 w-full">
         <section class="flex justify-between items-start px-4 pb-5">
             <div class="flex flex-wrap gap-1 items-center">
                 <Button label="고객 선택" icon="pi pi-plus" outlined size="small" rounded @click="getPopupOpen('clientChoice')" class="!rounded-full !gap-1 !pr-2.5"></Button>
@@ -22,14 +22,41 @@
                 <small class="text-msg">{{ msg['msg'][`title`] }}</small>
             </div>
             <div class="!my-0 gray-bar"></div>
+
             <div class="px-4">
+                <!-- 기존 문자 내용 -->
                 <IftaLabel class="w-full">
                     <Textarea id="contents" v-model="msg.info.contents" class="w-full" autoResize rows="10" cols="30"/>
                     <label>문자 내용</label>
                 </IftaLabel>
+
+                <!-- 신규 문자 내용
+                <div class="overflow-hidden relative">
+                    <div contenteditable="true" class="msg-input-custom">
+                        <b>⭐️ <span class="tag-shop">디자인윈도우</span> 상담 준비완료 안내</b><br />
+                        안녕하세요. <span class="tag-shop">디자인윈도우</span> <span class="tag-name">하현재</span> 입니다.<br /><br />
+
+                        저희 매장은 매일 전체 방역과 함께 상담 전, 후로 상균소독을 진행하고 있습니다.<br />
+                        전 직원 역시 방역 수칙에 따라 철처하게 개인위생 관리할 것을 약속드립니다.<br />
+                        언제나 고객님의 건강과 안전을 최우 선으로 생각하겠습니다.<br /><br />
+                        
+                        안심하고 방문해주세요. 감사합니다  💕
+                    </div>
+                    <div class="flex absolute right-[1px] bottom-[1px] left-[1px] rounded-br-[0.125rem] rounded-bl-[0.125rem] py-1 px-2 gap-1 items-center bg-gray-100/50">
+                        <button class="tag-shop">디자인윈도우</button>
+                        <button class="tag-name">하현재</button>  
+                    </div>
+                </div>
+                //신규 문자 내용 -->
+                
+                <Button label="메세지 저장" @click="getPopupOpen('messageSave')"></Button>
+
                 <small class="text-msg">{{ msg['msg'][`contents`] }}</small>
                 <small class="text-msg">{{ msg['msg'][`clientList`] }}</small>
             </div>
+
+            
+            
         </section>
     </main>
     <div class="z-10 flex-col bottom-fixed-btn-box">
@@ -54,11 +81,22 @@
         </div>
         <CustomerChoice/>
     </Dialog>
+
+    <Dialog v-model:visible="popup['pop']['messageSave']"
+        :modal=true position="bottom" class="custom-dialog-bottom"
+        @update:visible="getPopupClose('messageSave', true)">
+        <div class="modal-backheader">
+            <Button @click="getPopupClose('messageSave', true)" severity="contrast" text icon="pi pi-times" />
+            <h2 class="modal-backheader-title">정보수정</h2>
+        </div>
+        <MessageSavePop/>
+    </Dialog>
 </template>
 
 <script setup lang="ts">
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import CustomerChoice from '@/views/include/message/CustomerChoice.vue'
+import MessageSavePop from '@/views/include/message/MessageSavePop.vue'
 import IftaLabel from 'primevue/iftalabel';
 import Textarea from 'primevue/textarea';
 // import Tag from 'primevue/tag';

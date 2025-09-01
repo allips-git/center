@@ -237,6 +237,38 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     
     
 }
+
+.custom-dialog-util-wrap {
+    .p-dialog.custom-dialog-util {
+        width: 100%;
+        margin: 0 !important;
+        border-radius: rem(16) rem(16) 0 0 !important;
+        overflow: hidden;
+        .p-dialog-header, .p-drawer-header{
+            padding: 0;
+            display: none;
+        }
+        .p-dialog-content {
+            padding: 0;
+        } 
+    }
+    @media (min-width: $breakpoint-sm) { 
+        align-items: center !important;
+        .p-dialog.custom-dialog-util {
+            width: rem(480);
+            border-radius: rem(12) !important;
+        }
+    }
+}
+
+.color-chips {
+    .chip {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border-radius: rem(6);
+    }
+}
+
 .custom-popover-listbox{
     .p-popover-content {
         padding:0.275rem;
@@ -661,6 +693,39 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .p-textarea.p-placeholder{
     font-size: 12px;
 }
+.msg-input-custom {
+    padding-block: rem(16);
+    padding-inline: rem(16);
+    padding-bottom: rem(60);
+    border-radius: rem(2);
+    color: #404040;
+    font-size: rem(13);
+    font-weight: 500;
+    line-height: 1.5;
+    border: 1px solid var(--p-textarea-border-color);
+    outline: 0;
+    &:hover, &:focus {
+        border-color: var(--p-textarea-focus-border-color);
+    }
+}
+.tag-shop, .tag-name {
+    display: inline-block;
+    margin: rem(2) rem(1);
+    padding: rem(6) rem(7) rem(5) rem(8);
+    font-size: rem(12);
+    font-weight: 700;
+    line-height: 1;
+    border-radius: 9999em;  
+} 
+.tag-shop {
+    color: #6AB2BE;
+    background-color: #E5F7FB;
+}
+.tag-name {
+    color: #DBB071;
+    background-color: #FCF2E6;
+}
+
 .p-iftalabel {
     label{
         z-index: 10 !important;
@@ -1291,7 +1356,6 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
  // Start of Selection
 }
 
-
 // Info List : 공장 상세, 
 .info-list {
     display: flex;
@@ -1337,6 +1401,22 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         }
     }
 }
+
+// 기타
 .imoji-shadow {
-    text-shadow: 0 3px px rgba(0, 0, 0, 0.08);
+    text-shadow: 0 3px 9px rgba(0, 0, 0, 0.08);
+}
+
+.btn-select {
+    width: auto !important;
+    gap: rem(4) !important;
+    padding-right: rem(8) !important;
+    border: 0 !important;
+    color: var(--l-lv0) !important;
+    line-height: 1;
+    align-items: flex-end;
+    &:hover, &:focus {
+        background-color: transparent !important;
+        //background-color: var(--bg-lv2) !important;
+    }
 }
