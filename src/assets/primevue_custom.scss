@@ -266,6 +266,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         width: 100%;
         aspect-ratio: 1 / 1;
         border-radius: rem(6);
+        cursor: pointer;
     }
 }
 
@@ -1106,7 +1107,6 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
-
 .mini_input{
     border: 0;
     background-color: #F6F6F6 !important;
@@ -1418,5 +1418,34 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     &:hover, &:focus {
         background-color: transparent !important;
         //background-color: var(--bg-lv2) !important;
+    }
+    .emoji-size {
+        font-size: rem(30);
+        @at-root html.ios & {
+            font-size: rem(30);
+        }
+        @at-root html.android & {
+            font-size: rem(26);
+        }
+    }
+}
+
+.custom-dialog-util {
+    .v3-emoji-picker {
+        width: 100%;
+        height: rem(400);
+        box-shadow: none;
+        .v3-emojis button {
+            font-size: rem(24) !important;
+            flex-basis: calc(100% / 7) !important;
+            max-width: calc(100% / 7) !important;
+            @at-root html.ios & {
+                font-size: rem(28) !important;
+            }
+            @media (min-width: $breakpoint-sm) { 
+                flex-basis: 10% !important;
+                max-width: 10% !important;
+            }
+        }
     }
 }

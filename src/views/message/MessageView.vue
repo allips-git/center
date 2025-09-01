@@ -3,10 +3,10 @@
     <main class="pb-48 w-full">
         <section class="flex justify-between items-start px-4 pb-5">
             <div class="flex flex-wrap gap-1 items-center">
-                <Button label="고객 선택" icon="pi pi-plus" outlined size="small" rounded @click="getPopupOpen('clientChoice')" class="!rounded-full !gap-1 !pr-2.5"></Button>
-                <span class="px-2.5 py-1.5 text-xs font-bold rounded-full border text-t-lv2 border-l-lv4" v-if="msg.clientList.length > 0">
-                    {{ msg.clientList.length === 1 ? msg.clientList[0]['clientNm'] : msg.clientList[0]['clientNm']+' 외 '+(msg.clientList.length - 1)+'명'  }}
-                </span>
+                <Button label="고객 선택" icon="pi pi-plus" outlined size="small" rounded @click="getPopupOpen('clientChoice')" class="!rounded-full !gap-1 !pr-2.5" v-if="msg.clientList.length === 0" />
+                <div class="px-2.5 py-1.5 text-xs font-bold rounded-full border text-t-lv2 border-l-lv4" v-if="msg.clientList.length > 0" @click="getPopupOpen('clientChoice')">
+                    {{ msg.clientList.length === 1 ? msg.clientList[0]['clientNm'] : msg.clientList[0]['clientNm']+' 외 '+(msg.clientList.length - 1)+'명'  }} <strong class="font-bold underline underline-offset-2 decoration-[1px] text-p-lv4">변경</strong>
+                </div>
             </div>
             <div class="flex flex-none gap-1 items-center">
                 <Button label="메세지 저장" size="small" @click="getSave"></Button>
@@ -30,7 +30,7 @@
                     <label>문자 내용</label>
                 </IftaLabel>
 
-                <!-- 신규 문자 내용
+                <!-- @TODO FE 신규 문자 내용
                 <div class="overflow-hidden relative">
                     <div contenteditable="true" class="msg-input-custom">
                         <b>⭐️ <span class="tag-shop">디자인윈도우</span> 상담 준비완료 안내</b><br />
@@ -47,9 +47,8 @@
                         <button class="tag-name">하현재</button>  
                     </div>
                 </div>
-                //신규 문자 내용 -->
-                
                 <Button label="메세지 저장" @click="getPopupOpen('messageSave')"></Button>
+                //신규 문자 내용 -->
 
                 <small class="text-msg">{{ msg['msg'][`contents`] }}</small>
                 <small class="text-msg">{{ msg['msg'][`clientList`] }}</small>
