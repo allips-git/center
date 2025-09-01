@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useJoinStore } from '@/store';
+import { useFindStore } from '@/store/modules/find';
 
 const IMP = window.IMP;
 IMP.init("imp36139043");
 
-export async function getCertified()
+export async function getCertified(gb: string): Promise
 {
     return new Promise((resolve, reject) => {
         IMP.certification({
@@ -18,7 +19,7 @@ export async function getCertified()
 
                 if(token['status']) 
                 {
-                    const info = await getDanal(rsp.imp_uid, token['data']['token']);
+                    const info = await getDanal(rsp.imp_uid, token['data']['token'], gb);
                     resolve(info);
                 }
                 else 
@@ -74,9 +75,10 @@ async function getDanalToken()
  * @param => uid   다날 SMS 인증성공 key
  * @param => token access_token
  */
-async function getDanal(uid, token)
+async function getDanal(uid, token, gb)
 {
     const join      = useJoinStore();
+    const find      = useFindStore();
     const params    = {
         impUid  : uid,
         token   : token['response']['access_token']
@@ -102,7 +104,18 @@ async function getDanal(uid, token)
         if(result.response.certified)
         {
             /** 본인인증 성공 */
-            join.getAuth(result.response.name, result.response.phone);
+            switch(gb)
+            {
+                case 'find':
+                    find.getAuth({
+                        name : result.response.name,
+                        tel  : result.response.phone
+                    });
+                break;
+                case 'join':
+                    join.getAuth(result.response.name, result.response.phone);
+                break;
+            }
             
             return {
                 status  : true,
