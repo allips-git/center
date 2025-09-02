@@ -25,12 +25,14 @@ interface AlarmList {
 }
 
 interface State {
-    clientCnt  : number;
-    stCnt      : StCnt[];
-    factoryCnt : number;
-    kakaoYn    : string;
-    msgList    : MsgList[];
-    alarmList  : AlarmList[];
+    clientCnt       : number;
+    stCnt           : StCnt[];
+    factoryCnt      : number;
+    kakaoYn         : string;
+    kakaoUseCnt     : number;
+    kakaoSendCnt    : number;
+    msgList         : MsgList[];
+    alarmList       : AlarmList[];
 }
 
 const getStCnt = (): StCnt[] => {
@@ -46,12 +48,14 @@ const getStCnt = (): StCnt[] => {
 
 export const useMainStore = defineStore('main', {
     state: (): State => ({
-        clientCnt  : 0,
-        stCnt      : getStCnt(),
-        factoryCnt : 0,
-        kakaoYn    : 'N',
-        msgList    : [],
-        alarmList  : []
+        clientCnt       : 0,
+        stCnt           : getStCnt(),
+        factoryCnt      : 0,
+        kakaoYn         : 'N',
+        kakaoUseCnt     : 0,
+        kakaoSendCnt    : 0,
+        msgList         : [],
+        alarmList       : []
     }),
     actions: {
         async getData()
@@ -74,10 +78,12 @@ export const useMainStore = defineStore('main', {
                         }
                     })
                 })
-                this.factoryCnt = res.data['factoryCnt'];
-                this.kakaoYn    = res.data['kakaoYn'];
-                this.msgList    = res.data['msgList'];
-                this.alarmList  = res.data['alarmList'].map(item => {
+                this.factoryCnt     = res.data['factoryCnt'];
+                this.kakaoYn        = res.data['kakaoYn'];
+                this.kakaoUseCnt    = res.data['kakaoUseCnt'];
+                this.kakaoSendCnt   = res.data['kakaoSendCnt'];
+                this.msgList        = res.data['msgList'];
+                this.alarmList      = res.data['alarmList'].map(item => {
                     let title = '';
 
                     switch(item['state'])

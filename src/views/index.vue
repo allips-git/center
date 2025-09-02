@@ -99,9 +99,9 @@
                                         <span v-else class="px-1.5 text-xs text-white bg-sky-400 rounded-full">ON</span> -->
                                     </div>
                                     <div v-if="main['kakaoYn'] === 'Y'" class="flex gap-2 text-11 sm:text-13 !font-normal text-t-lv4 mt-[-0.125rem]">
-                                        <span>0개 사용중</span>
+                                        <span>{{ main.kakaoUseCnt }}개 사용중</span>
                                         <span>|</span>
-                                        <span>잔여 포인트 <span class="">50P</span></span>
+                                        <span>잔여 포인트 <span class="">0P</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -113,19 +113,19 @@
                                 <Button label="플랜톡 사용하기" class="w-full mt-[14px] *:!text-sm !border-none !py-[0.625rem] *:!font-semibold" @click="getPlanTalk"></Button>
                             </div>        
                             <ul v-else class="grid grid-cols-2 gap-2 *:bg-bg-lv1 *:p-3 *:rounded-lg *:flex *:flex-col *:gap-px text-xs mt-[0.875rem]">
-                                <li class="cursor-pointer">
+                                <li class="cursor-pointer" @click="getKakaoHistory('Y')">
                                     <h5 class="font-bold">예약된 알림</h5>
                                     <div class="flex justify-between items-center">
                                         <p class="text-zinc-400">상세보기</p>
                                         <IconLeftArrow class="w-[0.4375rem] fill-l-lv2"/>
                                     </div>
                                 </li>
-                                <li class="cursor-pointer">
+                                <li class="cursor-pointer" @click="getKakaoHistory('N')">
                                     <h5 class="font-bold">보낸 알림</h5>
                                     <div class="flex justify-between items-center">
                                         <p class="text-zinc-400">
                                             오늘
-                                            <span class="text-red-500">0건</span>
+                                            <span class="text-red-500">{{ main.kakaoSendCnt }}건</span>
                                         </p>
                                         <IconLeftArrow class="w-[0.4375rem] fill-l-lv2"/>
                                     </div>
@@ -501,6 +501,11 @@ const getStCd = async (stCd: string) => {
     {
         router.push({ path : '/customer/estiDetail' });
     }
+}
+
+const getKakaoHistory = async (resGb: 'Y' | 'N') => {
+    await kakao.getResGb(resGb);
+    router.push({ path : '/plantalk/res' })
 }
 
 const getPlanTalk = () => {

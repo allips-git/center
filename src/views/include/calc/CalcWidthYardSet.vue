@@ -25,13 +25,13 @@
         <div class="grid grid-cols-4 gap-3">
             <IftaLabel>
                 <label>가로(CM)<span class="ml-0.5 text-red-500">*</span></label>
-                <InputText v-keyfilter.money inputmode="numeric" id="cWidth" v-model="esti['common']['width']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()" />
+                <InputText v-keyfilter.money inputmode="decimal" id="cWidth" v-model="esti['common']['width']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()" />
                 <small class="whitespace-nowrap text-msg">{{ esti['msg']['curtain'][`cWidth`] }}</small>
             </IftaLabel>
 
             <IftaLabel>
                 <label>세로(CM)</label>
-                <InputText v-keyfilter.money inputmode="numeric" id="cHeight" v-model="esti['common']['height']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()" />
+                <InputText v-keyfilter.money inputmode="decimal" id="cHeight" v-model="esti['common']['height']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()" />
                 <small class="whitespace-nowrap text-msg">{{ esti['msg']['curtain'][`cHeight`] }}</small>
             </IftaLabel>
 
@@ -48,7 +48,7 @@
                 <div class="relative">
                     <IftaLabel class="flex-1 min-w-0">
                     <label class="accent">최종({{ getRealSize() + esti['common']['unitNm'] }})</label>
-                    <InputText v-keyfilter.int id="cSize" v-model="esti['curtain']['size']" class="w-full text-lg text-center text-sky-500" @input="esti.getUnitCalc('Y')" />
+                    <InputText v-keyfilter.money inputmode="decimal" id="cSize" v-model="esti['curtain']['size']" class="w-full text-lg text-center text-sky-500" @input="esti.getUnitCalc('Y')" />
                 </IftaLabel>
                 <!-- <span class="absolute right-2.5 bottom-[0.625rem] text-xs text-t-lv1">{{ esti['common']['unitNm'] }}</span> -->
                 </div>

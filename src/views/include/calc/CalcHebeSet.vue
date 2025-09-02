@@ -18,12 +18,12 @@
         <div v-if="esti['blind']['division'] !== 'A'" class="grid grid-cols-4 gap-3">
             <IftaLabel>
                 <label>가로 (CM)<span class="ml-0.5 text-red-500">*</span></label>
-                <InputText v-keyfilter.money inputmode="numeric" id="bWidth" v-model="esti['common']['width']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()"/>
+                <InputText v-keyfilter.money inputmode="decimal" id="bWidth" v-model="esti['common']['width']" class="w-full text-lg text-center" @update:modelValue="esti.getUnitCalc()"/>
                 <small class="whitespace-nowrap text-msg">{{ esti['msg']['blind']['bWidth'] }}</small>
             </IftaLabel> 
             <IftaLabel>
                 <label>세로 (CM)<span class="ml-0.5 text-red-500">*</span></label>
-                <InputText v-keyfilter.money inputmode="numeric" id="bHeight" v-model="esti['common']['height']" class="w-full text-lg text-center" @update:modelValue="getHeight"/>
+                <InputText v-keyfilter.money inputmode="decimal" id="bHeight" v-model="esti['common']['height']" class="w-full text-lg text-center" @update:modelValue="getHeight"/>
                 <small class="whitespace-nowrap text-msg">{{ esti['msg']['blind']['bHeight'] }}</small>
             </IftaLabel>
             <!-- 분할없음 -->
@@ -80,11 +80,11 @@
                 <div v-for="(item, index) in esti['blind']['divSpec']" :key="index" class="grid grid-cols-4 gap-3 fgrid">
                     <IftaLabel class="w-full">
                         <label v-if="index === 0">가로(CM)<span class="ml-0.5 text-red-500">*</span></label>
-                        <InputText v-keyfilter.money inputmode="numeric" :id="'bWidth'+index" v-model="item['width']" class="w-full text-lg text-center" @input="getDivBlindWidth(index)"/>
+                        <InputText v-keyfilter.money inputmode="decimal" :id="'bWidth'+index" v-model="item['width']" class="w-full text-lg text-center" @input="getDivBlindWidth(index)"/>
                     </IftaLabel>
                     <IftaLabel class="w-full">
                         <label v-if="index === 0">세로(CM)<span class="ml-0.5 text-red-500">*</span></label>
-                        <InputText v-keyfilter.money inputmode="numeric" v-model="esti['common']['height']" class="w-full text-lg text-center" @input="getDivBlindWidth(index)"/>
+                        <InputText v-keyfilter.money inputmode="decimal" v-model="esti['common']['height']" class="w-full text-lg text-center" @input="getDivBlindWidth(index)"/>
                     </IftaLabel>
                     <IftaLabel class="w-full">
                         <Select v-model="item['handle']" :options="data['handle']" optionLabel="name" optionValue="value" class="w-full">
@@ -121,11 +121,11 @@
             <div v-for="(item, index) in esti['blind']['divSpec']" :key="index" class="grid grid-cols-4 gap-3 fgrid">
                 <IftaLabel class="w-full">
                     <label v-if="index === 0">가로(CM)<span class="ml-0.5 text-red-500">*</span></label>
-                    <InputText v-keyfilter.money inputmode="numeric" :id="'bWidth'+index" v-model="item['width']" class="w-full text-lg text-center" @input="getDivBlindWidth(index)"/>
+                    <InputText v-keyfilter.money inputmode="decimal" :id="'bWidth'+index" v-model="item['width']" class="w-full text-lg text-center" @input="getDivBlindWidth(index)"/>
                 </IftaLabel>
                 <IftaLabel class="w-full">
                     <label v-if="index === 0">세로(CM)<span class="ml-0.5 text-red-500">*</span></label>
-                    <InputText v-keyfilter.money inputmode="numeric" :id="'bHeight'+index" v-model="item['height']" class="w-full text-lg text-center" @input="getDivBlindHeight(index)"/>
+                    <InputText v-keyfilter.money inputmode="decimal" :id="'bHeight'+index" v-model="item['height']" class="w-full text-lg text-center" @input="getDivBlindHeight(index)"/>
                 </IftaLabel>
                 <IftaLabel class="w-full">
                     <Select v-model="item['handle']" :options="data['handle']" optionLabel="name" optionValue="value" class="w-full">

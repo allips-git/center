@@ -8,7 +8,7 @@
             </div>
             
             <div class="relative flex items-center justify-center w-full">
-                <p class="w-[100px] flex-none">시공일</p>
+                <p class="w-[100px] flex-none">시공일<span class="ml-0.5 text-red-500">*</span></p>
                 <div class="flex flex-col w-full gap-1">
                     <DatePicker id="deliDt" v-model="con['conInfo']['deliDt']" showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd" showTime hourFormat="24" class="w-full"/>
                     <small class="w-full text-red-500">{{ con['msg']['deliDt'] }}</small>
@@ -16,7 +16,7 @@
             </div>
 
             <div class="relative flex items-center justify-center w-full">
-                <p class="w-[100px]  flex-none">설치시간</p>
+                <p class="w-[100px]  flex-none">설치시간<span class="ml-0.5 text-red-500">*</span></p>
                 <div class="w-full">
                     <div class="flex w-full gap-2 *:w-full">
                         <Select v-model="con['conInfo']['insHour']" :options="data['hours']" optionLabel="name" optionValue="value" placeholder="시"/>

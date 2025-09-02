@@ -304,7 +304,6 @@ export const useClientStore = defineStore('client', {
         },
         async getReset()
         {
-            this.gb     = 'Y';
             this.type   = 'I';
             this.person = [];
             this.group  = [{ value : 'N', label : '신규입력' }];
