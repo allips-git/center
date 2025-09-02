@@ -224,6 +224,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 }
 
 .custom-dialog-center{
+    width: calc(100% - 32px);
     .p-dialog-header, .p-drawer-header{
         padding: 0.25rem;
         width: 100%;
@@ -414,9 +415,6 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         border-color: transparent;
         // color: var(--p-tabs-tab-color);
     }
-}
-.p-inputtext,.p-select,.p-textarea{
-    //border-radius: 2px !important;
 }
 
 
@@ -687,8 +685,24 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 .p-textarea {
-    height: auto !important;
+    font-size: rem(13);
+    &:not(.p-textarea-resizable) {
+        height: auto !important;
+    }
+    &.p-textarea-resizable {
+        min-height: rem(40);
+        padding-inline: rem(14);
+        color: var(--t-lv2);
+        font-size: rem(13);
+        line-height: 1.34;
+        &:read-only {
+            padding-inline: 0;
+            padding-block: 0 !important;
+            border: 0;
+        }
+    }
 }
+
 
 
 .p-textarea.p-placeholder{
@@ -949,7 +963,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 }
 .bottom-fixed-btn-box {
     .p-button{
-        padding: 0.9375rem 0;
+        padding: 0.9375rem 0 !important;
         //border: none;
         .p-button-label{
             font-size: 0.9375rem;
@@ -982,8 +996,8 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         line-height: 1.5;
     }
     &.p-button-lg {
-        padding-top: 0.875rem;
-        padding-bottom: 0.875rem;
+        padding-top: rem(12);
+        padding-bottom: rem(12);
         .p-button-label{
             font-weight: 700;
         }
@@ -1404,7 +1418,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 
 // 기타
 .imoji-shadow {
-    text-shadow: 0 3px 9px rgba(0, 0, 0, 0.08);
+    text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.20);
 }
 
 .btn-select {
@@ -1446,6 +1460,54 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
                 flex-basis: 10% !important;
                 max-width: 10% !important;
             }
+        }
+    }
+}
+.p-selectbutton {
+    .p-togglebutton {
+        padding: rem(8) rem(12);
+        font-size: rem(13);
+    }
+    .p-togglebutton-label {
+        white-space: nowrap;
+    }
+    .p-togglebutton-checked {
+        .p-togglebutton-label {
+            font-weight: 700;
+            color: var(--p-lv4);
+        }
+    }
+}
+
+.contract-table {
+    width: 100%;
+    border-top: 1px solid var(--l-lv2);
+    border-bottom: 0.75px solid var(--l-lv2);
+    thead {
+        th {
+            padding-top: rem(12);
+            padding-bottom: rem(10);
+            border-bottom: 0.75px solid var(--l-lv2);
+        }
+    }
+    tbody {
+        tr:not(:last-child) {
+            th, td {
+                border-bottom: 1px solid var(--l-lv4);
+            } 
+        }
+        th, td {
+            padding-top: rem(16);
+            padding-bottom: rem(24);
+        }
+    }
+    th, td {
+        font-size: rem(12);
+        font-weight: 700;
+        line-height: 1.34;
+        vertical-align: top;
+        @media (min-width: $breakpoint-sm) { 
+            font-size: rem(14);
         }
     }
 }

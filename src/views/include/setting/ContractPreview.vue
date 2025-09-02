@@ -1,0 +1,274 @@
+<template>
+    <main class="pb-[80px]" ref="mainRef">
+        <div class="p-4 sm:p-6">
+            <h1 class="p-2.5 text-base font-bold leading-tight bg-bg-lv2 text-t-lv1">계약서 (견적서)</h1>
+            <!-- 계약자 정보 -->
+            <section class="relative mt-3.5">
+                <h2 class="text-sm sm:text-base font-bold text-t-lv1 leading-[1.34] break-keep pr-14">디자인윈도우 부산점</h2>
+                <div class="mt-2 flex flex-col gap-1 [&_dl]:w-full [&_dl]:flex [&_dl]:gap-1 [&_dt]:flex-none text-xs sm:text-sm text-t-lv1 leading-[1.34] break-keep">
+                    <dl class="pr-14">
+                        <dt>대표:</dt>
+                        <dd>하현재</dd>
+                    </dl>
+                    <dl>
+                        <dt>계약 담당자:</dt>
+                        <dd>홍길동</dd>
+                    </dl>
+                    <dl>
+                        <dt>전화번호:</dt>
+                        <dd>010-3445-2105</dd>
+                    </dl>
+                    <dl>
+                        <dt>주소:</dt>
+                        <dd>부산광역시 수영구 수영로 411-1 디자인윈도우</dd>
+                    </dl>
+                    <dl>
+                        <dt>견적일:</dt>
+                        <dd>2025.01.18</dd>
+                    </dl>
+                    <dl>
+                        <dt>계약일:</dt>
+                        <dd>2025.02.18</dd>
+                    </dl>
+                </div>
+                <!-- 파일이 있는 경우에만 노출 -->
+                <div class="absolute top-0 right-0 w-[3.25rem] h-[3.25rem] border border-l-lv2">
+                    <img src="@/assets/img/img-seal.png" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>   
+                </div>
+            </section>
+            <!-- 견적 금액 -->
+            <section class="mt-6">
+                <table role="table" class="contract-table">
+                    <colgroup>
+                        <col style="width: auto;" />
+                        <col style="width: 16%;" />
+                        <col style="width: 24%;" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-left">제품</th>
+                            <th scope="col" class="text-center">수량</th>
+                            <th scope="col" class="text-right">금액</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="text-left">
+                                아르카디아 / 아이스화이트
+                                <!-- 옵션 / 사이즈 -->
+                                <div class="mt-1.5 font-normal text-t-lv2">
+                                    <div>옵션: 솜피 알투스 402모터</div>
+                                    <ul>
+                                        <li>240*120 [좌1] 2.4회베</li>
+                                        <li>240*120 [우1] 2.4회베</li>
+                                        <li>240*120 [우1] 2.4회베</li>
+                                    </ul>
+                                </div>
+                            </th>
+                            <td class="text-center">3</td>
+                            <td class="text-right">320,000</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-left">
+                                커튼 소니아 / 화이트
+                                <div class="mt-1.5 font-normal text-t-lv2">
+                                    <div>옵션: 형상옵션</div>
+                                    <ul>
+                                        <li>240*120 [4폭]</li>
+                                    </ul>
+                                </div>
+                            </th>
+                            <td class="text-center">33</td>
+                            <td class="text-right">412,320,000</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-left">
+                                커튼 쉬폰 / 화이트
+                                <div class="mt-1.5 font-normal text-t-lv2">
+                                    <div>옵션: 형상옵션</div>
+                                    <ul>
+                                        <li>240*120 [10.4야드]</li>
+                                    </ul>
+                                </div>
+                            </th>
+                            <td class="text-center">111</td>
+                            <td class="text-right">320,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3 class="mt-3.5 text-xs sm:text-sm text-t-lv1 leading-[1.34] font-bold">합계금액</h3>
+                <div class="mt-4 flex flex-col gap-1.5 [&_dl]:w-full [&_dl]:flex [&_dl]:justify-between text-xs sm:text-sm text-t-lv1 leading-[1.34]">
+                    <dl>
+                        <dt>상품 금액</dt>
+                        <dd class="font-bold">603,253</dd>
+                    </dl>
+                    <dl>
+                        <dt>할인</dt>
+                        <dd class="font-bold text-red-500">-50,000</dd>
+                    </dl>
+                    <dl>
+                        <dt>절삭 할인</dt>
+                        <dd class="font-bold text-red-500">-3,253</dd>
+                    </dl>
+                    <dl>
+                        <dt>선금/계좌: 농협 01011112221132</dt>
+                        <dd class="font-bold text-red-500">-1,450,000</dd>
+                    </dl>
+                    <dl class="mt-2 text-base pt-3.5 pb-4 border-y-[0.75px] border-t-lv1">
+                        <dt class="font-bold">총금액</dt>
+                        <dd class="font-bold text-p-lv4">550,000</dd>
+                    </dl>
+                </div>
+            </section>
+            <!-- 약정 내용 -->
+            <section class="mt-6">
+                <Textarea v-model="terms" autoResize readonly cols="30" rows="10"  class="w-full" />
+            </section>
+            <section class="mt-3">
+                <h2 class="p-2.5 text-base font-bold leading-tight bg-bg-lv2 text-t-lv1">계약서 (견적서)</h2>
+                <div class="flex justify-between mt-3.5">
+                    <div class="flex flex-col gap-1.5 justify-center min-h-[3.25rem]">
+                        <h3 class="text-sm sm:text-base font-bold text-t-lv1 leading-[1.34] break-keep">홍길동</h3>
+                        <div class="flex flex-col gap-1 [&_dl]:w-full [&_dl]:flex [&_dl]:gap-1 [&_dt]:flex-none text-xs sm:text-sm text-t-lv1 leading-[1.34] break-keep">
+                            <dl>
+                                <dt>전화번호:</dt>
+                                <dd>010-3445-2105</dd>
+                            </dl>
+                            <dl>
+                                <dt>주소:</dt>
+                                <dd>부산광역시 수영구 수영로 411-1 디자인윈도우</dd>
+                            </dl>
+                        </div> 
+                    </div>
+                    <!-- 파일이 있는 경우에만 노출 -->
+                    <div class="w-[3.25rem] h-[3.25rem] border border-l-lv2">
+                        <img src="@/assets/img/img-seal.png" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>   
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div :style="{width: mainWidth + 'px', left: mainLeft + 'px', }" class="bottom-fixed-btn-box">
+        <Button label="계약 서명하기" size="large" class="w-full" @click="getPopupOpen('signaturePop')"/>
+    </div>
+
+    <Dialog v-model:visible="popup['pop']['signaturePop']" 
+        :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissable-mask="true"
+        @update:visible="getPopupClose(true, 'signaturePop')">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopupClose(true, 'signaturePop')" severity="contrast" text icon="pi pi-times"/>
+                <h2 class="modal-backheader-title">계약 서명</h2>
+            </div>
+        </template>
+        <div class="md:pt-4">
+            <div class="relative w-full h-[180px] md:h-[180px] bg-[#FFFBE2] border border-l-lv4 rounded-sm">
+                <Vue3Signature  ref="signature" :sigOption="state.option" :w="'100%'" :h="'100%'"
+                :disabled="state.disabled" class="example"></Vue3Signature>
+                <div class="flex absolute top-0 right-0 gap-1 p-1 z-1 btn-group-signature">
+                    <Button size="small" icon="pi pi-eraser" label="이전" variant="text" class="[&_.p-button-icon]:text-red-500" @click="undo" />
+                    <Button size="small" icon="pi pi-refresh" label="다시 그리기" variant="text"  @click="clear" />
+                </div>
+            </div>
+            <p class="mt-1.5 px-8 text-10 md:text-xs leading-[1.34] text-t-lv2 text-center break-keep">본인은 본 계약서 및 관련 약관의 모든 내용을 확인하였으며, 전자서명을 통해 이에 동의함을 확인합니다.</p>
+            <div class="grid grid-cols-2 gap-2 mt-6 btn-2-layout-box">
+                <Button size="large" severity="secondary" label="취소"/>
+                <Button size="large" label="계약완료"/>
+            </div>
+        </div>
+    </Dialog>
+</template>
+
+<script setup lang="ts">
+import { reactive, ref } from 'vue';
+import { onMounted } from 'vue'
+import Textarea from 'primevue/textarea';
+import Button from 'primevue/button';
+import Dialog from "primevue/dialog";
+import { usePopupStore } from '@/store';
+import { usePopup } from '@/assets/js/popup';
+
+import Vue3Signature from "vue3-signature"
+
+const state = reactive({
+  count: 0,
+  option: {
+    penColor: "rgb(0, 0, 0)",
+    backgroundColor: "transparent"
+  },
+  disabled: false
+})
+
+const signature = ref(null)
+
+const save = (t) => {
+  console.log(signature.value.save(t))
+}
+
+const clear = () => {
+  signature.value.clear()
+}
+
+const undo = () => {
+  signature.value.undo();
+}
+
+const mainRef = ref(null);
+const mainWidth = ref(0);
+const mainLeft = ref(0);
+const popup     = usePopupStore();
+const { getPopupOpen, getPopupClose } = usePopup();
+
+onMounted(() => {
+    const updateMainSize = () => {
+        if (mainRef.value) {
+            mainWidth.value = mainRef.value.offsetWidth
+            mainLeft.value = mainRef.value.offsetLeft
+        }
+    }
+
+    updateMainSize()
+
+    const observer = new ResizeObserver(() => updateMainSize())
+    observer.observe(mainRef.value)
+});
+
+const terms = ref(`
+1. 본사는 맞춤전문 업체로서 계약해지 또는 변경은 계약후 7일내에 한하며 이후 해지는 불가능 합니다. 또한 계약 제품이 생산을 진행하였어도 계약해지 또는 변경이 불가능합니다.
+
+2. 계약 철회시 제작이 진행하지 않았어도 계약금은 반환되지 않습니다.
+
+3. 기존제품 철거 및 재시공은 하지 않습니다. 만약 고객님이 원할 경우 추가비용이 발생합니다.
+
+4. 주문 제작 특성상 설치 후 교환/반품은 불가합니다. (제품 불량건 교환가능)
+
+5. 시공시간 지정은 불가능 합니다.
+
+6. 무상AS 기간은 1년이며, 고객 실수로 인한 제품하자는 AS비용이 별도로 발생합니다. (제품하자일 경우 제외)
+
+7. 계약서의 내용을 충분히 이해하였음을 확인합니다.
+`)
+</script>
+
+<style lang="scss">
+.btn-group-signature {
+    .p-button {
+        border-radius: 0.25rem !important;
+        background: var(--white);
+        gap: 0.25rem;
+        &:hover, &:focus {
+            background: var(--white) !important;
+        }
+        .p-button-icon {
+            color: var(--t-lv3);
+            font-size: 0.75rem;
+        }
+        .p-button-label {
+            color: var(--t-lv3);
+            font-size: 0.625rem;
+            font-weight: 700;
+        }
+    }
+}
+</style>

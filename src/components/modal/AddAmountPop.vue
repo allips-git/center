@@ -13,8 +13,8 @@
         </IftaLabel>
         
         <div class="grid grid-cols-2 gap-2 mt-2 btn-2-layout-box">
-            <Button severity="secondary" label="취소" @click="emit('getClose')"/>
-            <Button label="확인" @click="emit('getApply')"/>
+            <Button size="large" severity="secondary" label="취소" @click="emit('getClose')"/>
+            <Button size="large" label="확인" @click="emit('getApply')"/>
         </div>
     </div>
 </template>

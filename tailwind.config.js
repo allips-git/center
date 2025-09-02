@@ -64,6 +64,7 @@ export default {
 
         'bg-lv1':"#F8F9FA",
         'bg-lv2':"#F6F6F6",
+        'bg-lv3':"#EFEFEF",
 
         
         

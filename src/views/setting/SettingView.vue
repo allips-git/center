@@ -1,8 +1,8 @@
 <template>
     <div class="xl:h-[90vh] overflow-y-auto">
         <BackHeader title="설정" />
-        <main class="pb-5">
-            <section class="px-4 md:p-6">
+        <main class="flex flex-col gap-4 px-4 pb-5 md:px-6">
+            <section class="">
                 <div class="flex gap-2 px-4 py-3.5 rounded-sm border border-gray-200">
                     <div class="!size-[33px] flex items-center justify-center">
                         <IconAvatar class="fill-[#78BBFF]  size-full"/>
@@ -13,7 +13,7 @@
                     </div>
                 </div>
             </section>
-            <section class="px-4 md:px-6">
+            <section class="">
                 <ul class="border *:border-b last:border-b-0 border-l-lv3 rounded-sm bg-bg-lv1 *:flex *:justify-between *:items-center *:p-4">
                     <li>
                         <div class="flex items-center">
@@ -35,48 +35,49 @@
                     </li>
                 </ul>
             </section>
-            <section class="p-4 pb-0 md:p-6 md:pb-0">
-                <h2 class="text-sm setting-list-header text-t-lv1">정보설정</h2>
-                <ul>
-                    <li v-for="(item, index) in storeSettings" :key="index" class="flex justify-between items-center p-4 text-sm border-b hover:bg-gray-50 text-t-lv1" @click="navigateTo(item)">
-                        <p>{{ item.name }}</p>
-                        <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
-                    </li>
-                </ul>
-    
-            </section>
-            <section class="p-4 pt-0 md:p-6 md:pt-0">
-
-                <h2 class="text-con setting-list-header text-t-lv1 !border-t-0">플랜오더 약관</h2>
-                <ul class="*:text-sm text-t-lv1">
-                    <li class="flex justify-between p-4 border-b hover:bg-gray-50">
-                        <p>사용약관</p>
-                        <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
-                    </li>
-                    <li class="flex justify-between p-4 border-b hover:bg-gray-50" @click="getPopupOpen('privacyView')">
-                        <p>개인정보 처리방침</p>
-                        <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
-                    </li>
-                    <li class="flex justify-between p-4 border-b hover:bg-gray-50">
-                        <p>개인정보 수집 이용 동의서</p>
-                        <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
-                    </li>
-                    <li class="flex justify-between p-4 border-b hover:bg-gray-50" @click="getJoinOut">
-                        <p>회원탈퇴</p>
-                        <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-gray-600"/></div>
-                    </li>
-                </ul>
-            </section>
-    
-            <section class="px-4">
+            <div>
+                <!-- 정보설정 -->
+                <section class="">
+                    <h2 class="text-sm setting-list-header text-t-lv1">정보설정</h2>
+                    <ul>
+                        <li v-for="(item, index) in storeSettings" :key="index" class="flex justify-between items-center p-4 pr-2 text-sm border-b hover:bg-gray-50 text-t-lv1" @click="navigateTo(item)">
+                            <p>{{ item.name }}</p>
+                            <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-l-lv0"/></div>
+                        </li>
+                    </ul>
+        
+                </section>
+                <!-- 플랜오더 약관 -->
+                <section class="">
+                    <h2 class="text-con setting-list-header text-t-lv1 !border-t-0">플랜오더 약관</h2>
+                    <ul class="*:text-sm text-t-lv1">
+                        <li class="flex justify-between p-4 pr-2 border-b hover:bg-gray-50">
+                            <p>사용약관</p>
+                            <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-l-lv0"/></div>
+                        </li>
+                        <li class="flex justify-between p-4 pr-2 border-b hover:bg-gray-50" @click="getPopupOpen('privacyView')">
+                            <p>개인정보 처리방침</p>
+                            <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-l-lv0"/></div>
+                        </li>
+                        <li class="flex justify-between p-4 pr-2 border-b hover:bg-gray-50">
+                            <p>개인정보 수집 이용 동의서</p>
+                            <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-l-lv0"/></div>
+                        </li>
+                        <li class="flex justify-between p-4 pr-2 border-b hover:bg-gray-50" @click="getJoinOut">
+                            <p>회원탈퇴</p>
+                            <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-l-lv0"/></div>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            <section class="">
                 <p class="my-5 text-sm text-center text-[#DBDBDB]">version 1.1.0.8c</p>
                 <Button severity="secondary" class="w-full h-[46px] !font-light" @click="getLogOut">
                     <span class="text-xs">로그아웃</span>
                 </Button>
             </section>
-    
-            <section class="px-5 py-6 my-[52px] border-gray-200 border-y !text-[#505050]">
-                <ul class="flex justify-evenly text-10">
+            <section class="py-4 my-[52px] border-gray-200 border-y !text-[#505050]">
+                <ul class="flex justify-evenly text-xs">
                     <li>회사소개</li>
                     <li>고객센터</li>
                     <li>공지사항</li>
@@ -104,6 +105,17 @@
                     </div> -->
                 </template>
                 <MemberMng/>
+            </Dialog>
+            <Dialog v-model:visible="popup['pop']['contractSetting']" 
+                :modal=true position="center" class="custom-dialog-full" 
+                @update:visible="getPopClose('contractSetting', true)">
+                <template #header>
+                    <!-- <div class="modal-backheader">
+                        <Button @click="getPopupClose(true, 'settingStore')" severity="contrast" text icon="pi pi-times" />
+                        <h2 class="modal-backheader-title">매장 설정</h2>
+                    </div> -->
+                </template>
+                <ContractSetting/>
             </Dialog>
             <Dialog v-model:visible="popup['pop']['couponMenu']" 
                 :modal=true position="center" class="custom-dialog-full" 
@@ -161,6 +173,7 @@ import Dialog from 'primevue/dialog';
 import SettingStore from "@/views/setting/SettingStore.vue";
 import PlantalkMain from "@/views/plantalk/PlantalkMain.vue";
 import MemberMng from "@/views/setting/MemberMng.vue";
+import ContractSetting from "@/views/setting/ContractSetting.vue";
 import CouponMenu from "@/views/setting/CouponMenu.vue";
 import TimeSetting from "@/views/setting/TimeSetting.vue";
 import StaticPayView from "@/views/setting/StaticPay.vue";
@@ -184,6 +197,7 @@ const storeSettings = ref([
     { name: '매장설정', path: 'settingStore' },
     { name: '플랜톡', path: 'kakaoList' },
     { name: '멤버관리', path: 'memberList' },
+    //{ name: '견적서 / 계약서 설정', path: 'contractSetting' },
     { name: '할인 설정', path: 'couponMenu' },
     { name: '시공시간 설정', path: 'timeSetting' },
     { name: '고정비용 등록', path: 'staticPayView' },

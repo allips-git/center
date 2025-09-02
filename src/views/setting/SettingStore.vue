@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full overflow-y-auto">
+    <div class="overflow-y-auto h-full">
         <BackHeader title="매장 설정"/>
         <main class="pt-3 pb-[140px] md:pb-[160px]" ref="mainRef">
             <section class="px-4 md:px-6">
@@ -59,9 +59,9 @@
                 </IftaLabel>
 
                 <div class="relative ifta-label-box">
-                    <ul class="flex justify-center gap-3 mt-2 font-bold">
+                    <ul class="flex gap-3 justify-center mt-2 font-bold">
                         <li v-for="(day, index) in setting['info']['days']" :key="index" @click="setting.getDayCheck(day['value'])" 
-                            :class="{'bg-sky-500 text-white': day['checked'], 'bg-transparent': !day['checked']}" class="py-2.5 px-2 transition-colors duration-300 border border-gray-200 rounded-full cursor-pointer text-xs">
+                            :class="{'bg-sky-500 text-white': day['checked'], 'bg-transparent': !day['checked']}" class="px-2 py-2.5 text-xs rounded-full border border-gray-200 transition-colors duration-300 cursor-pointer">
                             {{ day['text'] }}
                         </li>
                     </ul>
@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="flex flex-col gap-5">
-                    <div class="flex w-full gap-4 mt-3">
+                    <div class="flex gap-4 mt-3 w-full">
                         <IftaLabel class="label-input-box">
                             <div class="w-full custom-select-arrow">
                                 <DatePicker v-model="setting['info']['dayStart']" class="w-full" showIcon fluid iconDisplay="input" timeOnly/>
@@ -88,7 +88,7 @@
                 </div>
 
                 <div class="flex flex-col gap-5">
-                    <div class="flex w-full gap-4 mt-3">
+                    <div class="flex gap-4 mt-3 w-full">
                         <IftaLabel class="label-input-box">
                             <div class="w-full custom-select-arrow">
                                 <DatePicker v-model="setting['info']['holidayStart']" class="w-full" showIcon fluid iconDisplay="input" timeOnly/>
