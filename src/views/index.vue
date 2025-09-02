@@ -99,9 +99,9 @@
                                         <span v-else class="px-1.5 text-xs text-white bg-sky-400 rounded-full">ON</span> -->
                                     </div>
                                     <div v-if="main['kakaoYn'] === 'Y'" class="flex gap-2 text-11 sm:text-13 !font-normal text-t-lv4 mt-[-0.125rem]">
-                                        <span>0개 사용중</span>
+                                        <span>{{ main.kakaoUseCnt }}개 사용중</span>
                                         <span>|</span>
-                                        <span>잔여 포인트 <span class="">50P</span></span>
+                                        <span>잔여 포인트 <span class="">0P</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -113,19 +113,19 @@
                                 <Button label="플랜톡 사용하기" class="w-full mt-[14px] *:!text-sm !border-none !py-[0.625rem] *:!font-semibold" @click="getPlanTalk"></Button>
                             </div>        
                             <ul v-else class="grid grid-cols-2 gap-2 *:bg-bg-lv1 *:p-3 *:rounded-lg *:flex *:flex-col *:gap-px text-xs mt-[0.875rem]">
-                                <li class="cursor-pointer">
+                                <li class="cursor-pointer" @click="getKakaoHistory('Y')">
                                     <h5 class="font-bold">예약된 알림</h5>
                                     <div class="flex justify-between items-center">
                                         <p class="text-zinc-400">상세보기</p>
                                         <IconLeftArrow class="w-[0.4375rem] fill-l-lv2"/>
                                     </div>
                                 </li>
-                                <li class="cursor-pointer">
+                                <li class="cursor-pointer" @click="getKakaoHistory('N')">
                                     <h5 class="font-bold">보낸 알림</h5>
                                     <div class="flex justify-between items-center">
                                         <p class="text-zinc-400">
                                             오늘
-                                            <span class="text-red-500">0건</span>
+                                            <span class="text-red-500">{{ main.kakaoSendCnt }}건</span>
                                         </p>
                                         <IconLeftArrow class="w-[0.4375rem] fill-l-lv2"/>
                                     </div>
@@ -135,264 +135,42 @@
                     </section>
                     <div class="grid grid-cols-2 gap-[14px]">
                         <!-- 나의 메시지 -->
-                        <section class="col-span-2 lg:col-span-1 main-card-container-box">
+                        <section v-for="(item, index) in main.msgHeader" :key="index" class="col-span-2 lg:col-span-1 main-card-container-box">
                             <div class="!items-start main-card-tilte-box">
                                 <div class="flex items-center gap-[10px]">
-                                    <div class="flex flex-none items-center justify-center w-[2.75rem] h-[2.75rem] rounded-full bg-[#E2F0FF] text-[1.625rem] overflow-hidden">
-                                        <div class="imoji-shadow">📨</div>
+                                    <div class="flex flex-none items-center justify-center w-[2.75rem] h-[2.75rem] rounded-full text-[1.625rem] overflow-hidden" :style="`background-color: ${item.color}`">
+                                        <div class="imoji-shadow">{{ item.emoji }}</div>
                                     </div>
                                     <div class="flex flex-col-reverse gap-0.5 items-start">
                                         <h2 class="flex justify-center items-center font-bold text-18">
-                                            나의 메시지
+                                            {{ item.title }}
                                         </h2>
                                         <p class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                            매장 응대 톤앤매너도 통일돼요!
+                                            {{ item.contents }}
                                         </p>
                                     </div>
                                 </div>
-                                <Button label="메세지 추가" size="small" class="mt-0.5" @click="getMsg('', 'I')"></Button>
+                                <Button v-if="item.mhCd === '1'" label="메세지 추가" size="small" class="mt-0.5" @click="getMsg(item.mhCd, '', '', 'I')"></Button>
                             </div>
                             <ul class="flex flex-col pt-2 pb-3 w-full">
-                                <li v-for="(item, index) in main['msgList']" :key="index" class="flex gap-3.5 justify-between items-center pl-1 w-full cursor-pointer" @click="getMsg(item.msCd, 'U')">
-                                    <div class="flex flex-none items-center justify-center w-[2.25rem] h-[2.25rem] rounded-full bg-[#eef0f2] text-[1.25rem]">😊</div>
-                                    <!-- {{ index + 1 }} -->
-                                    <div class="flex flex-1 gap-2 items-center py-2.5 min-w-0 border-b border-l-lv5">
-                                        <div class="flex flex-col flex-1 gap-0.5 mt-0.5 min-w-0">
-                                            <strong class="text-xs font-bold leading-tight truncate sm:text-sm text-t-lv1">
-                                                {{ item.title }}
-                                            </strong>
-                                            <div class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                                {{ item.description }}
+                                <li v-for="(msg, mIndex) in main['msgList']" :key="mIndex" class="flex gap-3.5 justify-between items-center pl-1 w-full cursor-pointer" @click="getMsg(item.mhCd, msg.mbCd, msg.msCd, 'U')">
+                                    <template v-if="item.mhCd === msg.mhCd">
+                                        <div class="flex flex-none items-center justify-center w-[2.25rem] h-[2.25rem] rounded-full text-[1.25rem]" :style="`background-color: ${msg.color}`">{{ msg.emoji }}</div>
+                                        <!-- {{ index + 1 }} -->
+                                        <div class="flex flex-1 gap-2 items-center py-2.5 min-w-0 border-b border-l-lv5">
+                                            <div class="flex flex-col flex-1 gap-0.5 mt-0.5 min-w-0">
+                                                <strong class="text-xs font-bold leading-tight truncate sm:text-sm text-t-lv1">
+                                                    {{ msg.title }}
+                                                </strong>
+                                                <div class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
+                                                    {{ msg.description }}
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-none justify-end items-center w-[2rem] pr-1.5 size-7">
+                                                <IconLeftArrow class="w-3 fill-l-lv3"/>
                                             </div>
                                         </div>
-                                        <div class="flex flex-none justify-end items-center w-[2rem] pr-1.5 size-7">
-                                            <IconLeftArrow class="w-3 fill-l-lv3"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </section>
-                        
-                        <!-- 메세지 템플릿 -->
-                        <section class="col-span-2 lg:col-span-1 main-card-container-box">
-                            <div class="!items-start main-card-tilte-box">
-                                <div class="flex items-center gap-[10px]">
-                                    <div class="flex flex-none items-center justify-center w-[2.75rem] h-[2.75rem] rounded-full bg-[#FEEDEA] text-[1.625rem] overflow-hidden">
-                                        <div class="imoji-shadow">💊</div>
-                                    </div>
-                                    <div class="flex flex-col-reverse gap-0.5 items-start">
-                                        <h2 class="flex justify-center items-center font-bold text-18">
-                                            방역관리 안심문자
-                                        </h2>
-                                        <p class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                            고객이 안심하고 방문하도록 안내해요.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <ul class="flex flex-col pt-2 pb-3 w-full">
-                                <li class="flex gap-3.5 justify-between items-center pl-1 w-full cursor-pointer">
-                                    <div class="flex flex-none items-center justify-center w-[2.25rem] h-[2.25rem] rounded-full bg-[#eef0f2] text-[1.25rem]">😷</div>
-                                    <div class="flex flex-1 gap-2 items-center py-2.5 min-w-0 border-b border-l-lv5">
-                                        <div class="flex flex-col flex-1 gap-0.5 mt-0.5 min-w-0">
-                                            <strong class="text-xs font-bold leading-tight truncate sm:text-sm text-t-lv1">
-                                                매장 방역관리 알리기
-                                            </strong>
-                                            <div class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                                매장이 수시로 안전하게 방역중임을 알리세요.
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-none justify-end items-center w-[2rem] pr-1.5 size-7">
-                                            <IconLeftArrow class="w-3 fill-l-lv3"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </section>
-
-                        <!-- 퍼블 확인용 Draft -->
-                        <section class="col-span-2 lg:col-span-1 main-card-container-box">
-                            <div class="!items-start main-card-tilte-box">
-                                <div class="flex items-center gap-[10px]">
-                                    <div class="flex flex-none items-center justify-center w-[2.75rem] h-[2.75rem] rounded-full bg-[#CFF9E3] text-[1.625rem] overflow-hidden">
-                                        <div class="imoji-shadow">⏳</div>
-                                    </div>
-                                    <div class="flex flex-col-reverse gap-0.5 items-start">
-                                        <h2 class="flex justify-center items-center font-bold text-18">
-                                            견적후 고민 중인 고객 문자
-                                        </h2>
-                                        <p class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                            견적서 받은 후 “생각해볼게요" 상황 응대문자
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <ul class="flex flex-col pt-2 pb-3 w-full">
-                                <li class="flex gap-3.5 justify-between items-center pl-1 w-full cursor-pointer">
-                                    <div class="flex flex-none items-center justify-center w-[2.25rem] h-[2.25rem] rounded-full bg-[#eef0f2] text-[1.25rem]">🕰</div>
-                                    <div class="flex flex-1 gap-2 items-center py-2.5 min-w-0 border-b border-l-lv5">
-                                        <div class="flex flex-col flex-1 gap-0.5 mt-0.5 min-w-0">
-                                            <strong class="text-xs font-bold leading-tight truncate sm:text-sm text-t-lv1">
-                                                견적 리마인드 문자
-                                            </strong>
-                                            <div class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                                고객이 며칠째 답이 없을때 자연스럽게 문자해보아요.
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-none justify-end items-center w-[2rem] pr-1.5 size-7">
-                                            <IconLeftArrow class="w-3 fill-l-lv3"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="flex gap-3.5 justify-between items-center pl-1 w-full cursor-pointer">
-                                    <div class="flex flex-none items-center justify-center w-[2.25rem] h-[2.25rem] rounded-full bg-[#eef0f2] text-[1.25rem]">💬</div>
-                                    <div class="flex flex-1 gap-2 items-center py-2.5 min-w-0 border-b border-l-lv5">
-                                        <div class="flex flex-col flex-1 gap-0.5 mt-0.5 min-w-0">
-                                            <strong class="text-xs font-bold leading-tight truncate sm:text-sm text-t-lv1">
-                                                결정을 도와드리는 배려형 문자
-                                            </strong>
-                                            <div class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                                고객이 고민 중이라고 말했을 때, 배려 있는 제안
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-none justify-end items-center w-[2rem] pr-1.5 size-7">
-                                            <IconLeftArrow class="w-3 fill-l-lv3"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="flex gap-3.5 justify-between items-center pl-1 w-full cursor-pointer">
-                                    <div class="flex flex-none items-center justify-center w-[2.25rem] h-[2.25rem] rounded-full bg-[#eef0f2] text-[1.25rem]">🎁</div>
-                                    <div class="flex flex-1 gap-2 items-center py-2.5 min-w-0 border-b border-l-lv5">
-                                        <div class="flex flex-col flex-1 gap-0.5 mt-0.5 min-w-0">
-                                            <strong class="text-xs font-bold leading-tight truncate sm:text-sm text-t-lv1">
-                                                혜택으로 부드럽게 유도하기
-                                            </strong>
-                                            <div class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                                이번 주만 가능한 작은 혜택으로 제안해보아요.
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-none justify-end items-center w-[2rem] pr-1.5 size-7">
-                                            <IconLeftArrow class="w-3 fill-l-lv3"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </section>
-                        <section class="col-span-2 lg:col-span-1 main-card-container-box">
-                            <div class="!items-start main-card-tilte-box">
-                                <div class="flex items-center gap-[10px]">
-                                    <div class="flex flex-none items-center justify-center w-[2.75rem] h-[2.75rem] rounded-full bg-[#FFF5EC] text-[1.625rem] overflow-hidden">
-                                        <div class="imoji-shadow">✋</div>
-                                    </div>
-                                    <div class="flex flex-col-reverse gap-0.5 items-start">
-                                        <h2 class="flex justify-center items-center font-bold text-18">
-                                            재구매 유도 환영문자
-                                        </h2>
-                                        <p class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                            시공완료후 재구매와 지인소개를 유도하세요.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <ul class="flex flex-col pt-2 pb-3 w-full">
-                                <li class="flex gap-3.5 justify-between items-center pl-1 w-full cursor-pointer">
-                                    <div class="flex flex-none items-center justify-center w-[2.25rem] h-[2.25rem] rounded-full bg-[#eef0f2] text-[1.25rem]">👱‍♀</div>
-                                    <div class="flex flex-1 gap-2 items-center py-2.5 min-w-0 border-b border-l-lv5">
-                                        <div class="flex flex-col flex-1 gap-0.5 mt-0.5 min-w-0">
-                                            <strong class="text-xs font-bold leading-tight truncate sm:text-sm text-t-lv1">
-                                                젊은 고객 환영하기
-                                            </strong>
-                                            <div class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                                처음 방문하는 젊은고객을 환영해요.
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-none justify-end items-center w-[2rem] pr-1.5 size-7">
-                                            <IconLeftArrow class="w-3 fill-l-lv3"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="flex gap-3.5 justify-between items-center pl-1 w-full cursor-pointer">
-                                    <div class="flex flex-none items-center justify-center w-[2.25rem] h-[2.25rem] rounded-full bg-[#eef0f2] text-[1.25rem]">👨‍🦳</div>
-                                    <div class="flex flex-1 gap-2 items-center py-2.5 min-w-0 border-b border-l-lv5">
-                                        <div class="flex flex-col flex-1 gap-0.5 mt-0.5 min-w-0">
-                                            <strong class="text-xs font-bold leading-tight truncate sm:text-sm text-t-lv1">
-                                                중년 고객 환영하기
-                                            </strong>
-                                            <div class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                                처음 방문하는 중년고객을 환영해요.
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-none justify-end items-center w-[2rem] pr-1.5 size-7">
-                                            <IconLeftArrow class="w-3 fill-l-lv3"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="flex gap-3.5 justify-between items-center pl-1 w-full cursor-pointer">
-                                    <div class="flex flex-none items-center justify-center w-[2.25rem] h-[2.25rem] rounded-full bg-[#eef0f2] text-[1.25rem]">🌈</div>
-                                    <div class="flex flex-1 gap-2 items-center py-2.5 min-w-0 border-b border-l-lv5">
-                                        <div class="flex flex-col flex-1 gap-0.5 mt-0.5 min-w-0">
-                                            <strong class="text-xs font-bold leading-tight truncate sm:text-sm text-t-lv1">
-                                                할인과 함께 재구매 유도하기
-                                            </strong>
-                                            <div class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                                할인쿠폰으로 고객의 방문을 환영해요.
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-none justify-end items-center w-[2rem] pr-1.5 size-7">
-                                            <IconLeftArrow class="w-3 fill-l-lv3"/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </section>
-                        <section class="col-span-2 lg:col-span-1 main-card-container-box">
-                            <div class="!items-start main-card-tilte-box">
-                                <div class="flex items-center gap-[10px]">
-                                    <div class="flex flex-none items-center justify-center w-[2.75rem] h-[2.75rem] rounded-full bg-[#F4F1FE] text-[1.625rem] overflow-hidden">
-                                        <div class="imoji-shadow">🤬</div>
-                                    </div>
-                                    <div class="flex flex-col-reverse gap-0.5 items-start">
-                                        <h2 class="flex justify-center items-center font-bold text-18">
-                                            불만고객 사과문자
-                                        </h2>
-                                        <p class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                            고객의 서운한 마음을 풀어주세요.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <ul class="flex flex-col pt-2 pb-3 w-full">
-                                <li class="flex gap-3.5 justify-between items-center pl-1 w-full cursor-pointer">
-                                    <div class="flex flex-none items-center justify-center w-[2.25rem] h-[2.25rem] rounded-full bg-[#eef0f2] text-[1.25rem]">👿</div>
-                                    <div class="flex flex-1 gap-2 items-center py-2.5 min-w-0 border-b border-l-lv5">
-                                        <div class="flex flex-col flex-1 gap-0.5 mt-0.5 min-w-0">
-                                            <strong class="text-xs font-bold leading-tight truncate sm:text-sm text-t-lv1">
-                                                불만 해결로 고객 달래기
-                                            </strong>
-                                            <div class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                                간접적으로 불만을 표현하는 고객을 달래보세요.
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-none justify-end items-center w-[2rem] pr-1.5 size-7">
-                                            <IconLeftArrow class="w-3 fill-l-lv3"/>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="flex gap-3.5 justify-between items-center pl-1 w-full cursor-pointer">
-                                    <div class="flex flex-none items-center justify-center w-[2.25rem] h-[2.25rem] rounded-full bg-[#eef0f2] text-[1.25rem]">🛠</div>
-                                    <div class="flex flex-1 gap-2 items-center py-2.5 min-w-0 border-b border-l-lv5">
-                                        <div class="flex flex-col flex-1 gap-0.5 mt-0.5 min-w-0">
-                                            <strong class="text-xs font-bold leading-tight truncate sm:text-sm text-t-lv1">
-                                                재 시공으로 불만고객 붙잡기
-                                            </strong>
-                                            <div class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                                강한 불만을 표현하는 고객에게 사과해보아요.
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-none justify-end items-center w-[2rem] pr-1.5 size-7">
-                                            <IconLeftArrow class="w-3 fill-l-lv3"/>
-                                        </div>
-                                    </div>
+                                    </template>
                                 </li>
                             </ul>
                         </section>
@@ -503,6 +281,11 @@ const getStCd = async (stCd: string) => {
     }
 }
 
+const getKakaoHistory = async (resGb: 'Y' | 'N') => {
+    await kakao.getResGb(resGb);
+    router.push({ path : '/plantalk/res' })
+}
+
 const getPlanTalk = () => {
     confirm.require({
         message     : '카카오톡을 사용하시겠습니까?',
@@ -526,12 +309,12 @@ const getPlanTalk = () => {
     });
 }
 
-const getMsg = async (msCd: string, type: 'I'|'U') => {
+const getMsg = async (mhCd: string, mbCd: string, msCd: string, type: 'I'|'U') => {
     await msg.getReset();
 
     if(type === 'U')
     {
-        await msg.getMsCd(msCd);
+        await msg.getData(mhCd, mbCd, msCd);
     }
 
     router.push({ path : '/msg' });

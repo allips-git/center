@@ -76,6 +76,7 @@
                                 </div>
                             </div>
                         </TabPanel>
+                        <div ref="loadMoreTrigger" class="h-1"></div>
                     </TabPanels>
                 </Tabs>
             </section>
@@ -108,13 +109,15 @@ import TabPanel from 'primevue/tabpanel';
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import AccMonth from '@/views/include/acc/AccMonth.vue'
 import AccountList from '@/components/list/AccountList.vue'
-import { onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { usePopupStore, useAccStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 import { getCommas } from '@/assets/js/function';
 
-const popup = usePopupStore();
-const acc   = useAccStore();
+const popup             = usePopupStore();
+const acc               = useAccStore();
+const loadMoreTrigger   = ref(null);
+const observer          = ref(null);
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
@@ -124,12 +127,33 @@ const getAmt = (amt: number) => {
 
 const getTab = async (stCd: string) => {
     await acc.getStCd(stCd);
+    await acc.getReset();
     await acc.getAccAll();
 }
 
-onMounted(() => {
-    acc.getAccAll();
+onMounted(async () => {
+    await acc.getReset();
+    await acc.getAccAll();
+
+    observer.value = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && acc.loading && acc.list.length !== 0) 
+        {
+            acc.getAccAll();
+        }
+    })
+    
+    if (loadMoreTrigger.value) 
+    {
+        observer.value.observe(loadMoreTrigger.value)
+    }
 });
+
+onUnmounted(() => {
+    if (observer.value) 
+    {
+        observer.value.disconnect()
+    }
+})
 
 </script>
 

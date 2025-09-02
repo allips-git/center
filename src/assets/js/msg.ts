@@ -9,17 +9,20 @@ interface JoinFirstParams {
  * @description 회원가입 시 유효성 검사 1
  */
 export const joinFirstMsg = (params: JoinFirstParams): { msg: string; id: string, state: boolean } => {
-    if(params['email'] === '')
+    if(params['email'])
     {
-        return { msg : '이메일을 입력해주세요.', id : 'email', state : false };
-    }
+        if(params['email'] === '')
+        {
+            return { msg : '이메일을 입력해주세요.', id : 'email', state : false };
+        }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const stat       = emailRegex.test(params['email']);
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const stat       = emailRegex.test(params['email']);
 
-    if(!stat)
-    {
-        return { msg : '잘못된 이메일 형식입니다.', id : 'email', state : false };
+        if(!stat)
+        {
+            return { msg : '잘못된 이메일 형식입니다.', id : 'email', state : false };
+        }
     }
 
     if(params['pwd'] === '')

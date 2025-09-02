@@ -57,6 +57,7 @@ interface DayList {
 }
 
 interface State {
+    loading     : boolean;
     searchDt    : Date;
     stCd        : string;
     mainHeader  : MainHeader;
@@ -79,6 +80,7 @@ const getMainHeader = (): MainHeader => {
 
 export const useAccStore = defineStore('acc', {
     state: (): State => ({
+        loading     : true,
         searchDt    : new Date(),
         stCd        : '003',
         mainHeader  : getMainHeader(),
@@ -134,7 +136,14 @@ export const useAccStore = defineStore('acc', {
                 console.log(res);
                 this.mainHeader = res.data['amt'];
                 this.dateList   = res.data['date'];
-                this.list       = res.data['list'];
+
+                this.list       = this.list.concat(res.data['list']);
+                this.start      += 20;
+
+                if(res.data['list'].length < 20)
+                {
+                    this.loading = false;
+                }
             }
             catch(e)
             {
@@ -212,6 +221,12 @@ export const useAccStore = defineStore('acc', {
         getStCd(stCd: string)
         {
             this.stCd = stCd;
+        },
+        getReset()
+        {
+            this.list       = [];
+            this.start      = 0;
+            this.loading    = true;
         }
     }
 });

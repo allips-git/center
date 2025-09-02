@@ -10,8 +10,19 @@ interface StCnt {
     stCd  : string;
 }
 
+interface MsgHeader {
+    mhCd        : string;
+    emoji       : string;
+    color       : string;
+    title       : string;
+    description : string;    
+}
+
 interface MsgList {
-    msgCd       : string;
+    msCd        : string;
+    mhCd        : string;
+    emoji       : string;
+    color       : string;
     title       : string;
     description : string;
 }
@@ -25,12 +36,15 @@ interface AlarmList {
 }
 
 interface State {
-    clientCnt  : number;
-    stCnt      : StCnt[];
-    factoryCnt : number;
-    kakaoYn    : string;
-    msgList    : MsgList[];
-    alarmList  : AlarmList[];
+    clientCnt       : number;
+    stCnt           : StCnt[];
+    factoryCnt      : number;
+    kakaoYn         : string;
+    kakaoUseCnt     : number;
+    kakaoSendCnt    : number;
+    msgHeader       : MsgHeader[];
+    msgList         : MsgList[];
+    alarmList       : AlarmList[];
 }
 
 const getStCnt = (): StCnt[] => {
@@ -46,12 +60,14 @@ const getStCnt = (): StCnt[] => {
 
 export const useMainStore = defineStore('main', {
     state: (): State => ({
-        clientCnt  : 0,
-        stCnt      : getStCnt(),
-        factoryCnt : 0,
-        kakaoYn    : 'N',
-        msgList    : [],
-        alarmList  : []
+        clientCnt       : 0,
+        stCnt           : getStCnt(),
+        factoryCnt      : 0,
+        kakaoYn         : 'N',
+        kakaoUseCnt     : 0,
+        kakaoSendCnt    : 0,
+        msgList         : [],
+        alarmList       : []
     }),
     actions: {
         async getData()
@@ -74,10 +90,13 @@ export const useMainStore = defineStore('main', {
                         }
                     })
                 })
-                this.factoryCnt = res.data['factoryCnt'];
-                this.kakaoYn    = res.data['kakaoYn'];
-                this.msgList    = res.data['msgList'];
-                this.alarmList  = res.data['alarmList'].map(item => {
+                this.factoryCnt     = res.data['factoryCnt'];
+                this.kakaoYn        = res.data['kakaoYn'];
+                this.kakaoUseCnt    = res.data['kakaoUseCnt'];
+                this.kakaoSendCnt   = res.data['kakaoSendCnt'];
+                this.msgHeader      = res.data['msgHeader'];
+                this.msgList        = res.data['msgList'];
+                this.alarmList      = res.data['alarmList'].map(item => {
                     let title = '';
 
                     switch(item['state'])

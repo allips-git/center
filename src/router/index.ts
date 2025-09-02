@@ -119,7 +119,7 @@ const routes = [
     },
 
     {
-        path: "/join/change_password",
+        path: "/change_password",
         name: "ChangePassword",
         component: ChangePassword,
         meta : { gubun: 'Y' , showShadow: false}

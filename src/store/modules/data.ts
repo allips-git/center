@@ -133,6 +133,20 @@ export const useDataStore = defineStore('data', {
                 { value : 2, label : '2시간' },
                 { value : 3, label : '3시간' },
                 { value : 4, label : '4시간' }
+            ],
+            msg : [
+                { mhCd : 2, emoji : '😷', color : '#eef0f2', title : '매장 방역관리 알리기', contents : '매장이 수시로 안전하게 방역중임을 알리세요.' },
+
+                { mhCd : 3, emoji : '🕰', color : '#eef0f2', title : '견적 리마인드 문자', contents : '고객이 며칠째 답이 없을때 자연스럽게 문자해보아요.' },
+                { mhCd : 3, emoji : '💬', color : '#eef0f2', title : '결정을 도와드리는 배려형 문자', contents : '고객이 고민 중이라고 말했을 때, 배려 있는 제안' },
+                { mhCd : 3, emoji : '🎁', color : '#eef0f2', title : '혜택으로 부드럽게 유도하기', contents : '이번 주만 가능한 작은 혜택으로 제안해보아요.' },
+
+                { mhCd : 4, emoji : '👱‍♀', color : '#eef0f2', title : '젊은 고객 환영하기', contents : '처음 방문하는 젊은고객을 환영해요.' },
+                { mhCd : 4, emoji : '👨‍🦳', color : '#eef0f2', title : '중년 고객 환영하기', contents : '처음 방문하는 중년고객을 환영해요.' },
+                { mhCd : 4, emoji : '🌈', color : '#eef0f2', title : '할인과 함께 재구매 유도하기', contents : '할인쿠폰으로 고객의 방문을 환영해요.' },
+
+                { mhCd : 5, emoji : '👿', color : '#eef0f2', title : '불만 해결로 고객 달래기', contents : '간접적으로 불만을 표현하는 고객을 달래보세요.' },
+                { mhCd : 5, emoji : '🛠', color : '#eef0f2', title : '재 시공으로 불만고객 붙잡기', contents : '강한 불만을 표현하는 고객에게 사과해보아요.' }
             ]
         };
     },

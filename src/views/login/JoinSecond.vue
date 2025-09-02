@@ -14,29 +14,29 @@
                     </div>
                     <div class="form-gap-box">
                         <IftaLabel class="w-full">
-                            <label>매장이름</label>
+                            <label>매장이름<span class="ml-0.5 text-red-500">*</span></label>
                             <InputText id="ceNm" v-model="join['center']['ceNm']" placeholder="매장이름을 입력해주세요." class="w-full"/>    
                             <small v-if="join['msg']['ceNm'] !== ''" class="text-xs text-red-500">{{ join['msg']['ceNm'] }}</small>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
-                            <label>지역</label>
+                            <label>지역<span class="ml-0.5 text-red-500">*</span></label>
                             <Select v-model="join['center']['area']" :options="data['area']" optionLabel="name" optionValue="value" placeholder="지역을 선택해주세요." class="w-full"/>
                         </IftaLabel>
 
                         <div class="flex flex-col gap-2">
-                            <label class="text-base">사업자 구분</label>
+                            <label class="text-base">사업자 구분<span class="ml-0.5 text-red-500">*</span></label>
                             <SelectButton v-model="join['center']['gb']" :options="data['einGb']" optionLabel="name" optionValue="value" size="small" />
                         </div>
 
                         <IftaLabel class="w-full">
-                            <label>사업자 등록 번호</label>
+                            <label>사업자 등록 번호<span class="ml-0.5 text-red-500">*</span></label>
                             <InputText id="einNum" v-model="join['center']['einNum']" placeholder="- 없이 입력해주세요." class="w-full"/>
                             <small v-if="join['msg']['einNum'] !== ''" class="text-xs text-red-500">{{ join['msg']['einNum'] }}</small>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
-                            <label>사업자등록증상 대표자 이름</label>
+                            <label>사업자등록증상 대표자 이름<span class="ml-0.5 text-red-500">*</span></label>
                             <InputText id="ceoNm" v-model="join['center']['ceoNm']" placeholder="대표자 이름을 입력해주세요." class="w-full"/>   
                             <small v-if="join['msg']['ceoNm'] !== ''" class="text-xs text-red-500">{{ join['msg']['ceoNm'] }}</small>
                         </IftaLabel>
@@ -46,7 +46,7 @@
                                 <InputText v-model="join['center']['addr']" placeholder="주소를 검색해주세요." class="w-full" readonly @click="getAddr"/>
                                 <InputIcon class="pi pi-search" />
                             </IconField>
-                            <label>주소</label>
+                            <label>주소<span class="ml-0.5 text-red-500">*</span></label>
                             <small v-if="join['msg']['addr'] !== ''" class="text-xs text-red-500">{{ join['msg']['addr'] }}</small>
                         </IftaLabel>
 
@@ -56,7 +56,7 @@
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
-                            <label>매장 대표 연락처</label>
+                            <label>매장 대표 연락처<span class="ml-0.5 text-red-500">*</span></label>
                             <InputText id="ceoTel" v-model="join['center']['ceoTel']" placeholder="- 없이 입력해주세요." class="w-full"/>  
                             <small v-if="join['msg']['ceoTel'] !== ''" class="text-xs text-red-500">{{ join['msg']['ceoTel'] }}</small>  
                         </IftaLabel>

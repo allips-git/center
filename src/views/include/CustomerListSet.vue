@@ -7,14 +7,14 @@
 
         <IftaLabel class="label-input-box">
             <InputText id="clientNm" v-model="client['info']['clientNm']" placeholder="고객명을 입력해주세요."/>
-            <label>고객명</label>
+            <label>고객명<span class="ml-0.5 text-red-500">*</span></label>
             <small class="text-red-500">{{ client['msg']['clientNm'] }}</small>
         </IftaLabel>
 
         <template v-if="client.gb === 'Y'">
             <IftaLabel class="label-input-box">
                 <InputText id="tel" v-model="client['info']['tel']" placeholder="010-0000-0000"/>
-                <label>전화번호</label>
+                <label>전화번호<span class="ml-0.5 text-red-500">*</span></label>
                 <small class="text-red-500">{{ client['msg']['tel'] }}</small>
             </IftaLabel>
             
@@ -35,18 +35,18 @@
 
         <IftaLabel class="label-input-box">
             <Select v-model="client['info']['person']" :options="client['person']" optionLabel="label" optionValue="value" placeholder="선택"/> 
-            <label>담당자</label>
+            <label>담당자<span class="ml-0.5 text-red-500">*</span></label>
             <small class="text-red-500">{{ client['msg']['person'] }}</small>
         </IftaLabel>
 
         <IftaLabel class="label-input-box">
             <Select v-model="client['info']['groupCd']" :options="client['group']" optionLabel="label" optionValue="value"/> 
-            <label>그룹</label>
+            <label>그룹<span class="ml-0.5 text-red-500">*</span></label>
         </IftaLabel>
 
         <IftaLabel v-if="client['info']['groupCd'] === 'N'" class="label-input-box">
             <InputText id="groupNm" v-model="client['info']['groupNm']"/>
-            <label>그룹명</label>
+            <label>그룹명<span class="ml-0.5 text-red-500">*</span></label>
             <small class="text-red-500">{{ client['msg']['groupNm'] }}</small>
         </IftaLabel>
         <div class="bottom-modal-absol-box">
@@ -72,6 +72,7 @@ import DatePicker from 'primevue/datepicker';
 import Select from 'primevue/select';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { useClientStore } from '@/store';
 import { getAxiosData, getConvertDate, getDaumPopupPosition } from '@/assets/js/function';
 import { clientMsg } from '@/assets/js/msg';
@@ -79,6 +80,8 @@ import { usePopup } from '@/assets/js/popup';
 
 const client    = useClientStore();
 const confirm   = useConfirm();
+const router    = useRouter();
+const route     = useRoute();
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
@@ -182,6 +185,11 @@ const getSaveNext = () => {
                 
                 if(client['type'] === 'I')
                 {
+                    if(route.name === 'MainPage')
+                    {
+                        router.push({ path : '/customer/list' });
+                    }
+
                     await client.getDataSet(res.data['clientCd']);
                     getPopupOpen('clientDetail');
                     await client.getDetail();
@@ -209,8 +217,8 @@ const getSaveNext = () => {
                             getFocus('groupNm');
                         break;
                         case 4200:
-                            client.getMsgSet('이미 등록된 고객명입니다.', 'clientNm');
-                            getFocus('clientNm');
+                            client.getMsgSet('이미 등록된 전화번호입니다.', 'tel');
+                            getFocus('tel');
                         break;
                     }
                 }
@@ -227,8 +235,9 @@ const getFocus = (id: string) => {
     }
 }
 
-onMounted(() => {
-    client.getData();
+onMounted(async () => {
+    await client.getReset();
+    await client.getData();
 })
 
 </script>

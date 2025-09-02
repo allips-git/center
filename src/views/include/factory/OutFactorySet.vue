@@ -3,12 +3,12 @@
         <div class="form-gap-box">
             <IftaLabel>
                 <InputText id="outFaNm" v-model="factory['out']['info']['faNm']" class="w-full"/>
-                <label>공장 이름</label>
+                <label>공장 이름<span class="ml-0.5 text-red-500">*</span></label>
                 <small class="text-red-500">{{ factory['out']['msg']['outFaNm'] }}</small>
             </IftaLabel>
 
                 <IftaLabel class="w-full">
-                    <label>전화번호</label>
+                    <label>전화번호<span class="ml-0.5 text-red-500">*</span></label>
                     <InputText id="tel" v-model="factory['out']['info']['tel']" class="w-full"/>    
                     <small class="text-red-500">{{ factory['out']['msg']['tel'] }}</small>
                 </IftaLabel>
@@ -19,7 +19,7 @@
                     <InputIcon class="pi pi-search" />
                 </IconField>
                 <small class="text-red-500">{{ factory['out']['msg']['addr'] }}</small>
-                <label>주소</label>
+                <label>주소<span class="ml-0.5 text-red-500">*</span></label>
             </IftaLabel>
 
             <IftaLabel class="w-full">
