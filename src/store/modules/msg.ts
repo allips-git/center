@@ -3,6 +3,7 @@
  */
 import { defineStore } from 'pinia';
 import { getAxiosData } from '@/assets/js/function';
+import { useLoginStore } from '@/store';
 
 interface Info {
     color       : string;
@@ -67,6 +68,7 @@ export const useMsgStore = defineStore('msg', {
     actions : {
         async getInfo()
         {
+            const login  = useLoginStore();
             const params = { 
                 mbCd    : this.mbCd, 
                 msCd    : this.msCd 
@@ -81,6 +83,7 @@ export const useMsgStore = defineStore('msg', {
 
                 this.type = 'U';
                 this.info = res.data.info;
+                this.info.contents = this.info.contents.replace('${ceNm}', `<span class="tag-shop">${login.ceNm}</span>`).replace('${name}', `<span class="tag-name">${login.name}</span>`);
             }
             catch(e)
             {

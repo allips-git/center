@@ -181,7 +181,9 @@ const getSaveNext = () => {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/clientV1/getResult`, params);
 
-                getPopupClose(true, 'clientSet');
+                await client.getList();
+                await getPopupClose(true, 'clientChoice');
+                await getPopupClose(true, 'clientSet');
                 
                 if(client['type'] === 'I')
                 {
@@ -191,11 +193,9 @@ const getSaveNext = () => {
                     }
 
                     await client.getDataSet(res.data['clientCd']);
-                    getPopupOpen('clientDetail');
                     await client.getDetail();
+                    await getPopupOpen('clientDetail');
                 }
-
-                await client.getList();
                 
             }
             catch(e)

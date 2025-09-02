@@ -26,6 +26,7 @@ export const useLoginStore = defineStore('login', {
                 const res  = await axios.post('https://data.planorder.kr/login/getLogin', params, { withCredentials: true });
                 console.log(res);
                 this.token = res.data['access_token'];
+                this.ceNm  = res.data['ceNm'];
                 this.name  = res.data['name'];
                 this.rank  = res.data['rank'];
 

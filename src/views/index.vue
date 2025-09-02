@@ -145,9 +145,7 @@
                                         <h2 class="flex justify-center items-center font-bold text-18">
                                             {{ item.title }}
                                         </h2>
-                                        <p class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                            {{ item.contents }}
-                                        </p>
+                                        <p class="font-semibold truncate text-10 text-t-lv4 sm:text-11" v-html="item.contents"></p>
                                     </div>
                                 </div>
                                 <Button v-if="item.mhCd === '1'" label="메세지 추가" size="small" class="mt-0.5" @click="getMsg(item.mhCd, '', '', 'I')"></Button>
@@ -163,7 +161,7 @@
                                                     {{ msg.title }}
                                                 </strong>
                                                 <div class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                                    {{ msg.description }}
+                                                    {{ item.mhCd === '1' ? msg.contents : msg.description }}
                                                 </div>
                                             </div>
                                             <div class="flex flex-none justify-end items-center w-[2rem] pr-1.5 size-7">
@@ -230,6 +228,18 @@
         </template>
         <CustomerListSet/>
     </Dialog>
+
+    <Dialog v-model:visible="popup['pop']['clientDetail']" header="고객 상세" 
+        :modal=true position="center" class="custom-dialog-full" 
+        @update:visible="getPopupClose('clientDetail', true)">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopupClose('clientDetail', true)" severity="contrast" text icon="pi pi-times" />
+                <h2 class="modal-backheader-title">고객 상세</h2>
+            </div>
+        </template>
+        <CustomerDetail/>
+    </Dialog>
 </div>  
 </template>
 
@@ -244,6 +254,7 @@ import EstiDetail from "@/views/include/customer/EstiDetail.vue";
 import ChatRoomModal from "@/views/customer/ChatRoomModal.vue";
 import CustomerChoice from '@/components/modal/CustomerChoice.vue'
 import CustomerListSet from '@/views/include/CustomerListSet.vue'
+import CustomerDetail from '@/views/include/customer/CustomerDetail.vue'
 import { usePopup } from '@/assets/js/popup';
 
 const confirm   = useConfirm();
