@@ -197,7 +197,7 @@ const storeSettings = ref([
     { name: '매장설정', path: 'settingStore' },
     { name: '플랜톡', path: 'kakaoList' },
     { name: '멤버관리', path: 'memberList' },
-    { name: '견적서 / 계약서 설정', path: 'contractSetting' },
+    //{ name: '견적서 / 계약서 설정', path: 'contractSetting' },
     { name: '할인 설정', path: 'couponMenu' },
     { name: '시공시간 설정', path: 'timeSetting' },
     { name: '고정비용 등록', path: 'staticPayView' },
