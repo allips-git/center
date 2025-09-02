@@ -5,8 +5,10 @@ import { defineStore } from 'pinia';
 import { getAxiosData } from '@/assets/js/function';
 
 interface Info {
-    title     : string;
-    contents  : string;
+    color       : string;
+    emoji       : string;
+    title       : string;
+    contents    : string;
 }
 
 interface ClientList {
@@ -30,6 +32,8 @@ interface State {
 
 const getInfo = (): Info => {
     return {
+        color       : '#eef0f2',
+        emoji       : '😊',
         title       : '',
         contents    : ''
     }
