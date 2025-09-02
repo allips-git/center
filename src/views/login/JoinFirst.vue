@@ -7,7 +7,7 @@
                 <div class="px-4 pt-10">
                     <div class="form-gap-box">
                         <IftaLabel class="relative w-full">
-                            <label for="email">이메일</label>
+                            <label for="email">이메일<span class="ml-0.5 text-red-500">*</span></label>
                             <IconField>
                                 <InputText id="email" v-model="join['login']['email']" placeholder="이메일을 입력해주세요." class="w-full"/>
                                 <InputIcon @click="getIdDelete"><IconInputX/></InputIcon>
@@ -17,7 +17,7 @@
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
-                            <label for="pw">비밀번호</label>
+                            <label for="pw">비밀번호<span class="ml-0.5 text-red-500">*</span></label>
                             <IconField>
                                 <InputText type="password" id="pwd" v-model="join['login']['pwd']" placeholder="비밀번호를 입력해주세요" class="w-full"/>
                                 <InputIcon @click="getPwView('pwd')"><IconEye/></InputIcon>
@@ -27,7 +27,7 @@
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
-                            <label for="pw">비밀번호 확인</label>
+                            <label for="pw">비밀번호 확인<span class="ml-0.5 text-red-500">*</span></label>
                             <IconField>
                                 <InputText type="password" id="pwChk" v-model="join['login']['pwChk']" placeholder="비밀번호를 다시 한 번 입력해주세요" class="w-full"/>    
                                 <InputIcon @click="getPwView('pwChk')"><IconEye/></InputIcon>
