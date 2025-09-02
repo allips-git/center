@@ -14,7 +14,7 @@
         <template v-if="client.gb === 'Y'">
             <IftaLabel class="label-input-box">
                 <InputText id="tel" v-model="client['info']['tel']" placeholder="010-0000-0000"/>
-                <label>전화번호</label>
+                <label>전화번호<span class="ml-0.5 text-red-500">*</span></label>
                 <small class="text-red-500">{{ client['msg']['tel'] }}</small>
             </IftaLabel>
             
@@ -217,8 +217,8 @@ const getSaveNext = () => {
                             getFocus('groupNm');
                         break;
                         case 4200:
-                            client.getMsgSet('이미 등록된 고객명입니다.', 'clientNm');
-                            getFocus('clientNm');
+                            client.getMsgSet('이미 등록된 전화번호입니다.', 'tel');
+                            getFocus('tel');
                         break;
                     }
                 }
