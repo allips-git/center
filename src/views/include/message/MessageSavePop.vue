@@ -9,6 +9,7 @@
             <IftaLabel class="mb-1 w-full">
                 <InputText id="title" v-model="msg.info.title" class="w-full" placeholder="제목을 입력해주세요." />
                 <label>제목</label>
+                <small class="text-msg">{{ msg['msg'][`title`] }}</small>
             </IftaLabel>
             <div class="flex justify-between items-center">
                 <label class="pl-0.5 text-sm font-medium text-t-lv3">아이콘</label>
@@ -55,7 +56,7 @@
             <div class="grid grid-cols-6 gap-2 sm:grid-cols-8 color-chips">
                 <div v-for="color in colorList" :key="color" class="chip"
                     :class="{ 'border-2 border-p-lv4': msg.info.color === color }"
-                    :style="{ backgroundColor: msg.info.color }" @click="pickColor(color)">
+                    :style="{ backgroundColor: color }" @click="pickColor(color)">
                 </div>
             </div>
         </div>
@@ -69,6 +70,7 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Dialog from "primevue/dialog";
 import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
+import { ref } from "vue";
 import { useConfirm } from "primevue/useconfirm";
 import { usePopupStore, useMainStore, useMsgStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
@@ -82,29 +84,30 @@ const main      = useMainStore();
 const msg       = useMsgStore();
 const popup     = usePopupStore();
 const router    = useRouter();
+const status    = ref(false);
 
 const { getPopupOpen, getPopupClose } = usePopup();
 const colorList = [
-  "#eef0f2",
-  "#FEEDEA",
-  "#FFF5EC",
-  "#fefae0",
-  "#E7F3FF",
-  "#F4F1FE",
-  "#FFD2D5",
-  "#FFE0DD",
-  "#FFE5CC",
-  "#FFF2B4",
-  "#E9FBB6",
-  "#C7F7CE",
-  "#CAF6E5",
-  "#EDF1FF",
-  "#FFE6FB",
-  "#CEF3F5",
-  "#CAF1FF",
-  "#E3E9F3",
-  "#F1F0E8",
-  "#edede9",
+    "#eef0f2",
+    "#FEEDEA",
+    "#FFF5EC",
+    "#fefae0",
+    "#E7F3FF",
+    "#F4F1FE",
+    "#FFD2D5",
+    "#FFE0DD",
+    "#FFE5CC",
+    "#FFF2B4",
+    "#E9FBB6",
+    "#C7F7CE",
+    "#CAF6E5",
+    "#EDF1FF",
+    "#FFE6FB",
+    "#CEF3F5",
+    "#CAF1FF",
+    "#E3E9F3",
+    "#F1F0E8",
+    "#edede9"
 ];
 
 const pickColor = (color: string) => {
@@ -140,10 +143,12 @@ const getSave = () => {
         accept : async () => {
             const params = {
                 type        : msg.type,
+                mhCd        : msg.mhCd,
+                mbCd        : msg.mbCd,
                 emoji       : msg.info.emoji,
                 color       : msg.info.color,
                 title       : msg.info.title,
-                contents    : msg.info.contents,
+                contents    : msg.info.contents
             }
 
             if(msg.type === 'U')
@@ -156,7 +161,9 @@ const getSave = () => {
             try
             {
                 const instance  = await getAxiosData();
-                await instance.post(`https://data.planorder.kr/msgV1/getResult`, params);
+                const res = await instance.post(`https://data.planorder.kr/msgV1/getResult`, params);
+
+                console.log(res);
 
                 await main.getData();
                 await getPopupClose("messageSave", true);

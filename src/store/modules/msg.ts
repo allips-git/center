@@ -24,6 +24,7 @@ interface Msg {
 }
 
 interface State {
+    mhCd        : string;
     msCd        : string;
     type        : 'I' | 'U';
     info        : Info;
@@ -56,6 +57,7 @@ const getMsg = (): Msg => {
 
 export const useMsgStore = defineStore('msg', {
     state: (): State => ({
+        mhCd        : '',
         msCd        : '',
         type        : 'I',
         info        : getInfo(),
@@ -65,10 +67,17 @@ export const useMsgStore = defineStore('msg', {
     actions : {
         async getInfo()
         {
+            const params = { 
+                mbCd    : this.mbCd, 
+                msCd    : this.msCd 
+            };
+
+            console.log(params);
+
             try
             {
                 const instance  = await getAxiosData();
-                const res       = await instance.post(`https://data.planorder.kr/msgV1/getInfo`, { msCd : this.msCd });
+                const res       = await instance.post(`https://data.planorder.kr/msgV1/getInfo`, params);
 
                 this.type = 'U';
                 this.info = res.data.info;
@@ -83,8 +92,10 @@ export const useMsgStore = defineStore('msg', {
             this.msg        = getMsgInfo();
             this.msg[id]    = msg;
         },
-        getMsCd(msCd: string)
+        getData(mhCd: string, mbCd: string, msCd: string)
         {
+            this.mhCd = mhCd;
+            this.mbCd = mbCd;
             this.msCd = msCd;
         },
         getReset()
@@ -99,6 +110,6 @@ export const useMsgStore = defineStore('msg', {
     persist: {
         key     : 'msg',
         storage : localStorage,
-        paths   : ['type', 'msCd']
+        paths   : ['type', 'mhCd', 'msCd']
     }
 });

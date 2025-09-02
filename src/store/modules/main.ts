@@ -10,8 +10,19 @@ interface StCnt {
     stCd  : string;
 }
 
+interface MsgHeader {
+    mhCd        : string;
+    emoji       : string;
+    color       : string;
+    title       : string;
+    description : string;    
+}
+
 interface MsgList {
-    msgCd       : string;
+    msCd        : string;
+    mhCd        : string;
+    emoji       : string;
+    color       : string;
     title       : string;
     description : string;
 }
@@ -31,6 +42,7 @@ interface State {
     kakaoYn         : string;
     kakaoUseCnt     : number;
     kakaoSendCnt    : number;
+    msgHeader       : MsgHeader[];
     msgList         : MsgList[];
     alarmList       : AlarmList[];
 }
@@ -82,6 +94,7 @@ export const useMainStore = defineStore('main', {
                 this.kakaoYn        = res.data['kakaoYn'];
                 this.kakaoUseCnt    = res.data['kakaoUseCnt'];
                 this.kakaoSendCnt   = res.data['kakaoSendCnt'];
+                this.msgHeader      = res.data['msgHeader'];
                 this.msgList        = res.data['msgList'];
                 this.alarmList      = res.data['alarmList'].map(item => {
                     let title = '';

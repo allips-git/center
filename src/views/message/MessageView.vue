@@ -10,7 +10,7 @@
             </div>
             <div class="flex flex-none gap-1 items-center">
                 <Button label="메세지 저장" size="small" @click="getSave"></Button>
-                <Button v-if="msg.type === 'U'" label="삭제" size="small" severity="danger" @click="getDelete"></Button>
+                <Button v-if="msg.type === 'U' && msg.msCd !== 'N'" label="삭제" size="small" severity="danger" @click="getDelete"></Button>
             </div>
         </section>
         <section class="flex flex-col gap-6 mt-5">
