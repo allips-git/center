@@ -3,7 +3,7 @@
     <main class="pb-[80px]" ref="mainRef">
         <section class="px-4 pt-4 pb-6 sm:px-6 sm:pt-6 sm:pb-8">
             <div class="flex gap-4">
-                <div class="flex-1 border border-l-lv4 rounded-[4px] overflow-hidden cursor-pointer" @click="getPopup">
+                <div class="flex-1 border border-l-lv4 rounded-[4px] overflow-hidden cursor-pointer" @click="getPopupOpen('contractPreview')">
                     <div class="px-[20px] pt-[40px] bg-bg-lv3">
                         <div class="line-repeat-paper"></div>
                     </div>
@@ -62,7 +62,7 @@
                 </li>
                 <li>
                     <p class="text-lv1 break-keep">견적서,계약서 싸인/도장 png 누끼파일</p>
-                    <div class="flex items-center justify-center flex-none w-[5.5rem] h-[5.5rem] rounded-[4px] bg-[#fff] border border-bg-lv3 cursor-pointer overflow-hidden">
+                    <div class="flex items-center justify-center flex-none w-[5.5rem] h-[5.5rem] rounded-[4px] bg-[#fff] border border-bg-lv3 cursor-pointer overflow-hidden" @click="getPopupOpen('ssss')">
                         <!-- 파일 업로드 전 -->
                         <img src="@/assets/img/img-upload.png" alt="이미지 업로드" title="이미지 업로드" class="w-full aspect-square"/>
                         <!-- 파일 업로드 후
@@ -93,7 +93,43 @@
             </div>
         </template>
         <ContractPreview/>
-    </Dialog> 
+    </Dialog>
+
+    <Dialog v-model:visible="popup['pop']['ssss']"
+        :modal=true position="bottom" class="custom-dialog-util"
+        @update:visible="getPopupClose('emojiPickerPop', true)" pt:mask:class="custom-dialog-util-wrap">
+        <div class="modal-backheader">
+            <Button @click="getPopupClose('emojiPickerPop', true)" severity="contrast" text icon="pi pi-times" />
+            <h2 class="modal-backheader-title">싸인/도장 선택</h2>
+        </div>
+        <div class="p-4 pb-6">
+            <div class="flex flex-col">
+                <!-- 선택 O -->
+                <Button variant="text" label="싸인 만들기" icon="pi pi-check" iconPos="right" class="!justify-between w-full *:text-sm sm:*:text-base *:text-p-lv4" @click="getPopupOpen('signaturePop')" />
+                <!-- 선택 X -->
+                <Button variant="text" label="도장 png 누끼파일 등록" iconPos="right" class="!justify-between w-full *:text-sm sm:*:text-base *:text-t-lv1" />
+            </div>
+        </div>
+    </Dialog>
+
+    <Dialog v-model:visible="popup['pop']['signaturePop']" 
+        :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissable-mask="true"
+        @update:visible="getPopupClose(true, 'signaturePop')">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopupClose(true, 'signaturePop')" severity="contrast" text icon="pi pi-times"/>
+                <h2 class="modal-backheader-title">싸인 등록하기</h2>
+            </div>
+        </template>
+        <div class="md:pt-4">
+            <SignaturePad />
+            <p class="mt-1.5 px-8 text-10 md:text-xs leading-[1.34] text-t-lv2 text-center break-keep">계약서에 자동으로 입력될 싸인입니다.</p>
+            <div class="grid grid-cols-2 gap-2 mt-6 btn-2-layout-box">
+                <Button size="large" severity="secondary" label="취소"/>
+                <Button size="large" label="확인"/>
+            </div>
+        </div>
+    </Dialog>
 </template>
 
 <script setup lang="ts">
@@ -101,6 +137,7 @@ import BackHeader from '@/components/layouts/BackHeader.vue'
 import ToggleSwitch from 'primevue/toggleswitch';
 import SelectButton from 'primevue/selectbutton';
 import Textarea from 'primevue/textarea';
+import SignaturePad from "@/views/include/SignaturePad.vue";
 import ContractPreview from "@/views/include/setting/ContractPreview.vue";
 import { ref } from 'vue';
 import { onMounted } from 'vue'
@@ -128,7 +165,7 @@ onMounted(() => {
 const { getPopupOpen, getPopupClose } = usePopup();
 
 const getPopup = async() => {
-    getPopupOpen('contractPreview');
+    //getPopupOpen('contractPreview');
 }
 const value = ref('기본양식');
 const options = ref(['기본양식', '엑셀양식']);
@@ -148,8 +185,6 @@ const terms = ref(`
 
 7. 계약서의 내용을 충분히 이해하였음을 확인합니다.
 `)
-
-
 </script>
 
 <style lang="scss">
