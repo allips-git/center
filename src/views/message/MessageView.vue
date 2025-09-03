@@ -39,7 +39,7 @@
         ></Button>
       </div>
     </section>
-    <section class="flex flex-col gap-6 mt-5">
+    <section class="flex flex-col gap-6">
       <!-- <div class="px-4">
                 <IftaLabel class="w-full">
                     <InputText id="title" v-model="msg.info.title" class="w-full"/>
