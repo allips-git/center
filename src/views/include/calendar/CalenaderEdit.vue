@@ -1,37 +1,43 @@
 <template>
-    <section class="px-3 py-[18px]">
-        <div class="flex items-center gap-4 pb-5 border-b border-[#FAFAFA]">
-            <IconAvatar class="size-12 fill-sky-400"/>
-            <div class="w-full ">
-                <p class="text-8 text-sky-500">일정</p>
-                <p class="flex items-center text-base font-bold">{{ calendar['edit']['clientNm'] }} 
-                    <span class="flex items-center justify-center ml-2 text-sm text-gray-400 size-4" @click="getClientDetail">
-                        <IconPlay class="size-4 fill-gray-400"/>
+    <section class="px-[12px] py-[18px]">
+        <div class="flex gap-2 items-center pb-5">
+            <IconAvatar class="flex-none size-9 fill-[#78BBFF]"/>
+            <div class="w-full">
+                <p class="font-bold text-sky-500 text-8">일정</p>
+                <p class="mt-[-1px] flex items-center text-base font-bold text-t-lv1">{{ calendar['edit']['clientNm'] }} 
+                    <span class="flex justify-center items-center ml-2 text-sm text-gray-400 size-4" @click="getClientDetail">
+                        <IconPlay class="size-4 fill-l-lv0"/>
                     </span>
                 </p>
             </div>
-            <p class="flex-none text-base font-bold text-sky-500">
+            <p class="flex-none text-base font-bold text-[#6670E4]">
                 {{ calendar['edit']['stCd'] === 'Y' ? '견적' : '시공' }}
             </p>
         </div>
-        <div class="py-[10px] edit-select">
-            <Select v-model="calendar['edit']['stCd']" :options="getStCd()" optionLabel="label" optionValue="value" class="!rounded-full *:!text-10 *:!rounded-full " size="small" 
-                @update:modelValue="(value) => getStCdChange(value)"/>
+        <div class="py-[6px] border-t border-[#FAFAFA]">
+            <Select v-model="calendar['edit']['stCd']" :options="getStCd()" optionLabel="label" optionValue="value" class="edit-select" size="small" 
+                @update:modelValue="(value) => getStCdChange(value)">
+                <template #dropdownicon>
+                    <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
+                </template>
+            </Select>
         </div>
-        <div class="flex flex-col items-start gap-1 text-gray-500 text-10">
+        <div class="flex flex-col gap-1 items-start text-10 text-t-lv2 sm:text-xs">
             <p>{{ getDate() }}</p>
-            <p class="px-2 py-[3px] text-10 text-white rounded-full bg-sky-500" @click="getNavi('tel', calendar['edit']['tel'])">{{ calendar['edit']['tel'] }}</p>
-            <p class="px-2 py-[3px] text-10 text-white rounded-full bg-sky-500" :data-address="calendar['edit']['addr']" @click="getNavi('addr', calendar['edit']['addr'])">{{ calendar['edit']['addr'] }}</p>
+            <p class="px-2 py-[3px] text-10 sm:text-xs text-white rounded-full bg-sky-500" @click="getNavi('tel', calendar['edit']['tel'])">{{ calendar['edit']['tel'] }}</p>
+            <p class="px-2 py-[3px] text-10 sm:text-xs text-white rounded-full bg-sky-500" :data-address="calendar['edit']['addr']" @click="getNavi('addr', calendar['edit']['addr'])">{{ calendar['edit']['addr'] }}</p>
             <p>상세주소 : {{ calendar['edit']['addrDetail'] }}</p>
             <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 예상시간 : {{ calendar['edit']['insTime'] }}</p>
             <p v-if="calendar['edit']['stCd'] === '013' || calendar['edit']['stCd'] === '011'">설치 수량 : {{ calendar['edit']['insCnt'] }}</p>
         </div>
-        <div class="w-full px-3 mt-4 mb-5 ml-3 border-l-2 border-gray-300 min-h-12 custom-textarea">
-            <Textarea v-model="calendar['edit']['memo']" rows="5" cols="30" @blur="getMemoUpdate"/>
+        <div class="px-2.5 mt-2.5 mb-5 ml-4 w-full border-l-2 border-l-lv2 min-h-12 custom-textarea">
+            <Textarea v-model="calendar['edit']['memo']" rows="5" cols="30" @blur="getMemoUpdate" placeholder="메모를 입력해주세요."/>
         </div>
 
-        <div class="flex justify-end border-t border-[#fafafa] pt-[10px]">
-            <Iconpencil class="fill-gray-500 size-4" @click="getDetail"/>
+        <div class="flex justify-end border-t border-[#FAFAFA] pt-2.5">
+            <button class="p-2 m-[-0.5rem]" @click="getDetail">
+                <Iconpencil class="fill-gray-500 size-5" />
+            </button>
         </div>
     </section>
 </template>
@@ -47,6 +53,7 @@ import { useDataStore, useClientStore, useCalendarStore } from '@/store';
 import { getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { getAxiosData, getTokenOut } from '@/assets/js/function';
+import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
 
 const confirm   = useConfirm();
 const data      = useDataStore();
@@ -208,13 +215,17 @@ onMounted(() => {
 <style lang="scss"> 
 .custom-textarea{
     .p-textarea{
-        width: 180px;
+        width: 100%;
+        padding: 0 0.5rem 0 0 !important;
         border: none;
-        height: 48px;
-        font-size: 0.6175rem;
-        padding: 0;
-        color: #ACB3BB;
+        color: var(--t-lv4);
+        font-size: 0.625rem;
+        font-weight: 400;
         box-shadow: none;
+        line-height: 1.2;
+        &:focus {
+            //color: var(--t-lv1);
+        }
     }
 }
 </style>

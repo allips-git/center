@@ -122,27 +122,56 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
-.editPopup{
+.editPopup-wrap {
+    background-color: transparent !important;
+    justify-content: flex-end !important;
+    .editPopup {
+        margin: rem(16) !important;
+    }
+}
+.editPopup {
     width: 246px;
+    //width: calc(100% - 2rem);
+    box-shadow: 6px 16px 40px rgba(0, 0, 0, 0.30) !important;
     overflow: hidden;
+    border: 0.5px solid #E5E5EC;
     border-radius: 20px !important;
+    max-width: 660px !important;
     .p-dialog-header{
-        padding: 0;
+        padding: 0 !important;
     }
     .p-dialog-content{
-        padding: 0;
+        padding: 0 !important;
+        overflow: hidden;
     }
     .p-dialog-close-button{
         display: none;
     }
 
 }
+@media (min-width: $breakpoint-sm) {
+    .editPopup-wrap {
+        justify-content: center !important;
+    }
+    .editPopup {
+        width: 660px;
+    }
+}
 
 .edit-select {
-    .p-select{
+    &.p-select {
+        height: rem(22);
         border-radius: 9999px !important;
-    }
-    
+        .p-select-label {
+            padding: 0 !important;
+            padding-block: rem(3) !important;
+            padding-inline: rem(8) !important;
+            color: var(--t-lv1) !important;
+            font-size: rem(10);
+            font-weight: 700 !important;
+            line-height: rem(18);
+        }
+    }    
 }
 
 .custom-dialog-full.p-dialog
@@ -224,7 +253,9 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 }
 
 .custom-dialog-center{
-    width: calc(100% - 32px);
+    //width: calc(100% - 2rem);
+    width: 246px;
+    max-width: 660px;
     .p-dialog-header, .p-drawer-header{
         padding: 0.25rem;
         width: 100%;
@@ -729,9 +760,10 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     font-size: 12px;
 }
 .msg-input-custom {
+    &.p-textarea{
     padding-block: rem(16);
     padding-inline: rem(16);
-    padding-bottom: rem(60);
+    padding-bottom: rem(60) !important;
     border-radius: rem(2);
     color: #404040;
     font-size: rem(13);
@@ -742,6 +774,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     &:hover, &:focus {
         border-color: var(--p-textarea-focus-border-color);
     }
+}
 }
 .tag-shop, .tag-name {
     display: inline-block;
@@ -1076,9 +1109,8 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     border: none !important;
 }
 .p-button:not(.p-button-outlined):hover {
-    border: none !important;
+    //border: none !important;
 }
-
 
 .p-button-help{
     background: #DBB071 !important;
@@ -1185,6 +1217,8 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     font-size: 0.75rem;
 }
 
+
+// Datepicker
 .custom-datapicker{
     // 테이블 데이트 피크
     
@@ -1216,7 +1250,6 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         }
     }
 }
-
 .acc-datepicker {
     .p-datepicker {
         width: 6rem;
@@ -1224,6 +1257,20 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
             // font-size: 0.75rem !important;
             background-color: var(--p-gray-100);
             border: none;
+        }
+    }
+}
+.basic-datepicker {
+    &.p-datepicker{
+        .p-inputtext {
+            background-color: var(--bg-lv2);
+            border-color: var(--bg-lv2);
+            color: var(--t-lv2);
+            font-size: rem(13);
+            height: rem(40) !important;
+        }
+        .p-datepicker-input-icon-container {
+            color: var(--t-lv2);
         }
     }
 }
@@ -1390,7 +1437,12 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
             }
         }
     }
- // Start of Selection
+    &.custom-dialog-center {
+        .p-dialog-content {
+            padding-left: rem(16);
+            padding-right: rem(16);
+        }
+    }
 }
 
 // Info List : 공장 상세, 

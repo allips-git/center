@@ -27,9 +27,9 @@
                 <!-- 기존 문자 내용 -->
                 <div class="overflow-hidden relative">
                     <IftaLabel class="w-full">
-                        <Textarea id="contents" v-model="msg.info.contents" class="w-full" autoResize rows="15" cols="30"/>
+                        <Textarea id="contents" v-model="msg.info.contents" class="w-full msg-input-custom" autoResize rows="15" cols="30"/>
                     </IftaLabel>
-                    <div class="flex absolute right-[1px] bottom-[1px] left-[1px] rounded-br-[0.125rem] rounded-bl-[0.125rem] py-1 px-2 gap-1 items-center bg-gray-100/50">
+                    <div class="flex absolute left-px right-px bottom-[6px] rounded-br-[0.125rem] rounded-bl-[0.125rem] py-1 px-2 gap-1 items-center bg-gray-100/50">
                         <button class="tag-shop">디자인윈도우</button>
                         <button class="tag-name">하현재</button>  
                     </div>

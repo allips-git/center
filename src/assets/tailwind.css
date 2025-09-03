@@ -185,6 +185,10 @@
     @apply h-[50px] sticky relative top-0 px-4 md:px-6 flex w-full items-center justify-end md:border-b md:shadow-none bg-white z-50 md:border-gray-100
   }
 
+  .modal-backheader.line{
+    @apply border-b border-gray-100
+  }
+
   .modal-fullheader{
     @apply h-[50px] sticky relative top-0 px-4 md:px-6 md:border-b flex w-full items-center justify-between md:shadow-none bg-white z-50 md:border-gray-100
   }
