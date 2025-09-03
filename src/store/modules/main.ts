@@ -24,6 +24,7 @@ interface MsgList {
     emoji       : string;
     color       : string;
     title       : string;
+    contents    : string;
     description : string;
 }
 

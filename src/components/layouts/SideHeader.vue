@@ -10,7 +10,7 @@
                     <span class="w-6"
                     :class="setWideSide ? '' : '!w-6'"
                     ><IconAvatar class="w-6 mr-2 text-blue-300"/></span>
-                    <p v-if="setWideSide || drawerClass" class="text-gray-900">{{ login['name'] }}</p>
+                    <p v-if="setWideSide || drawerClass" class="text-gray-900">{{ login['ceNm'] }}</p>
                 </router-link>
             </li>
             <li 
