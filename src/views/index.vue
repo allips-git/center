@@ -161,7 +161,7 @@
                                                     {{ msg.title }}
                                                 </strong>
                                                 <div class="font-semibold truncate text-10 text-t-lv4 sm:text-11">
-                                                    {{ item.mhCd === '1' ? msg.contents : msg.description }}
+                                                    {{ item.mhCd === '1' ? getMsgContents(msg.contents) : msg.description }}
                                                 </div>
                                             </div>
                                             <div class="flex flex-none justify-end items-center w-[2rem] pr-1.5 size-7">
@@ -246,7 +246,7 @@
 <script setup lang="ts">
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue';
-import { useMainStore, usePopupStore, useClientStore, useKakaoStore, useChatStore, useMsgStore } from '@/store';
+import { useLoginStore, useMainStore, usePopupStore, useClientStore, useKakaoStore, useChatStore, useMsgStore } from '@/store';
 import { useRouter } from 'vue-router';
 import IconAddCircle from '@/components/icons/IconAddCircle.vue';
 import IconLeftArrow from '@/components/icons/IconLeftArrow.vue';
@@ -258,6 +258,7 @@ import CustomerDetail from '@/views/include/customer/CustomerDetail.vue'
 import { usePopup } from '@/assets/js/popup';
 
 const confirm   = useConfirm();
+const login     = useLoginStore();
 const main      = useMainStore();
 const popup     = usePopupStore();
 const client    = useClientStore();
@@ -319,6 +320,10 @@ const getPlanTalk = () => {
             }
         }
     });
+}
+
+const getMsgContents = (contents: string) => {
+    return contents.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replaceAll('${ceNm}', login.ceNm).replaceAll('${name}', login.name);
 }
 
 const getMsg = async (mhCd: string, mbCd: string, msCd: string, type: 'I'|'U') => {

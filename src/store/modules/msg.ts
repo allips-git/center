@@ -83,7 +83,7 @@ export const useMsgStore = defineStore('msg', {
 
                 this.type = 'U';
                 this.info = res.data.info;
-                this.info.contents = this.info.contents.replace('${ceNm}', `<span class="tag-shop">${login.ceNm}</span>`).replace('${name}', `<span class="tag-name">${login.name}</span>`);
+                // this.info.contents = this.info.contents.replaceAll('${ceNm}', login.ceNm).replaceAll('${name}', login.name);
             }
             catch(e)
             {
