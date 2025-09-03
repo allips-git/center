@@ -147,6 +147,10 @@ export const useDataStore = defineStore('data', {
 
                 { mhCd : 5, emoji : '👿', color : '#eef0f2', title : '불만 해결로 고객 달래기', contents : '간접적으로 불만을 표현하는 고객을 달래보세요.' },
                 { mhCd : 5, emoji : '🛠', color : '#eef0f2', title : '재 시공으로 불만고객 붙잡기', contents : '강한 불만을 표현하는 고객에게 사과해보아요.' }
+            ],
+            repSet : [
+                { value : 'B', name : '기본양식' },
+                // { value : 'E', name : '엑셀양식' }
             ]
         };
     },

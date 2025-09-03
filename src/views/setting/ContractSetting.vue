@@ -27,7 +27,7 @@
                     </div>
                     <div class="p-3 shadow-[0_-4px_10px_rgba(0,0,0,0.12)]">
                         <strong class="block text-sm font-bold tracking-tight break-keep text-t-lv1">디자인윈도우 계약서 미리보기 [ 엑셀양식 ]</strong>
-                        <div class="flex flex-col gap-0.5 mt-2">
+                        <!-- <div class="flex flex-col gap-0.5 mt-2">
                             <dl class="flex gap-1 text-xs font-medium text-t-lv1">
                                 <dt>수정일:</dt>
                                 <dd>25.03.12</dd>
@@ -36,7 +36,7 @@
                                 <dt>생성일:</dt>
                                 <dd>25.01.30</dd>
                             </dl>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -46,28 +46,25 @@
             <ul class="flex flex-col *:border-b *:py-4 *:border-gray-100 *:flex *:justify-between *:items-center text-sm *:gap-8">
                 <li>
                     <p class="text-lv1 break-keep">견적서/계약서 대표설정</p>
-                    <SelectButton size="small" v-model="value" :options="options" />
+                    <SelectButton size="small" v-model="setting.repSet" :options="data.repSet" optionLabel="name" optionValue="value" />
                 </li>
                 <li>
                     <p class="text-lv1">실측 사이즈 숨김</p>
-                    <ToggleSwitch />
+                    <ToggleSwitch v-model="setting.sizeYn" :trueValue="'Y'" :falseValue="'N'"/>
                 </li>
                 <li>
                     <p class="text-lv1">단위 숨김</p>
-                    <ToggleSwitch />
+                    <ToggleSwitch v-model="setting.unitYn" :trueValue="'Y'" :falseValue="'N'"/>
                 </li>
                 <li>
                     <p class="text-lv1">고객 계약싸인 기능</p>
-                    <ToggleSwitch />
+                    <ToggleSwitch v-model="setting.signYn" :trueValue="'Y'" :falseValue="'N'"/>
                 </li>
                 <li>
                     <p class="text-lv1 break-keep">견적서,계약서 싸인/도장 png 누끼파일</p>
                     <div class="flex items-center justify-center flex-none w-[5.5rem] h-[5.5rem] rounded-[4px] bg-[#fff] border border-bg-lv3 cursor-pointer overflow-hidden" @click="getPopupOpen('ssss')">
-                        <!-- 파일 업로드 전 -->
-                        <img src="@/assets/img/img-upload.png" alt="이미지 업로드" title="이미지 업로드" class="w-full aspect-square"/>
-                        <!-- 파일 업로드 후
-                        <img src="@/assets/img/img-seal.png" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>
-                        -->
+                        <img v-if="setting.file" :src="setting.image" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>
+                        <img v-else src="@/assets/img/img-upload.png" alt="이미지 업로드" title="이미지 업로드" class="w-full aspect-square"/>
                     </div>
                 </li>
             </ul>
@@ -80,7 +77,7 @@
     </main>
 
     <div :style="{width: mainWidth + 'px', left: mainLeft + 'px', }" class="bottom-fixed-btn-box">
-        <Button label="저장" size="large" class="w-full"/>
+        <Button label="저장" size="large" class="w-full" @click="getSave"/>
     </div>
 
     <Dialog v-model:visible="popup['pop']['contractPreview']" header="계약서 미리보기" 
@@ -104,10 +101,11 @@
         </div>
         <div class="p-4 pb-6">
             <div class="flex flex-col">
-                <!-- 선택 O -->
                 <Button variant="text" label="싸인 만들기" iconPos="right" class="!justify-between w-full *:text-sm sm:*:text-base *:text-t-lv1" @click="getPopupOpen('signaturePop')" />
-                <!-- 선택 X -->
-                <Button variant="text" label="도장 png 누끼파일 등록" iconPos="right" class="!justify-between w-full *:text-sm sm:*:text-base *:text-t-lv1" />
+                <div>
+                    <Button variant="text" label="도장 png 누끼파일 등록" iconPos="right" class="!justify-between w-full *:text-sm sm:*:text-base *:text-t-lv1" @click="getSignFile"/>
+                    <input id="signFileInput" type="file" accept="image/*" class="hidden" @change="getFile($event)"/>
+                </div>
             </div>
         </div>
     </Dialog>
@@ -122,11 +120,11 @@
             </div>
         </template>
         <div class="md:pt-4">
-            <SignaturePad />
+            <SignaturePad ref="signRef"/>
             <p class="mt-1.5 px-8 text-10 md:text-xs leading-[1.34] text-t-lv2 text-center break-keep">계약서에 자동으로 입력될 싸인입니다.</p>
             <div class="grid grid-cols-2 gap-2 mt-6 btn-2-layout-box">
-                <Button size="large" severity="secondary" label="취소"/>
-                <Button size="large" label="확인"/>
+                <Button size="large" severity="secondary" label="취소" @click="getPopupClose(true, 'signaturePop')"/>
+                <Button size="large" label="확인" @click="getSignSave"/>
             </div>
         </div>
     </Dialog>
@@ -139,15 +137,103 @@ import SelectButton from 'primevue/selectbutton';
 import Textarea from 'primevue/textarea';
 import SignaturePad from "@/views/include/SignaturePad.vue";
 import ContractPreview from "@/views/include/setting/ContractPreview.vue";
+import { useConfirm } from "primevue/useconfirm";
 import { ref } from 'vue';
 import { onMounted } from 'vue'
-import { usePopupStore } from '@/store';
+import { useEstiAndConSetStore, usePopupStore, useDataStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
+import { getAxiosData, getTokenOut } from '@/assets/js/function';
 
+const confirm   = useConfirm();
+const setting   = useEstiAndConSetStore();
 const popup     = usePopupStore();
-const mainRef = ref(null);
+const data      = useDataStore();
+const mainRef   = ref(null);
 const mainWidth = ref(0);
-const mainLeft = ref(0)
+const mainLeft  = ref(0);
+const signRef   = ref(null);
+
+const { getPopupOpen, getPopupClose } = usePopup();
+
+const getSignFile = () => {
+    document.getElementById('signFileInput')?.click();
+}
+
+const getFile = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) 
+    {
+        const file      = target.files[0];
+        const reader    = new FileReader();
+
+        reader.onload = (e) => {
+            setting.getFile(file, e.target?.result as string);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    getPopupClose(true, 'signaturePop');
+}
+
+const getSignSave = () => {
+    signRef.value.saveAsImage();
+}
+
+const getSave = () => {
+    confirm.require({
+        message     : '견적서 / 계약서 설정 정보를 저장하시겠습니까?',
+        header      : '저장',
+        rejectProps : {
+            label       : '취소',
+            severity    : 'secondary',
+            outlined    : true
+        },
+        acceptProps : {
+            label: '저장'
+        },
+        accept : async () => {
+            const formData  = new FormData();
+            const params    = {
+                repSet : setting.repSet,
+                sizeYn : setting.sizeYn,
+                unitYn : setting.unitYn,
+                signYn : setting.signYn,
+                file   : setting.file
+            };
+
+            formData.append('params', JSON.stringify(params));
+
+            if(setting.file !== null)
+            {
+                formData.append('file', setting.file);
+            }
+
+            try
+            {
+                const instance  = await getAxiosData();
+                await instance.post('https://data.planorder.kr/estiAndConSetV1/getSave', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                alert('견적서 / 계약서 설정 정보가 저장되었습니다.');
+            }
+            catch(e)
+            {
+                console.log(e);
+                if(e.response.status === 401)
+                {
+                    getTokenOut();
+                }
+                else
+                {
+                    alert('견적서 / 계약서 설정에 실패하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                }
+            }
+        }
+    });
+}
 
 onMounted(() => {
     const updateMainSize = () => {
@@ -156,19 +242,12 @@ onMounted(() => {
             mainLeft.value = mainRef.value.offsetLeft
         }
     }
-
     updateMainSize()
 
     const observer = new ResizeObserver(() => updateMainSize())
-    observer.observe(mainRef.value)
+    observer.observe(mainRef.value);
+    setting.getData();
 });
-const { getPopupOpen, getPopupClose } = usePopup();
-
-const getPopup = async() => {
-    //getPopupOpen('contractPreview');
-}
-const value = ref('기본양식');
-const options = ref(['기본양식', '엑셀양식']);
 
 const terms = ref(`
 1. 본사는 맞춤전문 업체로서 계약해지 또는 변경은 계약후 7일내에 한하며 이후 해지는 불가능 합니다. 또한 계약 제품이 생산을 진행하였어도 계약해지 또는 변경이 불가능합니다.
