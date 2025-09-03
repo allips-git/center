@@ -105,7 +105,7 @@
         <div class="p-4 pb-6">
             <div class="flex flex-col">
                 <!-- 선택 O -->
-                <Button variant="text" label="싸인 만들기" icon="pi pi-check" iconPos="right" class="!justify-between w-full *:text-sm sm:*:text-base *:text-p-lv4" @click="getPopupOpen('signaturePop')" />
+                <Button variant="text" label="싸인 만들기" iconPos="right" class="!justify-between w-full *:text-sm sm:*:text-base *:text-t-lv1" @click="getPopupOpen('signaturePop')" />
                 <!-- 선택 X -->
                 <Button variant="text" label="도장 png 누끼파일 등록" iconPos="right" class="!justify-between w-full *:text-sm sm:*:text-base *:text-t-lv1" />
             </div>

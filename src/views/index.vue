@@ -326,13 +326,9 @@ const getMsgContents = (contents: string) => {
     return contents.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replaceAll('${ceNm}', login.ceNm).replaceAll('${name}', login.name);
 }
 
-const getMsg = async (mhCd: string, mbCd: string, msCd: string, type: 'I'|'U') => {
+const getMsg = async (mhCd: string, mbCd: string, msCd: string) => {
     await msg.getReset();
-
-    if(type === 'U')
-    {
-        await msg.getData(mhCd, mbCd, msCd);
-    }
+    await msg.getData(mhCd, mbCd, msCd);
 
     router.push({ path : '/msg' });
 }
