@@ -74,7 +74,7 @@
                                 <div class="mt-1.5 font-normal text-t-lv2">
                                     <div>옵션: 형상옵션</div>
                                     <ul>
-                                        <li>240*120 [4폭]</li>
+                                        <li>240*120<span>[4폭]</span></li>
                                     </ul>
                                 </div>
                             </th>
