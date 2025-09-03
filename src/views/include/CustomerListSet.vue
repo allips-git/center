@@ -41,12 +41,12 @@
 
         <IftaLabel class="label-input-box">
             <Select v-model="client['info']['groupCd']" :options="client['group']" optionLabel="label" optionValue="value"/> 
-            <label>그룹<span class="ml-0.5 text-red-500">*</span></label>
+            <label>그룹</label>
         </IftaLabel>
 
         <IftaLabel v-if="client['info']['groupCd'] === 'N'" class="label-input-box">
             <InputText id="groupNm" v-model="client['info']['groupNm']"/>
-            <label>그룹명<span class="ml-0.5 text-red-500">*</span></label>
+            <label>그룹명</label>
             <small class="text-red-500">{{ client['msg']['groupNm'] }}</small>
         </IftaLabel>
         <div class="bottom-modal-absol-box">
@@ -72,7 +72,7 @@ import DatePicker from 'primevue/datepicker';
 import Select from 'primevue/select';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useClientStore } from '@/store';
 import { getAxiosData, getConvertDate, getDaumPopupPosition } from '@/assets/js/function';
 import { clientMsg } from '@/assets/js/msg';
@@ -80,7 +80,6 @@ import { usePopup } from '@/assets/js/popup';
 
 const client    = useClientStore();
 const confirm   = useConfirm();
-const router    = useRouter();
 const route     = useRoute();
 
 const { getPopupOpen, getPopupClose } = usePopup();
@@ -189,7 +188,7 @@ const getSaveNext = () => {
                 {
                     if(route.name === 'MainPage')
                     {
-                        router.push({ path : '/customer/list' });
+                        await window.history.pushState({ page: 'clientDetail' }, '', '#clientDetail')
                     }
 
                     await client.getDataSet(res.data['clientCd']);

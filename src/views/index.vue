@@ -268,8 +268,9 @@ const router    = useRouter();
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
-const getPopOpen = () => {
-    getPopupOpen('clientChoice');
+const getPopOpen = async () => {
+    await window.history.pushState({ page: 'clientChoice' }, '', '#clientChoice')
+    await getPopupOpen('clientChoice');
     client.getReset();
 }
 

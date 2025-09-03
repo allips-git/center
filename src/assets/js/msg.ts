@@ -125,10 +125,10 @@ export const clientMsg = (params: ClientMsg): { msg: string; id: string, state: 
         return { msg : '담당자를 선택해주세요.', id : 'person', state : false };
     }
 
-    if(params['groupCd'] === 'N' && params['groupNm'] === '')
-    {
-        return { msg : '그룹명을 입력해주세요.', id : 'groupNm', state : false };
-    }
+    // if(params['groupCd'] === 'N' && params['groupNm'] === '')
+    // {
+    //     return { msg : '그룹명을 입력해주세요.', id : 'groupNm', state : false };
+    // }
 
     return { msg : '', id : '', state : true };
 }
