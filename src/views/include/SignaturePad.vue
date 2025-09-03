@@ -5,42 +5,42 @@
         <div class="flex absolute top-0 right-0 gap-0.5 p-1 z-1 btn-group-signature">
             <Button size="small" icon="pi pi-eraser" label="이전" variant="text" class="[&>span:first-child]:text-t-lv1" @click="undo" />
             <Button size="small" icon="pi pi-refresh" label="다시 그리기" variant="text" class="[&>span:first-child]:text-red-500" @click="clear" />
-            <Button size="small" icon="pi pi-download" label="저장" variant="text" class="[&>span:first-child]:text-blue-500" @click="saveAsImage" />
+            <!-- <Button size="small" icon="pi pi-download" label="저장" variant="text" class="[&>span:first-child]:text-blue-500" @click="saveAsImage" /> -->
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
+import { useEstiAndConSetStore } from '@/store';
+import { usePopup } from '@/assets/js/popup';
 import Vue3Signature from "vue3-signature"
 
-const state = reactive({
-  count: 0,
-  option: {
-    penColor: "rgb(0, 0, 0)",
-    backgroundColor: "transparent"
-  },
-  disabled: false
+const { getPopupClose } = usePopup();
+
+const setting   = useEstiAndConSetStore();
+const state     = reactive({
+    count       : 0,
+    option      : {
+    penColor    : "rgb(0, 0, 0)",
+        backgroundColor: "transparent"
+    },
+    disabled    : false
 })
 
-const signature = ref<any>(null)
+const signature = ref(null);
 
-// 이미지로 저장하는 함수
 const saveAsImage = () => {
-  if (!signature.value) return
-  
-  // PNG 형태로 서명 이미지 데이터 가져오기
-  const imageData = signature.value.save('image/png')
-  
-  // 다운로드 링크 생성
-  const link = document.createElement('a')
-  link.href = imageData
-  link.download = `signature_${new Date().getTime()}.png`
-  
-  // 자동 다운로드 실행
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
+    if (!signature.value) return;
+
+    const base64Data = signature.value.save('image/png');
+
+    fetch(base64Data).then(res => res.blob()).then(blob => {
+        const file = new File([blob], 'signature.png', { type: 'image/png' });
+        setting.getFile(file, base64Data);
+    });
+
+    getPopupClose(true, 'signaturePop');
 }
 
 // Base64 데이터만 가져오는 함수 (서버 전송용)
@@ -67,11 +67,11 @@ const undo = () => {
 
 // 부모 컴포넌트에서 사용할 수 있도록 expose
 defineExpose({
-  saveAsImage,
-  getSignatureData,
-  isEmpty,
-  clear,
-  undo
+    saveAsImage,
+    getSignatureData,
+    isEmpty,
+    clear,
+    undo
 })
 </script>
 
