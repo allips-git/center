@@ -46,7 +46,7 @@ export default {
         'p-lv1' :'#233CF9',
         'p-lv2' :'#0176F9',
         'p-lv3' :'#409AFF',
-        'p-lv4' :'#00AEF2',
+        'p-lv4' :'#00AEF2', // Brand Color
         'p-lv5' :'#E2F0FF',
         'p-lv6' :'#C2D7FF',
         'p-lv7' :'#ABC9FB',
@@ -61,6 +61,8 @@ export default {
 
         's-lv1' : "#6AB2BE",
         's-lv2' : "#E5F7FB",
+        's-lv3' : "#DBB071",
+        's-lv4' : "#FCF2E6",
 
         'bg-lv1':"#F8F9FA",
         'bg-lv2':"#F6F6F6",

@@ -1,17 +1,17 @@
 <template>
-    <div class="overflow-hidden w-full rounded border border-gray-200"> 
-        <h1 class="px-4 py-[10px] text-sm text-left bg-gray-50">{{ title }}</h1>
+    <div class="overflow-hidden w-full rounded border border-l-lv4"> 
+        <h1 class="px-4 py-1.5 text-sm text-left bg-l-lv5">{{ title }}</h1>
         <!-- 개별 카드 v-for  -->
-        <div class="flex flex-col justify-start items-start p-4 border-t first:border-t-0" v-for="(card, index) in cards" :key="index" @click="emit('get-modify', card['edCd'])">
+        <div class="flex flex-col justify-start items-start px-4 py-6 border-t first:border-t-0" v-for="(card, index) in cards" :key="index" @click="emit('get-modify', card['edCd'])">
             <!-- 카드 상단 -->
              <div class="flex justify-between items-center w-full mb-[11px]">
-                <h2 class="text-xs text-gray-400">{{ card.productTitle }}</h2>
+                <h2 class="text-xs text-t-lv1">{{ card.productTitle }}</h2>
                 <div v-if="card.showDelete" class="flex justify-end danger-button">
-                    <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-16 !border-gray-200" />
+                    <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-[3.25rem] font-normal !border-l-lv3" />
                 </div>            
              </div>
             <section class="w-full">
-                <div class="flex justify-between items-end mb-[20px] w-full text-13">
+                <div class="flex justify-between items-end mb-3.5 w-full text-13">
                     <div class="">
                         <!-- <h2 class="mb-1 text-sm text-gray-400">{{ card.productTitle }}</h2> -->
                         <h3 :class="`font-black text-${card.isRed ? 'red-500' : 'p-lv3'}`">{{ card.colorTitle }}</h3>
@@ -21,9 +21,9 @@
                 </div>
             </section>
             <!-- 테이블 -->
-            <table class="overflow-hidden w-full text-center rounded-sm table-fixed">
+            <table class="overflow-hidden w-full text-center rounded-sm table-fixed custom-table-in-card">
                 <thead class="">
-                    <tr class="text-11 !text-t-lv3 border-0">
+                    <tr class="text-10 !text-t-lv3 border-0 *:font-normal *:pb-0.5">
                         <template v-for="col in card.columns" :key="col.key">
                             <template v-if="sizeYn">
                                 <th v-if="col.header !== '가로' && col.header !== '세로'">
@@ -40,65 +40,64 @@
                 </thead>
                 <tbody class="">
                     <!-- v-for -->
-                    <tr class="*:py-[3px] font-bold text-sm !text-t-lv1" v-for="(row, index) in card.rows" :key="index">
+                    <tr class="font-bold text-sm !text-t-lv1" v-for="(row, index) in card.rows" :key="index">
                         <template v-if="sizeYn">
                             <template v-for="col in card.columns" :key="col.key">
-                                <td v-if="col.key !== 'width' && col.key !== 'height'">
+                                <td class="py-0.5 leading-tight align-top" v-if="col.key !== 'width' && col.key !== 'height'">
                                     {{ row[col.key] }}
                                 </td>
                             </template>
                         </template>
                         <template v-else>
                             <template v-for="col in card.columns" :key="col.key">
-                                <td>
-                                    {{ row[col.key] }}
-                                </td>
+                                <td class="py-0.5 leading-tight align-top">{{ row[col.key] }}</td>
                             </template>
                         </template>
                     </tr>
                 </tbody>
             </table>
-            <!-- 태그  -->
-            <section v-if="card.showTag" class="flex flex-wrap gap-2 my-3">
-                <Tag v-for="(tag, index) in card.tags" :key="index" severity="info" :value="tag.spanText" class="!inline-flex !items-center !px-2 !py-1 !text-xs !font-medium !rounded-md"></Tag>
-            </section>
+            <div class="flex flex-col gap-[0.875rem]" :class="{ 'mt-4': card.showTag || card.spanText !== '' }">
+                <!-- 태그  -->
+                <section v-if="card.showTag" class="flex flex-wrap gap-y-1.5 gap-2">
+                    <Tag v-for="(tag, index) in card.tags" :key="index" severity="info" :value="tag.spanText" class="!inline-flex !items-center !px-2 !py-1 *:text-10 *:font-bold !rounded-[0.75rem] !text-s-lv1 !bg-s-lv2 *:leading-[1.34]"></Tag>
+                </section>
 
-            <!-- 지시사항  -->
-            <section v-if="card['spanText'] !== ''" class="flex justify-start items-center px-3 py-1 my-2 mt-3 w-auto text-orange-400 bg-orange-50 rounded-full text-10">
-                <p class="font-bold">지시사항: <span class="">{{ card['spanText'] }}</span></p>
-            </section>
+                <!-- 지시사항  -->
+                <section v-if="card['spanText'] !== ''" class="flex justify-start items-center px-2 py-1 w-auto text-s-lv3 bg-s-lv4 rounded-[0.75rem] text-10">
+                    <p class="font-bold leading-[1.34]">지시사항: <span class="">{{ card['spanText'] }}</span></p>
+                </section>
+            </div>
             <!-- 버튼 -->
             <!-- 버튼타입 // severity="" // primary(시스템),success(외주),secondary(시스템/외주 발주완료),warn(발주취소),danger(발주 취소 요청) -->
-                <div class="order-button">
-                    <!-- @2025-09-02 발주 배송요청 사항 정보 요청 -->
-                    <!-- <div class="bg-bg-lv2 rounded-[0.25rem] p-3 mt-4">
-                        <div class="flex justify-evenly flex-wrap items-center [&_dl]:flex [&_dl]:flex-col [&_dl]:gap-1 [&_dl]:items-center text-11 sm:text-13">
-                            <dl>
-                                <dt class="text-t-lv3">배송</dt>
-                                <dd class="text-t-lv1">
-                                    <span class="inline-block px-1.5 font-medium text-white rounded-sm bg-p-lv4">직배</span>
-                                </dd>
-                            </dl>
-                            <hr class="w-[1px] h-[1.5rem] bg-l-lv4" />
-                            <dl>
-                                <dt class="text-t-lv3">주문일</dt>
-                                <dd class="text-t-lv1">01.08 (목) 17:30</dd>
-                            </dl>
-                            <hr class="w-[1px] h-[1.5rem] bg-l-lv4" />
-                            <dl>
-                                <dt class="text-t-lv3">출고일</dt>
-                                <dd class="text-t-lv1">01.08 (목)</dd>
-                            </dl>
-                            <dl class="mt-4 w-full">
-                                <dt class="text-t-lv3">배송 요청사항</dt>
-                                <dd class="text-t-lv1">빠른 배송 부탁드립니다.</dd>
-                            </dl>
-                        </div>
-                    </div> -->
-                    <Button v-if="card['showButton'] && index === cards.length -1" 
-                        :label="card['buttonText']" :severity="card['buttonType']"  @click="getBtnProcess(card['buttonType'], card['edCd'])" class="mt-4 w-full"/>
-                </div>
-            
+            <div class="order-button">
+                <!-- @2025-09-02 발주 배송요청 사항 정보 요청 -->
+                <!-- <div class="bg-bg-lv2 rounded-[0.25rem] p-3 mt-4">
+                    <div class="flex justify-evenly flex-wrap items-center [&_dl]:flex [&_dl]:flex-col [&_dl]:gap-1 [&_dl]:items-center text-11 sm:text-13">
+                        <dl>
+                            <dt class="text-t-lv3">배송</dt>
+                            <dd class="text-t-lv1">
+                                <span class="inline-block px-1.5 font-medium text-white rounded-sm bg-p-lv4">직배</span>
+                            </dd>
+                        </dl>
+                        <hr class="w-[1px] h-[1.5rem] bg-l-lv4" />
+                        <dl>
+                            <dt class="text-t-lv3">주문일</dt>
+                            <dd class="text-t-lv1">01.08 (목) 17:30</dd>
+                        </dl>
+                        <hr class="w-[1px] h-[1.5rem] bg-l-lv4" />
+                        <dl>
+                            <dt class="text-t-lv3">출고일</dt>
+                            <dd class="text-t-lv1">01.08 (목)</dd>
+                        </dl>
+                        <dl class="mt-4 w-full">
+                            <dt class="text-t-lv3">배송 요청사항</dt>
+                            <dd class="text-t-lv1">빠른 배송 부탁드립니다.</dd>
+                        </dl>
+                    </div>
+                </div> -->
+                <Button v-if="card['showButton'] && index === cards.length -1" 
+                    :label="card['buttonText']" :severity="card['buttonType']"  @click="getBtnProcess(card['buttonType'], card['edCd'])" class="mt-4 w-full"/>
+            </div>
         </div>
     </div>
 </template>
@@ -325,5 +324,8 @@ const getAmt = (amt) => {
 </script>
 
 <style lang="scss">
-
+.custom-table-in-card {
+    margin: 0 -0.5rem;
+    width: calc(100% + 1rem);
+}
 </style>

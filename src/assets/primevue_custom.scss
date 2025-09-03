@@ -253,8 +253,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 }
 
 .custom-dialog-center{
-    //width: calc(100% - 2rem);
-    width: 246px;
+    width: calc(100% - 2rem);
     max-width: 660px;
     .p-dialog-header, .p-drawer-header{
         padding: 0.25rem;
@@ -266,7 +265,6 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     .p-dialog-close-button{
         display: none;
     }
-    
     
 }
 
@@ -769,6 +767,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     font-size: rem(13);
     font-weight: 500;
     line-height: 1.5;
+    min-height: rem(100) !important;
     border: 1px solid var(--p-textarea-border-color);
     outline: 0;
     &:hover, &:focus {
@@ -837,6 +836,9 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
          padding: 10px;
         .p-button-label {
             font-size: 0.8175rem;
+        }
+        &:hover, &:focus {
+            border: none !important; 
         }
     }
 }
@@ -908,8 +910,12 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 
 .danger-button {
     .p-button.p-button-sm {
-        padding: 4px !important;
+        padding: rem(4) !important;
         border-radius: 2px !important;
+        .p-button-label {
+            font-size: rem(11);
+            font-weight: 400;
+        }
     }
 }
 
@@ -1106,7 +1112,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 
 .p-button-secondary:not(:disabled):hover{
     background-color: #e2e8f0;
-    border: none !important;
+    //border: none !important;
 }
 .p-button:not(.p-button-outlined):hover {
     //border: none !important;

@@ -4,7 +4,7 @@
         <Button label="제품 추가 등록" size="small" class="esti-button" @click="getEstiAdd"/> -->
     </div>
     <main class="pb-52 main-bottom-fixed-pd" ref="mainRef">
-        <section class="p-4">
+        <section class="p-4 pt-2">
             <div class="flex flex-col gap-5">
                 <TableCard v-for="(table, index) in esti['list']" :key="index" :title="table.title" :cards="table.cardLists"
                     :columns="table.columns" :rows="table.rows" :tags="table.tags" :showTag="table.showTag" :showButton="table.showButton"
@@ -18,13 +18,13 @@
                     <div class="flex relative justify-between items-center input-custom">
                         <p class="w-[100px] text-13 flex-none text-t-lv3">할인 금액</p>
                         <InputText class="*:!text-blue-500 inputNumber-color *:!rounded-sm !w-1/3" @click="getDisAmtPopup" :value="getAmtInfo('dcAmt')" readonly/>
-                        <span class="absolute right-4 bottom-1/2 text-blue-500 translate-y-1/2 text-13">원</span>
+                        <span class="absolute right-3 bottom-1/2 text-blue-500 translate-y-1/2 text-13">원</span>
                     </div>
 
                     <div class="flex relative justify-between items-center input-custom">
                         <p class="w-[100px] text-13 flex-none text-t-lv3">추가 금액</p>
                         <InputText class="*:!text-red-500 inputNumber-color *:!rounded-sm !w-1/3" @click="getPopupOpen('addAmtSet')" :value="getAmtInfo('addAmt')" readonly/>
-                        <span class="absolute bottom-1.5 right-4 text-red-500 text-13">원</span>
+                        <span class="absolute right-3 bottom-1/2 text-red-500 translate-y-1/2 text-13">원</span>
                     </div>
                 </div>
                 <div class="flex justify-between my-5 custom-toggle">

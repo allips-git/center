@@ -10,10 +10,13 @@
             <div v-if="showtoggle" class="custom_accordion">
                 <Accordion value="0">
                     <AccordionPanel class="*:pb-0 " value="0" >
-                        <AccordionHeader class="!gap-2 !px-0 !mb-5">
+                        <AccordionHeader class="!gap-1.5 !px-0 !mb-5">
                             <p class="pb-0 w-full text-base">{{ title }}</p>
-                            <p class="flex-none pb-0 text-sm font-bold">더보기</p>
-                            </AccordionHeader>
+                            <p class="flex-none pb-0 font-normal text-13 text-t-lv4">더보기</p>
+                            <template #toggleicon>
+                                <IconArrowDropDown class="w-6 h-6 text-t-lv3" />
+                            </template>
+                        </AccordionHeader>
                         <AccordionContent class="w-full *:!px-0">
                             <slot></slot>
                         </AccordionContent>
@@ -67,6 +70,7 @@ import AccordionPanel from 'primevue/accordionpanel';
 import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
 import { getCommas } from '@/assets/js/function';
+import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
 
 defineProps({
     title       : String,
