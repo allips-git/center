@@ -25,6 +25,7 @@ interface Msg {
 
 interface State {
     mhCd        : string;
+    mbCd        : string;
     msCd        : string;
     type        : 'I' | 'U';
     info        : Info;
@@ -58,6 +59,7 @@ const getMsg = (): Msg => {
 export const useMsgStore = defineStore('msg', {
     state: (): State => ({
         mhCd        : '',
+        mbCd        : '',
         msCd        : '',
         type        : 'I',
         info        : getInfo(),
@@ -81,6 +83,7 @@ export const useMsgStore = defineStore('msg', {
 
                 this.type = 'U';
                 this.info = res.data.info;
+                // this.info.contents = this.info.contents.replaceAll('${ceNm}', login.ceNm).replaceAll('${name}', login.name);
             }
             catch(e)
             {
@@ -110,6 +113,6 @@ export const useMsgStore = defineStore('msg', {
     persist: {
         key     : 'msg',
         storage : localStorage,
-        paths   : ['type', 'mhCd', 'msCd']
+        paths   : ['type', 'mhCd', 'mbCd', 'msCd']
     }
 });

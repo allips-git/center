@@ -300,6 +300,7 @@ const getEstiSave = () => {
                 else
                 {
                     await client.getDetail();
+                    getPopupOpen('estiList');
                 }
 
                 getPopupClose('itemList', false);

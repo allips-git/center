@@ -339,6 +339,7 @@ const getEstiAdd = async () => {
 const getClientModify = async () => {
     getPopupOpen('clientSet');
     await client.getReset();
+    await client.getGb('Y');
     await client.getInfo();
 }
 
