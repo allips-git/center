@@ -758,7 +758,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     font-size: 12px;
 }
 .msg-input-custom {
-    &.p-textarea{
+    //&.p-textarea{}
     padding-block: rem(16);
     padding-inline: rem(16);
     padding-bottom: rem(60) !important;
@@ -767,13 +767,12 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     font-size: rem(13);
     font-weight: 500;
     line-height: 1.5;
-    min-height: rem(100) !important;
-    border: 1px solid var(--p-textarea-border-color);
+    min-height: rem(200) !important;
+    border: 1px solid var(--p-inputtext-border-color);
     outline: 0;
     &:hover, &:focus {
-        border-color: var(--p-textarea-focus-border-color);
+        border-color: var(--p-inputtext-focus-border-color);
     }
-}
 }
 .tag-shop, .tag-name {
     display: inline-block;

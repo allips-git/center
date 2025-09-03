@@ -71,8 +71,8 @@
           <div
             class="flex absolute right-[1px] bottom-[1px] left-[1px] rounded-br-[0.125rem] rounded-bl-[0.125rem] py-1 px-2 gap-1 items-center bg-gray-100/50"
           >
-            <button class="tag-shop" @click="getButtons('ceNm')">{{ login.ceNm }}</button>
-            <button class="tag-name" @click="getButtons('name')">{{ login.name }}</button>
+            <button v-if="login.ceNm" class="tag-shop" @click="getButtons('ceNm')">{{ login.ceNm }}</button>
+            <button v-if="login.name" class="tag-name" @click="getButtons('name')">{{ login.name }}</button>
           </div>
         </div>
 
