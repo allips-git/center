@@ -1,20 +1,46 @@
 <template>
-    <BackHeader title="메세지 저장" />
-    <main class="pb-48 w-full">
-        <section class="flex justify-between items-start px-4 pb-5">
-            <div class="flex flex-wrap gap-1 items-center">
-                <Button label="고객 선택" icon="pi pi-plus" outlined size="small" rounded @click="getPopupOpen('clientChoice')" class="!rounded-full !gap-1 !pr-2.5" v-if="msg.clientList.length === 0" />
-                <div class="px-2.5 py-1.5 text-xs font-bold rounded-full border text-t-lv2 border-l-lv4" v-if="msg.clientList.length > 0" @click="getPopupOpen('clientChoice')">
-                    {{ msg.clientList.length === 1 ? msg.clientList[0]['clientNm'] : msg.clientList[0]['clientNm']+' 외 '+(msg.clientList.length - 1)+'명'  }} <strong class="font-bold underline underline-offset-2 decoration-[1px] text-p-lv4">변경</strong>
-                </div>
-            </div>
-            <div class="flex flex-none gap-1 items-center">
-                <Button label="메세지 저장" size="small" @click="getSave"></Button>
-                <Button v-if="msg.type === 'U' && msg.msCd !== 'N'" label="삭제" size="small" severity="danger" @click="getDelete"></Button>
-            </div>
-        </section>
-        <section class="flex flex-col gap-6 mt-5">
-            <!-- <div class="px-4">
+  <BackHeader title="메세지 저장" />
+  <main class="pb-48 w-full">
+    <section class="flex justify-between items-start px-4 pb-5">
+      <div class="flex flex-wrap gap-1 items-center">
+        <Button
+          label="고객 선택"
+          icon="pi pi-plus"
+          outlined
+          size="small"
+          rounded
+          @click="getPopupOpen('clientChoice')"
+          class="!rounded-full !gap-1 !pr-2.5"
+          v-if="msg.clientList.length === 0"
+        />
+        <div
+          class="px-2.5 py-1.5 text-xs font-bold rounded-full border text-t-lv2 border-l-lv4"
+          v-if="msg.clientList.length > 0"
+          @click="getPopupOpen('clientChoice')"
+        >
+          {{
+            msg.clientList.length === 1
+              ? msg.clientList[0]['clientNm']
+              : msg.clientList[0]['clientNm'] + ' 외 ' + (msg.clientList.length - 1) + '명'
+          }}
+          <strong class="font-bold underline underline-offset-2 decoration-[1px] text-p-lv4"
+            >변경</strong
+          >
+        </div>
+      </div>
+      <div class="flex flex-none gap-1 items-center">
+        <Button label="메세지 저장" size="small" @click="getSave"></Button>
+        <Button
+          v-if="msg.type === 'U' && msg.msCd !== 'N'"
+          label="삭제"
+          size="small"
+          severity="danger"
+          @click="getDelete"
+        ></Button>
+      </div>
+    </section>
+    <section class="flex flex-col gap-6 mt-5">
+      <!-- <div class="px-4">
                 <IftaLabel class="w-full">
                     <InputText id="title" v-model="msg.info.title" class="w-full"/>
                     <label>문자 제목</label>
@@ -23,9 +49,9 @@
             </div>
             <div class="!my-0 gray-bar"></div> -->
 
-            <div class="px-4">
-                <!-- 기존 문자 내용 -->
-                <!-- <div class="overflow-hidden relative">
+      <div class="px-4">
+        <!-- 기존 문자 내용 -->
+        <!-- <div class="overflow-hidden relative">
                     <IftaLabel class="w-full">
                         <Textarea id="contents" v-model="msg.info.contents" class="w-full" autoResize rows="15" cols="30"/>
                     </IftaLabel>
@@ -35,195 +61,268 @@
                     </div>
                 </div> -->
 
-                <div class="overflow-hidden relative">
-                    <div contenteditable="true" class="msg-input-custom" ref="editorEl" @input="getContents"></div>
-                    <div class="flex absolute right-[1px] bottom-[1px] left-[1px] rounded-br-[0.125rem] rounded-bl-[0.125rem] py-1 px-2 gap-1 items-center bg-gray-100/50">
-                        <button class="tag-shop" @click="getButtons('ceNm')">{{ login.ceNm }}</button>
-                        <button class="tag-name" @click="getButtons('name')">{{ login.name }}</button>  
-                    </div>
-                </div>
+        <div class="overflow-hidden relative">
+          <div
+            contenteditable="true"
+            class="msg-input-custom"
+            ref="editorEl"
+            @input="getContents"
+          ></div>
+          <div
+            class="flex absolute right-[1px] bottom-[1px] left-[1px] rounded-br-[0.125rem] rounded-bl-[0.125rem] py-1 px-2 gap-1 items-center bg-gray-100/50"
+          >
+            <button class="tag-shop" @click="getButtons('ceNm')">{{ login.ceNm }}</button>
+            <button class="tag-name" @click="getButtons('name')">{{ login.name }}</button>
+          </div>
+        </div>
 
-                <small class="text-msg">{{ msg['msg'][`contents`] }}</small>
-                <small class="text-msg">{{ msg['msg'][`clientList`] }}</small>
-            </div>
-
-            
-            
-        </section>
-    </main>
-    <div class="z-10 flex-col bottom-fixed-btn-box">
-        <!-- <div>
+        <small class="text-msg">{{ msg['msg'][`contents`] }}</small>
+        <small class="text-msg">{{ msg['msg'][`clientList`] }}</small>
+      </div>
+    </section>
+  </main>
+  <div class="z-10 flex-col bottom-fixed-btn-box">
+    <!-- <div>
             <div class="flex gap-2 *:!text-xs mb-2">
                 <Tag severity="info" value="업체명"></Tag>
                 <Tag severity="success" value="담당자명"></Tag>
                 <Tag severity="warn" value="고객명"></Tag>
             </div>
         </div> -->
-        <div class="flex w-full gap-2 *:w-full">
-            <Button size="large"  label="문자 메세지 보내기" @click="getNavi"/>
-            <!-- <Button size="large" icon="pi pi-arrow-up-right" class="flex-none" text severity="secondary" @click="getNavi"/> -->
-        </div>
+    <div class="flex w-full gap-2 *:w-full">
+      <Button size="large" label="문자 메세지 보내기" @click="getNavi" />
+      <!-- <Button size="large" icon="pi pi-arrow-up-right" class="flex-none" text severity="secondary" @click="getNavi"/> -->
     </div>
-    <Dialog v-model:visible="popup['pop']['clientChoice']"
-        :modal=true position="bottom" class="custom-dialog-bottom"
-        @update:visible="getPopupClose('clientChoice', true)">
-        <div class="modal-backheader">
-            <Button @click="getPopupClose('clientChoice', true)" severity="contrast" text icon="pi pi-times" />
-            <h2 class="modal-backheader-title">고객 선택</h2>
-        </div>
-        <CustomerChoice/>
-    </Dialog>
+  </div>
+  <Dialog
+    v-model:visible="popup['pop']['clientChoice']"
+    :modal="true"
+    position="bottom"
+    class="custom-dialog-bottom"
+    @update:visible="getPopupClose('clientChoice', true)"
+  >
+    <div class="modal-backheader">
+      <Button
+        @click="getPopupClose('clientChoice', true)"
+        severity="contrast"
+        text
+        icon="pi pi-times"
+      />
+      <h2 class="modal-backheader-title">고객 선택</h2>
+    </div>
+    <CustomerChoice />
+  </Dialog>
 
-    <Dialog v-model:visible="popup['pop']['messageSave']"
-        :modal=true position="bottom" class="custom-dialog-bottom"
-        @update:visible="getPopupClose('messageSave', true)">
-        <div class="modal-backheader">
-            <Button @click="getPopupClose('messageSave', true)" severity="contrast" text icon="pi pi-times" />
-            <h2 class="modal-backheader-title">정보수정</h2>
-        </div>
-        <MessageSavePop/>
-    </Dialog>
+  <Dialog
+    v-model:visible="popup['pop']['messageSave']"
+    :modal="true"
+    position="bottom"
+    class="custom-dialog-bottom"
+    @update:visible="getPopupClose('messageSave', true)"
+  >
+    <div class="modal-backheader">
+      <Button
+        @click="getPopupClose('messageSave', true)"
+        severity="contrast"
+        text
+        icon="pi pi-times"
+      />
+      <h2 class="modal-backheader-title">정보수정</h2>
+    </div>
+    <MessageSavePop />
+  </Dialog>
 </template>
 
 <script setup lang="ts">
 import BackHeader from '@/components/layouts/BackHeader.vue'
 import CustomerChoice from '@/views/include/message/CustomerChoice.vue'
 import MessageSavePop from '@/views/include/message/MessageSavePop.vue'
-import IftaLabel from 'primevue/iftalabel';
-import Textarea from 'primevue/textarea';
 // import Tag from 'primevue/tag';
-import { ref, onMounted } from "vue";
-import { useConfirm } from "primevue/useconfirm";
-import { useRouter } from 'vue-router';
-import { useLoginStore, usePopupStore, useMainStore, useMsgStore } from '@/store';
-import { getAxiosData } from '@/assets/js/function';
-import { usePopup } from '@/assets/js/popup';
+import { ref, onMounted } from 'vue'
+import { useConfirm } from 'primevue/useconfirm'
+import { useRouter } from 'vue-router'
+import { useLoginStore, usePopupStore, useMainStore, useMsgStore } from '@/store'
+import { getAxiosData } from '@/assets/js/function'
+import { usePopup } from '@/assets/js/popup'
 
-const confirm   = useConfirm();
-const login     = useLoginStore();
-const popup     = usePopupStore();
-const main      = useMainStore();
-const msg       = useMsgStore();
-const router    = useRouter();
-const status    = ref(false);
+const confirm = useConfirm()
+const login = useLoginStore()
+const popup = usePopupStore()
+const main = useMainStore()
+const msg = useMsgStore()
+const router = useRouter()
+const status = ref(false)
 
-const editorEl = ref<HTMLElement | null>(null);
-const isInitialized = ref(false);
+const editorEl = ref<HTMLElement | null>(null)
+const isInitialized = ref(false)
 
-const { getPopupOpen, getPopupClose } = usePopup();
+const { getPopupOpen, getPopupClose } = usePopup()
 
 const getContents = (event: Event) => {
-    const target = event.target as HTMLElement;
-    msg.info.contents = target.innerHTML;
+  const target = event.target as HTMLElement
+
+  // 실제 값을 템플릿 변수로 변환하여 저장
+  let contents = target.innerHTML
+
+  // 정규식에서 특수문자 이스케이프 처리
+  const escapeRegExp = (string: string) => {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  }
+
+  // 업체명을 템플릿 변수로 변환
+  const ceNmPattern = `<span class="tag-shop" contenteditable="false">${escapeRegExp(
+    login.ceNm
+  )}</span>`
+  contents = contents.replace(
+    new RegExp(ceNmPattern, 'g'),
+    '<span class="tag-shop" contenteditable="false">${ceNm}</span>'
+  )
+
+  // 담당자명을 템플릿 변수로 변환
+  const namePattern = `<span class="tag-name" contenteditable="false">${escapeRegExp(
+    login.name
+  )}</span>`
+  contents = contents.replace(
+    new RegExp(namePattern, 'g'),
+    '<span class="tag-name" contenteditable="false">${name}</span>'
+  )
+
+  msg.info.contents = contents
 }
 
 const getButtons = (gb: string) => {
-    if (!editorEl.value) return;
-    
-    const variableText = gb === 'ceNm' ? '${ceNm}' : '${name}';
-    const displayText = gb === 'ceNm' ? login.ceNm : login.name;
-    
-    // DOM에 span 요소 추가
-    const span = document.createElement('span');
-    span.className = gb === 'ceNm' ? 'tag-shop' : 'tag-name';
-    span.textContent = displayText;
-    span.setAttribute('contenteditable', false); // 편집 불가
-    
-    // 공백 노드 생성
-    const spaceNode = document.createTextNode(' ');
-    
-    editorEl.value.appendChild(span);
-    editorEl.value.appendChild(spaceNode);
-    
-    // 에디터에 포커스하고 커서를 공백 뒤로 이동
-    editorEl.value.focus();
-    
-    const selection = window.getSelection();
-    const range = document.createRange();
-    range.setStartAfter(spaceNode);
-    range.collapse(true);
-    selection?.removeAllRanges();
-    selection?.addRange(range);
-    
-    // contents 업데이트
-    msg.info.contents += variableText;
+  if (!editorEl.value) return
+
+  const variableText =
+    gb === 'ceNm'
+      ? '<span class="tag-shop" contenteditable="false">${ceNm}</span>'
+      : '<span class="tag-name" contenteditable="false">${name}</span>'
+  const displayText = gb === 'ceNm' ? login.ceNm : login.name
+
+  // 현재 선택 위치 가져오기
+  const selection = window.getSelection()
+  let range: Range
+
+  // 포커스가 에디터 내부에 있는지 확인
+  const isEditorFocused =
+    selection &&
+    selection.rangeCount > 0 &&
+    editorEl.value.contains(selection.getRangeAt(0).commonAncestorContainer)
+
+  if (!selection || selection.rangeCount === 0 || !isEditorFocused) {
+    // 에디터 외부에 포커스가 있거나 선택이 없는 경우 - 에디터 끝에 추가
+    editorEl.value.focus()
+    range = document.createRange()
+    range.selectNodeContents(editorEl.value)
+    range.collapse(false) // 끝으로 이동
+    selection?.removeAllRanges()
+    selection?.addRange(range)
+  } else {
+    // 에디터 내부에 포커스가 있는 경우 - 현재 위치에 추가
+    range = selection.getRangeAt(0)
+  }
+
+  // DOM에 span 요소 생성
+  const span = document.createElement('span')
+  span.className = gb === 'ceNm' ? 'tag-shop' : 'tag-name'
+  span.textContent = displayText
+  span.setAttribute('contenteditable', 'false') // 편집 불가
+
+  // 공백 노드 생성
+  const spaceNode = document.createTextNode(' ')
+
+  // 현재 커서 위치에 삽입
+  range.insertNode(spaceNode)
+  range.insertNode(span)
+
+  // 커서를 공백 뒤로 이동
+  range.setStartAfter(spaceNode)
+  range.collapse(true)
+  selection?.removeAllRanges()
+  selection?.addRange(range)
+
+  // contents 업데이트 - variableText를 추가하여 템플릿 변수 저장
+  msg.info.contents += variableText
 }
 
 const getDelete = () => {
-    confirm.require({
-        message     : '해당 메세지를 삭제하시겠습니까?',
-        header      : '메세지 삭제',
-        rejectProps : {
-            label       : '취소',
-            severity    : 'secondary',
-            outlined    : true
-        },
-        acceptProps : {
-            label: '삭제'
-        },
-        accept : async () => {
-            const params = {
-                msCd : msg.msCd
-            }
+  confirm.require({
+    message: '해당 메세지를 삭제하시겠습니까?',
+    header: '메세지 삭제',
+    rejectProps: {
+      label: '취소',
+      severity: 'secondary',
+      outlined: true
+    },
+    acceptProps: {
+      label: '삭제'
+    },
+    accept: async () => {
+      const params = {
+        msCd: msg.msCd
+      }
 
-            console.log(params);
+      console.log(params)
 
-            status.value = true;
+      status.value = true
 
-            try
-            {
-                const instance  = await getAxiosData();
-                await instance.post(`https://data.planorder.kr/msgV1/getDelete`, params);
-                await main.getData();
-                router.go(-1);
-            }
-            catch(e)
-            {
-                console.log(e);
-            }
+      try {
+        const instance = await getAxiosData()
+        await instance.post(`https://data.planorder.kr/msgV1/getDelete`, params)
+        await main.getData()
+        router.go(-1)
+      } catch (e) {
+        console.log(e)
+      }
 
-            status.value = false;
-        }
-    });
+      status.value = false
+    }
+  })
 }
 
 const getSave = () => {
-    if(msg.info.contents === '')
-    {
+  if (msg.info.contents === '') {
+    msg.getMsgSet('문자 내용을 입력해주세요.', 'contents')
+    getFocus('contents')
+    return false
+  }
 
-        msg.getMsgSet('문자 내용을 입력해주세요.', 'contents');
-        getFocus('contents');
-        return false;
-    }
-
-    getPopupOpen('messageSave');
+  getPopupOpen('messageSave')
 }
 
 const getFocus = (id: string) => {
-    const inputElement = document.getElementById(id);
-    if (inputElement) 
-    {
-        inputElement.focus();
-    }
+  const inputElement = document.getElementById(id)
+  if (inputElement) {
+    inputElement.focus()
+  }
 }
 
 const getNavi = () => {
-    window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'share', value: msg.info.contents }));
+  const contents = msg.info.contents
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<[^>]*>/g, '')
+    .replaceAll('&nbsp;', ' ')
+    .replaceAll('${ceNm}', login.ceNm)
+    .replaceAll('${name}', login.name)
+
+  window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'share', value: contents }))
 }
 
 onMounted(async () => {
-    if(msg.msCd !== '') {
-        await msg.getInfo();
-        // 초기 내용 설정 (한 번만)
-        if (editorEl.value && !isInitialized.value) 
-        {
-            editorEl.value.innerHTML = msg.info.contents;
-            isInitialized.value = true;
-        }
+  if (msg.msCd !== '') {
+    await msg.getInfo()
+    // 초기 내용 설정 (한 번만)
+    if (editorEl.value && !isInitialized.value) {
+      // 템플릿 변수를 실제 값으로 치환하여 표시
+      const displayContent = msg.info.contents
+        .replace(/\$\{ceNm\}/g, login.ceNm)
+        .replace(/\$\{name\}/g, login.name)
+
+      editorEl.value.innerHTML = displayContent
+      isInitialized.value = true
     }
+  }
 })
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
