@@ -242,6 +242,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .custom-dialog-util-wrap {
     .p-dialog.custom-dialog-util {
         width: 100%;
+        min-height: rem(100);
         margin: 0 !important;
         border-radius: rem(16) rem(16) 0 0 !important;
         overflow: hidden;
@@ -258,6 +259,25 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         .p-dialog.custom-dialog-util {
             width: rem(480);
             border-radius: rem(12) !important;
+        }
+    }
+}
+.custom-dialog-util {
+    .v3-emoji-picker {
+        width: 100%;
+        height: rem(400);
+        box-shadow: none;
+        .v3-emojis button {
+            font-size: rem(24) !important;
+            flex-basis: calc(100% / 7) !important;
+            max-width: calc(100% / 7) !important;
+            @at-root html.ios & {
+                font-size: rem(28) !important;
+            }
+            @media (min-width: $breakpoint-sm) { 
+                flex-basis: 10% !important;
+                max-width: 10% !important;
+            }
         }
     }
 }
@@ -441,7 +461,9 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .p-button-text.p-button-contrast {
     width: 20px;
 }
-
+.p-button-text:not(.p-button-outlined) {
+    border: 0 !important;
+}
 
 .input-custom {
     .p-inputtext {
@@ -702,8 +724,6 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         }
     }
 }
-
-
 
 .p-textarea.p-placeholder{
     font-size: 12px;
@@ -1053,6 +1073,9 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 
 .p-button-secondary:not(:disabled):hover{
     background-color: #e2e8f0;
+    border: none !important;
+}
+.p-button:not(.p-button-outlined):hover {
     border: none !important;
 }
 
@@ -1444,25 +1467,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
-.custom-dialog-util {
-    .v3-emoji-picker {
-        width: 100%;
-        height: rem(400);
-        box-shadow: none;
-        .v3-emojis button {
-            font-size: rem(24) !important;
-            flex-basis: calc(100% / 7) !important;
-            max-width: calc(100% / 7) !important;
-            @at-root html.ios & {
-                font-size: rem(28) !important;
-            }
-            @media (min-width: $breakpoint-sm) { 
-                flex-basis: 10% !important;
-                max-width: 10% !important;
-            }
-        }
-    }
-}
+
 .p-selectbutton {
     .p-togglebutton {
         padding: rem(8) rem(12);

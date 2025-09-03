@@ -163,14 +163,7 @@
             </div>
         </template>
         <div class="md:pt-4">
-            <div class="relative w-full h-[180px] md:h-[180px] bg-[#FFFBE2] border border-l-lv4 rounded-sm">
-                <Vue3Signature  ref="signature" :sigOption="state.option" :w="'100%'" :h="'100%'"
-                :disabled="state.disabled" class="example"></Vue3Signature>
-                <div class="flex absolute top-0 right-0 gap-1 p-1 z-1 btn-group-signature">
-                    <Button size="small" icon="pi pi-eraser" label="이전" variant="text" class="[&_.p-button-icon]:text-red-500" @click="undo" />
-                    <Button size="small" icon="pi pi-refresh" label="다시 그리기" variant="text"  @click="clear" />
-                </div>
-            </div>
+            <SignaturePad />
             <p class="mt-1.5 px-8 text-10 md:text-xs leading-[1.34] text-t-lv2 text-center break-keep">본인은 본 계약서 및 관련 약관의 모든 내용을 확인하였으며, 전자서명을 통해 이에 동의함을 확인합니다.</p>
             <div class="grid grid-cols-2 gap-2 mt-6 btn-2-layout-box">
                 <Button size="large" severity="secondary" label="취소"/>
@@ -181,38 +174,15 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 import { onMounted } from 'vue'
 import Textarea from 'primevue/textarea';
 import Button from 'primevue/button';
 import Dialog from "primevue/dialog";
+import SignaturePad from "@/views/include/SignaturePad.vue";
 import { usePopupStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
-import Vue3Signature from "vue3-signature"
-
-const state = reactive({
-  count: 0,
-  option: {
-    penColor: "rgb(0, 0, 0)",
-    backgroundColor: "transparent"
-  },
-  disabled: false
-})
-
-const signature = ref(null)
-
-const save = (t) => {
-  console.log(signature.value.save(t))
-}
-
-const clear = () => {
-  signature.value.clear()
-}
-
-const undo = () => {
-  signature.value.undo();
-}
 
 const mainRef = ref(null);
 const mainWidth = ref(0);
@@ -250,25 +220,3 @@ const terms = ref(`
 7. 계약서의 내용을 충분히 이해하였음을 확인합니다.
 `)
 </script>
-
-<style lang="scss">
-.btn-group-signature {
-    .p-button {
-        border-radius: 0.25rem !important;
-        background: var(--white);
-        gap: 0.25rem;
-        &:hover, &:focus {
-            background: var(--white) !important;
-        }
-        .p-button-icon {
-            color: var(--t-lv3);
-            font-size: 0.75rem;
-        }
-        .p-button-label {
-            color: var(--t-lv3);
-            font-size: 0.625rem;
-            font-weight: 700;
-        }
-    }
-}
-</style>
