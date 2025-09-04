@@ -87,6 +87,8 @@ const isActive = (index: number) => {
 
 const getItemChoice = async (icCd: string) => {
     product['icCd'] = icCd;
+    await esti.getOptionReset();
+    
     getPopupOpen('itemSet');
     
     const result = await product.getInfo();
