@@ -19,9 +19,10 @@ import CustomerEstiDetail from "@/views/include/customer/EstiDetail.vue";
 import CustomerChatList from "@/views/customer/ChatRoomModal.vue";
 import CustomerEstiList from "@/views/customer/SpecsList.vue";
 import EstimateModal from "@/views/customer/EstimateModal.vue";
-import EstiDoc from "@/views/customer/EstiDoc.vue";
+// import EstiDoc from "@/views/customer/EstiDoc.vue";
 import ConmateModal from "@/views/customer/ConmateModal.vue";
-import ConDoc from "@/views/customer/ConDoc.vue";
+// import ConDoc from "@/views/customer/ConDoc.vue";
+import Doc from "@/views/include/setting/ContractPreview.vue";
 import CustomerOrderList from "@/views/customer/OrderList.vue";
 import CustomerPayList from "@/views/customer/PayList.vue";
 import OutOrderDoc from "@/views/customer/OutOrderDoc.vue";
@@ -190,8 +191,8 @@ const routes = [
     {
         path: "/customer/estiDoc",
         name: "EstiDoc",
-        component: EstiDoc,
-        meta: { title: '견적서 공유 화면', gubun: 'Y' }
+        component: Doc,
+        meta: { title: '견적서 공유 화면', gubun: 'Y', gb : 'E' }
     },
     {
         path: "/customer/outOrderMate",
@@ -208,8 +209,8 @@ const routes = [
     {
         path: "/customer/conDoc",
         name: "ConDoc",
-        component: ConDoc,
-        meta: { title: '계약서 공유 화면', gubun: 'Y' }
+        component: Doc,
+        meta: { title: '계약서 공유 화면', gubun: 'Y', gb : 'C' }
     },
     {
         path: "/customer/orderList",

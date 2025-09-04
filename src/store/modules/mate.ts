@@ -26,7 +26,7 @@ interface List {
 interface Info {
     sign                : string;
     ceoNm               : string;
-    conPeron            : string;
+    conPerson           : string;
     tel                 : string;
     addr                : string;
     addrDetail          : string;
@@ -39,6 +39,8 @@ interface Info {
     clientAddr          : string;
     clientAddrDetail    : string;
     clientSign          : string;
+    clientSignFile      : string | File | null;
+    clientSignImage     : string;
 }
 
 interface PayList {
@@ -54,6 +56,10 @@ interface PayList {
 interface State {
     base    : 'Y' | 'N';
     gb      : 'E' | 'C';
+    view    : 'Y' | 'N';
+    sizeYn  : 'Y' | 'N';
+    unitYn  : 'Y' | 'N';
+    signYn  : 'Y' | 'N';
     info    : Info;
     payList : Amt;
 }
@@ -102,7 +108,7 @@ const getInfo = (): Info => {
     return {
         sign                : '',
         ceoNm               : '',
-        conPeron            : '',
+        conPerson           : '',
         tel                 : '',
         addr                : '',
         addrDetail          : '',
@@ -114,7 +120,9 @@ const getInfo = (): Info => {
         clientTel           : '',
         clientAddr          : '',
         clientAddrDetail    : '',
-        clientSign          : ''
+        clientSign          : '',
+        clientSignFile      : null,
+        clientSignImage     : ''
     }
 }
 
@@ -140,6 +148,10 @@ export const useMateStore = defineStore('mate', {
     state: (): State => ({
         base    : 'Y',
         gb      : 'C',
+        view    : 'Y',
+        sizeYn  : 'N',
+        unitYn  : 'N',
+        signYn  : 'N',
         info    : getInfo(),
         payList : getPayList()
     }),
@@ -165,6 +177,11 @@ export const useMateStore = defineStore('mate', {
 
                 this.base = 'N';
                 this.gb   = 'E';
+                this.view = yn;
+
+                this.sizeYn = res.data.info.sizeYn;
+                this.unitYn = res.data.info.unitYn;
+                this.signYn = res.data.info.signYn;
 
                 this.info.sign       = filePath + res.data.info.file;
                 this.info.ceoNm      = res.data.info.ceNm;
@@ -172,24 +189,51 @@ export const useMateStore = defineStore('mate', {
                 this.info.addr       = res.data.info.addr;
                 this.info.addrDetail = res.data.info.addrDetail;
                 this.info.estiDt     = getConvertDate(new Date(res.data.info.stDt), 'yy.mm.dd');
+                this.info.clientSet  = 'N';
 
                 this.info.list = res.data.estiList.map(item => {
                     let cnt = 0;
+                    const rows = [];
 
                     switch(item.unit)
                     {
                         case '001':
                             if(item.division === 'D')
                             {
-                                cnt = item.detail.reduce((c, i) => c + Number(i.cnt), 0);
+                                cnt  = item.detail.reduce((c, i) => c + Number(i.cnt), 0);
+                                item.detail.map(detail => {
+                                    rows.push({
+                                        width   : detail.width,
+                                        height  : detail.height,
+                                        handle  : detail.handle === '' ? detail.handle : (detail.handle === 'L' ? '좌' : '우'),
+                                        cnt     : detail.cnt,
+                                        unit    : detail.size
+                                    })
+                                })
                             }
                             else
                             {
                                 cnt = Number(item.leftCnt) + Number(item.rightCnt);
+                                rows.push({
+                                    width   : item.width,
+                                    height  : item.height,
+                                    handle  : '',
+                                    cnt     : `좌${item.leftCnt} / 우${item.rightCnt}`,
+                                    unit    : item.totalUnit
+                                })
                             }
                         break;
                         case '002': case '003': case '004': case '005': case '006':
                             cnt = item.cnt;
+                            item.detail.map(detail => {
+                                rows.push({
+                                    width   : detail.width,
+                                    height  : detail.height,
+                                    handle  : '',
+                                    cnt     : detail.cnt,
+                                    unit    : item.totalUnit
+                                })
+                            })
                         break;
                     }
 
@@ -199,18 +243,14 @@ export const useMateStore = defineStore('mate', {
                         cnt     : cnt,
                         amt     : Number(item.totalSaleAmt) + Number(item.totalSaleTax),
                         unitNm  : item.unitNm,
-                        spec    : item.detail.map(detail => {
-                            return {
-                                width   : detail.width,
-                                height  : detail.height,
-                                handle  : detail.handle === '' ? detail.handle : (detail.handle === 'L' ? '좌' : '우'),
-                                cnt     : detail.cnt,
-                                unit    : detail.size
-                            }
-                        }),
-                        option  : []
+                        spec    : rows,
+                        option  : item.option.map(option => {
+                            return option.itemNm + ' / ' + option.icNm
+                        })
                     }
                 })
+
+                console.log(this.info.list);
 
                 if(res.data['amtList'].length === 0)
                 {
@@ -238,6 +278,134 @@ export const useMateStore = defineStore('mate', {
                 console.log(e);
             }
         },
+        async getConMate(params, yn: Y | N = 'Y')
+        {
+            let res;
+            params['yn'] = yn;
+
+            try
+            {
+                if(yn === 'N')
+                {
+                    res = await axios.post(`https://data.planorder.kr/estiV1/getConMateInfo`, params);
+                }
+                else
+                {
+                    const instance  = await getAxiosData();
+                    res = await instance.post(`https://data.planorder.kr/estiV1/getConMateInfo`, params);
+                }
+
+                console.log(res);
+
+                this.base = 'N';
+                this.gb   = 'C';
+                this.view = yn;
+
+                this.sizeYn = res.data.info.sizeYn;
+                this.unitYn = res.data.info.unitYn;
+                this.signYn = res.data.info.signYn;
+
+                this.info.sign       = filePath + res.data.info.file;
+                this.info.ceoNm      = res.data.info.ceNm;
+                this.info.tel        = res.data.info.tel;
+                this.info.addr       = res.data.info.addr;
+                this.info.addrDetail = res.data.info.addrDetail;
+                this.info.estiDt     = getConvertDate(new Date(res.data.info.stDt), 'yy.mm.dd');
+                this.info.conDt      = getConvertDate(new Date(res.data.info.conDt), 'yy.mm.dd');
+                this.info.conPerson  = res.data.info.conPerson;
+                this.info.clientSet  = res.data.info.clientSign === '' ? 'N' : 'Y';
+                this.info.clientNm   = res.data.info.clientNm;
+                this.info.clientTel  = res.data.info.clientTel;
+                this.info.clientAddr = res.data.info.clientAddr;
+                
+                this.info.clientAddrDetail  = res.data.info.clientAddrDetail;
+                this.info.clientSignImage   = filePath + res.data.info.clientSign;
+
+                this.info.list = res.data.estiList.map(item => {
+                    let cnt = 0;
+                    const rows = [];
+
+                    switch(item.unit)
+                    {
+                        case '001':
+                            if(item.division === 'D')
+                            {
+                                cnt  = item.detail.reduce((c, i) => c + Number(i.cnt), 0);
+                                item.detail.map(detail => {
+                                    rows.push({
+                                        width   : detail.width,
+                                        height  : detail.height,
+                                        handle  : detail.handle === '' ? detail.handle : (detail.handle === 'L' ? '좌' : '우'),
+                                        cnt     : detail.cnt,
+                                        unit    : detail.size
+                                    })
+                                })
+                            }
+                            else
+                            {
+                                cnt = Number(item.leftCnt) + Number(item.rightCnt);
+                                rows.push({
+                                    width   : item.width,
+                                    height  : item.height,
+                                    handle  : '',
+                                    cnt     : `좌${item.leftCnt} / 우${item.rightCnt}`,
+                                    unit    : item.totalUnit
+                                })
+                            }
+                        break;
+                        case '002': case '003': case '004': case '005': case '006':
+                            cnt = item.cnt;
+                            item.detail.map(detail => {
+                                rows.push({
+                                    width   : detail.width,
+                                    height  : detail.height,
+                                    handle  : '',
+                                    cnt     : detail.cnt,
+                                    unit    : item.totalUnit
+                                })
+                            })
+                        break;
+                    }
+
+                    return {
+                        itemNm  : item.colorTitle,
+                        icNm    : '',
+                        cnt     : cnt,
+                        amt     : Number(item.totalSaleAmt) + Number(item.totalSaleTax),
+                        unitNm  : item.unitNm,
+                        spec    : rows,
+                        option  : item.option.map(option => {
+                            return option.itemNm + ' / ' + option.icNm
+                        })
+                    }
+                })
+
+                console.log(this.info.list);
+
+                if(res.data['amtList'].length === 0)
+                {
+                    this.payList = getPayList();
+                }
+                else
+                {
+                    res.data['amtList'].map((amt) => {
+                        this.getPayAmt(amt['amtGb'], Number(amt['amt']), amt['memo']);
+                    });
+                }
+
+                this.getItemAmt('itemAmt', Number(res.data['itemAmt']));
+                this.getItemAmt('itemTax', Number(res.data['itemTax']));
+                this.getItemAmt('optionAmt', Number(res.data['optionAmt']));
+                this.getItemAmt('procAmt', Number(res.data['procAmt']));
+                this.getItemAmt('bprocAmt', Number(res.data['bprocAmt']));
+                this.getItemAmt('shapeAmt', Number(res.data['shapeAmt']));
+                this.getItemAmt('heightAmt', Number(res.data['heightAmt']));
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
+        },
         getItemAmt(name: string, amt: number)
         {
             const item = this.payList.find(item => item.name === name);
@@ -257,6 +425,11 @@ export const useMateStore = defineStore('mate', {
                 item.memo = memo;
             }
         },
+        getFile(file: File, image: string)
+        {
+            this.info.clientSignFile  = file;
+            this.info.clientSignImage = image;
+        },
         getReset()
         {
             this.base       = 'N';
@@ -271,19 +444,20 @@ export const useMateStore = defineStore('mate', {
             this.info = {
                 sign                : '@/assets/img/img-seal.png',
                 ceoNm               : '하현재',
-                conPeron            : '홍길동',
+                conPerson           : '홍길동',
                 tel                 : '010-3445-2105',
                 addr                : '부산광역시 수영구 수영로 411-1',
                 addrDetail          : '디자인윈도우',
                 estiDt              : '2025.01.18',
                 conDt               : '2025.02.18',
                 list                : getList(),
-                clientSet           : 'Y',
+                clientSet           : 'N',
                 clientNm            : '홍길동',
                 clientTel           : '010-3445-2105',
                 clientAddr          : '부산광역시 수영구 411-1',
                 clientAddrDetail    : '디자인윈도우',
-                clientSign          : '@/assets/img/img-seal.png'
+                clientSignFile      : '',
+                clientSignImage     : '@/assets/img/img-seal.png'
             };
             this.payList = [
                 {name : 'itemAmt',      amtGb : '', title: '상품 금액',         amt: 603253, red: false, blue: false, memo : ''},

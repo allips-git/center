@@ -193,16 +193,20 @@ const getSecondBtnText = () => {
     return text;
 };
 
-const getFirstBtnClick = () => {
+const getFirstBtnClick = async () => {
     esti.getEmCd(props['info']['emCd']);
 
     switch(props.info['stCd'])
     {
         case '002':
-            getPopupOpen('estiMate');
+            await mate.getReset();
+            await mate.getEstiMate({ emCd : esti['emCd'] });
+            await getPopupOpen('estiMate');
         break;
         case '003':
-            getPopupOpen('conMate');
+            await mate.getReset();
+            await mate.getConMate({ emCd : esti['emCd'] });
+            await getPopupOpen('conMate');
         break;
         case '006': 
             getPopupOpen('payList');
@@ -370,7 +374,9 @@ const getProcess = async (value: string) => {
         case 'C':
             if(props.info['stCd'] !== '002')
             {
-                getPopupOpen('conMate');
+                await mate.getReset();
+                await mate.getConMate({ emCd : esti['emCd'] });
+                await getPopupOpen('conMate');
             }
             else
             {
