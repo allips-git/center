@@ -41,14 +41,15 @@
                         <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
                     </template>
                 </Select>
-                <label class="whitespace-nowrap">사용량({{ getUsageVal() }})</label>
+                <label class="whitespace-nowrap">사용량{{ getUsageVal() }}</label>
             </IftaLabel>
 
             <div>
                 <div class="relative">
                     <IftaLabel class="flex-1 min-w-0">
-                    <label class="accent">최종({{ getRealSize() + esti['common']['unitNm'] }})</label>
-                    <InputText v-keyfilter.money inputmode="decimal" id="cSize" v-model="esti['curtain']['size']" class="w-full text-lg text-center text-sky-500" @input="esti.getUnitCalc('Y')" />
+                    <label class="accent">최종{{ getRealSize() + esti['common']['unitNm'] }}</label>
+                    <InputText v-keyfilter.money inputmode="decimal" id="cSize" v-model="esti['curtain']['size']" :readonly="esti['common']['unit'] === '003' || esti['common']['unit'] === '005' ? false : true"
+                        class="w-full text-lg text-center text-sky-500" @input="esti.getUnitCalc('Y')" />
                 </IftaLabel>
                 <!-- <span class="absolute right-2.5 bottom-[0.625rem] text-xs text-t-lv1">{{ esti['common']['unitNm'] }}</span> -->
                 </div>
@@ -141,31 +142,18 @@ const getRealSize = () => {
     switch(esti['common']['unit'])
     {
         case '003': case '005':
-            {
-                const width         = Number(esti['common']['width']);
-                const uselMaterial  = Number(esti['curtain']['use']);
-                const los           = Number(esti['curtain']['los']);
-                const pokSpec       = Number(esti['curtain']['pokSpec']);
+        {
+            const width         = Number(esti['common']['width']);
+            const uselMaterial  = Number(esti['curtain']['use']);
+            const los           = Number(esti['curtain']['los']);
+            const pokSpec       = Number(esti['curtain']['pokSpec']);
 
-                const value = width === 0 ? 0 : ((width * uselMaterial + los) / pokSpec);
+            const value = width === 0 ? 0 : ((width * uselMaterial + los) / pokSpec);
 
-                return value.toFixed(2);
-            }
-        case '002':
-            {
-                const width         = Number(esti['common']['width']);
-                const uselMaterial  = Number(esti['curtain']['use']);
-                const los           = Number(esti['curtain']['los']);
-
-                const value = width === 0 ? 0 : (width * uselMaterial + los) / 90;
-
-                return value.toFixed(2);
-            }
-        case '006':
-            {
-                return Number(esti['common']['width']);
-            }
-        
+            return `(${value.toFixed(2)})`;
+        }
+        default:
+            return '';
     }
 }
 
@@ -240,31 +228,26 @@ const getShape = () => {
 
 const getUsageVal = () => {
     let size = 0;
-    if(esti['common']['unit'] === '003')
+    switch(esti['common']['unit'])
     {
-        const width         = Number(esti['common']['width']);
-        const uselMaterial  = Number(esti['curtain']['use']);
-        const los           = esti['curtain']['proc'] === '001' ? (Number(esti['curtain']['los']) * 2) : Number(esti['curtain']['los']);
-        const pokSpec       = Number(esti['curtain']['pokSpec']);
+        case '003': case '005':
+        {
+            const width         = Number(esti['common']['width']);
+            const uselMaterial  = Number(esti['curtain']['use']);
+            const los           = esti['curtain']['proc'] === '001' ? (Number(esti['curtain']['los']) * 2) : Number(esti['curtain']['los']);
+            const pokSpec       = Number(esti['curtain']['pokSpec']);
 
-        const value = width === 0 ? 0 : ((width * uselMaterial + los) / pokSpec);
+            const value = width === 0 ? 0 : ((width * uselMaterial + los) / pokSpec);
 
-        size = value.toFixed(2);
+            size = value.toFixed(2);
+
+            const val  = (Number(size) * Number(esti['curtain']['pokSpec'])) / Number(esti['common']['width']);
+
+            return `(${Math.round(val * 10) / 10})`;
+        }
+        default:
+        return '';
     }
-    else
-    {
-        const width         = Number(esti['common']['width']);
-        const uselMaterial  = Number(esti['curtain']['use']);
-        const los           = esti['curtain']['proc'] === '001' ? (Number(esti['curtain']['los']) * 2) : Number(esti['curtain']['los']);
-
-        const value = width === 0 ? 0 : (width * uselMaterial + los) / 90;
-
-        size = value.toFixed(2);
-    }
-
-    const val  = (Number(size) * Number(esti['curtain']['pokSpec'])) / Number(esti['common']['width']);
-
-    return Math.round(val * 10) / 10;
 }
 
 // const getInColor = () => {

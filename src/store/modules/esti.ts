@@ -1293,6 +1293,10 @@ export const useEstiStore = defineStore('esti', {
         {
             this[name] = info;
         },
+        getOptionReset()
+        {
+            this.common.options = [getOption()];
+        },
         getReset()
         {
             this.common     = getCommonInfo();
