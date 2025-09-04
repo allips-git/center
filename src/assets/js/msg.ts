@@ -35,14 +35,14 @@ export const joinFirstMsg = (params: JoinFirstParams): { msg: string; id: string
         return { msg : '비밀번호 확인란을 입력해주세요.', id : 'pwChk', state : false };
     }
 
-    if(params['pwd'] !== params['pwChk'])
-    {
-        return { msg : '비밀번호가 일치하지 않습니다.', id : 'pwChk', state : false };
-    }
-
     if(params['pwd'].length < 8)
     {
         return { msg : '비밀번호는 8자리 이상 입력해주세요.', id : 'pwd', state : false };
+    }
+
+    if(params['pwd'] !== params['pwChk'])
+    {
+        return { msg : '비밀번호가 일치하지 않습니다.', id : 'pwChk', state : false };
     }
 
     return { msg : '', id : '', state : true };
@@ -65,15 +65,19 @@ export const joinSecondMsg = (params: JoinSecondParams): { msg: string; id: stri
         return { msg : '센터 시설명을 입력해주세요', id : 'ceNm', state : false };
     }
 
-    if(params['einNum'] === '' )
+    if(params['einNum'] !== '')
     {
-        return { msg : '사업자 등록번호를 입력해주세요.', id : 'einNum', state : false };
+        if(params['einNum'].length !== 10)
+        {
+            return { msg : '사업자등록번호 자릿수를 확인해주세요.', id : 'einNum', state : false }; 
+        }
+        // return { msg : '사업자 등록번호를 입력해주세요.', id : 'einNum', state : false };
     }
 
-    if(params['ceoNm'] === '')
-    {
-        return { msg : '대표자 이름을 입력해주세요.', id : 'ceoNm', state : false };
-    }
+    // if(params['ceoNm'] === '')
+    // {
+    //     return { msg : '대표자 이름을 입력해주세요.', id : 'ceoNm', state : false };
+    // }
 
     if(params['addr'] === '')
     {
