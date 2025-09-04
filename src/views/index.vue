@@ -145,7 +145,7 @@
                                         <h2 class="flex justify-center items-center font-bold text-18">
                                             {{ item.title }}
                                         </h2>
-                                        <p class="font-semibold truncate text-10 text-t-lv4 sm:text-11" v-html="item.contents"></p>
+                                        <p class="font-semibold truncate text-10 text-t-lv4 sm:text-11">{{ item.description }}</p>
                                     </div>
                                 </div>
                                 <Button v-if="item.mhCd === '1'" label="메세지 추가" size="small" class="mt-0.5" @click="getMsg(item.mhCd, '', '', 'I')"></Button>

@@ -241,6 +241,18 @@
         </Dialog> -->
 
         <Dialog v-model:visible="popup['pop']['conMate']" header="계약서" 
+            :modal=true position="center" class="custom-dialog-bottom" 
+            @update:visible="getPopupClose('conMate', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'conMate')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">계약서 미리보기</h2>
+                </div>
+            </template>
+            <ContractPreview/>
+        </Dialog>
+
+        <!-- <Dialog v-model:visible="popup['pop']['conMate']" header="계약서" 
             :modal=true position="center" class="custom-dialog-full" 
             @update:visible="getPopupClose('conMate', true)">
             <template #header>
@@ -250,7 +262,7 @@
                 </div>
             </template>
             <ConmateModal/>
-        </Dialog>
+        </Dialog> -->
 
         <Dialog v-model:visible="popup['pop']['payList']" header="결제내역" 
             :modal=true position="center" class="custom-dialog-full" 

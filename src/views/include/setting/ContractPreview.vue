@@ -63,9 +63,9 @@
                                     </template>
                                     <ul>
                                         <li v-for="(spec, spIndex) in item.spec" :key="spIndex">
-                                            <span>{{ spec.width }}*{{ spec.height }}</span>
-                                            <span>{{ spec.handle === '' ? '' : `[${spec.handle}${spec.cnt}]` }}</span>
-                                            <span>[{{ spec.unit }}{{ item.unitNm }}]</span>
+                                            <span v-if="mate.sizeYn === 'N'">{{ spec.width }}*{{ spec.height }}</span>
+                                            <span>{{ spec.handle === '' ? `[${spec.cnt}]` : `[${spec.handle}${spec.cnt}]` }}</span>
+                                            <span v-if="mate.unitYn === 'N'">[{{ spec.unit }}{{ item.unitNm }}]</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -105,21 +105,33 @@
                             </dl>
                             <dl>
                                 <dt>주소:</dt>
-                                <dd>{{ mate.info.addr }} {{ mate.info.addrDetail }}</dd>
+                                <dd>{{ mate.info.clientAddr }} {{ mate.info.clientAddrDetail }}</dd>
                             </dl>
                         </div> 
                     </div>
                     <!-- 파일이 있는 경우에만 노출 -->
                     <div class="w-[3.25rem] h-[3.25rem] border border-l-lv2">
-                        <img v-if="mate.base === 'N'" :src="mate.info.clientSign" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>
+                        <img v-if="mate.base === 'N'" :src="mate.info.clientSignImage" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>
                         <img v-else src="@/assets/img/img-seal.png" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>
                     </div>
                 </div>
             </section>
         </div>
     </main>
+    <section v-if="mate.view === 'Y'" class="overflow-hidden fixed bottom-0 px-4 pt-4 w-full bg-white rounded-t-2xl border-t border-gray-200 md:pb-0">
+        <IftaLabel class="w-[100%]">
+            <IconField class="w-full">
+                <InputText :value="`${domain}/customer/${mate.gb === 'E' ? 'estiDoc' : 'conDoc'}?cd=${emCd}`" readonly class="w-[100%] cursor-pointer truncate pr-12"/>
+                <InputIcon class="cursor-pointer pi pi-eye" @click="getDoc"/>
+            </IconField>
+            <label>{{ mate.gb === 'E' ? '견적서' : '계약서' }} 링크</label>
+        </IftaLabel>
+        <div class="py-4 btn-2-layout-box conbutton">
+            <Button :label="`${mate.gb === 'E' ? '견적서' : '계약서'} 링크 발송`" @click="getNavi" class="w-[100%]"/>
+        </div>
+    </section>
 
-    <div v-if="mate.info.gb === 'C' && mate.info.clientSet === 'N'" :style="{width: mainWidth + 'px', left: mainLeft + 'px', }" class="bottom-fixed-btn-box">
+    <div v-if="mate.base !== 'Y' && mate.gb === 'C' && mate.view === 'N' && mate.info.clientSet === 'N'" :style="{width: mainWidth + 'px', left: mainLeft + 'px', }" class="bottom-fixed-btn-box">
         <Button label="계약 서명하기" size="large" class="w-full" @click="getPopupOpen('signaturePop')"/>
     </div>
 
@@ -133,11 +145,11 @@
             </div>
         </template>
         <div class="md:pt-4">
-            <SignaturePad />
+            <SignaturePad ref="signRef" :gb="'contract'"/>
             <p class="mt-1.5 px-8 text-10 md:text-xs leading-[1.34] text-t-lv2 text-center break-keep">본인은 본 계약서 및 관련 약관의 모든 내용을 확인하였으며, 전자서명을 통해 이에 동의함을 확인합니다.</p>
             <div class="grid grid-cols-2 gap-2 mt-6 btn-2-layout-box">
-                <Button size="large" severity="secondary" label="취소"/>
-                <Button size="large" label="계약완료"/>
+                <Button size="large" severity="secondary" label="취소" @click="getPopupClose(true, 'signaturePop')"/>
+                <Button size="large" label="계약완료" @click="getConResult"/>
             </div>
         </div>
     </Dialog>
@@ -149,19 +161,104 @@ import { onMounted } from 'vue'
 import Textarea from 'primevue/textarea';
 import Button from 'primevue/button';
 import Dialog from "primevue/dialog";
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
+import IftaLabel from 'primevue/iftalabel';
 import SignaturePad from "@/views/include/SignaturePad.vue";
-import { usePopupStore, useMateStore } from '@/store';
+import { useConfirm } from "primevue/useconfirm";
+import { usePopupStore, useEstiStore, useMateStore } from '@/store';
+import { useRoute } from 'vue-router';
 import { usePopup } from '@/assets/js/popup';
-import { getCommas, getAmt } from '@/assets/js/function';
-
+import { getAxiosData, getCommas, getAmt } from '@/assets/js/function';
 
 const mainRef   = ref(null);
 const mainWidth = ref(0);
 const mainLeft  = ref(0);
+const domain    = window.location.origin;
+const confirm   = useConfirm();
 const popup     = usePopupStore();
+const esti      = useEstiStore();
 const mate      = useMateStore();
+const emCd      = btoa(esti['emCd']);
+const route     = useRoute();
+const signRef   = ref(null);
 
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getDoc = () => {
+    const url = domain+`/customer/${mate.gb === 'E' ? 'estiDoc' : 'conDoc'}?cd=`+emCd;
+    window.open(url, '_blank');
+}
+
+const getConResult = () => {
+    confirm.require({
+        message     : '계약을 완료하시겠습니까?',
+        header      : '계약',
+        rejectProps : {
+            label       : '취소',
+            severity    : 'secondary',
+            outlined    : true
+        },
+        acceptProps : {
+            label: '완료'
+        },
+        accept : async () => {
+            const formData  = new FormData();
+
+            try 
+            {
+                await signRef.value.saveAsImage();
+                const params    = {
+                    emCd : atob(route.query.cd)
+                };
+
+                formData.append('params', JSON.stringify(params));
+
+                console.log(mate.info.clientSignFile);
+
+                if(mate.info.clientSignFile !== null)
+                {
+                    formData.append('file', mate.info.clientSignFile);
+                }
+            } 
+            catch (signError) 
+            {
+                console.error('서명 저장 실패:', signError);
+                alert('서명 저장에 실패했습니다. 다시 시도해주세요.');
+                return;
+            }
+
+            try
+            {
+                const instance  = await getAxiosData();
+                await instance.post('https://data.planorder.kr/estiAndConSetV1/getContractSave', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                mate.getConMate({ emCd : atob(route.query.cd) }, 'N');
+                alert('계약이 완료되었습니다.');
+            }
+            catch(e)
+            {
+                console.log(e);
+                if(e.response.data.code === 4100)
+                {
+                    alert('이미 서명된 계약건입니다.');
+                }
+                else
+                {
+                    alert('계약에 실패하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                }
+            }
+        }
+    });
+}
+
+const getNavi = () => {
+    window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'share', value: `${domain}/customer/${mate.gb === 'E' ? 'estiDoc' : 'conDoc'}?cd=${emCd}` }));
+}
 
 onMounted(() => {
     const updateMainSize = () => {
@@ -175,6 +272,18 @@ onMounted(() => {
 
     const observer = new ResizeObserver(() => updateMainSize())
     observer.observe(mainRef.value);
+
+    if(route.query.cd)
+    {
+        if(route.meta.gb === 'E')
+        {
+            mate.getEstiMate({ emCd : atob(route.query.cd) }, 'N');
+        }
+        else
+        {
+            mate.getConMate({ emCd : atob(route.query.cd) }, 'N');
+        }
+    }
 });
 
 const terms = ref(`
