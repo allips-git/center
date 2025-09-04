@@ -15,7 +15,7 @@
                     <div class="form-gap-box">
                         <IftaLabel class="w-full">
                             <label>매장이름<span class="ml-0.5 text-red-500">*</span></label>
-                            <InputText id="ceNm" v-model="join['center']['ceNm']" placeholder="매장이름을 입력해주세요." class="w-full"/>    
+                            <InputText id="ceNm" v-model="join['center']['ceNm']" placeholder="매장이름을 입력해주세요." class="w-full" @input="getCheck('N')"/>    
                             <small v-if="join['msg']['ceNm'] !== ''" class="text-xs text-red-500">{{ join['msg']['ceNm'] }}</small>
                         </IftaLabel>
 
@@ -30,14 +30,14 @@
                         </div>
 
                         <IftaLabel class="w-full">
-                            <label>사업자 등록 번호<span class="ml-0.5 text-red-500">*</span></label>
-                            <InputText id="einNum" v-model="join['center']['einNum']" placeholder="- 없이 입력해주세요." class="w-full"/>
+                            <label>사업자 등록 번호</label>
+                            <InputText v-keyfilter.money inputmode="numberic" id="einNum" v-model="join['center']['einNum']" :maxLength="10" placeholder="- 없이 입력해주세요." class="w-full" @input="getCheck('N')"/>
                             <small v-if="join['msg']['einNum'] !== ''" class="text-xs text-red-500">{{ join['msg']['einNum'] }}</small>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
-                            <label>사업자등록증상 대표자 이름<span class="ml-0.5 text-red-500">*</span></label>
-                            <InputText id="ceoNm" v-model="join['center']['ceoNm']" placeholder="대표자 이름을 입력해주세요." class="w-full"/>   
+                            <label>사업자등록증상 대표자 이름</label>
+                            <InputText id="ceoNm" v-model="join['center']['ceoNm']" placeholder="대표자 이름을 입력해주세요." class="w-full" @input="getCheck('N')"/>   
                             <small v-if="join['msg']['ceoNm'] !== ''" class="text-xs text-red-500">{{ join['msg']['ceoNm'] }}</small>
                         </IftaLabel>
 
@@ -52,12 +52,12 @@
 
                         <IftaLabel class="w-full">
                             <label>상세주소</label>
-                            <InputText id="addrDetail" v-model="join['center']['addrDetail']" placeholder="상세 주소를 입력해주세요." class="w-full"/>
+                            <InputText id="addrDetail" v-model="join['center']['addrDetail']" placeholder="상세 주소를 입력해주세요." class="w-full" @input="getCheck('N')"/>
                         </IftaLabel>
 
                         <IftaLabel class="w-full">
                             <label>매장 대표 연락처<span class="ml-0.5 text-red-500">*</span></label>
-                            <InputText id="ceoTel" v-model="join['center']['ceoTel']" placeholder="- 없이 입력해주세요." class="w-full"/>  
+                            <InputText id="ceoTel" v-model="join['center']['ceoTel']" placeholder="- 없이 입력해주세요." class="w-full" @input="getCheck('N')"/>  
                             <small v-if="join['msg']['ceoTel'] !== ''" class="text-xs text-red-500">{{ join['msg']['ceoTel'] }}</small>  
                         </IftaLabel>
                         
@@ -134,46 +134,57 @@ const getCloseDaumPost = () => {
     document.getElementById('layer').style.display = 'none';
 }
 
-const getResultCheck = async () => {
+const getCheck = async (gb : 'Y' | 'N' = 'Y') => {
     await join.getMsgReset();
 
     const checkParams = {
         ceNm    : join['center']['ceNm'],
         einNum  : join['center']['einNum'],
-        ceoNm   : join['center']['ceoNm'],
+        // ceoNm   : join['center']['ceoNm'],
         addr    : join['center']['addr'],
         ceoTel  : join['center']['ceoTel']
     };
 
     const result = joinSecondMsg(checkParams);
 
-    console.log(result);
-
     if(!result['state'])
     {
-        join['msg'][result['id']] = result['msg'];
-        const inputElement = document.getElementById(result['id']);
-        if (inputElement) 
+        join.getMsgSet(result['msg'], result['id']);
+
+        if(gb === 'Y')
         {
-            inputElement.focus();
+            const inputElement = document.getElementById(result['id']);
+            if (inputElement) 
+            {
+                inputElement.focus();
+            }
         }
 
         return false;
     }
 
-    confirm.require({
-        message     : '센터시설 정보 제출을 완료하시겠습니까?',
-        header      : '회원가입',
-        rejectProps : {
-            label       : '취소',
-            severity    : 'secondary',
-            outlined    : true
-        },
-        acceptProps : {
-            label       : '확인',
-        },
-        accept : () => {
-            getResult();
+    return true;
+}
+
+const getResultCheck = async () => {
+    getCheck().then(result => {
+        if(result)
+        {
+            confirm.require({
+                message     : '센터시설 정보 제출을 완료하시겠습니까?',
+                header      : '회원가입',
+                rejectProps : {
+                    label       : '취소',
+                    severity    : 'secondary',
+                    outlined    : true
+                },
+                acceptProps : {
+                    label       : '확인',
+                },
+                accept : () => {
+                    getResult();
+                }
+            });
         }
     });
 }

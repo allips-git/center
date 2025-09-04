@@ -9,7 +9,7 @@
                         <IftaLabel class="relative w-full">
                             <label for="email">이메일<span class="ml-0.5 text-red-500">*</span></label>
                             <IconField>
-                                <InputText id="email" v-model="join['login']['email']" placeholder="이메일을 입력해주세요." class="w-full"/>
+                                <InputText id="email" v-model="join['login']['email']" placeholder="이메일을 입력해주세요." class="w-full" @input="getCheck('N')"/>
                                 <InputIcon @click="getIdDelete"><IconInputX/></InputIcon>
                             </IconField>
                             <small v-if="join['msg']['email'] !== ''" class="vali_text">{{ join['msg']['email'] }}</small>
@@ -19,7 +19,7 @@
                         <IftaLabel class="w-full">
                             <label for="pw">비밀번호<span class="ml-0.5 text-red-500">*</span></label>
                             <IconField>
-                                <InputText type="password" id="pwd" v-model="join['login']['pwd']" placeholder="비밀번호를 입력해주세요" class="w-full"/>
+                                <InputText type="password" id="pwd" v-model="join['login']['pwd']" placeholder="비밀번호를 입력해주세요" class="w-full" @input="getCheck('N')"/>
                                 <InputIcon @click="getPwView('pwd')"><IconEye/></InputIcon>
                             </IconField>
                             <small v-if="join['msg']['pwd'] !== ''" class="vali_text">{{ join['msg']['pwd'] }}</small>
@@ -29,7 +29,7 @@
                         <IftaLabel class="w-full">
                             <label for="pw">비밀번호 확인<span class="ml-0.5 text-red-500">*</span></label>
                             <IconField>
-                                <InputText type="password" id="pwChk" v-model="join['login']['pwChk']" placeholder="비밀번호를 다시 한 번 입력해주세요" class="w-full"/>    
+                                <InputText type="password" id="pwChk" v-model="join['login']['pwChk']" placeholder="비밀번호를 다시 한 번 입력해주세요" class="w-full" @input="getCheck('N')"/>    
                                 <InputIcon @click="getPwView('pwChk')"><IconEye/></InputIcon>
                             </IconField>
                             <small v-if="join['msg']['pwChk'] !== ''" class="vali_text">{{ join['msg']['pwChk'] }}</small>
@@ -118,7 +118,7 @@ const getFile = (event: Event) => {
     }
 };
 
-const getNext = async () => {
+const getCheck = async (gb : 'Y' | 'N' = 'Y') => {
     await join.getMsgReset();
 
     const checkParams = {
@@ -133,39 +133,52 @@ const getNext = async () => {
     if(!result['state'])
     {
         join.getMsgSet(result['msg'], result['id']);
-        const inputElement = document.getElementById(result['id']);
-        if (inputElement) 
+
+        if(gb === 'Y')
         {
-            inputElement.focus();
-        }
-
-        return false;
-    }
-
-    try
-    {
-        const res = await axios.post('https://data.planorder.kr/joinV1/getIdCheck', { id : join['login']['email'] });
-
-        console.log(res);
-        router.push({ path : `/join/joinSecond` });
-    }
-    catch(e)
-    {
-        console.log(e);
-        if(e.response.data['code'] === 4100)
-        {
-            join.getMsgSet('이미 사용 중인 계정입니다.', 'email');
-            const inputElement = document.getElementById('email');
+            const inputElement = document.getElementById(result['id']);
             if (inputElement) 
             {
                 inputElement.focus();
             }
         }
-        else
-        {
-            alert('회원가입 도중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
-        }
+
+        return false;
     }
+
+    return true;
+}
+
+const getNext = () => {
+    getCheck().then(async (result) => {
+        if(result)
+        {
+            try
+            {
+                const res = await axios.post('https://data.planorder.kr/joinV1/getIdCheck', { id : join['login']['email'] });
+
+                console.log(res);
+                router.push({ path : `/join/joinSecond` });
+            }
+            catch(e)
+            {
+                console.log(e);
+                if(e.response.data['code'] === 4100)
+                {
+                    join.getMsgSet('이미 사용 중인 계정입니다.', 'email');
+                    const inputElement = document.getElementById('email');
+                    if (inputElement) 
+                    {
+                        inputElement.focus();
+                    }
+                }
+                else
+                {
+                    alert('회원가입 도중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                }
+            }
+        }
+    });
 }
 
 onMounted(()=>{
