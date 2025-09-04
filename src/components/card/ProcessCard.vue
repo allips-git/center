@@ -88,7 +88,7 @@ import Popover from 'primevue/popover';
 import Listbox from 'primevue/listbox';
 import { ref, nextTick } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
-import { usePopupStore, useClientStore, useEstiStore, useChatStore } from '@/store';
+import { usePopupStore, useClientStore, useEstiStore, useChatStore, useMateStore } from '@/store';
 import { getAxiosData, getTokenOut, getCommas, getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { useRoute } from 'vue-router';
@@ -100,6 +100,7 @@ const popup     = usePopupStore();
 const client    = useClientStore();
 const esti      = useEstiStore();
 const chat      = useChatStore();
+const mate      = useMateStore();
 const route     = useRoute();
 const status    = ref(false);
 const props     = defineProps({
@@ -362,7 +363,9 @@ const getProcess = async (value: string) => {
             }
         break;
         case 'E':
-            getPopupOpen('estiMate');
+            await mate.getReset();
+            await mate.getEstiMate({ emCd : esti['emCd'] });
+            await getPopupOpen('estiMate');
         break;
         case 'C':
             if(props.info['stCd'] !== '002')

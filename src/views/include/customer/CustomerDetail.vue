@@ -216,7 +216,19 @@
             <ChatRoomModal/>
         </Dialog>
 
-        <Dialog v-model:visible="popup['pop']['estiMate']" header="견적서" 
+        <Dialog v-model:visible="popup['pop']['estiMate']" header="견적서 미리보기" 
+            :modal=true position="center" class="custom-dialog-bottom" 
+            @update:visible="getPopupClose('estiMate', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose(true, 'estiMate')" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">견적서 미리보기</h2>
+                </div>
+            </template>
+            <ContractPreview/>
+        </Dialog>
+    
+        <!-- <Dialog v-model:visible="popup['pop']['estiMate']" header="견적서" 
             :modal=true position="center" class="custom-dialog-full" 
             @update:visible="getPopupClose('estiMate', true)">
             <template #header>
@@ -226,7 +238,7 @@
                 </div>
             </template>
             <EstimateModal/>
-        </Dialog>
+        </Dialog> -->
 
         <Dialog v-model:visible="popup['pop']['conMate']" header="계약서" 
             :modal=true position="center" class="custom-dialog-full" 
@@ -272,7 +284,8 @@ import ProductChoice from "@/views/include/ProductChoice.vue";
 import ProductRegister from "@/views/include/ProductRegister.vue";
 import CustomerListSet from '@/views/include/CustomerListSet.vue';
 import ChatRoomModal from "@/views/customer/ChatRoomModal.vue";
-import EstimateModal from "@/views/customer/EstimateModal.vue";
+// import EstimateModal from "@/views/customer/EstimateModal.vue";
+import ContractPreview from "@/views/include/setting/ContractPreview.vue";
 import ConmateModal from "@/views/customer/ConmateModal.vue";
 import EstiList from '@/views/include/customer/EstiList.vue';
 import OrderList from "@/views/customer/OrderList.vue";

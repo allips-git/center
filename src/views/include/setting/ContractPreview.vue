@@ -1,39 +1,40 @@
 <template>
     <main class="pb-[80px]" ref="mainRef">
         <div class="p-4 sm:p-6">
-            <h1 class="p-2.5 text-base font-bold leading-tight bg-bg-lv2 text-t-lv1">계약서 (견적서)</h1>
+            <h1 class="p-2.5 text-base font-bold leading-tight bg-bg-lv2 text-t-lv1">{{ mate.gb === 'E' ? '견적서' : '계약서' }}</h1>
             <!-- 계약자 정보 -->
             <section class="relative mt-3.5">
-                <h2 class="text-sm sm:text-base font-bold text-t-lv1 leading-[1.34] break-keep pr-14">디자인윈도우 부산점</h2>
+                <h2 class="text-sm sm:text-base font-bold text-t-lv1 leading-[1.34] break-keep pr-14">{{ mate.info.ceNm }}</h2>
                 <div class="mt-2 flex flex-col gap-1 [&_dl]:w-full [&_dl]:flex [&_dl]:gap-1 [&_dt]:flex-none text-xs sm:text-sm text-t-lv1 leading-[1.34] break-keep">
                     <dl class="pr-14">
                         <dt>대표:</dt>
-                        <dd>하현재</dd>
+                        <dd>{{ mate.info.ceoNm }}</dd>
                     </dl>
-                    <dl>
+                    <dl v-if="mate.gb === 'C'">
                         <dt>계약 담당자:</dt>
-                        <dd>홍길동</dd>
+                        <dd>{{ mate.info.conPerson }}</dd>
                     </dl>
                     <dl>
                         <dt>전화번호:</dt>
-                        <dd>010-3445-2105</dd>
+                        <dd>{{ mate.info.tel }}</dd>
                     </dl>
                     <dl>
                         <dt>주소:</dt>
-                        <dd>부산광역시 수영구 수영로 411-1 디자인윈도우</dd>
+                        <dd>{{ mate.info.addr }} {{ mate.info.addrDetail }}</dd>
                     </dl>
                     <dl>
                         <dt>견적일:</dt>
-                        <dd>2025.01.18</dd>
+                        <dd>{{ mate.info.estiDt }}</dd>
                     </dl>
-                    <dl>
+                    <dl v-if="mate.gb === 'C'">
                         <dt>계약일:</dt>
-                        <dd>2025.02.18</dd>
+                        <dd>{{ mate.info.conDt }}</dd>
                     </dl>
                 </div>
                 <!-- 파일이 있는 경우에만 노출 -->
                 <div class="absolute top-0 right-0 w-[3.25rem] h-[3.25rem] border border-l-lv2">
-                    <img src="@/assets/img/img-seal.png" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>   
+                    <img v-if="mate.base === 'N'" :src="mate.info.sign" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>
+                    <img v-else src="@/assets/img/img-seal.png" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>
                 </div>
             </section>
             <!-- 견적 금액 -->
@@ -52,71 +53,39 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr v-for="(item, index) in mate.info.list" :key="index">
                             <th scope="row" class="text-left">
-                                아르카디아 / 아이스화이트
+                                {{ item.itemNm }}
                                 <!-- 옵션 / 사이즈 -->
                                 <div class="mt-1.5 font-normal text-t-lv2">
-                                    <div>옵션: 솜피 알투스 402모터</div>
+                                    <template v-for="(option, opIndex) in item.option" :key="opIndex">
+                                        <div>옵션: {{ option }}</div>
+                                    </template>
                                     <ul>
-                                        <li>240*120 [좌1] 2.4회베</li>
-                                        <li>240*120 [우1] 2.4회베</li>
-                                        <li>240*120 [우1] 2.4회베</li>
+                                        <li v-for="(spec, spIndex) in item.spec" :key="spIndex">
+                                            <span>{{ spec.width }}*{{ spec.height }}</span>
+                                            <span>{{ spec.handle === '' ? '' : `[${spec.handle}${spec.cnt}]` }}</span>
+                                            <span>[{{ spec.unit }}{{ item.unitNm }}]</span>
+                                        </li>
                                     </ul>
                                 </div>
                             </th>
-                            <td class="text-center">3</td>
-                            <td class="text-right">320,000</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="text-left">
-                                커튼 소니아 / 화이트
-                                <div class="mt-1.5 font-normal text-t-lv2">
-                                    <div>옵션: 형상옵션</div>
-                                    <ul>
-                                        <li>240*120<span>[4폭]</span></li>
-                                    </ul>
-                                </div>
-                            </th>
-                            <td class="text-center">33</td>
-                            <td class="text-right">412,320,000</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="text-left">
-                                커튼 쉬폰 / 화이트
-                                <div class="mt-1.5 font-normal text-t-lv2">
-                                    <div>옵션: 형상옵션</div>
-                                    <ul>
-                                        <li>240*120 [10.4야드]</li>
-                                    </ul>
-                                </div>
-                            </th>
-                            <td class="text-center">111</td>
-                            <td class="text-right">320,000</td>
+                            <td class="text-center">{{ item.cnt }}</td>
+                            <td class="text-right">{{ getCommas(item.amt) }}</td>
                         </tr>
                     </tbody>
                 </table>
                 <h3 class="mt-3.5 text-xs sm:text-sm text-t-lv1 leading-[1.34] font-bold">합계금액</h3>
                 <div class="mt-4 flex flex-col gap-1.5 [&_dl]:w-full [&_dl]:flex [&_dl]:justify-between text-xs sm:text-sm text-t-lv1 leading-[1.34]">
-                    <dl>
-                        <dt>상품 금액</dt>
-                        <dd class="font-bold">603,253</dd>
-                    </dl>
-                    <dl>
-                        <dt>할인</dt>
-                        <dd class="font-bold text-red-500">-50,000</dd>
-                    </dl>
-                    <dl>
-                        <dt>절삭 할인</dt>
-                        <dd class="font-bold text-red-500">-3,253</dd>
-                    </dl>
-                    <dl>
-                        <dt>선금/계좌: 농협 01011112221132</dt>
-                        <dd class="font-bold text-red-500">-1,450,000</dd>
-                    </dl>
+                    <template v-for="(item, index) in mate.payList" :key="index">
+                        <dl v-if="item.amt !== 0">
+                            <dt>{{ item.title }}</dt>
+                            <dd :class="`font-bold ${item.red ? 'text-red-500' : ( item.blue ? 'text-p-lv4' : '' )}`">{{ getCommas(item.amt) }}</dd>
+                        </dl>
+                    </template>
                     <dl class="mt-2 text-base pt-3.5 pb-4 border-y-[0.75px] border-t-lv1">
                         <dt class="font-bold">총금액</dt>
-                        <dd class="font-bold text-p-lv4">550,000</dd>
+                        <dd class="font-bold text-p-lv4">{{ getCommas(getAmt(mate.payList, 'total')) }}</dd>
                     </dl>
                 </div>
             </section>
@@ -124,32 +93,33 @@
             <section class="mt-6">
                 <Textarea v-model="terms" autoResize readonly cols="30" rows="10"  class="w-full" />
             </section>
-            <section class="mt-3">
-                <h2 class="p-2.5 text-base font-bold leading-tight bg-bg-lv2 text-t-lv1">계약서 (견적서)</h2>
+            <section v-if="mate.info.clientSet === 'Y'" class="mt-3">
+                <h2 class="p-2.5 text-base font-bold leading-tight bg-bg-lv2 text-t-lv1">계약서</h2>
                 <div class="flex justify-between mt-3.5">
                     <div class="flex flex-col gap-1.5 justify-center min-h-[3.25rem]">
-                        <h3 class="text-sm sm:text-base font-bold text-t-lv1 leading-[1.34] break-keep">홍길동</h3>
+                        <h3 class="text-sm sm:text-base font-bold text-t-lv1 leading-[1.34] break-keep">{{ mate.info.clientNm }}</h3>
                         <div class="flex flex-col gap-1 [&_dl]:w-full [&_dl]:flex [&_dl]:gap-1 [&_dt]:flex-none text-xs sm:text-sm text-t-lv1 leading-[1.34] break-keep">
                             <dl>
                                 <dt>전화번호:</dt>
-                                <dd>010-3445-2105</dd>
+                                <dd>{{ mate.info.clientTel }}</dd>
                             </dl>
                             <dl>
                                 <dt>주소:</dt>
-                                <dd>부산광역시 수영구 수영로 411-1 디자인윈도우</dd>
+                                <dd>{{ mate.info.addr }} {{ mate.info.addrDetail }}</dd>
                             </dl>
                         </div> 
                     </div>
                     <!-- 파일이 있는 경우에만 노출 -->
                     <div class="w-[3.25rem] h-[3.25rem] border border-l-lv2">
-                        <img src="@/assets/img/img-seal.png" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>   
+                        <img v-if="mate.base === 'N'" :src="mate.info.clientSign" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>
+                        <img v-else src="@/assets/img/img-seal.png" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>
                     </div>
                 </div>
             </section>
         </div>
     </main>
 
-    <div :style="{width: mainWidth + 'px', left: mainLeft + 'px', }" class="bottom-fixed-btn-box">
+    <div v-if="mate.info.gb === 'C' && mate.info.clientSet === 'N'" :style="{width: mainWidth + 'px', left: mainLeft + 'px', }" class="bottom-fixed-btn-box">
         <Button label="계약 서명하기" size="large" class="w-full" @click="getPopupOpen('signaturePop')"/>
     </div>
 
@@ -180,14 +150,17 @@ import Textarea from 'primevue/textarea';
 import Button from 'primevue/button';
 import Dialog from "primevue/dialog";
 import SignaturePad from "@/views/include/SignaturePad.vue";
-import { usePopupStore } from '@/store';
+import { usePopupStore, useMateStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
+import { getCommas, getAmt } from '@/assets/js/function';
 
 
-const mainRef = ref(null);
+const mainRef   = ref(null);
 const mainWidth = ref(0);
-const mainLeft = ref(0);
+const mainLeft  = ref(0);
 const popup     = usePopupStore();
+const mate      = useMateStore();
+
 const { getPopupOpen, getPopupClose } = usePopup();
 
 onMounted(() => {
@@ -201,7 +174,7 @@ onMounted(() => {
     updateMainSize()
 
     const observer = new ResizeObserver(() => updateMainSize())
-    observer.observe(mainRef.value)
+    observer.observe(mainRef.value);
 });
 
 const terms = ref(`

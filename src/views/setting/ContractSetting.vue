@@ -3,7 +3,7 @@
     <main class="pb-[80px]" ref="mainRef">
         <section class="px-4 pt-4 pb-6 sm:px-6 sm:pt-6 sm:pb-8">
             <div class="flex gap-4">
-                <div class="flex-1 border border-l-lv4 rounded-[4px] overflow-hidden cursor-pointer" @click="getPopupOpen('contractPreview')">
+                <div class="flex-1 border border-l-lv4 rounded-[4px] overflow-hidden cursor-pointer" @click="getBaseSet">
                     <div class="px-[20px] pt-[40px] bg-bg-lv3">
                         <div class="line-repeat-paper"></div>
                     </div>
@@ -140,12 +140,13 @@ import ContractPreview from "@/views/include/setting/ContractPreview.vue";
 import { useConfirm } from "primevue/useconfirm";
 import { ref } from 'vue';
 import { onMounted } from 'vue'
-import { useEstiAndConSetStore, usePopupStore, useDataStore } from '@/store';
+import { useEstiAndConSetStore, useMateStore, usePopupStore, useDataStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 import { getAxiosData, getTokenOut } from '@/assets/js/function';
 
 const confirm   = useConfirm();
 const setting   = useEstiAndConSetStore();
+const mate      = useMateStore();
 const popup     = usePopupStore();
 const data      = useDataStore();
 const mainRef   = ref(null);
@@ -154,6 +155,11 @@ const mainLeft  = ref(0);
 const signRef   = ref(null);
 
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getBaseSet = async () => {
+    mate.getBaseSet();
+    await getPopupOpen('contractPreview');
+}
 
 const getSignFile = () => {
     document.getElementById('signFileInput')?.click();
