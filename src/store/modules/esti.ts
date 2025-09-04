@@ -1112,6 +1112,11 @@ export const useEstiStore = defineStore('esti', {
         
                     this.total['totalQty']          = Number(this.curtain['cQty']);
                     this.total['totalUnitSize']     = Number(this.curtain['size']) * Number(this.curtain['cQty']);
+
+                    this.total['totalHeightSaleAmt']   = 0;
+                    this.total['totalHeightSaleTax']   = 0;
+                    this.total['totalHeightPurcAmt']   = 0;
+                    this.total['totalHeightPurcTax']   = 0;
                 break;
                 case '003': case '005':
                     /** 폭 */
