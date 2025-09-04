@@ -200,12 +200,14 @@ const getSave = () => {
         accept : async () => {
             const formData  = new FormData();
             const params    = {
-                repSet : setting.repSet,
+                repSet : setting.repSet ? setting.repSet : 'B',
                 sizeYn : setting.sizeYn,
                 unitYn : setting.unitYn,
                 signYn : setting.signYn,
                 file   : setting.file
             };
+
+            console.log(params);
 
             formData.append('params', JSON.stringify(params));
 

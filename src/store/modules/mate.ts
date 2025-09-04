@@ -41,6 +41,7 @@ interface Info {
     clientSign          : string;
     clientSignFile      : string | File | null;
     clientSignImage     : string;
+    agreeContents       : string;
 }
 
 interface PayList {
@@ -122,7 +123,8 @@ const getInfo = (): Info => {
         clientAddrDetail    : '',
         clientSign          : '',
         clientSignFile      : null,
-        clientSignImage     : ''
+        clientSignImage     : '',
+        agreeContents       : ''
     }
 }
 
@@ -183,7 +185,7 @@ export const useMateStore = defineStore('mate', {
                 this.unitYn = res.data.info.unitYn;
                 this.signYn = res.data.info.signYn;
 
-                this.info.sign       = filePath + res.data.info.file;
+                this.info.sign       = res.data.info.file !== '' ? filePath + res.data.info.file : '';
                 this.info.ceoNm      = res.data.info.ceNm;
                 this.info.tel        = res.data.info.tel;
                 this.info.addr       = res.data.info.addr;
@@ -305,7 +307,7 @@ export const useMateStore = defineStore('mate', {
                 this.unitYn = res.data.info.unitYn;
                 this.signYn = res.data.info.signYn;
 
-                this.info.sign       = filePath + res.data.info.file;
+                this.info.sign       = res.data.info.file !== '' ? filePath + res.data.info.file : '';
                 this.info.ceoNm      = res.data.info.ceNm;
                 this.info.tel        = res.data.info.tel;
                 this.info.addr       = res.data.info.addr;
@@ -317,7 +319,7 @@ export const useMateStore = defineStore('mate', {
                 this.info.clientNm   = res.data.info.clientNm;
                 this.info.clientTel  = res.data.info.clientTel;
                 this.info.clientAddr = res.data.info.clientAddr;
-                
+
                 this.info.clientAddrDetail  = res.data.info.clientAddrDetail;
                 this.info.clientSignImage   = filePath + res.data.info.clientSign;
 
@@ -380,7 +382,7 @@ export const useMateStore = defineStore('mate', {
                     }
                 })
 
-                console.log(this.info.list);
+                console.log(this.info);
 
                 if(res.data['amtList'].length === 0)
                 {
@@ -457,7 +459,8 @@ export const useMateStore = defineStore('mate', {
                 clientAddr          : '부산광역시 수영구 411-1',
                 clientAddrDetail    : '디자인윈도우',
                 clientSignFile      : '',
-                clientSignImage     : '@/assets/img/img-seal.png'
+                clientSignImage     : '@/assets/img/img-seal.png',
+                agreeContents       : ''
             };
             this.payList = [
                 {name : 'itemAmt',      amtGb : '', title: '상품 금액',         amt: 603253, red: false, blue: false, memo : ''},

@@ -59,8 +59,8 @@ const signature = ref(null)
 
 const saveAsImage = (): Promise<boolean> => {
   return new Promise((resolve, reject) => {
-    if (!signature.value) {
-      alert('싸인을 진행해주세요.')
+    if (signature.value.isEmpty()) {
+      alert('싸인을 진행해주세요.');
       reject(new Error('No signature'))
       return
     }
