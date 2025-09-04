@@ -32,6 +32,7 @@ import { useKakaoStore } from './modules/kakao';
 import { useChatStore } from './modules/chat';
 import { useMsgStore } from './modules/msg';
 import { useEstiAndConSetStore } from './modules/estiAndConSet';
+import { useMateStore } from './modules/mate';
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
@@ -71,5 +72,6 @@ export {
     useKakaoStore,
     useChatStore,
     useMsgStore,
-    useEstiAndConSetStore
+    useEstiAndConSetStore,
+    useMateStore
 };

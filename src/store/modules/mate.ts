@@ -2,11 +2,28 @@
  * @description 견적서 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
-import { getAxiosData, getCardColumns, getConvertDate } from '@/assets/js/function';
+import { getAxiosData, getConvertDate } from '@/assets/js/function';
 import axios from 'axios';
 
-interface State {
-    gb                  : 'E' | 'C';
+interface Spec {
+    width   : number;
+    hegith  : number;
+    handle  : string;
+    cnt     : string;
+    unit    : number;
+}
+
+interface List {
+    itemNm  : string;
+    icNm    : string;
+    cnt     : number;
+    amt     : string;
+    unitNm  : string;
+    spec    : Spec[];
+    option  : [];
+}
+
+interface Info {
     sign                : string;
     ceoNm               : string;
     conPeron            : string;
@@ -15,7 +32,7 @@ interface State {
     addrDetail          : string;
     estiDt              : string;
     conDt               : string;
-    list                : [];
+    list                : List[];
     clientSet           : 'Y' | 'N';
     clientNm            : string;
     clientTel           : string;
@@ -24,17 +41,110 @@ interface State {
     clientSign          : string;
 }
 
+interface PayList {
+    name    : string;
+    amtGb   : string;
+    title   : string;
+    amt     : number;
+    red     : boolean;
+    blue    : boolean;
+    memo    : string;
+}
+
+interface State {
+    base    : 'Y' | 'N';
+    gb      : 'E' | 'C';
+    info    : Info;
+    payList : Amt;
+}
+
+const getList = () => {
+    return [
+        {
+            itemNm  : '아르카디아 / 아이스화이트',
+            icNm    : '',
+            cnt     : 3,
+            amt     : 320000,
+            unitNm  : '회베',
+            spec    : [
+                { width : 240, hegith : 120, handle : '좌', cnt : 1, unit : 2.4 }, 
+                { width : 240, hegith : 120, handle : '우', cnt : 1, unit : 2.4 }, 
+                { width : 240, hegith : 120, handle : '우', cnt : 1, unit : 2.4 }
+            ],
+            option  : ['솜피 알투스 402모터']
+        },
+        {
+            itemNm  : '커튼 소니아 / 화이트',
+            icNm    : '',
+            cnt     : 33,
+            amt     : 412320000,
+            unitNm  : '폭',
+            spec    : [
+                { width : 240, hegith : 120, handle : '', cnt : 1, unit : 4 }
+            ],
+            option  : ['형상옵션']
+        },
+        {
+            itemNm  : '커튼 쉬폰 / 화이트',
+            icNm    : '',
+            cnt     : 111,
+            amt     : 320000,
+            unitNm  : '폭',
+            spec    : [
+                { width : 240, hegith : 120, handle : '', cnt : 1, unit : 10.4 }
+            ],
+            option  : ['형상옵션']
+        }
+    ]
+}
+
+const getInfo = (): Info => {
+    return {
+        sign                : '',
+        ceoNm               : '',
+        conPeron            : '',
+        tel                 : '',
+        addr                : '',
+        addrDetail          : '',
+        estiDt              : '',
+        conDt               : '',
+        list                : [],
+        clientSet           : 'N',
+        clientNm            : '',
+        clientTel           : '',
+        clientAddr          : '',
+        clientAddrDetail    : '',
+        clientSign          : ''
+    }
+}
+
+const getPayList = (): PayList => {
+    return [
+        {name : 'itemAmt',      amtGb : '', title: '상품 금액',         amt: 0, red: false, blue: false, memo : ''},
+        {name : 'itemTax',      amtGb : '', title: '부가세',            amt: 0, red: false, blue: false, memo : ''},
+        {name : 'optionAmt',      amtGb : '', title: '옵션',            amt: 0, red: false, blue: false, memo : ''},
+        {name : 'procAmt',      amtGb : '', title: '나비주름',            amt: 0, red: false, blue: false, memo : ''},
+        {name : 'bprocAmt',      amtGb : '', title: '리드밴드',            amt: 0, red: false, blue: false, memo : ''},
+        {name : 'shapeAmt',     amtGb : '', title: '형상',         amt: 0, red: false, blue: false, memo : ''},
+        {name : 'heightAmt',    amtGb : '', title: '세로길이 추가금액', amt: 0, red: false, blue: false, memo : ''},
+        {name : 'addAmt',       amtGb : '001', title: '추가',              amt: 0, red: true, blue: false, memo : ''},
+        {name : 'dcAmt',        amtGb : '002', title: '할인',              amt: 0, red: true, blue: false, memo : ''},
+        {name : 'cutAmt',       amtGb : '003', title: '절삭 할인',         amt: 0, red: true, blue: false, memo : ''},
+        {name : 'conAmt',       amtGb : '004', title: '계약 선금',         amt: 0, red: false, blue: true, memo : ''}
+    ]
+}
+
+const filePath = 'https://data.planorder.kr/image/sign/';
+
 export const useMateStore = defineStore('mate', {
     state: (): State => ({
-        ceNm    : '',
-        imgUrl  : '',
-        headers : [],
-        list    : [],
-        payList : getPayList(),
-        sizeYn  : false
+        base    : 'Y',
+        gb      : 'C',
+        info    : getInfo(),
+        payList : getPayList()
     }),
     actions : {
-        async getInfo(params, yn: Y | N = 'Y')
+        async getEstiMate(params, yn: Y | N = 'Y')
         {
             let res;
             params['yn'] = yn;
@@ -52,92 +162,55 @@ export const useMateStore = defineStore('mate', {
                 }
 
                 console.log(res);
-                this.ceNm = res.data['info']['ceNm'];
 
-                const headers = [
-                    { label: "전화번호", value: res.data['info']['tel'] },
-                    { label: "주소", value: res.data['info']['addr'] },
-                    { label: "상세주소", value: res.data['info']['addrDetail'] },
-                    { label: "견적일", value: getConvertDate(new Date(res.data['info']['stDt']), 'yy.mm.dd.w') }
-                ];
+                this.base = 'N';
+                this.gb   = 'E';
 
-                this.headers = headers;
+                this.info.sign       = filePath + res.data.info.file;
+                this.info.ceoNm      = res.data.info.ceNm;
+                this.info.tel        = res.data.info.tel;
+                this.info.addr       = res.data.info.addr;
+                this.info.addrDetail = res.data.info.addrDetail;
+                this.info.estiDt     = getConvertDate(new Date(res.data.info.stDt), 'yy.mm.dd');
 
-                const list = [];
+                this.info.list = res.data.estiList.map(item => {
+                    let cnt = 0;
 
-                res.data['location'].map(location => {
-                    list.push({
-                        title     : location.title,
-                        cardLists : res.data['estiList'].map(esti => {
-                            if(location.title === esti.title)
+                    switch(item.unit)
+                    {
+                        case '001':
+                            if(item.division === 'D')
                             {
-                                const rows = [];
-                                const tags = [];
-
-                                switch(esti.unit)
-                                {
-                                    case '001':
-                                        if(esti.division === 'D')
-                                        {
-                                            rows.push(...esti.detail.map(dItem => ({
-                                                width   : dItem.width,
-                                                height  : dItem.height,
-                                                leftQty : dItem.handle === 'L' ? 1 : 0,
-                                                rightQty: dItem.handle === 'R' ? 1 : 0,
-                                                size    : dItem.size + esti.unitNm
-                                            })));
-                                        }
-                                        else
-                                        {
-                                            rows.push({
-                                                width   : esti.width,
-                                                height  : esti.height,
-                                                leftQty : esti.leftCnt,
-                                                rightQty: esti.rightCnt,
-                                                size    : esti.totalUnit + esti.unitNm
-                                            });
-                                        }
-                                    break;
-                                    case '002': case '003': case '005': case '006':
-                                        rows.push({
-                                            width   : esti.width,
-                                            height  : esti.height,
-                                            proc    : esti.proc === '001' ? '나비주름' : '평주름',
-                                            split   : esti.split === '001' ? '양개' : '편개',
-                                            qty     : esti.cnt,
-                                            size    : esti.totalUnit + esti.unitNm
-                                        });
-                                    break;
-                                    case '004':
-                                        rows.push({
-                                            qty : esti.cnt
-                                        })
-                                    break;
-                                }
-
-                                if(esti.shape === 'Y')
-                                {
-                                    tags.push({ spanText: "형상옵션" });
-                                }
-
-                                return {
-                                    edCd         : esti.edCd,
-                                    productTitle : esti.productTitle,
-                                    colorTitle   : esti.colorTitle,
-                                    amt          : Number(esti.totalSaleAmt) + Number(esti.totalSaleTax),
-                                    isRed        : esti.productTitle ? false : true,
-                                    columns      : getCardColumns(esti.unit),
-                                    rows         : rows,
-                                    showTag      : tags.length > 0 ? true : false,
-                                    tags         : tags,
-                                    spanText     : esti.memo
-                                }
+                                cnt = item.detail.reduce((c, i) => c + Number(i.cnt), 0);
                             }
-                        }).filter(Boolean)
-                    })
-                });
+                            else
+                            {
+                                cnt = Number(item.leftCnt) + Number(item.rightCnt);
+                            }
+                        break;
+                        case '002': case '003': case '004': case '005': case '006':
+                            cnt = item.cnt;
+                        break;
+                    }
 
-                this.list = list;
+                    return {
+                        itemNm  : item.colorTitle,
+                        icNm    : '',
+                        cnt     : cnt,
+                        amt     : Number(item.totalSaleAmt) + Number(item.totalSaleTax),
+                        unitNm  : item.unitNm,
+                        spec    : item.detail.map(detail => {
+                            return {
+                                width   : detail.width,
+                                height  : detail.height,
+                                handle  : detail.handle === '' ? detail.handle : (detail.handle === 'L' ? '좌' : '우'),
+                                cnt     : detail.cnt,
+                                unit    : detail.size
+                            }
+                        }),
+                        option  : []
+                    }
+                })
 
                 if(res.data['amtList'].length === 0)
                 {
@@ -157,11 +230,74 @@ export const useMateStore = defineStore('mate', {
                 this.getItemAmt('bprocAmt', Number(res.data['bprocAmt']));
                 this.getItemAmt('shapeAmt', Number(res.data['shapeAmt']));
                 this.getItemAmt('heightAmt', Number(res.data['heightAmt']));
+
+                console.log(this.info);
             }
             catch(e)
             {
                 console.log(e);
             }
+        },
+        getItemAmt(name: string, amt: number)
+        {
+            const item = this.payList.find(item => item.name === name);
+            
+            if(item)
+            {
+                item.amt = Number(amt);
+            }
+        },
+        getPayAmt(amtGb: string, amt: number, memo: string='')
+        {
+            const item = this.payList.find(item => item.amtGb === amtGb);
+
+            if(item)
+            {
+                item.amt  = Number(amt);
+                item.memo = memo;
+            }
+        },
+        getReset()
+        {
+            this.base       = 'N';
+            this.gb         = 'E';
+            this.info       = getInfo();
+            this.payList    = getPayList();
+        },
+        getBaseSet()
+        {
+            this.base = 'Y';
+            this.gb   = 'C';
+            this.info = {
+                sign                : '@/assets/img/img-seal.png',
+                ceoNm               : '하현재',
+                conPeron            : '홍길동',
+                tel                 : '010-3445-2105',
+                addr                : '부산광역시 수영구 수영로 411-1',
+                addrDetail          : '디자인윈도우',
+                estiDt              : '2025.01.18',
+                conDt               : '2025.02.18',
+                list                : getList(),
+                clientSet           : 'Y',
+                clientNm            : '홍길동',
+                clientTel           : '010-3445-2105',
+                clientAddr          : '부산광역시 수영구 411-1',
+                clientAddrDetail    : '디자인윈도우',
+                clientSign          : '@/assets/img/img-seal.png'
+            };
+            this.payList = [
+                {name : 'itemAmt',      amtGb : '', title: '상품 금액',         amt: 603253, red: false, blue: false, memo : ''},
+                {name : 'itemTax',      amtGb : '', title: '부가세',            amt: 0, red: false, blue: false, memo : ''},
+                {name : 'optionAmt',      amtGb : '', title: '옵션',            amt: 0, red: false, blue: false, memo : ''},
+                {name : 'procAmt',      amtGb : '', title: '나비주름',            amt: 0, red: false, blue: false, memo : ''},
+                {name : 'bprocAmt',      amtGb : '', title: '리드밴드',            amt: 0, red: false, blue: false, memo : ''},
+                {name : 'shapeAmt',     amtGb : '', title: '형상',         amt: 0, red: false, blue: false, memo : ''},
+                {name : 'heightAmt',    amtGb : '', title: '세로길이 추가금액', amt: 0, red: false, blue: false, memo : ''},
+                {name : 'addAmt',       amtGb : '001', title: '추가',              amt: 0, red: true, blue: false, memo : ''},
+                {name : 'dcAmt',        amtGb : '002', title: '할인',              amt: 50000, red: true, blue: false, memo : ''},
+                {name : 'cutAmt',       amtGb : '003', title: '절삭 할인',         amt: 3253, red: true, blue: false, memo : ''},
+                {name : 'conAmt',       amtGb : '004', title: '계약 선금',         amt: 50000, red: false, blue: true, memo : '계좌: 농협 0101111221132'}
+            ]
         }
     }
 });
