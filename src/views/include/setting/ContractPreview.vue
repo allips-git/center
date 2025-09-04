@@ -32,7 +32,7 @@
                     </dl>
                 </div>
                 <!-- 파일이 있는 경우에만 노출 -->
-                <div class="absolute top-0 right-0 w-[3.25rem] h-[3.25rem] border border-l-lv2">
+                <div v-if="mate.info.sign !== ''" class="absolute top-0 right-0 w-[3.25rem] h-[3.25rem] border border-l-lv2">
                     <img v-if="mate.base === 'N'" :src="mate.info.sign" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>
                     <img v-else src="@/assets/img/img-seal.png" alt="도장이미지" title="도장이미지" class="w-full aspect-square"/>
                 </div>
@@ -286,12 +286,7 @@ onMounted(() => {
     }
 });
 
-const terms = ref(`
-1. 본사는 맞춤전문 업체로서 계약해지 또는 변경은 계약후 7일내에 한하며 이후 해지는 불가능 합니다. 또한 계약 제품이 생산을 진행하였어도 계약해지 또는 변경이 불가능합니다.
-
-2. 계약 철회시 제작이 진행하지 않았어도 계약금은 반환되지 않습니다.
-
-3. 기존제품 철거 및 재시공은 하지 않습니다. 만약 고객님이 원할 경우 추가비용이 발생합니다.
+const terms = ref(`1. 본사는 맞춤전문 업체로서 계약해지 또는 변경은 계약후 7일내에 한하며 이후 해지는 불가능 합니다. 또한 계약 제품이 생산을 진행하였어도 계약해지 또는 변경이 불가능합니다.\n\n 2. 계약 철회시 제작이 진행하지 않았어도 계약금은 반환되지 않습니다.\n\n 3. 기존제품 철거 및 재시공은 하지 않습니다. 만약 고객님이 원할 경우 추가비용이 발생합니다.
 
 4. 주문 제작 특성상 설치 후 교환/반품은 불가합니다. (제품 불량건 교환가능)
 
@@ -299,6 +294,5 @@ const terms = ref(`
 
 6. 무상AS 기간은 1년이며, 고객 실수로 인한 제품하자는 AS비용이 별도로 발생합니다. (제품하자일 경우 제외)
 
-7. 계약서의 내용을 충분히 이해하였음을 확인합니다.
-`)
+7. 계약서의 내용을 충분히 이해하였음을 확인합니다.1`)
 </script>
