@@ -69,7 +69,7 @@
                 <Button severity="secondary" :label="getFirstBtnText()" @click="getFirstBtnClick"/>
                 <Button :label="getSecondBtnText()" @click="getSecondBtnClick" class="list-button"/>
             </template>
-            <Button v-if="props.info['useYn'] !== 'N' && props.info['stCd'] !== '001'" severity="secondary" icon="pi pi-ellipsis-h" outlined class="flex-none" @click="togglemorePopover" />
+            <Button v-if="props.info['useYn'] !== 'N' && props.info['stCd'] !== '001'" severity="secondary" icon="pi pi-ellipsis-h" class="flex-none" @click="togglemorePopover" />
             <Popover class="custom-popover-listbox" ref="morePopover" dismissable> 
                 <Listbox :options="moreBtnList" optionLabel="name" optionValue="value" class="w-full md:w-56">
                 <template #option="slotProps">
