@@ -252,6 +252,12 @@ export const useOrderStore = defineStore('order', {
                                     showTag      : tags.length > 0 ? true : false,
                                     tags         : tags,
                                     spanText     : order.memo,
+                                    orderInfo    : {
+                                        shippingGbNm    : order.shippingGbNm,
+                                        ordDt           : order.ordDt,
+                                        outDt           : order.outDt,
+                                        orderMemo       : order.orderMemo
+                                    },
                                     showButton   : true,
                                     buttonText   : `(${fa.faNm})`+ buttonText,
                                     buttonType   : buttonType
