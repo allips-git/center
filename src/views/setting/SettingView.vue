@@ -40,7 +40,7 @@
                 <section class="">
                     <h2 class="text-sm setting-list-header text-t-lv1">정보설정</h2>
                     <ul>
-                        <li v-for="(item, index) in storeSettings" :key="index" class="flex justify-between items-center p-4 pr-2 text-sm border-b hover:bg-gray-50 text-t-lv1" @click="navigateTo(item)">
+                        <li v-for="(item, index) in storeSettings" :key="index" class="flex justify-between items-center p-4 pr-2 text-sm border-b cursor-pointer hover:bg-gray-50 text-t-lv1" @click="navigateTo(item)">
                             <p>{{ item.name }}</p>
                             <div class="flex justify-center items-center size-5"><IconPlay class="w-5 fill-l-lv0"/></div>
                         </li>
@@ -110,12 +110,15 @@
                 :modal=true position="center" class="custom-dialog-full" 
                 @update:visible="getPopClose('contractSetting', true)">
                 <template #header>
-                    <!-- <div class="modal-backheader">
-                        <Button @click="getPopupClose(true, 'settingStore')" severity="contrast" text icon="pi pi-times" />
-                        <h2 class="modal-backheader-title">매장 설정</h2>
-                    </div> -->
                 </template>
                 <ContractSetting/>
+            </Dialog>
+            <Dialog v-model:visible="popup['pop']['measurementSetting']" 
+                :modal=true position="center" class="custom-dialog-full" 
+                @update:visible="getPopClose('measurementSetting', true)">
+                <template #header>
+                </template>
+                <MeasurementSetting/>
             </Dialog>
             <Dialog v-model:visible="popup['pop']['couponMenu']" 
                 :modal=true position="center" class="custom-dialog-full" 
@@ -174,6 +177,7 @@ import SettingStore from "@/views/setting/SettingStore.vue";
 import PlantalkMain from "@/views/plantalk/PlantalkMain.vue";
 import MemberMng from "@/views/setting/MemberMng.vue";
 import ContractSetting from "@/views/setting/ContractSetting.vue";
+import MeasurementSetting from "@/views/setting/MeasurementSetting.vue";
 import CouponMenu from "@/views/setting/CouponMenu.vue";
 import TimeSetting from "@/views/setting/TimeSetting.vue";
 import StaticPayView from "@/views/setting/StaticPay.vue";
@@ -199,6 +203,7 @@ const storeSettings = ref([
     { name: '멤버관리', path: 'memberList' },
     { name: '견적서 / 계약서 설정', path: 'contractSetting' },
     { name: '할인 설정', path: 'couponMenu' },
+    { name: '실측 불러오기 설정', path: 'measurementSetting' },
     { name: '시공시간 설정', path: 'timeSetting' },
     { name: '고정비용 등록', path: 'staticPayView' },
     { name: '푸쉬 알림', path: '/setting' },

@@ -15,7 +15,7 @@
       />
 
       <template v-if="props.centerTitle">
-        <h1 class="flex-1 pt-4 text-base font-bold text-center md:text-left md:ml-2 text-t-lv1 ios-title">
+        <h1 class="flex-1 pt-4 font-bold text-center text-15 md:text-left md:ml-2 text-t-lv1 ios-title">
           {{ props.title }}
         </h1>
         <div class="w-6"></div> 
@@ -23,7 +23,7 @@
 
       <template v-else>
         <h1
-          class="absolute top-1/2 left-1/2 text-base font-bold -translate-x-1/2 -translate-y-1/2 text-t-lv1 md:relative md:-translate-y-0 md:-translate-x-0 md:top-0 md:left-2"
+          class="absolute top-1/2 left-1/2 font-bold -translate-x-1/2 -translate-y-1/2 text-15 text-t-lv1 md:relative md:-translate-y-0 md:-translate-x-0 md:top-0 md:left-2"
         >
           {{ props.title }}
         </h1>

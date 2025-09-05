@@ -201,7 +201,7 @@
   }
 
   .modal-backheader-title{
-    @apply text-base absolute font-bold -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 
+    @apply text-15 absolute font-bold -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 
   }
   .mini_select{
     @apply !h-8 *:!text-10 md:*:!text-sm items-center justify-center !bg-transparent

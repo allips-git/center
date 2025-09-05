@@ -493,7 +493,9 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .p-button-text:not(.p-button-outlined) {
     border: 0 !important;
 }
-
+.p-button-text {
+    background-color: transparent !important;
+}
 .input-custom {
     .p-inputtext {
         padding: 5px 10px !important;
@@ -1061,23 +1063,26 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         }
     }
     &.p-button-sm {
-        padding-block: 0.5rem;
+        padding-block: rem(6);
         padding-inline: 0.5rem;
         .p-button-label{
-            font-size: 0.75rem;
+            font-size: rem(12);
             font-weight: 700;
             line-height: 1.167;
         }
     }
     &.p-button-secondary{
-        background-color: #ebebeb;
+        &:not(.p-button-outlined) {
+            background-color: #ebebeb;
+            border-color: #ebebeb;
+        }
         color: #7D7C78;
-        border: none;
+        //border: none;
         // padding-block: 14px;
         .p-button-label{
-            color: #000000;
-            font-weight: 700 !important;
-            font-size: 0.8125rem;
+            // color: #000000;
+            // font-weight: 700 !important;
+            // font-size: rem(12);
         }
      
     }
@@ -1116,6 +1121,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
 .p-button:not(.p-button-outlined):hover {
     //border: none !important;
 }
+
 
 .p-button-help{
     background: #DBB071 !important;
