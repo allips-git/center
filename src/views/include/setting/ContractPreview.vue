@@ -214,8 +214,6 @@ const getConResult = () => {
 
                 formData.append('params', JSON.stringify(params));
 
-                console.log(mate.info.clientSignFile);
-
                 if(mate.info.clientSignFile !== null)
                 {
                     formData.append('file', mate.info.clientSignFile);
