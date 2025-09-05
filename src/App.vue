@@ -14,7 +14,7 @@
                         :class="{ 'pb-[56px] md:pb-0' : showAppFooter }"
                     >
                         <div
-                            class="w-full xl:max-w-[980px] xl:my-4 2xl:max-w-[1140px] xl:bg-white xl:rounded-2xl overflow-hidden" 
+                            class="w-full xl:max-w-[800px] xl:my-4 xl:bg-white xl:rounded-2xl overflow-hidden" 
                             :class="{ '': showShadow }"
                         >
                             <RouterView />

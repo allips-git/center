@@ -84,6 +84,65 @@
                     <li>사용문의</li>
                 </ul>
             </section>
+            <!-- Publishing Draft -->
+            <div class="flex flex-col gap-4 pb-20">
+                <div class="flex gap-2 items-end">
+                    <Button label="Primary" size="small" />
+                    <Button label="Secondary" severity="secondary" size="small" />
+                    <Button label="Warn" severity="warn" size="small" />
+                    <Button label="Primary" />
+                    <Button label="Secondary" severity="secondary" />
+                    <Button label="Warn" severity="warn" />
+                    <Button label="Primary" size="large" />
+                    <Button label="Secondary" severity="secondary" size="large" />
+                    <Button label="Warn" severity="warn" size="large" />
+                </div>
+                <div class="flex gap-2">
+                    <Button label="Primary" />
+                    <Button label="Secondary" severity="secondary" />
+                    <Button label="Success" severity="success" />
+                    <Button label="Info" severity="info" />
+                    <Button label="Warn" severity="warn" />
+                    <Button label="Help" severity="help" />
+                    <Button label="Danger" severity="danger" />
+                    <Button label="Contrast" severity="contrast" />
+                </div>
+                <div class="flex gap-2">
+                    <Button label="Primary" rounded />
+                    <Button label="Secondary" severity="secondary" rounded />
+                    <Button label="Success" severity="success" rounded />
+                    <Button label="Info" severity="info" rounded />
+                    <Button label="Warn" severity="warn" rounded />
+                    <Button label="Help" severity="help" rounded />
+                    <Button label="Danger" severity="danger" rounded />
+                    <Button label="Contrast" severity="contrast" rounded />
+                </div>
+                <div class="flex gap-2">
+                    <Button label="Primary" variant="outlined" />
+                    <Button label="Secondary" severity="secondary" variant="outlined" />
+                    <Button label="Success" severity="success" variant="outlined" />
+                    <Button label="Info" severity="info" variant="outlined" />
+                    <Button label="Warn" severity="warn" variant="outlined" />
+                    <Button label="Help" severity="help" variant="outlined" />
+                    <Button label="Danger" severity="danger" variant="outlined" />
+                    <Button label="Contrast" severity="contrast" variant="outlined" />
+                </div>
+                <div class="flex gap-2">
+                </div>
+                <div class="flex gap-2">
+                </div>
+                <div class="flex gap-2">
+                </div>
+                <div class="flex gap-2">
+                </div>
+                <div class="flex gap-2">
+                </div>
+                <div class="flex gap-2">
+                </div>
+                <div class="flex gap-2">
+                </div>
+            </div>
+            <!-- //Publishing Draft -->
             <Dialog v-model:visible="popup['pop']['settingStore']" 
                 :modal=true position="center" class="custom-dialog-full" 
                 @update:visible="getPopClose('settingStore', true)">

@@ -487,12 +487,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     &::placeholder {font-size: 14px;}
 }
 
-.p-button-text.p-button-contrast {
-    width: 20px;
-}
-.p-button-text:not(.p-button-outlined) {
-    border: 0 !important;
-}
+
 
 .input-custom {
     .p-inputtext {
@@ -829,302 +824,6 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     }
 }
 
-.btn-2-layout-box {
-    .p-button {
-        border: none;
-         padding: 10px;
-        .p-button-label {
-            font-size: 0.8175rem;
-        }
-        &:hover, &:focus {
-            border: none !important; 
-        }
-    }
-}
-.conbutton {
-    .p-button {
-        padding: 13.5px;
-    }
-}
-
-.order-button {
-    width: 100%;
-    .p-button{
-        padding-block: 13.5px !important;
-        .p-button-label {
-            font-size: 0.8175rem !important;
-        }
-    }
-}
-
-
-
-.register-button {
-    .p-button {
-        background-color: #409AFF !important;
-        padding: 16px 18px !important;
-        border-radius: 4px !important;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
-        .p-button-label{
-            font-weight: 800 !important;
-            font-size: 0.8175rem;
-        }
-    }
-}
-
-.p-button.print-btn{
-    padding: 8px 6px !important;
-    .p-button-label{
-        font-size: 0.75rem;
-        font-weight: 800 !important;
-    }
-}
-
-.bottom-fixed-btn-box {
-    .p-button.p-button-secondary .p-button-label {
-        border: none;
-        color: #000000;
-    }
-}
-
-.change-button {
-    .p-button.p-button-sm {
-        padding: 6px !important;
-        border-radius: 2px;
-        border: none;
-    }
-}
-
-.list-button {
-    .p-button-label{
-        font-size: 0.8175rem !important;
-    }
-}
-
-.esti-button {
-    .p-button {
-       padding: 6px !important;
-    }
-}
-
-.danger-button {
-    .p-button.p-button-sm {
-        padding: rem(4) !important;
-        border-radius: 2px !important;
-        .p-button-label {
-            font-size: rem(11);
-            font-weight: 400;
-        }
-    }
-}
-
-.accbutton{
-    .p-button.p-button-secondary {
-        padding: 10px;
-        .p-button-label{
-            font-size: 0.6875rem;
-        }
-    }
-}
-
-.product-button {
-    .p-button.p-button-sm {
-        padding: 6px 8px !important;
-        border: none;
-        .p-button-label {
-            font-weight: 700 !important;
-        }
-    }
-}
-
-
-
-.facadd-button {
-    .p-button{
-        border-radius: 4px !important;
-        .p-button-label{
-            font-size: 0.8175rem;
-        }
-    }
-    pointer-events: auto;
-    z-index: 50;
-}
-
-.p-button-outlined.p-button-danger {
-    padding: 5px !important;
-    .p-button-label{
-        font-weight: 600 !important;
-        font-size: 11px;
-        
-    }
-}
-
-.alert-button {
-    .p-button.p-button-sm {
-        padding: 6px 8px !important;
-    }
-}
-
-.login-button {
-    .p-button {
-        .p-button-label{
-            font-size: 0.875rem;
-        }
-    }
-}
-
-
-
-.success-button{
-    .p-button.p-button-success{
-        padding: 14px;
-    }
-}
-
-.outmng-button{
-    .p-button{
-        .p-button-label{
-            font-size: 0.8175rem !important;
-        }
-    }
-}
-
-.add-button {
-    .p-button{
-        padding-block: 14px;
-        .p-button-label{
-            font-size: 13px;
-        }
-    }
-}
-
-.next-button{
-    .p-button{
-        padding-block: 12px;
-    }
-    .p-button-label{
-        font-size: 0.875rem !important;
-    }
-}
-
-.bottom-modal-absol-box {
-    .p-button{
-        padding: 0.9375rem 0;
-        //border: none;
-        .p-button-label{
-            font-size: 0.9375rem;
-            font-weight: 700;
-            line-height: 1rem;
-            letter-spacing: 0.02em;
-        }
-    }
-}
-.bottom-fixed-btn-box {
-    .p-button{
-        padding: 0.9375rem 0 !important;
-        //border: none;
-        .p-button-label{
-            font-size: 0.9375rem;
-            font-weight: 700;
-            line-height: 1rem;
-            letter-spacing: 0.02em;
-        }
-    }
-}
-
-.mobile-fiex-bottom {
-    .p-button{
-        padding-block: 13.5px;
-        border: none;
-    }
-}
-
-// 버튼 정리
-.p-button {
-    // /border: 0 !important;
-    border-radius: 0.125rem !important;
-    &.rounded-full {
-        border-radius: 9999px !important; 
-    }
-    &:hover {
-        //border: 0 !important;
-    }
-    .p-button-label{
-        font-weight: 500;
-        line-height: 1.5;
-    }
-    &.p-button-lg {
-        padding-top: rem(12);
-        padding-bottom: rem(12);
-        .p-button-label{
-            font-weight: 700;
-        }
-    }
-    &.p-button-sm {
-        padding-block: 0.5rem;
-        padding-inline: 0.5rem;
-        .p-button-label{
-            font-size: 0.75rem;
-            font-weight: 700;
-            line-height: 1.167;
-        }
-    }
-    &.p-button-secondary{
-        background-color: #ebebeb;
-        color: #7D7C78;
-        border: none;
-        // padding-block: 14px;
-        .p-button-label{
-            color: #000000;
-            font-weight: 700 !important;
-            font-size: 0.8125rem;
-        }
-     
-    }
-    &.outlined-button{
-        background-color: #ffffff;
-        border: 1px solid #E4E5E9;
-        border-radius: 4px !important;
-        padding: 6px 16px !important;
-        .p-button-label{
-            font-weight: 400 !important;
-            font-size: 12px;
-            
-        }
-    }
-    &.btn-md {
-        padding: 0.6875rem 0.625rem;
-        .p-button-label{
-            font-size: 0.875rem;
-            line-height: 1rem;
-        }
-    }
-    &.btn-xs {
-        padding: 0.375rem 0.5rem calc(0.375rem - 1px);
-        .p-button-label{
-            font-weight: 700;
-            font-size: 0.6875rem;
-            line-height: 0.75rem;
-        }
-    }
-}
-
-.p-button-secondary:not(:disabled):hover{
-    background-color: #e2e8f0;
-    //border: none !important;
-}
-.p-button:not(.p-button-outlined):hover {
-    //border: none !important;
-}
-
-.p-button-help{
-    background: #DBB071 !important;
-    border: 1px solid #DBB071 !important;
-}
-
-.p-button-rounded{
-    border-radius: 9999px !important;
-}
 :root{
     --p-form-field-padding-y:0.5rem !important
 }
@@ -1571,5 +1270,305 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         @media (min-width: $breakpoint-sm) { 
             font-size: rem(14);
         }
+    }
+}
+
+
+// 버튼 정리
+.p-button {
+    height: rem(40);
+    padding: rem(13) rem(14);
+    border-radius: rem(2) !important;
+    font-size: rem(14) !important;
+    font-weight: 600;
+    // size
+    .p-button-label {
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: 1 !important;
+    }
+    &.p-button-sm {
+        height: rem(26);
+        padding: rem(7) rem(8);
+        font-size: rem(12) !important;
+    }
+    &.p-button-lg {
+        height: rem(42);
+        padding: rem(14) rem(16);
+        font-weight: 700;
+    }
+    &.p-button-xl {
+        height: rem(48);
+        font-weight: 700;
+    }
+    // severity
+    &.p-button-secondary {
+        color: var(--t-lv1);
+        background-color: var(--bg-lv4);
+        border-color: var(--bg-lv4);
+        &:hover, &:focus {
+            background-color: #ddd;
+            border-color: #ddd;
+        }
+        &.p-button-outlined {
+            background-color: transparent;
+            &:hover, &:focus {
+            }
+        }
+        &.p-button-text {
+            &:hover, &:focus {
+                background-color: transparent;
+                border-color: transparent;
+            }
+        }
+    }
+}
+
+/*
+.p-button {
+
+    &.rounded-full {
+        border-radius: 9999px !important; 
+    }
+
+
+
+
+    &.outlined-button{
+        background-color: #ffffff;
+        border: 1px solid #E4E5E9;
+        border-radius: 4px !important;
+        padding: 6px 16px !important;
+        .p-button-label{
+            font-weight: 400 !important;
+            font-size: 12px;
+            
+        }
+    }
+    &.btn-md {
+        padding: 0.6875rem 0.625rem;
+        .p-button-label{
+            font-size: 0.875rem;
+            line-height: 1rem;
+        }
+    }
+    &.btn-xs {
+        padding: 0.375rem 0.5rem calc(0.375rem - 1px);
+        .p-button-label{
+            font-weight: 700;
+            font-size: 0.6875rem;
+            line-height: 0.75rem;
+        }
+    }
+}
+*/
+/*
+.p-button-secondary:not(:disabled):hover{
+    background-color: #e2e8f0;
+}
+.p-button:not(.p-button-outlined):hover {
+}
+
+.p-button-help{
+    background: #DBB071 !important;
+    border: 1px solid #DBB071 !important;
+}
+
+.p-button-rounded{
+    border-radius: 9999px !important;
+}
+
+.p-button-text.p-button-contrast {
+    width: 20px;
+}
+.p-button-text:not(.p-button-outlined) {
+    border: 0 !important;
+}
+.p-button-outlined.p-button-danger {
+    padding: 5px !important;
+    .p-button-label{
+        font-weight: 600 !important;
+        font-size: 11px;
+        
+    }
+}
+*/
+
+
+.btn-2-layout-box {
+    .p-button {
+        border: none;
+         padding: 10px;
+        .p-button-label {
+            font-size: 0.8175rem;
+        }
+        &:hover, &:focus {
+            border: none !important; 
+        }
+    }
+}
+.p-button.print-btn{
+    padding: 8px 6px !important;
+    .p-button-label{
+        font-size: 0.75rem;
+        font-weight: 800 !important;
+    }
+}
+.bottom-fixed-btn-box {
+    .p-button.p-button-secondary .p-button-label {
+        border: none;
+        color: #000000;
+    }
+}
+.bottom-modal-absol-box {
+    .p-button{
+        padding: 0.9375rem 0;
+        //border: none;
+        .p-button-label{
+            font-size: 0.9375rem;
+            font-weight: 700;
+            line-height: 1rem;
+            letter-spacing: 0.02em;
+        }
+    }
+}
+.bottom-fixed-btn-box {
+    .p-button{
+        padding: 0.9375rem 0 !important;
+        //border: none;
+        .p-button-label{
+            font-size: 0.9375rem;
+            font-weight: 700;
+            line-height: 1rem;
+            letter-spacing: 0.02em;
+        }
+    }
+}
+.mobile-fiex-bottom {
+    .p-button{
+        padding-block: 13.5px;
+        border: none;
+    }
+}
+
+
+.conbutton {
+    .p-button {
+        padding: 13.5px;
+    }
+}
+.order-button {
+    width: 100%;
+    .p-button{
+        padding-block: 13.5px !important;
+        .p-button-label {
+            font-size: 0.8175rem !important;
+        }
+    }
+}
+.register-button {
+    .p-button {
+        background-color: #409AFF !important;
+        padding: 16px 18px !important;
+        border-radius: 4px !important;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+        .p-button-label{
+            font-weight: 800 !important;
+            font-size: 0.8175rem;
+        }
+    }
+}
+.change-button {
+    .p-button.p-button-sm {
+        padding: 6px !important;
+        border-radius: 2px;
+        border: none;
+    }
+}
+.list-button {
+    .p-button-label{
+        font-size: 0.8175rem !important;
+    }
+}
+.esti-button {
+    .p-button {
+       padding: 6px !important;
+    }
+}
+.danger-button {
+    .p-button.p-button-sm {
+        padding: rem(4) !important;
+        border-radius: 2px !important;
+        .p-button-label {
+            font-size: rem(11);
+            font-weight: 400;
+        }
+    }
+}
+.accbutton{
+    .p-button.p-button-secondary {
+        padding: 10px;
+        .p-button-label{
+            font-size: 0.6875rem;
+        }
+    }
+}
+.product-button {
+    .p-button.p-button-sm {
+        padding: 6px 8px !important;
+        border: none;
+        .p-button-label {
+            font-weight: 700 !important;
+        }
+    }
+}
+.facadd-button {
+    .p-button{
+        border-radius: 4px !important;
+        .p-button-label{
+            font-size: 0.8175rem;
+        }
+    }
+    pointer-events: auto;
+    z-index: 50;
+}
+.alert-button {
+    .p-button.p-button-sm {
+        padding: 6px 8px !important;
+    }
+}
+.login-button {
+    .p-button {
+        .p-button-label{
+            font-size: 0.875rem;
+        }
+    }
+}
+.success-button{
+    .p-button.p-button-success{
+        padding: 14px;
+    }
+}
+.outmng-button{
+    .p-button{
+        .p-button-label{
+            font-size: 0.8175rem !important;
+        }
+    }
+}
+.add-button {
+    .p-button{
+        padding-block: 14px;
+        .p-button-label{
+            font-size: 13px;
+        }
+    }
+}
+.next-button{
+    .p-button{
+        padding-block: 12px;
+    }
+    .p-button-label{
+        font-size: 0.875rem !important;
     }
 }
