@@ -175,6 +175,15 @@ export const useOrderStore = defineStore('order', {
                                     break;
                                 }
 
+                                const options = order.option.filter(item => item.poGb === '001');
+
+                                if(options.length !== 0)
+                                {
+                                    options.map(option => {
+                                        tags.push({ spanText: option.itemNm + ' / ' + option.icNm });
+                                    })
+                                }
+
                                 if(order.shape === 'Y')
                                 {
                                     tags.push({ spanText: "형상옵션" });
