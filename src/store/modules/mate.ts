@@ -3,6 +3,7 @@
  */
 import { defineStore } from 'pinia';
 import { getAxiosData, getConvertDate } from '@/assets/js/function';
+import { useDataStore } from '@/store';
 import axios from 'axios';
 
 interface Spec {
@@ -162,6 +163,7 @@ export const useMateStore = defineStore('mate', {
     actions : {
         async getEstiMate(params, yn: Y | N = 'Y')
         {
+            const data = useDataStore();
             let res;
             params['yn'] = yn;
 
@@ -194,7 +196,7 @@ export const useMateStore = defineStore('mate', {
                 this.info.addrDetail = res.data.info.addrDetail;
                 this.info.estiDt     = getConvertDate(new Date(res.data.info.stDt), 'yy.mm.dd');
                 this.info.clientSet  = 'N';
-                this.info.terms      = res.data.info.terms;
+                this.info.terms      = res.data.info.terms === '' ? data.terms : res.data.info.terms;
 
                 this.info.list = res.data.estiList.map(item => {
                     let cnt = 0;
@@ -318,7 +320,7 @@ export const useMateStore = defineStore('mate', {
                 this.info.estiDt     = getConvertDate(new Date(res.data.info.stDt), 'yy.mm.dd');
                 this.info.conDt      = getConvertDate(new Date(res.data.info.conDt), 'yy.mm.dd');
                 this.info.conPerson  = res.data.info.conPerson;
-                this.info.terms      = res.data.info.terms;
+                this.info.terms      = res.data.info.terms === '' ? data.terms : res.data.info.terms;
                 this.info.clientSet  = res.data.info.clientSign === '' ? 'N' : 'Y';
                 this.info.clientNm   = res.data.info.clientNm;
                 this.info.clientTel  = res.data.info.clientTel;

@@ -240,6 +240,18 @@
         </template>
         <CustomerDetail/>
     </Dialog>
+
+    <Dialog v-model:visible="popup['pop']['messageView']" header="고객 상세" 
+        :modal=true position="center" class="custom-dialog-full" 
+        @update:visible="getPopupClose('messageView', true)">
+        <template #header>
+            <div class="modal-backheader">
+                <Button @click="getPopupClose('messageView', true)" severity="contrast" text icon="pi pi-times" />
+                <h2 class="modal-backheader-title">메시지 저장</h2>
+            </div>
+        </template>
+        <MessageView/>
+    </Dialog>
 </div>  
 </template>
 
@@ -255,6 +267,7 @@ import ChatRoomModal from "@/views/customer/ChatRoomModal.vue";
 import CustomerChoice from '@/components/modal/CustomerChoice.vue'
 import CustomerListSet from '@/views/include/CustomerListSet.vue'
 import CustomerDetail from '@/views/include/customer/CustomerDetail.vue'
+import MessageView from '@/views/message/MessageView.vue'
 import { usePopup } from '@/assets/js/popup';
 
 const confirm   = useConfirm();
@@ -270,7 +283,7 @@ const router    = useRouter();
 const { getPopupOpen, getPopupClose } = usePopup();
 
 const getPopOpen = async () => {
-    await window.history.pushState({ page: 'clientChoice' }, '', '#clientChoice')
+    await router.push({ hash: "#popup" });
     await getPopupOpen('clientChoice');
     client.getReset();
 }
@@ -329,8 +342,8 @@ const getMsgContents = (contents: string) => {
 const getMsg = async (mhCd: string, mbCd: string, msCd: string) => {
     await msg.getReset();
     await msg.getData(mhCd, mbCd, msCd);
-
-    router.push({ path : '/msg' });
+    await router.push({ hash: "#popup" });
+    await getPopupOpen('messageView');
 }
 
 onMounted(() => {

@@ -244,7 +244,7 @@ const getSave = () => {
     });
 }
 
-onMounted(() => {
+onMounted(async () => {
     const updateMainSize = () => {
         if (mainRef.value) {
             mainWidth.value = mainRef.value.offsetWidth
@@ -255,11 +255,11 @@ onMounted(() => {
 
     const observer = new ResizeObserver(() => updateMainSize())
     observer.observe(mainRef.value);
-    setting.getData();
+    await setting.getData();
 
     if(setting.terms === '')
     {
-        setting.terms = terms.value
+        setting.terms = terms.value;
     }
 });
 
