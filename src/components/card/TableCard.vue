@@ -3,23 +3,22 @@
         <h1 class="px-4 py-1.5 text-sm text-left bg-l-lv5">{{ title }}</h1>
         <!-- 개별 카드 v-for  -->
         <div class="flex flex-col justify-start items-start px-4 py-6 border-t first:border-t-0" v-for="(card, index) in cards" :key="index" @click="emit('get-modify', card['edCd'])">
-            <!-- 카드 상단 -->
-             <div class="flex justify-between items-center w-full mb-[11px]">
-                <h2 class="text-xs text-t-lv1">{{ card.productTitle }}</h2>
-                <div v-if="card.showDelete" class="flex justify-end danger-button">
-                    <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-[3.25rem] font-normal !border-l-lv3" />
-                </div>            
-             </div>
-            <section class="w-full">
-                <div class="flex justify-between items-end mb-3.5 w-full text-13">
-                    <div class="">
+            <div class="flex justify-between mb-4 w-full">
+                <div class="flex-1 flex flex-col gap-[0.8125rem] pt-1">
+                    <h2 v-if="card.productTitle" class="text-xs leading-tight text-t-lv3">{{ card.productTitle }}</h2>
+                    <div>
                         <!-- <h2 class="mb-1 text-sm text-gray-400">{{ card.productTitle }}</h2> -->
-                        <h3 :class="`font-black text-${card.isRed ? 'red-500' : 'p-lv3'}`">{{ card.colorTitle }}</h3>
+                        <h3 :class="`font-black text-13 leading-tight text-${card.isRed ? 'red-500' : 'p-lv3'}`">{{ card.colorTitle }}</h3>
                         <!-- <h3 class="font-bold text-red-600">{{ card.colorTitle }}</h3> -->
                     </div>
-                    <p class="font-bold">{{ card.amt ? getAmt(card.amt)+'원' : '' }}</p>
                 </div>
-            </section>
+                <div class="w-[100px] flex-none flex flex-col gap-2">
+                    <div v-if="card.showDelete" class="flex justify-end danger-button">
+                        <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-[3.25rem] font-normal !border-l-lv3" />
+                    </div>  
+                    <p class="font-bold text-right text-13">{{ card.amt ? getAmt(card.amt)+'원' : '' }}</p>
+                </div>
+            </div>                
             <!-- 테이블 -->
             <table class="overflow-hidden w-full text-center rounded-sm table-fixed custom-table-in-card">
                 <thead class="">
