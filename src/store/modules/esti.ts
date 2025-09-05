@@ -1103,7 +1103,7 @@ export const useEstiStore = defineStore('esti', {
                             usage   : Number(this.curtain['use']),
                             size    : Number(this.common['unitSize']),
                             los     : this.curtain['los'],
-                            proc    : this.curtain['proc'],
+                            split   : this.curtain['split'],
                             roundGb : this.common['roundGb']
                         });
                     }

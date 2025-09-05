@@ -6,7 +6,7 @@
                 <InputText v-model="esti['common']['location']" placeholder="기타" class="w-full"/> 
             </IftaLabel>
             <IftaLabel>
-                <Select v-model="esti['curtain']['split']" :options="data['split']" optionLabel="name" optionValue="value" class="w-full">
+                <Select v-model="esti['curtain']['split']" :options="data['split']" optionLabel="name" optionValue="value" class="w-full" @change="esti.getUnitCalc('N')">
                     <template #dropdownicon>
                         <IconArrowDropDown class="w-4 h-4 text-l-lv0" />
                     </template>
