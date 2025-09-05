@@ -178,9 +178,33 @@ export const usePayStore = defineStore('pay', {
                                     break;
                                 }
 
+                               const options = order.option.filter(item => item.poGb === '001');
+
+                                if(options.length !== 0)
+                                {
+                                    options.map(option => {
+                                        tags.push({ spanText: option.itemNm + ' / ' + option.icNm });
+                                    })
+                                }
+
                                 if(order.shape === 'Y')
                                 {
                                     tags.push({ spanText: "형상옵션" });
+                                }
+
+                                if(order.proc === '001')
+                                {
+                                    tags.push({ spanText: "나비주름" });
+                                }
+
+                                if(order.bproc === '002')
+                                {
+                                    tags.push({ spanText: "리드밴드" });
+                                }
+
+                                if(order.addColor === 'T')
+                                {
+                                    tags.push({ spanText: `투톤: 기둥 ${order.outColorNm} ${order.outSize}${order.unitNm} / 안쪽 ${order.inColorNm} ${order.inSize}${order.unitNm}` });
                                 }
 
                                 if(order.ordGb === 'O')
@@ -240,6 +264,12 @@ export const usePayStore = defineStore('pay', {
                                     showTag      : tags.length > 0 ? true : false,
                                     tags         : tags,
                                     spanText     : order.memo,
+                                    orderInfo    : {
+                                        shippingGbNm    : order.shippingGbNm,
+                                        ordDt           : order.ordDt,
+                                        outDt           : order.outDt,
+                                        orderMemo       : order.orderMemo
+                                    },
                                     showButton   : true,
                                     buttonText   : `(${fa.faNm})`+ buttonText,
                                     buttonType   : buttonType

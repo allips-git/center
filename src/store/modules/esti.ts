@@ -567,6 +567,15 @@ export const useEstiStore = defineStore('esti', {
                                     break;
                                 }
 
+                                const options = esti.option.filter(item => item.poGb === '001');
+
+                                if(options.length !== 0)
+                                {
+                                    options.map(option => {
+                                        tags.push({ spanText: option.itemNm + ' / ' + option.icNm });
+                                    })
+                                }
+
                                 if(esti.shape === 'Y')
                                 {
                                     tags.push({ spanText: "형상옵션" });

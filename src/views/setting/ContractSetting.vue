@@ -72,7 +72,7 @@
         <div class="gray-bar"></div>
         <section class="px-4 py-6 sm:px-6 sm:py-8">
             <h2 class="mb-1 text-sm font-normal">약정서 내용</h2>
-            <Textarea v-model="terms" autoResize cols="30" rows="10"  class="w-full" />
+            <Textarea v-model="setting.terms" autoResize cols="30" rows="10"  class="w-full" />
         </section>
     </main>
 
@@ -204,7 +204,8 @@ const getSave = () => {
                 sizeYn : setting.sizeYn,
                 unitYn : setting.unitYn,
                 signYn : setting.signYn,
-                file   : setting.file
+                file   : setting.file,
+                terms  : setting.terms
             };
 
             console.log(params);
@@ -243,7 +244,7 @@ const getSave = () => {
     });
 }
 
-onMounted(() => {
+onMounted(async () => {
     const updateMainSize = () => {
         if (mainRef.value) {
             mainWidth.value = mainRef.value.offsetWidth
@@ -254,7 +255,12 @@ onMounted(() => {
 
     const observer = new ResizeObserver(() => updateMainSize())
     observer.observe(mainRef.value);
-    setting.getData();
+    await setting.getData();
+
+    if(setting.terms === '')
+    {
+        setting.terms = terms.value;
+    }
 });
 
 const terms = ref(`

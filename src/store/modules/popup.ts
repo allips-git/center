@@ -56,7 +56,9 @@ interface Pop {
     privacyView         : boolean;
     shippingGbList      : boolean;
     shippingGbSet       : boolean;
+    chatRoom            : boolean;
     chatList            : boolean;
+    messageView         : boolean;
 }
 
 interface State {
@@ -118,6 +120,8 @@ const getPopInfo = (): Pop => {
         shippingGbList      : false,
         shippingGbSet       : false,
         chatRoom            : false,
+        chatList            : false,
+        messageView         : false
     }
 }
 
@@ -139,6 +143,8 @@ export const usePopupStore = defineStore('popup', {
             }
 
             this.list.push(popNm);
+
+            console.log(this.list);
         },
         getClose(popNm : string)
         {

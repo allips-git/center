@@ -91,7 +91,7 @@
             </section>
             <!-- 약정 내용 -->
             <section class="mt-6">
-                <Textarea v-model="terms" autoResize readonly cols="30" rows="10"  class="w-full" />
+                <Textarea v-model="mate.info.terms" autoResize readonly cols="30" rows="10"  class="w-full" />
             </section>
             <section v-if="mate.info.clientSet === 'Y'" class="mt-3">
                 <h2 class="p-2.5 text-base font-bold leading-tight bg-bg-lv2 text-t-lv1">계약서</h2>
@@ -214,8 +214,6 @@ const getConResult = () => {
 
                 formData.append('params', JSON.stringify(params));
 
-                console.log(mate.info.clientSignFile);
-
                 if(mate.info.clientSignFile !== null)
                 {
                     formData.append('file', mate.info.clientSignFile);
@@ -285,14 +283,4 @@ onMounted(() => {
         }
     }
 });
-
-const terms = ref(`1. 본사는 맞춤전문 업체로서 계약해지 또는 변경은 계약후 7일내에 한하며 이후 해지는 불가능 합니다. 또한 계약 제품이 생산을 진행하였어도 계약해지 또는 변경이 불가능합니다.\n\n 2. 계약 철회시 제작이 진행하지 않았어도 계약금은 반환되지 않습니다.\n\n 3. 기존제품 철거 및 재시공은 하지 않습니다. 만약 고객님이 원할 경우 추가비용이 발생합니다.
-
-4. 주문 제작 특성상 설치 후 교환/반품은 불가합니다. (제품 불량건 교환가능)
-
-5. 시공시간 지정은 불가능 합니다.
-
-6. 무상AS 기간은 1년이며, 고객 실수로 인한 제품하자는 AS비용이 별도로 발생합니다. (제품하자일 경우 제외)
-
-7. 계약서의 내용을 충분히 이해하였음을 확인합니다.1`)
 </script>

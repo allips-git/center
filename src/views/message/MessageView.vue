@@ -138,7 +138,7 @@ import BackHeader from '@/components/layouts/BackHeader.vue'
 import CustomerChoice from '@/views/include/message/CustomerChoice.vue'
 import MessageSavePop from '@/views/include/message/MessageSavePop.vue'
 // import Tag from 'primevue/tag';
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useConfirm } from 'primevue/useconfirm'
 import { useRouter } from 'vue-router'
 import { useLoginStore, usePopupStore, useMainStore, useMsgStore } from '@/store'
@@ -323,6 +323,10 @@ onMounted(async () => {
     }
   }
 })
+
+onUnmounted(async () => {
+    await main.getData();
+});
 </script>
 
 <style lang="scss"></style>
