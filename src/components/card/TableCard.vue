@@ -71,30 +71,30 @@
             <!-- 버튼타입 // severity="" // primary(시스템),success(외주),secondary(시스템/외주 발주완료),warn(발주취소),danger(발주 취소 요청) -->
             <div class="order-button">
                 <!-- @2025-09-02 발주 배송요청 사항 정보 요청 -->
-                <!-- <div class="bg-bg-lv2 rounded-[0.25rem] p-3 mt-4">
+                <div v-if="card.detailStCd && card.detailStCd !== '005' && index === cards.length -1" class="bg-bg-lv2 rounded-[0.25rem] p-3 mt-4">
                     <div class="flex justify-evenly flex-wrap items-center [&_dl]:flex [&_dl]:flex-col [&_dl]:gap-1 [&_dl]:items-center text-11 sm:text-13">
                         <dl>
                             <dt class="text-t-lv3">배송</dt>
                             <dd class="text-t-lv1">
-                                <span class="inline-block px-1.5 font-medium text-white rounded-sm bg-p-lv4">직배</span>
+                                <span class="inline-block px-1.5 font-medium text-white rounded-sm bg-p-lv4">{{ card.orderInfo.shippingGbNm }}</span>
                             </dd>
                         </dl>
                         <hr class="w-[1px] h-[1.5rem] bg-l-lv4" />
                         <dl>
                             <dt class="text-t-lv3">주문일</dt>
-                            <dd class="text-t-lv1">01.08 (목) 17:30</dd>
+                            <dd class="text-t-lv1">{{ getConvertDate(new Date(card.orderInfo.ordDt), 'yy.mm.dd.w') }}</dd>
                         </dl>
                         <hr class="w-[1px] h-[1.5rem] bg-l-lv4" />
                         <dl>
                             <dt class="text-t-lv3">출고일</dt>
-                            <dd class="text-t-lv1">01.08 (목)</dd>
+                            <dd class="text-t-lv1">{{ getConvertDate(new Date(card.orderInfo.outDt), 'yy.mm.dd.w') }}</dd>
                         </dl>
                         <dl class="mt-4 w-full">
                             <dt class="text-t-lv3">배송 요청사항</dt>
-                            <dd class="text-t-lv1">빠른 배송 부탁드립니다.</dd>
+                            <dd class="text-t-lv1">{{ card.orderInfo.orderMemo }}</dd>
                         </dl>
                     </div>
-                </div> -->
+                </div>
                 <Button v-if="card['showButton'] && index === cards.length -1" 
                     :label="card['buttonText']" :severity="card['buttonType']"  @click="getBtnProcess(card['buttonType'], card['edCd'])" class="mt-4 w-full"/>
             </div>
@@ -108,7 +108,7 @@ import { useConfirm } from "primevue/useconfirm";
 import { ref, defineProps } from 'vue'
 import { usePopupStore, useClientStore, useEstiStore, useOrderStore, usePayStore } from '@/store';
 import { getCommas } from "@/assets/js/function";
-import { getAxiosData, getTokenOut } from '@/assets/js/function';
+import { getAxiosData, getTokenOut, getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { useRoute } from 'vue-router';
 
