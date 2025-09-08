@@ -34,6 +34,8 @@ import ToastService from 'primevue/toastservice'
 import Dialog from 'primevue/dialog'
 import Tooltip from 'primevue/tooltip'
 import KeyFilter from 'primevue/keyfilter'
+import VueDatePicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
 import { register } from 'vue-advanced-chat'
 
 const app = createApp(App)
@@ -43,6 +45,7 @@ register()
 
 app.use(ConfirmationService)
 app.use(ToastService)
+app.component('VueDatePicker', VueDatePicker)
 // PrimeVue 컴포넌트 등록
 app.component('Button', Button)
 app.component('InputText', InputText)

@@ -116,7 +116,7 @@ import EditPricePop from '@/components/modal/EditPricePop.vue'
 import OptionChoice from "@/views/include/OptionChoice.vue";
 import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
-import { usePopupStore, useClientStore, useEstiStore } from '@/store';
+import { usePopupStore, useClientStore, useEstiStore, useOrderStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { useRoute } from 'vue-router';
@@ -130,6 +130,7 @@ const confirm   = useConfirm();
 const popup     = usePopupStore();
 const client    = useClientStore();
 const esti      = useEstiStore();
+const order     = useOrderStore();
 const route     = useRoute();
 const status    = ref(false);
 const { getPopupOpen, getPopupClose } = usePopup();
@@ -289,9 +290,21 @@ const getEstiSave = () => {
                 const res       = await instance.post(`https://data.planorder.kr/estiV1/getResult`, params);
 
                 console.log(res);
-                
+                console.log(esti.type);
+
+
                 await esti.getEmCd(res.data['emCd']);
-                await esti.getList();
+
+                if(esti.type === 'M' || esti.type === 'I')
+                {
+                    /** 견적에서 수정 시 */
+                    await esti.getList();
+                }
+                else if(esti.type === 'O')
+                {
+                    /** 발주에서 수정 시 */
+                    await order.getList({ emCd : esti['emCd'] });
+                }
 
                 if(route.name === 'CustomerEstiDetail')
                 {
@@ -299,8 +312,11 @@ const getEstiSave = () => {
                 }
                 else
                 {
-                    await client.getDetail();
-                    getPopupOpen('estiList');
+                    if(esti.type !== 'O')
+                    {
+                        await client.getDetail();
+                        getPopupOpen('estiList');
+                    }
                 }
 
                 getPopupClose('itemList', false);

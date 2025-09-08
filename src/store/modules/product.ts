@@ -173,13 +173,13 @@ export const useProductStore = defineStore('product', {
             {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/estiV1/getFactory`);
+                const factory   = [];
 
                 res.data['list'].forEach(item => {
-                    if (!this.option.some(item1 => item1.label === item.label)) 
-                    {
-                        this.option.push(item);
-                    }
+                    factory.push(item);
                 });
+
+                this.option = factory;
             }
             catch(e)
             {
