@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <h1 class="text-base font-bold">{{ login['name'] }}</h1>
+    <h1 class="text-base font-bold">{{ login['ceNm'] }}</h1>
     <div class="relative">
       <IconBell class="cursor-pointer fill-t-lv2" @click="open = true" />
         <!-- <span v-if="main['alarmList'] && main['alarmList'].length > 0" class="flex absolute -top-1 -right-1 justify-center items-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full">

@@ -270,6 +270,7 @@ export const usePayStore = defineStore('pay', {
                                         outDt           : order.outDt,
                                         orderMemo       : order.orderMemo
                                     },
+                                    outNo        : order.outNo,
                                     showButton   : true,
                                     buttonText   : `(${fa.faNm})`+ buttonText,
                                     buttonType   : buttonType

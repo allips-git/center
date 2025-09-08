@@ -122,7 +122,7 @@ export const getCardColumns = (unit: string) => {
 				{ key: 'width', header: '가로' },
 				{ key: 'height', header: '세로' },
 				// { key: 'proc', header: '가공' },
-				// { key: 'split', header: '분할' },
+				{ key: 'split', header: '분할' },
                 { key: 'qty', header: '수량' },
 				{ key: 'size', header: '규격' }
 			)

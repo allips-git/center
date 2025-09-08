@@ -4,13 +4,15 @@
 
             <div class="relative flex items-center justify-center w-full ">
                 <p class="w-[100px] flex-none">계약일</p>
-                <DatePicker v-model="con['conInfo']['conDt']" showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd" showTime hourFormat="24" class="w-full"/>
+                <VueDatePicker id="deliDt" v-model="con['conInfo']['conDt']" locale="ko" format="yyyy-MM-dd HH:mm" :enable-time-picker="true" 
+                    :is-24="true" input-class="w-full" :clearable="false" :auto-apply="true" :close-on-auto-apply="false"/>
             </div>
             
             <div class="relative flex items-center justify-center w-full">
                 <p class="w-[100px] flex-none">시공일<span class="ml-0.5 text-red-500">*</span></p>
                 <div class="flex flex-col w-full gap-1">
-                    <DatePicker id="deliDt" v-model="con['conInfo']['deliDt']" showIcon fluid iconDisplay="input" dateFormat="yy-mm-dd" showTime hourFormat="24" class="w-full"/>
+                    <VueDatePicker id="deliDt" v-model="con['conInfo']['deliDt']" locale="ko" format="yyyy-MM-dd HH:mm" :enable-time-picker="true" 
+                        :is-24="true" input-class="w-full" :clearable="false" :auto-apply="true" :close-on-auto-apply="false"/>
                     <small class="w-full text-red-500">{{ con['msg']['deliDt'] }}</small>
                 </div>
             </div>
@@ -55,8 +57,7 @@ import DatePicker from 'primevue/datepicker';
 import Textarea from 'primevue/textarea';
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router';
-import { usePopupStore, useDataStore, useClientStore, useEstiStore, useContractStore } from '@/store';
+import { useDataStore, useClientStore, useEstiStore, useContractStore } from '@/store';
 import { getAxiosData, getTokenOut, getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { contractMsg } from '@/assets/js/msg';
@@ -64,7 +65,6 @@ import { useRoute } from 'vue-router';
 
 const confirm   = useConfirm();
 const route     = useRoute();
-const popup     = usePopupStore();
 const data      = useDataStore();
 const client    = useClientStore();
 const esti      = useEstiStore();

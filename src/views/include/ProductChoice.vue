@@ -109,6 +109,12 @@ const getItemChoice = async (icCd: string) => {
 }
 
 const getExItem = async (itemCd: string) => {
+    if(esti.type === 'O')
+    {
+        alert('발주 수정 시 실측 데이터는 선택 불가능합니다.');
+        return;
+    }
+
     getPopupOpen('itemSet');
 
     await product.getEx(itemCd);

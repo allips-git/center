@@ -19,6 +19,7 @@
     "@headlessui/vue": "^1.7.23",
     "@heroicons/vue": "^2.2.0",
     "@primevue/themes": "^4.2.3",
+    "@vuepic/vue-datepicker": "^11.0.2",
     "axios": "^1.7.8",
     "chart.js": "^4.4.7",
     "pinia": "^2.2.6",

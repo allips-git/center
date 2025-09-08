@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <Button v-if="card['showButton'] && index === cards.length -1" 
-                    :label="card['buttonText']" :severity="card['buttonType']"  @click="getBtnProcess(card['buttonType'], card['edCd'])" class="mt-4 w-full"/>
+                    :label="card['buttonText']" :severity="card['buttonType']"  @click.stop="getBtnProcess(card['buttonType'], card['edCd'], card['outNo'])" class="mt-4 w-full"/>
             </div>
         </div>
     </div>
@@ -192,7 +192,7 @@ const getDelete = (edCd: string) => {
     });
 }
 
-const getBtnProcess = async (type: string, edCd: string) => {
+const getBtnProcess = async (type: string, edCd: string, outNo: null | string = null) => {
     switch(type)
     {
         case 'primary':
@@ -290,7 +290,8 @@ const getBtnProcess = async (type: string, edCd: string) => {
                 },
                 accept : async () => {
                     const params = {
-                        edCd : order['edCd']
+                        edCd    : order['edCd'],
+                        outNo   : outNo
                     }
 
                     try

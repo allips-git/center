@@ -555,7 +555,7 @@ export const useEstiStore = defineStore('esti', {
                                             width   : esti.width,
                                             height  : esti.height,
                                             // proc    : esti.proc === '001' ? '나비주름' : '평주름',
-                                            // split   : esti.split === '001' ? '양개' : '편개',
+                                            split   : esti.split === '001' ? '양개' : '편개',
                                             qty     : esti.cnt,
                                             size    : esti.totalUnit + esti.unitNm
                                         });
@@ -1284,9 +1284,9 @@ export const useEstiStore = defineStore('esti', {
         {
             this.emCd = emCd;
         },
-        getEdCd(edCd: string)
+        getEdCd(edCd: string, type: 'M' | 'O' = 'M')
         {
-            this.type = 'M';
+            this.type = type;
             this.edCd = edCd;
         },
         getUnitSet(price: number)
