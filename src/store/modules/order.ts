@@ -253,7 +253,7 @@ export const useOrderStore = defineStore('order', {
                                     detailStCd   : order.detailStCd,
                                     productTitle : order.productTitle,
                                     colorTitle   : order.colorTitle,
-                                    showDelete   : false,
+                                    showDelete   : order.detailStCd === '005' ? true : false,
                                     amt          : Number(order.totalPurcAmt) + Number(order.totalPurcTax),
                                     isRed        : false,
                                     columns      : getCardColumns(order.unit),

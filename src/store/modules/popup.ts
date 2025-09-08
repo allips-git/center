@@ -143,8 +143,6 @@ export const usePopupStore = defineStore('popup', {
             }
 
             this.list.push(popNm);
-
-            console.log(this.list);
         },
         getClose(popNm : string)
         {
