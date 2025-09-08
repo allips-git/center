@@ -66,7 +66,7 @@
                     </InputNumber>
                     <small class="whitespace-nowrap text-msg">{{ esti['msg']['blind']['bQty'] }}</small>
                 </IftaLabel>
-                <Button label="균등분할" class="w-full btn-md h-[2.5rem] *:whitespace-nowrap" @click="getEqual"/>
+                <Button label="균등분할" class="w-full *:whitespace-nowrap" @click="getEqual"/>
             </div>
         </div>
     </div>

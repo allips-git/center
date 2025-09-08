@@ -1,7 +1,7 @@
 <template>
-  <BackHeader title="메세지 저장" />
+  <!-- <BackHeader title="메세지 저장" /> -->
   <main class="pb-48 w-full">
-    <section class="flex justify-between items-start px-4 pb-5">
+    <section class="flex justify-between items-start px-4 py-2">
       <div class="flex flex-wrap gap-1 items-center">
         <Button
           label="고객 선택"
@@ -10,7 +10,7 @@
           size="small"
           rounded
           @click="getPopupOpen('clientChoice')"
-          class="!rounded-full !gap-1 !pr-2.5"
+          class="!gap-1 !pr-2.5"
           v-if="msg.clientList.length === 0"
         />
         <div

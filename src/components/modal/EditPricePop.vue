@@ -10,7 +10,7 @@
             <InputNumber v-model="price" class="w-full" />
         </IftaLabel>
 
-        <div class="grid grid-cols-2 gap-2 justify-between mt-2 btn-2-layout-box">
+        <div class="grid grid-cols-2 gap-2 justify-between mt-2">
             <Button severity="secondary" label="취소" @click="getPopupClose('priceChange', true)"/>
             <Button label="확인" @click="getApply"/>
         </div>

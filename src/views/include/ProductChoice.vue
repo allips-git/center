@@ -15,7 +15,7 @@
                 </IconField>
             </div>
         </div>
-        <div class="flex w-full gap-[0.625rem] py-2">
+        <div class="flex w-full gap-[0.625rem] mt-2.5 py-2">
             <Button label="실측 불러보기" size="small"/>
             <Button label="커튼 실측" size="small" @click="getExItem('EX000001')"/>
             <Button label="블라인드 실측" size="small" @click="getExItem('EX000002')"/>

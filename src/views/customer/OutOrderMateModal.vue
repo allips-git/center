@@ -60,8 +60,8 @@
                 </IconField>
                 <label>발주서 링크</label>
             </IftaLabel>
-            <div class="py-4 btn-2-layout-box conbutton">
-                <Button label="링크 발주" @click="getNavi" severity="success" class="w-[100%]"/>
+            <div class="py-4">
+                <Button label="링크 발주" size="large" @click="getNavi" severity="success" class="w-full"/>
             </div>
         </section>
     </main>

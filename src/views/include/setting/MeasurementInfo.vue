@@ -1,7 +1,7 @@
 <template>
     <!-- <BackHeader title="실측 정보" /> -->
     <main class="pb-[80px]" ref="mainRef">
-        <section class="flex flex-col gap-5 px-4 pt-4 pb-6 sm:px-6 sm:pt-6 sm:pb-8">
+        <section class="flex flex-col gap-5 px-4 pt-2 pb-6 sm:px-6 sm:pt-6 sm:pb-8">
             <div v-for="card in cards" :key="card.title" class="overflow-hidden w-full rounded border border-l-lv4">
                 <h2 class="px-4 py-1.5 text-sm text-left bg-l-lv5">
                     {{ card.title }}
@@ -13,8 +13,8 @@
                             <h3 class="font-black leading-tight text-red-500 text-13">블라인드 실측</h3>
                         </div>
                         <div class="w-[100px] flex-none flex flex-col gap-2">
-                            <div class="flex justify-end danger-button">
-                                <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-[3.25rem] font-normal !border-l-lv3" />
+                            <div class="flex justify-end">
+                                <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-[3rem] *:!font-normal" />
                             </div>
                             <div class="font-bold text-right text-13">154,675,769원</div>
                         </div>
@@ -51,7 +51,7 @@
         </section>
 
         <div :style="{width: mainWidth + 'px', left: mainLeft + 'px' }" class="bottom-fixed-btn-box">
-            <Button label="실측 저장" size="large"/>
+            <Button label="실측 저장" size="large" />
         </div>
     </main>
 </template>

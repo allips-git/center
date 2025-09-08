@@ -73,7 +73,7 @@
                 </div>
             </section>
         </div>
-        <div class="mt-2 btn-2-layout-box bottom-fixed-btn-box">
+        <div class="mt-2 bottom-fixed-btn-box">
             <Button label="결제 완료" :disabled="status" @click="getPay"/>
         </div>
         

@@ -75,10 +75,10 @@
             :modal=true position="center" class="custom-dialog-full" 
             @update:visible="getPopupClose('estiList', true)">
             <template #header>
-                <div class="modal-fullheader change-button">
+                <div class="modal-fullheader">
                     <Button @click="getPopupClose('estiList', true)" severity="contrast" text icon="pi pi-arrow-left" class="flex justify-start"/>
                     <h2 class="modal-backheader-title">명세서</h2>
-                    <Button label="제품 추가 등록" size="small" outlined @click="getEstiAdd" class="!z-[100] !bg-p-lv4 !text-white esti-button"/>
+                    <Button label="제품 추가 등록" size="small" @click="getEstiAdd" class="!z-[100]"/>
                 </div>
             </template>
             <EstiList/>

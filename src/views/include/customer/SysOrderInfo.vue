@@ -49,7 +49,7 @@
                 <Textarea v-model="order['sysInfo']['memo']" rows="5" placeholder="배송 요청사항을 입력하세요." />
             </IftaLabel>
             
-            <div class="mt-2 btn-2-layout-box bottom-fixed-btn-box">
+            <div class="mt-2 bottom-fixed-btn-box">
                 <Button :severity="'primary'" label="시스템 발주" @click="getOrder"/>
             </div>
         </div>

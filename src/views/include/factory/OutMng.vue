@@ -112,7 +112,7 @@
                 </div>
             </section>
 
-            <div class="w-full bottom-modal-absol-box outmng-button">
+            <div class="w-full bottom-modal-absol-box">
                 <Button label="저장" class="w-full" @click="getOutItemSave"/>
             </div>
         </div>

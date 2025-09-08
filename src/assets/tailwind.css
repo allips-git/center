@@ -182,7 +182,7 @@
     @apply *:!text-right w-full  *:!pr-8 font-bold
   }
   .modal-backheader{
-    @apply h-[50px] sticky relative top-0 px-4 md:px-6 flex w-full items-center justify-end md:border-b md:shadow-none bg-white z-50 md:border-gray-100
+    @apply h-[50px] sticky relative top-0 px-2 md:px-2 flex w-full items-center justify-end md:border-b md:shadow-none bg-white z-50 md:border-gray-100
   }
 
   .modal-backheader.line{
@@ -190,7 +190,7 @@
   }
 
   .modal-fullheader{
-    @apply h-[50px] sticky relative top-0 px-4 md:px-6 md:border-b flex w-full items-center justify-between md:shadow-none bg-white z-50 md:border-gray-100
+    @apply h-[50px] sticky relative top-0 px-2 md:pl-2 md:pr-3 md:border-b flex w-full items-center justify-between md:shadow-none bg-white z-50 md:border-gray-100
   }
   .popup {
     @apply max-h-[90%]

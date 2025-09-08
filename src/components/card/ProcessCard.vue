@@ -55,19 +55,19 @@
 
         <section class="flex gap-2 *:w-full">
             <template v-if="props.info['stCd'] === '001' && props.info['useYn'] === 'Y'">
-                <div class="add-button">
-                    <Button label="제품추가" @click="getEstiAdd" size="large" class="w-full"/>
+                <div>
+                    <Button label="제품추가" @click="getEstiAdd" class="w-full *:!text-[0.8125rem] *:!font-bold"/>
                 </div>
             </template>
             <template v-else-if="props.info['stCd'] === '012'">
-                <Button severity="secondary" label="상세보기" @click="getPayInfo"/>
+                <Button severity="secondary" label="상세보기" @click="getPayInfo" class="*:!text-[0.8125rem] *:!font-bold" />
             </template>
             <template v-else-if="props.info['useYn'] === 'N'">
-                <Button severity="secondary" label="견적서 복원" @click="getEstiRestore"/>
+                <Button severity="secondary" label="견적서 복원" @click="getEstiRestore" class="*:!text-[0.8125rem] *:!font-bold" />
             </template>
             <template v-else>
-                <Button severity="secondary" :label="getFirstBtnText()" @click="getFirstBtnClick"/>
-                <Button :label="getSecondBtnText()" @click="getSecondBtnClick" class="list-button"/>
+                <Button severity="secondary" :label="getFirstBtnText()" @click="getFirstBtnClick" class="*:!text-[0.8125rem] *:!font-bold" />
+                <Button :label="getSecondBtnText()" @click="getSecondBtnClick" class="*:!text-[0.8125rem] *:!font-bold"/>
             </template>
             <Button v-if="props.info['useYn'] !== 'N' && props.info['stCd'] !== '001'" severity="secondary" icon="pi pi-ellipsis-h" class="flex-none" @click="togglemorePopover" />
             <Popover class="custom-popover-listbox" ref="morePopover" dismissable> 

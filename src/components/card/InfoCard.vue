@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-between items-center py-1 sm:pt-5">
         <h2 class="font-bold text-15 sm:text-base text-t-lv1">{{ title }}</h2>
-        <Button v-if="btnLabel" :label="btnLabel" severity="secondary" outlined @click="getBtn" class="outlined-button *:!text-13"></Button>
+        <Button v-if="btnLabel" :label="btnLabel" size="small" severity="secondary" outlined @click="getBtn"></Button>
     </div>
     <div class="mt-2 info-list">
         <dl v-for="(info, index) in props.info" :key="index" class="info-set">

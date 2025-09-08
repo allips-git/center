@@ -1,6 +1,6 @@
 <template>
   <div class="input-layout-box">
-    <div class="flex flex-col gap-2 mt-2 btn-2-layout-box">
+    <div class="flex flex-col gap-2 mt-2">
       <Button class="w-full" size="large" severity="secondary" label="간편등록" @click="getClientGb('N')" />
       <Button class="w-full" size="large" label="상세등록" @click="getClientGb('Y')" />
     </div>

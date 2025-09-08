@@ -12,7 +12,7 @@
             <Textarea v-model="info['addInfo']['memo']" autoResize cols="30" rows="1"  class="w-full" placeholder="메모입력" />
         </IftaLabel>
         
-        <div class="grid grid-cols-2 gap-2 mt-2 btn-2-layout-box">
+        <div class="grid grid-cols-2 gap-2 mt-2">
             <Button size="large" severity="secondary" label="취소" @click="emit('getClose')"/>
             <Button size="large" label="확인" @click="emit('getApply')"/>
         </div>
@@ -49,6 +49,11 @@ const options = ref(['원']);
     }
     > button{
         height: 100%;
+    }
+    .p-togglebutton-checked {
+        .p-togglebutton-label {
+            color: #fff !important;
+        }
     }
 }
 .custom-InputGroupAddon{

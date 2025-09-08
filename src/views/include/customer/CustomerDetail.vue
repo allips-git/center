@@ -4,7 +4,7 @@
         <section class="px-4 mb-6 sm:px-8">
             <div class="flex justify-between items-center py-1 sm:pt-5">
                 <h2 class="font-bold text-15 sm:text-base text-t-lv1">{{ client['detail']['clientNm'] }}</h2>
-                <Button label="정보수정" outlined severity="secondary" @click="getClientModify" class="outlined-button *:!text-13"/>
+                <Button label="정보수정" outlined size="small" severity="secondary" @click="getClientModify" />
             </div>
             <div class="mt-2 info-list">
                 <dl class="info-set">
@@ -151,10 +151,10 @@
             :modal=true position="center" class="custom-dialog-full"
             @update:visible="getPopupClose('itemSet', true)">
             <template #header>
-                <div class="modal-fullheader change-button">
+                <div class="modal-fullheader">
                     <Button @click="getPopupClose('itemSet', true)" severity="contrast" text icon="pi pi-arrow-left" class="flex justify-start"/>
                     <h2 class="modal-backheader-title">제품등록</h2>
-                    <Button label="제품 변경" size="small" outlined @click="getItemChange" class="!z-[100] !bg-p-lv4 !text-white"/>
+                    <Button label="제품 변경" size="small" @click="getItemChange" class="!z-[100]"/>
                 </div>
             </template>
             <ProductRegister/>
@@ -186,7 +186,7 @@
                 <div class="modal-fullheader change-button">
                     <Button @click="getPopupClose('estiList', true)" severity="contrast" text icon="pi pi-arrow-left" class="flex justify-start"/>
                     <h2 class="modal-backheader-title">명세서</h2>
-                    <Button label="제품 추가 등록" size="small" outlined @click="getEstiAdd" class="!z-[100] !bg-p-lv4 !text-white esti-button"/>
+                    <Button label="제품 추가 등록" size="small" @click="getEstiAdd" class="!z-[100]"/>
                 </div>
             </template>
             <EstiList/>

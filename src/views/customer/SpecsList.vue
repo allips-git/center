@@ -1,7 +1,7 @@
 <template>
-    <div class="sticky top-0 z-10 w-full bg-white product-button">
+    <div class="sticky top-0 z-10 w-full bg-white">
         <BackHeader title="명세서" />
-        <Button label="제품 추가 등록" size="small" class="esti-button" @click="getEstiAdd"/>
+        <Button label="제품 추가 등록" size="small" @click="getEstiAdd"/>
     </div>
     <main class="pb-52 main-bottom-fixed-pd" ref="mainRef">
         <section class="p-4">

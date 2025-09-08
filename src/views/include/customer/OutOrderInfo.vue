@@ -29,7 +29,7 @@
                             @change="getShippingGb"/>
                     </IftaLabel>
     
-                    <IftaLabel class="label-input-box ">
+                    <IftaLabel class="label-input-box">
                         <label>주소</label>
                         <InputText v-model="order['outInfo']['addr']" :disabled="order['outInfo']['shippingGb'] === '001' ? true : false" 
                             readonly @click="getAddr"/>
@@ -38,18 +38,18 @@
                 <small class="text-red-500">{{ addrMsg }}</small>
             </div>
     
-            <IftaLabel class="label-input-box ">
+            <IftaLabel class="label-input-box">
                 <label>상세 주소</label>
                 <InputText id="addrDetail" v-model="order['outInfo']['addrDetail']" placeholder="상세 주소를 입력하세요" />
                 <small class="text-red-500">{{ addrDetailMsg }}</small>
             </IftaLabel>
     
-            <IftaLabel class="label-input-box ">
+            <IftaLabel class="label-input-box">
                 <label>배송 요청사항</label>
                 <Textarea v-model="order['outInfo']['memo']" rows="5" placeholder="배송 요청사항을 입력하세요." />
             </IftaLabel>
             
-            <div class="mt-2 btn-2-layout-box bottom-fixed-btn-box success-button">
+            <div class="mt-2 bottom-fixed-btn-box">
                 <Button :severity="'success'" label="웹 링크로 공유" @click="getOrder"/>
             </div>
         </div>

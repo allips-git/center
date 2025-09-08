@@ -122,7 +122,7 @@
         <div class="md:pt-4">
             <SignaturePad ref="signRef" :gb="'setting'"/>
             <p class="mt-1.5 px-8 text-10 md:text-xs leading-[1.34] text-t-lv2 text-center break-keep">계약서에 자동으로 입력될 싸인입니다.</p>
-            <div class="grid grid-cols-2 gap-2 mt-6 btn-2-layout-box">
+            <div class="grid grid-cols-2 gap-2 mt-6">
                 <Button size="large" severity="secondary" label="취소" @click="getPopupClose(true, 'signaturePop')"/>
                 <Button size="large" label="확인" @click="getSignSave"/>
             </div>

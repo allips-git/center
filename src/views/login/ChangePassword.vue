@@ -27,8 +27,8 @@
                         </IconField>
                     </IftaLabel>
                 </div>
-                <div class="login-button">
-                    <Button label="비밀번호 변경" class="w-full mt-6 !py-[13px]" @click="getChangePassword"/>
+                <div>
+                    <Button label="비밀번호 변경" size="large" class="mt-6 w-full" @click="getChangePassword"/>
                 </div>
                 <small v-if="msg !== ''" class="vali_text">{{ msg }}</small>
             </div>

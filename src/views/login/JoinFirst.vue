@@ -46,7 +46,7 @@
                         </IftaLabel>
                         <small v-if="join['msg']['einFile'] !== ''" class="vali_text">{{ join['msg']['einFile'] }}</small>
                         <small v-if="join['msg']['einFile'] !== ''" class="vali_text-tran">none</small>
-                        <div class="mobile-fiex-bottom next-button md:*:mt-12 md:!border-t-0">
+                        <div class="mobile-fiex-bottom md:*:mt-12 md:!border-t-0">
                             <Button label="다음" class="w-full" @click="getNext"/>
                         </div>
                     </div>

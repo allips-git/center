@@ -4,7 +4,7 @@
         <section class="p-4">
             <div class="flex justify-between items-center">
                 <h2 class="text-base font-bold">{{ client['detail']['clientNm'] }}</h2>
-                <Button label="정보수정" outlined severity="secondary" size="small" @click="getClientModify" class="outlined-button"/>
+                <Button label="정보수정" outlined severity="secondary" size="small" @click="getClientModify"/>
             </div>
             <ul class="flex flex-col gap-3 mt-3 rounded-md text-xs !text-t-lv2">
                 <li class="flex items-center">
@@ -106,7 +106,7 @@
                 <div class="modal-fullheader change-button">
                     <Button @click="getPopClose(true, 'itemSet')" severity="contrast" text icon="pi pi-arrow-left" class="flex justify-start"/>
                     <h2 class="modal-backheader-title">제품등록</h2>
-                    <Button label="제품 변경" size="small" outlined @click="getItemChange" class="!z-[100] !bg-p-lv4 !text-white"/>
+                    <Button label="제품 변경" size="small" outlined @click="getItemChange" class="!z-[100]"/>
                 </div>
             </template>
             <ProductRegister/>

@@ -28,7 +28,7 @@
                                     <strong>{{ main['clientCnt'] }}</strong>
                                     <span class="text-19">명</span>
                                 </div>
-                                <div class="block mr-2 w-px h-5 bg-gray-200" />
+                                <div class="block w-px h-5 bg-gray-200" />
                                 <!-- <Button label="고객 등록" size="small" class="cursor-pointer" @click="getPopOpen"></Button> -->
                                 <Button label="고객 등록" size="small" severity="secondary" variant="text" class="cursor-pointer my-btn"  @click="getPopOpen">
                                     <IconAddCircle />
@@ -105,7 +105,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <Button v-if="main['kakaoYn'] === 'Y'" label="설정" severity="secondary" size="small" class="!px-3 !py-2  !bg-bg-lv2 *:!text-xs *:!text-t-lv2" @click="router.push({ path : '/plantalk' });"></Button>
+                            <Button v-if="main['kakaoYn'] === 'Y'" label="설정" severity="secondary" size="small" @click="router.push({ path : '/plantalk' });"></Button>
                         </div>
                         <div class="main-card-container-box-padding">
                             <div v-if="main['kakaoYn'] === 'N'">

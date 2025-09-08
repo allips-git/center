@@ -41,8 +41,8 @@
                             <router-link to="/find_password" class="text-xs">비밀번호 찾기</router-link>
                         </div>
                 </div>
-                <div class="login-button">
-                    <Button label="이메일 로그인" class="w-full mt-6 !py-[13px]" @click="getLogin"/>
+                <div>
+                    <Button label="이메일 로그인" size="large" class="mt-6 w-full" @click="getLogin"/>
                 </div>
                 <div class="flex items-center justify-center w-full gap-[1.125rem] mt-6">
                     <span class="text-sm text-t-lv2">계정이 없으신가요?</span>

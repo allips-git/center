@@ -18,8 +18,8 @@
                         <p class="font-bold text-green-500 text-18">{{ acc['mainHeader']['margin'] }}%</p>
                     </li>
                 </ul>
-                <div class="accbutton">
-                    <Button label="전체 기록 보기" severity="secondary" class="!absolute right-0 top-0" size="large" @click="getPopupOpen('accMonth')"/>
+                <div>
+                    <Button label="전체 기록 보기" severity="secondary" class="!h-[2rem] !absolute right-0 top-0" @click="getPopupOpen('accMonth')"/>
                 </div>
             </div>
         </section>

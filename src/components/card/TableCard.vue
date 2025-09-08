@@ -13,8 +13,8 @@
                     </div>
                 </div>
                 <div class="w-[100px] flex-none flex flex-col gap-2">
-                    <div v-if="card.showDelete" class="flex justify-end danger-button">
-                        <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-[3.25rem] font-normal !border-l-lv3" />
+                    <div v-if="card.showDelete" class="flex justify-end">
+                        <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-[3rem] *:!font-normal" />
                     </div>  
                     <p class="font-bold text-right text-13">{{ card.amt ? getAmt(card.amt)+'원' : '' }}</p>
                 </div>
@@ -68,7 +68,7 @@
             </div>
             <!-- 버튼 -->
             <!-- 버튼타입 // severity="" // primary(시스템),success(외주),secondary(시스템/외주 발주완료),warn(발주취소),danger(발주 취소 요청) -->
-            <div class="order-button">
+            <div class="w-full">
                 <!-- @2025-09-02 발주 배송요청 사항 정보 요청 -->
                 <div v-if="card.detailStCd && card.detailStCd !== '005' && index === cards.length -1" class="bg-bg-lv2 rounded-[0.25rem] p-3 mt-4">
                     <div class="flex justify-evenly flex-wrap items-center [&_dl]:flex [&_dl]:flex-col [&_dl]:gap-1 [&_dl]:items-center text-11 sm:text-13">
