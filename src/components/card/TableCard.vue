@@ -171,7 +171,14 @@ const getDelete = (edCd: string) => {
                         getPopupClose(true, 'estiList');
                     }
 
-                    esti.getList();
+                    if(res.data.stCd === '002')
+                    {
+                        await esti.getList();
+                    }
+                    else
+                    {
+                        await order.getList({ emCd : esti['emCd'] });
+                    }
                 }
                 catch(e)
                 {
@@ -182,7 +189,15 @@ const getDelete = (edCd: string) => {
                     }
                     else
                     {
-                        alert('제품 삭제 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                        if(e.response.data.code === 4100)
+                        {
+                            alert('해당 제품은 발주처리된 제품입니다.');
+                            order.getList({ emCd : esti['emCd'] });
+                        }
+                        else
+                        {
+                            alert('제품 삭제 처리 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                        }
                     }
                 }
             }
