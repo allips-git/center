@@ -256,7 +256,7 @@ const getAddApply = () => {
     }
 
     /** 절삭단위 체크된 경우 재적용 */
-    if(ord['cutInfo']['gubun'] === 'Y')
+    if(ord['cutInfo']['gubun'])
     {
         const amt       = getAmt(ord['payList'], 'cutDis');
         const cutAmt    = amt % 10000;
