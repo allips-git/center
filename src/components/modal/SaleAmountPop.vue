@@ -31,7 +31,7 @@ import InputGroup from 'primevue/inputgroup';
 import InputGroupAddon from 'primevue/inputgroupaddon';
 import Textarea from 'primevue/textarea';
 import SelectButton from 'primevue/selectbutton';
-import { useDataStore, useEstiStore, usePayStore } from '@/store';
+import { useDataStore, useEstiStore, useOrderStore, usePayStore } from '@/store';
 
 const props = defineProps({
     gubun : String
@@ -39,7 +39,7 @@ const props = defineProps({
 
 const emit  = defineEmits(['getApply', 'getClose']);
 const data  = useDataStore();
-const info  = props['gubun'] === 'E' ? useEstiStore() : usePayStore();
+const info  = props['gubun'] === 'E' ? useEstiStore() : ( props['gubun'] === 'O' ? useOrderStore() : usePayStore() );
 
 const getCoupon = () => {
     const coupon        = info['dcInfo']['cpCd'];

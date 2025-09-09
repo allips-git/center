@@ -270,7 +270,7 @@
             <template #header>
                 <div class="modal-backheader">
                     <Button @click="getPopupClose('payList', true)" severity="contrast" text icon="pi pi-times" />
-                    <h2 class="modal-backheader-title">계약서</h2>
+                    <h2 class="modal-backheader-title">결제서</h2>
                 </div>
             </template>
             <CustomerPayList/>

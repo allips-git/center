@@ -258,6 +258,7 @@ export const usePayStore = defineStore('pay', {
                                     colorTitle   : order.colorTitle,
                                     showDelete   : false,
                                     amt          : Number(order.totalSaleAmt) + Number(order.totalSaleTax),
+                                    purcAmt      : Number(order.totalPurcAmt) + Number(order.totalPurcTax),
                                     isRed        : false,
                                     columns      : getCardColumns(order.unit),
                                     rows         : rows,
