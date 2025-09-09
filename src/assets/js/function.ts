@@ -234,7 +234,6 @@ export function getDaumPopupPosition(layer) {
         // 모달 내부 기준으로 위치 조정
         layer.style.margin = '0';
         // z-index 조정으로 모달 위에 표시
-        layer.style.zIndex = '9999';
     } else {
         // 데스크톱에서는 화면 중앙
         layer.style.position = 'fixed';
@@ -243,6 +242,8 @@ export function getDaumPopupPosition(layer) {
         layer.style.transform = 'translate(-50%, -50%)';
         layer.style.margin = '0';
     }
+
+    layer.style.zIndex = '99999';
 }
 
 /**

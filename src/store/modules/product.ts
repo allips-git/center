@@ -128,6 +128,7 @@ interface State {
     option      : Select[];
     fcCd        : string;
     search      : string;
+    estiYn      : 'Y' | 'N';  /** (Y : 견적등록 / N : 실측설정에서 실측 등록) */
     itemCd      : string;
     icCd        : string;
     list        : [];
@@ -144,6 +145,7 @@ export const useProductStore = defineStore('product', {
         option      : [{ label: "브랜드_검색", value: "" }],
         fcCd        : '',
         search      : '',
+        estiYn      : 'Y',
         itemCd      : '',
         icCd        : '',
         list        : [],
@@ -277,9 +279,10 @@ export const useProductStore = defineStore('product', {
                 return { result : false, calc : null };
             }
         },
-        getEx(itemCd: string)
+        getEx(itemCd: string, estiYn : 'Y' | 'N')
         {
-            this.info = itemCd === 'EX000001' ? this.exItem['curtain'] : this.exItem['blind'];
+            this.info   = itemCd === 'EX000001' ? this.exItem['curtain'] : this.exItem['blind'];
+            this.estiYn = estiYn;
         },
         getListReset()
         {

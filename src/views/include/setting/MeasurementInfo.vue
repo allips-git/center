@@ -66,18 +66,50 @@
         <div :style="{width: mainWidth + 'px', left: mainLeft + 'px' }" class="bottom-fixed-btn-box">
             <Button label="실측 저장" size="large" />
         </div>
+
+        <Dialog v-model:visible="popup['pop']['actualChoice']" 
+            :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissable-mask="true"
+            @update:visible="getPopupClose('actualChoice', true)">
+            <template #header>
+                <div class="modal-backheader">
+                    <Button @click="getPopupClose('actualChoice', true)" severity="contrast" text icon="pi pi-times"/>
+                    <h2 class="modal-backheader-title">실측 구분</h2>
+                </div>
+            </template>
+            <div class="pt-3">
+                <ActualChoice :gubun="'E'" @getApply="getDisApply" @getClose="getPopupClose('actualChoice', true)"/>
+            </div>
+        </Dialog>
+        <Dialog v-model:visible="popup['pop']['itemSet']" header="실측등록" 
+            :modal=true position="center" class="custom-dialog-bottom backPopup"
+            @update:visible="getPopupClose('itemSet', true)">
+            <template #header>
+                <div class="modal-fullheader change-button">
+                    <Button @click="getPopupClose('itemSet', true)" severity="contrast" text icon="pi pi-arrow-left"/>
+                    <h2 class="modal-backheader-title">실측등록</h2>
+                    <Button label="실측 변경" size="small" @click="getItemChange" class="!z-[100] !bg-p-lv4 !text-white"/>
+                </div>
+            </template>
+            <ProductRegister/>
+        </Dialog>
     </main>
 </template>
 
 <script setup lang="ts">
+import ActualChoice from '@/components/modal/ActualChoice.vue'
+import ProductRegister from "@/views/include/ProductRegister.vue";
 import { ref } from 'vue';
 import { onMounted } from 'vue';
-import { useActualStore } from '@/store';
+import { usePopupStore, useActualStore } from '@/store';
+import { usePopup } from '@/assets/js/popup';
 
+const popup     = usePopupStore();
 const actual    = useActualStore();
 const mainRef   = ref(null);
 const mainWidth = ref(0);
 const mainLeft  = ref(0);
+
+const { getPopupOpen, getPopupClose } = usePopup();
 
 const getLocate = () => {
     return [...new Map(actual.detail.map(item => [item.setLocate, item])).values()];
@@ -85,6 +117,10 @@ const getLocate = () => {
 
 const getDelete = (adCd: string) => {
     console.log(adCd);
+}
+
+const getItemChange = () => {
+    getPopupOpen('actualChoice');
 }
 
 onMounted(() => {

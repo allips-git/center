@@ -71,7 +71,7 @@
         </div>
     </div>
     <div class="bottom-modal-absol-box">
-        <Button type="button" label="저장" @click="getEstiSave" :disabled="status" size="large" class="w-full"></Button>
+        <Button type="button" label="저장" @click="getSaveCheck" :disabled="status" size="large" class="w-full"></Button>
     </div>
     <Dialog v-model:visible="popup['pop']['priceChange']" header="단가 변경" 
             :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissable-mask="true"
@@ -116,7 +116,7 @@ import EditPricePop from '@/components/modal/EditPricePop.vue'
 import OptionChoice from "@/views/include/OptionChoice.vue";
 import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
-import { usePopupStore, useClientStore, useEstiStore, useOrderStore } from '@/store';
+import { usePopupStore, useClientStore, useProductStore, useEstiStore, useOrderStore, useActualStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { useRoute } from 'vue-router';
@@ -129,8 +129,10 @@ import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
 const confirm   = useConfirm();
 const popup     = usePopupStore();
 const client    = useClientStore();
+const product   = useProductStore();
 const esti      = useEstiStore();
 const order     = useOrderStore();
+const actual    = useActualStore();
 const route     = useRoute();
 const status    = ref(false);
 const { getPopupOpen, getPopupClose } = usePopup();
@@ -148,7 +150,7 @@ const getAmt = (amt: number) => {
     return getCommas(Number(amt));
 }
 
-const getEstiSave = () => {
+const getSaveCheck = () => {
     const checkParams = new Object();
 
     switch(esti['common']['unit'])
@@ -218,6 +220,68 @@ const getEstiSave = () => {
         break;
     }
 
+    if(product.estiYn === 'Y')
+    {
+        getEstiSave();
+    }
+    else
+    {
+        getActualSave();
+    }
+}
+
+const getActualSave = () => {
+    confirm.require({
+        message     : '해당 실측을 저장하시겠습니까?',
+        header      : '실측저장',
+        rejectProps : {
+            label       : '취소',
+            severity    : 'secondary',
+            outlined    : true
+        },
+        acceptProps : {
+            label: '저장'
+        },
+        accept : async () => {
+            let params;
+
+            switch(esti['common']['unit'])
+            {
+                case '001':
+                    params = getBlindParams(esti['common'], esti['blind']);
+                break;
+                case '002': case '003': case '005': case '006':
+                    params = getCurtainParams(esti['common'], esti['curtain']);
+                break;
+            }
+
+            params['size']  = esti['total']['totalUnitSize'];
+            params['qty']   = esti['total']['totalQty'];
+            params['amCd']  = actual.amCd;
+
+            console.log(JSON.stringify(params, null, 2));
+
+            // status.value = true;
+
+            // try
+            // {
+            //     const instance  = await getAxiosData();
+            //     await instance.post(`https://data.planorder.kr/actualV1/getResult`, params);
+
+            //     await actual.getDetail();
+            //     getPopupClose('itemSet', false);
+            // }
+            // catch(e)
+            // {
+            //     console.log(e);
+            // }
+
+            // status.value = false;
+        }
+    });
+}
+
+const getEstiSave = () => {
     confirm.require({
         message     : '해당 견적을 저장하시겠습니까?',
         header      : '견적저장',
