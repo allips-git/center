@@ -117,7 +117,7 @@ const getExItem = async (itemCd: string) => {
 
     getPopupOpen('itemSet');
 
-    await product.getEx(itemCd);
+    await product.getEx(itemCd, 'Y');
     await esti.getCommonSet(product['info']);
     await esti.getUnitCalc();
 }

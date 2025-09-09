@@ -59,6 +59,7 @@ interface Pop {
     chatRoom            : boolean;
     chatList            : boolean;
     messageView         : boolean;
+    actualChoice        : boolean;
 }
 
 interface State {
@@ -121,7 +122,8 @@ const getPopInfo = (): Pop => {
         shippingGbSet       : false,
         chatRoom            : false,
         chatList            : false,
-        messageView         : false
+        messageView         : false,
+        actualChoice        : false
     }
 }
 

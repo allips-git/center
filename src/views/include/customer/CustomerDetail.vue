@@ -196,9 +196,10 @@
             :modal=true position="center" class="custom-dialog-full" 
             @update:visible="getPopupClose('orderList', true)">
             <template #header>
-                <div class="modal-backheader">
-                    <Button @click="getPopupClose('orderList', true)" severity="contrast" text icon="pi pi-times" />
+                <div class="modal-fullheader change-button">
+                    <Button @click="getPopupClose('orderList', true)" severity="contrast" text icon="pi pi-arrow-left" class="flex justify-start" />
                     <h2 class="modal-backheader-title">발주서</h2>
+                    <Button label="제품 추가 등록" size="small" @click="getEstiAdd" class="!z-[100]"/>
                 </div>
             </template>
             <OrderList/>

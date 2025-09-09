@@ -61,7 +61,7 @@
                 <div class="modal-fullheader">
                     <Button @click="getPopupClose('measurementInfo', true)" severity="contrast" text icon="pi pi-arrow-left" class="flex justify-start"/>
                     <h1 class="modal-backheader-title">실측 정보</h1>
-                    <Button label="사이즈 추가등록" size="small" class="!z-[100] *:!font-bold" />
+                    <Button label="사이즈 추가등록" size="small" class="!z-[100] *:!font-bold" @click="getPopupOpen('actualChoice')"/>
                 </div>
             </template>
             <MeasurementInfo />
