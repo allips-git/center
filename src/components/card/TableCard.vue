@@ -106,20 +106,20 @@
                                 <div class="flex flex-col gap-1 [&_dl]:flex [&_dl]:justify-center [&_dl]:gap-1 [&_dl]:text-xs [&_dl]:font-medium [&_dl]:text-t-lv1">
                                     <dl>
                                         <dt>매출 총가격:</dt>
-                                        <dd>2,000</dd>
+                                        <dd>{{ getSaleAmt() }}원</dd>
                                     </dl>
                                     <dl>
                                         <dt>매입 총가격:</dt>
-                                        <dd>1,000</dd>
+                                        <dd>{{ getPurcAmt() }}원</dd>
                                     </dl>
                                 </div>
                             </AccordionContent>
                         </AccordionPanel>
                     </Accordion>
                 </div>
-                <Button v-if="card['showButton'] && index === cards.length -1" 
-                    :label="card['buttonText']" :severity="card['buttonType']"  @click.stop="getBtnProcess(card['buttonType'], card['edCd'], card['outNo'])" class="mt-5 w-full"/>
             </div>
+            <Button v-if="card['showButton'] && index === cards.length -1" 
+                :label="card['buttonText']" :severity="card['buttonType']"  @click.stop="getBtnProcess(card['buttonType'], card['edCd'], card['outNo'])" class="mt-5 w-full"/>
         </div>
     </div>
 </template>
@@ -132,7 +132,7 @@ import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
 import { useConfirm } from "primevue/useconfirm";
 import { ref, defineProps } from 'vue'
-import { usePopupStore, useClientStore, useEstiStore, useOrderStore, usePayStore } from '@/store';
+import { useClientStore, useEstiStore, useOrderStore, usePayStore } from '@/store';
 import { getCommas } from "@/assets/js/function";
 import { getAxiosData, getTokenOut, getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
@@ -141,7 +141,6 @@ import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
 
 const emit      = defineEmits(['get-modify']);
 const confirm   = useConfirm();
-const popup     = usePopupStore();
 const client    = useClientStore();
 const esti      = useEstiStore();
 const order     = useOrderStore();
@@ -151,13 +150,21 @@ const status    = ref(false);
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
-defineProps({
+const props = defineProps({
     title   : String,
     cards   : String,
     columns : Array,
     rows    : Array,
     sizeYn  : String
 });
+
+const getSaleAmt = () => {
+    return getAmt(props.cards.reduce((total, item) => total + Number(item.amt), 0));
+}
+
+const getPurcAmt = () => {
+    return getAmt(props.cards.reduce((total, item) => total + Number(item.purcAmt), 0));
+}
 
 const getDelete = (edCd: string) => {
     confirm.require({

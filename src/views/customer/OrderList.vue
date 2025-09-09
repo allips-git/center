@@ -9,8 +9,26 @@
                 </div>
             </section>
             <div class="gray-bar my-[14px]"></div>
-            <section class="px-4">
-                <CalculateCard title="제품 결제 내역" :calcs="ord['payList']" totalTitle="총 결제 금액" :totalAmt="ord.totalAmt" :showtoggle="true" />
+            <section class="p-4">
+                <CalculateCard title="제품 결제 내역" :calcs="ord['payList']" totalTitle="총 결제 금액" :totalAmt="getAmt(ord['payList'], 'total')" :showtoggle="true">
+                    <div class="flex flex-col gap-5 py-3">                    
+                        <div class="flex relative justify-between items-center input-custom">
+                            <p class="w-[100px] text-13 flex-none text-t-lv3">할인 금액</p>
+                            <InputText class="*:!text-blue-500 inputNumber-color *:!rounded-sm !w-1/3" @click="getDisAmtPopup" :value="getAmtInfo('dcAmt')" readonly/>
+                            <span class="absolute right-3 bottom-1/2 text-blue-500 translate-y-1/2 text-13">원</span>
+                        </div>
+
+                        <div class="flex relative justify-between items-center input-custom">
+                            <p class="w-[100px] text-13 flex-none text-t-lv3">추가 금액</p>
+                            <InputText class="*:!text-red-500 inputNumber-color *:!rounded-sm !w-1/3" @click="getPopupOpen('addAmtSet')" :value="getAmtInfo('addAmt')" readonly/>
+                            <span class="absolute right-3 bottom-1/2 text-red-500 translate-y-1/2 text-13">원</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between my-5 custom-toggle">
+                        <p class="text-sm">천원단위 절삭</p>
+                        <ToggleSwitch v-model="ord['cutInfo']['gubun']" @change="getCut"/>
+                    </div>
+                </CalculateCard>
             </section>
         </main>
 <!-- 
@@ -21,8 +39,36 @@
         <div :style="{width: mainWidth + 'px', left: mainLeft + 'px',  
             }" class="bottom-fixed-btn-box" 
             >
-            <Button label="확인" size="large" severity="secondary" @click="router.go(-1)"/>
+            <Button label="저장하기" size="large" severity="secondary" @click="getSave"/>
         </div>
+
+        <Dialog v-model:visible="popup['pop']['disAmtSet']" 
+                :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissable-mask="true"
+                @update:visible="getPopupClose(true, 'disAmtSet')">
+                <template #header>
+                    <div class="modal-backheader">
+                        <Button @click="getPopupClose(true, 'disAmtSet')" severity="contrast" text icon="pi pi-times"/>
+                        <h2 class="modal-backheader-title">할인</h2>
+                    </div>
+                </template>
+                <div class="pt-3">
+                <SaleAmountPop :gubun="'O'" @getApply="getDisApply" @getClose="getPopupClose('disAmtSet', true)"/>
+            </div>
+        </Dialog>
+
+        <Dialog v-model:visible="popup['pop']['addAmtSet']" header="추가 가격 입력" 
+                :modal=true position="center" class="w-96 max-w-96 custom-dialog-center" :dismissable-mask="true"
+                @update:visible="getPopupClose(true, 'addAmtSet')">
+                <template #header>
+                    <div class="modal-backheader">
+                        <Button @click="getPopupClose(true, 'addAmtSet')" severity="contrast" text icon="pi pi-times"/>
+                        <h2 class="modal-backheader-title">추가 가격 입력</h2>
+                    </div>
+                </template>
+                <div class="pt-3">
+                <AddAmountPop :gubun="'O'" @getApply="getAddApply" @getClose="getPopupClose('addAmtSet', true)"/>
+            </div>
+        </Dialog>
 
         <Dialog v-model:visible="popup['pop']['itemList']" header="제품선택" 
             :modal=true position="center" class="custom-dialog-full"
@@ -92,11 +138,16 @@ import SysOrderInfo from "@/views/include/customer/SysOrderInfo.vue";
 import OutOrderInfo from "@/views/include/customer/OutOrderInfo.vue";
 import ProductChoice from "@/views/include/ProductChoice.vue";
 import ProductRegister from "@/views/include/ProductRegister.vue";
+import SaleAmountPop from '@/components/modal/SaleAmountPop.vue'
+import AddAmountPop from '@/components/modal/addAmountPop.vue'
+import ToggleSwitch from 'primevue/toggleswitch';
+import { useConfirm } from "primevue/useconfirm";
 import { ref } from 'vue';
 import { onMounted } from 'vue'
-import { useRouter } from 'vue-router';
-import { usePopupStore, useEstiStore, useOrderStore } from '@/store';
+import { useRoute } from 'vue-router';
+import { useDataStore, usePopupStore, useClientStore, useEstiStore, useOrderStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
+import { getAmt, getAxiosData, getTokenOut } from '@/assets/js/function';
 
 const mainRef = ref(null);
 const mainWidth = ref(0);
@@ -116,8 +167,11 @@ onMounted(() => {
     observer.observe(mainRef.value)
 });
 
-const router    = useRouter();
+const confirm   = useConfirm();
+const route     = useRoute();
+const data      = useDataStore();
 const popup     = usePopupStore();
+const client    = useClientStore();
 const esti      = useEstiStore();
 const ord       = useOrderStore();
 
@@ -128,11 +182,16 @@ const getItemChange = () => {
     getPopupOpen('itemList');
 }
 
+const getDisAmtPopup = async () => {
+    await data.getCoupon();
+    getPopupOpen('disAmtSet');
+}
+
 const getEstiModify = async (edCd: string) => {
-    const data = ord.list.flatMap(item => item.cardLists).find(card => card.edCd === edCd);
+    const info = ord.list.flatMap(item => item.cardLists).find(card => card.edCd === edCd);
     
     // 데이터가 없거나 발주 대기 상태가 아니면 무시
-    if (!data || data.detailStCd !== '005') 
+    if (!info || info.detailStCd !== '005') 
     {
         return;
     }
@@ -141,6 +200,146 @@ const getEstiModify = async (edCd: string) => {
     await esti.getEdCd(edCd, 'O');
     await esti.getInfo();
     getPopupOpen('itemSet');
+}
+
+const getAmtInfo = (name) => {
+    const info = ord['payList'].find(item => item.name === name);
+
+    return info['amt'];
+}
+
+const getDisApply = () => {
+    getPopupClose('disAmtSet', true);
+
+    if(ord['dcInfo']['unit'] === 'F')
+    {
+        const dcAmt = Number(ord['dcInfo']['val']);
+        
+        ord['dcInfo']['amt'] = -dcAmt;
+        ord.getPayAmt('002', -dcAmt, ord['dcInfo']['memo']);
+    }
+    else
+    {
+        const amt    = getAmt(ord['payList'], 'firstDis');
+        const dcAmt  = Math.round(amt/100 * ord['dcInfo']['val']);
+
+        ord['dcInfo']['amt'] = -dcAmt;
+        ord.getPayAmt('002', -dcAmt, ord['dcInfo']['memo']);
+    }
+
+    /** 절삭단위 체크된 경우 재적용 */
+    if(ord['cutInfo']['gubun'])
+    {
+        const amt       = getAmt(ord['payList'], 'cutDis');
+        const cutAmt    = amt % 10000;
+
+        ord['cutInfo']['amt'] = -cutAmt;
+        ord['cutInfo']['val'] = -cutAmt;
+        ord.getPayAmt('003', -cutAmt);
+    }
+}
+
+const getAddApply = () => {
+    getPopupClose(true, 'addAmtSet');
+
+    ord['addInfo']['amt'] = ord['addInfo']['val'];
+    ord.getPayAmt('001', Number(ord['addInfo']['val']), ord['addInfo']['memo']);
+
+    /** 할인 단위가 %일 시 할인 금액 재적용 */
+    if(ord['dcInfo']['unit'] === 'P')
+    {
+        const amt    = getAmt(ord['payList'], 'firstDis');
+        const dcAmt  = Math.round(amt/100 * ord['dcInfo']['val']);
+
+        ord['dcInfo']['amt'] = -dcAmt;
+        ord.getPayAmt('002', -dcAmt, ord['dcInfo']['memo']);
+    }
+
+    /** 절삭단위 체크된 경우 재적용 */
+    if(ord['cutInfo']['gubun'] === 'Y')
+    {
+        const amt       = getAmt(ord['payList'], 'cutDis');
+        const cutAmt    = amt % 10000;
+
+        ord['cutInfo']['amt'] = -cutAmt;
+        ord['cutInfo']['val'] = -cutAmt;
+        ord.getPayAmt('003', -cutAmt);
+    }
+}
+
+const getCut = () => {
+    let cutAmt = 0;
+
+    if(ord['cutInfo']['gubun'])
+    {
+        const amt   = getAmt(ord['payList'], 'cutDis');
+        cutAmt      = amt % 10000;
+    }
+
+    ord['cutInfo']['amt'] = -cutAmt;
+    ord['cutInfo']['val'] = -cutAmt;
+    ord.getPayAmt('003', -cutAmt);
+}
+
+const getSave = () => {
+    confirm.require({
+        message     : '발주서를 저장하시겠습니까?',
+        header      : '발주서 저장',
+        rejectProps : {
+            label       : '취소',
+            severity    : 'secondary',
+            outlined    : true
+        },
+        acceptProps : {
+            label: '저장'
+        },
+        accept : async () => {
+            const params = {
+                emCd    : esti['emCd'],
+                addInfo : ord['addInfo'],
+                dcInfo  : ord['dcInfo'],
+                cutInfo : ord['cutInfo']
+            }
+
+            console.log(params);
+
+            try
+            {
+                const instance  = await getAxiosData();
+                await instance.post(`https://data.planorder.kr/estiV1/getSave`, params);
+
+                if(route.name === 'CustomerEstiDetail')
+                {
+                    await esti.getDetail(client.stCd);
+                }
+                else
+                {
+                    await client.getDetail();
+                }
+                
+                getPopupClose(true, 'estiList');
+            }
+            catch(e)
+            {
+                console.log(e);
+                if(e.response.status === 401)
+                {
+                    getTokenOut();
+                }
+                else
+                {
+                    if(e.response.data.code === 4100)
+                    {
+                        alert('진행된 발주서는 수정할 수 없습니다.');
+                    }
+                    else
+                    {
+                        alert('발주서 저장 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                    }
+                }
+            }
+        }
+    });
 }
 
 onMounted(async () => {

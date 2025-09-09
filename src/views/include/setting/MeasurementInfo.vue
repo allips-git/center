@@ -9,14 +9,12 @@
                 <div class="flex flex-col justify-start items-start px-4 py-6 border-t first:border-t-0">
                     <div class="flex justify-between mb-4 w-full">
                         <div class="flex-1 flex flex-col gap-[0.8125rem] pt-1">
-                            <div class="text-xs leading-tight text-t-lv3">공장제목이 필요 없는 경우 이 부분 삭제하면 됨 (가격도 마찬가지)</div>
                             <h3 class="font-black leading-tight text-red-500 text-13">블라인드 실측</h3>
                         </div>
                         <div class="w-[100px] flex-none flex flex-col gap-2">
                             <div class="flex justify-end">
                                 <Button label="삭제" outlined severity="danger" size="small" @click.stop="getDelete(card['edCd'])" class="w-[3rem] *:!font-normal" />
                             </div>
-                            <div class="font-bold text-right text-13">154,675,769원</div>
                         </div>
                     </div>
                     <table class="overflow-hidden w-full text-center rounded-sm table-fixed custom-table-in-card">

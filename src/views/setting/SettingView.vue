@@ -203,7 +203,7 @@ const storeSettings = ref([
     { name: '멤버관리', path: 'memberList' },
     { name: '견적서 / 계약서 설정', path: 'contractSetting' },
     { name: '할인 설정', path: 'couponMenu' },
-    //{ name: '실측 불러오기 설정', path: 'measurementSetting' },
+    { name: '실측 불러오기 설정', path: 'measurementSetting' },
     { name: '시공시간 설정', path: 'timeSetting' },
     { name: '고정비용 등록', path: 'staticPayView' },
     { name: '푸쉬 알림', path: '/setting' },

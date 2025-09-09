@@ -27,13 +27,13 @@ import InputNumber from 'primevue/inputnumber';
 import Textarea from 'primevue/textarea';
 import SelectButton from 'primevue/selectbutton';
 import { ref } from 'vue'
-import { useEstiStore, usePayStore } from '@/store';
+import { useEstiStore, useOrderStore, usePayStore } from '@/store';
 
 const props = defineProps({
     gubun : String
 });
 
-const info  = props['gubun'] === 'E' ? useEstiStore() : usePayStore();
+const info  = props['gubun'] === 'E' ? useEstiStore() : ( props['gubun'] === 'O' ? useOrderStore() : usePayStore() );
 const emit  = defineEmits(['getApply', 'getClose']);
 
 const value   = ref('원');

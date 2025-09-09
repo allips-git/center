@@ -14,6 +14,19 @@ interface PayList {
     memo    : string;
 }
 
+interface AmtInfo {
+    cpCd : string;
+    unit : AmtUnitType;
+    val  : Nullable<string>;
+    amt  : Nullable<string>;
+    memo : string;
+}
+
+interface CutInfo {
+    gubun : boolean;
+    amt   : Nullable<string>;
+}
+
 interface Order {
     ordDt       : string;
     outDt       : string;
@@ -43,8 +56,22 @@ const getPayList = (): PayList[] => {
         {name : 'procAmt',      amtGb : '', title: '나비주름',            amt: 0, red: false, blue: false, memo : ''},
         {name : 'bprocAmt',      amtGb : '', title: '리드밴드',            amt: 0, red: false, blue: false, memo : ''},
         {name : 'shapeAmt',     amtGb : '', title: '형상',         amt: 0, red: false, blue: false, memo : ''},
-        {name : 'heightAmt',    amtGb : '', title: '세로길이 추가금액', amt: 0, red: false, blue: false, memo : ''}
+        {name : 'heightAmt',    amtGb : '', title: '세로길이 추가금액', amt: 0, red: false, blue: false, memo : ''},
+        {name : 'addAmt',       amtGb : '001', title: '추가',              amt: 0, red: true, blue: false, memo : ''},
+        {name : 'dcAmt',        amtGb : '002', title: '할인',              amt: 0, red: true, blue: false, memo : ''},
+        {name : 'cutAmt',       amtGb : '003', title: '절삭 할인',         amt: 0, red: true, blue: false, memo : ''},
+        {name : 'conAmt',       amtGb : '004', title: '계약 선금',         amt: 0, red: false, blue: true, memo : ''},
     ]
+}
+
+const getAmtInfo = (): AmtInfo => {
+    return {
+        cpCd : '',
+        unit : 'F',
+        val  : null,
+        amt  : null,
+        memo : ''
+    }
 }
 
 const getOrder = (): Order => {
@@ -64,6 +91,9 @@ interface State {
     edCd        : string;
     list        : [];
     payList     : PayList[];
+    dcInfo      : AmtInfo;
+    addInfo     : AmtInfo;
+    cutInfo     : CutInfo;
     shippingList: ShippingList[];
     sysInfo     : Order;
     outInfo     : Order;
@@ -74,6 +104,12 @@ export const useOrderStore = defineStore('order', {
         edCd        : '',
         list        : [],
         payList     : getPayList(),
+        dcInfo      : getAmtInfo(),
+        addInfo     : getAmtInfo(),
+        cutInfo     : {
+            gubun : false,
+            amt   : 0
+        },
         shippingList: [],
         sysInfo     : getOrder(),
         outInfo     : getOrder()
@@ -254,7 +290,8 @@ export const useOrderStore = defineStore('order', {
                                     productTitle : order.productTitle,
                                     colorTitle   : order.colorTitle,
                                     showDelete   : order.detailStCd === '005' ? true : false,
-                                    amt          : Number(order.totalPurcAmt) + Number(order.totalPurcTax),
+                                    amt          : Number(order.totalSaleAmt) + Number(order.totalSaleTax),
+                                    purcAmt      : Number(order.totalPurcAmt) + Number(order.totalPurcTax),
                                     isRed        : false,
                                     columns      : getCardColumns(order.unit),
                                     rows         : rows,
@@ -286,6 +323,30 @@ export const useOrderStore = defineStore('order', {
                 this.getItemAmt('bprocAmt', Number(res.data['bprocAmt']));
                 this.getItemAmt('shapeAmt', Number(res.data['shapeAmt']));
                 this.getItemAmt('heightAmt', Number(res.data['heightAmt']));
+
+                this.getAmtInfo('addInfo', getAmtInfo());
+                this.getAmtInfo('dcInfo', getAmtInfo());
+                this.getAmtInfo('cutInfo', { gubun : false, amt : 0 });
+
+                res.data['amtList'].map((amt) => {
+                    switch(amt.amtGb)
+                    {
+                        case '001':
+                            this.getAmtInfo('addInfo', amt);
+                        break;
+                        case '002':
+                            this.getAmtInfo('dcInfo', amt);
+                        break;
+                        case '003':
+                            if(Number(amt.amt) !== 0)
+                            {
+                                this.getAmtInfo('cutInfo', { gubun : true, amt : Number(amt.amt) });
+                            }
+                        break;
+                    };
+
+                    this.getPayAmt(amt['amtGb'], Number(amt['amt']), amt['memo'])
+                });
             }
             catch(e)
             {
@@ -300,6 +361,20 @@ export const useOrderStore = defineStore('order', {
             {
                 item.amt = Number(amt);
             }
+        },
+        getPayAmt(amtGb: string, amt: number, memo: string)
+        {
+            const item = this.payList.find(item => item.amtGb === amtGb);
+            
+            if(item)
+            {
+                item.amt  = Number(amt);
+                item.memo = memo;
+            }
+        },
+        getAmtInfo(name: string, info: obejct)
+        {
+            this[name] = info;
         },
         getEdCd(edCd: string)
         {
