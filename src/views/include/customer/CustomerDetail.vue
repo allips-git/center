@@ -298,7 +298,7 @@ import CustomerListSet from '@/views/include/CustomerListSet.vue';
 import ChatRoomModal from "@/views/customer/ChatRoomModal.vue";
 // import EstimateModal from "@/views/customer/EstimateModal.vue";
 import ContractPreview from "@/views/include/setting/ContractPreview.vue";
-import ConmateModal from "@/views/customer/ConmateModal.vue";
+// import ConmateModal from "@/views/customer/ConmateModal.vue";
 import EstiList from '@/views/include/customer/EstiList.vue';
 import OrderList from "@/views/customer/OrderList.vue";
 import CustomerPayList from "@/views/customer/PayList.vue";

@@ -2,6 +2,7 @@
  * @description 고객 관련 모듈 pinia
  */
 import { defineStore } from 'pinia';
+import { useLoginStore } from '@/store';
 import { getAxiosData, getConvertDate } from '@/assets/js/function';
 
 interface List {
@@ -88,6 +89,8 @@ interface State {
 }
 
 const getInfo = (): Info => {
+    const login = useLoginStore();
+
     return {
         estiDt      : new Date(),
         clientNm    : '',
@@ -95,7 +98,7 @@ const getInfo = (): Info => {
         zip         : null,
         addr        : '',
         addrDetail  : '',
-        person      : '',
+        person      : login.userCd,
         groupCd     : 'N',
         groupNm     : ''
     }

@@ -1,6 +1,6 @@
 <template>
     <BackHeader title="실측 불러오기"/>
-    <main class="pb-[80px]" ref="mainRef">
+    <main class="pb-[80px]">
         <section class="px-4 pt-2 pb-6 sm:px-6 sm:pt-6 sm:pb-8">
             <IconField class="w-full bg">
                 <InputIcon class="z-10">
@@ -8,37 +8,37 @@
                 </InputIcon>
                 <InputText placeholder="아파트 이름" class="w-full" />
             </IconField>
-            <Accordion value="0" class="mt-2">
-                <AccordionPanel v-for="tab in tabs" :key="tab.title" :value="tab.value" class="relative">
-                    <AccordionHeader expandIcon="" collapseIcon="" class="!block !px-0 !pt-6 [&_svg]:hidden">
+            <Accordion v-model:value="active" class="mt-2">
+                <AccordionPanel v-for="(item, index) in actual.list" :key="index" :value="index" class="relative">
+                    <AccordionHeader expandIcon="" collapseIcon="" class="!block !px-0 !pt-6 [&_svg]:hidden" @click="getAccordion(item.amCd, index)">
                         <h2 class="font-bold leading-[1.3] font-base text-p-lv4 break-keep">
-                            {{ tab.title }}
+                            {{ item.amNm }}
                         </h2>
                         <div class="flex flex-col gap-1.5 mt-1.5 [&_dl]:flex [&_dl]:gap-1 [&_dl]:w-full [&_dl]:text-sm [&_dl]:text-t-lv1 [&_dl]:font-normal [&_dl]:leading-tight [&_dt]:flex-none">
                             <dl>
                                 <dt class="hidden">주소</dt>
-                                <dd>부산 수영구 수영로 472</dd>
+                                <dd>{{ item.addr !== '' ? item.addr + ' / ' + item.addrDetail : '' }}</dd>
                             </dl>
                             <dl>
                                 <dt>실측 개수: </dt>
-                                <dd>12개</dd>
+                                <dd>{{ item.cnt }}개</dd>
                             </dl>
                             <dl>
                                 <dt>메모: </dt>
-                                <dd>공동구매 아파트 메모가 길어질 때 메모가 길어질 때</dd>
+                                <dd>{{ item.memo }}</dd>
                             </dl>
                             <dl class="*:text-10 *:text-t-lv3">
                                 <dt>등록일: </dt>
-                                <dd>25.01.02</dd>
+                                <dd>{{ item.regDt }}</dd>
                             </dl>
                         </div>
+                        <Button label="정보 수정" size="small" severity="secondary" variant="outlined" class="!absolute top-[1.25rem] right-0 *:!text-t-lv3" @click="getInfo(item.amCd)"/>
                     </AccordionHeader>
-                    <AccordionContent class="[&>div]:p-0">
-                        <Button label="정보 수정" size="small" severity="secondary" variant="outlined" class="!absolute top-[1.25rem] right-0 *:!text-t-lv3" />
+                    <AccordionContent v-if="gubun !== 'I'" class="[&>div]:p-0">
                         <CheckboxGroup name="ingredient" class="flex flex-col w-full border-t border-l-lv4">
-                            <div v-for="category of categories" :key="category.key" class="flex gap-2 px-2.5 py-3.5 items-center bg-[#FAFAFA] border-y border-l-lv4 mb-[-1px]">
-                                <Checkbox v-model="selectedCategories" :inputId="category.key" name="category" :value="category.name" />
-                                <label :for="category.key" class="text-sm font-medium">{{ category.name }}</label>
+                            <div v-for="(detail, dIndex) of item.detail" :key="dIndex" class="flex gap-2 px-2.5 py-3.5 items-center bg-[#FAFAFA] border-y border-l-lv4 mb-[-1px]">
+                                <Checkbox v-model="detail.adCd" :inputId="detail.adCd" name="category" :binary="true" />
+                                <label :for="detail.adCd" class="text-sm font-medium">{{ detail.setLocate }}</label>
                             </div>
                         </CheckboxGroup>
                     </AccordionContent>
@@ -82,7 +82,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import BackHeader from '@/components/layouts/BackHeader.vue';
 import IconField from 'primevue/iconfield'; 
 import InputText from 'primevue/inputtext'; 
@@ -97,31 +96,43 @@ import Dialog from 'primevue/dialog';
 import IconSearch from '@/components/icons/IconSearch.vue';
 import MeasurementInfo from "@/views/include/setting/MeasurementInfo.vue";
 import MeasurementRegistration from "@/views/include/setting/MeasurementRegistration.vue";
-import { usePopupStore } from '@/store';
+import { onMounted, ref } from 'vue';
+import { usePopupStore, useActualStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
 
+const props = defineProps({
+    gubun : String
+});
+
 const popup   = usePopupStore();
+const actual  = useActualStore();
+const active  = ref(null);
 
 const { getPopupOpen, getPopupClose } = usePopup();
 
-const mainRef = ref(null);
+const getAccordion = async (amCd: string, index: number) => {
+    await actual.getAmCd(amCd);
+    
+    if(props.gubun === 'I')
+    {
+        await actual.getDetail();
+        getPopupOpen('measurementInfo')
+    }
+    else
+    {
+        active.value = index;
+    }
+}
 
-const tabs = ref([
-    { title: '부산 광안자이 아파트 1단지 24A', value: '0' },
-    { title: '부산 해운대 센텀파크 아파트 2단지 34B', value: '1' },
-    { title: '부산 연제 롯데캐슬 골드클래스 1단지 45A', value: '2' },
-    { title: '부산 동래 자이엘라 아파트 3단지 29C', value: '3' }
-]);
+const getInfo = async (amCd: string) => {
+    await actual.getAmCd(amCd);
+    await actual.getInfo();
+    getPopupOpen('measurementRegistration');
+}
 
-const categories = ref([
-    {name: "거실 블라인드", key: "1"},
-    {name: "거실 커튼", key: "2"},
-    {name: "안방 블라인드", key: "3"},
-    {name: "안방 커튼", key: "4"},
-    {name: "입구 작은방 블라인드", key: "5"},
-    {name: "안방 블라인드", key: "6"},
-]);
-const selectedCategories = ref(['안방 블라인드', '안방 커튼']);
+onMounted(() => {
+    actual.getList();
+})
 </script>
 
 <style lang="scss">
