@@ -186,7 +186,7 @@
                 <div class="modal-fullheader change-button">
                     <Button @click="getPopupClose('estiList', true)" severity="contrast" text icon="pi pi-arrow-left" class="flex justify-start"/>
                     <h2 class="modal-backheader-title">명세서</h2>
-                    <Button label="제품 추가 등록" size="small" @click="getEstiAdd" class="!z-[100]"/>
+                    <Button label="제품 추가 등록" size="small" @click="getEstiAdd('I')" class="!z-[100]"/>
                 </div>
             </template>
             <EstiList/>
@@ -199,7 +199,7 @@
                 <div class="modal-fullheader change-button">
                     <Button @click="getPopupClose('orderList', true)" severity="contrast" text icon="pi pi-arrow-left" class="flex justify-start" />
                     <h2 class="modal-backheader-title">발주서</h2>
-                    <Button label="제품 추가 등록" size="small" @click="getEstiAdd" class="!z-[100]"/>
+                    <Button label="제품 추가 등록" size="small" @click="getEstiAdd('O')" class="!z-[100]"/>
                 </div>
             </template>
             <OrderList/>
@@ -356,8 +356,8 @@ const getNewEsti = async () => {
     await getPopupOpen('itemList');
 }
 
-const getEstiAdd = async () => {
-    await esti.getType('I');
+const getEstiAdd = async (type : 'I' | 'O') => {
+    await esti.getType(type);
     await esti.getReset();
     await getPopupOpen('itemList');
 }
