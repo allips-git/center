@@ -118,7 +118,7 @@
                 @update:visible="getPopClose('measurementSetting', true)">
                 <template #header>
                 </template>
-                <MeasurementSetting/>
+                <MeasurementSetting :gubun="'I'"/>
             </Dialog>
             <Dialog v-model:visible="popup['pop']['couponMenu']" 
                 :modal=true position="center" class="custom-dialog-full" 

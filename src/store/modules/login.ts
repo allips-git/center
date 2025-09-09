@@ -8,6 +8,7 @@ interface State {
     addr        : string;
     addrDetail  : string;
     rank        : C | M | B | C;
+    userCd      : string;
 }
 
 export const useLoginStore = defineStore('login', {
@@ -17,7 +18,8 @@ export const useLoginStore = defineStore('login', {
         name        : '',
         addr        : '',
         addrDetail  : '',
-        rank        : ''
+        rank        : '',
+        userCd      : ''
     }),
     actions: {
         async getLogin(params) {
@@ -25,10 +27,11 @@ export const useLoginStore = defineStore('login', {
             {
                 const res  = await axios.post('https://data.planorder.kr/login/getLogin', params, { withCredentials: true });
                 console.log(res);
-                this.token = res.data['access_token'];
-                this.ceNm  = res.data['ceNm'];
-                this.name  = res.data['name'];
-                this.rank  = res.data['rank'];
+                this.token  = res.data['access_token'];
+                this.ceNm   = res.data['ceNm'];
+                this.name   = res.data['name'];
+                this.rank   = res.data['rank'];
+                this.userCd = res.data['userCd'];
 
                 return 200;
             }
