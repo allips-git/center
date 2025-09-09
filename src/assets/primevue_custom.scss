@@ -1104,7 +1104,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
     &.p-confirmdialog {
         width: calc(100% - 2rem);
         min-width: rem(300);
-        border-radius: 0.5rem;
+        border-radius: 0.25rem;
         @media (min-width: $breakpoint-sm) {
             width: rem(400);
         }
@@ -1142,6 +1142,7 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         }
     }
     &.custom-dialog-center {
+        border-radius: 0.25rem;
         .p-dialog-content {
             padding-left: rem(16);
             padding-right: rem(16);

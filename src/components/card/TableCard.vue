@@ -68,9 +68,8 @@
             </div>
             <!-- 버튼 -->
             <!-- 버튼타입 // severity="" // primary(시스템),success(외주),secondary(시스템/외주 발주완료),warn(발주취소),danger(발주 취소 요청) -->
-            <div class="w-full">
-                <!-- @2025-09-02 발주 배송요청 사항 정보 요청 -->
-                <div v-if="card.detailStCd && card.detailStCd !== '005' && index === cards.length -1" class="bg-bg-lv2 rounded-[0.25rem] p-3 mt-4">
+            <div v-if="card.detailStCd && card.detailStCd !== '005' && index === cards.length -1" class="px-4 pt-6 w-[calc(100%+2rem)] mx-[-1rem] border-t mt-6">
+                <div v-if="card.detailStCd && card.detailStCd !== '005' && index === cards.length -1" class="bg-bg-lv2 rounded-[0.25rem] p-3">
                     <div class="flex justify-evenly flex-wrap items-center [&_dl]:flex [&_dl]:flex-col [&_dl]:gap-1 [&_dl]:items-center text-11 sm:text-13">
                         <dl>
                             <dt class="text-t-lv3">배송</dt>
@@ -94,8 +93,32 @@
                         </dl>
                     </div>
                 </div>
+                <div class="mt-3 w-full rounded-[0.25rem] bg-bg-lv2">
+                    <Accordion value="null">
+                        <AccordionPanel class="!border-0" value="0" >
+                            <AccordionHeader class="!bg-[transparent] !gap-1 !justify-end !py-2.5 !px-2 !border-b-0">
+                                <p class="pb-0 text-xs font-medium text-t-lv4">더보기</p>
+                                <template #toggleicon>
+                                    <IconArrowDropDown class="w-4 h-4 text-t-lv3" />
+                                </template>
+                            </AccordionHeader>
+                            <AccordionContent class="w-full *:!bg-[transparent] [&>div]:pb-2.5">
+                                <div class="flex flex-col gap-1 [&_dl]:flex [&_dl]:justify-center [&_dl]:gap-1 [&_dl]:text-xs [&_dl]:font-medium [&_dl]:text-t-lv1">
+                                    <dl>
+                                        <dt>매출 총가격:</dt>
+                                        <dd>2,000</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>매입 총가격:</dt>
+                                        <dd>1,000</dd>
+                                    </dl>
+                                </div>
+                            </AccordionContent>
+                        </AccordionPanel>
+                    </Accordion>
+                </div>
                 <Button v-if="card['showButton'] && index === cards.length -1" 
-                    :label="card['buttonText']" :severity="card['buttonType']"  @click.stop="getBtnProcess(card['buttonType'], card['edCd'], card['outNo'])" class="mt-4 w-full"/>
+                    :label="card['buttonText']" :severity="card['buttonType']"  @click.stop="getBtnProcess(card['buttonType'], card['edCd'], card['outNo'])" class="mt-5 w-full"/>
             </div>
         </div>
     </div>
@@ -103,6 +126,10 @@
 
 <script setup lang="ts">
 import Tag from 'primevue/tag';
+import Accordion from 'primevue/accordion';
+import AccordionPanel from 'primevue/accordionpanel';
+import AccordionHeader from 'primevue/accordionheader';
+import AccordionContent from 'primevue/accordioncontent';
 import { useConfirm } from "primevue/useconfirm";
 import { ref, defineProps } from 'vue'
 import { usePopupStore, useClientStore, useEstiStore, useOrderStore, usePayStore } from '@/store';
@@ -110,6 +137,7 @@ import { getCommas } from "@/assets/js/function";
 import { getAxiosData, getTokenOut, getConvertDate } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import { useRoute } from 'vue-router';
+import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
 
 const emit      = defineEmits(['get-modify']);
 const confirm   = useConfirm();
