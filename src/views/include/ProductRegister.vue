@@ -254,29 +254,34 @@ const getActualSave = () => {
                     params = getCurtainParams(esti['common'], esti['curtain']);
                 break;
             }
+            
+            params['amCd']      = actual.amCd;
+            params['type']      = actual.detailType;
+            params['totalUnit'] = esti['total']['totalUnitSize'];
 
-            params['size']  = esti['total']['totalUnitSize'];
-            params['qty']   = esti['total']['totalQty'];
-            params['amCd']  = actual.amCd;
+            if(actual.detailType === 'U')
+            {
+                params['adCd'] = actual.adCd;
+            }
 
             console.log(JSON.stringify(params, null, 2));
 
-            // status.value = true;
+            status.value = true;
 
-            // try
-            // {
-            //     const instance  = await getAxiosData();
-            //     await instance.post(`https://data.planorder.kr/actualV1/getResult`, params);
+            try
+            {
+                const instance  = await getAxiosData();
+                await instance.post(`https://data.planorder.kr/actualV1/getDetailSave`, params);
 
-            //     await actual.getDetail();
-            //     getPopupClose('itemSet', false);
-            // }
-            // catch(e)
-            // {
-            //     console.log(e);
-            // }
+                await actual.getDetail();
+                getPopupClose('itemSet', false);
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
 
-            // status.value = false;
+            status.value = false;
         }
     });
 }

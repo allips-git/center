@@ -279,6 +279,10 @@ export const useProductStore = defineStore('product', {
                 return { result : false, calc : null };
             }
         },
+        getEstiYn(estiYn: 'Y' | 'N')
+        {
+            this.estiYn = estiYn;
+        },
         getEx(itemCd: string, estiYn : 'Y' | 'N')
         {
             this.info   = itemCd === 'EX000001' ? this.exItem['curtain'] : this.exItem['blind'];

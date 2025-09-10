@@ -37,6 +37,7 @@ interface State {
     type        : 'I' | 'U';
     search      : string;
     amCd        : string;
+    adCd        : string;
     list        : List[];
     info        : Info;
     detail      : Detail[];
@@ -64,7 +65,9 @@ const getMsg = (): Msg => {
 export const useActualStore = defineStore('actual', {
     state: (): State => ({
         type        : 'I',
+        detailType  : 'I',
         amCd        : '',
+        adCd        : '',
         search      : '',
         list        : [],
         info        : getInfo(),
@@ -141,6 +144,8 @@ export const useActualStore = defineStore('actual', {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://data.planorder.kr/actualV1/getDetail`, params);
 
+                console.log(res);
+
                 this.detail = res.data.detail.map(item => {
                     return {
                         adCd        : item.adCd,
@@ -167,10 +172,36 @@ export const useActualStore = defineStore('actual', {
                 console.log(e);
             }
         },
+        async getDetailInfo()
+        {
+            const params = {
+                adCd : this.adCd
+            };
+
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://data.planorder.kr/actualV1/getDetailInfo`, params);
+
+                console.log(res);
+
+                return { result : true , data : res.data };
+            }
+            catch(e)
+            {
+                console.log(e);
+                return { result : false , data : null };
+            }
+        },
         getAmCd(amCd: string)
         {
             this.type = 'U';
             this.amCd = amCd;
+        },
+        getAdCd(adCd: string)
+        {
+            this.detailType = 'U';
+            this.adCd       = adCd;
         },
         getMsgSet(msg: string, name: string)
         {
