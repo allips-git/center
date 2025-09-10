@@ -32,7 +32,7 @@
                                 <dd>{{ item.regDt }}</dd>
                             </dl>
                         </div>
-                        <Button label="정보 수정" size="small" severity="secondary" variant="outlined" class="!absolute top-[1.25rem] right-0 *:!text-t-lv3" @click="getInfo(item.amCd)"/>
+                        <Button label="정보 수정" size="small" severity="secondary" variant="outlined" class="!absolute top-[1.25rem] right-0 *:!text-t-lv3" @click.stop="getInfo(item.amCd)"/>
                     </AccordionHeader>
                     <AccordionContent v-if="gubun !== 'I'" class="[&>div]:p-0">
                         <CheckboxGroup name="ingredient" class="flex flex-col w-full border-t border-l-lv4">

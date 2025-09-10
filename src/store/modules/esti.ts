@@ -912,6 +912,7 @@ export const useEstiStore = defineStore('esti', {
             }
         
             this.blind['divSpec'] = specArr;
+            this.getUnitCalc();
         },
         getDivisionAdd()
         {
@@ -1083,6 +1084,8 @@ export const useEstiStore = defineStore('esti', {
                 case '001':
                     /** 회배 */
                     info = getHebeCalc(this.common, this.blind);
+
+                    console.log(info);
 
                     this.total['totalQty']      = Number(this.blind['division']) === 1 ? (Number(this.blind['leftQty']) + Number(this.blind['rightQty'])) : Number(this.blind['bQty']);
                     this.total['totalUnitSize'] = info['hebe'];

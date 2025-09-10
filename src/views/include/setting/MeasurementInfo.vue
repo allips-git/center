@@ -7,7 +7,7 @@
                     {{ item.setLocate }}
                 </h2>
                 <template v-for="(data, dIndex) in actual.detail" :key="dIndex">
-                    <div v-if="item.setLocate === data.setLocate" class="flex flex-col justify-start items-start px-4 py-6 border-t first:border-t-0">
+                    <div v-if="item.setLocate === data.setLocate" class="flex flex-col justify-start items-start px-4 py-6 border-t first:border-t-0" @click="getDetailInfo(data.adCd)">
                         <div class="flex justify-between mb-4 w-full">
                             <div class="flex-1 flex flex-col gap-[0.8125rem] pt-1">
                                 <h3 class="font-black leading-tight text-red-500 text-13">{{ data.itemNm }}</h3>
@@ -41,8 +41,8 @@
                                         <tr v-for="(blind, bIndex) in data.spec" :key="bIndex" class="font-bold text-sm !text-t-lv1">
                                             <td class="py-0.5 leading-tight align-top">{{ blind.width }}</td>
                                             <td class="py-0.5 leading-tight align-top">{{ blind.height }}</td>
-                                            <td class="py-0.5 leading-tight align-top">{{ blind.handle === 'L' ? blind.cnt : 0 }}</td>
-                                            <td class="py-0.5 leading-tight align-top">{{ blind.handle === 'R' ? blind.cnt : 0 }}</td>
+                                            <td class="py-0.5 leading-tight align-top">{{ blind.handle === 'L' ? (data.division === 'D' ? data.qty : blind.qty) : 0 }}</td>
+                                            <td class="py-0.5 leading-tight align-top">{{ blind.handle === 'R' ? (data.division === 'D' ? data.qty : blind.qty) : 0 }}</td>
                                             <td class="py-0.5 leading-tight align-top">{{ blind.size }}회베</td>
                                         </tr>
                                     </template>
@@ -77,7 +77,7 @@
                 </div>
             </template>
             <div class="pt-3">
-                <ActualChoice :gubun="'E'" @getApply="getDisApply" @getClose="getPopupClose('actualChoice', true)"/>
+                <ActualChoice :gubun="'E'" @getClose="getPopupClose('actualChoice', true)"/>
             </div>
         </Dialog>
         <Dialog v-model:visible="popup['pop']['itemSet']" header="실측등록" 
@@ -98,12 +98,17 @@
 <script setup lang="ts">
 import ActualChoice from '@/components/modal/ActualChoice.vue'
 import ProductRegister from "@/views/include/ProductRegister.vue";
+import { useConfirm } from "primevue/useconfirm";
 import { ref } from 'vue';
 import { onMounted } from 'vue';
-import { usePopupStore, useActualStore } from '@/store';
+import { usePopupStore, useProductStore, useEstiStore, useActualStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
+import { getAxiosData, getTokenOut } from '@/assets/js/function';
 
+const confirm   = useConfirm();
 const popup     = usePopupStore();
+const product   = useProductStore();
+const esti      = useEstiStore();
 const actual    = useActualStore();
 const mainRef   = ref(null);
 const mainWidth = ref(0);
@@ -116,7 +121,69 @@ const getLocate = () => {
 }
 
 const getDelete = (adCd: string) => {
-    console.log(adCd);
+    confirm.require({
+        message     : '해당 실측 데이터를 삭제하시겠습니까?',
+        header      : '삭제',
+        rejectProps : {
+            label       : '취소',
+            severity    : 'secondary',
+            outlined    : true
+        },
+        acceptProps : {
+            label: '삭제'
+        },
+        accept : async () => {
+            const params = {
+                adCd : adCd
+            }
+
+            console.log(params);
+
+            try
+            {
+                const instance  = await getAxiosData();
+                await instance.post(`https://data.planorder.kr/actualV1/getDelete`, params);
+                await actual.getDetail();
+            }
+            catch(e)
+            {
+                console.log(e);
+                if(e.response.status === 401)
+                {
+                    getTokenOut();
+                }
+                else
+                {
+                    alert('실측 삭제 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                }
+            }
+        }
+    });
+}
+
+const getDetailInfo = async (adCd: string) => {
+    await product.getEstiYn('N');
+    await actual.getAdCd(adCd);
+    await actual.getDetailInfo().then(async (res) => {
+        if(res.result)
+        {
+            await esti.getReset();
+            if(res.data.common.itemCd === 'EX000001')
+            {
+                res.data.common.roundGb = '001';
+                await esti.getCurtainSet(res.data.itemInfo);
+            }
+            else
+            {
+                await esti.getBlindSet(res.data.itemInfo);
+            }
+
+            await esti.getCommonSet(res.data.common);
+            await esti.getUnitCalc('Y');
+        }
+    });
+
+    getPopupOpen('itemSet');
 }
 
 const getItemChange = () => {
