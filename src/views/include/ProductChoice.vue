@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="flex w-full gap-[0.625rem] mt-2.5 py-2">
-            <Button label="실측 불러보기" size="small"/>
+            <Button label="실측 불러보기" size="small" @click="getActual"/>
             <Button label="커튼 실측" size="small" @click="getExItem('EX000001')"/>
             <Button label="블라인드 실측" size="small" @click="getExItem('EX000002')"/>
         </div>
@@ -59,12 +59,13 @@ import IconField from 'primevue/iconfield';
 import InputText from 'primevue/inputtext'; 
 import InputIcon from 'primevue/inputicon'; 
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useProductStore, useEstiStore } from '@/store';
+import { useProductStore, useEstiStore, useActualStore } from '@/store';
 import { getCommas } from '@/assets/js/function';
 import { usePopup } from '@/assets/js/popup';
 import IconArrowDropDown from '@/components/icons/IconArrowDropDown.vue'
 import IconSearch from '@/components/icons/IconSearch.vue'
 
+const actual  = useActualStore();
 const product = useProductStore();
 const esti    = useEstiStore();
 const { getPopupOpen } = usePopup();
@@ -84,6 +85,17 @@ const toggleSubList = (index: number, itemCd: string) => {
 const isActive = (index: number) => {
     return activeIndex.value === index;
 };
+
+const getActual = async () => {
+    if(esti.type === 'O')
+    {
+        alert('발주 수정 시 실측 데이터는 선택 불가능합니다.');
+        return;
+    }
+    
+    await actual.getListReset();
+    getPopupOpen('measurementSetting');
+}
 
 const getItemChoice = async (icCd: string) => {
     product['icCd'] = icCd;

@@ -25,9 +25,9 @@ interface Info {
     memo        : string;
 }
 
-interface Detail {
+// interface Detail {
     
-}
+// }
 
 interface Msg {
     amNm : string;
@@ -38,6 +38,7 @@ interface State {
     search      : string;
     amCd        : string;
     adCd        : string;
+    adList      : [];
     list        : List[];
     info        : Info;
     detail      : Detail[];
@@ -68,6 +69,7 @@ export const useActualStore = defineStore('actual', {
         detailType  : 'I',
         amCd        : '',
         adCd        : '',
+        adList      : [],
         search      : '',
         list        : [],
         info        : getInfo(),
@@ -81,7 +83,7 @@ export const useActualStore = defineStore('actual', {
         {
             const params = {
                 search : this.search,
-                start  : this.start
+                // start  : this.start
             };
 
             try
@@ -91,13 +93,12 @@ export const useActualStore = defineStore('actual', {
 
                 console.log(res);
 
-                this.list       = this.list.concat(res.data.list);
-                this.start      += 20;
+                this.list = res.data.list;
 
-                if(res.data['list'].length < 20)
-                {
-                    this.loading = false;
-                }
+                // if(res.data['list'].length < 20)
+                // {
+                //     this.loading = false;
+                // }
             }
             catch(e)
             {
@@ -136,8 +137,11 @@ export const useActualStore = defineStore('actual', {
         async getDetail()
         {
             const params = {
-                amCd : this.amCd
+                amCd : this.amCd,
+                adCd : this.adList
             };
+
+            this.detail = [];
 
             try
             {
@@ -203,6 +207,14 @@ export const useActualStore = defineStore('actual', {
             this.detailType = 'U';
             this.adCd       = adCd;
         },
+        getAdList(adList: [])
+        {
+            this.adList = adList;
+        },
+        getAdCdAdd(adCd: string)
+        {
+            this.adList.push(adCd);
+        },
         getMsgSet(msg: string, name: string)
         {
             this.msg        = getMsg();
@@ -212,6 +224,10 @@ export const useActualStore = defineStore('actual', {
         {
             this.list   = [];
             this.start  = 0;
+        },
+        getDetailReset()
+        {
+            this.detailType = 'I';
         },
         getReset()
         {
