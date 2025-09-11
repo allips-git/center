@@ -159,6 +159,14 @@
             </template>
             <ProductRegister/>
         </Dialog>
+        
+        <Dialog v-model:visible="popup['pop']['measurementSetting']" 
+            :modal=true position="center" class="custom-dialog-full" 
+            @update:visible="getPopClose('measurementSetting', true)">
+            <template #header>
+            </template>
+            <MeasurementSetting :gubun="'O'"/>
+        </Dialog>
 
         <!-- <Dialog v-model:visible="popup['pop']['clientSet']" header="고객 정보 수정" 
             :modal=true position="center" class="custom-dialog-bottom"
@@ -300,6 +308,7 @@ import ChatRoomModal from "@/views/customer/ChatRoomModal.vue";
 // import EstimateModal from "@/views/customer/EstimateModal.vue";
 import ContractPreview from "@/views/include/setting/ContractPreview.vue";
 // import ConmateModal from "@/views/customer/ConmateModal.vue";
+import MeasurementSetting from "@/views/setting/MeasurementSetting.vue";
 import EstiList from '@/views/include/customer/EstiList.vue';
 import OrderList from "@/views/customer/OrderList.vue";
 import CustomerPayList from "@/views/customer/PayList.vue";

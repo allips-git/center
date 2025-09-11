@@ -61,10 +61,10 @@
         <div class="flex-1 pt-0.5 pb-1 sm:px-4 toggle-group-box">
             <h3 class="title text-10 text-t-lv3">가공 옵션</h3>
             <div class="flex flex-wrap w-full">
-                <div class="basis-1/4 toggle-set">
+                <!-- <div class="basis-1/4 toggle-set">
                     <label for="switch3" class="font-medium text-11 text-t-lv2">투톤 색상</label>
                     <ToggleSwitch v-model="esti['curtain']['addColor']" :trueValue="'T'" :falseValue="'O'"/>
-                </div>
+                </div> -->
                 <div v-if="getOptionCheck('B')" class="basis-1/4 toggle-set">
                     <label for="switch4" class="font-medium text-11 text-t-lv2">리드밴드</label>
                     <ToggleSwitch v-model="esti['curtain']['bproc']" :trueValue="'002'" :falseValue="'001'" @change="getBproc"/>

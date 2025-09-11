@@ -144,13 +144,19 @@ const getSave = () => {
             try
             {
                 const instance  = await getAxiosData();
-                await instance.post(`https://data.planorder.kr/actualV1/getSave`, params);
+                const res       = await instance.post(`https://data.planorder.kr/actualV1/getSave`, params);
+
+                console.log(res);
+
                 await actual.getListReset();
                 await actual.getList();
                 await getPopupClose(true, 'measurementRegistration');
 
                 if(actual.type === 'I')
                 {
+                    await actual.getAmCd(res.data.amCd);
+                    await actual.getAdList([]);
+                    await actual.getDetail();
                     getPopupOpen('measurementInfo');
                 }
 

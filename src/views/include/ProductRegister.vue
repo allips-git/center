@@ -271,8 +271,12 @@ const getActualSave = () => {
             try
             {
                 const instance  = await getAxiosData();
-                await instance.post(`https://data.planorder.kr/actualV1/getDetailSave`, params);
+                const res       = await instance.post(`https://data.planorder.kr/actualV1/getDetailSave`, params);
 
+                if(actual.detailType === 'I')
+                {
+                    await actual.getAdCdAdd(res.data.adCd);
+                }
                 await actual.getDetail();
                 getPopupClose('itemSet', false);
             }
