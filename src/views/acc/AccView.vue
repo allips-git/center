@@ -59,8 +59,8 @@
                             <div class="">
                                 <div>
                                     <template v-for="(date, dIndex) in acc.dateList" :key="dIndex">
-                                        <div class="flex gap-2 items-center px-4 py-2">
-                                            <p class="flex-none text-gray-400">{{ date['stDt'] }}</p>
+                                        <div class="flex gap-2 items-center h-6">
+                                            <p class="flex-none text-xs">{{ date['stDt'] }}</p>
                                             <div class="w-full h-px bg-gray-200"></div>
                                         </div>
                                         <template v-for="(item, index) in acc.list" :key="index">
