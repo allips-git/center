@@ -1369,3 +1369,31 @@ $breakpoint-3xl: 1920px; // Extra large devices (large desktops)
         padding: 6px 8px !important;
     }
 }
+
+// 버튼 타입 정리 한번 해야함!
+.est-button {
+    &.p-button-warn {
+        background-color: #FF9800;
+        border-color: #FF9800;
+        &:hover, &:focus {
+            background-color: #f08f01 !important;
+            border-color: #f08f01 !important;
+        }
+    }
+    &.p-button-help {
+        background-color: #DBB071;
+        border-color: #DBB071;
+        &:hover, &:focus {
+            background-color: #ca9e5d !important;
+            border-color: #ca9e5d !important;
+        }
+    }
+    &.p-button-info {
+        background-color: #6AB2BE;
+        border-color: #6AB2BE;
+        &:hover, &:focus {
+            background-color: #5da4b0 !important;
+            border-color: #5da4b0 !important;
+        }
+    }
+}

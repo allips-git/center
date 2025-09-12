@@ -251,7 +251,7 @@ export const useOrderStore = defineStore('order', {
                                     else
                                     {
                                         buttonText = '메세지 발주';
-                                        buttonType = 'success';
+                                        buttonType = 'info';
                                     }
                                 }
                                 else
