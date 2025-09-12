@@ -118,8 +118,8 @@
                     </Accordion>
                 </div>
             </div>
-            <Button v-if="card['showButton'] && index === cards.length -1" 
-                :label="card['buttonText']" :severity="card['buttonType']"  @click.stop="getBtnProcess(card['buttonType'], card['edCd'], card['outNo'])" class="mt-5 w-full"/>
+            <Button size="large" v-if="card['showButton'] && index === cards.length -1" 
+                :label="card['buttonText']" :severity="card['buttonType']"  @click.stop="getBtnProcess(card['buttonType'], card['edCd'], card['outNo'])" class="mt-5 w-full est-button"/>
         </div>
     </div>
 </template>
