@@ -64,7 +64,7 @@
         </section>
 
         <div v-if="gubun !== 'I'" :style="{width: mainWidth + 'px', left: mainLeft + 'px' }" class="bottom-fixed-btn-box">
-            <Button label="실측 저장" size="large" @click="getActualEstiSave"/>
+            <Button label="실측 저장" size="large"/>
         </div>
 
         <Dialog v-model:visible="popup['pop']['actualChoice']" 
@@ -101,8 +101,8 @@ import ProductRegister from "@/views/include/ProductRegister.vue";
 import { useConfirm } from "primevue/useconfirm";
 import { ref } from 'vue';
 import { onMounted, onUnmounted } from 'vue';
-import { usePopupStore, useProductStore, useClientStore, useEstiStore, useActualStore } from '@/store';
-import { useRoute } from 'vue-router';
+import { usePopupStore, useProductStore, useEstiStore, useActualStore } from '@/store';
+// import { useRoute } from 'vue-router';
 import { usePopup } from '@/assets/js/popup';
 import { getAxiosData, getTokenOut } from '@/assets/js/function';
 
@@ -111,9 +111,9 @@ defineProps({
 });
 
 const confirm   = useConfirm();
-const route     = useRoute();
+// const route     = useRoute();
 const popup     = usePopupStore();
-const client    = useClientStore();
+// const client    = useClientStore();
 const product   = useProductStore();
 const esti      = useEstiStore();
 const actual    = useActualStore();
@@ -197,77 +197,77 @@ const getItemChange = () => {
     getPopupOpen('actualChoice');
 }
 
-const getActualEstiSave = () => {
-    confirm.require({
-        message     : '해당 실측 데이터를 추가하시겠습니까?',
-        header      : '견적 추가',
-        rejectProps : {
-            label       : '취소',
-            severity    : 'secondary',
-            outlined    : true
-        },
-        acceptProps : {
-            label: '추가'
-        },
-        accept : async () => {
-            const params = {
-                adCd : actual.adList
-            }
+// const getActualEstiSave = () => {
+//     confirm.require({
+//         message     : '해당 실측 데이터를 추가하시겠습니까?',
+//         header      : '견적 추가',
+//         rejectProps : {
+//             label       : '취소',
+//             severity    : 'secondary',
+//             outlined    : true
+//         },
+//         acceptProps : {
+//             label: '추가'
+//         },
+//         accept : async () => {
+//             const params = {
+//                 adCd : actual.adList
+//             }
 
-            params['type']      = esti['type'];
-            params['emCd']      = esti['emCd'];
-            params['clientCd']  = client['clientCd'];
+//             params['type']      = esti['type'];
+//             params['emCd']      = esti['emCd'];
+//             params['clientCd']  = client['clientCd'];
 
-            console.log(params);
+//             console.log(params);
 
-            try
-            {
-                const instance = await getAxiosData();
-                const res      = await instance.post(`https://data.planorder.kr/estiV1/getActualSave`, params);
+//             try
+//             {
+//                 const instance = await getAxiosData();
+//                 const res      = await instance.post(`https://data.planorder.kr/estiV1/getActualSave`, params);
 
-                await esti.getEmCd(res.data['emCd']);
+//                 await esti.getEmCd(res.data['emCd']);
 
-                if(esti.type === 'I')
-                {
-                    /** 견적에서 추가 데이터 시 */
-                    await esti.getList();
-                }
+//                 if(esti.type === 'I')
+//                 {
+//                     /** 견적에서 추가 데이터 시 */
+//                     await esti.getList();
+//                 }
 
-                if(route.name === 'CustomerEstiDetail')
-                {
-                    await esti.getDetail(client.stCd);
-                }
-                else
-                {
-                    await client.getDetail();
-                    getPopupOpen('estiList');
-                }
+//                 if(route.name === 'CustomerEstiDetail')
+//                 {
+//                     await esti.getDetail(client.stCd);
+//                 }
+//                 else
+//                 {
+//                     await client.getDetail();
+//                     getPopupOpen('estiList');
+//                 }
 
-                getPopupClose('itemList', false);
-                getPopupClose('itemSet', false);
-                getPopupClose('measurementSetting', false);
-                getPopupClose('measurementInfo', false);
+//                 getPopupClose('itemList', false);
+//                 getPopupClose('itemSet', false);
+//                 getPopupClose('measurementSetting', false);
+//                 getPopupClose('measurementInfo', false);
 
-                if(esti.type === 'N')
-                {
-                    getPopupOpen('estiList');
-                }
-            }
-            catch(e)
-            {
-                console.log(e);
-                if(e.response.status === 401)
-                {
-                    getTokenOut();
-                }
-                else
-                {
-                    alert('실측 저장 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
-                }
-            }
-        }
-    });
-}
+//                 if(esti.type === 'N')
+//                 {
+//                     getPopupOpen('estiList');
+//                 }
+//             }
+//             catch(e)
+//             {
+//                 console.log(e);
+//                 if(e.response.status === 401)
+//                 {
+//                     getTokenOut();
+//                 }
+//                 else
+//                 {
+//                     alert('실측 저장 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+//                 }
+//             }
+//         }
+//     });
+// }
 
 onMounted(() => {
     const updateMainSize = () => {
