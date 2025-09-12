@@ -48,7 +48,8 @@
                 <div class="relative">
                     <IftaLabel class="flex-1 min-w-0">
                     <label class="accent">최종{{ getRealSize() + esti['common']['unitNm'] }}</label>
-                    <InputText v-keyfilter.money inputmode="decimal" id="cSize" v-model="esti['curtain']['size']" :readonly="esti['common']['unit'] === '003' || esti['common']['unit'] === '005' ? false : true"
+                    <InputText v-keyfilter.money inputmode="decimal" id="cSize" v-model="esti['curtain']['size']" 
+                        :disabled="esti['common']['unit'] === '003' || esti['common']['unit'] === '005' ? false : true"
                         class="w-full text-lg text-center text-sky-500" @input="esti.getUnitCalc('Y')" />
                 </IftaLabel>
                 <!-- <span class="absolute right-2.5 bottom-[0.625rem] text-xs text-t-lv1">{{ esti['common']['unitNm'] }}</span> -->
