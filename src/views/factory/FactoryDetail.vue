@@ -79,31 +79,39 @@
                         {{ factory['sys']['info']['boon'] }}
                     </dd>
                 </dl>
+                <dl class="info-set">
+                    <dt class="title">
+                        메모
+                    </dt>
+                    <dd class="desc">
+                        {{ factory['sys']['info']['alMemo'] }}
+                    </dd>
+                </dl>
             </div>
 
             <!-- 카운트 -->
             <ul class="grid grid-cols-4 py-5 border border-gray-200 rounded-[4px] mt-[10px]">
                 <li class="flex flex-col justify-center items-center border-r border-l-lv4 last:border-r-0">
-                    <p class="text-lg font-bold text-blue-600">0</p>
+                    <p class="text-lg font-bold text-blue-600">{{ factory.sys.info.orderCnt }}</p>
                     <p class="text-xs text-gray-500">주문</p>
                 </li>
                 <li class="flex flex-col justify-center items-center border-r border-l-lv4 last:border-r-0">
-                    <p class="text-lg font-bold text-blue-600">0</p>
+                    <p class="text-lg font-bold text-blue-600">{{ factory.sys.info.prodCnt }}</p>
                     <p class="text-xs text-gray-500">생산</p>
                 </li>
                 <li class="flex flex-col justify-center items-center border-r border-l-lv4 last:border-r-0">
-                    <p class="text-lg font-bold text-blue-600">0</p>
-                    <p class="text-xs text-gray-500">생산완료</p>
+                    <p class="text-lg font-bold text-blue-600">{{ factory.sys.info.conCnt }}</p>
+                    <p class="text-xs text-gray-500">완료</p>
                 </li>
                 <li class="flex flex-col justify-center items-center border-r border-l-lv4 last:border-r-0">
-                    <p class="text-lg font-bold text-blue-600">0</p>
+                    <p class="text-lg font-bold text-blue-600">{{ factory.sys.info.outCnt }}</p>
                     <p class="text-xs text-gray-500">출고</p>
                 </li>
             </ul>
         </section>
         <div class="my-8 w-full h-3 bg-gray-100"></div>
         <section class="px-5">
-            <CalculateCard  :showtitle="true"  title="거래원장" totalTitle="총 결제 금액"/>
+            <CalculateCard :calcs="factory.sys.info.payList" :showtitle="true"  title="거래원장" totalTitle="총 결제 금액" :totalAmt="getTotalAmt()"/>
         </section>
         <section class="px-5">
             <NoticeCard/>
@@ -133,10 +141,10 @@
     :modal=true
     position="bottom"
     class="custom-dialog-full"
-    @update:visible="getPopClose(true, 'sysFactoryNameSet')">
+    @update:visible="getPopupClose('sysFactoryNameSet', true)">
     <template #header>
         <div class="modal-backheader">
-            <Button @click="getPopClose(true, 'sysFactoryNameSet')" severity="contrast" text icon="pi pi-times" iconPos="right"/>
+            <Button @click="getPopupClose('sysFactoryNameSet', true)" severity="contrast" text icon="pi pi-times" iconPos="right"/>
             <h2 class="modal-backheader-title">별칭 설정</h2>
         </div>
     </template>
@@ -147,7 +155,7 @@
     @update:visible="getPopupClose('sysFactoryItemList', true)">
     <template #header>
         <div class="modal-fullheader">
-            <Button @click="getPopupClose(true, 'sysFactoryItemList')" severity="contrast" text icon="pi pi-arrow-left" class="flex justify-start"/>
+            <Button @click="getPopupClose('sysFactoryItemList', true)" severity="contrast" text icon="pi pi-arrow-left" class="flex justify-start"/>
             <h2 class="modal-backheader-title">제품정보</h2>
         </div>
     </template>
@@ -201,6 +209,10 @@ const { getPopupOpen, getPopupClose } = usePopup();
 
 const getImage = (imgUrl: string) => {
     return 'https://elasticbeanstalk-ap-northeast-2-627549176645.s3.ap-northeast-2.amazonaws.com/' + imgUrl;
+}
+
+const getTotalAmt = () => {
+    return factory.sys.info.payList.reduce((total, item) => total + Number(item.amt), 0);
 }
 
 onMounted(async () => {

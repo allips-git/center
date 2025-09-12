@@ -52,15 +52,15 @@ export const useAverageStore = defineStore('average', {
         },
         saleAmtPercent: (state) => {
             const total = state.saleAmt + state.purcAmt + state.fixedAmt;
-            return total ? ((state.saleAmt / total) * 100).toFixed(2) + '%' : '0%';
+            return total ? ((state.saleAmt / total) * 100).toFixed(0) + '%' : '0%';
         },
         purcAmtPercent: (state) => {
             const total = state.saleAmt + state.purcAmt + state.fixedAmt;
-            return total ? ((state.purcAmt / total) * 100).toFixed(2) + '%' : '0%';
+            return total ? ((state.purcAmt / total) * 100).toFixed(0) + '%' : '0%';
         },
         fixedAmtPercent: (state) => {
             const total = state.saleAmt + state.purcAmt + state.fixedAmt;
-            return total ? ((state.fixedAmt / total) * 100).toFixed(2) + '%' : '0%';
+            return total ? ((state.fixedAmt / total) * 100).toFixed(0) + '%' : '0%';
         },
         keywordNmList: (state) => {
             return state.keywordList.map(item => item.codeNm);
@@ -68,15 +68,15 @@ export const useAverageStore = defineStore('average', {
         accountPercent: (state) => {
             const total = state.payList.reduce((acc, cur) => acc + Number(cur.amt), 0);
             console.log(state.payList.find(item => item.codeSub === '001'));
-            return total ? ((Number(state.payList.find(item => item.codeSub === '001')['amt']) / total) * 100).toFixed(2) + '%' : '0%';
+            return total ? ((Number(state.payList.find(item => item.codeSub === '001')['amt']) / total) * 100).toFixed(0) + '%' : '0%';
         },
         cashPercent: (state) => {
             const total = state.payList.reduce((acc, cur) => acc + Number(cur.amt), 0);
-            return total ? ((Number(state.payList.find(item => item.codeSub === '002')['amt']) / total) * 100).toFixed(2) + '%' : '0%';
+            return total ? ((Number(state.payList.find(item => item.codeSub === '002')['amt']) / total) * 100).toFixed(0) + '%' : '0%';
         },
         cardPercent: (state) => {
             const total = state.payList.reduce((acc, cur) => acc + Number(cur.amt), 0);
-            return total ? ((Number(state.payList.find(item => item.codeSub === '003')['amt']) / total) * 100).toFixed(2) + '%' : '0%';
+            return total ? ((Number(state.payList.find(item => item.codeSub === '003')['amt']) / total) * 100).toFixed(0) + '%' : '0%';
         },
         keywordValList: (state) => {
             return state.keywordList.map(item => Number(item.cnt));

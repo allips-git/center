@@ -84,6 +84,14 @@
             <EstiList/>
         </Dialog>
 
+        <Dialog v-model:visible="popup['pop']['measurementSetting']" 
+            :modal=true position="center" class="custom-dialog-full" 
+            @update:visible="getPopClose('measurementSetting', true)">
+            <template #header>
+            </template>
+            <MeasurementSetting :gubun="'O'"/>
+        </Dialog>
+
         <Dialog v-model:visible="popup['pop']['orderList']" header="발주서" 
             :modal=true position="center" class="custom-dialog-full" 
             @update:visible="getPopupClose('orderList', true)">
@@ -202,6 +210,7 @@ import EstiList from '@/views/include/customer/EstiList.vue';
 import OrderList from "@/views/customer/OrderList.vue";
 import CustomerPayList from "@/views/customer/PayList.vue";
 import OutOrderMateModal from "@/views/customer/OutOrderMateModal.vue";
+import MeasurementSetting from "@/views/setting/MeasurementSetting.vue";
 import { onMounted } from 'vue';
 import { useDataStore, usePopupStore, useClientStore, useEstiStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';

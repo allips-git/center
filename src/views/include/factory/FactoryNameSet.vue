@@ -8,6 +8,10 @@
                 <small class="text-red-500 text-10">{{ factory['sys']['msg']['alNm'] }}</small>
                 <label for="faCd">별칭명</label>
             </IftaLabel>
+            <IftaLabel class="w-full">
+                <label>메모</label>
+                <Textarea v-model="alMemo" autoResize rows="8" cols="30" class="w-full" placeholder="메모를 입력해주세요." />
+            </IftaLabel>
         </div>
         <div class="bottom-modal-absol-box">
             <Button type="button" label="저장" @click="getSysFactoryNameSet" class="w-full"></Button>
@@ -18,6 +22,7 @@
 <script setup lang="ts">
 import IftaLabel from 'primevue/iftalabel';
 import IconField from 'primevue/iconfield';
+import Textarea from 'primevue/textarea';
 import { ref, onMounted } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 import { useFactoryStore } from '@/store';
@@ -27,6 +32,7 @@ import { usePopup } from '@/assets/js/popup';
 const factory   = useFactoryStore();
 const confirm   = useConfirm();
 const alNm      = ref('');
+const alMemo    = ref('');
 
 const { getPopupClose } = usePopup();
 
@@ -51,8 +57,9 @@ const getSysFactoryNameSet = () => {
         },
         accept : async () => {
             const params = {
-                faCd : factory['sys']['faCd'],
-                alNm : alNm.value
+                faCd    : factory['sys']['faCd'],
+                alNm    : alNm.value,
+                alMemo  : alMemo.value
             };
 
             console.log(params);
@@ -85,9 +92,8 @@ const getFocus = (id: string) => {
 }
 
 onMounted(() => {
-    alNm.value = factory['sys']['info']['alNm'];
-
-    console.log(factory['sys']['info']['alNm']);
+    alNm.value      = factory['sys']['info']['alNm'];
+    alMemo.value    = factory['sys']['info']['alMemo'];
 });
 
 </script>

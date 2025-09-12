@@ -5,14 +5,14 @@
             <div class="relative flex items-center justify-center w-full ">
                 <p class="w-[100px] flex-none">계약일</p>
                 <VueDatePicker id="deliDt" v-model="con['conInfo']['conDt']" locale="ko" format="yyyy-MM-dd HH:mm" :enable-time-picker="true" 
-                    :is-24="true" input-class="w-full" :clearable="false" :auto-apply="true" :close-on-auto-apply="false"/>
+                    :is-24="true" input-class="w-full" :clearable="false" :auto-apply="true" :close-on-auto-apply="false" :flow="['calendar', 'time']"/>
             </div>
             
             <div class="relative flex items-center justify-center w-full">
                 <p class="w-[100px] flex-none">시공일<span class="ml-0.5 text-red-500">*</span></p>
                 <div class="flex flex-col w-full gap-1">
                     <VueDatePicker id="deliDt" v-model="con['conInfo']['deliDt']" locale="ko" format="yyyy-MM-dd HH:mm" :enable-time-picker="true" 
-                        :is-24="true" input-class="w-full" :clearable="false" :auto-apply="true" :close-on-auto-apply="false"/>
+                        :is-24="true" input-class="w-full" :clearable="false" :auto-apply="true" :close-on-auto-apply="false" :flow="['calendar', 'time']"/>
                     <small class="w-full text-red-500">{{ con['msg']['deliDt'] }}</small>
                 </div>
             </div>
