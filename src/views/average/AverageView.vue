@@ -11,7 +11,7 @@
                     class="custom-datapicker *:!text-sm !max-w-[150px] !w-[120px] h-[33px] *:!pl-1 *:!pr-1.5 bg-gray" :locale="'ko'" showIcon fluid iconDisplay="input" appendTo="self"
                     @update:modelValue="aver.getData()">
                     <template #inputicon="slotProps" class="!pl-1">
-                    <IconPlay class="rotate-90 !fill-gray-500"/>
+                        <IconPlay class="rotate-90 !fill-gray-500"/>
                     </template>
             </DatePicker>
             </div>
@@ -28,12 +28,12 @@
                     </div>
     
                     <div :class="`bg-yellow-400`" :style="{ width: `${aver.purcAmtPercent}` }" >
-                        <p class="flex justify-end items-center pr-3 h-full text-xs text-right text-white">{{ aver.purcAmtPercent }}</p>
+                        <p v-if="aver.purcAmtPercent !== '0%'" class="flex justify-end items-center pr-3 h-full text-xs text-right text-white">{{ aver.purcAmtPercent }}</p>
                     </div>
     
                     <div :class="`bg-red-400`" :style="{ width: `${aver.fixedAmtPercent}` }">
                         <!-- 0%센트 일때 안보이게 처리 (글자 겹칩 현상 발생함) -->
-                        <p v-if="aver.fixedAmtPercent == '0%'"   class="flex justify-end items-center pr-3 h-full text-xs text-right text-white">{{ aver.fixedAmtPercent }}</p>
+                        <p v-if="aver.fixedAmtPercent !== '0%'"   class="flex justify-end items-center pr-3 h-full text-xs text-right text-white">{{ aver.fixedAmtPercent }}</p>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                 <div class="overflow-hidden w-full h-5 bg-gray-200 rounded-full">
                     <div class="flex items-center h-full *:h-full">
                         <div :class="`bg-blue-400`" :style="{ width: `${aver.accountPercent}`}" >
-                            <p v-if="aver.accountPercent !== '0%'"  class="flex justify-end items-center pr-3 h-full text-xs text-right text-white">{{ aver.accountPercent }}</p>
+                            <p class="flex justify-end items-center pr-3 h-full text-xs text-right text-white">{{ aver.accountPercent }}</p>
                         </div>
         
                         <div :class="`bg-yellow-400`" :style="{ width: `${aver.cashPercent}` }" >

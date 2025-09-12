@@ -26,9 +26,14 @@ interface MsgInfo {
  * @description 계약서 정보
  */
 const getConInfo = (): ConInfo => {
+    const conDt     = new Date();
+    const deliDt    = new Date(conDt);
+    
+    deliDt.setDate(deliDt.getDate() + 7);
+
     return {
-        conDt       : new Date(),
-        deliDt      : '',
+        conDt,
+        deliDt,
         insHour     : 0,
         insMinute   : 0,
         person      : '',

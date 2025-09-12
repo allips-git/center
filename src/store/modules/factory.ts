@@ -27,9 +27,19 @@ interface SysList {
     addrDetail  : string;
 }
 
+interface Pay {
+    name    : string;
+    title   : string;
+    amt     : number;
+    red     : boolean;
+    blue    : boolean;
+    memo    : string;
+}
+
 interface SysInfo {
     faNm        : string;
     alNm        : string;
+    alMemo      : string;
     filePath    : string;
     tel         : string;
     boon        : string;
@@ -39,7 +49,12 @@ interface SysInfo {
     addrDetail  : string;
     bankNm      : string;
     accNum      : string;
+    orderCnt    : number;
+    prodCnt     : number;
+    conCnt      : number;
+    outCnt      : number;
     itemCnt     : number;
+    payList     : Pay;
 }
 
 interface SysItemList {
@@ -152,6 +167,7 @@ const getSysInfo = (): SysInfo => {
     return {
         faNm        : '',
         alNm        : '',
+        alMemo      : '',
         filePath    : '',
         tel         : '',
         boon        : '',
@@ -161,7 +177,12 @@ const getSysInfo = (): SysInfo => {
         addrDetail  : '',
         bankNm      : '',
         accNum      : 0,
-        itemCnt     : 0
+        orderCnt    : 0,
+        prodCnt     : 0,
+        conCnt      : 0,
+        outCnt      : 0,
+        itemCnt     : 0,
+        payList     : []
     }
 }
 
@@ -370,6 +391,7 @@ export const useFactoryStore = defineStore('factory', {
                 const info = {
                     faNm        : res.data['info']['faNm'],
                     alNm        : res.data['info']['alNm'],
+                    alMemo      : res.data['info']['alMemo'],
                     filePath    : res.data['info']['imgUrl'],
                     tel         : res.data['info']['tel'],
                     boon        : '',
@@ -379,7 +401,17 @@ export const useFactoryStore = defineStore('factory', {
                     addrDetail  : res.data['info']['addrDetail'],
                     bankNm      : res.data['info']['bankNm'],
                     accNum      : res.data['info']['accNum'],
-                    itemCnt     : res.data['itemCnt']
+                    orderCnt    : res.data.cnt.order,
+                    prodCnt     : res.data.cnt.prod,
+                    conCnt      : res.data.cnt.con,
+                    outCnt      : res.data.cnt.out,
+                    itemCnt     : res.data['itemCnt'],
+                    payList     : [
+                        {name : 'itemAmt',  title: '이월 잔액',         amt: res.data.amt.pre, red: false, blue: false, memo : ''},
+                        {name : 'itemAmt',  title: '이달 매입금',       amt: res.data.amt.mon, red: false, blue: false, memo : ''},
+                        {name : 'itemAmt',  title: '이달 수정 / 반품',  amt: res.data.amt.mod, red: true, blue: false, memo : ''},
+                        {name : 'itemAmt',  title: '이달 지급',         amt: res.data.amt.pay, red: true, blue: false, memo : ''}
+                    ]
                 }
 
                 this.sys.info = info;

@@ -87,7 +87,7 @@ export const useMainStore = defineStore('main', {
                     res.data['stCnt'].map(s => {
                         if(s.stNm === item.label)
                         {
-                            item.count = Number(item.count) + Number(s.count);
+                            item.count = Number(s.count);
                         }
                     })
                 })

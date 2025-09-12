@@ -245,6 +245,8 @@ const getActualEstiSave = () => {
 
                 getPopupClose('itemList', false);
                 getPopupClose('itemSet', false);
+                getPopupClose('measurementSetting', false);
+                getPopupClose('measurementInfo', false);
 
                 if(esti.type === 'N')
                 {

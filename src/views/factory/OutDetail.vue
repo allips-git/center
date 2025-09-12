@@ -4,7 +4,7 @@
             <section class="px-4 mb-6 sm:px-8">
                 <InfoCard :title="factory['out']['detail']['header'][0]['value']" 
                     :info="factory['out']['detail']['header']" :btnLabel="'수정하기'"
-                    @get-btn="getPopOpen('outFactorySet')"/>
+                    @get-delete="getDelete" @get-btn="getPopOpen('outFactorySet')"/>
             </section>
             <div class="gray-bar" />
             <section class="px-4 my-6 sm:px-8">
@@ -50,15 +50,16 @@
 </template>
     
 <script setup lang="ts">
-import BackHeader from '@/components/layouts/BackHeader.vue'
 import CalculateCard from "@/components/card/CalculateCard.vue";
 import InfoCard from "@/components/card/InfoCard.vue";
 import OutProduct from "@/views/include/factory/OutProduct.vue";
 import OutFactorySet from '@/views/include/factory/OutFactorySet.vue'
+import { useConfirm } from "primevue/useconfirm";
 import { ref } from 'vue';
 import { onMounted, onUnmounted } from 'vue';
 import { usePopupStore, useFactoryStore } from '@/store';
 import { usePopup } from '@/assets/js/popup';
+import { getAxiosData } from '@/assets/js/function';
 
 const mainRef = ref(null);
 const mainWidth = ref(0);
@@ -78,10 +79,50 @@ onMounted(() => {
     observer.observe(mainRef.value)
 });
 
-
+const confirm   = useConfirm();
 const popup     = usePopupStore();
 const factory   = useFactoryStore();
 const { getPopupOpen, getPopupClose } = usePopup();
+
+const getDelete = () => {
+    confirm.require({
+        message     : '해당 외주공장을 삭제하시겠습니까?',
+        header      : '외주공장 삭제',
+        rejectProps : {
+            label       : '취소',
+            severity    : 'secondary',
+            outlined    : true
+        },
+        acceptProps : {
+            label: '삭제'
+        },
+        accept : async () => {
+            const params = {
+                fcCd : factory.out.fcCd
+            }
+
+            console.log(params);
+
+            try
+            {
+                const instance  = await getAxiosData();
+                await instance.post(`https://data.planorder.kr/factoryV1/getOutFactoryDelete`, params);
+            }
+            catch(e)
+            {
+                console.log(e);
+                if(e.response.status === 401)
+                {
+                    alert('토큰 만료');
+                }
+                else
+                {
+                    alert('외주 공장 삭제 중 에러가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                }
+            }
+        }
+    });
+}
 
 const getPopOpen = (popNm: string) => {
     factory.getOutInfoReset();

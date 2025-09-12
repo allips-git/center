@@ -1,7 +1,10 @@
 <template>
     <div class="flex justify-between items-center py-1 sm:pt-5">
         <h2 class="font-bold text-15 sm:text-base text-t-lv1">{{ title }}</h2>
-        <Button v-if="btnLabel" :label="btnLabel" size="small" severity="secondary" outlined @click="getBtn"></Button>
+        <div class="flex gap-2">
+            <Button v-if="btnLabel" :label="'삭제'" size="small" severity="danger" outlined @click="getDelete"></Button>
+            <Button v-if="btnLabel" :label="btnLabel" size="small" severity="secondary" outlined @click="getBtn"></Button>
+        </div>
     </div>
     <div class="mt-2 info-list">
         <dl v-for="(info, index) in props.info" :key="index" class="info-set">
@@ -51,6 +54,10 @@ const props = defineProps<{
     btnLabel    : string;
     info        : InfoItem[];
 }>();
+
+const getDelete = () => {
+    emit('get-delete');
+}
 
 const getBtn = () => {
     emit('get-btn');
